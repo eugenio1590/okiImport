@@ -1,4 +1,4 @@
-package com.okiimport.app.dao.configuracion;
+package com.okiimport.app.configuracion.dao;
 
 import java.util.List;
 

@@ -28,7 +28,7 @@ import org.zkoss.zul.Radiogroup;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.servicios.configuracion.SControlUsuario;
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 
 public class ListaUsuariosViewModel extends AbstractViewModel implements EventListener<SortEvent>{
 	

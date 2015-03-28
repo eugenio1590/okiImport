@@ -1,4 +1,4 @@
-package com.okiimport.app.mvvm.controladores;
+package com.okiimport.app.mvvm.controladores.seguridad;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import com.okiimport.app.modelo.Menu;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModelNavbar;
-import com.okiimport.app.servicios.configuracion.SControlUsuario;
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 
 public class SidebarViewModel extends AbstractViewModel implements SerializableEventListener{
 	

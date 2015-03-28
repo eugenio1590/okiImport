@@ -61,14 +61,14 @@
     <!-- DAO -->
     <!--    
     <beans:bean id="analistaDAO" class="com.okiimport.app.DAO.Impl.AnalistaDAOImpl"/>-->
-    <beans:bean id="usuarioDAO" class="com.okiimport.app.dao.impl.configuracion.UsuarioDAOImpl"/>
-    <beans:bean id="menuDAO" class="com.okiimport.app.dao.impl.configuracion.MenuDAOImpl"/>
-    <beans:bean id="historyLoginDAO" class="com.okiimport.app.dao.impl.seguridad.HistoryLoginDAOImpl"/>
+    <beans:bean id="usuarioDAO" class="com.okiimport.app.configuracion.dao.impl.UsuarioDAOImpl"/>
+    <beans:bean id="menuDAO" class="com.okiimport.app.configuracion.dao.impl.MenuDAOImpl"/>
+    <beans:bean id="historyLoginDAO" class="com.okiimport.app.seguridad.dao.impl.HistoryLoginDAOImpl"/>
     
     
     <!-- Servicios -->
-    <beans:bean id="sControlUsuario" class="com.okiimport.app.servicios.impl.configuracion.SControlUsuarioImpl"/>
-    <beans:bean id="sHistorial" class="com.okiimport.app.servicios.impl.seguridad.SHistorialImpl"/>
+    <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>
+    <beans:bean id="sHistorial" class="com.okiimport.app.seguridad.servicios.impl.SHistorialImpl"/>
     
     <!-- Transaction Manager -->
     <tx:annotation-driven />

@@ -1,4 +1,4 @@
-package com.okiimport.app.servicios.impl.configuracion;
+package com.okiimport.app.configuracion.servicios.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +17,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.okiimport.app.dao.configuracion.MenuDAO;
-import com.okiimport.app.dao.configuracion.UsuarioDAO;
+import com.okiimport.app.configuracion.dao.MenuDAO;
+import com.okiimport.app.configuracion.dao.UsuarioDAO;
 import com.okiimport.app.modelo.Menu;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.servicios.configuracion.SControlUsuario;
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
 @Service

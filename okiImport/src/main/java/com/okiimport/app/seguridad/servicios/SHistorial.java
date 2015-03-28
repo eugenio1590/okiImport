@@ -1,4 +1,4 @@
-package com.okiimport.app.servicios.seguridad;
+package com.okiimport.app.seguridad.servicios;
 
 import com.okiimport.app.modelo.Usuario;
 

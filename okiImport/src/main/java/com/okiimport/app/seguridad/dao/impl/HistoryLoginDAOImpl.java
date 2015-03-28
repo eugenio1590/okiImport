@@ -1,4 +1,4 @@
-package com.okiimport.app.dao.impl.seguridad;
+package com.okiimport.app.seguridad.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
-import com.okiimport.app.dao.seguridad.HistoryLoginDAO;
+import com.okiimport.app.seguridad.dao.HistoryLoginDAO;
 import com.okiimport.app.modelo.HistoryLogin;
 
 public class HistoryLoginDAOImpl extends AbstractJpaDao<HistoryLogin, Integer> implements HistoryLoginDAO {

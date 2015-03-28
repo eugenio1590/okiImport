@@ -1,4 +1,4 @@
-package com.okiimport.app.servicios.configuracion;
+package com.okiimport.app.configuracion.servicios;
 
 import java.util.List;
 import java.util.Map;

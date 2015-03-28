@@ -1,4 +1,4 @@
-package com.okiimport.app.dao.seguridad;
+package com.okiimport.app.seguridad.dao;
 
 import com.okiimport.app.dao.IGenericDao;
 import com.okiimport.app.modelo.HistoryLogin;

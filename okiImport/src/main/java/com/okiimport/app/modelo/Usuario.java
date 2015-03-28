@@ -52,6 +52,10 @@ public class Usuario implements Serializable {
 	private List<HistoryLogin> historyLogins;
 	
 	/**USUARIOS ESPECIFICOS*/
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id_analista", referencedColumnName="id_analista", columnDefinition="integer",
+		nullable=true)
+	private Analista analista;
 
 	public Usuario() {
 	}
@@ -118,6 +122,14 @@ public class Usuario implements Serializable {
 		return persistentLogin;
 	}
 	
+	public Analista getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(Analista analista) {
+		this.analista = analista;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public String getFoto64(){
 		if(this.foto!=null)

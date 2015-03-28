@@ -1,4 +1,4 @@
-package com.okiimport.app.mvvm.controladores;
+package com.okiimport.app.mvvm.controladores.configuracion;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
@@ -18,7 +18,7 @@ import org.zkoss.zul.Textbox;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.servicios.configuracion.SControlUsuario;
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 
 public class EditarPerfilViewModel extends AbstractViewModel implements EventListener<UploadEvent> {
 	

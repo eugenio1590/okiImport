@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.okiimport.app.dao.configuracion.UsuarioDAO;
+import com.okiimport.app.configuracion.dao.UsuarioDAO;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.servicios.seguridad.SHistorial;
+import com.okiimport.app.seguridad.servicios.SHistorial;
 
 
 @Component

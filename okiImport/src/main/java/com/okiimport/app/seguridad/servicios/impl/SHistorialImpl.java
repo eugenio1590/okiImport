@@ -1,15 +1,15 @@
-package com.okiimport.app.servicios.impl.seguridad;
+package com.okiimport.app.seguridad.servicios.impl;
 
 import java.sql.Timestamp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.okiimport.app.dao.seguridad.HistoryLoginDAO;
+import com.okiimport.app.seguridad.dao.HistoryLoginDAO;
 import com.okiimport.app.modelo.HistoryLogin;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
-import com.okiimport.app.servicios.seguridad.SHistorial;
+import com.okiimport.app.seguridad.servicios.SHistorial;
 
 public class SHistorialImpl extends AbstractServiceImpl implements SHistorial {
 

@@ -1,4 +1,4 @@
-package com.okiimport.app.dao.impl.configuracion;
+package com.okiimport.app.configuracion.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.stereotype.Repository;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
-import com.okiimport.app.dao.configuracion.UsuarioDAO;
+import com.okiimport.app.configuracion.dao.UsuarioDAO;
 import com.okiimport.app.modelo.Usuario;
 
 @Repository
