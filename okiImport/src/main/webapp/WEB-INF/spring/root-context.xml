@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		
+<security:http pattern="/css/**" security="none"/>
+		
+<security:http auto-config="true">
+		<security:intercept-url pattern="/admin/*" access="ROLE_USER" /> <!-- URL de los Archivos a Proteger -->
+		<!-- 
+		@param login-processing-url: url a la que se va a enviar la informacion de acceso (no definida en los controladores)
+		@param login-page: url de la pagina del login
+		@param default-target-url: define la url por defecto que se usara cuando se inicia session
+		@param always-use-default-target: define si se usara la url por defecto siempre al iniciar session
+		@param authentication-failure-url: url que define la vista cuando falla la session
+		 -->
+		<security:form-login login-processing-url="/login" login-page="/inicioSession" 
+			default-target-url="/admin/home" always-use-default-target="true"
+			authentication-failure-url="/inicioSession?auth=false"
+		/>
+		
+		<!-- 
+		@param logout-url: url para cerrar la session (no definida en los controladores)
+		@param logout-success-url: url despues de habar cerrado session
+		@param invalidate-session: borra los datos de session
+		@param delete-cookies: 
+		 -->
+		<security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true" delete-cookies="JSESSIONID"/>
+		
+		<!-- @param invalid-session-url: url para cuando la session ha expirado (Revisar) -->
+		<security:session-management invalid-session-url="/sessionExpirada">
+			<!-- 
+			<security:concurrency-control session-registry-ref=""/>
+			-->
+		</security:session-management>
+		
+</security:http>
+
+<!-- Bean Encriptador de Claves -->
+	<bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+	<security:authentication-manager>
+		<!-- Servicio que provee la interfaz para la validacion del usuario con la base de datos  -->
+		<security:authentication-provider user-service-ref="sControlUsuario">
+			<!-- Encriptamos las Claves por medio de la referencia al Encriptador 
+			<security:password-encoder ref="bcryptEncoder"/>-->
+			<!-- Forma Manual
+				<security:user-service>
+					<security:user name="euge" password="1234" authorities="ROLE_USER"/>
+				</security:user-service>
+			-->
+		 </security:authentication-provider>
+	</security:authentication-manager>
+		
+</beans>

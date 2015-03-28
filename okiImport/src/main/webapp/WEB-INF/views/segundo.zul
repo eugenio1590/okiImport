@@ -1,0 +1,5 @@
+<?page title="Auto Generated index.zul"?>
+<window id="ventana" title="Hello World!!" border="normal" width="500px"
+	apply="org.zkoss.bind.BindComposer">
+	<label value="Segundo.zul" />
+</window>	

@@ -1,0 +1,22 @@
+<?page title="Auto Generated index.zul"?>
+<window id="ventana" title="Hello World!!" border="normal" width="500px"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.okiimport.app.mvvm.RepuestoViewModel')">
+	<!-- apply="com.prueba.web.InicioController" -->
+	<label value="You are using: ${desktop.webApp.version}" />
+	<listbox id="gridArticulos" mold="paging" model="@load(vm.listaRepuestos)">
+		<listhead>
+			<listheader label="Codigo" sort="auto" />
+			<listheader label="Nombre" sort="auto" />
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell label="@bind(each.id)" />
+				<listcell label="@bind(each.nombre)" />
+			</listitem>
+		</template>
+
+	</listbox>
+	<paging id="pagArticulos" onPaging="@command('paginarLista')"/>
+	<button id="btnActualizar" label="Grabar" onClick="@command('grabar')"/>
+</window>
