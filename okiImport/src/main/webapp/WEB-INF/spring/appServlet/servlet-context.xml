@@ -29,7 +29,7 @@
         <beans:property name="driverClassName" value="org.postgresql.Driver" />
         <beans:property name="url" value="jdbc:postgresql://localhost:5432/requerimientos" />
         <beans:property name="username" value="postgres" />
-        <beans:property name="password" value="1234" />
+        <beans:property name="password" value="postgres" />
         <beans:property name="maxActive" value="100" /> <!-- indica el nÃºmero mÃ¡ximo de conexiones que pueden usarse. -->
         <beans:property name="maxIdle" value="30"/> <!-- indica el nÃºmero mÃ¡ximo de conexiones que puede haber esperando a que llegue un usuario para usarlas.  -->
         <beans:property name="maxWait" value="10000"/> <!-- indica el tiempo en ms que esperarÃ¡ Tomcat a que haya una conexiÃ³n libre en caso de que no hubiera ninguna libre en ese instante. -->
@@ -59,16 +59,16 @@
     
     <context:annotation-config />
     <!-- DAO -->
-    <!-- <beans:bean id="articuloDAO" class="com.prueba.web.dao.impl.ArticuloDAOImpl"/> 
-    <beans:bean id="repuestoDAO" class="com.okiimport.app.DAO.Impl.RepuestoDAOImpl"/>
-    
+    <!--    
     <beans:bean id="analistaDAO" class="com.okiimport.app.DAO.Impl.AnalistaDAOImpl"/>-->
+    <beans:bean id="usuarioDAO" class="com.okiimport.app.dao.impl.configuracion.UsuarioDAOImpl"/>
+    <beans:bean id="menuDAO" class="com.okiimport.app.dao.impl.configuracion.MenuDAOImpl"/>
+    <beans:bean id="historyLoginDAO" class="com.okiimport.app.dao.impl.seguridad.HistoryLoginDAOImpl"/>
     
     
     <!-- Servicios -->
-    <!--<beans:bean id="serviceControlInventario" class="com.prueba.web.service.impl.ServiceControlInventarioImpl"/> 
-    <beans:bean id="sControlInventario" class="com.okiimport.app.Servicios.Impl.SControlInventarioImpl"/>
-    <beans:bean id="sControlUsuario" class="com.okiimport.app.Servicios.Impl.SControlUsuarioImpl"/>-->
+    <beans:bean id="sControlUsuario" class="com.okiimport.app.servicios.impl.configuracion.SControlUsuarioImpl"/>
+    <beans:bean id="sHistorial" class="com.okiimport.app.servicios.impl.seguridad.SHistorialImpl"/>
     
     <!-- Transaction Manager -->
     <tx:annotation-driven />

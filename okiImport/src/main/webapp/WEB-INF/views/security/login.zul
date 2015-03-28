@@ -5,7 +5,8 @@
 		Usuario:
 		<textbox id="username" name="j_username" />
 		Clave:
-		<textbox id="password" name="j_password" />
+		<textbox id="password" name="j_password" type="password" />
+		<checkbox id="remember_me" name="remember-me" label="Remember Me" />
 		<button label="Iniciar Session" type="submit" />
 	</vbox>
 </h:form>

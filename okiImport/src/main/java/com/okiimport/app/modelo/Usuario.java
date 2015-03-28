@@ -52,10 +52,6 @@ public class Usuario implements Serializable {
 	private List<HistoryLogin> historyLogins;
 	
 	/**USUARIOS ESPECIFICOS*/
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_cliente", referencedColumnName="id_cliente", columnDefinition="integer", 
-		nullable=true)
-	private Cliente cliente;
 
 	public Usuario() {
 	}
