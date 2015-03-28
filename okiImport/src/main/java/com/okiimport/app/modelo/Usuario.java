@@ -7,9 +7,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
-
-
-
 import com.okiimport.app.mvvm.AbstractViewModel;
 
 import java.util.List;
@@ -140,6 +137,11 @@ public class Usuario implements Serializable {
 	
 	public String isActivo(){
 		return (this.activo) ? "Activo" : "Inactivo";
+	}
+	
+	public void asignarUsuario(Persona persona){
+		if(persona instanceof Analista)
+			this.setAnalista((Analista) persona);
 	}
 
 }

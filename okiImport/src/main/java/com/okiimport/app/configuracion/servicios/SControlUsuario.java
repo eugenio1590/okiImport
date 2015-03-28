@@ -19,11 +19,12 @@ public interface SControlUsuario {
 	public Boolean eliminarUsuario(Usuario usuario);
 	public Boolean validarAutenticacion(User user);
 	public UsernamePasswordAuthenticationToken consultarAutenticacion(User user);
-	public Map<String, Object> consultarUsuarios(Integer id, String username, Boolean activo,
-			String fieldSort, Boolean sortDirection, int pagina, int limit);
+	public Map<String, Object> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
+			int pagina, int limit);
 	//Usuarios Especificos:
 	//1. Analistas
 	public Map<String, Object> consultarAnalistas(int pagina, int limit);
+	public Map<String, Object> consultarAnalistasSinUsuarios(int pagina, int limit);
 	//Menu
 	public List<Menu> consultarMenus();
 }

@@ -58,9 +58,8 @@
 	<beans:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
     
     <context:annotation-config />
-    <!-- DAO -->
-    <!--    
-    <beans:bean id="analistaDAO" class="com.okiimport.app.DAO.Impl.AnalistaDAOImpl"/>-->
+    <!-- DAO -->   
+    <beans:bean id="analistaDAO" class="com.okiimport.app.personas.dao.impl.AnalistaDAOImpl"/>
     <beans:bean id="usuarioDAO" class="com.okiimport.app.configuracion.dao.impl.UsuarioDAOImpl"/>
     <beans:bean id="menuDAO" class="com.okiimport.app.configuracion.dao.impl.MenuDAOImpl"/>
     <beans:bean id="historyLoginDAO" class="com.okiimport.app.seguridad.dao.impl.HistoryLoginDAOImpl"/>

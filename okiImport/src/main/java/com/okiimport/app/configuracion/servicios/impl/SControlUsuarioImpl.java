@@ -22,6 +22,7 @@ import com.okiimport.app.configuracion.dao.UsuarioDAO;
 import com.okiimport.app.modelo.Menu;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.personas.dao.AnalistaDAO;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -39,6 +40,10 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	@Autowired
 	@BeanInjector("usuarioDAO")
 	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	@BeanInjector("analistaDAO")
+	private AnalistaDAO analistaDAO;
 	
 	@Autowired
 	@BeanInjector("menuDAO")
@@ -146,14 +151,12 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	}
 	
 	@Override
-	public Map<String, Object> consultarUsuarios(Integer id, String username, Boolean isActivo,
-			String fieldSort, Boolean sortDirection, int pagina, int limit) {
+	public Map<String, Object> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
+			int pagina, int limit) {
 		// TODO Auto-generated method stub
-		String idFind = (id!=null) ? "%"+String.valueOf(id)+"%" : null;
-		username = (username!=null) ? "%"+username+"%" : null;
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", ((Integer) usuarioDAO.consultarUsuarios(idFind, username, isActivo, fieldSort, sortDirection, 0, -1).size()).longValue());
-		parametros.put("usuarios", usuarioDAO.consultarUsuarios(idFind, username, isActivo, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", usuarioDAO.consultarUsuarios(usuarioF, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("usuarios", usuarioDAO.consultarUsuarios(usuarioF, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
 	
@@ -162,6 +165,14 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	@Override
 	public Map<String, Object> consultarAnalistas(int pagina, int limit){
 		return null;
+	}
+	
+	@Override
+	public Map<String, Object> consultarAnalistasSinUsuarios(int pagina, int limit){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", analistaDAO.consultarAnalistasSinUsuarios(0, -1).size());
+		parametros.put("analistas", analistaDAO.consultarAnalistasSinUsuarios(pagina*limit, limit));
+		return parametros;
 	}
 	
 	//2. Menus

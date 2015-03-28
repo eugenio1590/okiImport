@@ -9,8 +9,8 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.stereotype.Repository;
 
-import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.configuracion.dao.UsuarioDAO;
+import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.modelo.Usuario;
 
 @Repository
@@ -55,8 +55,8 @@ public class UsuarioDAOImpl extends AbstractJpaDao<Usuario, Integer> implements 
 	}
 
 	@Override
-	public List<Usuario> consultarUsuarios(String id, String username, Boolean isActivo,
-			String fieldSort, Boolean sortDirection, int pagina, int limit) {
+	public List<Usuario> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
+			int pagina, int limit) {
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -67,21 +67,21 @@ public class UsuarioDAOImpl extends AbstractJpaDao<Usuario, Integer> implements 
 		//3. Creamos las Restricciones de la busqueda
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		
-		if(id!=null)
+		if(usuarioF.getId()!=null)
 			restricciones.add(this.criteriaBuilder.like(
-					this.entity.<Long>get("id").as(String.class), id.toLowerCase()
+					this.entity.<Long>get("id").as(String.class), "%"+String.valueOf(usuarioF.getId()).toLowerCase()+"%"
 			));
 		
-		if(username!=null)
+		if(usuarioF.getUsername()!=null)
 			restricciones.add(this.criteriaBuilder.like(
 					this.criteriaBuilder.lower(this.entity.<String>get("username")),
-					username.toLowerCase()
+					"%"+usuarioF.getUsername().toLowerCase()+"%"
 			));
 		
-		if(isActivo!=null)
+		if(usuarioF.getActivo()!=null)
 			restricciones.add(this.criteriaBuilder.equal(
 					this.entity.get("activo"), 
-					isActivo
+					usuarioF.getActivo()
 			));
 		
 		//4. Creamos los campos de ordenamiento y ejecutamos
