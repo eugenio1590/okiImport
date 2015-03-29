@@ -1,8 +1,47 @@
-<?page title="Auto Generated index.zul"?>
-<window id="ventana" title="Hello World!!" border="normal" width="500px"
-	apply="org.zkoss.bind.BindComposer"
-	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RepuestoViewModel')">
-	<!-- apply="com.prueba.web.InicioController" -->
-	<label value="You are using: ${desktop.webApp.version}" />
-	<button id="login" label="Iniciar Session" onClick="@command('iniciarSession')"/>
-</window>
+<?page title="::Sistema Requerimiento Autopartes::" contentType="text/html;charset=UTF-8"?>
+<?link href="/resources/css/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
+<zk>
+	<borderlayout id="principal" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.InicioViewModel')">
+		
+		<north><!-- height="60px" border="none" -->
+			<div sclass="navbar" height="59px">
+				<a label="Organizacion" sclass="pull-left navbar-brand"
+					iconSclass="z-icon-leaf" />
+			</div>
+		</north>
+		<!-- width="300px" minsize="300" width="15%"  -->
+		
+		<center autoscroll="true" style="border-style: solid;">
+			<vlayout width="100%" >
+				<div  sclass="breadcrumbs">
+					<div id="hrefEnlacesMenu"  sclass="breadcrumbs" align="right">
+  						<!-- Search input-->
+  						<button label="Home" type="submit" onClick="@command('registrarRequerimiento')" />
+						<button label="Solicitar Ser Proveedor" type="submit" onClick="@command('registrarProveedor')" />
+						<button label="Verificar Requerimiento" type="submit" onClick="@command('verificarRequerimiento')" />
+					</div>
+				</div>
+				<div align="center" width="100%">
+				<!-- 
+				<include src="/WEB-INF/views/formularioRequerimiento.zul" /> -->
+				<include id="mainInclude" self="@define(content)"/>
+				</div>
+			</vlayout>
+			
+		</center>
+		
+		<south height="30px" style="border-style: solid;">
+			<!-- 
+			<include
+				src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />
+			-->
+		</south>
+		
+	</borderlayout>
+	
+</zk>

@@ -1,0 +1,8 @@
+<?page title="Auto Generated index.zul"?>
+<window id="ventana" title="Hello World!!" border="normal" width="500px"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RepuestoViewModel')">
+	<!-- apply="com.prueba.web.InicioController" -->
+	<label value="You are using: ${desktop.webApp.version}" />
+	<button id="login" label="Iniciar Session" onClick="@command('iniciarSession')"/>
+</window>

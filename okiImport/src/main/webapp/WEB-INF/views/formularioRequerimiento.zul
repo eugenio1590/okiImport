@@ -1,0 +1,178 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winFormularioRequerimiento" border="none" width="60%"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
+		<n:h3>Ingrese Su Requerimiento</n:h3>
+		<groupbox>
+			<groupbox>
+				<caption label="Datos Personales" />
+				<div>
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label value="Cedula/RIF: " />
+
+								<textbox id="cedulaRif" width="80%"
+									readonly="" mold="rounded" value="@bind(vm.cliente.cedula)"
+									placeholder="Ej: J-40240537-5" maxlength="12"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+
+
+								<label value="Nombre/Razón Social: " />
+
+								<textbox id="nombreRazonSocial"
+									width="80%" readonly="" mold="rounded"
+									value="@bind(vm.cliente.nombre)" placeholder="Ej: Empresa C.A"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+							</row>
+
+							<row>
+
+								<label value="Teléfono: " />
+
+								<textbox id="telefono" width="80%"
+									readonly="" mold="rounded" value="@bind(vm.cliente.telefono)"
+									maxlength="11" placeholder="Ej: 02512552233"
+									constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+
+
+								<label value="E-mail:" />
+								<textbox id="email" width="80%"
+									readonly="" mold="rounded" value="@bind(vm.cliente.correo)"
+									placeholder="Ej. fusa@gmail.com"
+									constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
+								</textbox>
+							</row>
+
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+			<groupbox>
+				<caption label="Datos Vehiculo" />
+				<div>
+
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label value="Marca: " />
+								<combobox placeholder="Seleccione..."
+									width="80%" model="@load(vm.listaMarcasVehiculo)">
+									<template name="model">
+										<comboitem label="@bind(each.nombre)">
+										
+										</comboitem>
+									</template>
+								</combobox>
+
+								<label value="Modelo: " />
+
+								<textbox id="modelo" width="80%"
+									readonly="" mold="rounded"
+									value="@bind(vm.requerimiento.modeloV)" placeholder="Hilux"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+							</row>
+
+							<row>
+
+								<label value="Serial Carroceria: " />
+
+								<textbox id="serialCarroceria"
+									width="80%" readonly="" mold="rounded"
+									value="@bind(vm.requerimiento.serialCarroceriaV)"
+									maxlength="11" placeholder="Ej: xA245D25623"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+								<label value=" " />
+								<button label="Mas Datos" type="submit"
+									width="80%" />
+							</row>
+
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+			<groupbox>
+				<caption label="Datos Repuestos" />
+				<panel apply="org.zkoss.bind.BindComposer"
+					sclass="panel-primary">
+					<panelchildren>
+
+						<listbox mold="paging"
+							style="margin-top:10px">
+
+
+							<listhead>
+								<listheader label="CodigoOEM"
+									sort="auto" />
+								<listheader label="Nombre" sort="auto" />
+								<listheader label="Descripcion"
+									sort="auto" />
+								<listheader label="Foto" sort="auto" />
+							</listhead>
+
+
+							<listitem>
+								<listcell label="96342511" />
+								<listcell label="Manilla Aveo" />
+								<listcell label="Manilla externa Aveo" />
+								<listcell label="AQUI VA LA FOTO" />
+							</listitem>
+							<listitem>
+								<listcell label="7rtyyfy" />
+								<listcell label="Manilla Spark" />
+								<listcell label="Manilla Interna Spark" />
+								<listcell label="AQUI VA LA FOTO" />
+							</listitem>
+							<listitem>
+								<listcell label="457457rt" />
+								<listcell label="Kit Clutch Gol" />
+								<listcell
+									label="disco,prensa y collarin" />
+								<listcell label="AQUI VA LA FOTO" />
+							</listitem>
+							<listitem>
+								<listcell label="67575uty" />
+								<listcell label="Puerta SupperDutty" />
+								<listcell
+									label="Puerta Derecha SuperDutty" />
+								<listcell label="AQUI VA LA FOTO" />
+							</listitem>
+							<listitem>
+								<listcell label="65757yt" />
+								<listcell label="Goma Pedal Logan" />
+								<listcell label="Goma Pedal Logan" />
+								<listcell label="AQUI VA LA FOTO" />
+							</listitem>
+
+
+						</listbox>
+						<paging id="listaCa" pageSize="5" />
+
+					</panelchildren>
+				</panel>
+
+			</groupbox>
+		</groupbox>
+		<div sclass="btn btn-sm btn-info" align="right">
+			<button label="Limpiar" type="submit"
+				onClick="@command('limpiar')" />
+			<button label="Enviar" type="submit" onClick="@command('registrar')" />
+		</div>
+	</window>
+</zk>

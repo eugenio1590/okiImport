@@ -1,7 +1,11 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 
 /**
@@ -11,6 +15,11 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Generated(GenerationTime.INSERT)
+	@Column(name="id_persona", columnDefinition = "serial")
+	private Integer idPersona;
 	
 	@Column(unique=true, nullable=false)
 	private String cedula;
@@ -34,6 +43,14 @@ public abstract class Persona implements Serializable {
 	private String telefono;
 
 	public Persona() {
+	}
+
+	public Integer getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(Integer idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public String getCedula() {

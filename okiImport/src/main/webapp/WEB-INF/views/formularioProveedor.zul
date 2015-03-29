@@ -1,0 +1,75 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winFormularioRequerimiento" border="none" width="60%"
+		apply="org.zkoss.bind.BindComposer">
+		<n:h3>Registrese Como Proveedor</n:h3>
+		<groupbox>
+			<groupbox>
+				<caption label="Datos Fiscales" />
+				<div>
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label value="RIF: " />
+
+								<textbox id="cedulaRif" width="80%"
+									readonly="" mold="rounded" value=""
+									placeholder="Ej: J-40240537-5" maxlength="12"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+
+
+								<label value="Nombre/Razón Social: " />
+
+								<textbox id="nombreRazonSocial"
+									width="80%" readonly="" mold="rounded" value=""
+									placeholder="Ej: Empresa C.A"
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+							</row>
+
+							<row>
+
+								<label value="Teléfono: " />
+
+								<textbox id="telefono" width="80%"
+									readonly="" mold="rounded" value="" maxlength="11"
+									placeholder="Ej: 02512552233"
+									constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+
+
+								<label value="E-mail:" />
+								<textbox id="email" width="80%"
+									readonly="" mold="rounded"
+									value="" placeholder="Ej. fusa@gmail.com"
+									constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
+								</textbox>
+							</row>
+							<row>
+
+								<label value="Dirección: " />
+
+								<textbox id="direccion" width="80%"
+									rows="3" cols="35" readonly="" mold="rounded" value=""
+									placeholder="Ej: zona industrial 2 "
+									constraint="no empty:El Campo No Debe Estar Vacio" />
+
+							</row>
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+		</groupbox>
+		
+
+		<div sclass="btn btn-sm btn-info" align="right">
+			<button label="Limpiar" type="submit" />
+			<button label="Enviar" type="submit" />
+		</div>
+	</window>
+</zk>
