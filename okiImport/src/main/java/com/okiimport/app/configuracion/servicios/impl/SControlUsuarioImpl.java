@@ -160,6 +160,12 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 		return parametros;
 	}
 	
+	@Override
+	public boolean verificarUsername(String username){
+		Usuario usuario = consultarUsuario(username, null);
+		return (usuario!=null);
+	}
+	
 	//Usuarios Especificos
 	//1.1 Analistas
 	@Override

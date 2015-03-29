@@ -143,5 +143,12 @@ public class Usuario implements Serializable {
 		if(persona instanceof Analista)
 			this.setAnalista((Analista) persona);
 	}
+	
+	public Persona obtenerUsuario(){
+		if(this.analista!=null)
+			return this.getAnalista();
+		
+		return null;
+	}
 
 }

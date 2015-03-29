@@ -21,6 +21,7 @@ public interface SControlUsuario {
 	public UsernamePasswordAuthenticationToken consultarAutenticacion(User user);
 	public Map<String, Object> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
 			int pagina, int limit);
+	public boolean verificarUsername(String username);
 	//Usuarios Especificos:
 	//1. Analistas
 	public Map<String, Object> consultarAnalistas(int pagina, int limit);
