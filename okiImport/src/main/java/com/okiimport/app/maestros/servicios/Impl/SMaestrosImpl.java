@@ -39,10 +39,9 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 
 	@Override
 	public Cliente registrarCliente(Cliente cliente) {
-		cliente.setIdPersona((cliente.getIdPersona()==null)?-1:cliente.getIdPersona());
-	    if (clienteDAO.findByPrimaryKey(cliente.getIdPersona())== null)
-	        cliente = clienteDAO.save(cliente);
-		return cliente;
+		//cliente.setIdPersona((cliente.getIdPersona()==null)?-1:cliente.getIdPersona());
+		//if (clienteDAO.findByPrimaryKey(cliente.getIdPersona())== null)
+	   return clienteDAO.save(cliente);
 	}
 
 	public ClienteDAO getClienteDAO() {
