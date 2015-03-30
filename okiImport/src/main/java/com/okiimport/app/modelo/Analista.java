@@ -4,20 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-
-
 /**
  * The persistent class for the analista database table.
  * 
  */
 @Entity
 @NamedQuery(name="Analista.findAll", query="SELECT a FROM Analista a")
-@AttributeOverride(name="idPersona",column=@Column(name="id_analista"))
+@AttributeOverride(name="id",column=@Column(name="id_analista", columnDefinition="serial"))
 public class Analista extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//bi-directional many-to-one association to Usuario
 	@OneToOne(mappedBy="analista")
 	private Usuario usuario;
 
