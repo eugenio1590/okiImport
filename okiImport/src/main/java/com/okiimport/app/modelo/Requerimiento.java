@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 import java.sql.Timestamp;
 
 
@@ -16,15 +19,9 @@ import java.sql.Timestamp;
 public class Requerimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_requerimiento", columnDefinition = "serial")
-	private Integer idRequerimiento;
-
 	@Column(name="anno_v")
 	private Timestamp annoV;
 
-	@Column(name="estatus")
 	private String estatus;
 
 	@Column(name="fecha_cierre")
@@ -36,17 +33,28 @@ public class Requerimiento implements Serializable {
 	@Column(name="fecha_vencimiento")
 	private Timestamp fechaVencimiento;
 
-	//bi-directional many-to-one association to Analista
-	@ManyToOne
-	@JoinColumn(name="id_analista", columnDefinition="integer")
-	private Analista analista;
+	@Column(name="id_analista")
+	private Integer idAnalista;
 
-	//bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name="id_cliente", columnDefinition="integer")
+	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 
-	//Vehiculo
+	@Column(name="id_marca_v")
+	private Integer idMarcaV;
+
+	@Column(name="id_motor_v")
+	private Integer idMotorV;
+
+    @Id
+    //@Generated(GenerationTime.INSERT)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_requerimiento", columnDefinition = "serial")
+	private Integer idRequerimiento;
+
+	@Column(name="id_traccion_v")
+	private Integer idTraccionV;
+
 	@Column(name="modelo_v")
 	private String modeloV;
 
@@ -55,27 +63,10 @@ public class Requerimiento implements Serializable {
 
 	@Column(name="transmision_v")
 	private Boolean transmisionV;
-	
-	
-	@Column(name="id_marca_v")
-	private Integer idMarcaV;
-
-	@Column(name="id_motor_v")
-	private Integer idMotorV;
-
-	@Column(name="id_traccion_v")
-	private Integer idTraccionV;
 
 	public Requerimiento() {
 	}
 
-	public Integer getIdRequerimiento() {
-		return this.idRequerimiento;
-	}
-
-	public void setIdRequerimiento(Integer idRequerimiento) {
-		this.idRequerimiento = idRequerimiento;
-	}
 	public Timestamp getAnnoV() {
 		return this.annoV;
 	}
@@ -116,12 +107,12 @@ public class Requerimiento implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Analista getAnalista() {
-		return analista;
+	public Integer getIdAnalista() {
+		return this.idAnalista;
 	}
 
-	public void setAnalista(Analista analista) {
-		this.analista = analista;
+	public void setIdAnalista(Integer idAnalista) {
+		this.idAnalista = idAnalista;
 	}
 
 	public Cliente getCliente() {
@@ -146,6 +137,14 @@ public class Requerimiento implements Serializable {
 
 	public void setIdMotorV(Integer idMotorV) {
 		this.idMotorV = idMotorV;
+	}
+
+	public Integer getIdRequerimiento() {
+		return this.idRequerimiento;
+	}
+
+	public void setIdRequerimiento(Integer idRequerimiento) {
+		this.idRequerimiento = idRequerimiento;
 	}
 
 	public Integer getIdTraccionV() {

@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 
 /**
  * The persistent class for the persona database table.
@@ -14,9 +17,9 @@ public abstract class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id", columnDefinition = "serial")
-	private Integer id;
+	@Generated(GenerationTime.INSERT)
+	@Column(name="id_persona", columnDefinition = "serial")
+	private Integer idPersona;
 	
 	@Column(unique=true, nullable=false)
 	private String cedula;
@@ -42,12 +45,12 @@ public abstract class Persona implements Serializable {
 	public Persona() {
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getIdPersona() {
+		return idPersona;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdPersona(Integer idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public String getCedula() {

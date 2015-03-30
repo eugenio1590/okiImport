@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 /**
  * The persistent class for the cliente database table.
@@ -12,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="cliente")
 @NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
-@AttributeOverride(name="id",column=@Column(name="id_cliente", columnDefinition="serial"))
+@AttributeOverride(name="idPersona",column=@Column(name="id_cliente"))
 public class Cliente extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 

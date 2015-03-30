@@ -49,18 +49,10 @@ public class Usuario implements Serializable {
 	private List<HistoryLogin> historyLogins;
 	
 	/**USUARIOS ESPECIFICOS*/
-	@Transient
-	public static final String[] USUARIOS_ESPECIFICOS = new String[]{"analista", "proveedor"};
-	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_analista", referencedColumnName="id_analista", columnDefinition="integer",
 		nullable=true)
 	private Analista analista;
-	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_proveedor", referencedColumnName="id_proveedor", columnDefinition="integer",
-		nullable=true)
-	private Proveedor proveedor;
 
 	public Usuario() {
 	}
@@ -135,14 +127,6 @@ public class Usuario implements Serializable {
 		this.analista = analista;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
-	}
-
 	/**METODOS PROPIOS DE LA CLASE*/
 	public String getFoto64(){
 		if(this.foto!=null)
@@ -158,15 +142,11 @@ public class Usuario implements Serializable {
 	public void asignarUsuario(Persona persona){
 		if(persona instanceof Analista)
 			this.setAnalista((Analista) persona);
-		else if(persona instanceof Proveedor)
-			this.setProveedor((Proveedor) persona);
 	}
 	
 	public Persona obtenerUsuario(){
 		if(this.analista!=null)
 			return this.getAnalista();
-		else if(this.proveedor!=null)
-			return this.getProveedor();
 		
 		return null;
 	}
