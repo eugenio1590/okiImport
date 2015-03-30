@@ -39,7 +39,7 @@ public class AnalistaDAOImpl extends AbstractJpaDao<Analista, Integer> implement
 
 		//4. Creamos los campos de ordenamiento y ejecutamos
 		Map<String, Boolean> orders = new HashMap<String, Boolean>();
-		orders.put("idAnalista", true);
+		orders.put("id", true);
 
 		List<Analista> analistas = this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, 0, -1);
 		if(analistas.size()>0)
@@ -65,7 +65,7 @@ public class AnalistaDAOImpl extends AbstractJpaDao<Analista, Integer> implement
 
 		//4. Creamos los campos de ordenamiento y ejecutamos
 		Map<String, Boolean> orders = new HashMap<String, Boolean>();
-		orders.put("idAnalista", true);
+		orders.put("id", true);
 		return this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 

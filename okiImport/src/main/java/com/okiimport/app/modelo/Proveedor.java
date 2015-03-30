@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -11,23 +12,24 @@ import javax.persistence.*;
 @Entity
 @Table(name="proveedor")
 @NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p")
-@AttributeOverride(name="idPersona",column=@Column(name="id_proveedor"))
+@AttributeOverrides(value = { 
+		@AttributeOverride(name="id",column=@Column(name="id_proveedor", columnDefinition="serial")),
+		//@AttributeOverride(name="cedula", column=@Column(name="rif"))
+})
 public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//private String estatus;
-
-	//private String rif;
+	@Column(name="rif", unique=true)
+	private String rif; //Atributo Override con Cedula
+	
+	@Column(name="estatus")
+	private String estatus;
+	
+	//bi-directional many-to-one association to Usuario
+	@OneToOne(mappedBy="proveedor")
+	private Usuario usuario;
 
 	public Proveedor() {
-	}
-
-	/*public String getEstatus() {
-		return this.estatus;
-	}
-
-	public void setEstatus(String estatus) {
-		this.estatus = estatus;
 	}
 
 	public String getRif() {
@@ -36,6 +38,14 @@ public class Proveedor extends Persona implements Serializable {
 
 	public void setRif(String rif) {
 		this.rif = rif;
-	}*/
+	}
+	
+	public String getEstatus() {
+		return this.estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
 
 }
