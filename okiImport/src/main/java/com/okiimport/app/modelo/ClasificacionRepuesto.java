@@ -1,12 +1,13 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the tipo_repuesto database table.
+ * The persistent class for the clasificacion_repuesto database table.
  * 
  */
 @Entity
@@ -17,29 +18,54 @@ public class ClasificacionRepuesto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id", columnDefinition = "serial")
-	private Integer id;
+	@Column(name="id_clasificacion_repuesto")
+	private Integer idClasificacionRepuesto;
 
-	@Column(name="nombre")
-	private String nombre;
+	private String descripcion;
+	
+	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY)
+	private List<DetalleRequerimiento> detalleRequerimientos;
 
 	public ClasificacionRepuesto() {
 	}
 
-	public Integer getId() {
-		return this.id;
+	public Integer getIdClasificacionRepuesto() {
+		return idClasificacionRepuesto;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdClasificacionRepuesto(Integer idClasificacionRepuesto) {
+		this.idClasificacionRepuesto = idClasificacionRepuesto;
 	}
 
-	public String getNombre() {
-		return this.nombre;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	public List<DetalleRequerimiento> getDetalleRequerimientos() {
+		return detalleRequerimientos;
+	}
+
+	public void setDetalleRequerimientos(
+			List<DetalleRequerimiento> detalleRequerimientos) {
+		this.detalleRequerimientos = detalleRequerimientos;
+	}
+
+	public DetalleRequerimiento addDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
+		getDetalleRequerimientos().add(detalleRequerimiento);
+		detalleRequerimiento.setClasificacionRepuesto(this);
+
+		return detalleRequerimiento;
+	}
+
+	public DetalleRequerimiento removeDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
+		getDetalleRequerimientos().remove(detalleRequerimiento);
+		detalleRequerimiento.setClasificacionRepuesto(null);
+
+		return detalleRequerimiento;
 	}
 
 }

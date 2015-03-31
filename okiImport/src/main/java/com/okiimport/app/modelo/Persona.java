@@ -1,7 +1,6 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
 
@@ -9,53 +8,44 @@ import javax.persistence.*;
  * The persistent class for the persona database table.
  * 
  */
-@MappedSuperclass
-public abstract class Persona implements Serializable {
+@Entity
+@Table(name="persona")
+@NamedQuery(name="Persona.findAll", query="SELECT p FROM Persona p")
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="person_type")
+public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id", columnDefinition = "serial")
+	@Column(name="id", columnDefinition = "serial", unique=true, nullable=false)
 	private Integer id;
-	
-	@Column(unique=true, nullable=false)
-	private String cedula;
 
-	@Column(length=50)
 	private String apellido;
 
-	@Column(length=20)
+	private String cedula;
+
 	private String correo;
-	
-	@Column
+
 	private String direccion;
 
-	@Column(length=50)
 	private String nombre;
-
-	@Column
-	private Boolean sexo;
 	
-	@Column(length=20)
 	private String telefono;
+	
+	//bi-directional many-to-one association to Usuario (Relacion Poliformica)
+	@OneToOne(mappedBy="persona")
+	private Usuario usuario;
 
 	public Persona() {
 	}
 
 	public Integer getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getCedula() {
-		return this.cedula;
-	}
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
 	}
 
 	public String getApellido() {
@@ -64,6 +54,14 @@ public abstract class Persona implements Serializable {
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
+	}
+
+	public String getCedula() {
+		return this.cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 	public String getCorreo() {
@@ -89,15 +87,7 @@ public abstract class Persona implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public Boolean getSexo() {
-		return this.sexo;
-	}
-
-	public void setSexo(Boolean sexo) {
-		this.sexo = sexo;
-	}
-
+	
 	public String getTelefono() {
 		return this.telefono;
 	}
@@ -106,4 +96,11 @@ public abstract class Persona implements Serializable {
 		this.telefono = telefono;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 }

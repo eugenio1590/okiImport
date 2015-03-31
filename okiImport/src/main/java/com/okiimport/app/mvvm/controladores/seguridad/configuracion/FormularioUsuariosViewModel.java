@@ -170,7 +170,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	public void guardar(@BindingParam("txtPassword") Textbox txtPassword){
 		if(personaSeleccionada.getCedula()!=null && !txtPassword.getValue().toString().equalsIgnoreCase("")){
 			usuario.setActivo(true);
-			usuario.asignarUsuario(personaSeleccionada);
+			usuario.setPersona(personaSeleccionada);
 			sControlUsuario.grabarUsuario(usuario);
 			mostrarMensaje("Informacion", "Usuario Creado Exitosamente", null, null, null, null);
 			personaSeleccionada = new Persona() {

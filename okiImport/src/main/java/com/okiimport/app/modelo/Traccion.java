@@ -6,34 +6,33 @@ import java.util.List;
 
 
 /**
- * The persistent class for the marca_vehiculo database table.
+ * The persistent class for the traccion database table.
  * 
  */
 @Entity
-@Table(name="marca_vehiculo")
-@NamedQuery(name="MarcaVehiculo.findAll", query="SELECT m FROM MarcaVehiculo m")
-public class MarcaVehiculo implements Serializable {
+@NamedQuery(name="Traccion.findAll", query="SELECT t FROM Traccion t")
+public class Traccion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_marca_vehiculo")
-	private Integer idMarcaVehiculo;
+	@Column(name="id_traccion")
+	private Integer idTraccion;
 
 	private String nombre;
 
 	//bi-directional many-to-one association to Requerimiento
-	@OneToMany(mappedBy="marcaVehiculo")
+	@OneToMany(mappedBy="traccion")
 	private List<Requerimiento> requerimientos;
 
-	public MarcaVehiculo() {
+	public Traccion() {
 	}
 
-	public Integer getIdMarcaVehiculo() {
-		return this.idMarcaVehiculo;
+	public Integer getIdTraccion() {
+		return this.idTraccion;
 	}
 
-	public void setIdMarcaVehiculo(Integer idMarcaVehiculo) {
-		this.idMarcaVehiculo = idMarcaVehiculo;
+	public void setIdTraccion(Integer idTraccion) {
+		this.idTraccion = idTraccion;
 	}
 
 	public String getNombre() {
@@ -54,14 +53,14 @@ public class MarcaVehiculo implements Serializable {
 
 	public Requerimiento addRequerimiento(Requerimiento requerimiento) {
 		getRequerimientos().add(requerimiento);
-		requerimiento.setMarcaVehiculo(this);
+		requerimiento.setTraccion(this);
 
 		return requerimiento;
 	}
 
 	public Requerimiento removeRequerimiento(Requerimiento requerimiento) {
 		getRequerimientos().remove(requerimiento);
-		requerimiento.setMarcaVehiculo(null);
+		requerimiento.setTraccion(null);
 
 		return requerimiento;
 	}

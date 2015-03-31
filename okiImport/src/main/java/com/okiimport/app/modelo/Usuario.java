@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Any;
+import org.hibernate.annotations.AnyMetaDef;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.MetaValue;
 
 import com.okiimport.app.mvvm.AbstractViewModel;
 
@@ -48,19 +51,17 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY)
 	private List<HistoryLogin> historyLogins;
 	
-	/**USUARIOS ESPECIFICOS*/
-	@Transient
-	public static final String[] USUARIOS_ESPECIFICOS = new String[]{"analista", "proveedor"};
-	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_analista", referencedColumnName="id_analista", columnDefinition="integer",
-		nullable=true)
-	private Analista analista;
-	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_proveedor", referencedColumnName="id_proveedor", columnDefinition="integer",
-		nullable=true)
-	private Proveedor proveedor;
+	@Any(metaColumn=@Column(name="persona_type"), fetch=FetchType.LAZY)
+	@AnyMetaDef(idType="integer", metaType="string",
+			metaValues={
+					/**USUARIOS ESPECIFICOS*/	
+					@MetaValue(targetEntity=Analista.class, value="A"),
+					@MetaValue(targetEntity=Proveedor.class, value="P")
+			}
+	)
+	@OneToOne
+	@JoinColumn(name="persona_id",columnDefinition="integer")
+	private Persona persona;
 
 	public Usuario() {
 	}
@@ -127,20 +128,12 @@ public class Usuario implements Serializable {
 		return persistentLogin;
 	}
 	
-	public Analista getAnalista() {
-		return analista;
+	public Persona getPersona() {
+		return persona;
 	}
 
-	public void setAnalista(Analista analista) {
-		this.analista = analista;
-	}
-
-	public Proveedor getProveedor() {
-		return proveedor;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -153,22 +146,6 @@ public class Usuario implements Serializable {
 	
 	public String isActivo(){
 		return (this.activo) ? "Activo" : "Inactivo";
-	}
-	
-	public void asignarUsuario(Persona persona){
-		if(persona instanceof Analista)
-			this.setAnalista((Analista) persona);
-		else if(persona instanceof Proveedor)
-			this.setProveedor((Proveedor) persona);
-	}
-	
-	public Persona obtenerUsuario(){
-		if(this.analista!=null)
-			return this.getAnalista();
-		else if(this.proveedor!=null)
-			return this.getProveedor();
-		
-		return null;
 	}
 
 }

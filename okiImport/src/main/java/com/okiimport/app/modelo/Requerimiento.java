@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -18,13 +19,12 @@ public class Requerimiento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_requerimiento", columnDefinition = "serial")
+	@Column(name="id_requerimiento")
 	private Integer idRequerimiento;
 
 	@Column(name="anno_v")
 	private Timestamp annoV;
 
-	@Column(name="estatus")
 	private String estatus;
 
 	@Column(name="fecha_cierre")
@@ -36,17 +36,6 @@ public class Requerimiento implements Serializable {
 	@Column(name="fecha_vencimiento")
 	private Timestamp fechaVencimiento;
 
-	//bi-directional many-to-one association to Analista
-	@ManyToOne
-	@JoinColumn(name="id_analista", columnDefinition="integer")
-	private Analista analista;
-
-	//bi-directional many-to-one association to Cliente
-	@ManyToOne
-	@JoinColumn(name="id_cliente", columnDefinition="integer")
-	private Cliente cliente;
-
-	//Vehiculo
 	@Column(name="modelo_v")
 	private String modeloV;
 
@@ -56,15 +45,34 @@ public class Requerimiento implements Serializable {
 	@Column(name="transmision_v")
 	private Boolean transmisionV;
 	
+	//bi-directional many-to-one association to Analista
+	@ManyToOne
+	@JoinColumn(name="id_analista")
+	private Analista analista;
 	
-	@Column(name="id_marca_v")
-	private Integer idMarcaV;
+	//bi-directional many-to-one association to Cliente
+	@ManyToOne
+	@JoinColumn(name="id_cliente")
+	private Cliente cliente;
 
-	@Column(name="id_motor_v")
-	private Integer idMotorV;
+	//bi-directional many-to-one association to MarcaVehiculo
+	@ManyToOne
+	@JoinColumn(name="id_marca_v")
+	private MarcaVehiculo marcaVehiculo;
 
-	@Column(name="id_traccion_v")
-	private Integer idTraccionV;
+	//bi-directional many-to-one association to Motor
+	@ManyToOne
+	@JoinColumn(name="id_motor_v")
+	private Motor motor;
+
+	//bi-directional many-to-one association to Traccion
+	@ManyToOne
+	@JoinColumn(name="id_traccion_v")
+	private Traccion traccion;
+	
+	//bi-directional many-to-one association to DetalleRequerimiento
+	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY)
+	private List<DetalleRequerimiento> detalleRequerimientos;
 
 	public Requerimiento() {
 	}
@@ -76,6 +84,7 @@ public class Requerimiento implements Serializable {
 	public void setIdRequerimiento(Integer idRequerimiento) {
 		this.idRequerimiento = idRequerimiento;
 	}
+
 	public Timestamp getAnnoV() {
 		return this.annoV;
 	}
@@ -116,46 +125,6 @@ public class Requerimiento implements Serializable {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 
-	public Analista getAnalista() {
-		return analista;
-	}
-
-	public void setAnalista(Analista analista) {
-		this.analista = analista;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Integer getIdMarcaV() {
-		return this.idMarcaV;
-	}
-
-	public void setIdMarcaV(Integer idMarcaV) {
-		this.idMarcaV = idMarcaV;
-	}
-
-	public Integer getIdMotorV() {
-		return this.idMotorV;
-	}
-
-	public void setIdMotorV(Integer idMotorV) {
-		this.idMotorV = idMotorV;
-	}
-
-	public Integer getIdTraccionV() {
-		return this.idTraccionV;
-	}
-
-	public void setIdTraccionV(Integer idTraccionV) {
-		this.idTraccionV = idTraccionV;
-	}
-
 	public String getModeloV() {
 		return this.modeloV;
 	}
@@ -176,8 +145,71 @@ public class Requerimiento implements Serializable {
 		return this.transmisionV;
 	}
 
+	public Analista getAnalista() {
+		return analista;
+	}
+
+	public void setAnalista(Analista analista) {
+		this.analista = analista;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public void setTransmisionV(Boolean transmisionV) {
 		this.transmisionV = transmisionV;
+	}
+
+	public MarcaVehiculo getMarcaVehiculo() {
+		return this.marcaVehiculo;
+	}
+
+	public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {
+		this.marcaVehiculo = marcaVehiculo;
+	}
+
+	public Motor getMotor() {
+		return this.motor;
+	}
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
+	}
+
+	public Traccion getTraccion() {
+		return this.traccion;
+	}
+
+	public void setTraccion(Traccion traccion) {
+		this.traccion = traccion;
+	}
+
+	public List<DetalleRequerimiento> getDetalleRequerimientos() {
+		return detalleRequerimientos;
+	}
+
+	public void setDetalleRequerimientos(
+			List<DetalleRequerimiento> detalleRequerimientos) {
+		this.detalleRequerimientos = detalleRequerimientos;
+	}
+	
+	public DetalleRequerimiento addDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
+		getDetalleRequerimientos().add(detalleRequerimiento);
+		detalleRequerimiento.setRequerimiento(this);
+
+		return detalleRequerimiento;
+	}
+
+	public DetalleRequerimiento removeDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
+		getDetalleRequerimientos().remove(detalleRequerimiento);
+		detalleRequerimiento.setRequerimiento(null);
+
+		return detalleRequerimiento;
 	}
 
 }
