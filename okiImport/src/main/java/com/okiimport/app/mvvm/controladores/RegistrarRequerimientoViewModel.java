@@ -52,10 +52,10 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	@Command
 	@NotifyChange({"requerimiento","cliente"})
 	public void registrar(){
-		cliente = sMaestros.registrarCliente(cliente);
+		cliente = sMaestros.registrarOActualizarCliente(cliente);
 		requerimiento.setCliente(cliente);
-		sTransaccion.registrarRequerimiento(requerimiento);
-		
+		sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
+		limpiar();
 	}
 
 	public Requerimiento getRequerimiento() {

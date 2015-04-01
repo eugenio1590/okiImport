@@ -26,6 +26,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
@@ -37,6 +38,9 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	//Servicios
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
+	
+	@BeanInjector("sMaestros")
+	private SMaestros sMaestros;
 	
 	//GUI
 	@Wire("#gridPersonas")
@@ -120,7 +124,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 			Map<String, Object> parametros = null;
 			switch (tipoSeleccionado.getValor()) {
 			case 1:
-				parametros = (Map<String, Object>) sControlUsuario.consultarAnalistasSinUsuarios(page, PAGE_SIZE);
+				parametros = (Map<String, Object>) sMaestros.consultarAnalistasSinUsuarios(page, PAGE_SIZE);
 				personasSinUsuario = (List<Persona>) parametros.get("analistas");
 				break;
 			case 2:

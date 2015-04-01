@@ -15,14 +15,34 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="id_analista", columnDefinition="integer")
 public class Analista extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Column(length=50)
+	private String estatus;
+	
+	@Transient
+	private Long cantRequerimientos; 
+	
 	//bi-directional many-to-one association to Requerimiento
 	@OneToMany(mappedBy="analista", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
 
 	public Analista() {
 	}
+	
+	public String getEstatus() {
+		return estatus;
+	}
 
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
+	public Analista(Long cantRequerimientos, Integer id) {
+		super();
+		this.cantRequerimientos = cantRequerimientos;
+		this.id = id;
+	}
+	
 	public List<Requerimiento> getRequerimientos() {
 		return requerimientos;
 	}
@@ -45,4 +65,13 @@ public class Analista extends Persona implements Serializable {
 		return requerimiento;
 	}
 
+	//@Transient
+	public Long getCantRequerimientos() {
+		return cantRequerimientos;
+	}
+
+	public void setCantRequerimientos(Long cantRequerimientos) {
+		this.cantRequerimientos = cantRequerimientos;
+	}
+	
 }

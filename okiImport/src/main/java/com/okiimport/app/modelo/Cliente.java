@@ -27,6 +27,10 @@ public class Cliente extends Persona implements Serializable {
 
 	public Cliente() {
 	}
+	
+	public Cliente(String cedula){
+		super.cedula = cedula;
+	}
 
 	public TipoCliente getTipoCliente() {
 		return tipoCliente;

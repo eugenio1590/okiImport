@@ -19,23 +19,24 @@ public class Persona implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id", columnDefinition = "serial", unique=true, nullable=false)
-	private Integer id;
+	protected Integer id;
 
-	private String apellido;
+	protected String apellido;
 
-	private String cedula;
+	@Column(unique=true, nullable=false)
+	protected String cedula;
 
-	private String correo;
+	protected String correo;
 
-	private String direccion;
+	protected String direccion;
 
-	private String nombre;
+	protected String nombre;
 	
-	private String telefono;
+	protected String telefono;
 	
 	//bi-directional many-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
-	private Usuario usuario;
+	protected Usuario usuario;
 
 	public Persona() {
 	}
