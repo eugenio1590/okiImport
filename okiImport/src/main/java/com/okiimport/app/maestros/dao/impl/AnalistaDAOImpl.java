@@ -90,8 +90,8 @@ public class AnalistaDAOImpl extends PersonaDAOImpl<Analista> implements Analist
 		 List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
 		 groupBy.add(this.entity.get("id"));
 		 
-		 //5. Creamos los campos de ordenamiento y ejecutamos
-		 return this.ejecutarCriteriaGroupBy(concatenaArrayPredicate(restricciones), null, groupBy , orders);
+		//5. Creamos los campos de ordenamiento y ejecutamos
+		 return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null , groupBy , orders);
 	}
 
 

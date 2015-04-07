@@ -2,7 +2,9 @@ package com.okiimport.app.transaccion.servicios.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,6 +51,29 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		List<Analista> analistas = sMaestros.consultarCantRequerimientos(estatus, 0, -1);
 		if(analistas.size()>0)
 			requerimiento.setAnalista(analistas.get(0));
+	}
+	
+	
+	
+	@Override
+	public Map<String, Object> ConsultarMisRequerimientos(
+			Requerimiento regFiltro, Integer idusuario, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro, idusuario, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro, idusuario, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String cedula, 
+			int pagina, int limit)  
+	{
+		// TODO Auto-generated method stub
+				Map<String, Object> parametros= new HashMap<String, Object>();
+				parametros.put("total", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro, cedula, 0,-1).size());
+				parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro, cedula, pagina*limit, limit));
+		return parametros;
 	}
 
 }

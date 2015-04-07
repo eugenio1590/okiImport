@@ -1,0 +1,61 @@
+<?page title="consultarSolicitud" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:w="client" xmlns:n="native">
+<window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
+
+<window id= "ventanaCliente" border="normal" width="40%">
+        <label style="color:red;" value="Nro de Cedula Invalida o No posee Solicitudes!!!" if="${not empty param.auth}" />
+		Cédula: <textbox id="cedulaclie" value= "@bind(vm.cliente.cedula)" />   <button label="Enviar"  onClick= "@command('buscarCliente')" /> 
+</window>
+
+<n:h3>Mis Solicitudes</n:h3>
+
+
+<listbox visible="false" id= "gridRequerimientosCliente" mold="paging" checkmark="true" pageSize="10" pagingPosition="top"  multiple="true" sclass="mylist"  model="@load(vm.listaRequerimientos)" >
+		
+            <listhead>
+            
+                <listheader id="idnroreq" label="N° Solicitud" sort="auto(idRequerimiento)" width="150px" >
+				  <textbox  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>
+					
+				
+				<listheader id="idfechacre" label="Fecha Creación" sort="auto(fechaCreacion)" width="150px" >
+					<datebox format="dd/HH/yyyy - a hh:mm" instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200"/>
+			    </listheader>
+			    
+			    <listheader id="idmodelo" label="Modelo Carro"  sort="auto(idModelo)" width="150px"  >
+				  <textbox instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="110px"/>
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>
+			    
+			    <listheader id="idserial" label="N° Serial" sort="auto(serialCarroceriaV)" width="150px" >
+				  <textbox  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>
+				
+			   <listheader width="11%" label= "Operaciones"/>
+
+			</listhead>
+            <template name="model">
+		     <listitem>
+		           <listcell label="@bind(each.idRequerimiento)" />
+			       <listcell label=" @bind(each.fechaCreacion)" />
+			       <listcell label="@bind(each.modeloV)" />
+			       <listcell label="@bind(each.serialCarroceriaV)"/>
+			       <listcell>
+						<hbox spacing="20px">
+							<div class="btn-group btn-group-sm">
+								
+								<button image="/resources/img/icons/ic_see.png" tooltiptext="Ver" />
+								
+							</div>
+						</hbox>
+				  </listcell>
+            </listitem>
+         </template>
+		</listbox>
+		<paging id="pagRequerimientosCliente" onPaging="@command('paginarLista')" autohide="true" />
+</window>
+</zk>
