@@ -67,7 +67,8 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 				
 	    //4. Creamos los campos de ordenamiento y ejecutamos
 				Map<String, Boolean> orders = new HashMap<String, Boolean>();
-				orders.put("idRequerimiento", true);	// true ascendente	
+				orders.put("fechaCreacion", false);	// true ascendente	
+				
 				//Faltan los filtros
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start,limit);
 	}

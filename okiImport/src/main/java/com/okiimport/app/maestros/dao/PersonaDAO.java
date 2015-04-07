@@ -8,5 +8,5 @@ import com.okiimport.app.modelo.Persona;
 
 public interface PersonaDAO<T extends Persona> extends IGenericDao<T, Integer> {
 	public T consultarPersona(T persona);
-	public List<T> consultarPersonaSinUsuarios(int start, int limit);
+	public List<T> consultarPersonaSinUsuarios(T persona, String fieldSort, Boolean sortDirection, int start, int limit);
 }

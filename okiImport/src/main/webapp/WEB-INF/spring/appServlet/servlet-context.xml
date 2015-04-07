@@ -67,6 +67,7 @@
     <beans:bean id="marcaVehiculoDAO" class="com.okiimport.app.maestros.dao.impl.MarcaVehiculoDAOImpl"/>
     <beans:bean id="clienteDAO" class="com.okiimport.app.maestros.dao.impl.ClienteDAOImpl"/>
     <beans:bean id="requerimientoDAO" class="com.okiimport.app.transaccion.dao.impl.RequerimientoDAOImpl"/>
+    <beans:bean id="proveedorDAO" class="com.okiimport.app.maestros.dao.impl.ProveedorDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

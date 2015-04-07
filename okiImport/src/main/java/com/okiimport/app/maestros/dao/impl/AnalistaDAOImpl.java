@@ -14,6 +14,7 @@ import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.maestros.dao.AnalistaDAO;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Persona;
 
 public class AnalistaDAOImpl extends PersonaDAOImpl<Analista> implements AnalistaDAO {
 
@@ -51,8 +52,19 @@ public class AnalistaDAOImpl extends PersonaDAOImpl<Analista> implements Analist
 	}
 	
 	@Override
-	public List<Analista> consultarAnalistasSinUsuarios(int start, int limit){
-		return super.consultarPersonaSinUsuarios(start, limit);
+	public List<Analista> consultarAnalistasSinUsuarios(Persona persona, String fieldSort, Boolean sortDirection, 
+			int start, int limit){
+		Analista analista = (persona == null) ? new Analista() : new Analista(persona);
+		analista.setAdministrador(false);
+		return super.consultarPersonaSinUsuarios(analista, fieldSort, sortDirection, start, limit);
+	}
+	
+	@Override
+	public List<Analista> consultarAdministradoresSinUsuarios(Persona persona, String fieldSort, Boolean sortDirection, 
+			int start, int limit){
+		Analista analista = (persona == null) ? new Analista() : new Analista(persona);
+		analista.setAdministrador(true);
+		return super.consultarPersonaSinUsuarios(analista, fieldSort, sortDirection, start, limit);
 	}
 
 	@Override
@@ -90,8 +102,16 @@ public class AnalistaDAOImpl extends PersonaDAOImpl<Analista> implements Analist
 		 List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
 		 groupBy.add(this.entity.get("id"));
 		 
-		//5. Creamos los campos de ordenamiento y ejecutamos
-		 return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null , groupBy , orders);
+		 //5. Creamos los campos de ordenamiento y ejecutamos
+		 return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy , orders);
+	}
+	
+	/**METODOS OVERRIDE*/
+	@Override
+	protected void agregarRestriccionesPersona(Analista persona, List<Predicate> restricciones) {
+		// TODO Auto-generated method stub
+		if(persona.getAdministrador()!=null)
+			restricciones.add(this.criteriaBuilder.equal(this.entity.get("administrador"), persona.getAdministrador()));
 	}
 
 

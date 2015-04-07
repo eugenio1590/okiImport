@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 
 import org.springframework.stereotype.Repository;
@@ -54,7 +56,7 @@ public abstract class PersonaDAOImpl<T extends Persona> extends AbstractJpaDao<T
 	}
 	
 	@Override
-	public List<T> consultarPersonaSinUsuarios(int start, int limit) {
+	public List<T> consultarPersonaSinUsuarios(T persona, String fieldSort, Boolean sortDirection, int start, int limit) {
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -67,37 +69,49 @@ public abstract class PersonaDAOImpl<T extends Persona> extends AbstractJpaDao<T
 		//3. Creamos las Restricciones de la busqueda
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		restricciones.add(this.criteriaBuilder.isNull(joins.get("usuario")));
+		agregarFiltros(persona, restricciones);
 
 		//4. Creamos los campos de ordenamiento y ejecutamos
-		Map<String, Boolean> orders = new HashMap<String, Boolean>();
-		orders.put("id", true);
+		List<Order> orders = new ArrayList<Order>();
+		
+		if(fieldSort!=null && sortDirection!=null){
+			Path<Object> field = this.entity.get(fieldSort);
+			orders.add((sortDirection) ? this.criteriaBuilder.asc(this.entity.get(fieldSort)) : this.criteriaBuilder.desc(field));
+		}else
+			orders.add( this.criteriaBuilder.asc(this.entity.get("id")));
+		
 		return this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 
-	/**METODOS PROPIOS DE LA CLASE*/
+	/**METODOS PROPIOS DE LA CLASE*/	
 	protected void agregarFiltros(T personaF, List<Predicate> restricciones){
-		if(personaF.getCedula()!=null){
-			System.out.println("Restriccion Cedula: "+personaF.getCedula());
-			restricciones.add(this.criteriaBuilder.like(
-					this.criteriaBuilder.lower(this.entity.<String>get("cedula")), 
-					"%"+personaF.getCedula().toLowerCase()+"%"
-			));
-		}
+		if(personaF!=null){
+			if(personaF.getCedula()!=null){
+				System.out.println("Restriccion Cedula: "+personaF.getCedula());
+				restricciones.add(this.criteriaBuilder.like(
+						this.criteriaBuilder.lower(this.entity.<String>get("cedula")), 
+						"%"+personaF.getCedula().toLowerCase()+"%"
+						));
+			}
 
-		if(personaF.getNombre()!=null){
-			System.out.println("Restriccion Nombre: "+personaF.getNombre());
-			restricciones.add(this.criteriaBuilder.like(
-					this.criteriaBuilder.lower(this.entity.<String>get("nombre")), 
-					"%"+personaF.getNombre().toLowerCase()+"%"
-			));
-		}
+			if(personaF.getNombre()!=null){
+				System.out.println("Restriccion Nombre: "+personaF.getNombre());
+				restricciones.add(this.criteriaBuilder.like(
+						this.criteriaBuilder.lower(this.entity.<String>get("nombre")), 
+						"%"+personaF.getNombre().toLowerCase()+"%"
+						));
+			}
 
-		if(personaF.getApellido()!=null){
-			System.out.println("Restriccion Apellido: "+personaF.getApellido());
-			restricciones.add(this.criteriaBuilder.like(
-					this.criteriaBuilder.lower(this.entity.<String>get("apellido")), 
-					"%"+personaF.getApellido().toLowerCase()+"%"
-			));
+			if(personaF.getApellido()!=null){
+				System.out.println("Restriccion Apellido: "+personaF.getApellido());
+				restricciones.add(this.criteriaBuilder.like(
+						this.criteriaBuilder.lower(this.entity.<String>get("apellido")), 
+						"%"+personaF.getApellido().toLowerCase()+"%"
+						));
+			}
+			agregarRestriccionesPersona(personaF, restricciones);
 		}
 	}
+	
+	protected abstract void agregarRestriccionesPersona(T persona, List<Predicate> restricciones);
 }

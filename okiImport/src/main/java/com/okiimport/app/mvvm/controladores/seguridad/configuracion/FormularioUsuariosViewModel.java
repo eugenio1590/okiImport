@@ -119,20 +119,25 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	public void cambiarPersonas(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
+		
 		if(tipoSeleccionado!=null){
 			usuario = new Usuario();
 			Map<String, Object> parametros = null;
 			switch (tipoSeleccionado.getValor()) {
 			case 1:
-				parametros = (Map<String, Object>) sMaestros.consultarAnalistasSinUsuarios(page, PAGE_SIZE);
+				parametros = (Map<String, Object>) sMaestros.consultarAnalistasSinUsuarios(personaFiltro, fieldSort, sortDirection, 
+						page, PAGE_SIZE);
 				personasSinUsuario = (List<Persona>) parametros.get("analistas");
 				break;
 			case 2:
-				/*parametros = (Map<String, Object>) servicioControlUsuario.consultarClientesSinUsuarios(page, PAGE_SIZE);
-				personasSinUsuario = (List<Persona>) parametros.get("clientes");*/
+				parametros = (Map<String, Object>) sMaestros.consultarAdministradoresSinUsuarios(personaFiltro, fieldSort, sortDirection,
+						page, PAGE_SIZE);
+				personasSinUsuario = (List<Persona>) parametros.get("administradores");
 				break;
 			case 3:
-				
+				parametros = (Map<String, Object>) sMaestros.consultarProveedoresSinUsuarios(personaFiltro, 
+						fieldSort, sortDirection, page, PAGE_SIZE);
+				personasSinUsuario = (List<Persona>) parametros.get("proveedores");
 				break;
 			default: return;
 			}
@@ -203,6 +208,14 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 		this.sControlUsuario = sControlUsuario;
 	}
 	
+	public SMaestros getsMaestros() {
+		return sMaestros;
+	}
+
+	public void setsMaestros(SMaestros sMaestros) {
+		this.sMaestros = sMaestros;
+	}
+
 	public List<Persona> getPersonasSinUsuario() {
 		return personasSinUsuario;
 	}
