@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -39,6 +40,24 @@ public class Persona implements Serializable {
 	protected Usuario usuario;
 
 	public Persona() {
+	}
+	
+	public Persona(Persona persona){
+		this(persona.getId(), persona.getApellido(), persona.getCedula(), persona.getCorreo(),
+				persona.getDireccion(), persona.getNombre(), persona.getTelefono(), persona.getUsuario());
+	}
+
+	public Persona(Integer id, String apellido, String cedula, String correo,
+			String direccion, String nombre, String telefono, Usuario usuario) {
+		super();
+		this.id = id;
+		this.apellido = apellido;
+		this.cedula = cedula;
+		this.correo = correo;
+		this.direccion = direccion;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.usuario = usuario;
 	}
 
 	public Integer getId() {

@@ -9,14 +9,13 @@
 		<class>com.okiimport.app.modelo.HistoryLogin</class>
 		<class>com.okiimport.app.modelo.Menu</class>
 		<class>com.okiimport.app.modelo.PersistentLogin</class>
-		<class>com.okiimport.app.modelo.ClasificacionRepuesto</class>
 		<class>com.okiimport.app.modelo.Requerimiento</class>
 		<class>com.okiimport.app.modelo.MarcaVehiculo</class>
 		<class>com.okiimport.app.modelo.Proveedor</class>
 		<class>com.okiimport.app.modelo.Motor</class>
 		<class>com.okiimport.app.modelo.Traccion</class>
-		<class>com.okiimport.app.modelo.TipoCliente</class>
 		<class>com.okiimport.app.modelo.DetalleRequerimiento</class>
+		<class>com.okiimport.app.modelo.ClasificacionRepuesto</class>
 		 <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
             <property name="hibernate.show_sql" value="true" />

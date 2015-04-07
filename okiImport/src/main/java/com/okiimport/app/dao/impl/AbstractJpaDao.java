@@ -271,6 +271,31 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 		return this.ejecutarCriteria(conditions, orders, 0, numberElements);
 	}
 	
+	protected List<T> ejecutarCriteria(Predicate[] conditions, List<Order> orders, 
+			int first, int numberElements){
+		List<T> lista = null;
+		HibernateEntityManager entityManager = this.getClassEntityManager();
+		if(query==null)
+			this.crearCriteria();
+
+		if(selected!=null)
+			this.query.multiselect(selected).distinct(distinct);
+		else
+			this.query.select(entity);
+
+		query=(conditions!=null) ? query.where(conditions) : query;
+		if(orders != null)
+		query=query.orderBy(orders);
+		
+		TypedQuery<T> typedQuery = entityManager.createQuery(query);
+		if (numberElements > -1) {
+			typedQuery.setFirstResult(first);
+			typedQuery.setMaxResults(numberElements);
+		}
+		lista = typedQuery.getResultList();
+		return lista;
+	}
+	
 	protected List<T> ejecutarCriteriaParameters(Predicate[] conditions, Map<String, Object> parameters,
 			Map<String, Boolean> orders, int first, int numberElements){
 		List<T> lista = null;
@@ -306,6 +331,41 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 	
 	protected List<T> ejecutarCriteriaParameters(Predicate[] conditions, Map<String, Object> parameters,
 			Map<String, Boolean> orders, int numberElements){
+		return this.ejecutarCriteriaParameters(conditions, parameters, orders, 0, -1);
+	}
+	
+	protected List<T> ejecutarCriteriaParameters(Predicate[] conditions, Map<String, Object> parameters,
+			List<Order> orders, int first, int numberElements){
+		List<T> lista = null;
+		HibernateEntityManager entityManager = this.getClassEntityManager();
+		if(query==null)
+			this.crearCriteria();
+		
+		if(selected!=null)
+			this.query.multiselect(selected).distinct(distinct);
+		else
+			this.query.select(entity);
+
+		query=(conditions!=null) ? query.where(conditions) : query;
+		if(orders != null)
+		this.query.orderBy(orders);
+		
+		TypedQuery<T> typedQuery = entityManager.createQuery(query);
+		if (numberElements > -1) {
+			typedQuery.setFirstResult(first);
+			typedQuery.setMaxResults(numberElements);
+		}
+		if(parameters!=null)
+		for(String parametro : parameters.keySet()){
+			typedQuery = typedQuery.setParameter(parametro, parameters.get(parametro));
+		}
+		
+		lista = typedQuery.getResultList();
+		return lista;
+	}
+	
+	protected List<T> ejecutarCriteriaParameters(Predicate[] conditions, Map<String, Object> parameters,
+			List<Order> orders, int numberElements){
 		return this.ejecutarCriteriaParameters(conditions, parameters, orders, 0, -1);
 	}
 	
@@ -352,6 +412,49 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 	}
 	
 	protected List<T> ejecutarCriteriaOrder(Predicate[] conditions, Map<String, Object> parameters, 
+			List<Expression<?>> groupBy, Map<String, Boolean> orders, int first, int numberElements){
+		
+		List<T> lista = null;
+		HibernateEntityManager entityManager = this.getClassEntityManager();
+		if(query==null)
+			this.crearCriteria();
+		
+		if(selected!=null)
+			this.query.multiselect(selected).distinct(distinct);
+		else
+			this.query.select(entity);
+
+		query=(conditions!=null) ? query.where(conditions) : query;
+		if(groupBy!=null)
+			query = query.groupBy(concatenaArrayExpression(groupBy));
+		
+		if(orders != null)
+		for(String orden : orders.keySet()){
+			Boolean ascendente = orders.get(orden);
+			query=(ascendente) ? query.orderBy(criteriaBuilder.asc(entity.get(orden))) 
+					: query.orderBy(criteriaBuilder.desc(entity.get(orden))) ;
+		}
+		
+		TypedQuery<T> typedQuery = entityManager.createQuery(query);
+		if (numberElements > -1) {
+			typedQuery.setFirstResult(first);
+			typedQuery.setMaxResults(numberElements);
+		}
+		if(parameters!=null)
+		for(String parametro : parameters.keySet()){
+			typedQuery = typedQuery.setParameter(parametro, parameters.get(parametro));
+		}
+		
+		lista = typedQuery.getResultList();
+		return lista;
+	}
+	
+	protected List<T> ejecutarCriteriaOrder(Predicate[] conditions, Map<String, Object> parameters, 
+			List<Expression<?>> groupBy, Map<String, Boolean> orders){
+		return this.ejecutarCriteriaOrder(conditions, parameters, groupBy, orders, 0, -1);
+	}
+	
+	protected List<T> ejecutarCriteriaOrder(Predicate[] conditions, Map<String, Object> parameters, 
 			List<Expression<?>> groupBy, List<Order> orders, int first, int numberElements){
 		
 		List<T> lista = null;
@@ -385,10 +488,12 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 		return lista;
 	}
 	
-	protected List<T> ejecutarCriteriaGroupBy(Predicate[] conditions, Map<String, Object> parameters, 
+	protected List<T> ejecutarCriteriaOrder(Predicate[] conditions, Map<String, Object> parameters, 
 			List<Expression<?>> groupBy, List<Order> orders){
 		return this.ejecutarCriteriaOrder(conditions, parameters, groupBy, orders, 0, -1);
 	}
+	
+	
 	
 	public static <X> Predicate[] concatenaArrayPredicate(List<X> array){
 		if(array.size()==0)

@@ -18,10 +18,12 @@ public class ClasificacionRepuesto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_clasificacion_repuesto")
+	@Column(name="id_clasificacion_repuesto", columnDefinition="serial")
 	private Integer idClasificacionRepuesto;
 
 	private String descripcion;
+	
+	private String estatus;
 	
 	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY)
 	private List<DetalleRequerimiento> detalleRequerimientos;
@@ -45,6 +47,14 @@ public class ClasificacionRepuesto implements Serializable {
 		this.descripcion = descripcion;
 	}
 	
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	public List<DetalleRequerimiento> getDetalleRequerimientos() {
 		return detalleRequerimientos;
 	}

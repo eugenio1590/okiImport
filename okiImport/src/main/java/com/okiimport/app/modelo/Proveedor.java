@@ -24,6 +24,10 @@ public class Proveedor extends Persona implements Serializable {
 
 	public Proveedor() {
 	}
+	
+	public Proveedor(Persona persona) {
+		super(persona);
+	}
 
 	public String getEstatus() {
 		return this.estatus;

@@ -19,6 +19,9 @@ public class Analista extends Persona implements Serializable {
 	@Column(length=50)
 	private String estatus;
 	
+	@Column
+	private Boolean administrador;
+	
 	@Transient
 	private Long cantRequerimientos; 
 	
@@ -29,12 +32,24 @@ public class Analista extends Persona implements Serializable {
 	public Analista() {
 	}
 	
+	public Analista(Persona persona) {
+		super(persona);
+	}
+	
 	public String getEstatus() {
 		return estatus;
 	}
 
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+
+	public Boolean getAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
 	}
 
 	public Analista(Long cantRequerimientos, Integer id) {

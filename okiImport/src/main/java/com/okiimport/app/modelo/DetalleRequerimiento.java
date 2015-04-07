@@ -31,7 +31,7 @@ public class DetalleRequerimiento implements Serializable {
 
 	//bi-directional many-to-one association to ClasificacionRepuesto
 	@ManyToOne
-	@JoinColumn(name="id_clasificacion_repuesto")
+	@JoinColumn(name="id_clasificacion_repuesto", columnDefinition="integer")
 	private ClasificacionRepuesto clasificacionRepuesto;
 
 	//bi-directional many-to-one association to Requerimiento

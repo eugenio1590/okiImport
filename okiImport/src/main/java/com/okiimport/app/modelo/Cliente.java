@@ -16,11 +16,10 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="id_cliente", columnDefinition="integer")
 public class Cliente extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	//bi-directional one-to-one association to TipoCliente
-	@ManyToOne
-	@JoinColumn(name="id_tipo_cliente")
-	private TipoCliente tipoCliente;
+	
+	private Boolean juridico;
+	
+	private String estatus;
 	
 	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
@@ -28,18 +27,30 @@ public class Cliente extends Persona implements Serializable {
 	public Cliente() {
 	}
 	
+	public Cliente(Persona persona) {
+		super(persona);
+	}
+	
 	public Cliente(String cedula){
 		super.cedula = cedula;
 	}
-
-	public TipoCliente getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
 	
+	public Boolean getJuridico() {
+		return juridico;
+	}
+
+	public void setJuridico(Boolean juridico) {
+		this.juridico = juridico;
+	}
+
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	public List<Requerimiento> getRequerimientos() {
 		return requerimientos;
 	}
