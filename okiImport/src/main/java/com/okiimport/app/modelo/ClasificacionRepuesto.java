@@ -17,8 +17,9 @@ public class ClasificacionRepuesto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_clasificacion_repuesto", columnDefinition="serial")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clasificacion_repuesto_id_seq")
+	@SequenceGenerator(name="clasificacion_repuesto_id_seq", sequenceName="clasificacion_repuesto_id_seq", initialValue=1, allocationSize=1)
+	@Column(name="id_clasificacion_repuesto")
 	private Integer idClasificacionRepuesto;
 
 	private String descripcion;

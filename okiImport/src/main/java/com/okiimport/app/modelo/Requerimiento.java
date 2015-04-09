@@ -13,12 +13,14 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="requerimiento")
 @NamedQuery(name="Requerimiento.findAll", query="SELECT r FROM Requerimiento r")
 public class Requerimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="requerimiento_id_seq")
+	@SequenceGenerator(name="requerimiento_id_seq", sequenceName="requerimiento_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_requerimiento")
 	private Integer idRequerimiento;
 
@@ -27,13 +29,13 @@ public class Requerimiento implements Serializable {
 
 	private String estatus;
 
-	@Column(name="fecha_cierre")
+	@Column(name="fecha_cierre", columnDefinition="date")
 	private Timestamp fechaCierre;
 
-	@Column(name="fecha_creacion")
+	@Column(name="fecha_creacion", columnDefinition="date")
 	private Timestamp fechaCreacion;
 
-	@Column(name="fecha_vencimiento")
+	@Column(name="fecha_vencimiento", columnDefinition="date")
 	private Timestamp fechaVencimiento;
 
 	@Column(name="modelo_v")
@@ -44,6 +46,9 @@ public class Requerimiento implements Serializable {
 
 	@Column(name="transmision_v")
 	private Boolean transmisionV;
+	
+	@Column(name="traccion_v")
+	private Boolean traccionV;
 	
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
@@ -64,11 +69,6 @@ public class Requerimiento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_motor_v")
 	private Motor motor;
-
-	//bi-directional many-to-one association to Traccion
-	@ManyToOne
-	@JoinColumn(name="id_traccion_v")
-	private Traccion traccion;
 	
 	//bi-directional many-to-one association to DetalleRequerimiento
 	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY)
@@ -169,6 +169,14 @@ public class Requerimiento implements Serializable {
 		return this.marcaVehiculo;
 	}
 
+	public Boolean getTraccionV() {
+		return traccionV;
+	}
+
+	public void setTraccionV(Boolean traccionV) {
+		this.traccionV = traccionV;
+	}
+
 	public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {
 		this.marcaVehiculo = marcaVehiculo;
 	}
@@ -179,14 +187,6 @@ public class Requerimiento implements Serializable {
 
 	public void setMotor(Motor motor) {
 		this.motor = motor;
-	}
-
-	public Traccion getTraccion() {
-		return this.traccion;
-	}
-
-	public void setTraccion(Traccion traccion) {
-		this.traccion = traccion;
 	}
 
 	public List<DetalleRequerimiento> getDetalleRequerimientos() {

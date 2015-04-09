@@ -1,7 +1,9 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,11 +12,14 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="motor")
 @NamedQuery(name="Motor.findAll", query="SELECT m FROM Motor m")
 public class Motor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="motor_id_seq")
+	@SequenceGenerator(name="motor_id_seq", sequenceName="motor_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_motor")
 	private Integer idMotor;
 

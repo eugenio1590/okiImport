@@ -26,8 +26,9 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Generated(GenerationTime.INSERT)
-	@Column(columnDefinition="serial", unique=true, nullable=false)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="usuario_id_seq")
+	@SequenceGenerator(name="usuario_id_seq", sequenceName="usuario_id_seq", initialValue=1, allocationSize=1)
+	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column
@@ -60,7 +61,7 @@ public class Usuario implements Serializable {
 			}
 	)
 	@OneToOne
-	@JoinColumn(name="persona_id",columnDefinition="integer")
+	@JoinColumn(name="persona_id")
 	private Persona persona;
 
 	public Usuario() {

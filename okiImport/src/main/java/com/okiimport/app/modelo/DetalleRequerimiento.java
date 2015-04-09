@@ -16,7 +16,8 @@ public class DetalleRequerimiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="detalle_requerimiento_id_seq")
+	@SequenceGenerator(name="detalle_requerimiento_id_seq", sequenceName="detalle_requerimiento_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_detalle_requerimiento")
 	private Integer idDetalleRequerimiento;
 
@@ -28,18 +29,20 @@ public class DetalleRequerimiento implements Serializable {
 	private String estatus;
 
 	private byte[] foto;
+	
+	private String nombre;
+	
+	private String descripcion;
 
 	//bi-directional many-to-one association to ClasificacionRepuesto
 	@ManyToOne
-	@JoinColumn(name="id_clasificacion_repuesto", columnDefinition="integer")
+	@JoinColumn(name="id_clasificacion_repuesto")
 	private ClasificacionRepuesto clasificacionRepuesto;
 
 	//bi-directional many-to-one association to Requerimiento
 	@ManyToOne
 	@JoinColumn(name="id_requerimiento")
 	private Requerimiento requerimiento;
-
-	private String nombre;
 
 	public DetalleRequerimiento() {
 	}
@@ -90,6 +93,14 @@ public class DetalleRequerimiento implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public ClasificacionRepuesto getClasificacionRepuesto() {

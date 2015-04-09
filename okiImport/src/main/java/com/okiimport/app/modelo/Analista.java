@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Analista.findAll", query="SELECT a FROM Analista a")
-@PrimaryKeyJoinColumn(name="id_analista", columnDefinition="integer")
+@PrimaryKeyJoinColumn(name="id_analista")
 public class Analista extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

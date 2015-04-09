@@ -1,6 +1,8 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -11,16 +13,24 @@ import javax.persistence.*;
 @Entity
 @Table(name="proveedor")
 @NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p")
-@PrimaryKeyJoinColumn(name="id_proveedor", columnDefinition="integer")
-/*@AttributeOverrides(value = {
-		//@AttributeOverride(name="cedula", column=@Column(name="rif"))
-})*/
+@PrimaryKeyJoinColumn(name="id_proveedor")
 public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String estatus;
-
-	private String rif; //Atributo Override con Cedula
+	
+	//bi-directional many-to-many association to MarcaRepuesto
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@JoinTable(
+		name="proveedor_marca_repuesto"
+		, joinColumns={
+				@JoinColumn(name="id_proveedor")
+		}
+		, inverseJoinColumns={
+				@JoinColumn(name="id_marca_repuesto")
+		}
+	)
+	private List<MarcaRepuesto> marcaRepuestos;
 
 	public Proveedor() {
 	}
@@ -37,14 +47,11 @@ public class Proveedor extends Persona implements Serializable {
 		this.estatus = estatus;
 	}
 
-	public String getRif() {
-		return this.rif;
+	public List<MarcaRepuesto> getMarcaRepuestos() {
+		return marcaRepuestos;
 	}
 
-	public void setRif(String rif) {
-		this.rif = rif;
+	public void setMarcaRepuestos(List<MarcaRepuesto> marcaRepuestos) {
+		this.marcaRepuestos = marcaRepuestos;
 	}
-
-	
-
 }

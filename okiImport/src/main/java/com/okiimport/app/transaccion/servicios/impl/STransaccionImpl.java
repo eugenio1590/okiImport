@@ -2,6 +2,8 @@ package com.okiimport.app.transaccion.servicios.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +35,16 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Override
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
+		Date fechaCreacion = calendar.getTime();
+		calendar.add(Calendar.DAY_OF_YEAR, 15);
+		Date fechaVencimiento = calendar.getTime();
 		asignarRequerimiento(requerimiento, sMaestros);
-		requerimiento.setFechaCreacion(new Timestamp(calendar.getTime().getTime()));
+		requerimiento.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
+		requerimiento.setFechaVencimiento(new Timestamp(fechaVencimiento.getTime()));
 		requerimiento.setEstatus("CR");
-		return requerimientoDAO.save(requerimiento);
+		requerimiento = requerimientoDAO.save(requerimiento);
+		calendar.setTime(fechaCreacion);
+		return requerimiento;
 	}
 
 	@Override

@@ -13,9 +13,9 @@
 		<class>com.okiimport.app.modelo.MarcaVehiculo</class>
 		<class>com.okiimport.app.modelo.Proveedor</class>
 		<class>com.okiimport.app.modelo.Motor</class>
-		<class>com.okiimport.app.modelo.Traccion</class>
 		<class>com.okiimport.app.modelo.DetalleRequerimiento</class>
 		<class>com.okiimport.app.modelo.ClasificacionRepuesto</class>
+		<class>com.okiimport.app.modelo.MarcaRepuesto</class>
 		 <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
             <property name="hibernate.show_sql" value="true" />
