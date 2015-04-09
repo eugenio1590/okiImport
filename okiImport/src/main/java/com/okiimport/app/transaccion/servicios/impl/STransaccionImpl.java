@@ -36,14 +36,12 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
 		Date fechaCreacion = calendar.getTime();
-		calendar.add(Calendar.DAY_OF_YEAR, 15);
-		Date fechaVencimiento = calendar.getTime();
+		Date fechaVencimiento = sumarORestarFDia(fechaCreacion, 15);
 		asignarRequerimiento(requerimiento, sMaestros);
 		requerimiento.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
 		requerimiento.setFechaVencimiento(new Timestamp(fechaVencimiento.getTime()));
 		requerimiento.setEstatus("CR");
 		requerimiento = requerimientoDAO.save(requerimiento);
-		calendar.setTime(fechaCreacion);
 		return requerimiento;
 	}
 
