@@ -14,24 +14,24 @@
 		
             <listhead>
             
-                <listheader id="idnroreq" label="N° Solicitud" sort="auto(idRequerimiento)" width="150px" >
-				  <textbox  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
+                <listheader value="idRequerimiento" label="N° Solicitud" sort="auto(idRequerimiento)" width="150px" >
+				  <spinner  value = "@bind(vm.requerimientoFiltro.idRequerimiento)" constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
 					<div sclass="z-icon-filter bigger-200"/>
 				</listheader>
 					
-				
-				<listheader id="idfechacre" label="Fecha Creación" sort="auto(fechaCreacion)" width="150px" >
-					<datebox format="dd/HH/yyyy - a hh:mm" instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+			
+				<listheader value="fechaCreacion" label="Fecha Creación" sort="auto(fechaCreacion)" width="150px" >
+					<datebox value = "@bind(vm.requerimientoFiltro.fechaCreacion)" format="dd/HH/yyyy - a hh:mm" instant="true" onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200"/>
 			    </listheader>
 			    
-			    <listheader id="idmodelo" label="Modelo Carro"  sort="auto(idModelo)" width="150px"  >
-				  <textbox instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="110px"/>
+			    <listheader value="modeloV" label="Modelo Carro"  sort="auto(modeloV)" width="150px"  >
+				  <textbox  value = "@bind(vm.requerimientoFiltro.modeloV)" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="110px"/>
 					<div sclass="z-icon-filter bigger-200"/>
 				</listheader>
 			    
-			    <listheader id="idserial" label="N° Serial" sort="auto(serialCarroceriaV)" width="150px" >
-				  <textbox  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
+			    <listheader value="serialCarroceriaV" label="N° Serial" sort="auto(serialCarroceriaV)" width="150px" >
+				  <textbox value = "@bind(vm.requerimientoFiltro.serialCarroceriaV)"  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
 					<div sclass="z-icon-filter bigger-200"/>
 				</listheader>
 				
@@ -41,14 +41,16 @@
             <template name="model">
 		     <listitem>
 		           <listcell label="@bind(each.idRequerimiento)" />
-			       <listcell label=" @bind(each.fechaCreacion)" />
+			       <listcell>
+			        <datebox format="dd/HH/yyyy - a hh:mm" value=" @bind(each.fechaCreacion)" readonly="true" buttonVisible="false" />
+			       </listcell>
 			       <listcell label="@bind(each.modeloV)" />
 			       <listcell label="@bind(each.serialCarroceriaV)"/>
 			       <listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
 								
-								<button image="/resources/img/icons/ic_see.png" tooltiptext="Ver" />
+								<button image="/resources/img/icons/ic_see.png" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 								
 							</div>
 						</hbox>

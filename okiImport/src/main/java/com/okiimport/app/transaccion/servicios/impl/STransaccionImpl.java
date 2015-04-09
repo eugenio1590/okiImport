@@ -54,25 +54,24 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	
-	
 	@Override
 	public Map<String, Object> ConsultarMisRequerimientos(
-			Requerimiento regFiltro, Integer idusuario, int pagina, int limit) {
+			Requerimiento regFiltro,  String fieldSort, Boolean sortDirection, Integer idusuario, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros= new HashMap<String, Object>();
-		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro, idusuario, 0,-1).size());
-		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro, idusuario, pagina*limit, limit));
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, pagina*limit, limit));
 		return parametros;
 	}
 	
 	@Override
-	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String cedula, 
+	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String fieldSort, Boolean sortDirection, String cedula, 
 			int pagina, int limit)  
 	{
 		// TODO Auto-generated method stub
 				Map<String, Object> parametros= new HashMap<String, Object>();
-				parametros.put("total", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro, cedula, 0,-1).size());
-				parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro, cedula, pagina*limit, limit));
+				parametros.put("total", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, 0,-1).size());
+				parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, pagina*limit, limit));
 		return parametros;
 	}
 
