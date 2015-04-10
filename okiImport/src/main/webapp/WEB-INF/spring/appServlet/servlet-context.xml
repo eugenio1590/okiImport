@@ -66,6 +66,11 @@
     <beans:bean id="marcaVehiculoDAO" class="com.okiimport.app.maestros.dao.impl.MarcaVehiculoDAOImpl"/>
     <beans:bean id="clienteDAO" class="com.okiimport.app.maestros.dao.impl.ClienteDAOImpl"/>
     <beans:bean id="requerimientoDAO" class="com.okiimport.app.transaccion.dao.impl.RequerimientoDAOImpl"/>
+    <beans:bean id="motorDAO" class="com.okiimport.app.maestros.dao.impl.MotorDAOImpl"/>
+     <beans:bean id="proveedorDAO" class="com.okiimport.app.maestros.dao.impl.ProveedorDAOImpl"/>
+    <beans:bean id="detalleRequerimientoDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleRequerimientoDAOImpl"/>
+     <beans:bean id="clasificacionRepuestoDAO" class="com.okiimport.app.maestros.dao.impl.ClasificacionRepuestoDAOImpl"/>
+    
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>
     <beans:bean id="sHistorial" class="com.okiimport.app.seguridad.servicios.impl.SHistorialImpl"/>
