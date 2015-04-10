@@ -75,9 +75,12 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	public void registrar(){
 		cliente = sMaestros.registrarOActualizarCliente(cliente);
 		requerimiento.setCliente(cliente);
-		requerimiento.setTraccionV(traccion.getValor());
-		requerimiento.setTransmisionV(transmision.getValor());
+		if(traccion!=null)
+			requerimiento.setTraccionV(traccion.getValor());
+		if(transmision!=null)
+			requerimiento.setTransmisionV(transmision.getValor());
 		sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
+		
 		String str = "El Requerimiento ha sido registrado existosamente ";
 
 		Messagebox.show(str, "Informacion", Messagebox.OK,
@@ -89,6 +92,7 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 						}
 					}
 				});
+		
 	}
 	
 	@Command
