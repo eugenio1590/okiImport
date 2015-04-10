@@ -21,6 +21,8 @@ public class Menu implements Serializable, ModelNavbar{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="menu_id_seq")
+	@SequenceGenerator(name="menu_id_seq", sequenceName="menu_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_menu", unique=true, nullable=false)
 	private Integer idMenu;
 

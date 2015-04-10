@@ -17,11 +17,14 @@ public class ClasificacionRepuesto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="clasificacion_repuesto_id_seq")
+	@SequenceGenerator(name="clasificacion_repuesto_id_seq", sequenceName="clasificacion_repuesto_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_clasificacion_repuesto")
 	private Integer idClasificacionRepuesto;
 
 	private String descripcion;
+	
+	private String estatus;
 	
 	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY)
 	private List<DetalleRequerimiento> detalleRequerimientos;
@@ -45,6 +48,14 @@ public class ClasificacionRepuesto implements Serializable {
 		this.descripcion = descripcion;
 	}
 	
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	public List<DetalleRequerimiento> getDetalleRequerimientos() {
 		return detalleRequerimientos;
 	}

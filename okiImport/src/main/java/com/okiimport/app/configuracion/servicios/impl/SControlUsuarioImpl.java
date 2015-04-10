@@ -22,7 +22,6 @@ import com.okiimport.app.configuracion.dao.UsuarioDAO;
 import com.okiimport.app.modelo.Menu;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.personas.dao.AnalistaDAO;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -40,10 +39,6 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	@Autowired
 	@BeanInjector("usuarioDAO")
 	private UsuarioDAO usuarioDAO;
-	
-	@Autowired
-	@BeanInjector("analistaDAO")
-	private AnalistaDAO analistaDAO;
 	
 	@Autowired
 	@BeanInjector("menuDAO")
@@ -164,21 +159,6 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	public boolean verificarUsername(String username){
 		Usuario usuario = consultarUsuario(username, null);
 		return (usuario!=null);
-	}
-	
-	//Usuarios Especificos
-	//1.1 Analistas
-	@Override
-	public Map<String, Object> consultarAnalistas(int pagina, int limit){
-		return null;
-	}
-	
-	@Override
-	public Map<String, Object> consultarAnalistasSinUsuarios(int pagina, int limit){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", analistaDAO.consultarAnalistasSinUsuarios(0, -1).size());
-		parametros.put("analistas", analistaDAO.consultarAnalistasSinUsuarios(pagina*limit, limit));
-		return parametros;
 	}
 	
 	//2. Menus

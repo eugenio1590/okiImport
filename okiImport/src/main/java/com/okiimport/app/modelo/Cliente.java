@@ -13,29 +13,44 @@ import javax.persistence.*;
 @Entity
 @Table(name="cliente")
 @NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
-@PrimaryKeyJoinColumn(name="id_cliente", columnDefinition="integer")
+@PrimaryKeyJoinColumn(name="id_cliente")
 public class Cliente extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	//bi-directional one-to-one association to TipoCliente
-	@ManyToOne
-	@JoinColumn(name="id_tipo_cliente")
-	private TipoCliente tipoCliente;
+	
+	private Boolean juridico;
+	
+	private String estatus;
 	
 	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
 
 	public Cliente() {
 	}
-
-	public TipoCliente getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
+	
+	public Cliente(Persona persona) {
+		super(persona);
 	}
 	
+	public Cliente(String cedula){
+		super.cedula = cedula;
+	}
+	
+	public Boolean getJuridico() {
+		return juridico;
+	}
+
+	public void setJuridico(Boolean juridico) {
+		this.juridico = juridico;
+	}
+
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	public List<Requerimiento> getRequerimientos() {
 		return requerimientos;
 	}

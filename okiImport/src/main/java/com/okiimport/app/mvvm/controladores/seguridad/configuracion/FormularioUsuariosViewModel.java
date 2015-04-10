@@ -120,8 +120,8 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 			Map<String, Object> parametros = null;
 			switch (tipoSeleccionado.getValor()) {
 			case 1:
-				parametros = (Map<String, Object>) sControlUsuario.consultarAnalistasSinUsuarios(page, PAGE_SIZE);
-				personasSinUsuario = (List<Persona>) parametros.get("analistas");
+				//parametros = (Map<String, Object>) sControlUsuario.consultarAnalistasSinUsuarios(page, PAGE_SIZE);
+				//personasSinUsuario = (List<Persona>) parametros.get("analistas");
 				break;
 			case 2:
 				/*parametros = (Map<String, Object>) servicioControlUsuario.consultarClientesSinUsuarios(page, PAGE_SIZE);

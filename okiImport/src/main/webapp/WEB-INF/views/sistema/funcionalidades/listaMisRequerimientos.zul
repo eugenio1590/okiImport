@@ -1,0 +1,51 @@
+<zk>
+	<window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosViewModel')">
+		<listbox id= "gridMisRequerimientos" mold="paging" checkmark="true" pageSize="10" pagingPosition="top"  multiple="true" sclass="mylist" model="@load(vm.listaRequerimientos)" >
+		
+            <listhead>
+            
+                <listheader value="idRequerimiento" label="N° Requerimiento" sort="auto(idRequerimiento)" width="150px" >
+				  <textbox  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="70px"  />
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>
+				
+				<listheader value="nombre"  label= "Nombre Cliente" sort="auto(idRequerimiento)" width="150px" >
+				  <textbox instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>	
+				
+				<listheader value="fechaCreacion" label="Fecha Creación" sort="auto(fechaCreacion)" width="150px" >
+					<datebox format="dd/HH/yyyy - a hh:mm" instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200"/>
+			    </listheader>
+			    
+			    <listheader value="modeloV" label="Modelo Carro"  sort="auto(modeloV)" width="150px"  >
+				  <textbox instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="110px"/>
+					<div sclass="z-icon-filter bigger-200"/>
+				</listheader>
+			    
+			   <listheader width="11%" label= "Operaciones"/>
+
+			</listhead>
+             <template name="model">
+		     <listitem>
+		           <listcell label="@bind(each.idRequerimiento)" />
+			       <listcell label=" @bind(each.cliente.nombre)" />
+			       <listcell label=" @bind(each.fechaCreacion)" />
+			       <listcell label="@bind(each.modeloV)" />
+			       <listcell>
+						<hbox spacing="20px">
+							<div class="btn-group btn-group-sm">
+								<button image="/resources/img/icons/ic_edit.png" tooltiptext="Editar"  />
+								<button image="/resources/img/icons/ic_see.png" tooltiptext="Ver" />
+								<button image="/resources/img/icons/ic_delete.png" tooltiptext="Eliminar" />
+							</div>
+						</hbox>
+				  </listcell>
+            </listitem>
+           </template>
+           
+		</listbox>
+		<paging id="pagMisRequerimientos" onPaging="@command('paginarLista')" autohide="true" />
+	</window>
+</zk>

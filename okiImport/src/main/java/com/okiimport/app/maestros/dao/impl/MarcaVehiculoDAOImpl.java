@@ -2,6 +2,7 @@ package com.okiimport.app.maestros.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ public class MarcaVehiculoDAOImpl extends AbstractJpaDao<MarcaVehiculo, Integer>
 		this.crearJoins(null);
 		List<Predicate> restrinciones = new ArrayList<Predicate>();
 		restrinciones.add(this.criteriaBuilder.equal(this.entity.get("estatus"), "activo"));
-		return this.ejecutarCriteria(concatenaArrayPredicate(restrinciones), null, start,limit);
+		Map<String, Boolean> orders=new HashMap<String, Boolean>();
+		return this.ejecutarCriteria(concatenaArrayPredicate(restrinciones), orders, start,limit);
 	}
 
 	
