@@ -6,6 +6,7 @@ import java.util.Map;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.Proveedor;
 
 public interface SMaestros {
 	//Marcas
@@ -24,4 +25,10 @@ public interface SMaestros {
 	//Proveedores
 	public Map<String, Object> consultarProveedoresSinUsuarios(Persona personaF, String fieldSort, Boolean sortDirection,
 			int pagina, int limit);
+	
+	public Map<String,Object> ConsultarClasificacionRepuesto(Integer page,Integer limit);
+	
+	public Proveedor registrarProveedor(Proveedor proveedor);
+	
+	public Map<String,Object> ConsultarMotor(Integer page,Integer limit);
 }

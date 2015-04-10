@@ -7,13 +7,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.dao.AnalistaDAO;
+import com.okiimport.app.maestros.dao.ClasificacionRepuestoDAO;
 import com.okiimport.app.maestros.dao.ClienteDAO;
 import com.okiimport.app.maestros.dao.MarcaVehiculoDAO;
+import com.okiimport.app.maestros.dao.MotorDAO;
 import com.okiimport.app.maestros.dao.ProveedorDAO;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -34,6 +37,14 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	@Autowired
 	@BeanInjector("proveedorDAO")
 	private ProveedorDAO proveedorDAO;
+	
+	@Autowired
+	@BeanInjector("clasificacionRepuestoDAO")
+	private ClasificacionRepuestoDAO clasificacionRepuestoDAO;
+	
+	@Autowired
+	@BeanInjector("motorDAO")
+	private MotorDAO motorDAO;
 		
 	//Marcas
 	@Override
@@ -91,6 +102,30 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		parametros.put("proveedores", proveedorDAO.consultarProveedoresSinUsuarios(personaF, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
+	
+	@Override
+	public Map<String, Object> ConsultarClasificacionRepuesto(Integer page, Integer limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", ((Long)clasificacionRepuestoDAO.countAll()).intValue());
+		Parametros.put("clasificacionRepuesto", clasificacionRepuestoDAO.findAll(page*limit, limit));
+		return Parametros;
+	}
+	
+	@Override
+	public Proveedor registrarProveedor(Proveedor proveedor) {
+	   return proveedorDAO.save(proveedor);
+	}
+	
+	
+	@Override
+	public Map<String, Object> ConsultarMotor(Integer page, Integer limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", ((Long)motorDAO.countAll()).intValue());
+		Parametros.put("motor", motorDAO.findAll(page*limit, limit));
+		return Parametros;
+	}
 
 	/**SETTERS Y GETTERS*/
 	public MarcaVehiculoDAO getMarcaVehiculoDAO() {
@@ -122,5 +157,22 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 
 	public void setProveedorDAO(ProveedorDAO proveedorDAO) {
 		this.proveedorDAO = proveedorDAO;
+	}
+
+	public ClasificacionRepuestoDAO getClasificacionRepuestoDAO() {
+		return clasificacionRepuestoDAO;
+	}
+
+	public void setClasificacionRepuestoDAO(
+			ClasificacionRepuestoDAO clasificacionRepuestoDAO) {
+		this.clasificacionRepuestoDAO = clasificacionRepuestoDAO;
+	}
+
+	public MotorDAO getMotorDAO() {
+		return motorDAO;
+	}
+
+	public void setMotorDAO(MotorDAO motorDAO) {
+		this.motorDAO = motorDAO;
 	}
 }

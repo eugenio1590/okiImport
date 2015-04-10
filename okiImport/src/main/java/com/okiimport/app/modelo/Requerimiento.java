@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,6 +76,7 @@ public class Requerimiento implements Serializable {
 	private List<DetalleRequerimiento> detalleRequerimientos;
 
 	public Requerimiento() {
+		detalleRequerimientos = new ArrayList<DetalleRequerimiento>();
 	}
 
 	public Integer getIdRequerimiento() {
