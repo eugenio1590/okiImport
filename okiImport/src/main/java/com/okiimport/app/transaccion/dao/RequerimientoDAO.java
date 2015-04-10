@@ -7,9 +7,9 @@ import com.okiimport.app.modelo.Requerimiento;
 
 public interface RequerimientoDAO extends IGenericDao<Requerimiento, Integer> {
 	
-	List <Requerimiento> ConsultarRequerimientoUsuario(Requerimiento regFiltro, Integer idusuario, int start, int limit);
+	List <Requerimiento> ConsultarRequerimientoUsuario(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,Integer idusuario, int start, int limit);
 	
-	List <Requerimiento> ConsultarRequerimientosCliente(Requerimiento regFiltro, String cedula, int start, int limit);
+	List <Requerimiento> ConsultarRequerimientosCliente(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, String cedula, int start, int limit);
 	
 
 }
