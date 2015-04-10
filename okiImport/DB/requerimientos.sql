@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2015-04-09 11:47:16
+-- Started on 2015-04-09 22:56:12
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -28,7 +28,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 140 (class 1259 OID 91286)
+-- TOC entry 140 (class 1259 OID 92542)
 -- Dependencies: 3
 -- Name: analista; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -43,7 +43,7 @@ CREATE TABLE analista (
 ALTER TABLE public.analista OWNER TO postgres;
 
 --
--- TOC entry 141 (class 1259 OID 91291)
+-- TOC entry 141 (class 1259 OID 92547)
 -- Dependencies: 3
 -- Name: clasificacion_repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -58,7 +58,7 @@ CREATE TABLE clasificacion_repuesto (
 ALTER TABLE public.clasificacion_repuesto OWNER TO postgres;
 
 --
--- TOC entry 155 (class 1259 OID 91442)
+-- TOC entry 155 (class 1259 OID 92698)
 -- Dependencies: 3
 -- Name: clasificacion_repuesto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -83,7 +83,7 @@ SELECT pg_catalog.setval('clasificacion_repuesto_id_seq', 1, false);
 
 
 --
--- TOC entry 142 (class 1259 OID 91299)
+-- TOC entry 142 (class 1259 OID 92555)
 -- Dependencies: 3
 -- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -98,7 +98,7 @@ CREATE TABLE cliente (
 ALTER TABLE public.cliente OWNER TO postgres;
 
 --
--- TOC entry 143 (class 1259 OID 91304)
+-- TOC entry 143 (class 1259 OID 92560)
 -- Dependencies: 3
 -- Name: detalle_requerimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -119,7 +119,7 @@ CREATE TABLE detalle_requerimiento (
 ALTER TABLE public.detalle_requerimiento OWNER TO postgres;
 
 --
--- TOC entry 156 (class 1259 OID 91444)
+-- TOC entry 156 (class 1259 OID 92700)
 -- Dependencies: 3
 -- Name: detalle_requerimiento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -144,7 +144,7 @@ SELECT pg_catalog.setval('detalle_requerimiento_id_seq', 1, false);
 
 
 --
--- TOC entry 144 (class 1259 OID 91312)
+-- TOC entry 144 (class 1259 OID 92568)
 -- Dependencies: 3
 -- Name: history_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -160,7 +160,7 @@ CREATE TABLE history_logins (
 ALTER TABLE public.history_logins OWNER TO postgres;
 
 --
--- TOC entry 157 (class 1259 OID 91446)
+-- TOC entry 157 (class 1259 OID 92702)
 -- Dependencies: 3
 -- Name: history_logins_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -181,11 +181,11 @@ ALTER TABLE public.history_logins_id_seq OWNER TO postgres;
 -- Name: history_logins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('history_logins_id_seq', 1, false);
+SELECT pg_catalog.setval('history_logins_id_seq', 2, true);
 
 
 --
--- TOC entry 145 (class 1259 OID 91317)
+-- TOC entry 145 (class 1259 OID 92573)
 -- Dependencies: 3
 -- Name: marca_repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -199,7 +199,7 @@ CREATE TABLE marca_repuesto (
 ALTER TABLE public.marca_repuesto OWNER TO postgres;
 
 --
--- TOC entry 158 (class 1259 OID 91448)
+-- TOC entry 158 (class 1259 OID 92704)
 -- Dependencies: 3
 -- Name: marca_repuesto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -224,7 +224,7 @@ SELECT pg_catalog.setval('marca_repuesto_id_seq', 1, false);
 
 
 --
--- TOC entry 146 (class 1259 OID 91322)
+-- TOC entry 146 (class 1259 OID 92578)
 -- Dependencies: 3
 -- Name: marca_vehiculo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -238,7 +238,7 @@ CREATE TABLE marca_vehiculo (
 ALTER TABLE public.marca_vehiculo OWNER TO postgres;
 
 --
--- TOC entry 159 (class 1259 OID 91450)
+-- TOC entry 159 (class 1259 OID 92706)
 -- Dependencies: 3
 -- Name: marca_vehiculo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -263,7 +263,7 @@ SELECT pg_catalog.setval('marca_vehiculo_id_seq', 1, false);
 
 
 --
--- TOC entry 147 (class 1259 OID 91327)
+-- TOC entry 147 (class 1259 OID 92583)
 -- Dependencies: 3
 -- Name: menu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -281,7 +281,7 @@ CREATE TABLE menu (
 ALTER TABLE public.menu OWNER TO postgres;
 
 --
--- TOC entry 160 (class 1259 OID 91452)
+-- TOC entry 160 (class 1259 OID 92708)
 -- Dependencies: 3
 -- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -302,11 +302,11 @@ ALTER TABLE public.menu_id_seq OWNER TO postgres;
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menu_id_seq', 4, false);
+SELECT pg_catalog.setval('menu_id_seq', 1, false);
 
 
 --
--- TOC entry 148 (class 1259 OID 91335)
+-- TOC entry 148 (class 1259 OID 92591)
 -- Dependencies: 3
 -- Name: motor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -320,7 +320,7 @@ CREATE TABLE motor (
 ALTER TABLE public.motor OWNER TO postgres;
 
 --
--- TOC entry 161 (class 1259 OID 91454)
+-- TOC entry 161 (class 1259 OID 92710)
 -- Dependencies: 3
 -- Name: motor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -345,7 +345,7 @@ SELECT pg_catalog.setval('motor_id_seq', 1, false);
 
 
 --
--- TOC entry 149 (class 1259 OID 91340)
+-- TOC entry 149 (class 1259 OID 92596)
 -- Dependencies: 3
 -- Name: persistent_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -361,7 +361,7 @@ CREATE TABLE persistent_logins (
 ALTER TABLE public.persistent_logins OWNER TO postgres;
 
 --
--- TOC entry 150 (class 1259 OID 91345)
+-- TOC entry 150 (class 1259 OID 92601)
 -- Dependencies: 3
 -- Name: persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -380,7 +380,7 @@ CREATE TABLE persona (
 ALTER TABLE public.persona OWNER TO postgres;
 
 --
--- TOC entry 162 (class 1259 OID 91456)
+-- TOC entry 162 (class 1259 OID 92712)
 -- Dependencies: 3
 -- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -401,11 +401,11 @@ ALTER TABLE public.persona_id_seq OWNER TO postgres;
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 7, true);
+SELECT pg_catalog.setval('persona_id_seq', 4, false);
 
 
 --
--- TOC entry 151 (class 1259 OID 91353)
+-- TOC entry 151 (class 1259 OID 92609)
 -- Dependencies: 3
 -- Name: proveedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -419,7 +419,7 @@ CREATE TABLE proveedor (
 ALTER TABLE public.proveedor OWNER TO postgres;
 
 --
--- TOC entry 152 (class 1259 OID 91358)
+-- TOC entry 152 (class 1259 OID 92614)
 -- Dependencies: 3
 -- Name: proveedor_marca_repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -433,7 +433,7 @@ CREATE TABLE proveedor_marca_repuesto (
 ALTER TABLE public.proveedor_marca_repuesto OWNER TO postgres;
 
 --
--- TOC entry 153 (class 1259 OID 91361)
+-- TOC entry 153 (class 1259 OID 92617)
 -- Dependencies: 3
 -- Name: requerimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -459,7 +459,7 @@ CREATE TABLE requerimiento (
 ALTER TABLE public.requerimiento OWNER TO postgres;
 
 --
--- TOC entry 163 (class 1259 OID 91458)
+-- TOC entry 163 (class 1259 OID 92714)
 -- Dependencies: 3
 -- Name: requerimiento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -480,11 +480,11 @@ ALTER TABLE public.requerimiento_id_seq OWNER TO postgres;
 -- Name: requerimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('requerimiento_id_seq', 4, true);
+SELECT pg_catalog.setval('requerimiento_id_seq', 1, false);
 
 
 --
--- TOC entry 154 (class 1259 OID 91369)
+-- TOC entry 154 (class 1259 OID 92625)
 -- Dependencies: 3
 -- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -502,7 +502,7 @@ CREATE TABLE usuario (
 ALTER TABLE public.usuario OWNER TO postgres;
 
 --
--- TOC entry 164 (class 1259 OID 91460)
+-- TOC entry 164 (class 1259 OID 92716)
 -- Dependencies: 3
 -- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -527,20 +527,17 @@ SELECT pg_catalog.setval('usuario_id_seq', 2, false);
 
 
 --
--- TOC entry 1897 (class 0 OID 91286)
+-- TOC entry 1897 (class 0 OID 92542)
 -- Dependencies: 140
 -- Data for Name: analista; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 3);
+INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 2);
 INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 4);
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 1);
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 5);
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 6);
 
 
 --
--- TOC entry 1898 (class 0 OID 91291)
+-- TOC entry 1898 (class 0 OID 92547)
 -- Dependencies: 141
 -- Data for Name: clasificacion_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -548,18 +545,17 @@ INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 6
 
 
 --
--- TOC entry 1899 (class 0 OID 91299)
+-- TOC entry 1899 (class 0 OID 92555)
 -- Dependencies: 142
 -- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 1);
-INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 2);
-INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 7);
+INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 3);
 
 
 --
--- TOC entry 1900 (class 0 OID 91304)
+-- TOC entry 1900 (class 0 OID 92560)
 -- Dependencies: 143
 -- Data for Name: detalle_requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -567,15 +563,17 @@ INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 7);
 
 
 --
--- TOC entry 1901 (class 0 OID 91312)
+-- TOC entry 1901 (class 0 OID 92568)
 -- Dependencies: 144
 -- Data for Name: history_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (1, '2015-04-09 22:35:16.51', '2015-04-09 22:35:16.51', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (2, '2015-04-09 22:35:16.51', '2015-04-09 22:35:16.51', 'euge');
 
 
 --
--- TOC entry 1902 (class 0 OID 91317)
+-- TOC entry 1902 (class 0 OID 92573)
 -- Dependencies: 145
 -- Data for Name: marca_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -583,7 +581,7 @@ INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 7);
 
 
 --
--- TOC entry 1903 (class 0 OID 91322)
+-- TOC entry 1903 (class 0 OID 92578)
 -- Dependencies: 146
 -- Data for Name: marca_vehiculo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -591,19 +589,19 @@ INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 7);
 
 
 --
--- TOC entry 1904 (class 0 OID 91327)
+-- TOC entry 1904 (class 0 OID 92583)
 -- Dependencies: 147
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (1, NULL, 'z-icon-book', 'Paso 1', '/WEB-INF/views/sistema/funcionalidades/new_file.zul', NULL);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (2, NULL, 'z-icon-cog', 'Configuracion', '/WEB-INF/views/sistema/funcionalidades/new_file.zul', NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (3, NULL, 'z-icon-lock', 'Seguridad', NULL, 2);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (4, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 3);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (1, NULL, 'z-icon-book', 'Paso 1', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientos.zul', NULL);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (2, NULL, 'z-icon-cog', 'Configuracion', NULL, NULL);
 
 
 --
--- TOC entry 1905 (class 0 OID 91335)
+-- TOC entry 1905 (class 0 OID 92591)
 -- Dependencies: 148
 -- Data for Name: motor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -611,7 +609,7 @@ INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (4, 
 
 
 --
--- TOC entry 1906 (class 0 OID 91340)
+-- TOC entry 1906 (class 0 OID 92596)
 -- Dependencies: 149
 -- Data for Name: persistent_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -619,22 +617,19 @@ INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (4, 
 
 
 --
--- TOC entry 1907 (class 0 OID 91345)
+-- TOC entry 1907 (class 0 OID 92601)
 -- Dependencies: 150
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (2, NULL, '5254874', 'esther@gmail.com', NULL, 'Esther', '457845');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (3, NULL, '18934677', 'J@gmail.com', NULL, 'JOSE CAICEDO', '0251252227');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (4, NULL, '7412354', 'fer@hot.com', NULL, 'fernando', '78541');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (1, NULL, '20186243', 'euge@gmail.com', NULL, 'Eugenio Caicedo', '2528291');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (7, NULL, '20348677', 'jose@gmail.com', NULL, 'Jose Caicedo', '521485185');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (6, NULL, '18654287', 'luis@gmail.com', NULL, 'Luis', '1234567');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (5, NULL, '19854678', 'marta@hotmail.com', NULL, 'Martah', '123456');
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (1, NULL, '20186243', 'euge@gmail.com', NULL, 'EUGENIO CAICEDO', '2528291');
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (2, NULL, '4578124', 'maria@gmail.com', NULL, 'MARIA', '784512');
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (3, NULL, '123456', 'luis@gmail.com', NULL, 'LUIS', '457896');
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (4, NULL, '19547896', 'p.fer@gmail.com', NULL, 'FERNANDO', '457896');
 
 
 --
--- TOC entry 1908 (class 0 OID 91353)
+-- TOC entry 1908 (class 0 OID 92609)
 -- Dependencies: 151
 -- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -642,7 +637,7 @@ INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) 
 
 
 --
--- TOC entry 1909 (class 0 OID 91358)
+-- TOC entry 1909 (class 0 OID 92614)
 -- Dependencies: 152
 -- Data for Name: proveedor_marca_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -650,29 +645,25 @@ INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) 
 
 
 --
--- TOC entry 1910 (class 0 OID 91361)
+-- TOC entry 1910 (class 0 OID 92617)
 -- Dependencies: 153
 -- Data for Name: requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (1, NULL, 'CR', NULL, '2015-04-09', '2015-04-24', 'Hilux', '123', NULL, NULL, 3, 1, NULL, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (2, NULL, 'CR', NULL, '2015-04-09', '2015-04-24', 'Hilux', '123', NULL, NULL, 3, 2, NULL, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (3, NULL, 'CR', NULL, '2015-04-09', '2015-04-24', 'Ford', '9874235', NULL, NULL, 1, 1, NULL, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (4, NULL, 'CR', NULL, '2015-04-09', '2015-04-24', 'Ford', '1234', NULL, NULL, 4, 7, NULL, NULL);
 
 
 --
--- TOC entry 1911 (class 0 OID 91369)
+-- TOC entry 1911 (class 0 OID 92625)
 -- Dependencies: 154
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (1, true, NULL, '147', 'euge', 1);
-INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (2, true, NULL, '123', 'admin', 3);
+INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (1, true, NULL, '147', 'euge', 2);
+INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (2, true, NULL, '123', 'admin', 4);
 
 
 --
--- TOC entry 1853 (class 2606 OID 91290)
+-- TOC entry 1853 (class 2606 OID 92546)
 -- Dependencies: 140 140
 -- Name: analista_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -682,7 +673,7 @@ ALTER TABLE ONLY analista
 
 
 --
--- TOC entry 1855 (class 2606 OID 91298)
+-- TOC entry 1855 (class 2606 OID 92554)
 -- Dependencies: 141 141
 -- Name: clasificacion_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -692,7 +683,7 @@ ALTER TABLE ONLY clasificacion_repuesto
 
 
 --
--- TOC entry 1857 (class 2606 OID 91303)
+-- TOC entry 1857 (class 2606 OID 92559)
 -- Dependencies: 142 142
 -- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -702,7 +693,7 @@ ALTER TABLE ONLY cliente
 
 
 --
--- TOC entry 1859 (class 2606 OID 91311)
+-- TOC entry 1859 (class 2606 OID 92567)
 -- Dependencies: 143 143
 -- Name: detalle_requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -712,7 +703,7 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1861 (class 2606 OID 91316)
+-- TOC entry 1861 (class 2606 OID 92572)
 -- Dependencies: 144 144
 -- Name: history_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -722,7 +713,7 @@ ALTER TABLE ONLY history_logins
 
 
 --
--- TOC entry 1863 (class 2606 OID 91321)
+-- TOC entry 1863 (class 2606 OID 92577)
 -- Dependencies: 145 145
 -- Name: marca_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -732,7 +723,7 @@ ALTER TABLE ONLY marca_repuesto
 
 
 --
--- TOC entry 1865 (class 2606 OID 91326)
+-- TOC entry 1865 (class 2606 OID 92582)
 -- Dependencies: 146 146
 -- Name: marca_vehiculo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -742,7 +733,7 @@ ALTER TABLE ONLY marca_vehiculo
 
 
 --
--- TOC entry 1867 (class 2606 OID 91334)
+-- TOC entry 1867 (class 2606 OID 92590)
 -- Dependencies: 147 147
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -752,7 +743,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 1869 (class 2606 OID 91339)
+-- TOC entry 1869 (class 2606 OID 92595)
 -- Dependencies: 148 148
 -- Name: motor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -762,7 +753,7 @@ ALTER TABLE ONLY motor
 
 
 --
--- TOC entry 1871 (class 2606 OID 91344)
+-- TOC entry 1871 (class 2606 OID 92600)
 -- Dependencies: 149 149
 -- Name: persistent_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -772,7 +763,7 @@ ALTER TABLE ONLY persistent_logins
 
 
 --
--- TOC entry 1873 (class 2606 OID 91352)
+-- TOC entry 1873 (class 2606 OID 92608)
 -- Dependencies: 150 150
 -- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -782,7 +773,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 1875 (class 2606 OID 91357)
+-- TOC entry 1875 (class 2606 OID 92613)
 -- Dependencies: 151 151
 -- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -792,7 +783,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 1877 (class 2606 OID 91368)
+-- TOC entry 1877 (class 2606 OID 92624)
 -- Dependencies: 153 153
 -- Name: requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -802,7 +793,7 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1879 (class 2606 OID 91376)
+-- TOC entry 1879 (class 2606 OID 92632)
 -- Dependencies: 154 154
 -- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -812,7 +803,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1881 (class 2606 OID 91475)
+-- TOC entry 1881 (class 2606 OID 92720)
 -- Dependencies: 154 154
 -- Name: usuario_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -822,7 +813,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1887 (class 2606 OID 91397)
+-- TOC entry 1887 (class 2606 OID 92653)
 -- Dependencies: 1866 147 147
 -- Name: fk33155fb000c573; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -832,7 +823,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 1883 (class 2606 OID 91382)
+-- TOC entry 1883 (class 2606 OID 92638)
 -- Dependencies: 142 150 1872
 -- Name: fk334b85fa72a75f10; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -842,8 +833,8 @@ ALTER TABLE ONLY cliente
 
 
 --
--- TOC entry 1885 (class 2606 OID 91392)
--- Dependencies: 1876 143 153
+-- TOC entry 1885 (class 2606 OID 92648)
+-- Dependencies: 1876 153 143
 -- Name: fk42c4ba5d1726034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -852,8 +843,8 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1884 (class 2606 OID 91387)
--- Dependencies: 143 141 1854
+-- TOC entry 1884 (class 2606 OID 92643)
+-- Dependencies: 141 1854 143
 -- Name: fk42c4ba5d9195f9f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -862,8 +853,8 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1891 (class 2606 OID 91412)
--- Dependencies: 151 152 1874
+-- TOC entry 1891 (class 2606 OID 92668)
+-- Dependencies: 1874 152 151
 -- Name: fk8b0d75456338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -872,8 +863,8 @@ ALTER TABLE ONLY proveedor_marca_repuesto
 
 
 --
--- TOC entry 1890 (class 2606 OID 91407)
--- Dependencies: 145 152 1862
+-- TOC entry 1890 (class 2606 OID 92663)
+-- Dependencies: 152 145 1862
 -- Name: fk8b0d7545d92110f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -882,8 +873,8 @@ ALTER TABLE ONLY proveedor_marca_repuesto
 
 
 --
--- TOC entry 1888 (class 2606 OID 91481)
--- Dependencies: 1880 149 154
+-- TOC entry 1888 (class 2606 OID 92726)
+-- Dependencies: 1880 154 149
 -- Name: fkbd224d2a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -892,8 +883,8 @@ ALTER TABLE ONLY persistent_logins
 
 
 --
--- TOC entry 1882 (class 2606 OID 91377)
--- Dependencies: 1872 140 150
+-- TOC entry 1882 (class 2606 OID 92633)
+-- Dependencies: 140 1872 150
 -- Name: fkc2e8ee2fdcbd110d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -902,8 +893,8 @@ ALTER TABLE ONLY analista
 
 
 --
--- TOC entry 1892 (class 2606 OID 91417)
--- Dependencies: 1852 153 140
+-- TOC entry 1892 (class 2606 OID 92673)
+-- Dependencies: 1852 140 153
 -- Name: fkd19e472517870034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -912,8 +903,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1895 (class 2606 OID 91432)
--- Dependencies: 148 153 1868
+-- TOC entry 1895 (class 2606 OID 92688)
+-- Dependencies: 1868 148 153
 -- Name: fkd19e47257973088b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -922,8 +913,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1894 (class 2606 OID 91427)
--- Dependencies: 1864 146 153
+-- TOC entry 1894 (class 2606 OID 92683)
+-- Dependencies: 153 1864 146
 -- Name: fkd19e4725b1f9d9de; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -932,8 +923,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1893 (class 2606 OID 91422)
--- Dependencies: 1856 142 153
+-- TOC entry 1893 (class 2606 OID 92678)
+-- Dependencies: 153 1856 142
 -- Name: fkd19e4725ce63155e; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -942,8 +933,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1889 (class 2606 OID 91402)
--- Dependencies: 151 1872 150
+-- TOC entry 1889 (class 2606 OID 92658)
+-- Dependencies: 151 150 1872
 -- Name: fkdf24cade6d89dcf4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -952,8 +943,8 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 1886 (class 2606 OID 91476)
--- Dependencies: 144 1880 154
+-- TOC entry 1886 (class 2606 OID 92721)
+-- Dependencies: 144 154 1880
 -- Name: fkee0d8835a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -962,8 +953,8 @@ ALTER TABLE ONLY history_logins
 
 
 --
--- TOC entry 1896 (class 2606 OID 91437)
--- Dependencies: 154 150 1872
+-- TOC entry 1896 (class 2606 OID 92693)
+-- Dependencies: 150 1872 154
 -- Name: fkf814f32ebe6ae2c8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -983,7 +974,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2015-04-09 11:47:16
+-- Completed on 2015-04-09 22:56:12
 
 --
 -- PostgreSQL database dump complete
