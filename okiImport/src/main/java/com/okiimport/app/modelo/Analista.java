@@ -36,6 +36,10 @@ public class Analista extends Persona implements Serializable {
 		super(persona);
 	}
 	
+	public Analista(String cedula) {
+		this.cedula = cedula;
+	}
+	
 	public String getEstatus() {
 		return estatus;
 	}

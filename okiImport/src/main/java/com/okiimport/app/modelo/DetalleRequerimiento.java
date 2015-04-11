@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.okiimport.app.mvvm.AbstractViewModel;
+
 
 /**
  * The persistent class for the detalle_requerimiento database table.
@@ -117,6 +119,11 @@ public class DetalleRequerimiento implements Serializable {
 
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String getFoto64(){
+		return AbstractViewModel.decodificarImagen(foto);
 	}
 
 }

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.maestros.dao.PersonaDAO;
-import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Persona;
 
 @Repository

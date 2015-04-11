@@ -38,6 +38,10 @@ public class Proveedor extends Persona implements Serializable {
 	public Proveedor(Persona persona) {
 		super(persona);
 	}
+	
+	public Proveedor(String cedula) {
+		super.cedula = cedula;
+	}
 
 	public String getEstatus() {
 		return this.estatus;

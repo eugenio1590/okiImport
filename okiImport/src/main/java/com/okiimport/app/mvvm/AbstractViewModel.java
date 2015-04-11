@@ -44,6 +44,7 @@ import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
+import org.zkoss.zul.impl.InputElement;
 import org.zkoss.zul.Window;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -60,6 +61,8 @@ import net.sf.jasperreports.view.JasperViewer;
 public abstract class AbstractViewModel {
 	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
 	public static final String BasePackageSistema = "/WEB-INF/views/SistemaOrion/Contenido/";
+	
+	private Component form;
 	
 	protected HttpSession sesion;
 	
@@ -88,8 +91,53 @@ public abstract class AbstractViewModel {
 	 * Nota: No se Ejecutara sino es invocado en la seccion respectiva del formulario
 	 * */
 	public void doAfterCompose(Component view){
+		form = view;
 		Selectors.wireComponents(view, this, false); 
 		buildInjection(this);
+	}
+	
+	/**
+	 * Descripcion: permite verificar si el componente es valido con su respectivo constraint.
+	 * Parametros: @param component: componente de la vista a evaluar.
+	 * Retorno: variable boolean que indica si el componente es valido o no
+	 * */
+	private boolean check(Component component) {
+		boolean exito = true;
+			if (component instanceof InputElement) {
+				if (!((InputElement) component).isValid()) {
+					exito = false;
+					((InputElement) component).getText(); // Force show errorMessage
+				}
+			}
+		return exito;
+	}
+	
+	/**
+	 * Descripcion: Permitira verificar si el componente y sus hijos son validos con su respectivo constraint.
+	 * Parametros: @param component: componente de la vista a evaluar.
+	 * Retorno: variable boolean que indica si el componente y sus hijos son validos o no
+	 * */
+	protected boolean checkIsValid(Component component) {
+		if(!check(component))
+			return false;
+		
+		List<Component> children = component.getChildren();
+		for (Component each: children) {
+			if(!checkIsValid(each))
+				return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Descipcion: permitira validar si el formulario y sus hijos son validos o no
+	 * Parametros: Ninguno
+	 * Retorno: variable boolean que indica si el formulario y sus hijos son validos o no
+	 * */
+	protected boolean checkIsFormValid(){
+		if(form!=null)
+			return checkIsValid(form);
+		return true;
 	}
 	
 	/**
