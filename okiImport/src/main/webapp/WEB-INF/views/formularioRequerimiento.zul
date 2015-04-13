@@ -81,7 +81,7 @@
 											<row>
 												<label value="Marca: " />
 												<combobox
-													placeholder="Seleccione..." width="80%"
+													placeholder="Seleccione..." width="80%" readonly="true"
 													selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
 													model="@load(vm.listaMarcasVehiculo)">
 													<template
@@ -146,7 +146,7 @@
 											<row>
 												<label value="Motor: " />
 												<combobox
-													selectedItem="@bind(vm.requerimiento.motor)"
+													selectedItem="@bind(vm.requerimiento.motor)" readonly="true"
 													placeholder="Seleccione..." width="80%"
 													model="@load(vm.listaMotor)">
 													<template
@@ -161,7 +161,7 @@
 												<label
 													value="Transmision: " />
 												<combobox
-													placeholder="Seleccione..." width="80%"
+													placeholder="Seleccione..." width="80%" readonly="true"
 													selectedItem="@bind(vm.transmision)" model="@load(vm.listaTransmision)">
 													<template
 														name="model">
@@ -178,7 +178,7 @@
 												<label
 													value="Traccion: " />
 												<combobox
-													placeholder="Seleccione..." width="80%"
+													placeholder="Seleccione..." width="80%" readonly="true"
 													selectedItem="@bind(vm.traccion)" model="@load(vm.listaTraccion)">
 													<template
 														name="model">
@@ -198,50 +198,54 @@
 			</groupbox>
 			</vbox>
 			<groupbox>
+			<div align="right">
 				<button label="Agregar Repuesto" type="submit"
 					onClick="@command('agregarRepuesto')" />
+					<button label="Eliminar Repuesto" type="submit"
+					onClick="@command('eliminarRepuesto')" />
+					</div>
 				<caption label="Datos Repuestos" />
 				<panel sclass="panel-primary">
 					<panelchildren>
 
-						<listbox mold="paging"
+						<listbox mold="paging" multiple="true" checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							style="margin-top:10px" pageSize="5">
 
 
 							<listhead>
 								<listheader label="CodigoOEM"
+									sort="auto" width="140px" />
+								<listheader label="Nombre" sort="auto" width="125px"/>
+								<listheader label="Descripcion" width="150px"
 									sort="auto" />
-								<listheader label="Nombre" sort="auto" />
-								<listheader label="Descripcion"
+								<listheader label="Cantidad" width="80px"
 									sort="auto" />
-								<listheader label="Cantidad"
-									sort="auto" />
-								<listheader label="Foto" sort="auto" />
+								<listheader label="Foto" sort="auto" width="100px"/>
 							</listhead>
 							<template name="model">
 								<listitem>
 									<listcell>
-										<textbox
+										<textbox width="110px"
 											value="@bind(each.codigoOem)"
 											constraint="no empty:El Campo No Debe Estar Vacio">
 										</textbox>
 
 									</listcell>
 									<listcell>
-										<textbox
+										<textbox width="115px"
 											value="@bind(each.nombre)"
 											constraint="no empty:El Campo No Debe Estar Vacio">
 										</textbox>
 									</listcell>
 									<listcell>
-										<textbox
+										<textbox width="135px"
 											value="@bind(each.descripcion)"
 											constraint="no empty:El Campo No Debe Estar Vacio">
 										</textbox>
 									</listcell>
 									<listcell>
-										<spinner
+										<spinner width="70px" constraint="no empty,min 1 max 1000"
 											value="@bind(each.cantidad)"
 											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros">
 										</spinner>

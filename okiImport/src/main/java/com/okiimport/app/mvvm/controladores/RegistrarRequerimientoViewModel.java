@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -43,8 +45,11 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	private List <ModeloCombo<Boolean>> listaTransmision;
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
+	private List <DetalleRequerimiento> eliminarDetalle;
 	
 
+
+	
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -79,6 +84,7 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 			requerimiento.setTraccionV(traccion.getValor());
 		if(transmision!=null)
 			requerimiento.setTransmisionV(transmision.getValor());
+		if (requerimiento.getDetalleRequerimientos().size() > 0 && checkIsFormValid()){
 		sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
 		
 		String str = "El Requerimiento ha sido registrado existosamente ";
@@ -92,6 +98,8 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 						}
 					}
 				});
+		}
+		else mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
 		
 	}
 	
@@ -100,6 +108,16 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	public void agregarRepuesto(){
 		if (requerimiento.getDetalleRequerimientos().size() < 10)
 		requerimiento.addDetalleRequerimiento(new DetalleRequerimiento());
+	}
+	
+	@Command
+	@NotifyChange({"requerimiento","cliente"})
+	public void eliminarRepuesto(){
+		if (eliminarDetalle != null){
+			for (DetalleRequerimiento detalle:eliminarDetalle)
+				requerimiento.removeDetalleRequerimiento(detalle);
+		}
+		
 	}
 
 	public Requerimiento getRequerimiento() {
@@ -185,6 +203,22 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	
 	public void recargar() {
 		redireccionar("/");
+	}
+	
+	public List<DetalleRequerimiento> getEliminarDetalle() {
+		return eliminarDetalle;
+	}
+
+	public void setEliminarDetalle(List<DetalleRequerimiento> eliminarDetalle) {
+		this.eliminarDetalle = eliminarDetalle;
+	}
+	@Command
+	@NotifyChange("*")
+	public void cambiarFoto(@BindingParam("media") Media media, @BindingParam("detalle") DetalleRequerimiento detalle){
+		if (media instanceof org.zkoss.image.Image)
+			detalle.setFoto(((org.zkoss.image.Image) media).getByteData());			
+		else if (media != null)
+			mostrarMensaje("Error", "No es una imagen: " + media, null, null, null, null);
 	}
 	
 
