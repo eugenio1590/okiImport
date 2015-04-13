@@ -1,10 +1,12 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" border="none" width="65%"
+	<window id="winFormularioRequerimiento" border="none" width="95%"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')"
 		form="@id('fx') @load(vm.requerimiento) @save(vm.requerimiento, before='registrar')">
 		<n:h3>Ingrese Su Requerimiento</n:h3>
 		<groupbox>
+		<hbox>
+			<vbox>
 			<groupbox>
 				<caption label="Datos Personales" />
 				<div>
@@ -59,18 +61,9 @@
 			</groupbox>
 			<groupbox>
 				<caption label="Datos Vehiculo" />
-				<tabbox id="tabVehiculo" height="80%">
-					<tabs id="tabs">
-						<tab id="tabDatosVehiculo">
-							<label value="Datos del Vehiculo" />
-						</tab>
-						<tab id="tabMasDatosVehiculo">
-							<label value="Datos Adicionales" />
-						</tab>
-					</tabs>
-					<tabpanels>
-						<tabpanel>
-							<groupbox>
+						
+							<groupbox id="tabDatosVehiculo">
+								<caption label="Datos del Vehiculo" />
 
 								<div>
 
@@ -133,10 +126,9 @@
 									</grid>
 								</div>
 							</groupbox>
-						</tabpanel>
-						<tabpanel>
 
-							<groupbox>
+							<groupbox id="tabMasDatosVehiculo">
+								<caption label="Datos Adicionales" />
 
 								<div>
 
@@ -203,17 +195,13 @@
 									</grid>
 								</div>
 							</groupbox>
-
-						</tabpanel>
-					</tabpanels>
-				</tabbox>
 			</groupbox>
+			</vbox>
 			<groupbox>
 				<button label="Agregar Repuesto" type="submit"
 					onClick="@command('agregarRepuesto')" />
 				<caption label="Datos Repuestos" />
-				<panel apply="org.zkoss.bind.BindComposer"
-					sclass="panel-primary">
+				<panel sclass="panel-primary">
 					<panelchildren>
 
 						<listbox mold="paging"
@@ -258,7 +246,14 @@
 											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros">
 										</spinner>
 									</listcell>
-
+									<listcell>
+										<div>
+											<image width="50px" height="50px" src="@bind(each.getFoto64())"  />
+											
+											<button label="..." sclass="btn-success" style="margin-bottom:0px"
+												upload="true" onUpload="@command('cambiarFoto', media=event.media, detalle = each)"/>
+										</div>
+									</listcell>
 								</listitem>
 							</template>
 						</listbox>
@@ -267,6 +262,7 @@
 				</panel>
 
 			</groupbox>
+			</hbox>
 		</groupbox>
 		<div sclass="btn btn-sm btn-info" align="right">
 			<button label="Limpiar" type="submit"
