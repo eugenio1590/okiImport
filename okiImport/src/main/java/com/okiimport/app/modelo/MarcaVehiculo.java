@@ -1,7 +1,9 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -16,10 +18,15 @@ public class MarcaVehiculo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="marca_vehiculo_id_seq")
+	@SequenceGenerator(name="marca_vehiculo_id_seq", sequenceName="marca_vehiculo_id_seq", initialValue=1, allocationSize=1)
 	@Column(name="id_marca_vehiculo")
 	private Integer idMarcaVehiculo;
 
 	private String nombre;
+	private String estatus;
+
+
 
 	//bi-directional many-to-one association to Requerimiento
 	@OneToMany(mappedBy="marcaVehiculo")
@@ -66,4 +73,11 @@ public class MarcaVehiculo implements Serializable {
 		return requerimiento;
 	}
 
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
 }

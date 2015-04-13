@@ -12,6 +12,7 @@
 			<div sclass="navbar" height="59px">
 				<a label="Organizacion" sclass="pull-left navbar-brand"
 					iconSclass="z-icon-leaf" />
+					<image src="resources/img/topLogo2.png" ></image>
 			</div>
 		</north>
 		<!-- width="300px" minsize="300" width="15%"  -->

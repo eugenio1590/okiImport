@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -17,27 +18,47 @@ public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id", columnDefinition = "serial", unique=true, nullable=false)
-	private Integer id;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="persona_id_seq")
+	@SequenceGenerator(name="persona_id_seq", sequenceName="persona_id_seq", initialValue=1, allocationSize=1)
+	@Column(name="id", unique=true, nullable=false)
+	protected Integer id;
 
-	private String apellido;
+	protected String apellido;
 
-	private String cedula;
+	@Column(name="cedula", unique=true, nullable=false)
+	protected String cedula;
 
-	private String correo;
+	protected String correo;
 
-	private String direccion;
+	protected String direccion;
 
-	private String nombre;
+	protected String nombre;
 	
-	private String telefono;
+	protected String telefono;
 	
 	//bi-directional many-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
-	private Usuario usuario;
+	protected Usuario usuario;
 
 	public Persona() {
+	}
+	
+	public Persona(Persona persona){
+		this(persona.getId(), persona.getApellido(), persona.getCedula(), persona.getCorreo(),
+				persona.getDireccion(), persona.getNombre(), persona.getTelefono(), persona.getUsuario());
+	}
+
+	public Persona(Integer id, String apellido, String cedula, String correo,
+			String direccion, String nombre, String telefono, Usuario usuario) {
+		super();
+		this.id = id;
+		this.apellido = apellido;
+		this.cedula = cedula;
+		this.correo = correo;
+		this.direccion = direccion;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.usuario = usuario;
 	}
 
 	public Integer getId() {
