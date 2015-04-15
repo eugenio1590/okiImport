@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,8 +32,12 @@ public class MarcaVehiculo implements Serializable {
 	//bi-directional many-to-one association to Requerimiento
 	@OneToMany(mappedBy="marcaVehiculo")
 	private List<Requerimiento> requerimientos;
+	
+	@ManyToMany(mappedBy="marcaVehiculos", fetch=FetchType.LAZY)
+	private List<Proveedor> proveedores;
 
 	public MarcaVehiculo() {
+		proveedores=new ArrayList<Proveedor>();
 	}
 
 	public Integer getIdMarcaVehiculo() {
@@ -80,4 +85,14 @@ public class MarcaVehiculo implements Serializable {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
+
+	public List<Proveedor> getProveedores() {
+		return proveedores;
+	}
+
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
+	}
+	
+	
 }

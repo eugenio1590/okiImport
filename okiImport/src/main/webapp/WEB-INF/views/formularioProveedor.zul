@@ -109,11 +109,11 @@
 												<toolbarbutton
 													height="45px"
 													image="resources/img/icons/ButtonArrowRight32.png"
-													tooltiptext="Agregar Marcas a Vender"
+													tooltiptext="Agregar Marcas a Vender" onClick = "@command('agregarMarcas')"
 													 />
 											</toolbar>
 											<listbox id="gridMarcas"
-											    mold="paging" checkmark="true"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.marcaSeleccionadas)"
 												multiple="true" model="@load(vm.listaMarcaVehiculos)">
 												<!--
 												<auxhead
@@ -180,12 +180,12 @@
 												<toolbarbutton
 													height="45px"
 													image="resources/img/icons/ButtonArrowLeft32.png"
-													tooltiptext="Remover Marcas a Vender"
+													tooltiptext="Remover Marcas a Vender" onClick = "@command('eliminarMarcas')"
 									                 />
 											</toolbar>
 											<listbox
-												id="gridMarcasVender" 
-												mold="paging" checkmark="true" multiple="true"
+												id="gridMarcasVender" model="@load(vm.proveedor.marcaVehiculos)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.marcaSeleccionadas)"
 												>
 												<!-- 
 													<frozen columns="1"/>
@@ -199,13 +199,8 @@
 													name="model">
 													<listitem>
 														<listcell
-															label="" />
-														<listcell
-															label="" />
-														<listcell>
-															<textbox
-																value="" />
-														</listcell>
+															label="@bind(each.nombre)" />
+														
 													</listitem>
 												</template>
 											</listbox>
@@ -235,33 +230,12 @@
 												<toolbarbutton
 													height="45px"
 													image="resources/img/icons/ButtonArrowRight32.png"
-													tooltiptext="Agregar Tipo Repuesto a Vender"
+													tooltiptext="Agregar Tipo Repuesto a Vender" onClick = "@command('agregarTipoRepuesto')"
 													 />
 											</toolbar>
-											<listbox id="gridClasificacionRepuesto"
-											    mold="paging" checkmark="true"
+											<listbox id="gridClasificacionRepuesto" model="@load(vm.listaClasificacionRepuesto)"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
 												multiple="true">
-												<auxhead
-													sclass="nombre-center">
-													<auxheader
-														colspan="1">
-														<!-- 
-															<image src="resources/iconos/filtro.png" />
-														-->
-														<textbox
-															 instant="true"
-															 width="100px" />
-													</auxheader>
-													<auxheader
-														colspan="1">
-														<!-- 
-															<image src="resources/iconos/filtro.png" />
-														-->
-													</auxheader>
-												</auxhead>
-												<!-- 
-													<frozen columns="1"/>
-												-->
 												<listhead
 													menupopup="auto">
 
@@ -272,15 +246,14 @@
 													name="model">
 													<listitem>
 														<listcell
-															label="" />
-														<listcell
-															label="" />
+															label="@bind(each.descripcion)" />
+														
 													</listitem>
 												</template>
 
 											</listbox>
 											<paging id="pagTipoRepuestos"
-												 autohide="true" />
+												 autohide="true" onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
 										</vlayout>
 									</west>
 									<!-- 
@@ -305,16 +278,13 @@
 												<toolbarbutton
 													height="45px"
 													image="resources/img/icons/ButtonArrowLeft32.png"
-													tooltiptext="Remover Tipo de Repuesto a Vender"
+													tooltiptext="Remover Tipo de Repuesto a Vender" onClick = "@command('eliminarTipoRepuesto')"
 									                 />
 											</toolbar>
 											<listbox
-												id="gridTipoRepuestosVender" 
-												mold="paging" checkmark="true" multiple="true"
+												id="gridTipoRepuestosVender" model="@load(vm.proveedor.clasificacionRepuestos)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
 												>
-												<!-- 
-													<frozen columns="1"/>
-												-->
 												<listhead
 													menupopup="auto">
 													<listheader
@@ -324,13 +294,8 @@
 													name="model">
 													<listitem>
 														<listcell
-															label="" />
-														<listcell
-															label="" />
-														<listcell>
-															<textbox
-																value="" />
-														</listcell>
+															label="@bind(each.descripcion)" />
+														
 													</listitem>
 												</template>
 											</listbox>

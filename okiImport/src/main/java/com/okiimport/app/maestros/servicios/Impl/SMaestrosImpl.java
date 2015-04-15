@@ -11,7 +11,9 @@ import com.okiimport.app.maestros.dao.MarcaVehiculoDAO;
 import com.okiimport.app.maestros.dao.MotorDAO;
 import com.okiimport.app.maestros.dao.ProveedorDAO;
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
@@ -76,6 +78,12 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Proveedor registrarProveedor(Proveedor proveedor) {
+		for(ClasificacionRepuesto clasificacion : proveedor.getClasificacionRepuestos()){
+			clasificacion.getProveedores().add(proveedor);
+		}
+		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos()) {
+			marca.getProveedores().add(proveedor);
+		}
 	   return proveedorDAO.save(proveedor);
 	}
 	

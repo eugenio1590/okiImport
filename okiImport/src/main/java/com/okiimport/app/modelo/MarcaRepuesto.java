@@ -22,9 +22,6 @@ public class MarcaRepuesto implements Serializable {
 	
 	private String nombre;
 	
-	@ManyToMany(mappedBy="marcaRepuestos", fetch=FetchType.LAZY)
-	private List<Proveedor> proveedors;
-	
 	public MarcaRepuesto() {
 	}
 
@@ -43,13 +40,4 @@ public class MarcaRepuesto implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public List<Proveedor> getProveedors() {
-		return proveedors;
-	}
-
-	public void setProveedors(List<Proveedor> proveedors) {
-		this.proveedors = proveedors;
-	}
-
 }

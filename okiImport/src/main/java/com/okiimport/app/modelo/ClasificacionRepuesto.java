@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -28,8 +29,12 @@ public class ClasificacionRepuesto implements Serializable {
 	
 	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY)
 	private List<DetalleRequerimiento> detalleRequerimientos;
+	
+	@ManyToMany(mappedBy="clasificacionRepuestos", fetch=FetchType.LAZY)
+	private List<Proveedor> proveedores;
 
 	public ClasificacionRepuesto() {
+		proveedores = new ArrayList<Proveedor>();
 	}
 
 	public Integer getIdClasificacionRepuesto() {
@@ -78,5 +83,15 @@ public class ClasificacionRepuesto implements Serializable {
 
 		return detalleRequerimiento;
 	}
+
+	public List<Proveedor> getProveedores() {
+		return proveedores;
+	}
+
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
+	}
+	
+	
 
 }
