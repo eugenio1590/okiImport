@@ -116,12 +116,10 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Proveedor registrarProveedor(Proveedor proveedor) {
-		for(ClasificacionRepuesto clasificacion : proveedor.getClasificacionRepuestos()){
+		for(ClasificacionRepuesto clasificacion : proveedor.getClasificacionRepuestos())
 			clasificacion.getProveedores().add(proveedor);
-		}
-		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos()) {
+		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos())
 			marca.getProveedores().add(proveedor);
-		}
 	   return proveedorDAO.save(proveedor);
 	}
 	

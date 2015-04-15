@@ -36,17 +36,17 @@ public class Proveedor extends Persona implements Serializable {
 
 
 	//bi-directional many-to-many association to MarcaRepuesto
-		@ManyToMany(fetch=FetchType.LAZY)
-		@JoinTable(
-			name="proveedor_clasificacion_repuesto"
-			, joinColumns={
-					@JoinColumn(name="id_proveedor")
-			}
-			, inverseJoinColumns={
-					@JoinColumn(name="id_clasificacion_repuesto")
-			}
-		)
-		private List<ClasificacionRepuesto> clasificacionRepuestos;
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+		name="proveedor_clasificacion_repuesto"
+		, joinColumns={
+				@JoinColumn(name="id_proveedor")
+		}
+		, inverseJoinColumns={
+				@JoinColumn(name="id_clasificacion_repuesto")
+		}
+	)
+	private List<ClasificacionRepuesto> clasificacionRepuestos;
 		
 	public Proveedor() {
 		marcaVehiculos = new ArrayList<MarcaVehiculo>();
@@ -81,11 +81,8 @@ public class Proveedor extends Persona implements Serializable {
 		return clasificacionRepuestos;
 	}
 
-
 	public void setClasificacionRepuestos(
 			List<ClasificacionRepuesto> clasificacionRepuestos) {
 		this.clasificacionRepuestos = clasificacionRepuestos;
 	}
-	
-	
 }
