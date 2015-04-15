@@ -31,7 +31,7 @@ public class Cliente extends Persona implements Serializable {
 		super(persona);
 	}
 	
-	public Cliente(String cedula) {
+	public Cliente(String cedula){
 		super.cedula = cedula;
 	}
 	

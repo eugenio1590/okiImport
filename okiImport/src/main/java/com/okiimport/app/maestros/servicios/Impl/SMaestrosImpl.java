@@ -14,8 +14,10 @@ import com.okiimport.app.maestros.dao.MotorDAO;
 import com.okiimport.app.maestros.dao.ProveedorDAO;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
@@ -51,8 +53,8 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	public Map<String, Object> ConsultarMarca(Integer page, Integer limit) {
 		// TODO Auto-generated method stub
 		Map<String, Object> Parametros= new HashMap<String, Object>();
-		Parametros.put("total", ((Long)marcaVehiculoDAO.countAll()).intValue());
-		Parametros.put("marcas", marcaVehiculoDAO.findAll(page*limit, limit));
+		Parametros.put("total", marcaVehiculoDAO.listaMarcasVehiculosActivas(0, -1).size());
+		Parametros.put("marcas", marcaVehiculoDAO.listaMarcasVehiculosActivas(page*limit, limit));
 		return Parametros;
 	}
 	
@@ -114,6 +116,12 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Proveedor registrarProveedor(Proveedor proveedor) {
+		for(ClasificacionRepuesto clasificacion : proveedor.getClasificacionRepuestos()){
+			clasificacion.getProveedores().add(proveedor);
+		}
+		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos()) {
+			marca.getProveedores().add(proveedor);
+		}
 	   return proveedorDAO.save(proveedor);
 	}
 	

@@ -1,75 +1,325 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormularioRequerimiento" border="none" width="60%"
-		apply="org.zkoss.bind.BindComposer">
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')"
+		form="@id('fx') @load(vm.proveedor) @save(vm.proveedor, before='registrar')">
 		<n:h3>Registrese Como Proveedor</n:h3>
 		<groupbox>
-			<groupbox>
-				<caption label="Datos Fiscales" />
-				<div>
-					<grid>
-						<columns>
-							<column width="35%" align="right" />
-							<column width="65%" />
-							<column width="35%" align="right" />
-							<column width="65%" />
-						</columns>
+			<caption />
+			<tabbox id="tabDatosProveedor" height="80%">
+				<tabs id="tabs">
+					<tab id="tabDatosFiscales">
+						<label value="Datos Fiscales" />
+					</tab>
+					<tab id="tabMarcaVehiculo">
+						<label value="Marcas" />
+					</tab>
+					<tab id="tabClasificacionRepuesto">
+						<label value="Clasificación Repuestos" />
+					</tab>
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<groupbox>
 
-						<rows>
-							<row>
-								<label value="RIF: " />
+							<div>
 
-								<textbox id="cedulaRif" width="80%"
-									readonly="" mold="rounded" value=""
-									placeholder="Ej: J-40240537-5" maxlength="12"
-									constraint="no empty:El Campo No Debe Estar Vacio" />
+								<grid>
+									<columns>
+										<column width="35%"
+											align="right" />
+										<column width="65%" />
+										<column width="35%"
+											align="right" />
+										<column width="65%" />
+									</columns>
 
+									<rows>
+										<row>
+											<label value="RIF: " />
 
-								<label value="Nombre/Razón Social: " />
-
-								<textbox id="nombreRazonSocial"
-									width="80%" readonly="" mold="rounded" value=""
-									placeholder="Ej: Empresa C.A"
-									constraint="no empty:El Campo No Debe Estar Vacio" />
-							</row>
-
-							<row>
-
-								<label value="Teléfono: " />
-
-								<textbox id="telefono" width="80%"
-									readonly="" mold="rounded" value="" maxlength="11"
-									placeholder="Ej: 02512552233"
-									constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+											<textbox id="cedulaRif"
+												width="80%" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.cedula)"
+												placeholder="Ej: J-40240537-5" maxlength="12"
+												constraint="no empty:El Campo No Debe Estar Vacio" />
 
 
-								<label value="E-mail:" />
-								<textbox id="email" width="80%"
-									readonly="" mold="rounded"
-									value="" placeholder="Ej. fusa@gmail.com"
-									constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
-								</textbox>
-							</row>
-							<row>
+											<label
+												value="Nombre/Razón Social: " />
 
-								<label value="Dirección: " />
+											<textbox
+												id="nombreRazonSocial" width="80%" readonly=""
+												mold="rounded" value="@bind(vm.proveedor.nombre)"
+												placeholder="Ej: Empresa C.A"
+												constraint="no empty:El Campo No Debe Estar Vacio" />
+										</row>
 
-								<textbox id="direccion" width="80%"
-									rows="3" cols="35" readonly="" mold="rounded" value=""
-									placeholder="Ej: zona industrial 2 "
-									constraint="no empty:El Campo No Debe Estar Vacio" />
+										<row>
 
-							</row>
+											<label value="Teléfono: " />
 
-						</rows>
-					</grid>
-				</div>
-			</groupbox>
+											<textbox id="telefono"
+												width="80%" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.telefono)" maxlength="11"
+												placeholder="Ej: 02512552233"
+												constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+
+
+											<label value="E-mail:" />
+											<textbox id="email"
+												width="80%" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.correo)"
+												placeholder="Ej. fusa@gmail.com"
+												constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
+											</textbox>
+
+
+										</row>
+										<row>
+
+											<label value="Dirección: " />
+
+											<textbox id="direccion"
+												width="80%" rows="3" cols="35" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.direccion)"
+												placeholder="Ej: zona industrial 2 "
+												constraint="no empty:El Campo No Debe Estar Vacio" />
+
+										</row>
+
+
+									</rows>
+								</grid>
+							</div>
+						</groupbox>
+					</tabpanel>
+					<tabpanel>
+
+						<groupbox>
+
+							<div>
+
+								<borderlayout width="100%"
+									height="350px">
+									<west width="300px"
+										title="Marcas" collapsible="true">
+										<vlayout>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowRight32.png"
+													tooltiptext="Agregar Marcas a Vender" onClick = "@command('agregarMarcas')"
+													 />
+											</toolbar>
+											<listbox id="gridMarcas"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.marcaSeleccionadas)"
+												multiple="true" model="@load(vm.listaMarcaVehiculos)">
+												<!--
+												<auxhead
+													sclass="nombre-center">
+													<auxheader
+														colspan="1">
+														 
+															<image src="resources/iconos/filtro.png" />
+														
+														<textbox
+															 instant="true"
+															 width="100px" />
+													</auxheader>
+													<auxheader
+														colspan="1">
+														
+															<image src="resources/iconos/filtro.png" />
+														
+														
+													</auxheader>
+												</auxhead>-->
+												<!-- 
+													<frozen columns="1"/>
+												-->
+												<listhead
+													menupopup="auto">
+
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.nombre)" />
+														
+													</listitem>
+												</template>
+
+											</listbox>
+											<paging id="pagMarcas"
+												 autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
+										</vlayout>
+									</west>
+									<!-- 
+										<center>
+										<div class="actionColumn">
+										<image sclass="pointer" tooltiptext="Add Project"
+										src="resources/img/icons/ButtonArrowRight32.png"
+										onClick="@command('agregarArticulos')">
+										</image>
+										<separator height="15px" />
+										<image sclass="pointer" tooltiptext="Remove Project"
+										src="resources/img/icons/ButtonArrowLeft32.png"
+										onClick="@command('removerArticulos')">
+										</image>
+										</div>
+										</center>  width="43.75%"
+									-->
+									<east id="borderEast"
+										title="Marcas a Vender" width="62.5%">
+										<div>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowLeft32.png"
+													tooltiptext="Remover Marcas a Vender" onClick = "@command('eliminarMarcas')"
+									                 />
+											</toolbar>
+											<listbox
+												id="gridMarcasVender" model="@load(vm.proveedor.marcaVehiculos)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.marcaSeleccionadas)"
+												>
+												<!-- 
+													<frozen columns="1"/>
+												-->
+												<listhead
+													menupopup="auto">
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.nombre)" />
+														
+													</listitem>
+												</template>
+											</listbox>
+											<!-- 
+												<paging id="pagArticulosCompra"
+												onPaging="@command('paginarLista')" autohide="true" />
+											-->
+										</div>
+									</east>
+								</borderlayout>
+							</div>
+						</groupbox>
+
+					</tabpanel>
+					<tabpanel>
+
+						<groupbox>
+
+							<div>
+
+								<borderlayout width="100%"
+									height="350px">
+									<west width="300px"
+										title="Tipo de Repuestos" collapsible="true">
+										<vlayout>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowRight32.png"
+													tooltiptext="Agregar Tipo Repuesto a Vender" onClick = "@command('agregarTipoRepuesto')"
+													 />
+											</toolbar>
+											<listbox id="gridClasificacionRepuesto" model="@load(vm.listaClasificacionRepuesto)"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
+												multiple="true">
+												<listhead
+													menupopup="auto">
+
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.descripcion)" />
+														
+													</listitem>
+												</template>
+
+											</listbox>
+											<paging id="pagTipoRepuestos"
+												 autohide="true" onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+										</vlayout>
+									</west>
+									<!-- 
+										<center>
+										<div class="actionColumn">
+										<image sclass="pointer" tooltiptext="Add Project"
+										src="resources/img/icons/ButtonArrowRight32.png"
+										onClick="@command('agregarArticulos')">
+										</image>
+										<separator height="15px" />
+										<image sclass="pointer" tooltiptext="Remove Project"
+										src="resources/img/icons/ButtonArrowLeft32.png"
+										onClick="@command('removerArticulos')">
+										</image>
+										</div>
+										</center>  width="43.75%"
+									-->
+									<east id="borderEast2"
+										title="Tipo de Repuestos a Vender" width="62.5%">
+										<div>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowLeft32.png"
+													tooltiptext="Remover Tipo de Repuesto a Vender" onClick = "@command('eliminarTipoRepuesto')"
+									                 />
+											</toolbar>
+											<listbox
+												id="gridTipoRepuestosVender" model="@load(vm.proveedor.clasificacionRepuestos)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
+												>
+												<listhead
+													menupopup="auto">
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.descripcion)" />
+														
+													</listitem>
+												</template>
+											</listbox>
+											<!-- 
+												<paging id="pagArticulosCompra"
+												onPaging="@command('paginarLista')" autohide="true" />
+											-->
+										</div>
+									</east>
+								</borderlayout>
+							</div>
+						</groupbox>
+
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
 		</groupbox>
-		
+
 
 		<div sclass="btn btn-sm btn-info" align="right">
-			<button label="Limpiar" type="submit" />
-			<button label="Enviar" type="submit" />
+			<button label="Limpiar" type="submit"
+				onClick="@command('limpiar')" />
+			<button label="Enviar" type="submit"
+				onClick="@command('registrar')" />
 		</div>
 	</window>
 </zk>

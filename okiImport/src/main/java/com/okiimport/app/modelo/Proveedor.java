@@ -1,6 +1,8 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -18,21 +20,37 @@ public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String estatus;
-	
+		
 	//bi-directional many-to-many association to MarcaRepuesto
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
-		name="proveedor_marca_repuesto"
+		name="proveedor_marca_vehiculo"
 		, joinColumns={
 				@JoinColumn(name="id_proveedor")
 		}
 		, inverseJoinColumns={
-				@JoinColumn(name="id_marca_repuesto")
+				@JoinColumn(name="id_marca_vehiculo")
 		}
 	)
-	private List<MarcaRepuesto> marcaRepuestos;
+	private List<MarcaVehiculo> marcaVehiculos;
 
+
+	//bi-directional many-to-many association to MarcaRepuesto
+		@ManyToMany(fetch=FetchType.LAZY)
+		@JoinTable(
+			name="proveedor_clasificacion_repuesto"
+			, joinColumns={
+					@JoinColumn(name="id_proveedor")
+			}
+			, inverseJoinColumns={
+					@JoinColumn(name="id_clasificacion_repuesto")
+			}
+		)
+		private List<ClasificacionRepuesto> clasificacionRepuestos;
+		
 	public Proveedor() {
+		marcaVehiculos = new ArrayList<MarcaVehiculo>();
+		clasificacionRepuestos = new ArrayList<ClasificacionRepuesto>();
 	}
 	
 	public Proveedor(Persona persona) {
@@ -51,11 +69,23 @@ public class Proveedor extends Persona implements Serializable {
 		this.estatus = estatus;
 	}
 
-	public List<MarcaRepuesto> getMarcaRepuestos() {
-		return marcaRepuestos;
+	public List<MarcaVehiculo> getMarcaVehiculos() {
+		return marcaVehiculos;
 	}
 
-	public void setMarcaRepuestos(List<MarcaRepuesto> marcaRepuestos) {
-		this.marcaRepuestos = marcaRepuestos;
+	public void setMarcaVehiculos(List<MarcaVehiculo> marcaVehiculos) {
+		this.marcaVehiculos = marcaVehiculos;
 	}
+
+	public List<ClasificacionRepuesto> getClasificacionRepuestos() {
+		return clasificacionRepuestos;
+	}
+
+
+	public void setClasificacionRepuestos(
+			List<ClasificacionRepuesto> clasificacionRepuestos) {
+		this.clasificacionRepuestos = clasificacionRepuestos;
+	}
+	
+	
 }
