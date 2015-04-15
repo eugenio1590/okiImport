@@ -1,12 +1,37 @@
-<h:form id="formLogin" action="/app/login" method="POST"
-	xmlns:h="http://www.w3.org/1999/xhtml">
-	<vbox>
-		<label style="color:red;" value="Datos Invalidos!!!" if="${not empty param.auth}" />
-		Usuario:
-		<textbox id="username" name="j_username" />
-		Clave:
-		<textbox id="password" name="j_password" type="password" />
-		<checkbox id="remember_me" name="remember-me" label="Remember Me" />
-		<button label="Iniciar Session" type="submit" />
-	</vbox>
+
+<?link href="/resources/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+
+<zk> 
+<h:form id="formLogin" action="/app/login" method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
+	<div  width="300px" height="300px" sclass="alert alert-info">
+		<grid>
+			<columns>
+			  <column label="" />
+			</columns>
+			<rows>
+				<row align="center">
+					<vlayout spacing="15px">
+						<image src="/resources/img/user1.png"
+							width="70px" height="70px"/>
+							
+						<div class="input-group">
+							<span class="input-group-addon"></span>
+							<textbox class="form-control"
+								placeholder="Usuario o Email" id="username" name="j_username" width="100%" height="40px" />
+						</div>
+
+						<textbox id="password"  name="j_password" type="password" class="form-control"
+							placeholder="Contraseña" width="100%" height="40px" />
+							
+					   <checkbox id="remember_me" name="remember-me" label="Remember Me" />
+
+					   <button label="Iniciar Session" type="submit" 
+					   sclass="btn-primary" width="100%" height="40px" />
+							
+					</vlayout>
+				</row>
+			</rows>
+		</grid>
+	</div>
 </h:form>
+</zk>

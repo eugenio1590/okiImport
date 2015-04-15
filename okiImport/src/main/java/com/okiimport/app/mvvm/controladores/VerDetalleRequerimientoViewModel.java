@@ -4,20 +4,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.controladores.seguridad.configuracion.EditarUsuarioViewModel;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class VerDetalleRequerimientoViewModel extends AbstractViewModel  {
@@ -37,12 +43,54 @@ public class VerDetalleRequerimientoViewModel extends AbstractViewModel  {
 	
 	
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{
 		super.doAfterCompose(view);
 		//cliente = new Cliente();	
-		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
+		//listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
+		//requerimiento = (Requerimiento) cliente.getRequerimientos();
+		//Usuario usuario = cliente.getUsuario();
+		//this.cliente = cliente;
+		this.requerimiento = requerimiento;
+		
+		
+		
+		
 	}
+	
+	/*public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("usuario") Usuario usuario)
+	{
+		super.doAfterCompose(view);
+		persona = usuario.getPersona();
+		this.usuario = usuario;
+		this.usuario.setPasword(null);
+		username = this.usuario.getUsername();
+		
+		btnCambFoto.addEventListener("onUpload", this);
+		
+		validadorUsername = new AbstractValidator() {
+			
+			@Override
+			public void validate(ValidationContext ctx) {
+				// TODO Auto-generated method stub
+				String username = (String) ctx.getProperty().getValue();
+				txtUsername = (Textbox) ctx.getBindContext().getValidatorArg("txtUsername");
+				if(username!=null)
+					if(sControlUsuario.verificarUsername(username) && 
+							!username.equalsIgnoreCase(EditarUsuarioViewModel.this.username)){
+						String mensaje = "El Username "+username+" ya esta en uso!";
+						mostrarNotification(mensaje, "error", 5000, true, txtUsername);
+						addInvalidMessage(ctx, mensaje);
+					}
+			}
+		};
+	}*/
+	
+	
+	
+	
+	
 	
 	
 	public Requerimiento getRequerimiento() {

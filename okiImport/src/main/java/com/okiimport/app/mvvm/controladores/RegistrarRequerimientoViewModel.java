@@ -78,19 +78,20 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 	@Command
 	@NotifyChange({"requerimiento","cliente"})
 	public void registrar(){
-		cliente = sMaestros.registrarOActualizarCliente(cliente);
-		requerimiento.setCliente(cliente);
-		if(traccion!=null)
-			requerimiento.setTraccionV(traccion.getValor());
-		if(transmision!=null)
-			requerimiento.setTransmisionV(transmision.getValor());
-		if (requerimiento.getDetalleRequerimientos().size() > 0 && checkIsFormValid()){
-		sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
-		
-		String str = "El Requerimiento ha sido registrado existosamente ";
+		if(checkIsFormValid()){
+			cliente = sMaestros.registrarOActualizarCliente(cliente);
+			requerimiento.setCliente(cliente);
+			if(traccion!=null)
+				requerimiento.setTraccionV(traccion.getValor());
+			if(transmision!=null)
+				requerimiento.setTransmisionV(transmision.getValor());
+			if (requerimiento.getDetalleRequerimientos().size() > 0){
+				sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
 
-		Messagebox.show(str, "Informacion", Messagebox.OK,
-				Messagebox.INFORMATION, new EventListener() {
+				String str = "El Requerimiento ha sido registrado existosamente ";
+
+				Messagebox.show(str, "Informacion", Messagebox.OK,
+						Messagebox.INFORMATION, new EventListener() {
 					public void onEvent(Event event) throws Exception {
 						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
@@ -98,8 +99,9 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 						}
 					}
 				});
+			}
+			else mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
 		}
-		else mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
 		
 	}
 	

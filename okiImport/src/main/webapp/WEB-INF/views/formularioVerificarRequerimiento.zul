@@ -3,8 +3,8 @@
 <window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
 
 <window id= "ventanaCliente" border="normal" width="40%">
-        <label style="color:red;" value="Nro de Cedula Invalida o No posee Solicitudes!!!" if="${not empty param.auth}" />
-		Cédula: <textbox id="cedulaclie" value= "@bind(vm.cliente.cedula)" />   <button label="Enviar"  onClick= "@command('buscarCliente')" /> 
+        
+		Cédula: <textbox id="cedulaclie" value= "@bind(vm.cliente.cedula)" type="password"/>   <button label="Buscar"  onClick= "@command('buscarCliente')" sclass="btn-primary" /> 
 </window>
 
 <n:h3>Mis Solicitudes</n:h3>
@@ -31,7 +31,7 @@
 				</listheader>
 			    
 			    <listheader value="serialCarroceriaV" label="N° Serial" sort="auto(serialCarroceriaV)" width="150px" >
-				  <textbox value = "@bind(vm.requerimientoFiltro.serialCarroceriaV)"  constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
+				  <textbox value = "@bind(vm.requerimientoFiltro.serialCarroceriaV)"  constraint="no negative, no zero" instant="true" onChange="@command('aplicarFiltro')" width="100px"  />
 					<div sclass="z-icon-filter bigger-200"/>
 				</listheader>
 				

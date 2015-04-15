@@ -20,9 +20,9 @@
 				<div  sclass="breadcrumbs">
 					<div id="hrefEnlacesMenu"  sclass="breadcrumbs" align="right">
   						<!-- Search input-->
-  						<button label="Home" type="submit" onClick="@command('registrarRequerimiento')" />
-						<button label="Solicitar Ser Proveedor" type="submit" onClick="@command('registrarProveedor')" />
-						<button label="Verificar Requerimiento" type="submit" onClick="@command('verificarRequerimiento')" />
+  						<button label="Home" type="submit" onClick="@command('registrarRequerimiento')" sclass="btn-primary"/>
+						<button label="Solicitar Ser Proveedor" type="submit" onClick="@command('registrarProveedor')" sclass="btn-primary" />
+						<button label="Verificar Requerimiento" type="submit" onClick="@command('verificarRequerimiento')" sclass="btn-primary"/>
 					</div>
 				</div>
 				<div align="center" width="100%">

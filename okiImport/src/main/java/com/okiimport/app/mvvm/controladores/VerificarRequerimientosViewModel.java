@@ -126,7 +126,7 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 			
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("requerimiento", requerimiento);
-				llamarFormulario("verDetalleRequerimiento.zul", null);
+				llamarFormulario("verDetalleRequerimiento.zul", parametros);
 			
 		}
 		
