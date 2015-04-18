@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,13 +31,13 @@ public class Requerimiento implements Serializable {
 	private String estatus;
 
 	@Column(name="fecha_cierre", columnDefinition="date")
-	private Timestamp fechaCierre;
+	private Date fechaCierre;
 
 	@Column(name="fecha_creacion", columnDefinition="date")
-	private Timestamp fechaCreacion;
+	private Date fechaCreacion;
 
 	@Column(name="fecha_vencimiento", columnDefinition="date")
-	private Timestamp fechaVencimiento;
+	private Date fechaVencimiento;
 
 	@Column(name="modelo_v")
 	private String modeloV;
@@ -76,6 +77,10 @@ public class Requerimiento implements Serializable {
 
 	public Requerimiento() {
 	}
+	
+	public Requerimiento(Cliente cliente){
+		this.cliente = cliente;
+	}
 
 	public Integer getIdRequerimiento() {
 		return this.idRequerimiento;
@@ -101,27 +106,27 @@ public class Requerimiento implements Serializable {
 		this.estatus = estatus;
 	}
 
-	public Timestamp getFechaCierre() {
+	public Date getFechaCierre() {
 		return this.fechaCierre;
 	}
 
-	public void setFechaCierre(Timestamp fechaCierre) {
+	public void setFechaCierre(Date fechaCierre) {
 		this.fechaCierre = fechaCierre;
 	}
 
-	public Timestamp getFechaCreacion() {
+	public Date getFechaCreacion() {
 		return this.fechaCreacion;
 	}
 
-	public void setFechaCreacion(Timestamp fechaCreacion) {
+	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 
-	public Timestamp getFechaVencimiento() {
+	public Date getFechaVencimiento() {
 		return this.fechaVencimiento;
 	}
 
-	public void setFechaVencimiento(Timestamp fechaVencimiento) {
+	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
 

@@ -1,10 +1,12 @@
 package com.okiimport.app.dao.impl;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 
 
@@ -33,6 +35,7 @@ import javax.persistence.metamodel.EntityType;
 
 
 
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 //import org.hibernate.annotations.common.util.impl.Log_.logger;
@@ -49,6 +52,8 @@ import com.okiimport.app.dao.IGenericDao;
 public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T, ID> {
 	
 	private static final Logger logger =  LoggerFactory.getLogger(AbstractJpaDao.class);
+	
+	protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	private Class<T> persistenceClass = null;
 	

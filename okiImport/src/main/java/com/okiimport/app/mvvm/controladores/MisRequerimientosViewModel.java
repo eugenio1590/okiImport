@@ -22,9 +22,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
@@ -52,11 +50,14 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	private static final int PAGE_SIZE = 3;
 	
 	private Usuario usuario;
+	
+	private Requerimiento requerimientoFiltro;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
+		requerimientoFiltro = new Requerimiento(new Cliente());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
@@ -84,7 +85,8 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		System.out.println(usuario==null);
-		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(null, fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
+		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(requerimientoFiltro, 
+				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridMisRequerimientos.setMultiple(true);
@@ -93,7 +95,7 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		pagMisRequerimientos.setTotalSize(total);
 	}
 	
-
+	/**COMMAND*/
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
@@ -101,7 +103,19 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		cambiarRequerimientos(page, null, null);
 	}
 	
+	@Command
+	@NotifyChange("listaRequerimientos")
+	public void aplicarFiltro(){
+		cambiarRequerimientos(0, null, null);
+	}
 	
+	@Command
+	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+	}
+	
+	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -122,9 +136,16 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		return sControlUsuario;
 	}
 
-
 	public void setsControlUsuario(SControlUsuario sControlUsuario) {
 		this.sControlUsuario = sControlUsuario;
+	}
+
+	public Requerimiento getRequerimientoFiltro() {
+		return requerimientoFiltro;
+	}
+
+	public void setRequerimientoFiltro(Requerimiento requerimientoFiltro) {
+		this.requerimientoFiltro = requerimientoFiltro;
 	}
 
 }

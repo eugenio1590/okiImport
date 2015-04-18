@@ -11,6 +11,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
+import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 
@@ -40,6 +41,7 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 				List<Predicate> restricciones = new ArrayList<Predicate>();
 		
 				restricciones.add(criteriaBuilder.equal(joins.get("analista").get("id"),idusuario));
+				agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 				
 	    //4. Creamos los campos de ordenamiento y ejecutamos
 				List<Order> orders = new ArrayList<Order>();
@@ -74,7 +76,7 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 				List<Predicate> restricciones = new ArrayList<Predicate>();
 		
 				restricciones.add(criteriaBuilder.equal(joins.get("cliente").get("cedula"),cedula));
-				agregarRestriccionesFiltros(restricciones, regFiltro);
+				agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 				
 	    //4. Creamos los campos de ordenamiento y ejecutamos
 				Map<String, Boolean> orders = new HashMap<String, Boolean>();
@@ -94,7 +96,7 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start,limit);
 	}
 	
-	private void agregarRestriccionesFiltros (List<Predicate> restricciones,Requerimiento regFiltro  )
+	private void agregarRestriccionesFiltros (List<Predicate> restricciones,Requerimiento regFiltro, Map<String, Join> joins)
 	{
 		
 		if (regFiltro != null )
@@ -108,7 +110,7 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 			if (regFiltro.getFechaCreacion() != null)
 			{
 				restricciones.add(this.criteriaBuilder.like(this.entity.get("fechaCreacion").as(String.class),
-						"%" + String.valueOf(regFiltro.getFechaCreacion()) +"%") );
+						"%" + dateFormat.format(regFiltro.getFechaCreacion()) +"%") );
 			}
 
 			if (regFiltro.getModeloV() != null)
@@ -121,6 +123,16 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 			{
 				restricciones.add(this.criteriaBuilder.like(this.entity.get("serialCarroceriaV").as(String.class),
 						"%" + String.valueOf(regFiltro.getSerialCarroceriaV()) +"%"));
+			}
+			
+			if(joins!=null){
+				//Cliente
+				Cliente cliente = regFiltro.getCliente();
+				if (cliente!=null && joins.get("cliente")!=null){
+					if(cliente.getNombre()!=null)
+						restricciones.add(this.criteriaBuilder.like(joins.get("cliente").get("nombre").as(String.class),
+								"%" + String.valueOf(cliente.getNombre()) +"%" ) ) ;
+				}
 			}
 		}
 	}

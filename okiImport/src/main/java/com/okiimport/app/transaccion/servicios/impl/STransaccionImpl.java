@@ -1,6 +1,5 @@
 package com.okiimport.app.transaccion.servicios.impl;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,8 +50,8 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Date fechaCreacion = calendar.getTime();
 		Date fechaVencimiento = sumarORestarFDia(fechaCreacion, 15);
 		asignarRequerimiento(requerimiento, sMaestros);
-		requerimiento.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
-		requerimiento.setFechaVencimiento(new Timestamp(fechaVencimiento.getTime()));
+		requerimiento.setFechaCreacion(fechaCreacion);
+		requerimiento.setFechaVencimiento(fechaVencimiento);
 		requerimiento.setEstatus("CR");
 		requerimiento = requerimientoDAO.save(requerimiento);
 		for(DetalleRequerimiento detalle:requerimiento.getDetalleRequerimientos()){
