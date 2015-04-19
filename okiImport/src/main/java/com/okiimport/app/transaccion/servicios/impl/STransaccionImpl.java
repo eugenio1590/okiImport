@@ -61,6 +61,11 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		return requerimiento;
 	}
+	
+	@Override
+	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento){
+		return this.requerimientoDAO.update(requerimiento);
+	}
 
 	@Override
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {

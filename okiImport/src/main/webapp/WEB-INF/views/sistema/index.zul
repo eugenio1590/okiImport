@@ -4,6 +4,7 @@
 <?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/aplication.css" rel="stylesheet" type="text/css"?>
 <zk>
 	<borderlayout hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer">
 		

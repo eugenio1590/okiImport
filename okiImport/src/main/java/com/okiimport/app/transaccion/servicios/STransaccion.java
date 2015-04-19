@@ -8,6 +8,7 @@ import com.okiimport.app.modelo.Requerimiento;
 public interface STransaccion {
 	
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
+	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
 	public Map <String, Object> ConsultarMisRequerimientos(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,

@@ -113,6 +113,7 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/EditarRequerimiento.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

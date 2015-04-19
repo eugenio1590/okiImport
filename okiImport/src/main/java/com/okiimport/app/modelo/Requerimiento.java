@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -72,10 +73,11 @@ public class Requerimiento implements Serializable {
 	private Motor motor;
 	
 	//bi-directional many-to-one association to DetalleRequerimiento
-	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<DetalleRequerimiento> detalleRequerimientos;
 
 	public Requerimiento() {
+		detalleRequerimientos = new ArrayList<DetalleRequerimiento>();
 	}
 	
 	public Requerimiento(Cliente cliente){
@@ -215,6 +217,21 @@ public class Requerimiento implements Serializable {
 		detalleRequerimiento.setRequerimiento(null);
 
 		return detalleRequerimiento;
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String determinarTransmision(){
+		String texto = null;
+		if(transmisionV!=null)
+			texto = (transmisionV) ? "Automatico" : "Sincronico";
+		return texto;
+	}
+	
+	public String determinarTraccion(){
+		String texto = null;
+		if(traccionV!=null)
+			texto = (traccionV) ? "4x2" : "4x4";
+		return texto;
 	}
 
 }
