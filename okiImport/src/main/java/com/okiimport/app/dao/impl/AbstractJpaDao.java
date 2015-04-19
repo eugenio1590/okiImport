@@ -7,11 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
 //import javax.persistence.EntityManager;
 import org.hibernate.ejb.HibernateEntityManager;
 
@@ -29,12 +24,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
 import javax.persistence.metamodel.EntityType;
-
-
-
-
-
-
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -131,7 +120,7 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 	}
 	
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Throwable.class)
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public T save(T entity) {
 		HibernateEntityManager entityManager = this.getClassEntityManager();
 		entityManager.persist(entity);
@@ -139,7 +128,7 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 	}
 	
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Throwable.class)
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public T update(T entity) {
 		HibernateEntityManager entityManager = this.getClassEntityManager();
 		entityManager.merge(entity);
@@ -147,7 +136,7 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 	}
 	
 	@Override
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Throwable.class)
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void delete(T entity) {
 		HibernateEntityManager entityManager = this.getClassEntityManager();
 		entityManager.remove(entity);

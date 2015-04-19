@@ -57,7 +57,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		for(DetalleRequerimiento detalle:requerimiento.getDetalleRequerimientos()){
 			detalle.setRequerimiento(requerimiento);
 			detalle.setEstatus("activo");
-			detalleRequerimientoDAO.save(detalle);
+			detalleRequerimientoDAO.update(detalle);
 		}
 		return requerimiento;
 	}
