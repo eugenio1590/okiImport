@@ -31,6 +31,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class MisRequerimientosViewModel extends AbstractViewModel implements EventListener<SortEvent>{
 	
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
@@ -50,7 +51,6 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	private static final int PAGE_SIZE = 3;
 	
 	private Usuario usuario;
-	
 	private Requerimiento requerimientoFiltro;
 
 	@AfterCompose
@@ -79,12 +79,19 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	}
 	
 	/**GLOBAL COMMAND*/
+	/*
+	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
+	 * @param fieldSort: campo de ordenamiento, puede ser nulo
+	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
+	 * Retorno: Ninguno
+	 * */
 	@GlobalCommand
+	@SuppressWarnings("unchecked")
 	@NotifyChange("listaRequerimientos")
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		System.out.println(usuario==null);
 		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
@@ -96,6 +103,11 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	}
 	
 	/**COMMAND*/
+	/*
+	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
+	 * @param Ninguno
+	 * Retorno: Ninguno
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
@@ -103,12 +115,22 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		cambiarRequerimientos(page, null, null);
 	}
 	
+	/*
+	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
+	 * @param Ninguno
+	 * Retorno: Ninguno
+	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
 	public void aplicarFiltro(){
 		cambiarRequerimientos(0, null, null);
 	}
 	
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
 	@Command
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();

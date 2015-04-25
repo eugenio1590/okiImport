@@ -49,6 +49,7 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 	private Requerimiento requerimiento;
 	
 	@AfterCompose
+	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{
@@ -62,12 +63,16 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 	//1.EventListener<ClickEvent>
 	@Override
 	public void onEvent(ClickEvent event) throws Exception {
-		// TODO Auto-generated method stub
 		winERequerimiento.detach();
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
 	/**COMMAND*/
+	/*
+	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique
+	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
+	 * Retorno: Ninguno
+	 * */
 	@Command
 	public void abrirDatosVehiculo(@Default("false") @BindingParam("justIcon") boolean justIcon){
 		boolean open = grpDatosVehiculo.isOpen();
@@ -79,6 +84,11 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
 	}
 	
+	/*
+	 * Descripcion: Permitira actualizar la informacion del requerimiento
+	 * @param Ninguno
+	 * Retorno: Ninguno
+	 * */
 	@Command
 	public void actualizar(){
 		if(checkIsFormValid()){
@@ -87,6 +97,7 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 		}
 	}
 	
+	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
