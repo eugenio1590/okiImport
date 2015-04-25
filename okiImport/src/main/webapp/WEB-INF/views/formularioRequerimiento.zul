@@ -1,15 +1,16 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<script src="/resources/js/scriptParaFechas.js" />
-	<window id="winFormularioRequerimiento" border="none" width="95%"
+	<window id="winFormularioRequerimiento" border="normal" width="95%" sclass="btn-primary"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')"
-		form="@id('fx') @load(vm.requerimiento) @save(vm.requerimiento, before='registrar')">
-		<n:h3>Ingrese Su Requerimiento</n:h3>
+		form="@id('fx') @load(vm.requerimiento) @save(vm.requerimiento, before='registrar')" >
+		 
+		<n:h2> Ingrese Su Requerimiento</n:h2>
 		<groupbox>
 		<hbox>
 			<vbox>
 			<groupbox>
-				<caption label="Datos Personales" />
+				<caption label="Datos Personales"/>
 				<div>
 					<grid>
 						<columns>
@@ -64,7 +65,7 @@
 				<caption label="Datos Vehiculo" />
 						
 							<groupbox id="tabDatosVehiculo">
-								<caption label="Datos del Vehiculo" />
+								<caption label="Datos Basicos" />
 
 								<div>
 
@@ -199,8 +200,8 @@
 			<groupbox>
 			<div align="right">
 				<button label="Agregar Repuesto" type="submit"
-					onClick="@command('agregarRepuesto')" />
-					<button label="Eliminar Repuesto" type="submit"
+					onClick="@command('agregarRepuesto')" sclass="btn-primary"/>
+					<button label="Eliminar Repuesto" type="submit" sclass="btn-primary"
 					onClick="@command('eliminarRepuesto')" />
 					</div>
 				<caption label="Datos Repuestos" />
@@ -253,7 +254,7 @@
 										<div>
 											<image width="50px" height="50px" src="@bind(each.getFoto64())"  />
 											
-											<button label="..." sclass="btn-success" style="margin-bottom:0px"
+											<button label="..." sclass="btn-primary" style="margin-bottom:0px"
 												upload="true" onUpload="@command('cambiarFoto', media=event.media, detalle = each)"/>
 										</div>
 									</listcell>
@@ -267,11 +268,11 @@
 			</groupbox>
 			</hbox>
 		</groupbox>
-		<div sclass="btn btn-sm btn-info" align="right">
+		<div sclass="panel-footer" align="right">
 			<button label="Limpiar" type="submit"
-				onClick="@command('limpiar')" />
+				onClick="@command('limpiar')" sclass="btn-primary"/>
 			<button label="Enviar" type="submit"
-				onClick="@command('registrar')" />
+				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
 	</window>
 </zk>

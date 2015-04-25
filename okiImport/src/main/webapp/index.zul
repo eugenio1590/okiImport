@@ -34,7 +34,7 @@
 			
 		</center>
 		
-		<south height="30px" style="border-style: solid;">
+		<south height="30px" style="border-style: solid;"  sclass="btn-primary">
 			<!-- 
 			<include
 				src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />

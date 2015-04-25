@@ -2,7 +2,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 <window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
 
-<window id= "ventanaCliente" border="normal" width="40%">
+<window id= "ventanaCliente" border="normal" sclass="btn-primary" width="40%">
         
 		Cédula: <textbox id="cedulaclie" value= "@bind(vm.cliente.cedula)" type="password"/>   <button label="Buscar"  onClick= "@command('buscarCliente')" sclass="btn-primary" /> 
 </window>
@@ -44,13 +44,13 @@
 			       <listcell>
 			        <datebox format="dd/HH/yyyy - a hh:mm" value=" @bind(each.fechaCreacion)" readonly="true" buttonVisible="false" />
 			       </listcell>
-			       <listcell label="@bind(each.modeloV)" />
+			       <listcell label="@bind(each.modeloV)"/>
 			       <listcell label="@bind(each.serialCarroceriaV)"/>
 			       <listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
 								
-								<button image="/resources/img/icons/ic_see.png" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+								<a iconSclass="z-icon-book" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 								
 							</div>
 						</hbox>
