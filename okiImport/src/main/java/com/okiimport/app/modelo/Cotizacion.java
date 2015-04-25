@@ -2,12 +2,20 @@ package com.okiimport.app.modelo;
 
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="cotizacion")
 public class Cotizacion {
 	
+	@Id
 	private Integer id;
 	
+	@ManyToOne
+	@JoinColumn(name="id_proveedor")
 	private Proveedor proveedor;
 	
+	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
