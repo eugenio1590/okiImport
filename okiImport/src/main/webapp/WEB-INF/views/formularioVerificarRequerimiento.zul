@@ -50,7 +50,7 @@
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
 								
-								<a iconSclass="z-icon-book" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+								<button iconSclass="z-icon-pencil-square-o blue bigger-190" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 								
 							</div>
 						</hbox>
