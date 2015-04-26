@@ -11,7 +11,7 @@
 		    <space></space>
 		    <space></space> 
 		    <label value="Estado:" />
-		    <label value="@bind(vm.requerimiento.estatus)"/> 
+		    <label value="@bind(vm.requerimiento.determinarEstatus())"/> 
 		    
 		</div>
 			<groupbox closable="false">

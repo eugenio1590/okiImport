@@ -63,7 +63,9 @@
             </listitem>
          </template>
 		</listbox>
+		<div width="100%" align="left">
 		<paging id="pagRequerimientosCliente" onPaging="@command('paginarLista')" autohide="true" />
+		</div>
 		</div>
 </window>
 </zk>
