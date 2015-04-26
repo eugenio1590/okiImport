@@ -1,3 +1,4 @@
+
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosViewModel')">
@@ -65,4 +66,5 @@
 		<paging id="pagMisRequerimientos"
 			onPaging="@command('paginarLista')" autohide="true" />
 	</window>
+
 </zk>

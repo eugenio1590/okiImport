@@ -29,7 +29,7 @@ import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class MisRequerimientosViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class CotizacionesViewModel extends AbstractViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -38,14 +38,14 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
 
-	private List <Requerimiento> listaRequerimientos;
+	private List <Requerimiento> listaRequerimientosCotizados;
 	
 	//GUI
-	@Wire("#gridMisRequerimientos")
-	private Listbox gridMisRequerimientos;
+	@Wire("#gridRequerimientosCotizados")
+	private Listbox gridRequerimientosCotizados;
 	
-	@Wire("#pagMisRequerimientos")
-	private Paging pagMisRequerimientos;
+	@Wire("#pagRequerimientosCotizados")
+	private Paging pagRequerimientosCotizados;
 	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
@@ -60,13 +60,13 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		requerimientoFiltro = new Requerimiento(new Cliente());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
-		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		agregarGridSort(gridRequerimientosCotizados);
+		pagRequerimientosCotizados.setPageSize(PAGE_SIZE);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
 	@Override
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizado")
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
@@ -88,18 +88,18 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizado")
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(requerimientoFiltro, 
+		Map<String, Object> parametros = sTransaccion.RequerimientosCotizados(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
-		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		gridMisRequerimientos.setMultiple(true);
-		gridMisRequerimientos.setCheckmark(true);
-		pagMisRequerimientos.setActivePage(page);
-		pagMisRequerimientos.setTotalSize(total);
+		listaRequerimientosCotizados = (List<Requerimiento>) parametros.get("requerimientos");
+		gridRequerimientosCotizados.setMultiple(true);
+		gridRequerimientosCotizados.setCheckmark(true);
+		pagRequerimientosCotizados.setActivePage(page);
+		pagRequerimientosCotizados.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
@@ -111,7 +111,7 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
-		int page=pagMisRequerimientos.getActivePage();
+		int page=pagRequerimientosCotizados.getActivePage();
 		cambiarRequerimientos(page, null, null);
 	}
 	
@@ -121,7 +121,7 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizado")
 	public void aplicarFiltro(){
 		cambiarRequerimientos(0, null, null);
 	}
@@ -135,7 +135,7 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/EditarRequerimiento.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -148,11 +148,11 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	}
 
 	public List<Requerimiento> getListaRequerimientos() {
-		return listaRequerimientos;
+		return listaRequerimientosCotizados;
 	}
 
 	public void setListaRequerimientos(List<Requerimiento> listaRequerimientos) {
-		this.listaRequerimientos = listaRequerimientos;
+		this.listaRequerimientosCotizados = listaRequerimientos;
 	}
 
 	public SControlUsuario getsControlUsuario() {

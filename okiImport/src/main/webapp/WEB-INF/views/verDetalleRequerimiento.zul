@@ -1,3 +1,4 @@
+
 <window  border="none" width="60%" title="Requerimiento"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerDetalleRequerimientoViewModel')">

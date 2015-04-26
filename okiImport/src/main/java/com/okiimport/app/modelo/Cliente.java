@@ -21,7 +21,8 @@ public class Cliente extends Persona implements Serializable {
 	
 	private String estatus;
 	
-	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
+	//bi-directional many-to-one association to Proveedor
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Requerimiento> requerimientos;
 
 	public Cliente() {

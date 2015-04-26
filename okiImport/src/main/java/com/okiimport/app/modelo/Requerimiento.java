@@ -233,5 +233,21 @@ public class Requerimiento implements Serializable {
 			texto = (traccionV) ? "4x2" : "4x4";
 		return texto;
 	}
+	
+	public String determinarEstatus(){
+		if(this.estatus.equalsIgnoreCase("CR"))
+			return "Requerimiento Emitido";
+		else if(this.estatus.equalsIgnoreCase("E"))
+			return "Requerimiento Recibido y Editado por el Analista asignado";
+		else if(this.estatus.equalsIgnoreCase("EP"))
+			return "Requerimiento Enviado a Proveedores";
+		else if(this.estatus.equalsIgnoreCase("CT"))
+			return "Requerimiento con Cotizaciones Asignadas";
+		else if(this.estatus.equalsIgnoreCase("O"))
+			return "Requerimiento Ofertado";
+		else if(this.estatus.equalsIgnoreCase("CC"))
+			return "Requerimiento Concretado";
+		return "";
+	}
 
 }

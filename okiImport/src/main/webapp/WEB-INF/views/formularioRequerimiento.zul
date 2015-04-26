@@ -1,3 +1,4 @@
+
 <zk xmlns:w="client" xmlns:n="native">
 	<script src="/resources/js/scriptParaFechas.js" />
 	<window id="winFormularioRequerimiento" title="Ingrese Su Requerimiento" border="normal" width="95%" sclass="btn-primary"
@@ -274,4 +275,5 @@
 				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
 	</window>
+
 </zk>

@@ -1,6 +1,5 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.bind.annotation.AfterCompose;
@@ -13,8 +12,6 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Messagebox;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -23,12 +20,12 @@ import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends AbstractViewModel {
+public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
 
 	
 	private Requerimiento requerimiento;
@@ -57,13 +54,8 @@ public class RegistrarRequerimientoViewModel extends AbstractViewModel {
 		limpiar();
 		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
-		listaTraccion = new ArrayList<ModeloCombo<Boolean>>();
-		listaTraccion.add(new ModeloCombo<Boolean>("4x2", true));
-		listaTraccion.add(new ModeloCombo<Boolean>("4x4", false));
-		listaTransmision = new ArrayList<ModeloCombo<Boolean>>();
-		listaTransmision.add(new ModeloCombo<Boolean>("Automatico", true));
-		listaTransmision.add(new ModeloCombo<Boolean>("Sincronico", false));
-		
+		listaTraccion = llenarListaTraccion();
+		listaTransmision = llenarListaTransmision();
 	}
 
 	@Command

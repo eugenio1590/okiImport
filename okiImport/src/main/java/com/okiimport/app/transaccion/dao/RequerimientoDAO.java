@@ -11,5 +11,7 @@ public interface RequerimientoDAO extends IGenericDao<Requerimiento, Integer> {
 	
 	List <Requerimiento> ConsultarRequerimientosCliente(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, String cedula, int start, int limit);
 	
+	List <Requerimiento> ConsultarRequerimientosCotizados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,Integer idusuario, int start, int limit);
+	
 
 }

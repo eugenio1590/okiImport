@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -45,6 +46,10 @@ public class DetalleRequerimiento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_requerimiento")
 	private Requerimiento requerimiento;
+	
+	//bi-directional many-to-one association to DetalleCotizacion
+	@OneToMany(mappedBy="detalleRequerimiento", fetch=FetchType.LAZY, orphanRemoval=true)
+	private List<DetalleCotizacion> detalleCotizacions;
 
 	public DetalleRequerimiento() {
 	}
@@ -119,6 +124,14 @@ public class DetalleRequerimiento implements Serializable {
 
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
+	}
+
+	public List<DetalleCotizacion> getDetalleCotizacions() {
+		return detalleCotizacions;
+	}
+
+	public void setDetalleCotizacions(List<DetalleCotizacion> detalleCotizacions) {
+		this.detalleCotizacions = detalleCotizacions;
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
