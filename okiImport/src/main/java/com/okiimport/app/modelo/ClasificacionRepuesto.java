@@ -27,9 +27,11 @@ public class ClasificacionRepuesto implements Serializable {
 	
 	private String estatus;
 	
-	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY)
+	//bi-directional many-to-one association to DetalleRequerimiento
+	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<DetalleRequerimiento> detalleRequerimientos;
 	
+	//bi-directional many-to-one association to Proveedor
 	@ManyToMany(mappedBy="clasificacionRepuestos", fetch=FetchType.LAZY)
 	private List<Proveedor> proveedores;
 
@@ -91,7 +93,5 @@ public class ClasificacionRepuesto implements Serializable {
 	public void setProveedores(List<Proveedor> proveedores) {
 		this.proveedores = proveedores;
 	}
-	
-	
 
 }

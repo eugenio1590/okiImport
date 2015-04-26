@@ -26,13 +26,14 @@ public class MarcaVehiculo implements Serializable {
 	private Integer idMarcaVehiculo;
 
 	private String nombre;
+	
 	private String estatus;
-
-
+	
 	//bi-directional many-to-one association to Requerimiento
-	@OneToMany(mappedBy="marcaVehiculo")
+	@OneToMany(mappedBy="marcaVehiculo", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Requerimiento> requerimientos;
 	
+	//bi-directional many-to-one association to Proveedor
 	@ManyToMany(mappedBy="marcaVehiculos", fetch=FetchType.LAZY)
 	private List<Proveedor> proveedores;
 

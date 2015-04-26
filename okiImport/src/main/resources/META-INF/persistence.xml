@@ -15,7 +15,6 @@
 		<class>com.okiimport.app.modelo.Motor</class>
 		<class>com.okiimport.app.modelo.DetalleRequerimiento</class>
 		<class>com.okiimport.app.modelo.ClasificacionRepuesto</class>
-		<class>com.okiimport.app.modelo.MarcaRepuesto</class>
 		<class>com.okiimport.app.modelo.Cotizacion</class>
 		<class>com.okiimport.app.modelo.DetalleCotizacion</class>
 		 <properties>
