@@ -92,6 +92,7 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 	@Command
 	public void actualizar(){
 		if(checkIsFormValid()){
+			requerimiento.setEstatus("E");
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			mostrarMensaje("Informacion", "Requerimiento Actualizado Exitosamente", null, null, this, null);
 		}
