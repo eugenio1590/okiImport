@@ -2,3 +2,27 @@
 .custom_caption {
 	font-size:12px;
 }
+
+/* FUENTE PARA LAS LETRAS DE LA VENTANA*/
+.z-window-header {
+	color: white;
+	font-size: 17px;
+	font-weight: bolder;
+	font-family: serif;
+}
+.z-window-header .z-window-header-move {
+	color: white;
+}
+
+.z-fondo-principal { 
+	
+	background-image: url("/app/resources/img/fondo_p.jpg");
+	background-repeat: repeat;
+}	
+
+.z-letra-grande {
+	
+	font-size: 17px;
+	color: #428bca;
+	font-weight: bold;
+}	

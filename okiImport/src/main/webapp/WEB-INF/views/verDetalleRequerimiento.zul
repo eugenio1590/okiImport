@@ -1,7 +1,7 @@
 <window  border="none" width="60%" title="Requerimiento"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerDetalleRequerimientoViewModel')">
-		<groupbox>
+		<groupbox closable="false">
 		<div> 
 		    <space></space>
 		    <space></space> 
@@ -13,8 +13,8 @@
 		    <label value="@bind(vm.requerimiento.estatus)"/> 
 		    
 		</div>
-			<groupbox>
-				<caption label="Datos Personales" />
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Personales" />
 				<div>
 					<grid>
 						<columns>
@@ -44,8 +44,8 @@
 					</grid>
 				</div>
 			</groupbox>
-			<groupbox>
-				<caption label="Datos Vehiculo" />
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Vehiculo" />
 				<div>
 
 					<grid>
@@ -88,8 +88,8 @@
 					</grid>
 				</div>
 			</groupbox>
-			<groupbox>
-				<caption label="Datos Repuestos" />
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Repuestos" />
 				<panel apply="org.zkoss.bind.BindComposer"
 					sclass="panel-primary">
 					<panelchildren>

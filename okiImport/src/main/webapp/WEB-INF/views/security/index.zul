@@ -1,7 +1,13 @@
-<?page title="Inicio de Session" contentType="text/html;charset=UTF-8" session="false" ?>
-<zk>
- <div sclass="btn-primary" align="center">
-	<window title="Inicio de Session" sclass="btn-primary" border="normal" width="320px" height="340px"
+<?page title="Inicio de Sesion" contentType="text/html;charset=UTF-8" session="false" ?>
+<?link href="/resources/css/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/aplication.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
+<zk >
+ <div align="center" sclass="z-fondo-principal" height="100%">
+	<window title="Inicio de Sesión" sclass="btn-primary" border="normal" width="320px" height="340px"
 		apply="org.zkoss.bind.BindComposer">
 
 		<include src="login.zul"/>
