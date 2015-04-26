@@ -11,7 +11,7 @@
 		
 		<north><!-- height="60px" border="none" -->
 			<div sclass="navbar" height="59px">
-			     <image src="/resources/img/topLogo.png" width="260px"></image>
+			     <image src="/resources/img/topLogo6.png" width="260px"></image>
 			</div>
 		</north>
 		<!-- width="300px" minsize="300" width="15%"  -->
