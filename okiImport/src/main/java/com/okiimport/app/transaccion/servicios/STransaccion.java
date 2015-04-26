@@ -3,6 +3,7 @@ package com.okiimport.app.transaccion.servicios;
 import java.util.Map;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Requerimiento;
 
 public interface STransaccion {
@@ -20,6 +21,8 @@ public interface STransaccion {
 	public Map <String, Object> RequerimientosCotizados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit);
 	
+	public Map <String, Object> ConsultarCotizacionesRequerimiento(Cotizacion cotFiltro, String fieldSort, Boolean sortDirection, Integer idrequerimiento,
+			int pagina, int limit);
 	
 
 }

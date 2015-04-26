@@ -10,15 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+import com.okiimport.app.transaccion.dao.CotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class STransaccionImpl extends AbstractServiceImpl implements STransaccion {
+	
+	@Autowired
+	@BeanInjector("cotizacionDAO")
+	private CotizacionDAO cotizacionDAO;
 	
 	@Autowired
 	@BeanInjector("requerimientoDAO")
@@ -111,6 +117,17 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("total", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection, idusuario, 0,-1).size());
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection,idusuario, pagina*limit, limit));
 		return parametros;
+	}
+
+	@Override
+	public Map<String, Object> ConsultarCotizacionesRequerimiento(Cotizacion cotFiltro,
+			String fieldSort, Boolean sortDirection, Integer idrequerimiento,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento, pagina*limit, limit));
+return parametros;
 	}
 	
 
