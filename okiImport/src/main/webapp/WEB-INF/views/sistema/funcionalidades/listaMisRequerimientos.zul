@@ -16,28 +16,39 @@
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader value="nombre" label="Nombre Cliente"
-					sort="auto(idRequerimiento)" width="150px">
+				<listheader value="nombre" label="Cliente"
+					sort="auto(idRequerimiento)" width="120px">
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
 						onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader value="fechaCreacion" label="Fecha Creación"
-					sort="auto(fechaCreacion)" width="150px">
+				<listheader value="fechaCreacion" label="F. Creación"
+					sort="auto(fechaCreacion)" width="140px">
 					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaCreacion)"
 						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader value="modeloV" label="Modelo Carro"
-					sort="auto(modeloV)" width="150px">
+				<listheader value="modeloV" label="Modelo"
+					sort="auto(modeloV)" width="130px">
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.modeloV)"
 						onChange="@command('aplicarFiltro')" width="110px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
+				
+				<listheader value="estatus" label="Estado" sort="none" width="12%">
+					<combobox instant="true" placeholder="" selectedItem="@bind(vm.estatusFiltro)" 
+						model="@load(vm.listaEstatus)" onChange="@command('aplicarFiltro')" width="110px"
+						value="@bind(vm.estatusFiltro.nombre)">
+						<template name="model">
+							<comboitem label="@bind(each.nombre)"/>
+						</template>
+					</combobox>
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
 
-				<listheader width="11%" label="Operaciones" />
+				<listheader width="8%" label="Operaciones" />
 
 			</listhead>
 			<template name="model">
@@ -49,6 +60,7 @@
 							buttonVisible="false" readonly="true"/>
 					</listcell>
 					<listcell label="@bind(each.modeloV)" />
+					<listcell label="@bind(each.determinarEstatus())"/>
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">

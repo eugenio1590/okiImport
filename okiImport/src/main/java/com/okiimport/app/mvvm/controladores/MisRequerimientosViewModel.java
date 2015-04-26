@@ -25,11 +25,12 @@ import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class MisRequerimientosViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -52,6 +53,9 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	
 	private Usuario usuario;
 	private Requerimiento requerimientoFiltro;
+	
+	private List<ModeloCombo<String>> listaEstatus;
+	private ModeloCombo<String> estatusFiltro;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -62,6 +66,9 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
+		listaEstatus = llenarListaEstatus();
+		listaEstatus.add(estatusFiltro);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -123,6 +130,10 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 	@Command
 	@NotifyChange("listaRequerimientos")
 	public void aplicarFiltro(){
+		requerimientoFiltro.setEstatus(null);
+		if(estatusFiltro!=null)
+			if(!estatusFiltro.getNombre().equalsIgnoreCase("No Filtrar"))
+				requerimientoFiltro.setEstatus(estatusFiltro.getValor());
 		cambiarRequerimientos(0, null, null);
 	}
 	
@@ -169,6 +180,22 @@ public class MisRequerimientosViewModel extends AbstractViewModel implements Eve
 
 	public void setRequerimientoFiltro(Requerimiento requerimientoFiltro) {
 		this.requerimientoFiltro = requerimientoFiltro;
+	}
+
+	public List<ModeloCombo<String>> getListaEstatus() {
+		return listaEstatus;
+	}
+
+	public void setListaEstatus(List<ModeloCombo<String>> listaEstatus) {
+		this.listaEstatus = listaEstatus;
+	}
+
+	public ModeloCombo<String> getEstatusFiltro() {
+		return estatusFiltro;
+	}
+
+	public void setEstatusFiltro(ModeloCombo<String> estatusFiltro) {
+		this.estatusFiltro = estatusFiltro;
 	}
 
 }

@@ -125,6 +125,12 @@ public class RequerimientoDAOImpl extends AbstractJpaDao<Requerimiento, Integer>
 						"%" + String.valueOf(regFiltro.getSerialCarroceriaV()) +"%"));
 			}
 			
+			if (regFiltro.getEstatus() != null)
+			{
+				restricciones.add(this.criteriaBuilder.like(this.entity.get("estatus").as(String.class), 
+						"%" + regFiltro.getEstatus() + "%"));
+			}
+			
 			if(joins!=null){
 				//Cliente
 				Cliente cliente = regFiltro.getCliente();
