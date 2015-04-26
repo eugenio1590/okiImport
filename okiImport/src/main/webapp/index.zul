@@ -3,6 +3,7 @@
 <?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/aplication.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
 <zk>
 	<borderlayout id="principal" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer" 
@@ -34,7 +35,7 @@
 			
 		</center>
 		
-		<south height="30px" style="border-style: solid;">
+		<south height="30px" style="border-style: solid;"  sclass="btn-primary">
 			<!-- 
 			<include
 				src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />

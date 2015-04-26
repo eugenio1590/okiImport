@@ -1,9 +1,11 @@
 <?page title="Inicio de Session" contentType="text/html;charset=UTF-8" session="false" ?>
 <zk>
-	<window title="Inicio de Session" border="normal" width="320px" height="340px"
+ <div sclass="btn-primary" align="center">
+	<window title="Inicio de Session" sclass="btn-primary" border="normal" width="320px" height="340px"
 		apply="org.zkoss.bind.BindComposer">
 
 		<include src="login.zul"/>
 		
 	</window>
+	</div>
 </zk>

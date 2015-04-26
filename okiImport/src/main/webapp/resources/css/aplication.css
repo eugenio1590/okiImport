@@ -2,3 +2,10 @@
 .custom_caption {
 	font-size:12px;
 }
+
+.z-window-header {
+	color: white;
+}
+.z-window-header .z-window-header-move {
+	color: white;
+}

@@ -1,7 +1,6 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +19,10 @@ public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String estatus;
+	
+	//bi-directional many-to-many association to Cotizacion
+	@OneToMany(mappedBy="proveedor", fetch=FetchType.LAZY, orphanRemoval=true)
+	private List<Cotizacion> cotizacions;
 		
 	//bi-directional many-to-many association to MarcaRepuesto
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -67,6 +70,28 @@ public class Proveedor extends Persona implements Serializable {
 
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+
+	public List<Cotizacion> getCotizacions() {
+		return cotizacions;
+	}
+
+	public void setCotizacions(List<Cotizacion> cotizacions) {
+		this.cotizacions = cotizacions;
+	}
+	
+	public Cotizacion addCotizacion(Cotizacion cotizacion) {
+		getCotizacions().add(cotizacion);
+		cotizacion.setProveedor(this);
+
+		return cotizacion;
+	}
+
+	public Cotizacion removeDetalleRequerimiento(Cotizacion cotizacion) {
+		getCotizacions().remove(cotizacion);
+		cotizacion.setProveedor(null);
+
+		return cotizacion;
 	}
 
 	public List<MarcaVehiculo> getMarcaVehiculos() {
