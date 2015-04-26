@@ -103,4 +103,15 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		return parametros;
 	}
 
+	@Override
+	public Map<String, Object> RequerimientosCotizados(
+			Requerimiento regFiltro,  String fieldSort, Boolean sortDirection, Integer idusuario, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection, idusuario, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection,idusuario, pagina*limit, limit));
+		return parametros;
+	}
+	
+
 }
