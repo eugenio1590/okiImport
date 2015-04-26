@@ -92,14 +92,14 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		/*Map<String, Object> parametros = sTransaccion.RequerimientosCotizados(requerimientoFiltro, 
+		Map<String, Object> parametros = sTransaccion.RequerimientosCotizados(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientosCotizados = (List<Requerimiento>) parametros.get("requerimientos");
 		gridRequerimientosCotizados.setMultiple(true);
 		gridRequerimientosCotizados.setCheckmark(true);
 		pagRequerimientosCotizados.setActivePage(page);
-		pagRequerimientosCotizados.setTotalSize(total);*/
+		pagRequerimientosCotizados.setTotalSize(total);
 	}
 	
 	/**COMMAND*/

@@ -66,4 +66,3 @@
 		<paging id="pagRequerimientosCotizados"
 			onPaging="@command('paginarLista')" autohide="true" />
 	</window>
-</zk>

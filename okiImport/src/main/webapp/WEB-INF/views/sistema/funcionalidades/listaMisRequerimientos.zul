@@ -77,4 +77,3 @@
 		<paging id="pagMisRequerimientos"
 			onPaging="@command('paginarLista')" autohide="true" />
 	</window>
-</zk>
