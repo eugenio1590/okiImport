@@ -1,16 +1,15 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<script src="/resources/js/scriptParaFechas.js" />
-	<window id="winFormularioRequerimiento" border="normal" width="95%" sclass="btn-primary"
+	<window id="winFormularioRequerimiento" title="Ingrese Su Requerimiento" border="normal" width="95%" sclass="btn-primary"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')"
 		form="@id('fx') @load(vm.requerimiento) @save(vm.requerimiento, before='registrar')" >
-		 
-		<n:h2> Ingrese Su Requerimiento</n:h2>
+		
 		<groupbox>
 		<hbox>
 			<vbox>
-			<groupbox>
-				<caption label="Datos Personales"/>
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Personales"/>
 				<div>
 					<grid>
 						<columns>
@@ -61,11 +60,11 @@
 					</grid>
 				</div>
 			</groupbox>
-			<groupbox>
-				<caption label="Datos Vehiculo" />
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Vehiculo" />
 						
-							<groupbox id="tabDatosVehiculo">
-								<caption label="Datos Basicos" />
+							<groupbox id="tabDatosVehiculo" closable="false">
+								<caption sclass="custom_caption" label="Datos Basicos" />
 
 								<div>
 
@@ -127,8 +126,8 @@
 								</div>
 							</groupbox>
 
-							<groupbox id="tabMasDatosVehiculo">
-								<caption label="Datos Adicionales" />
+							<groupbox closable="false" id="tabMasDatosVehiculo">
+								<caption sclass="custom_caption" label="Datos Adicionales" />
 
 								<div>
 
@@ -197,14 +196,14 @@
 							</groupbox>
 			</groupbox>
 			</vbox>
-			<groupbox>
+			<groupbox closable="false">
 			<div align="right">
 				<button label="Agregar Repuesto" type="submit"
 					onClick="@command('agregarRepuesto')" sclass="btn-primary"/>
 					<button label="Eliminar Repuesto" type="submit" sclass="btn-primary"
 					onClick="@command('eliminarRepuesto')" />
 					</div>
-				<caption label="Datos Repuestos" />
+				<caption sclass="custom_caption" label="Datos Repuestos" />
 				<panel sclass="panel-primary">
 					<panelchildren>
 

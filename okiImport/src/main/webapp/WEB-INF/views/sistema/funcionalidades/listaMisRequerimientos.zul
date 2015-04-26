@@ -64,9 +64,9 @@
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-pencil green bigger-190" tooltiptext="Editar"
+								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
 									onClick="@command('editarReguerimiento', requerimiento = each)"/>
-								<button  iconSclass="z-icon-eye blue bigger-190" tooltiptext="Ver" />
+								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver" />
 							</div>
 						</hbox>
 					</listcell>
