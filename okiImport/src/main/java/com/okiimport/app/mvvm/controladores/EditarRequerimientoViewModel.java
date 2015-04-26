@@ -14,18 +14,21 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class EditarRequerimientoViewModel extends AbstractViewModel implements EventListener<ClickEvent>  {
+public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent>  {
 	
 	//Servicios
 	@BeanInjector("sMaestros")
@@ -44,9 +47,21 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 	@Wire("#aDatosVehiculo")
 	private A aDatosVehiculo;
 	
+	@Wire("#cmbTransmision")
+	private Combobox cmbTransmision;
+	
+	@Wire("#cmbTraccion")
+	private Combobox cmbTraccion;
+	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
+	private List <Motor> listaMotor;
 	private Requerimiento requerimiento;
+	
+	private List <ModeloCombo<Boolean>> listaTraccion;
+	private List <ModeloCombo<Boolean>> listaTransmision;
+	private ModeloCombo<Boolean> traccion;
+	private ModeloCombo<Boolean> transmision;
 	
 	@AfterCompose
 	@SuppressWarnings("unchecked")
@@ -57,6 +72,13 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 		this.requerimiento = requerimiento;
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
+		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
+		
+		listaTraccion = llenarListaTraccion();
+		listaTransmision = llenarListaTransmision();
+		
+		cmbTransmision.setValue(this.requerimiento.determinarTransmision());
+		cmbTraccion.setValue(this.requerimiento.determinarTraccion());
 	}
 	
 	/**INTERFACE*/
@@ -92,6 +114,10 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 	@Command
 	public void actualizar(){
 		if(checkIsFormValid()){
+			if(traccion!=null)
+				requerimiento.setTraccionV(traccion.getValor());
+			if(transmision!=null)
+				requerimiento.setTransmisionV(transmision.getValor());
 			requerimiento.setEstatus("E");
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			mostrarMensaje("Informacion", "Requerimiento Actualizado Exitosamente", null, null, this, null);
@@ -130,5 +156,45 @@ public class EditarRequerimientoViewModel extends AbstractViewModel implements E
 
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
+	}
+	
+	public List<ModeloCombo<Boolean>> getListaTraccion() {
+		return listaTraccion;
+	}
+
+	public void setListaTraccion(List<ModeloCombo<Boolean>> listaTraccion) {
+		this.listaTraccion = listaTraccion;
+	}
+
+	public List<ModeloCombo<Boolean>> getListaTransmision() {
+		return listaTransmision;
+	}
+
+	public void setListaTransmision(List<ModeloCombo<Boolean>> listaTransmision) {
+		this.listaTransmision = listaTransmision;
+	}
+
+	public ModeloCombo<Boolean> getTraccion() {
+		return traccion;
+	}
+
+	public void setTraccion(ModeloCombo<Boolean> traccion) {
+		this.traccion = traccion;
+	}
+
+	public ModeloCombo<Boolean> getTransmision() {
+		return transmision;
+	}
+
+	public void setTransmision(ModeloCombo<Boolean> transmision) {
+		this.transmision = transmision;
+	}
+
+	public List<Motor> getListaMotor() {
+		return listaMotor;
+	}
+
+	public void setListaMotor(List<Motor> listaMotor) {
+		this.listaMotor = listaMotor;
 	}
 }

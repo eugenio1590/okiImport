@@ -1,6 +1,6 @@
 <zk>
 	<window id="winERequerimiento" title="Requerimiento" border="none" width="80%" closable="true"
-		apply="org.zkoss.bind.BindComposer" 
+		sclass="btn-info" apply="org.zkoss.bind.BindComposer" 
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarRequerimientoViewModel')">
 		<groupbox closable="false">
 			<groupbox closable="false">
@@ -112,20 +112,38 @@
 							<rows>
 								<row>
 									<label value="Motor: " />
-									<textbox value="@bind(vm.requerimiento.motor.nombre)" readonly="true"
-										width="80%"/>
+									<combobox value="@bind(vm.requerimiento.motor.nombre)"
+										selectedItem="@bind(vm.requerimiento.motor)" readonly="true"
+										placeholder="Seleccione..." width="80%"
+										model="@load(vm.listaMotor)">
+										<template name="model">
+											<comboitem label="@bind(each.nombre)"/>
+										</template>
+									</combobox>
 
 									<label value="Transmision: " />
-									<textbox width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTransmision())"/>
+									<combobox id="cmbTransmision"
+										placeholder="Seleccione..." width="80%" readonly="true"
+										selectedItem="@bind(vm.transmision)"
+										model="@load(vm.listaTransmision)">
+										<template name="model">
+											<comboitem label="@bind(each.nombre)"/>
+										</template>
+									</combobox>
 								</row>
 
 								<row>
 
 									<label value="Traccion: " />
-									<textbox width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTraccion())"/>
-										
+									<combobox id="cmbTraccion"
+										placeholder="Seleccione..." width="80%" readonly="true"
+										selectedItem="@bind(vm.traccion)"
+										model="@load(vm.listaTraccion)">
+										<template name="model">
+											<comboitem label="@bind(each.nombre)"/>
+										</template>
+									</combobox>
+
 								</row>
 							</rows>
 						</grid>
