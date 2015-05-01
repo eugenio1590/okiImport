@@ -53,13 +53,9 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		requerimiento.setFechaCreacion(fechaCreacion);
 		requerimiento.setFechaVencimiento(fechaVencimiento);
 		requerimiento.setEstatus("CR");
-		requerimiento = requerimientoDAO.save(requerimiento);
-		for(DetalleRequerimiento detalle:requerimiento.getDetalleRequerimientos()){
-			detalle.setRequerimiento(requerimiento);
+		for(DetalleRequerimiento detalle:requerimiento.getDetalleRequerimientos())
 			detalle.setEstatus("activo");
-			detalleRequerimientoDAO.update(detalle);
-		}
-		return requerimiento;
+		return requerimiento = requerimientoDAO.save(requerimiento);
 	}
 	
 	@Override
@@ -110,6 +106,20 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros= new HashMap<String, Object>();
 		parametros.put("total", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection, idusuario, 0,-1).size());
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCotizados(regFiltro,fieldSort, sortDirection,idusuario, pagina*limit, limit));
+		return parametros;
+	}
+
+	@Override
+	public Map<String, Object> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
+			Boolean sortDirection, int idProveedor, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		List<String> estatus=new ArrayList<String>();
+		estatus.add("CT");
+		estatus.add("O");
+		estatus.add("CC");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientosConSolicitudesCotizacion(regFiltro, fieldSort, sortDirection, idProveedor, estatus, 0, -1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosConSolicitudesCotizacion(regFiltro, fieldSort, sortDirection, idProveedor, estatus, pagina*limit, limit));
 		return parametros;
 	}
 	
