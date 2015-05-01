@@ -14,6 +14,7 @@ import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 
@@ -113,23 +114,25 @@ public class RequerimientoDAOImpl extends
 			if (regFiltro.getIdRequerimiento() != null) {
 				restricciones.add(this.criteriaBuilder.like(
 						this.entity.get("idRequerimiento").as(String.class),
-						"%" + String.valueOf(regFiltro.getIdRequerimiento())
-								+ "%"));
+						"%" + String.valueOf(regFiltro.getIdRequerimiento()) + "%"));
 			}
 
 			if (regFiltro.getFechaCreacion() != null) {
 				restricciones.add(this.criteriaBuilder.like(
 						this.entity.get("fechaCreacion").as(String.class),
-						"%" + dateFormat.format(regFiltro.getFechaCreacion())
-								+ "%"));
+						"%" + dateFormat.format(regFiltro.getFechaCreacion()) + "%"));
 			}
 
 			if (regFiltro.getModeloV() != null) {
-				restricciones
-						.add(this.criteriaBuilder.like(
-								this.entity.get("modeloV").as(String.class),
-								"%" + String.valueOf(regFiltro.getModeloV())
-										+ "%"));
+				restricciones.add(this.criteriaBuilder.like(
+						this.criteriaBuilder.lower(this.entity.get("modeloV").as(String.class)),
+						"%" + String.valueOf(regFiltro.getModeloV()).toLowerCase() + "%"));
+			}
+			
+			if(regFiltro.getFechaVencimiento() != null){
+				restricciones.add(this.criteriaBuilder.like(
+						this.entity.get("fechaVencimiento").as(String.class), 
+						"%"+ dateFormat.format(regFiltro.getFechaVencimiento()) +"%"));
 			}
 			
 			if (regFiltro.getEstatus() != null)
@@ -143,8 +146,18 @@ public class RequerimientoDAOImpl extends
 				Cliente cliente = regFiltro.getCliente();
 				if (cliente != null && joins.get("cliente") != null) {
 					if (cliente.getNombre() != null)
-						restricciones.add(this.criteriaBuilder.like(joins.get("cliente").get("nombre").as(String.class),
-										"%"+ String.valueOf(cliente.getNombre()) + "%"));
+						restricciones.add(this.criteriaBuilder.like(
+								this.criteriaBuilder.lower(joins.get("cliente").get("nombre").as(String.class)),
+								"%"+ String.valueOf(cliente.getNombre()).toLowerCase() + "%"));
+				}
+				
+				//Marca Vehiculo
+				MarcaVehiculo marcaVehiculo = regFiltro.getMarcaVehiculo();
+				if(marcaVehiculo!=null && joins.get("marcaVehiculo") != null){
+					if(marcaVehiculo.getNombre()!=null)
+						restricciones.add(this.criteriaBuilder.like(
+								this.criteriaBuilder.lower(joins.get("marcaVehiculo").get("nombre").as(String.class)), 
+								"%"+String.valueOf(marcaVehiculo.getNombre()).toLowerCase()+"%"));
 				}
 			}
 		}
@@ -204,6 +217,7 @@ public class RequerimientoDAOImpl extends
 		entidades.put("analista", JoinType.INNER);
 		entidades.put("cliente", JoinType.INNER);
 		entidades.put("detalleRequerimientos", JoinType.INNER);
+		entidades.put("marcaVehiculo", JoinType.LEFT);
 		Map<String, Join> joins = this.crearJoins(entidades);
 		
 		// 3. Creamos las Restricciones de la busqueda y los campos a seleccionar
@@ -212,6 +226,8 @@ public class RequerimientoDAOImpl extends
 				this.entity.get("idRequerimiento"),
 				this.entity.get("estatus"),
 				this.entity.get("fechaCreacion"),
+				this.entity.get("fechaVencimiento"),
+				this.entity.get("modeloV"),
 				this.entity.get("analista"),
 				this.entity.get("cliente"),
 				this.entity.get("marcaVehiculo")
@@ -244,6 +260,8 @@ public class RequerimientoDAOImpl extends
 		groupBy.add(entity.get("idRequerimiento"));
 		groupBy.add(entity.get("estatus"));
 		groupBy.add(entity.get("fechaCreacion"));
+		groupBy.add(entity.get("fechaVencimiento"));
+		groupBy.add(entity.get("modeloV"));
 		groupBy.add(entity.get("analista"));
 		groupBy.add(entity.get("cliente"));
 		groupBy.add(entity.get("marcaVehiculo"));

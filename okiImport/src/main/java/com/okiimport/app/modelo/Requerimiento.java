@@ -83,6 +83,28 @@ public class Requerimiento implements Serializable {
 	public Requerimiento(Cliente cliente){
 		this.cliente = cliente;
 	}
+	
+	public Requerimiento(MarcaVehiculo marcaVehiculo){
+		this.marcaVehiculo = marcaVehiculo;
+	}
+	
+	public Requerimiento(Cliente cliente, MarcaVehiculo marcaVehiculo){
+		this.cliente = cliente;
+		this.marcaVehiculo = marcaVehiculo;
+	}
+
+	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
+			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo) {
+		super();
+		this.idRequerimiento = idRequerimiento;
+		this.estatus = estatus;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.modeloV = modeloV;
+		this.analista = analista;
+		this.cliente = cliente;
+		this.marcaVehiculo = marcaVehiculo;
+	}
 
 	public Integer getIdRequerimiento() {
 		return this.idRequerimiento;

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NamedQuery(name="Persona.findAll", query="SELECT p FROM Persona p")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="person_type")
-public class Persona implements Serializable {
+public abstract class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,6 +35,9 @@ public class Persona implements Serializable {
 	protected String nombre;
 	
 	protected String telefono;
+	
+	@Column(name="tipo_menu")
+	protected Integer tipoMenu;
 	
 	//bi-directional many-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
@@ -124,4 +127,18 @@ public class Persona implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public static Persona getNewInstance(){
+		return new Persona() {
+			
+			@Override
+			public Integer getTipoMenu() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		};
+	}
+	
+	public abstract Integer getTipoMenu();
 }

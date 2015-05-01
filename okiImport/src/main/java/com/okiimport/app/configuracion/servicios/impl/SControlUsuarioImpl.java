@@ -163,9 +163,9 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	
 	//2. Menus
 	@Override
-	public List<Menu> consultarMenus() {
+	public List<Menu> consultarPadresMenuUsuario(Integer tipo) {
 		// TODO Auto-generated method stub
-		return this.menuDAO.consultarPadres();
+		return this.menuDAO.consultarPadresMenuUsuario(tipo);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

@@ -24,5 +24,5 @@ public interface SControlUsuario {
 	public boolean verificarUsername(String username);
 	
 	//Menu
-	public List<Menu> consultarMenus();
+	public List<Menu> consultarPadresMenuUsuario(Integer tipo);
 }

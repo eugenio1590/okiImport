@@ -88,5 +88,16 @@ public class Analista extends Persona implements Serializable {
 	public void setCantRequerimientos(Long cantRequerimientos) {
 		this.cantRequerimientos = cantRequerimientos;
 	}
+
+	/**METODOS OVERRIDE*/
+	@Override
+	public Integer getTipoMenu() {
+		// TODO Auto-generated method stub
+		if(this.administrador)
+			this.tipoMenu=1;
+		else
+			this.tipoMenu=2;
+		return this.tipoMenu;
+	}
 	
 }

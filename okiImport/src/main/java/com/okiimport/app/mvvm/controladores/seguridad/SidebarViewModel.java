@@ -3,6 +3,7 @@ package com.okiimport.app.mvvm.controladores.seguridad;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -18,6 +19,7 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Span;
 
 import com.okiimport.app.modelo.Menu;
+import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModelNavbar;
@@ -45,9 +47,12 @@ public class SidebarViewModel extends AbstractViewModel implements SerializableE
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
 		
+		UserDetails user = this.getUser();
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword()); 
+		
 		List<ModelNavbar> modelo = new ArrayList<ModelNavbar>();
 		
-		for(Menu menu : sControlUsuario.consultarMenus())
+		for(Menu menu : sControlUsuario.consultarPadresMenuUsuario(usuario.getPersona().getTipoMenu()))
 			modelo.add(menu);
 		
 		constructMenu(modelo, this.navbar);
