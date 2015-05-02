@@ -149,6 +149,14 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
 	
+	@Command
+	public void enviarRequerimientoProv(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+	}
+	
+	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

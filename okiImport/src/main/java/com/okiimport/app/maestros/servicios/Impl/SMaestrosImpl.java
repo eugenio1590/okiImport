@@ -132,6 +132,17 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		Parametros.put("motor", motorDAO.findAll(page*limit, limit));
 		return Parametros;
 	}
+	
+	
+	@Override
+	public Map<String, Object> ConsultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
+			List<Integer> idsClasificacionRepuesto, int start, int limit){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection, idsClasificacionRepuesto, 0, -1).size());
+		parametros.put("proveedores", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection,idsClasificacionRepuesto, start*limit, limit));
+		return parametros;
+	}
+	
 
 	/**SETTERS Y GETTERS*/
 	public MarcaVehiculoDAO getMarcaVehiculoDAO() {

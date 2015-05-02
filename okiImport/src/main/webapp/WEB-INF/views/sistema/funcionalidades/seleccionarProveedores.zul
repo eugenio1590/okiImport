@@ -1,0 +1,82 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winListProveedores" title="Lista de Proveedores" border="normal" width="70%"
+		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.SeleccionarProveedoresViewModel')"
+		form="@id('fx') @load(vm.proveedor)" closable="true">
+
+
+<div>
+								<borderlayout width="100%"
+									height="350px">
+									<west width="300px"
+										title="Proveedores" collapsible="true">
+										<vlayout>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowRight32.png"
+													tooltiptext="Agregar Proveedores a Consultar" onClick = "@command('agregarProveedores')"
+													 />
+											</toolbar>
+											<listbox id="gridMarcas"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.marcaSeleccionadas)"
+												multiple="true" model="@load(vm.listaMarcaVehiculos)">
+												
+												<listhead
+													menupopup="auto">
+
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												
+													<listitem>
+														<listcell
+															label="Sissegtelca" />
+														<listcell
+															label="NovaCars" />	
+														
+													</listitem>
+												
+
+											</listbox>
+											<paging id="pagMarcas"
+												 autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
+										</vlayout>
+									</west>
+									
+									<east id="borderEast"
+										title="Proveedores Seleccionados" width="62.5%">
+										<div>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowLeft32.png"
+													tooltiptext="Remover Marcas a Vender" onClick = "@command('eliminarMarcas')"
+									                 />
+											</toolbar>
+											<listbox
+												id="gridMarcasVender" model="@load(vm.proveedor.marcaVehiculos)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.marcaSeleccionadas)"
+												>
+												
+												<listhead
+													menupopup="auto">
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.nombre)" />
+														
+													</listitem>
+												</template>
+											</listbox>
+											
+										</div>
+									</east>
+								</borderlayout>
+							</div>
+</window>
+</zk>

@@ -66,7 +66,8 @@
 							<div class="btn-group btn-group-sm">
 								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
 									onClick="@command('editarReguerimiento', requerimiento = each)"/>
-								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver" />
+								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"  
+								    onClick="@command('enviarRequerimientoProv', requerimiento = each)"/>
 							</div>
 						</hbox>
 					</listcell>
