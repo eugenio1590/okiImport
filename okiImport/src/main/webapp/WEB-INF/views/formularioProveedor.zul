@@ -1,11 +1,9 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" border="none" width="60%"
-		apply="org.zkoss.bind.BindComposer"
+	<window id="winFormularioRequerimiento" title="Registrese Como Proveedor" border="normal" width="70%"
+		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')"
 		form="@id('fx') @load(vm.proveedor) @save(vm.proveedor, before='registrar')">
-		<n:h3>Registrese Como Proveedor</n:h3>
-		<groupbox>
-			<caption />
+		
 			<tabbox id="tabDatosProveedor" height="80%">
 				<tabs id="tabs">
 					<tab id="tabDatosFiscales">
@@ -312,14 +310,16 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-		</groupbox>
+		
 
 
-		<div sclass="btn btn-sm btn-info" align="right">
+		<div sclass="panel-footer" align="right">
 			<button label="Limpiar" type="submit"
-				onClick="@command('limpiar')" />
+				onClick="@command('limpiar')" sclass="btn-primary"/>
 			<button label="Enviar" type="submit"
-				onClick="@command('registrar')" />
+				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
+		
+		
 	</window>
 </zk>

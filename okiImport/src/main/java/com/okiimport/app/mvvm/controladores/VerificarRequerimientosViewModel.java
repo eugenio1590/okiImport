@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
@@ -46,6 +47,9 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 		
 		@Wire("#pagRequerimientosCliente")
 		private Paging pagRequerimientosCliente;
+		
+		@Wire("#misolicitudes")
+		private Div misolicitudes;
 		
 		
 		//Atributos
@@ -107,11 +111,11 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 				cambiarRequerimientos(0,null, null);
 				if (listaRequerimientos.size() > 0 )
 				{
-					gridRequerimientosCliente.setVisible(true);
+					misolicitudes.setVisible(true);
 				}
 				else
 				{
-					gridRequerimientosCliente.setVisible(false);
+					misolicitudes.setVisible(false);
 					mostrarMensaje("Informacion Importante","No posee Solicitudes", null, null, null, null);
 					
 				}

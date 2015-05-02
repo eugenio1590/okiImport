@@ -78,20 +78,29 @@ public class RegistrarProveedorViewModel extends AbstractViewModel {
 	@Command
 	@NotifyChange({"proveedor"})
 	public void registrar(){
-		proveedor = sMaestros.registrarProveedor(proveedor);
-	
-		String str = "El Proveedor ha sido registrado existosamente ";
+		if(checkIsFormValid()){
+			
+			
+			if(proveedor.getMarcaVehiculos().size()>0 && proveedor.getClasificacionRepuestos().size()>0){
+				proveedor = sMaestros.registrarProveedor(proveedor);
+			
+			
+			String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-		Messagebox.show(str, "Informacion", Messagebox.OK,
-				Messagebox.INFORMATION, new EventListener() {
-					public void onEvent(Event event) throws Exception {
-						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+			Messagebox.show(str, "Informacion", Messagebox.OK,
+					Messagebox.INFORMATION, new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-							recargar();
+								recargar();
+							}
 						}
-					}
-				});
+					});
+		}
 		
+		else mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto", null, null, null, null);
+	
+	}
 	}
 	
 	

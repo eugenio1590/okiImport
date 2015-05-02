@@ -18,5 +18,16 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaTransmision.add(new ModeloCombo<Boolean>("Sincronico", false));
 		return listaTransmision;
 	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatus(){
+		List<ModeloCombo<String>> listaEstatus = new ArrayList<ModeloCombo<String>>();
+		listaEstatus.add(new ModeloCombo<String>("Emitido", "CR"));
+		listaEstatus.add(new ModeloCombo<String>("Recibido y Editado", "E"));
+		listaEstatus.add(new ModeloCombo<String>("Enviado a Proveedores", "EP"));
+		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Asignadas", "CT"));
+		listaEstatus.add(new ModeloCombo<String>("Ofertado", "O"));
+		listaEstatus.add(new ModeloCombo<String>("Concretado", "CC"));
+		return listaEstatus;
+	}
 
 }

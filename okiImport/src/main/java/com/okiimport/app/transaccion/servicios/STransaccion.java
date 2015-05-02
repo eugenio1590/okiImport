@@ -21,8 +21,12 @@ public interface STransaccion {
 	public Map <String, Object> RequerimientosCotizados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit);
 	
+
 	public Map <String, Object> ConsultarCotizacionesRequerimiento(Cotizacion cotFiltro, String fieldSort, Boolean sortDirection, Integer idrequerimiento,
 			int pagina, int limit);
-	
+
+	public Map <String, Object> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
+			Boolean sortDirection, int idProveedor, int pagina, int limit);
+
 
 }

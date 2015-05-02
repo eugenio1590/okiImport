@@ -10,8 +10,7 @@
 		
 		<north><!-- height="60px" border="none" -->
 			<div sclass="navbar" height="59px">
-				<a label="Organizacion" sclass="pull-left navbar-brand"
-					iconSclass="z-icon-leaf" />
+			     <image src="/resources/img/topLogo.png" width="260px"></image>
 				<hlayout sclass="nav-user pull-right" spacing="0">
 					<include src="/WEB-INF/views/sistema/seguridad/perfil.zul" />
 				</hlayout>

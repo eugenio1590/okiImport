@@ -52,7 +52,7 @@
 						<datebox value="@bind(each.fechaVencimiento)" format="dd/MM/yyyy" 
 							buttonVisible="false" readonly="true"/>
 					</listcell>
-					<listcell label="@bind(each.proveedor)" />
+					<listcell label="@bind(each.proveedor.nombre)" />
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">

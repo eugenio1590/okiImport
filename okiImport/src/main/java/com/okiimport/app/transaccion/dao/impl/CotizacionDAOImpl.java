@@ -9,6 +9,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.modelo.Cotizacion;
@@ -35,6 +36,15 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		Map<String, Join> joins = this.crearJoins(entidades);
 
 		// 3. Creamos las Restricciones de la busqueda
+		this.distinct=true;
+		this.selected=new Selection[]{
+				this.entity.get("idCotizacion"),
+				this.entity.get("fechaCreacion"),
+				this.entity.get("fechaVencimiento"),
+				this.entity.get("estatus"),
+				this.entity.get("mensaje"),
+				this.entity.get("proveedor"),
+		};
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 
 		restricciones.add(criteriaBuilder.equal(
@@ -55,3 +65,4 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 
 
 }
+

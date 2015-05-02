@@ -22,7 +22,7 @@
 									mold="rounded" tabbable="false" 
 									value="@bind(vm.requerimiento.cliente.cedula)"/>
 
-								<label value="Nombre/RazÃ³n Social: " />
+								<label value="Nombre/Razón Social: " />
 
 								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)" />
@@ -30,7 +30,7 @@
 
 							<row>
 
-								<label value="TelÃ©fono: " />
+								<label value="Teléfono: " />
 
 								<textbox id="telefono" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.telefono)"/>
@@ -84,7 +84,7 @@
 										width="80%" readonly="true" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 
-									<label value="AÃ±o: " />
+									<label value="Año: " />
 									
 									<datebox width="80%" format="yyyy" readonly="true" buttonVisible="false"
 										value="@bind(vm.requerimiento.annoV)"/>
@@ -230,6 +230,5 @@
 				</div>
 			</div>
 		</groupbox>
-		
 	</window>
 </zk>

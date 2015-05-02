@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.modelo.Cliente;
@@ -129,26 +131,20 @@ public class RequerimientoDAOImpl extends
 								"%" + String.valueOf(regFiltro.getModeloV())
 										+ "%"));
 			}
-
-			if (regFiltro.getSerialCarroceriaV() != null) {
-				restricciones.add(this.criteriaBuilder.like(
-						this.entity.get("serialCarroceriaV").as(String.class),
-						"%" + String.valueOf(regFiltro.getSerialCarroceriaV())
-								+ "%"));
+			
+			if (regFiltro.getEstatus() != null)
+			{
+				restricciones.add(this.criteriaBuilder.like(this.entity.get("estatus").as(String.class), 
+						"%" + regFiltro.getEstatus() + "%"));
 			}
-
-			if (joins != null) {
-				// Cliente
+			
+			if(joins!=null){
+				//Cliente
 				Cliente cliente = regFiltro.getCliente();
 				if (cliente != null && joins.get("cliente") != null) {
 					if (cliente.getNombre() != null)
-						restricciones
-								.add(this.criteriaBuilder.like(
-										joins.get("cliente").get("nombre")
-												.as(String.class),
-										"%"
-												+ String.valueOf(cliente
-														.getNombre()) + "%"));
+						restricciones.add(this.criteriaBuilder.like(joins.get("cliente").get("nombre").as(String.class),
+										"%"+ String.valueOf(cliente.getNombre()) + "%"));
 				}
 			}
 		}
@@ -174,7 +170,6 @@ public class RequerimientoDAOImpl extends
 		restricciones.add(criteriaBuilder.equal(
 				joins.get("analista").get("id"), idusuario));
 		restricciones.add(criteriaBuilder.equal(entity.get("estatus"), "CT"));
-		System.out.println("estatus filtro");
 		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 
 		// 4. Creamos los campos de ordenamiento y ejecutamos
@@ -195,6 +190,64 @@ public class RequerimientoDAOImpl extends
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders,
 				start, limit);
 
+	}
+
+	@Override
+	public List<Requerimiento> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
+			Boolean sortDirection, int idProveedor, List<String> estatus, int start, int limit) {
+		// TODO Auto-generated method stub
+		// 1. Creamos el Criterio de busqueda
+		this.crearCriteria();
+		
+		// 2. Generamos los Joins
+		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
+		entidades.put("analista", JoinType.INNER);
+		entidades.put("cliente", JoinType.INNER);
+		entidades.put("detalleRequerimientos", JoinType.INNER);
+		Map<String, Join> joins = this.crearJoins(entidades);
+		
+		// 3. Creamos las Restricciones de la busqueda y los campos a seleccionar
+		this.distinct = true;
+		this.selected=new Selection[]{
+				this.entity.get("idRequerimiento"),
+				this.entity.get("estatus"),
+				this.entity.get("fechaCreacion"),
+				this.entity.get("analista"),
+				this.entity.get("cliente"),
+				this.entity.get("marcaVehiculo")
+		};
+		
+		List<Predicate> restricciones = new ArrayList<Predicate>();
+		restricciones.add(this.criteriaBuilder.equal(
+				joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion").join("proveedor").get("id"), 
+				idProveedor));
+		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
+		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
+		
+		// 4. Creamos los campos de ordenamiento y ejecutamos
+		List<Order> orders = new ArrayList<Order>();
+
+		if (fieldSort != null && sortDirection != null) {
+			if (fieldSort.equalsIgnoreCase("nombre"))
+				orders.add((sortDirection) ? this.criteriaBuilder.asc(joins
+						.get("cliente").get("nombre")) : this.criteriaBuilder
+						.desc(joins.get("cliente").get("nombre")));
+			else
+				orders.add((sortDirection) ? this.criteriaBuilder
+						.asc(this.entity.get(fieldSort)) : this.criteriaBuilder
+						.desc(this.entity.get(fieldSort)));
+
+		}
+		
+		
+		List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
+		groupBy.add(entity.get("idRequerimiento"));
+		groupBy.add(entity.get("estatus"));
+		groupBy.add(entity.get("fechaCreacion"));
+		groupBy.add(entity.get("analista"));
+		groupBy.add(entity.get("cliente"));
+		groupBy.add(entity.get("marcaVehiculo"));
+		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy , orders, start, limit);
 	}
 
 }

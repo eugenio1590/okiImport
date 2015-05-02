@@ -9,3 +9,4 @@ public interface CotizacionDAO extends IGenericDao<Cotizacion, Integer> {
 	public List<Cotizacion> consultarCotizacionesAsignadas(Cotizacion cotizacion, String fieldSort, Boolean sortDirection,
 			Integer idRequerimiento, int start, int limit);
 }
+
