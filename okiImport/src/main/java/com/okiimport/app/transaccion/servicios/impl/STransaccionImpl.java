@@ -16,6 +16,7 @@ import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 import com.okiimport.app.transaccion.dao.CotizacionDAO;
+import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -33,6 +34,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleRequerimientoDAO")
 	private DetalleRequerimientoDAO detalleRequerimientoDAO;
+	
+	@Autowired
+	@BeanInjector("detalleCotizacionDAO")
+	private DetalleCotizacionDAO detalleCotizacionDAO;
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
 		return detalleRequerimientoDAO;
@@ -48,6 +53,24 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 
 	public void setRequerimientoDAO(RequerimientoDAO requerimientoDAO) {
 		this.requerimientoDAO = requerimientoDAO;
+	}
+	
+	
+
+	public CotizacionDAO getCotizacionDAO() {
+		return cotizacionDAO;
+	}
+
+	public void setCotizacionDAO(CotizacionDAO cotizacionDAO) {
+		this.cotizacionDAO = cotizacionDAO;
+	}
+
+	public DetalleCotizacionDAO getDetalleCotizacionDAO() {
+		return detalleCotizacionDAO;
+	}
+
+	public void setDetalleCotizacionDAO(DetalleCotizacionDAO detalleCotizacionDAO) {
+		this.detalleCotizacionDAO = detalleCotizacionDAO;
 	}
 
 	@Override
@@ -120,9 +143,11 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			String fieldSort, Boolean sortDirection, Integer idrequerimiento,
 			int pagina, int limit) {
 		// TODO Auto-generated method stub
+		List<String> estatus=new ArrayList<String>();
+		estatus.add("C");
 		Map<String, Object> parametros= new HashMap<String, Object>();
-		parametros.put("total", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento, 0, -1).size());
-		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento, pagina*limit, limit));
+		parametros.put("total", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, pagina*limit, limit));
 return parametros;
 	}
 	
@@ -139,6 +164,22 @@ return parametros;
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosConSolicitudesCotizacion(regFiltro, fieldSort, sortDirection, idProveedor, estatus, pagina*limit, limit));
 		return parametros;
 
+	}
+
+	@Override
+	public Map<String, Object> ConsultarDetalleCotizacion( Integer idcotizacion,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.ConsultarDetalleCotizacion(idcotizacion, 0, -1).size());
+		parametros.put("detalleCotizacion", detalleCotizacionDAO.ConsultarDetalleCotizacion(idcotizacion, pagina*limit, limit));
+        return parametros;
+	}
+
+	@Override
+	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion) {
+		// TODO Auto-generated method stub
+		return cotizacionDAO.update(cotizacion);
 	}
 	
 

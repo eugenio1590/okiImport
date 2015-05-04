@@ -4,7 +4,8 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesViewModel')">
 		<listbox id="gridCotizaciones" mold="paging"
 			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
-			sclass="mylist" model="@load(vm.listaCotizaciones)">
+			sclass="mylist" model="@load(vm.listaCotizaciones)" 
+			selectedItems="@bind(vm.listaCotizacionesSeleccionadas)">
 
 			<listhead>
 
@@ -57,9 +58,10 @@
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
 								<button image="/resources/img/icons/ic_edit.png" tooltiptext="Editar"
-									onClick="@command('editarReguerimiento', requerimiento = each)"/>
+									onClick="@command('aprobar', cotizacion = each)"/>
 								<button
-									image="/resources/img/icons/ic_see.png" tooltiptext="Ver" />
+									image="/resources/img/icons/ic_see.png" tooltiptext="Ver"
+									onClick="@command('verDetalleCotizacion', cotizacion = each)" />
 							</div>
 						</hbox>
 					</listcell>
@@ -69,5 +71,11 @@
 		</listbox>
 		<paging id="pagCotizaciones"
 			onPaging="@command('paginarLista')" autohide="true" />
+				<div width="100%" align="right">
+				<div sclass="btn btn-xs btn-info">
+					<button label="Aprobar" type="submit"
+						onClick="@command('aprobar', cotizacion=null)" />
+				</div>
+			</div>
 	</window>
 </zk>

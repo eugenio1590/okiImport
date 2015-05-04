@@ -25,7 +25,7 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 
 	@Override
 	public List<Cotizacion> consultarCotizacionesAsignadas(Cotizacion cotizacion, String fieldSort, Boolean sortDirection,
-			Integer idRequerimiento, int start, int limit) {
+			Integer idRequerimiento,List<String> estatus, int start, int limit) {
 		// TODO Auto-generated method stub
 		// 1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -33,6 +33,7 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		// 2. Generamos los Joins
 		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
 		entidades.put("detalleCotizacions", JoinType.INNER);
+		entidades.put("proveedor", JoinType.INNER);
 		Map<String, Join> joins = this.crearJoins(entidades);
 
 		// 3. Creamos las Restricciones de la busqueda
@@ -46,10 +47,11 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 				this.entity.get("proveedor"),
 		};
 		List<Predicate> restricciones = new ArrayList<Predicate>();
-
+		AgregarFiltro(cotizacion,restricciones,joins);
 		restricciones.add(criteriaBuilder.equal(
 					joins.get("detalleCotizacions").join("detalleRequerimiento").join("requerimiento").get("idRequerimiento"), 
 					idRequerimiento));
+		restricciones.add(entity.get("estatus").in(estatus));
 
 		// 4. Creamos los campos de ordenamiento y ejecutamos
 		List<Order> orders = new ArrayList<Order>();
@@ -62,7 +64,24 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 
-
+	private void AgregarFiltro(Cotizacion cotizacionF,List<Predicate> restricciones,Map<String, Join> joins){
+		if (cotizacionF != null){
+			if (cotizacionF.getIdCotizacion() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("idCotizacion").as(String.class)), "%"+String.valueOf(cotizacionF.getIdCotizacion()).toLowerCase()+"%"));
+			}
+			if (cotizacionF.getFechaCreacion() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaCreacion").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaCreacion()).toLowerCase()+"%"));
+			}
+			if (cotizacionF.getFechaVencimiento() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaVencimiento").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaVencimiento()).toLowerCase()+"%"));
+			}
+			if(joins.get("proveedor") != null && cotizacionF.getProveedor() != null){
+				if(cotizacionF.getProveedor().getNombre() != null){
+					restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(joins.get("proveedor").get("nombre").as(String.class)), "%"+String.valueOf(cotizacionF.getProveedor().getNombre()).toLowerCase()+"%"));
+				}
+			}
+		}
+	}
 
 }
 

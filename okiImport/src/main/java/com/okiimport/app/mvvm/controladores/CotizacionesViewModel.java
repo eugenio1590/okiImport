@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Cotizacion;
+import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
@@ -41,6 +43,7 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	private SControlUsuario sControlUsuario;
 
 	private List <Cotizacion> listaCotizaciones;
+	private List<Cotizacion> listaCotizacionesSeleccionadas;
 	
 	//GUI
 	@Wire("#gridCotizaciones")
@@ -62,6 +65,8 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
 		cotizacionFiltro = new Cotizacion();
+		cotizacionFiltro.setProveedor(new Proveedor());
+		listaCotizacionesSeleccionadas=new ArrayList<Cotizacion>();
 		this.requerimiento = requerimiento;
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarCotizaciones(0, null, null);
@@ -125,7 +130,7 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	@NotifyChange("listaRequerimientosCotizados")
+	@NotifyChange("listaCotizaciones")
 	public void aplicarFiltro(){
 		cambiarCotizaciones(0, null, null);
 	}
@@ -140,6 +145,36 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+	}
+	
+	@Command
+	public void verDetalleCotizacion(@BindingParam("cotizacion") Cotizacion cotizacion){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("cotizacion", cotizacion);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/detalleCotizacion.zul", parametros);
+	}
+	
+	@NotifyChange("*")
+	@Command
+	public void aprobar(@BindingParam("cotizacion") Cotizacion cotizacion){
+		
+		if (cotizacion != null){
+			System.out.println("Cotizacion");
+			cotizacion.setEstatus("A");
+			sTransaccion.ActualizarCotizacion(cotizacion);
+			cambiarCotizaciones(0, null, null);
+		}
+		
+		else if (listaCotizacionesSeleccionadas.size() > 0) { 
+			System.out.println("CotizacionSeleccionada");
+			for (Cotizacion cotizacionSeleccionada:listaCotizacionesSeleccionadas){
+				cotizacionSeleccionada.setEstatus("A");
+				sTransaccion.ActualizarCotizacion(cotizacionSeleccionada);
+			}
+			cambiarCotizaciones(0, null, null);
+			listaCotizacionesSeleccionadas.clear();
+		}
+		else mostrarMensaje("Informacion","Seleccione al menos una Cotización",null,null,null,null);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -175,6 +210,16 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	public void setCotizacionFiltro(Cotizacion cotizacionFiltro) {
 		this.cotizacionFiltro = cotizacionFiltro;
 	}
+
+	public List<Cotizacion> getListaCotizacionesSeleccionadas() {
+		return listaCotizacionesSeleccionadas;
+	}
+
+	public void setListaCotizacionesSeleccionadas(
+			List<Cotizacion> listaCotizacionesSeleccionadas) {
+		this.listaCotizacionesSeleccionadas = listaCotizacionesSeleccionadas;
+	}
+	
 	
 
 }

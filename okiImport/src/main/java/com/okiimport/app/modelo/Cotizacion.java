@@ -33,7 +33,7 @@ public class Cotizacion implements Serializable{
 	private Proveedor proveedor;
 	
 	//bi-directional many-to-one association to DetalleCotizacion
-	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY) //cascade=CascadeType.REMOVE, orphanRemoval=true
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
