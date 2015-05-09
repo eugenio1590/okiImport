@@ -40,6 +40,11 @@ public class MarcaVehiculo implements Serializable {
 	public MarcaVehiculo() {
 		proveedores=new ArrayList<Proveedor>();
 	}
+	
+	public MarcaVehiculo(String nombre){
+		this.nombre = nombre;
+		proveedores=new ArrayList<Proveedor>();
+	}
 
 	public Integer getIdMarcaVehiculo() {
 		return this.idMarcaVehiculo;

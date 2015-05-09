@@ -272,4 +272,15 @@ public class Requerimiento implements Serializable {
 		return "";
 	}
 
+	public void especificarInformacionVehiculo(){
+		String especificacion = "No Especificado";
+		if (this.marcaVehiculo==null) 
+			this.marcaVehiculo = new MarcaVehiculo(especificacion);
+		
+		if(this.modeloV==null)
+			this.modeloV = especificacion;
+		
+		if(this.motor==null)
+			this.motor = new Motor(especificacion);
+	}
 }

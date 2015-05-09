@@ -48,7 +48,8 @@ public class DetalleRequerimiento implements Serializable {
 	private Requerimiento requerimiento;
 	
 	//bi-directional many-to-one association to DetalleCotizacion
-	@OneToMany(mappedBy="detalleRequerimiento", fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(mappedBy="detalleRequerimiento", fetch=FetchType.LAZY, orphanRemoval=true, 
+			cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public DetalleRequerimiento() {

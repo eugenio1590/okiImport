@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Page;
@@ -176,11 +177,13 @@ public abstract class AbstractViewModel {
 	 * Parametros: 
 	 * @param west: grid izquierda de la pantalla
 	 * @param east: grid derecha de la pantalla
+	 * @param baseW: tamaño base de la region
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void openRegionWest(@BindingParam("west") LayoutRegion west, @BindingParam("east") LayoutRegion east){
-		String width = (west.isOpen()) ? "62.5%" : "95%";
+	public void openRegionWest(@BindingParam("west") LayoutRegion west, @BindingParam("east") LayoutRegion east,
+			@Default("62.5%") @BindingParam("baseW") String baseW){
+		String width = (west.isOpen()) ? baseW : "95%";
 		east.setWidth(width);
 	}
 	

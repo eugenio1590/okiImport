@@ -17,14 +17,13 @@ public class Cotizacion implements Serializable{
 	@SequenceGenerator(name="cotizacion_id_seq", sequenceName="cotizacion_id_seq", initialValue=1, allocationSize=1)
 	private Integer idCotizacion;
 	
-	@Column(name="nro_cotizacion")
-	private String nroCotizacion;
-	
 	@Column(name="fecha_creacion")
 	private Date fechaCreacion;
 	
 	@Column(name="fecha_vencimiento")
 	private Date fechaVencimiento;
+	
+	private String condiciones;
 	
 	private String estatus;
 	
@@ -42,20 +41,33 @@ public class Cotizacion implements Serializable{
 	public Cotizacion() {
 	}
 
+	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+	}
+	
+	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje, Proveedor proveedor) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+		this.proveedor = proveedor;
+	}
+
 	public Integer getIdCotizacion() {
 		return idCotizacion;
 	}
 
 	public void setIdCotizacion(Integer idCotizacion) {
 		this.idCotizacion = idCotizacion;
-	}
-
-	public String getNroCotizacion() {
-		return nroCotizacion;
-	}
-
-	public void setNroCotizacion(String nroCotizacion) {
-		this.nroCotizacion = nroCotizacion;
 	}
 
 	public Date getFechaCreacion() {
@@ -72,6 +84,14 @@ public class Cotizacion implements Serializable{
 
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public String getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(String condiciones) {
+		this.condiciones = condiciones;
 	}
 
 	public String getEstatus() {
