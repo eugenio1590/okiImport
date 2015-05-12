@@ -85,6 +85,7 @@
     <tx:annotation-driven />
 	<beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
+		<beans:property name="defaultTimeout" value="4000"/>
 	</beans:bean>
     
 </beans:beans>
