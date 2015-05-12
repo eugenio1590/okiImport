@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Cotizacion;
+import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+import com.okiimport.app.transaccion.dao.CotizacionDAO;
+import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -27,6 +31,14 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleRequerimientoDAO")
 	private DetalleRequerimientoDAO detalleRequerimientoDAO;
+	
+	@Autowired
+	@BeanInjector("cotizacionDAO")
+	private CotizacionDAO cotizacionDAO;
+	
+	@Autowired
+	@BeanInjector("detalleCotizacionDAO")
+	private DetalleCotizacionDAO detalleCotizacionDAO;
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
 		return detalleRequerimientoDAO;
@@ -42,6 +54,22 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 
 	public void setRequerimientoDAO(RequerimientoDAO requerimientoDAO) {
 		this.requerimientoDAO = requerimientoDAO;
+	}
+
+	public CotizacionDAO getCotizacionDAO() {
+		return cotizacionDAO;
+	}
+
+	public void setCotizacionDAO(CotizacionDAO cotizacionDAO) {
+		this.cotizacionDAO = cotizacionDAO;
+	}
+
+	public DetalleCotizacionDAO getDetalleCotizacionDAO() {
+		return detalleCotizacionDAO;
+	}
+
+	public void setDetalleCotizacionDAO(DetalleCotizacionDAO detalleCotizacionDAO) {
+		this.detalleCotizacionDAO = detalleCotizacionDAO;
 	}
 
 	@Override
@@ -123,5 +151,35 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		return parametros;
 	}
 	
+	//Cotizaciones
+	@Override
+	public Map<String, Object> consultarSolicitudCotizaciones(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int idProveedor, int pagina, int limit){
+		List<String> estatus=new ArrayList<String>();
+		estatus.add("SC");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarSolicitudCotizaciones(cotizacionF, fieldSort, sortDirection, idRequerimiento, idProveedor, estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarSolicitudCotizaciones(cotizacionF, fieldSort, sortDirection, idRequerimiento, idProveedor, estatus, pagina*limit, limit));
+		return parametros;
+	}
 
+	//Detalles Cotizacion
+	@Override
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion, 
+			String fieldSort, Boolean sortDirection, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+
+	@Override
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
+		// TODO Auto-generated method stub
+		cotizacion.setEstatus("C");
+		for(DetalleCotizacion detalle : cotizacion.getDetalleCotizacions())
+			detalle.getDetalleRequerimiento().setEstatus("CT");
+		return cotizacionDAO.update(cotizacion);
+	}
 }

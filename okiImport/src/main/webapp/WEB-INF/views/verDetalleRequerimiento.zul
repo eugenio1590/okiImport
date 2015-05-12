@@ -122,6 +122,12 @@
 									<listcell label="@bind(each.nombre)"/>
 									<listcell label="@bind(each.descripcion)"/>
 									<listcell label="@bind(each.cantidad)"/>
+									<listcell>
+										<div>
+											<image width="50px"
+												height="50px" src="@bind(each.getFoto64())" />
+										</div>
+									</listcell>
 									<listcell label="Por definir"/>
 								</listitem>
 							</template>

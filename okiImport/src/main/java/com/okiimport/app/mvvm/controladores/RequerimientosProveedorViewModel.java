@@ -141,7 +141,8 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	public void verSolicitudes(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		//crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		parametros.put("usuario", usuario);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedor.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
