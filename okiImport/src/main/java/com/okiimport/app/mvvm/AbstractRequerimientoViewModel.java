@@ -1,10 +1,12 @@
 package com.okiimport.app.mvvm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Spinner;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
@@ -34,6 +36,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaEstatus;
 	}
 	
+	public int getYearDay(){
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+	
 	public AbstractValidator getValidatorCantidad(){
 		return new AbstractValidator(){
 
@@ -58,4 +64,41 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		};
 	}
 
+	public AbstractValidator getValidatorAnno(){
+		return new AbstractValidator() {
+			
+			@Override
+			public void validate(ValidationContext ctx) {
+				// TODO Auto-generated method stub
+				Integer anno = (Integer) ctx.getProperty().getValue();
+				Integer minYear = (Integer) ctx.getBindContext().getValidatorArg("minValue");
+				Integer maxYear = (Integer) ctx.getBindContext().getValidatorArg("maxValue");
+				Intbox intbAnno = (Intbox) ctx.getBindContext().getValidatorArg("intbAnno");
+				
+				if(intbAnno==null)
+					System.out.println("***Error en la Validacion***");
+				else if(minYear!=null && maxYear!=null){
+					if(minYear > anno || anno > maxYear){
+						String mensaje = "El Año ingresado es Invalido !";
+						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
+						addInvalidMessage(ctx, mensaje);
+					}
+				}
+				else if(minYear!=null){
+					if(minYear > anno){
+						String mensaje = "El Año ingresado "+anno+" debe ser mayor que "+maxYear+"!";
+						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
+						addInvalidMessage(ctx, mensaje);
+					}
+				}
+				else if(maxYear!=null){
+					if(anno > maxYear){
+						String mensaje = "El Año ingresado "+anno+" debe ser menor que "+maxYear+"!";
+						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
+						addInvalidMessage(ctx, mensaje);
+					}
+				}
+			}
+		};
+	}
 }

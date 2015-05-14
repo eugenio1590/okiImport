@@ -1,9 +1,8 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<script src="/resources/js/scriptParaFechas.js" />
+<!-- 	<script src="/resources/js/scriptParaFechas.js" /> -->
 	<window id="winFormularioRequerimiento" title="Ingrese Su Requerimiento" border="normal" width="95%" sclass="btn-primary"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')"
-		form="@id('fx') @load(vm.requerimiento) @save(vm.requerimiento, before='registrar')" >
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')" >
 		
 		<groupbox>
 		<hbox>
@@ -115,11 +114,11 @@
 													constraint="no empty:El Campo No Debe Estar Vacio" />
 
 												<label value="Año: " />
-												<datebox width="80%" sclass="datebox-year-only"
-            										format="yyyy" value="@bind(vm.requerimiento.annoV)"/>
-            										
-											</row>
 
+												<intbox placeholder="0000" constraint="no negative,no empty, no zero" width="80%" 
+													value="@save(vm.requerimiento.annoV) 
+															@validator(vm.validatorAnno, maxValue=vm.yearDay, intbAnno=self)" />
+											</row>
 
 										</rows>
 									</grid>
