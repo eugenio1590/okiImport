@@ -104,8 +104,6 @@
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto" />
-								<listheader label="Nombre" 
-								    sort="auto" />
 								<listheader label="Descripcion"
 									sort="auto" />
 								<listheader label="Cantidad"
@@ -119,7 +117,6 @@
 							<template name="model">
 								<listitem>
 									<listcell label="@bind(each.codigoOem)"/>
-									<listcell label="@bind(each.nombre)"/>
 									<listcell label="@bind(each.descripcion)"/>
 									<listcell label="@bind(each.cantidad)"/>
 									<listcell>
