@@ -3,7 +3,7 @@
 <zk> 
 <div align="center">
 <h:form id="formLogin" action="/app/login" method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
-	<div  width="300px" height="300px" sclass="alert alert-info" align="center">
+	<div  width="300px" sclass="alert alert-info" align="center">
 		<grid>
 			<columns>
 			  <column label="" />
@@ -14,10 +14,12 @@
 						<image src="/resources/img/user1.png"
 							width="70px" height="70px"/>
 							
+						<label style="color:red;" value="Datos Invalidos!!!" if="${not empty param.auth}" />
+						
 						<div class="input-group">
 							<span class="input-group-addon"></span>
 							<textbox class="form-control"
-								placeholder="Usuario o Email" id="username" name="j_username" width="100%" height="40px" />
+								placeholder="Usuario" id="username" name="j_username" width="100%" height="40px" />
 						</div>
 
 						<textbox id="password"  name="j_password" type="password" class="form-control"
