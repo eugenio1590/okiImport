@@ -27,7 +27,7 @@ public class Requerimiento implements Serializable {
 	private Integer idRequerimiento;
 
 	@Column(name="anno_v")
-	private Timestamp annoV;
+	private Integer annoV;
 
 	private String estatus;
 
@@ -114,11 +114,11 @@ public class Requerimiento implements Serializable {
 		this.idRequerimiento = idRequerimiento;
 	}
 
-	public Timestamp getAnnoV() {
+	public Integer getAnnoV() {
 		return this.annoV;
 	}
 
-	public void setAnnoV(Timestamp annoV) {
+	public void setAnnoV(Integer annoV) {
 		this.annoV = annoV;
 	}
 
