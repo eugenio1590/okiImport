@@ -50,17 +50,6 @@ public class Cotizacion implements Serializable{
 		this.estatus = estatus;
 		this.mensaje = mensaje;
 	}
-	
-	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
-			String estatus, String mensaje, Proveedor proveedor) {
-		super();
-		this.idCotizacion = idCotizacion;
-		this.fechaCreacion = fechaCreacion;
-		this.fechaVencimiento = fechaVencimiento;
-		this.estatus = estatus;
-		this.mensaje = mensaje;
-		this.proveedor = proveedor;
-	}
 
 	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
 			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
