@@ -8,4 +8,5 @@ import com.okiimport.app.modelo.DetalleCotizacion;
 public interface DetalleCotizacionDAO extends IGenericDao<DetalleCotizacion, Integer> {
 	public List<DetalleCotizacion> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,
 			String fieldSort, Boolean sortDirection, int start, int limit);
+	public List<DetalleCotizacion> ConsultarDetalleCotizacion(int idCotizacion, int page, int limit);
 }

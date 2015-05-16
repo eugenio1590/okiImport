@@ -1,6 +1,6 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCotizacionesViewModel')">
 		<listbox id="gridRequerimientosCotizados" mold="paging"
 			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
 			sclass="mylist" model="@load(vm.listaRequerimientos)">
@@ -55,7 +55,8 @@
 								<button image="/resources/img/icons/ic_edit.png" tooltiptext="Editar"
 									onClick="@command('editarReguerimiento', requerimiento = each)"/>
 								<button
-									image="/resources/img/icons/ic_see.png" tooltiptext="Ver" />
+									image="/resources/img/icons/ic_see.png" tooltiptext="Ver"
+									onClick="@command('verCotizacion', requerimiento = each)" />
 							</div>
 						</hbox>
 					</listcell>
@@ -66,3 +67,4 @@
 		<paging id="pagRequerimientosCotizados"
 			onPaging="@command('paginarLista')" autohide="true" />
 	</window>
+</zk>

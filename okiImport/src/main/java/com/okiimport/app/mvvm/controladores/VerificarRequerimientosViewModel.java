@@ -29,11 +29,13 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class VerificarRequerimientosViewModel extends AbstractViewModel implements EventListener<SortEvent> {
+public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 	
 	
 	@BeanInjector("sTransaccion")
@@ -59,6 +61,9 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 		
 		private Requerimiento requerimientoFiltro;
 		
+		private List <ModeloCombo<Boolean>> listaTipoPersona;
+		
+		private ModeloCombo<Boolean> tipoPersona;
 		
 		@AfterCompose
 		public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
@@ -68,8 +73,8 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 			requerimientoFiltro = new Requerimiento();
 			pagRequerimientosCliente.setPageSize(PAGE_SIZE);
 			agregarGridSort(gridRequerimientosCliente);
+			listaTipoPersona = llenarListaTipoPersona();
 		}
-		
 		
 		/**Interface: EventListener<SortEvent>*/
 		@Override
@@ -108,6 +113,8 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 			
 			if (this.cliente.getCedula()!= null)
 			{ 
+				String tipo = (this.tipoPersona.getValor())?"J":"V";
+				cliente.setCedula(tipo+"-"+cliente.getCedula());
 				cambiarRequerimientos(0,null, null);
 				if (listaRequerimientos.size() > 0 )
 				{
@@ -198,6 +205,23 @@ public class VerificarRequerimientosViewModel extends AbstractViewModel implemen
 		}
 	
 		
-		
+		public List<ModeloCombo<Boolean>> getListaTipoPersona() {
+			return listaTipoPersona;
+		}
+
+
+		public void setListaTipoPersona(List<ModeloCombo<Boolean>> listaTipoPersona) {
+			this.listaTipoPersona = listaTipoPersona;
+		}
+
+
+		public ModeloCombo<Boolean> getTipoPersona() {
+			return tipoPersona;
+		}
+
+
+		public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
+			this.tipoPersona = tipoPersona;
+		}
 		
 }

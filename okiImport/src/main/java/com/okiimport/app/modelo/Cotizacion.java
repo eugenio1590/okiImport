@@ -35,7 +35,7 @@ public class Cotizacion implements Serializable{
 	private Proveedor proveedor;
 	
 	//bi-directional many-to-one association to DetalleCotizacion
-	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY) //cascade=CascadeType.REMOVE, orphanRemoval=true
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
@@ -50,9 +50,9 @@ public class Cotizacion implements Serializable{
 		this.estatus = estatus;
 		this.mensaje = mensaje;
 	}
-	
-	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
-			String estatus, String mensaje, Proveedor proveedor) {
+
+	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
+			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
 		super();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
@@ -61,6 +61,8 @@ public class Cotizacion implements Serializable{
 		this.mensaje = mensaje;
 		this.proveedor = proveedor;
 	}
+
+
 
 	public Integer getIdCotizacion() {
 		return idCotizacion;

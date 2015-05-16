@@ -1,6 +1,5 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -26,14 +24,13 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class CotizacionesViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class ListaCotizacionesViewModel extends AbstractViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -42,36 +39,30 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
 
-	private List <Cotizacion> listaCotizaciones;
-	private List<Cotizacion> listaCotizacionesSeleccionadas;
+	private List <Requerimiento> listaRequerimientosCotizados;
 	
 	//GUI
-	@Wire("#gridCotizaciones")
-	private Listbox gridCotizaciones;
+	@Wire("#gridRequerimientosCotizados")
+	private Listbox gridRequerimientosCotizados;
 	
-	@Wire("#pagCotizaciones")
-	private Paging pagCotizaciones;
+	@Wire("#pagRequerimientosCotizados")
+	private Paging pagRequerimientosCotizados;
 	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
 	
 	private Usuario usuario;
-	private Cotizacion cotizacionFiltro;
-	private Requerimiento requerimiento;
+	private Requerimiento requerimientoFiltro;
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("requerimiento")Requerimiento requerimiento){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
-		cotizacionFiltro = new Cotizacion();
-		cotizacionFiltro.setProveedor(new Proveedor());
-		listaCotizacionesSeleccionadas=new ArrayList<Cotizacion>();
-		this.requerimiento = requerimiento;
+		requerimientoFiltro = new Requerimiento(new Cliente());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-		cambiarCotizaciones(0, null, null);
-		agregarGridSort(gridCotizaciones);
-		pagCotizaciones.setPageSize(PAGE_SIZE);
+		cambiarRequerimientos(0, null, null);
+		agregarGridSort(gridRequerimientosCotizados);
+		pagRequerimientosCotizados.setPageSize(PAGE_SIZE);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -99,16 +90,17 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
 	@NotifyChange("listaRequerimientosCotizados")
-	public void cambiarCotizaciones(@Default("0") @BindingParam("page") int page, 
+	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarCotizacionesRequerimiento(cotizacionFiltro, fieldSort, sortDirection, requerimiento.getIdRequerimiento(), page, PAGE_SIZE);
+		Map<String, Object> parametros = sTransaccion.RequerimientosCotizados(requerimientoFiltro, 
+				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
-		listaCotizaciones = (List<Cotizacion>) parametros.get("cotizaciones");
-		gridCotizaciones.setMultiple(true);
-		gridCotizaciones.setCheckmark(true);
-		pagCotizaciones.setActivePage(page);
-		pagCotizaciones.setTotalSize(total);
+		listaRequerimientosCotizados = (List<Requerimiento>) parametros.get("requerimientos");
+		gridRequerimientosCotizados.setMultiple(true);
+		gridRequerimientosCotizados.setCheckmark(true);
+		pagRequerimientosCotizados.setActivePage(page);
+		pagRequerimientosCotizados.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
@@ -120,8 +112,8 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
-		int page=pagCotizaciones.getActivePage();
-		cambiarCotizaciones(page, null, null);
+		int page=pagRequerimientosCotizados.getActivePage();
+		cambiarRequerimientos(page, null, null);
 	}
 	
 	/*
@@ -130,9 +122,9 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	@NotifyChange("listaCotizaciones")
+	@NotifyChange("listaRequerimientosCotizado")
 	public void aplicarFiltro(){
-		cambiarCotizaciones(0, null, null);
+		cambiarRequerimientos(0, null, null);
 	}
 	
 	/*
@@ -146,35 +138,11 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
-	
 	@Command
-	public void verDetalleCotizacion(@BindingParam("cotizacion") Cotizacion cotizacion){
+	public void verCotizacion(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("cotizacion", cotizacion);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/detalleCotizacion.zul", parametros);
-	}
-	
-	@NotifyChange("*")
-	@Command
-	public void aprobar(@BindingParam("cotizacion") Cotizacion cotizacion){
-		
-		if (cotizacion != null){
-			System.out.println("Cotizacion");
-			cotizacion.setEstatus("A");
-			sTransaccion.ActualizarCotizacion(cotizacion);
-			cambiarCotizaciones(0, null, null);
-		}
-		
-		else if (listaCotizacionesSeleccionadas.size() > 0) { 
-			System.out.println("CotizacionSeleccionada");
-			for (Cotizacion cotizacionSeleccionada:listaCotizacionesSeleccionadas){
-				cotizacionSeleccionada.setEstatus("A");
-				sTransaccion.ActualizarCotizacion(cotizacionSeleccionada);
-			}
-			cambiarCotizaciones(0, null, null);
-			listaCotizacionesSeleccionadas.clear();
-		}
-		else mostrarMensaje("Informacion","Seleccione al menos una Cotización",null,null,null,null);
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -186,12 +154,12 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 		this.sTransaccion = sTransaccion;
 	}
 
-	public List<Cotizacion> getListaCotizaciones() {
-		return listaCotizaciones;
+	public List<Requerimiento> getListaRequerimientos() {
+		return listaRequerimientosCotizados;
 	}
 
-	public void setListaRequerimientos(List<Cotizacion> listaCotizaciones) {
-		this.listaCotizaciones = listaCotizaciones;
+	public void setListaRequerimientos(List<Requerimiento> listaRequerimientos) {
+		this.listaRequerimientosCotizados = listaRequerimientos;
 	}
 
 	public SControlUsuario getsControlUsuario() {
@@ -202,24 +170,12 @@ public class CotizacionesViewModel extends AbstractViewModel implements EventLis
 		this.sControlUsuario = sControlUsuario;
 	}
 
-
-	public Cotizacion getCotizacionFiltro() {
-		return cotizacionFiltro;
+	public Requerimiento getRequerimientoFiltro() {
+		return requerimientoFiltro;
 	}
 
-	public void setCotizacionFiltro(Cotizacion cotizacionFiltro) {
-		this.cotizacionFiltro = cotizacionFiltro;
+	public void setRequerimientoFiltro(Requerimiento requerimientoFiltro) {
+		this.requerimientoFiltro = requerimientoFiltro;
 	}
-
-	public List<Cotizacion> getListaCotizacionesSeleccionadas() {
-		return listaCotizacionesSeleccionadas;
-	}
-
-	public void setListaCotizacionesSeleccionadas(
-			List<Cotizacion> listaCotizacionesSeleccionadas) {
-		this.listaCotizacionesSeleccionadas = listaCotizacionesSeleccionadas;
-	}
-	
-	
 
 }

@@ -25,16 +25,16 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class STransaccionImpl extends AbstractServiceImpl implements STransaccion {
 	
 	@Autowired
+	@BeanInjector("cotizacionDAO")
+	private CotizacionDAO cotizacionDAO;
+	
+	@Autowired
 	@BeanInjector("requerimientoDAO")
 	private RequerimientoDAO requerimientoDAO;
 	
 	@Autowired
 	@BeanInjector("detalleRequerimientoDAO")
 	private DetalleRequerimientoDAO detalleRequerimientoDAO;
-	
-	@Autowired
-	@BeanInjector("cotizacionDAO")
-	private CotizacionDAO cotizacionDAO;
 	
 	@Autowired
 	@BeanInjector("detalleCotizacionDAO")
@@ -138,6 +138,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 
 	@Override
+	public Map<String, Object> ConsultarCotizacionesRequerimiento(Cotizacion cotFiltro,
+			String fieldSort, Boolean sortDirection, Integer idrequerimiento,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		List<String> estatus=new ArrayList<String>();
+		estatus.add("C");
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, pagina*limit, limit));
+return parametros;
+	}
+	
+	@Override
 	public Map<String, Object> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
 			Boolean sortDirection, int idProveedor, int pagina, int limit) {
 		// TODO Auto-generated method stub
@@ -149,6 +162,23 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("total", requerimientoDAO.ConsultarRequerimientosConSolicitudesCotizacion(regFiltro, fieldSort, sortDirection, idProveedor, estatus, 0, -1).size());
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosConSolicitudesCotizacion(regFiltro, fieldSort, sortDirection, idProveedor, estatus, pagina*limit, limit));
 		return parametros;
+
+	}
+
+	@Override
+	public Map<String, Object> ConsultarDetalleCotizacion(Integer idcotizacion,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.ConsultarDetalleCotizacion(idcotizacion, 0, -1).size());
+		parametros.put("detalleCotizacion", detalleCotizacionDAO.ConsultarDetalleCotizacion(idcotizacion, pagina*limit, limit));
+        return parametros;
+	}
+
+	@Override
+	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion) {
+		// TODO Auto-generated method stub
+		return cotizacionDAO.update(cotizacion);
 	}
 	
 	//Cotizaciones
