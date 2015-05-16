@@ -25,7 +25,8 @@
 								<textbox id="cedulaRif" width="80%"
 									readonly="" mold="rounded" value="@bind(vm.cliente.cedula)"
 									placeholder="Ej: J-40240537-5" maxlength="12"
-									constraint="no empty:El Campo No Debe Estar Vacio" />
+									constraint="no empty:El Campo No Debe Estar Vacio" 
+									onBlur="@command('buscarCliente')" onOK="@command('buscarCliente')"/>
 
 
 								<label value="Nombre/Razón Social: " />

@@ -14,6 +14,7 @@ public interface SMaestros {
 	
 	//Cliente
 	public Cliente registrarOActualizarCliente(Cliente cliente);
+	public Cliente consultarCliente(Cliente cliente);
 
 	//Analistas
 	public Map<String, Object> consultarAnalistasSinUsuarios(Persona personaF,  String fieldSort, Boolean sortDirection, 

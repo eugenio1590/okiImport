@@ -12,7 +12,9 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cliente;
@@ -33,6 +35,10 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private SMaestros sMaestros;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	//GUI
+	@Wire("#cedulaRif")
+	public Textbox cedulaRif;
 
 	private List <MarcaVehiculo> listaMarcasVehiculo;
 	private List <Motor> listaMotor;
@@ -62,7 +68,6 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		requerimiento = new Requerimiento();
 		cliente = new Cliente();
 		requerimiento.setCliente(cliente);
-		
 	}
 	
 	@Command
@@ -112,6 +117,20 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		
 	}
 
+	@Command
+	@NotifyChange({"requerimiento","cliente"})
+	public void buscarCliente(){
+		String cedula = cliente.getCedula();
+		if(cedula!=null && !cedula.equalsIgnoreCase("")){
+			Cliente cliente = sMaestros.consultarCliente(new Cliente(cedula));
+			if(cliente!=null)
+				this.cliente = cliente;
+			else
+				this.cliente = new Cliente(cedula);
+			this.requerimiento.setCliente(this.cliente);
+		}
+	}
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
