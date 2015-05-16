@@ -12,6 +12,10 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -35,17 +39,22 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	@Wire("#annoV")
+	private Datebox annoV;
+	@Wire("#comboTipoPersona")
+	private Combobox comboTipoPersona;
+	
 
 	private List <MarcaVehiculo> listaMarcasVehiculo;
 	private List <Motor> listaMotor;
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
+	private List <ModeloCombo<Boolean>> listaTipoPersona;
+	
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	private List <DetalleRequerimiento> eliminarDetalle;
-	
-
-
+	private ModeloCombo<Boolean> tipoPersona;
 	
 
 	@AfterCompose
@@ -56,6 +65,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
+		listaTipoPersona = llenarListaTipoPersona();
+		this.tipoPersona = listaTipoPersona.get(1);
 	}
 
 	@Command
@@ -64,6 +75,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		requerimiento = new Requerimiento();
 		cliente = new Cliente();
 		requerimiento.setCliente(cliente);
+		annoV.setValue(null);
 		
 	}
 	
@@ -71,6 +83,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({"requerimiento","cliente"})
 	public void registrar(){
 		if(checkIsFormValid()){
+			String tipo = (this.tipoPersona.getValor())?"J":"V";
+			cliente.setCedula(tipo+"-"+cliente.getCedula());
 			cliente = sMaestros.registrarOActualizarCliente(cliente);
 			requerimiento.setCliente(cliente);
 			if(traccion!=null)
@@ -206,6 +220,24 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setEliminarDetalle(List<DetalleRequerimiento> eliminarDetalle) {
 		this.eliminarDetalle = eliminarDetalle;
 	}
+	
+	public List<ModeloCombo<Boolean>> getListaTipoPersona() {
+		return listaTipoPersona;
+	}
+
+	public void setListaTipoPersona(List<ModeloCombo<Boolean>> listaTipoPersona) {
+		this.listaTipoPersona = listaTipoPersona;
+	}
+	
+	public ModeloCombo<Boolean> getTipoPersona() {
+		return tipoPersona;
+	}
+
+	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
+		this.tipoPersona = tipoPersona;
+	}
+	
+	
 	@Command
 	@NotifyChange("*")
 	public void cambiarFoto(@BindingParam("media") Media media, @BindingParam("detalle") DetalleRequerimiento detalle){
