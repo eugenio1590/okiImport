@@ -14,7 +14,8 @@ public abstract class AbstractServiceImpl {
 	}
 	
 	/**SUMA Y RESTAS PARA FECHAS*/
-	private Date sumarORestarFecha(Date fecha, int field, int value){
+	private static Date sumarORestarFecha(Date fecha, int field, int value){
+		Calendar calendar = GregorianCalendar.getInstance();
 		Date fechaTemp = calendar.getTime();
 		if(fecha!=null){
 			calendar.setTime(fecha);
@@ -25,15 +26,15 @@ public abstract class AbstractServiceImpl {
 		return fecha;
 	}
 	
-	protected Date sumarORestarFDia(Date fecha, int dias){
+	public static Date sumarORestarFDia(Date fecha, int dias){
 		return sumarORestarFecha(fecha, Calendar.DAY_OF_YEAR, dias);
 	}
 	
-	protected Date sumarORestarFMes(Date fecha, int meses){
+	public static Date sumarORestarFMes(Date fecha, int meses){
 		return sumarORestarFecha(fecha, Calendar.MONTH, meses);
 	}
 	
-	protected Date sumarORestarFAnno(Date fecha, int annos){
+	public static Date sumarORestarFAnno(Date fecha, int annos){
 		return sumarORestarFecha(fecha, Calendar.YEAR, annos);
 	}
 

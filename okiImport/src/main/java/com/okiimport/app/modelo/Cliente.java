@@ -74,4 +74,11 @@ public class Cliente extends Persona implements Serializable {
 		return requerimiento;
 	}
 
+	/**METODOS OVERRIDE*/
+	@Override
+	public Integer getTipoMenu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

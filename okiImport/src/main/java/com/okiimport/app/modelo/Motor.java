@@ -31,6 +31,10 @@ public class Motor implements Serializable {
 
 	public Motor() {
 	}
+	
+	public Motor(String nombre){
+		this.nombre = nombre;
+	}
 
 	public Integer getIdMotor() {
 		return this.idMotor;

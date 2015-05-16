@@ -22,7 +22,7 @@ public class MenuDAOImpl extends AbstractJpaDao<Menu, Integer> implements MenuDA
 	}
 
 	@Override
-	public List<Menu> consultarPadres() {
+	public List<Menu> consultarPadresMenuUsuario(Integer tipo) {
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -35,6 +35,10 @@ public class MenuDAOImpl extends AbstractJpaDao<Menu, Integer> implements MenuDA
 
 		restricciones.add(
 				this.criteriaBuilder.isNull(this.entity.get("padre"))
+		);
+		
+		restricciones.add(
+				this.criteriaBuilder.equal(this.entity.get("tipo"), tipo)
 		);
 		
 		//4. Creamos los campos de ordenamiento y ejecutamos

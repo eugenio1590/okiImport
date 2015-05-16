@@ -23,6 +23,8 @@ public class Cotizacion implements Serializable{
 	@Column(name="fecha_vencimiento")
 	private Date fechaVencimiento;
 	
+	private String condiciones;
+	
 	private String estatus;
 	
 	private String mensaje;
@@ -37,6 +39,27 @@ public class Cotizacion implements Serializable{
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
+	}
+
+	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+	}
+	
+	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje, Proveedor proveedor) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+		this.proveedor = proveedor;
 	}
 
 	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
@@ -74,6 +97,14 @@ public class Cotizacion implements Serializable{
 
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public String getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(String condiciones) {
+		this.condiciones = condiciones;
 	}
 
 	public String getEstatus() {

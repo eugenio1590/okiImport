@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2015-04-25 19:43:59
+-- Started on 2015-05-01 11:29:21
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -12,7 +12,7 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 --
--- TOC entry 534 (class 2612 OID 16386)
+-- TOC entry 539 (class 2612 OID 16386)
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
 --
 
@@ -74,7 +74,7 @@ CREATE SEQUENCE clasificacion_repuesto_id_seq
 ALTER TABLE public.clasificacion_repuesto_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1942 (class 0 OID 0)
+-- TOC entry 1949 (class 0 OID 0)
 -- Dependencies: 154
 -- Name: clasificacion_repuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -98,13 +98,17 @@ CREATE TABLE cliente (
 ALTER TABLE public.cliente OWNER TO postgres;
 
 --
--- TOC entry 166 (class 1259 OID 93879)
+-- TOC entry 168 (class 1259 OID 93911)
 -- Dependencies: 3
 -- Name: cotizacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE cotizacion (
-    id integer NOT NULL,
+    id_cotizacion integer NOT NULL,
+    estatus character varying(255),
+    fecha_creacion timestamp without time zone,
+    fecha_vencimiento timestamp without time zone,
+    mensaje character varying(255),
     id_proveedor integer
 );
 
@@ -112,19 +116,72 @@ CREATE TABLE cotizacion (
 ALTER TABLE public.cotizacion OWNER TO postgres;
 
 --
--- TOC entry 167 (class 1259 OID 93884)
+-- TOC entry 166 (class 1259 OID 93907)
+-- Dependencies: 3
+-- Name: cotizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cotizacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cotizacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 1950 (class 0 OID 0)
+-- Dependencies: 166
+-- Name: cotizacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cotizacion_id_seq', 1, false);
+
+
+--
+-- TOC entry 169 (class 1259 OID 93972)
 -- Dependencies: 3
 -- Name: detalle_cotizacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE detalle_cotizacion (
-    id integer NOT NULL,
+    id_detalle_cotizacion integer NOT NULL,
+    cantidad bigint,
+    marca_repuesto character varying(255),
+    precio_venta real,
     id_cotizacion integer,
     id_detalle_requerimiento integer
 );
 
 
 ALTER TABLE public.detalle_cotizacion OWNER TO postgres;
+
+--
+-- TOC entry 167 (class 1259 OID 93909)
+-- Dependencies: 3
+-- Name: detalle_cotizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE detalle_cotizacion_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.detalle_cotizacion_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 1951 (class 0 OID 0)
+-- Dependencies: 167
+-- Name: detalle_cotizacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('detalle_cotizacion_id_seq', 1, false);
+
 
 --
 -- TOC entry 143 (class 1259 OID 92560)
@@ -164,12 +221,12 @@ CREATE SEQUENCE detalle_requerimiento_id_seq
 ALTER TABLE public.detalle_requerimiento_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1943 (class 0 OID 0)
+-- TOC entry 1952 (class 0 OID 0)
 -- Dependencies: 155
 -- Name: detalle_requerimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('detalle_requerimiento_id_seq', 23, true);
+SELECT pg_catalog.setval('detalle_requerimiento_id_seq', 26, true);
 
 
 --
@@ -205,12 +262,12 @@ CREATE SEQUENCE history_logins_id_seq
 ALTER TABLE public.history_logins_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1944 (class 0 OID 0)
+-- TOC entry 1953 (class 0 OID 0)
 -- Dependencies: 156
 -- Name: history_logins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('history_logins_id_seq', 17, true);
+SELECT pg_catalog.setval('history_logins_id_seq', 31, true);
 
 
 --
@@ -244,7 +301,7 @@ CREATE SEQUENCE marca_repuesto_id_seq
 ALTER TABLE public.marca_repuesto_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1945 (class 0 OID 0)
+-- TOC entry 1954 (class 0 OID 0)
 -- Dependencies: 157
 -- Name: marca_repuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -284,7 +341,7 @@ CREATE SEQUENCE marca_vehiculo_id_seq
 ALTER TABLE public.marca_vehiculo_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1946 (class 0 OID 0)
+-- TOC entry 1955 (class 0 OID 0)
 -- Dependencies: 158
 -- Name: marca_vehiculo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -304,7 +361,8 @@ CREATE TABLE menu (
     icono character varying(255),
     nombre character varying(255),
     ruta character varying(255),
-    id_padre integer
+    id_padre integer,
+    tipo integer
 );
 
 
@@ -327,7 +385,7 @@ CREATE SEQUENCE menu_id_seq
 ALTER TABLE public.menu_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1947 (class 0 OID 0)
+-- TOC entry 1956 (class 0 OID 0)
 -- Dependencies: 159
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -366,7 +424,7 @@ CREATE SEQUENCE motor_id_seq
 ALTER TABLE public.motor_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1948 (class 0 OID 0)
+-- TOC entry 1957 (class 0 OID 0)
 -- Dependencies: 160
 -- Name: motor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -403,7 +461,8 @@ CREATE TABLE persona (
     correo character varying(255),
     direccion character varying(255),
     nombre character varying(255),
-    telefono character varying(255)
+    telefono character varying(255),
+    tipo_menu integer
 );
 
 
@@ -426,12 +485,12 @@ CREATE SEQUENCE persona_id_seq
 ALTER TABLE public.persona_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1949 (class 0 OID 0)
+-- TOC entry 1958 (class 0 OID 0)
 -- Dependencies: 161
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 71, true);
+SELECT pg_catalog.setval('persona_id_seq', 91, true);
 
 
 --
@@ -519,12 +578,12 @@ CREATE SEQUENCE requerimiento_id_seq
 ALTER TABLE public.requerimiento_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1950 (class 0 OID 0)
+-- TOC entry 1959 (class 0 OID 0)
 -- Dependencies: 162
 -- Name: requerimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('requerimiento_id_seq', 23, true);
+SELECT pg_catalog.setval('requerimiento_id_seq', 26, true);
 
 
 --
@@ -562,27 +621,27 @@ CREATE SEQUENCE usuario_id_seq
 ALTER TABLE public.usuario_id_seq OWNER TO postgres;
 
 --
--- TOC entry 1951 (class 0 OID 0)
+-- TOC entry 1960 (class 0 OID 0)
 -- Dependencies: 163
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('usuario_id_seq', 2, false);
+SELECT pg_catalog.setval('usuario_id_seq', 4, true);
 
 
 --
--- TOC entry 1919 (class 0 OID 92542)
+-- TOC entry 1926 (class 0 OID 92542)
 -- Dependencies: 140
 -- Data for Name: analista; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 2);
-INSERT INTO analista (administrador, estatus, id_analista) VALUES (NULL, NULL, 4);
 INSERT INTO analista (administrador, estatus, id_analista) VALUES (true, NULL, 44);
+INSERT INTO analista (administrador, estatus, id_analista) VALUES (true, NULL, 2);
+INSERT INTO analista (administrador, estatus, id_analista) VALUES (true, NULL, 4);
 
 
 --
--- TOC entry 1920 (class 0 OID 92547)
+-- TOC entry 1927 (class 0 OID 92547)
 -- Dependencies: 141
 -- Data for Name: clasificacion_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -593,7 +652,7 @@ INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, esta
 
 
 --
--- TOC entry 1921 (class 0 OID 92555)
+-- TOC entry 1928 (class 0 OID 92555)
 -- Dependencies: 142
 -- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -609,26 +668,35 @@ INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 48);
 INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 52);
 INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 64);
 INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 68);
+INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 76);
+INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 80);
+INSERT INTO cliente (estatus, juridico, id_cliente) VALUES (NULL, NULL, 84);
 
 
 --
--- TOC entry 1935 (class 0 OID 93879)
--- Dependencies: 166
+-- TOC entry 1942 (class 0 OID 93911)
+-- Dependencies: 168
 -- Data for Name: cotizacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO cotizacion (id_cotizacion, estatus, fecha_creacion, fecha_vencimiento, mensaje, id_proveedor) VALUES (1, 'A', '2015-01-06 00:00:00', NULL, 'Hola', 88);
+INSERT INTO cotizacion (id_cotizacion, estatus, fecha_creacion, fecha_vencimiento, mensaje, id_proveedor) VALUES (2, 'A', '2014-05-05 00:00:00', NULL, 'Hola', 88);
 
 
 --
--- TOC entry 1936 (class 0 OID 93884)
--- Dependencies: 167
+-- TOC entry 1943 (class 0 OID 93972)
+-- Dependencies: 169
 -- Data for Name: detalle_cotizacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO detalle_cotizacion (id_detalle_cotizacion, cantidad, marca_repuesto, precio_venta, id_cotizacion, id_detalle_requerimiento) VALUES (1, NULL, NULL, NULL, 1, 1);
+INSERT INTO detalle_cotizacion (id_detalle_cotizacion, cantidad, marca_repuesto, precio_venta, id_cotizacion, id_detalle_requerimiento) VALUES (2, NULL, NULL, NULL, 1, 2);
+INSERT INTO detalle_cotizacion (id_detalle_cotizacion, cantidad, marca_repuesto, precio_venta, id_cotizacion, id_detalle_requerimiento) VALUES (3, NULL, NULL, NULL, 2, 8);
+INSERT INTO detalle_cotizacion (id_detalle_cotizacion, cantidad, marca_repuesto, precio_venta, id_cotizacion, id_detalle_requerimiento) VALUES (4, NULL, NULL, NULL, 2, 9);
 
 
 --
--- TOC entry 1922 (class 0 OID 92560)
+-- TOC entry 1929 (class 0 OID 92560)
 -- Dependencies: 143
 -- Data for Name: detalle_requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -648,10 +716,13 @@ INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oe
 INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (18, 3, 'sdf343', 'sdfsdf', 'activo', NULL, 'dfsdf', NULL, 18);
 INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (19, 5, 'sdff34', 'ddd', 'activo', NULL, 'Frenos', NULL, 19);
 INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (23, 3, '34234', 'fsdf', 'activo', NULL, 'sdfsdf', NULL, 23);
+INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (24, 4, '434234', 'dsfsdf', NULL, NULL, 'dfsdf', NULL, 24);
+INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (25, 3, '324', 'sdfsdf', NULL, NULL, 'dfsdf', NULL, 25);
+INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, nombre, id_clasificacion_repuesto, id_requerimiento) VALUES (26, 3, '34324', 'dfsdf', 'activo', NULL, 'dfsdf', NULL, 26);
 
 
 --
--- TOC entry 1923 (class 0 OID 92568)
+-- TOC entry 1930 (class 0 OID 92568)
 -- Dependencies: 144
 -- Data for Name: history_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -673,10 +744,24 @@ INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (14, '
 INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (15, '2015-04-18 18:50:13.82', '2015-04-18 19:45:08.012', 'euge');
 INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (16, '2015-04-18 19:45:08.012', '2015-04-18 20:50:14.226', 'euge');
 INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (17, '2015-04-25 15:22:42.796', '2015-04-25 19:41:00.842', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (18, '2015-04-25 21:16:01.335', '2015-04-25 21:16:01.335', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (19, '2015-04-26 12:43:42.681', '2015-04-26 14:00:22.263', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (20, '2015-04-26 14:00:22.263', '2015-04-26 19:07:19.894', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (21, '2015-04-26 19:07:19.894', '2015-04-26 19:29:16.376', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (22, '2015-04-26 19:29:16.376', '2015-04-26 20:54:53.556', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (23, '2015-04-26 20:54:53.556', '2015-04-26 20:54:53.556', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (24, '2015-04-26 20:54:53.556', '2015-04-26 20:54:53.556', 'pastas');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (25, '2015-05-01 08:55:59.076', '2015-05-01 08:55:59.076', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (26, '2015-05-01 08:55:59.076', '2015-05-01 08:55:59.076', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (28, '2015-05-01 09:24:09.32', '2015-05-01 09:24:09.32', 'euge');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (27, '2015-05-01 08:55:59.076', '2015-05-01 09:24:09.32', 'euge1590');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (29, '2015-05-01 09:24:09.32', '2015-05-01 09:28:16.443', 'euge1590');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (30, '2015-05-01 09:28:16.443', NULL, 'euge1590');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (31, '2015-05-01 09:32:45.76', '2015-05-01 09:32:45.76', 'euge');
 
 
 --
--- TOC entry 1924 (class 0 OID 92573)
+-- TOC entry 1931 (class 0 OID 92573)
 -- Dependencies: 145
 -- Data for Name: marca_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -684,7 +769,7 @@ INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (17, '
 
 
 --
--- TOC entry 1925 (class 0 OID 92578)
+-- TOC entry 1932 (class 0 OID 92578)
 -- Dependencies: 146
 -- Data for Name: marca_vehiculo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -695,115 +780,137 @@ INSERT INTO marca_vehiculo (id_marca_vehiculo, nombre, estatus) VALUES (3, 'Audi
 
 
 --
--- TOC entry 1926 (class 0 OID 92583)
+-- TOC entry 1933 (class 0 OID 92583)
 -- Dependencies: 147
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (3, NULL, 'z-icon-lock', 'Seguridad', NULL, 2);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (4, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 3);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (2, NULL, 'z-icon-cog', 'Configuracion', NULL, NULL);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre) VALUES (1, NULL, 'z-icon-book', 'Mis Requerimientos', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientos.zul', NULL);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre, tipo) VALUES (1, NULL, 'z-icon-book', 'Mis Requerimientos', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientos.zul', NULL, 1);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre, tipo) VALUES (2, NULL, 'z-icon-cog', 'Configuracion', NULL, NULL, 1);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre, tipo) VALUES (3, NULL, 'z-icon-lock', 'Seguridad', NULL, 2, 1);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre, tipo) VALUES (4, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 3, 1);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, id_padre, tipo) VALUES (5, NULL, 'z-icon-shopping-cart', 'Cotizar', '/WEB-INF/views/sistema/funcionalidades/listaRequerimientosProveedor.zul', NULL, 3);
 
 
 --
--- TOC entry 1927 (class 0 OID 92591)
+-- TOC entry 1934 (class 0 OID 92591)
 -- Dependencies: 148
 -- Data for Name: motor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO motor (id_motor, nombre) VALUES (1, 'Motor 1');
+INSERT INTO motor (id_motor, nombre) VALUES (2, 'Motor 2');
 
 
 --
--- TOC entry 1928 (class 0 OID 92596)
+-- TOC entry 1935 (class 0 OID 92596)
 -- Dependencies: 149
 -- Data for Name: persistent_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO persistent_logins (series, last_used, token, username) VALUES ('BvFbBoJzBDIwFnmUovM4EQ==', '2015-05-01 11:23:20.796', 'v2EBZtBBszETBae93dK/Yg==', 'euge1590');
 
 
 --
--- TOC entry 1929 (class 0 OID 92601)
+-- TOC entry 1936 (class 0 OID 92601)
 -- Dependencies: 150
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (2, NULL, '4578124', 'maria@gmail.com', NULL, 'MARIA', '784512');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (3, NULL, '123456', 'luis@gmail.com', NULL, 'LUIS', '457896');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (4, NULL, '19547896', 'p.fer@gmail.com', NULL, 'FERNANDO', '457896');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (12, NULL, '5254874', 'esther@gmail.com', NULL, 'Esther Maria', '2548745');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (16, NULL, '12457896', 'prueba@gmail.com', NULL, 'Prueba', '7452869');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (28, NULL, '4578124', 'maria@gmail.com', NULL, 'Maria', '457896321');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (32, NULL, '4545', NULL, NULL, NULL, '34445');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (36, NULL, 'J-452178536', 'conpocc@gmail.com', 'Centro', 'Coorcentroccidente', '457812369');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (44, NULL, '21245', 'sdfsdf@fmai.com', NULL, 'dfg', '334');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (48, NULL, '4345', 'ddd@gma.com', NULL, 'sdfsdf', '34234');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (52, NULL, '34234', 'eeeuge@gmai.com', NULL, 'eeee', '34234');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (1, NULL, '20186243', 'euge@gmail.com', NULL, 'Euge', '2528291');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (64, NULL, '56983245', 'alma@m.com', NULL, 'Alma', '34324');
-INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono) VALUES (68, NULL, '2018624356', 'eeeg@gmail.com', NULL, 'prueba', '4234234');
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (3, NULL, '123456', 'luis@gmail.com', NULL, 'LUIS', '457896', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (4, NULL, '19547896', 'p.fer@gmail.com', NULL, 'FERNANDO', '457896', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (12, NULL, '5254874', 'esther@gmail.com', NULL, 'Esther Maria', '2548745', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (16, NULL, '12457896', 'prueba@gmail.com', NULL, 'Prueba', '7452869', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (28, NULL, '4578124', 'maria@gmail.com', NULL, 'Maria', '457896321', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (32, NULL, '4545', NULL, NULL, NULL, '34445', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (36, NULL, 'J-452178536', 'conpocc@gmail.com', 'Centro', 'Coorcentroccidente', '457812369', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (44, NULL, '21245', 'sdfsdf@fmai.com', NULL, 'dfg', '334', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (48, NULL, '4345', 'ddd@gma.com', NULL, 'sdfsdf', '34234', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (52, NULL, '34234', 'eeeuge@gmai.com', NULL, 'eeee', '34234', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (1, NULL, '20186243', 'euge@gmail.com', NULL, 'Euge', '2528291', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (64, NULL, '56983245', 'alma@m.com', NULL, 'Alma', '34324', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (68, NULL, '2018624356', 'eeeg@gmail.com', NULL, 'prueba', '4234234', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (72, NULL, 'J-475623-4', 'pastas@gmail.com', 'Zona Industrial I', 'Pastas Capr', '0254879645', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (76, NULL, '15789624', 'ddd@gmail.com', NULL, 'dddd', '3434', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (80, NULL, '45345', 'fff@gmail.com', NULL, 'dfgdfg', '5345345', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (84, NULL, '45435', 'dsfsdf@gmail.com', NULL, 'sfdsfdsf', '23434', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (88, NULL, 'J-20186243-1', 'euge@gmail.com', 'Patarata I', 'Eugenio', '2528291', NULL);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, nombre, telefono, tipo_menu) VALUES (2, NULL, '4578124', 'maria@gmail.com', NULL, 'MARIA', '784512', 1);
 
 
 --
--- TOC entry 1930 (class 0 OID 92609)
+-- TOC entry 1937 (class 0 OID 92609)
 -- Dependencies: 151
 -- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO proveedor (estatus, id_proveedor) VALUES (NULL, 36);
+INSERT INTO proveedor (estatus, id_proveedor) VALUES (NULL, 44);
+INSERT INTO proveedor (estatus, id_proveedor) VALUES (NULL, 72);
+INSERT INTO proveedor (estatus, id_proveedor) VALUES (NULL, 88);
 
 
 --
--- TOC entry 1933 (class 0 OID 93850)
+-- TOC entry 1940 (class 0 OID 93850)
 -- Dependencies: 164
 -- Data for Name: proveedor_clasificacion_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (36, 2);
 INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (36, 1);
+INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (44, 2);
+INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (72, 1);
+INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (88, 1);
 
 
 --
--- TOC entry 1934 (class 0 OID 93853)
+-- TOC entry 1941 (class 0 OID 93853)
 -- Dependencies: 165
 -- Data for Name: proveedor_marca_vehiculo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (36, 1);
+INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (72, 1);
+INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (88, 1);
 
 
 --
--- TOC entry 1931 (class 0 OID 92617)
+-- TOC entry 1938 (class 0 OID 92617)
 -- Dependencies: 152
 -- Data for Name: requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (9, NULL, 'CR', NULL, '2015-04-11', '2015-04-26', 'dffsdf', NULL, NULL, NULL, 4, 32, NULL, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (1, '2015-04-10 00:00:00', 'CR', NULL, '2015-04-06', '2015-04-25', 'Aveo', '2587496345', true, false, 2, 1, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (2, NULL, 'CR', NULL, '2015-04-20', '2015-04-25', 'Dddd', '457821', true, false, 4, 12, 3, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (3, NULL, 'CR', NULL, '2015-04-29', '2015-04-25', 'Ford', '3456787', NULL, NULL, 2, 16, 1, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (10, '2015-04-18 00:00:00', 'CR', NULL, '2015-04-18', '2015-05-03', 'Ford', '15935745685', false, true, 2, 1, 1, NULL);
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (11, '2015-04-18 00:00:00', 'CR', NULL, '2015-04-18', '2015-05-03', 'Aveo', '4578965', false, NULL, 2, 1, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (12, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'sdfsdf', '234234', NULL, NULL, 4, 1, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (13, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'dfsf', '334dsfs', NULL, NULL, 4, 1, 2, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (14, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'sdfsdf', 'sdfsdf', true, true, 2, 1, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (18, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'sdfdsf', '3434', NULL, NULL, 4, 52, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (19, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'Aveo', '4578754', NULL, NULL, 2, 1, 1, NULL);
 INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (23, NULL, 'CR', NULL, '2015-04-18', '2015-05-03', 'gfgdf', '45345', true, false, 4, 68, 1, NULL);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (1, '2015-04-10 00:00:00', 'CR', NULL, '2015-04-06', '2015-04-25', 'Aveo', '2587496345', true, false, 2, 1, 1, 2);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (11, '2015-04-18 00:00:00', 'E', NULL, '2015-04-18', '2015-05-03', 'Aveo', '4578965', false, NULL, 2, 1, 1, 2);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (10, '2015-04-18 00:00:00', 'CR', NULL, '2015-04-18', '2015-05-03', 'Ford', '15935745685', false, true, 2, 12, 1, NULL);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (24, NULL, 'CR', NULL, '2015-05-01', '2015-05-16', 'rrrr', '34234', true, true, 44, 76, 1, 1);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (25, NULL, 'CR', NULL, '2015-05-01', '2015-05-16', 'fgfdg', '435435', false, true, 44, 80, 1, 1);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_vencimiento, modelo_v, serial_carroceria_v, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (26, NULL, 'CR', NULL, '2015-05-01', '2015-05-16', 'sadd', '3423', false, true, 44, 84, 1, 1);
 
 
 --
--- TOC entry 1932 (class 0 OID 92625)
+-- TOC entry 1939 (class 0 OID 92625)
 -- Dependencies: 153
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (1, true, NULL, '147', 'euge', 2);
-INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (2, true, NULL, '123', 'admin', 4);
+INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (4, true, NULL, '123456', 'euge1590', 88);
+INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (2, true, NULL, NULL, 'admin', 4);
+INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (3, true, NULL, NULL, 'pastas', 72);
 
 
 --
--- TOC entry 1866 (class 2606 OID 92546)
+-- TOC entry 1871 (class 2606 OID 92546)
 -- Dependencies: 140 140
 -- Name: analista_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -813,7 +920,7 @@ ALTER TABLE ONLY analista
 
 
 --
--- TOC entry 1868 (class 2606 OID 92554)
+-- TOC entry 1873 (class 2606 OID 92554)
 -- Dependencies: 141 141
 -- Name: clasificacion_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -823,7 +930,7 @@ ALTER TABLE ONLY clasificacion_repuesto
 
 
 --
--- TOC entry 1870 (class 2606 OID 92559)
+-- TOC entry 1875 (class 2606 OID 92559)
 -- Dependencies: 142 142
 -- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -833,27 +940,27 @@ ALTER TABLE ONLY cliente
 
 
 --
--- TOC entry 1896 (class 2606 OID 93883)
--- Dependencies: 166 166
+-- TOC entry 1903 (class 2606 OID 93918)
+-- Dependencies: 168 168
 -- Name: cotizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY cotizacion
-    ADD CONSTRAINT cotizacion_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT cotizacion_pkey PRIMARY KEY (id_cotizacion);
 
 
 --
--- TOC entry 1898 (class 2606 OID 93888)
--- Dependencies: 167 167
+-- TOC entry 1905 (class 2606 OID 93976)
+-- Dependencies: 169 169
 -- Name: detalle_cotizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY detalle_cotizacion
-    ADD CONSTRAINT detalle_cotizacion_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT detalle_cotizacion_pkey PRIMARY KEY (id_detalle_cotizacion);
 
 
 --
--- TOC entry 1872 (class 2606 OID 92567)
+-- TOC entry 1877 (class 2606 OID 92567)
 -- Dependencies: 143 143
 -- Name: detalle_requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -863,7 +970,7 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1874 (class 2606 OID 92572)
+-- TOC entry 1879 (class 2606 OID 92572)
 -- Dependencies: 144 144
 -- Name: history_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -873,7 +980,7 @@ ALTER TABLE ONLY history_logins
 
 
 --
--- TOC entry 1876 (class 2606 OID 92577)
+-- TOC entry 1881 (class 2606 OID 92577)
 -- Dependencies: 145 145
 -- Name: marca_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -883,7 +990,7 @@ ALTER TABLE ONLY marca_repuesto
 
 
 --
--- TOC entry 1878 (class 2606 OID 92582)
+-- TOC entry 1883 (class 2606 OID 92582)
 -- Dependencies: 146 146
 -- Name: marca_vehiculo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -893,7 +1000,7 @@ ALTER TABLE ONLY marca_vehiculo
 
 
 --
--- TOC entry 1880 (class 2606 OID 92590)
+-- TOC entry 1885 (class 2606 OID 92590)
 -- Dependencies: 147 147
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -903,7 +1010,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 1882 (class 2606 OID 92595)
+-- TOC entry 1887 (class 2606 OID 92595)
 -- Dependencies: 148 148
 -- Name: motor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -913,7 +1020,7 @@ ALTER TABLE ONLY motor
 
 
 --
--- TOC entry 1884 (class 2606 OID 92600)
+-- TOC entry 1889 (class 2606 OID 92600)
 -- Dependencies: 149 149
 -- Name: persistent_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -923,7 +1030,7 @@ ALTER TABLE ONLY persistent_logins
 
 
 --
--- TOC entry 1886 (class 2606 OID 92608)
+-- TOC entry 1891 (class 2606 OID 92608)
 -- Dependencies: 150 150
 -- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -933,7 +1040,17 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 1888 (class 2606 OID 92613)
+-- TOC entry 1901 (class 2606 OID 93988)
+-- Dependencies: 164 164 164
+-- Name: proveedor_clasificacion_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY proveedor_clasificacion_repuesto
+    ADD CONSTRAINT proveedor_clasificacion_repuesto_pkey PRIMARY KEY (id_proveedor, id_clasificacion_repuesto);
+
+
+--
+-- TOC entry 1893 (class 2606 OID 92613)
 -- Dependencies: 151 151
 -- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -943,7 +1060,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 1890 (class 2606 OID 92624)
+-- TOC entry 1895 (class 2606 OID 92624)
 -- Dependencies: 152 152
 -- Name: requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -953,7 +1070,7 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1892 (class 2606 OID 92632)
+-- TOC entry 1897 (class 2606 OID 92632)
 -- Dependencies: 153 153
 -- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -963,7 +1080,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1894 (class 2606 OID 92720)
+-- TOC entry 1899 (class 2606 OID 92720)
 -- Dependencies: 153 153
 -- Name: usuario_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -973,8 +1090,8 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1915 (class 2606 OID 93871)
--- Dependencies: 151 165 1887
+-- TOC entry 1922 (class 2606 OID 93871)
+-- Dependencies: 165 151 1892
 -- Name: fk1c4167896338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -983,8 +1100,8 @@ ALTER TABLE ONLY proveedor_marca_vehiculo
 
 
 --
--- TOC entry 1914 (class 2606 OID 93866)
--- Dependencies: 1877 146 165
+-- TOC entry 1921 (class 2606 OID 93866)
+-- Dependencies: 165 146 1882
 -- Name: fk1c416789fb88f57b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -993,8 +1110,8 @@ ALTER TABLE ONLY proveedor_marca_vehiculo
 
 
 --
--- TOC entry 1904 (class 2606 OID 92653)
--- Dependencies: 147 147 1879
+-- TOC entry 1911 (class 2606 OID 92653)
+-- Dependencies: 147 147 1884
 -- Name: fk33155fb000c573; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1003,8 +1120,8 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 1900 (class 2606 OID 92638)
--- Dependencies: 1885 142 150
+-- TOC entry 1907 (class 2606 OID 92638)
+-- Dependencies: 142 150 1890
 -- Name: fk334b85fa72a75f10; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1013,8 +1130,8 @@ ALTER TABLE ONLY cliente
 
 
 --
--- TOC entry 1902 (class 2606 OID 92648)
--- Dependencies: 143 1889 152
+-- TOC entry 1909 (class 2606 OID 92648)
+-- Dependencies: 143 152 1894
 -- Name: fk42c4ba5d1726034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1023,8 +1140,8 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1901 (class 2606 OID 92643)
--- Dependencies: 1867 141 143
+-- TOC entry 1908 (class 2606 OID 92643)
+-- Dependencies: 143 141 1872
 -- Name: fk42c4ba5d9195f9f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1033,8 +1150,8 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1916 (class 2606 OID 93889)
--- Dependencies: 151 166 1887
+-- TOC entry 1923 (class 2606 OID 93924)
+-- Dependencies: 168 151 1892
 -- Name: fk5c3e3f8d6338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1043,8 +1160,8 @@ ALTER TABLE ONLY cotizacion
 
 
 --
--- TOC entry 1918 (class 2606 OID 93899)
--- Dependencies: 143 167 1871
+-- TOC entry 1925 (class 2606 OID 93982)
+-- Dependencies: 169 143 1876
 -- Name: fk6d4757554670fb59; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1053,18 +1170,18 @@ ALTER TABLE ONLY detalle_cotizacion
 
 
 --
--- TOC entry 1917 (class 2606 OID 93894)
--- Dependencies: 167 166 1895
+-- TOC entry 1924 (class 2606 OID 93977)
+-- Dependencies: 169 168 1902
 -- Name: fk6d475755b1780570; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_cotizacion
-    ADD CONSTRAINT fk6d475755b1780570 FOREIGN KEY (id_cotizacion) REFERENCES cotizacion(id);
+    ADD CONSTRAINT fk6d475755b1780570 FOREIGN KEY (id_cotizacion) REFERENCES cotizacion(id_cotizacion);
 
 
 --
--- TOC entry 1913 (class 2606 OID 93861)
--- Dependencies: 164 1887 151
+-- TOC entry 1920 (class 2606 OID 93861)
+-- Dependencies: 164 151 1892
 -- Name: fk97b0796d6338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1073,8 +1190,8 @@ ALTER TABLE ONLY proveedor_clasificacion_repuesto
 
 
 --
--- TOC entry 1912 (class 2606 OID 93856)
--- Dependencies: 1867 141 164
+-- TOC entry 1919 (class 2606 OID 93856)
+-- Dependencies: 164 1872 141
 -- Name: fk97b0796d9195f9f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1083,8 +1200,8 @@ ALTER TABLE ONLY proveedor_clasificacion_repuesto
 
 
 --
--- TOC entry 1905 (class 2606 OID 92726)
--- Dependencies: 153 1893 149
+-- TOC entry 1912 (class 2606 OID 92726)
+-- Dependencies: 149 153 1898
 -- Name: fkbd224d2a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1093,8 +1210,8 @@ ALTER TABLE ONLY persistent_logins
 
 
 --
--- TOC entry 1899 (class 2606 OID 92633)
--- Dependencies: 1885 150 140
+-- TOC entry 1906 (class 2606 OID 92633)
+-- Dependencies: 140 150 1890
 -- Name: fkc2e8ee2fdcbd110d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1103,8 +1220,8 @@ ALTER TABLE ONLY analista
 
 
 --
--- TOC entry 1907 (class 2606 OID 92673)
--- Dependencies: 140 152 1865
+-- TOC entry 1914 (class 2606 OID 92673)
+-- Dependencies: 152 140 1870
 -- Name: fkd19e472517870034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1113,8 +1230,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1910 (class 2606 OID 92688)
--- Dependencies: 148 1881 152
+-- TOC entry 1917 (class 2606 OID 92688)
+-- Dependencies: 152 148 1886
 -- Name: fkd19e47257973088b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1123,8 +1240,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1909 (class 2606 OID 92683)
--- Dependencies: 146 152 1877
+-- TOC entry 1916 (class 2606 OID 92683)
+-- Dependencies: 152 146 1882
 -- Name: fkd19e4725b1f9d9de; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1133,8 +1250,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1908 (class 2606 OID 92678)
--- Dependencies: 152 142 1869
+-- TOC entry 1915 (class 2606 OID 92678)
+-- Dependencies: 152 142 1874
 -- Name: fkd19e4725ce63155e; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1143,8 +1260,8 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1906 (class 2606 OID 92658)
--- Dependencies: 151 1885 150
+-- TOC entry 1913 (class 2606 OID 92658)
+-- Dependencies: 1890 151 150
 -- Name: fkdf24cade6d89dcf4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1153,8 +1270,8 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 1903 (class 2606 OID 92721)
--- Dependencies: 153 144 1893
+-- TOC entry 1910 (class 2606 OID 92721)
+-- Dependencies: 144 153 1898
 -- Name: fkee0d8835a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1163,8 +1280,8 @@ ALTER TABLE ONLY history_logins
 
 
 --
--- TOC entry 1911 (class 2606 OID 92693)
--- Dependencies: 153 150 1885
+-- TOC entry 1918 (class 2606 OID 92693)
+-- Dependencies: 153 150 1890
 -- Name: fkf814f32ebe6ae2c8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1173,7 +1290,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1941 (class 0 OID 0)
+-- TOC entry 1948 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -1184,7 +1301,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2015-04-25 19:43:59
+-- Completed on 2015-05-01 11:29:22
 
 --
 -- PostgreSQL database dump complete
