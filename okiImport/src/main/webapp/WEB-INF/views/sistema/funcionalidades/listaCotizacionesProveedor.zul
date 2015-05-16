@@ -110,7 +110,7 @@
 							<listcell
 								label="@bind(each.detalleRequerimiento.codigoOem)" />
 							<listcell
-								label="@bind(each.detalleRequerimiento.nombre)" />
+								label="@bind(each.detalleRequerimiento.descripcion)" />
 							<listcell
 								label="@bind(each.detalleRequerimiento.cantidad)" />
 							<listcell>
