@@ -77,7 +77,6 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		requerimiento = new Requerimiento();
 		cliente = new Cliente();
 		requerimiento.setCliente(cliente);
-		annoV.setValue(null);
 	}
 	
 	@Command
