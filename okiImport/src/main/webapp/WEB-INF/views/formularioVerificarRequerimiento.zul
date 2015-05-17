@@ -1,72 +1,112 @@
-
 <?page title="consultarSolicitud" contentType="text/html;charset=UTF-8"?>
 
 <zk xmlns:w="client" xmlns:n="native">
-<window border="none" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
+	<window border="none" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
 
-<window id= "ventanaCliente" border="normal" sclass="btn-primary" width="40%">
-        
-		Cédula: <space></space><textbox id="cedulaclie" value= "@bind(vm.cliente.cedula)" type="password" style="font-size: 12px"/> <space></space> <button label="Buscar"  onClick= "@command('buscarCliente')" sclass="btn-primary" /> 
-</window>
+		<window id="ventanaCliente" border="normal" sclass="btn-primary"
+			width="40%">
 
-<separator width="100%" orient="horizontal" bar="true" ></separator>
-<div id="misolicitudes" visible="false">
-<label value= "Mis Solicitudes" sclass="z-letra-grande" />
+			RIF/Cédula: *
+			<space></space>
+			<combobox width="10%" readonly="true"
+				selectedItem="@bind(vm.tipoPersona)"
+				model="@load(vm.listaTipoPersona)">
+				<template name="model">
+					<comboitem label="@bind(each.nombre)">
+
+					</comboitem>
+				</template>
+			</combobox>
+			<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)"
+				type="password" style="font-size: 12px" />
+			<space></space>
+			<button label="Buscar" onClick="@command('buscarCliente')"
+				sclass="btn-primary" />
+
+		</window>
+
+		<separator width="100%" orient="horizontal" bar="true"></separator>
+		<div id="misolicitudes" visible="false">
+			<label value="Mis Solicitudes" sclass="z-letra-grande" />
 
 
 
-<listbox  id= "gridRequerimientosCliente" mold="paging" checkmark="true" pageSize="10" pagingPosition="top"  multiple="true" sclass="mylist"  model="@load(vm.listaRequerimientos)" >
-		
-            <listhead>
-            
-                <listheader value="idRequerimiento" label="N° Solicitud" sort="auto(idRequerimiento)" width="150px" >
-				  <spinner  value = "@bind(vm.requerimientoFiltro.idRequerimiento)" constraint="no negative, no zero" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="100px"  />
-					<div sclass="z-icon-filter bigger-200"/>
-				</listheader>
-					
-			
-				<listheader value="fechaCreacion" label="Fecha Creación" sort="auto(fechaCreacion)" width="150px" >
-					<datebox value = "@bind(vm.requerimientoFiltro.fechaCreacion)" format="dd/HH/yyyy - a hh:mm" instant="true" onChange="@command('aplicarFiltro')" width="100px" />
-					<div sclass="z-icon-filter bigger-200"/>
-			    </listheader>
-			    
-			    <listheader value="modeloV" label="Modelo Carro"  sort="auto(modeloV)" width="150px"  >
-				  <textbox  value = "@bind(vm.requerimientoFiltro.modeloV)" instant="true" placeholder="" onChange="@command('aplicarFiltro')" width="110px"/>
-					<div sclass="z-icon-filter bigger-200"/>
-				</listheader>
-			    
-			    <listheader value="serialCarroceriaV" label="N° Serial" sort="auto(serialCarroceriaV)" width="150px" >
-				  <textbox value = "@bind(vm.requerimientoFiltro.serialCarroceriaV)"  constraint="no negative, no zero" instant="true" onChange="@command('aplicarFiltro')" width="100px"  />
-					<div sclass="z-icon-filter bigger-200"/>
-				</listheader>
-				
-			   <listheader width="11%" label= "Operaciones"/>
+			<listbox id="gridRequerimientosCliente" mold="paging"
+				checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
+				sclass="mylist" model="@load(vm.listaRequerimientos)">
 
-			</listhead>
-            <template name="model">
-		     <listitem>
-		           <listcell label="@bind(each.idRequerimiento)" />
-			       <listcell>
-			        <datebox format="dd/HH/yyyy - a hh:mm" value=" @bind(each.fechaCreacion)" readonly="true" buttonVisible="false" />
-			       </listcell>
-			       <listcell label="@bind(each.modeloV)"/>
-			       <listcell label="@bind(each.serialCarroceriaV)"/>
-			       <listcell>
-						<hbox spacing="20px">
-							<div class="btn-group btn-group-sm">
-								
-								<button iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver" onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
-								
-							</div>
-						</hbox>
-				  </listcell>
-            </listitem>
-         </template>
-		</listbox>
-		<div width="100%" align="left">
-		<paging id="pagRequerimientosCliente" onPaging="@command('paginarLista')" autohide="true" />
+				<listhead>
+
+					<listheader value="idRequerimiento"
+						label="N° Solicitud" sort="auto(idRequerimiento)" width="150px">
+						<spinner
+							value="@bind(vm.requerimientoFiltro.idRequerimiento)"
+							constraint="no negative, no zero" instant="true" placeholder=""
+							onChange="@command('aplicarFiltro')" width="100px" />
+						<div sclass="z-icon-filter bigger-200" />
+					</listheader>
+
+
+					<listheader value="fechaCreacion"
+						label="Fecha Creación" sort="auto(fechaCreacion)" width="200px">
+						<datebox
+							value="@bind(vm.requerimientoFiltro.fechaCreacion)"
+							format="dd/HH/yyyy - a hh:mm" instant="true"
+							onChange="@command('aplicarFiltro')" width="100px" />
+						<div sclass="z-icon-filter bigger-200" />
+					</listheader>
+
+					<listheader value="modeloV" label="Modelo Carro"
+						sort="auto(modeloV)" width="150px">
+						<textbox
+							value="@bind(vm.requerimientoFiltro.modeloV)" instant="true"
+							placeholder="" onChange="@command('aplicarFiltro')"
+							width="110px" />
+						<div sclass="z-icon-filter bigger-200" />
+					</listheader>
+
+					<listheader value="serialCarroceriaV"
+						label="N° Serial" sort="auto(serialCarroceriaV)" width="150px">
+						<textbox
+							value="@bind(vm.requerimientoFiltro.serialCarroceriaV)"
+							constraint="no negative, no zero" instant="true"
+							onChange="@command('aplicarFiltro')" width="100px" />
+						<div sclass="z-icon-filter bigger-200" />
+					</listheader>
+
+					<listheader width="11%" label="Operaciones" />
+
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="@bind(each.idRequerimiento)" />
+						<listcell>
+							<datebox format="dd/HH/yyyy - a hh:mm" width="200px"
+								value=" @bind(each.fechaCreacion)" readonly="true"
+								buttonVisible="false" />
+						</listcell>
+						<listcell label="@bind(each.modeloV)" />
+						<listcell label="@bind(each.serialCarroceriaV)" />
+						<listcell>
+							<hbox spacing="20px">
+								<div class="btn-group btn-group-sm">
+
+									<button
+										iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"
+										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+
+								</div>
+							</hbox>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			<div width="100%" align="left">
+				<paging id="pagRequerimientosCliente"
+					onPaging="@command('paginarLista')" autohide="true" />
+			</div>
 		</div>
-		</div>
-</window>
+	</window>
 </zk>
 

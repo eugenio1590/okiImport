@@ -18,9 +18,9 @@
 													tooltiptext="Agregar Proveedores a Consultar" onClick = "@command('agregarProveedores')"
 													 />
 											</toolbar>
-											<listbox id="gridMarcas"
-											    mold="paging" checkmark="true" selectedItems="@bind(vm.marcaSeleccionadas)"
-												multiple="true" model="@load(vm.listaMarcaVehiculos)">
+											<listbox id="gridProveedoresSeleccionados"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.proveedoresSeleccionados)"
+												multiple="true" model="@load(vm.listaProveedores)">
 												
 												<listhead
 													menupopup="auto">
@@ -29,17 +29,17 @@
 														label="Nombre" sort="auto" />
 												</listhead>
 												
+												<template
+													name="model">
 													<listitem>
 														<listcell
-															label="Sissegtelca" />
-														<listcell
-															label="NovaCars" />	
+															label="@bind(each.nombre)" />
 														
 													</listitem>
-												
-
+												</template>
+											
 											</listbox>
-											<paging id="pagMarcas"
+											<paging id="pagProveedores"
 												 autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
 										</vlayout>
 									</west>
@@ -51,12 +51,15 @@
 												<toolbarbutton
 													height="45px"
 													image="resources/img/icons/ButtonArrowLeft32.png"
-													tooltiptext="Remover Marcas a Vender" onClick = "@command('eliminarMarcas')"
+													tooltiptext="Remover Proveedores" onClick = "@command('eliminarProveedores')"
 									                 />
 											</toolbar>
+											
+
+											
 											<listbox
-												id="gridMarcasVender" model="@load(vm.proveedor.marcaVehiculos)"
-												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.marcaSeleccionadas)"
+												id="gridProveedores" model="@load(vm.listaProveedoresSeleccionados1)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.listaProveedoresSeleccionados2)"
 												>
 												
 												<listhead
@@ -73,10 +76,26 @@
 													</listitem>
 												</template>
 											</listbox>
-											
 										</div>
 									</east>
 								</borderlayout>
 							</div>
+							
+<div>
+  		<groupbox closable="false">
+				<caption>
+					<label value="Mensaje:"  sclass="custom_caption"/>
+		        </caption>
+        <textbox id="mensaje" width="100%" rows="3" cols="35" readonly="" mold="rounded"
+		 value= "Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión "  />
+		</groupbox>
+</div>			
+
+<div sclass="panel-footer" align="right">
+			<button label="Limpiar" type="submit"
+				onClick="@command('limpiar')" sclass="btn-primary"/>
+			<button label="Enviar" type="submit"
+				onClick="@command('enviar')" sclass="btn-primary"/>
+		</div>				
 </window>
 </zk>

@@ -23,14 +23,14 @@ import org.zkoss.zul.Paging;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class ListaCotizacionesViewModel extends AbstractViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -38,24 +38,21 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
+
+	private List <Requerimiento> listaRequerimientosCotizados;
 	
 	//GUI
-	@Wire("#gridMisRequerimientos")
-	private Listbox gridMisRequerimientos;
+	@Wire("#gridRequerimientosCotizados")
+	private Listbox gridRequerimientosCotizados;
 	
-	@Wire("#pagMisRequerimientos")
-	private Paging pagMisRequerimientos;
+	@Wire("#pagRequerimientosCotizados")
+	private Paging pagRequerimientosCotizados;
 	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
 	
-	private List <Requerimiento> listaRequerimientos;
-	
 	private Usuario usuario;
 	private Requerimiento requerimientoFiltro;
-	
-	private List<ModeloCombo<String>> listaEstatus;
-	private ModeloCombo<String> estatusFiltro;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -64,16 +61,13 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 		requerimientoFiltro = new Requerimiento(new Cliente());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
-		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
-		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
-		listaEstatus = llenarListaEstatus();
-		listaEstatus.add(estatusFiltro);
+		agregarGridSort(gridRequerimientosCotizados);
+		pagRequerimientosCotizados.setPageSize(PAGE_SIZE);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
 	@Override
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizados")
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
@@ -95,18 +89,18 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizados")
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(requerimientoFiltro, 
+		Map<String, Object> parametros = sTransaccion.RequerimientosCotizados(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
-		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		gridMisRequerimientos.setMultiple(true);
-		gridMisRequerimientos.setCheckmark(true);
-		pagMisRequerimientos.setActivePage(page);
-		pagMisRequerimientos.setTotalSize(total);
+		listaRequerimientosCotizados = (List<Requerimiento>) parametros.get("requerimientos");
+		gridRequerimientosCotizados.setMultiple(true);
+		gridRequerimientosCotizados.setCheckmark(true);
+		pagRequerimientosCotizados.setActivePage(page);
+		pagRequerimientosCotizados.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
@@ -118,7 +112,7 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
-		int page=pagMisRequerimientos.getActivePage();
+		int page=pagRequerimientosCotizados.getActivePage();
 		cambiarRequerimientos(page, null, null);
 	}
 	
@@ -128,12 +122,8 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	@NotifyChange("listaRequerimientos")
+	@NotifyChange("listaRequerimientosCotizado")
 	public void aplicarFiltro(){
-		requerimientoFiltro.setEstatus(null);
-		if(estatusFiltro!=null)
-			if(!estatusFiltro.getNombre().equalsIgnoreCase("No Filtrar"))
-				requerimientoFiltro.setEstatus(estatusFiltro.getValor());
 		cambiarRequerimientos(0, null, null);
 	}
 	
@@ -148,12 +138,11 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
-	
 	@Command
-	public void enviarRequerimientoProv(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void verCotizacion(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -166,11 +155,11 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	}
 
 	public List<Requerimiento> getListaRequerimientos() {
-		return listaRequerimientos;
+		return listaRequerimientosCotizados;
 	}
 
 	public void setListaRequerimientos(List<Requerimiento> listaRequerimientos) {
-		this.listaRequerimientos = listaRequerimientos;
+		this.listaRequerimientosCotizados = listaRequerimientos;
 	}
 
 	public SControlUsuario getsControlUsuario() {
@@ -187,22 +176,6 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 
 	public void setRequerimientoFiltro(Requerimiento requerimientoFiltro) {
 		this.requerimientoFiltro = requerimientoFiltro;
-	}
-
-	public List<ModeloCombo<String>> getListaEstatus() {
-		return listaEstatus;
-	}
-
-	public void setListaEstatus(List<ModeloCombo<String>> listaEstatus) {
-		this.listaEstatus = listaEstatus;
-	}
-
-	public ModeloCombo<String> getEstatusFiltro() {
-		return estatusFiltro;
-	}
-
-	public void setEstatusFiltro(ModeloCombo<String> estatusFiltro) {
-		this.estatusFiltro = estatusFiltro;
 	}
 
 }

@@ -34,17 +34,31 @@
 
 									<rows>
 										<row>
-											<label value="RIF: " />
+											<label value="RIF: *" />
+                                            
+                                            <hbox>
+											<combobox width="30%"
+												readonly="true"
+												selectedItem="@bind(vm.tipoPersona)"
+												model="@load(vm.listaTipoPersona)">
+												<template
+													name="model">
+													<comboitem
+														label="@bind(each.nombre)">
 
+													</comboitem>
+												</template>
+											</combobox>
+                                            
 											<textbox id="cedulaRif"
-												width="80%" readonly="" mold="rounded"
+												width="108%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.cedula)"
-												placeholder="Ej: J-40240537-5" maxlength="12"
+												placeholder="Ej: 402405375" maxlength="12"
 												constraint="no empty:El Campo No Debe Estar Vacio" />
-
+                                             </hbox>
 
 											<label
-												value="Nombre/Razón Social: " />
+												value="Nombre/Razón Social: *" />
 
 											<textbox
 												id="nombreRazonSocial" width="80%" readonly=""
@@ -55,7 +69,7 @@
 
 										<row>
 
-											<label value="Teléfono: " />
+											<label value="Teléfono: *" />
 
 											<textbox id="telefono"
 												width="80%" readonly="" mold="rounded"
@@ -64,7 +78,7 @@
 												constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
 
 
-											<label value="E-mail:" />
+											<label value="E-mail: *" />
 											<textbox id="email"
 												width="80%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.correo)"
@@ -76,7 +90,7 @@
 										</row>
 										<row>
 
-											<label value="Dirección: " />
+											<label value="Dirección: *" />
 
 											<textbox id="direccion"
 												width="80%" rows="3" cols="35" readonly="" mold="rounded"
@@ -310,7 +324,8 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-		
+		<hbox width="100%">
+			<label value="* Campos Obligatorios" hflex="1" />
 
 
 		<div sclass="panel-footer" align="right">
@@ -319,7 +334,6 @@
 			<button label="Enviar" type="submit"
 				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
-		
-		
+		</hbox>
 	</window>
 </zk>

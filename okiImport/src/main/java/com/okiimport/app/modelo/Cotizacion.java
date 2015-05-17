@@ -23,6 +23,8 @@ public class Cotizacion implements Serializable{
 	@Column(name="fecha_vencimiento")
 	private Date fechaVencimiento;
 	
+	private String condiciones;
+	
 	private String estatus;
 	
 	private String mensaje;
@@ -33,11 +35,34 @@ public class Cotizacion implements Serializable{
 	private Proveedor proveedor;
 	
 	//bi-directional many-to-one association to DetalleCotizacion
-	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY, cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY) //cascade=CascadeType.REMOVE, orphanRemoval=true
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
 	}
+
+	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+	}
+
+	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
+			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
+		super();
+		this.idCotizacion = idCotizacion;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.estatus = estatus;
+		this.mensaje = mensaje;
+		this.proveedor = proveedor;
+	}
+
+
 
 	public Integer getIdCotizacion() {
 		return idCotizacion;
@@ -61,6 +86,14 @@ public class Cotizacion implements Serializable{
 
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
+	}
+
+	public String getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(String condiciones) {
+		this.condiciones = condiciones;
 	}
 
 	public String getEstatus() {

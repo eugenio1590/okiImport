@@ -34,6 +34,9 @@ public class Menu implements Serializable, ModelNavbar{
 
 	@Column(length=255)
 	private String nombre;
+	
+	@Column
+	private Integer tipo;
 
 	@Column(length=255)
 	private String ruta;
@@ -76,6 +79,14 @@ public class Menu implements Serializable, ModelNavbar{
 
 	public String getNombre() {
 		return this.nombre;
+	}
+
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setNombre(String nombre) {

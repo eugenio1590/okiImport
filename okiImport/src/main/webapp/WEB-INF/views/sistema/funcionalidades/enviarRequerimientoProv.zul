@@ -13,35 +13,27 @@
 							<column width="35%" align="right" />
 							<column width="65%" />
 						</columns>
-
+		
 						<rows>
 							<row>
 								<label value="Cedula/RIF: " />
-
 								<textbox id="cedulaRif" width="80%" readonly="true"
 									mold="rounded" tabbable="false" 
-									value=""/>
+									value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 								<label value="Nombre/Razón Social: " />
-
 								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
-									value="" />
+									value="@bind(vm.requerimiento.cliente.nombre)" />
 							</row>
-
 							<row>
-
 								<label value="Teléfono: " />
-
 								<textbox id="telefono" width="80%" readonly="true" mold="rounded"
-									value=""/>
-
-								<label value="E-mail:" />
-								
+									value="@bind(vm.requerimiento.cliente.telefono)"/>
+								<label value="E-mail:" />								
 								<textbox id="email" width="80%" readonly="true" mold="rounded" 
-									value=""/>
+									value="@bind(vm.requerimiento.cliente.correo)"/>
 							</row>
-
-						</rows>
+						</rows>	
 					</grid>
 				</div>
 			</groupbox>
@@ -53,8 +45,7 @@
 				<hbox>
 				<groupbox id="tabDatosVehiculo" closable="false">
 					<caption label="Datos Basicos" sclass="custom_caption" />
-
-					<div>
+<div>
 
 						<grid>
 							<columns>
@@ -68,28 +59,21 @@
 								<row>
 									<label value="Marca: " />
 									<textbox width="80%" readonly="true"
-										value=""/>
-										
+										value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>										
 									<label value="Modelo: " />
-
 									<textbox width="80%" readonly="true" mold="rounded"
-										value=""/>
-								</row>
-
+										value="@bind(vm.requerimiento.modeloV)"/>
+								</row>	
+												
 								<row>
-
 									<label value="Serial Carroceria: " />
-
 									<textbox id="serialCarroceria2"
 										width="80%" readonly="true" mold="rounded"
-										value=""/>
-
-									<label value="Año: " />
-									
-									<datebox width="80%" format="yyyy" readonly="true" buttonVisible="false"/>
+										value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 										
-								</row>
-
+									<label value="Año: " />									
+									<datebox width="80%" format="yyyy" readonly="true" buttonVisible="false" value="@bind(vm.requerimiento.annoV)"/>										
+								</row>								
 							</rows>
 						</grid>
 					</div>
@@ -111,27 +95,23 @@
 							<rows>
 								<row>
 									<label value="Motor: " />
-									<combobox value=""
-										readonly="true"
-										placeholder="Seleccione..." width="80%">
+									<textbox value="@bind(vm.requerimiento.motor.nombre)"
+										readonly="true" width="80%">										
+									</textbox>
 										
-									</combobox>
-
 									<label value="Transmision: " />
-									<combobox id="cmbTransmision"
-										placeholder="Seleccione..." width="80%" readonly="true">
-										
-									</combobox>
+									<textbox
+										width="80%" readonly="true"
+										value="@bind(vm.requerimiento.determinarTransmision())" >
+									</textbox>	
 								</row>
 
 								<row>
-
 									<label value="Traccion: " />
-									<combobox id="cmbTraccion"
-										placeholder="Seleccione..." width="80%" readonly="true">
-										
-									</combobox>
-
+									<textbox
+										width="80%" readonly="true"
+										value="@bind(vm.requerimiento.determinarTraccion())">
+									</textbox>
 								</row>
 							</rows>
 						</grid>
@@ -141,61 +121,43 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption label="Datos Repuestos" sclass="custom_caption" />
-				<panel apply="org.zkoss.bind.BindComposer"
-					sclass="panel-primary">
+				<panel sclass="panel-primary">
 					<panelchildren>
 
-						<listbox mold="paging"
-							
+						<listbox id="listRepuestos" mold="paging"
+							model="@load(vm.requerimiento.detalleRequerimientos)"
+							selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)"
 							style="margin-top:10px" pageSize="5" checkmark="true" 
-							 pagingPosition="top" multiple="true"  sclass="mylist">
-
+							pagingPosition="top" multiple="true"  sclass="mylist">
+							 
 							<listhead>
 								<listheader label="CodigoOEM"
-									sort="auto" />
-								<listheader label="Nombre" 
-								    sort="auto" />
+									sort="auto"  width="130px" />
+								
 								<listheader label="Descripcion"
 									sort="auto" />
 								<listheader label="Cantidad"
 									sort="auto" />
 								<listheader label="Clasificacion"
-									sort="none" />
+									sort="none"  />
 								<listheader label="Foto" 
 								    sort="auto" />
 							</listhead>
-							
+							<template name="model">
 								<listitem>
-									<listcell>
-										<textbox
-											value="wer2" width="130px" />
+									<listcell label="@bind(each.codigoOem)" >
+										
 									</listcell>
-									<listcell>
-										<textbox
-											value="vil"
-											constraint="no empty:El Campo No Debe Estar Vacio">
-										</textbox>
+									
+									<listcell label="@bind(each.descripcion)">
 									</listcell>
-									<listcell>
-										<textbox
-											value="trtrt"
-											constraint="no empty:El Campo No Debe Estar Vacio">
-										</textbox>
+									
+									<listcell label="@bind(each.cantidad)">
 									</listcell>
-									<listcell>
-										<spinner
-											value="2"
-											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros">
-										</spinner>
+									
+									<listcell label="@bind(each.clasificacionRepuesto.descripcion)" >
 									</listcell>
-									<listcell>
-										<combobox width="100%" readonly="true"
-											value=""
-											
-											constraint="no empty: El campo no puede estar vacio, escoga una clasificacion">
-											
-										</combobox>
-									</listcell>
+									
 									<listcell>
 										<div>
 											<image width="50px"
@@ -203,6 +165,7 @@
 										</div>
 									</listcell>
 								</listitem>
+								</template>
 							
 						</listbox>
 						<paging id="pagMisRequerimientos" onPaging="@command('paginarLista')" 

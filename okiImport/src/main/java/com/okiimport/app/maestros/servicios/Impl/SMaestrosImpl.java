@@ -51,7 +51,6 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	//Marcas
 	@Override
 	public Map<String, Object> ConsultarMarca(Integer page, Integer limit) {
-		// TODO Auto-generated method stub
 		Map<String, Object> Parametros= new HashMap<String, Object>();
 		Parametros.put("total", marcaVehiculoDAO.listaMarcasVehiculosActivas(0, -1).size());
 		Parametros.put("marcas", marcaVehiculoDAO.listaMarcasVehiculosActivas(page*limit, limit));
@@ -69,6 +68,11 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 			cliente=clienteDAO.update(cliente);
 		}
 		return cliente;
+	}
+	
+	@Override
+	public Cliente consultarCliente(Cliente cliente) {
+		return clienteDAO.consultarPersona(cliente);
 	}
 	
 	//Analista
@@ -107,7 +111,6 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Map<String, Object> ConsultarClasificacionRepuesto(Integer page, Integer limit) {
-		// TODO Auto-generated method stub
 		Map<String, Object> Parametros= new HashMap<String, Object>();
 		Parametros.put("total", ((Long)clasificacionRepuestoDAO.countAll()).intValue());
 		Parametros.put("clasificacionRepuesto", clasificacionRepuestoDAO.findAll(page*limit, limit));
@@ -126,13 +129,11 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Map<String, Object> ConsultarMotor(Integer page, Integer limit) {
-		// TODO Auto-generated method stub
 		Map<String, Object> Parametros= new HashMap<String, Object>();
 		Parametros.put("total", ((Long)motorDAO.countAll()).intValue());
 		Parametros.put("motor", motorDAO.findAll(page*limit, limit));
 		return Parametros;
 	}
-	
 	
 	@Override
 	public Map<String, Object> ConsultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
@@ -142,7 +143,6 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		parametros.put("proveedores", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection,idsClasificacionRepuesto, start*limit, limit));
 		return parametros;
 	}
-	
 
 	/**SETTERS Y GETTERS*/
 	public MarcaVehiculoDAO getMarcaVehiculoDAO() {

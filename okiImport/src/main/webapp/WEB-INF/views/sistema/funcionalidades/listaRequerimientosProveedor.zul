@@ -1,7 +1,7 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCotizacionesViewModel')">
-		<listbox id="gridRequerimientosCotizados" mold="paging"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RequerimientosProveedorViewModel')">
+		<listbox id="gridMisRequerimientos" mold="paging"
 			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
 			sclass="mylist" model="@load(vm.listaRequerimientos)">
 
@@ -16,47 +16,55 @@
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader value="nombre" label="Nombre Cliente"
-					sort="auto(idRequerimiento)" width="150px">
-					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
-						onChange="@command('aplicarFiltro')" width="100px" />
-					<div sclass="z-icon-filter bigger-200" />
-				</listheader>
-
-				<listheader value="fechaCreacion" label="Fecha Creación"
-					sort="auto(fechaCreacion)" width="150px">
+				<listheader value="fechaCreacion" label="F. Creación"
+					sort="auto(fechaCreacion)" width="140px">
 					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaCreacion)"
 						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
-
-				<listheader value="modeloV" label="Modelo Carro"
-					sort="auto(modeloV)" width="150px">
+				
+				<listheader value="fechaVencimiento" label="F. Vencimiento"
+					sort="auto(fechaVencimiento)" width="160px">
+					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaVencimiento)"
+						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="marcaV" label="Marca"
+					sort="auto(marcaV)" width="130px">
+					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.marcaVehiculo.nombre)"
+						onChange="@command('aplicarFiltro')" width="110px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="modeloV" label="Modelo"
+					sort="auto(modeloV)" width="130px">
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.modeloV)"
 						onChange="@command('aplicarFiltro')" width="110px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader width="11%" label="Operaciones" />
+				<listheader width="8%" label="Operaciones" />
 
 			</listhead>
 			<template name="model">
 				<listitem>
 					<listcell label="@bind(each.idRequerimiento)" />
-					<listcell label=" @bind(each.cliente.nombre)" />
 					<listcell>
 						<datebox value="@bind(each.fechaCreacion)" format="dd/MM/yyyy" 
 							buttonVisible="false" readonly="true"/>
 					</listcell>
+					<listcell>
+						<datebox value="@bind(each.fechaVencimiento)" format="dd/MM/yyyy" 
+							buttonVisible="false" readonly="true"/>
+					</listcell>
+					<listcell label="@bind(each.marcaVehiculo.nombre)"/>
 					<listcell label="@bind(each.modeloV)" />
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
-								<button image="/resources/img/icons/ic_edit.png" tooltiptext="Editar"
-									onClick="@command('editarReguerimiento', requerimiento = each)"/>
-								<button
-									image="/resources/img/icons/ic_see.png" tooltiptext="Ver"
-									onClick="@command('verCotizacion', requerimiento = each)" />
+								<button iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitudes"
+									onClick="@command('verSolicitudes', requerimiento = each)"/>
 							</div>
 						</hbox>
 					</listcell>
@@ -64,7 +72,7 @@
 			</template>
 
 		</listbox>
-		<paging id="pagRequerimientosCotizados"
+		<paging id="pagMisRequerimientos"
 			onPaging="@command('paginarLista')" autohide="true" />
 	</window>
 </zk>

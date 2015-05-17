@@ -164,7 +164,6 @@
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto" />
-								<listheader label="Nombre" sort="auto" />
 								<listheader label="Descripcion"
 									sort="auto" />
 								<listheader label="Cantidad"
@@ -178,12 +177,6 @@
 									<listcell>
 										<textbox
 											value="@bind(each.codigoOem)" />
-									</listcell>
-									<listcell>
-										<textbox
-											value="@bind(each.nombre)"
-											constraint="no empty:El Campo No Debe Estar Vacio">
-										</textbox>
 									</listcell>
 									<listcell>
 										<textbox

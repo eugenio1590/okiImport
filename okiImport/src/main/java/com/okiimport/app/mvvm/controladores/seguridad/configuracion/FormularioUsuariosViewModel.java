@@ -68,11 +68,8 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 		super.doAfterCompose(view);
 		pagPersonas.setPageSize(PAGE_SIZE);
 		usuario = new Usuario();
-		personaFiltro = new Persona() {
-		};
-		personaSeleccionada = new Persona() {
-		};
-		
+		personaFiltro = Persona.getNewInstance();
+		personaSeleccionada = Persona.getNewInstance();
 		tiposUsuario = new ArrayList<ModeloCombo<Integer>>();
 		tiposUsuario.add(new ModeloCombo<Integer>("Analistas", 1));
 		tiposUsuario.add(new ModeloCombo<Integer>("Administradores", 2));
@@ -182,8 +179,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 			usuario.setPersona(personaSeleccionada);
 			sControlUsuario.grabarUsuario(usuario);
 			mostrarMensaje("Informacion", "Usuario Creado Exitosamente", null, null, null, null);
-			personaSeleccionada = new Persona() {
-			};
+			personaSeleccionada = Persona.getNewInstance();
 			int page = pagPersonas.getActivePage();
 			cambiarPersonas(page, null, null);
 			txtUsername.setValue(null);

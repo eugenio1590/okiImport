@@ -27,7 +27,7 @@ public class Requerimiento implements Serializable {
 	private Integer idRequerimiento;
 
 	@Column(name="anno_v")
-	private Timestamp annoV;
+	private Integer annoV;
 
 	private String estatus;
 
@@ -83,6 +83,28 @@ public class Requerimiento implements Serializable {
 	public Requerimiento(Cliente cliente){
 		this.cliente = cliente;
 	}
+	
+	public Requerimiento(MarcaVehiculo marcaVehiculo){
+		this.marcaVehiculo = marcaVehiculo;
+	}
+	
+	public Requerimiento(Cliente cliente, MarcaVehiculo marcaVehiculo){
+		this.cliente = cliente;
+		this.marcaVehiculo = marcaVehiculo;
+	}
+
+	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
+			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo) {
+		super();
+		this.idRequerimiento = idRequerimiento;
+		this.estatus = estatus;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaVencimiento = fechaVencimiento;
+		this.modeloV = modeloV;
+		this.analista = analista;
+		this.cliente = cliente;
+		this.marcaVehiculo = marcaVehiculo;
+	}
 
 	public Integer getIdRequerimiento() {
 		return this.idRequerimiento;
@@ -92,11 +114,11 @@ public class Requerimiento implements Serializable {
 		this.idRequerimiento = idRequerimiento;
 	}
 
-	public Timestamp getAnnoV() {
+	public Integer getAnnoV() {
 		return this.annoV;
 	}
 
-	public void setAnnoV(Timestamp annoV) {
+	public void setAnnoV(Integer annoV) {
 		this.annoV = annoV;
 	}
 
@@ -250,4 +272,15 @@ public class Requerimiento implements Serializable {
 		return "";
 	}
 
+	public void especificarInformacionVehiculo(){
+		String especificacion = "No Especificado";
+		if (this.marcaVehiculo==null) 
+			this.marcaVehiculo = new MarcaVehiculo(especificacion);
+		
+		if(this.modeloV==null)
+			this.modeloV = especificacion;
+		
+		if(this.motor==null)
+			this.motor = new Motor(especificacion);
+	}
 }

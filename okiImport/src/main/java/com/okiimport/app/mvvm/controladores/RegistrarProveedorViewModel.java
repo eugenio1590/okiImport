@@ -1,7 +1,5 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,19 +21,18 @@ import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class RegistrarProveedorViewModel extends AbstractViewModel {
+public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 	
 	private Proveedor proveedor;
 	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 	
-	
-
 	@Wire("#gridMarcas")
 	private Listbox gridMarcas;
 	@Wire("#gridClasificacionRepuesto")
@@ -52,8 +49,8 @@ public class RegistrarProveedorViewModel extends AbstractViewModel {
 	private Integer page_size = 6;
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
-	
-	
+	private List <ModeloCombo<Boolean>> listaTipoPersona;
+	private ModeloCombo<Boolean> tipoPersona;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -63,35 +60,44 @@ public class RegistrarProveedorViewModel extends AbstractViewModel {
 		pagTipoRepuestos.setPageSize(page_size);
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
-		
-	
-		
+		listaTipoPersona = llenarListaTipoPersona();
+		this.tipoPersona = listaTipoPersona.get(1);
 	}
 	
 	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
-		proveedor = new Proveedor();
-		
+		proveedor = new Proveedor();	
 	}
 	
 	@Command
 	@NotifyChange({"proveedor"})
 	public void registrar(){
-		proveedor = sMaestros.registrarProveedor(proveedor);
-	
-		String str = "El Proveedor ha sido registrado existosamente ";
+		if(checkIsFormValid()){
+			
+			
+			if(proveedor.getMarcaVehiculos().size()>0 && proveedor.getClasificacionRepuestos().size()>0){
+				String tipo = (this.tipoPersona.getValor())?"J":"V";
+				proveedor.setCedula(tipo+"-"+proveedor.getCedula());
+				proveedor = sMaestros.registrarProveedor(proveedor);
+			
+			
+			String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-		Messagebox.show(str, "Informacion", Messagebox.OK,
-				Messagebox.INFORMATION, new EventListener() {
-					public void onEvent(Event event) throws Exception {
-						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+			Messagebox.show(str, "Informacion", Messagebox.OK,
+					Messagebox.INFORMATION, new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-							recargar();
+								recargar();
+							}
 						}
-					}
-				});
+					});
+		}
 		
+		else mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto", null, null, null, null);
+	
+	}
 	}
 	
 	
@@ -222,8 +228,19 @@ public class RegistrarProveedorViewModel extends AbstractViewModel {
 		this.tipoRepuestoSeleccionados = tipoRepuestoSeleccionados;
 	}
 	
-	
-	
-	
+	public List<ModeloCombo<Boolean>> getListaTipoPersona() {
+		return listaTipoPersona;
+	}
 
+	public void setListaTipoPersona(List<ModeloCombo<Boolean>> listaTipoPersona) {
+		this.listaTipoPersona = listaTipoPersona;
+	}
+
+	public ModeloCombo<Boolean> getTipoPersona() {
+		return tipoPersona;
+	}
+
+	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
+		this.tipoPersona = tipoPersona;
+	}
 }

@@ -33,8 +33,6 @@ public class DetalleRequerimiento implements Serializable {
 
 	private byte[] foto;
 	
-	private String nombre;
-	
 	private String descripcion;
 
 	//bi-directional many-to-one association to ClasificacionRepuesto
@@ -48,7 +46,8 @@ public class DetalleRequerimiento implements Serializable {
 	private Requerimiento requerimiento;
 	
 	//bi-directional many-to-one association to DetalleCotizacion
-	@OneToMany(mappedBy="detalleRequerimiento", fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(mappedBy="detalleRequerimiento", fetch=FetchType.LAZY, orphanRemoval=true, 
+			cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public DetalleRequerimiento() {
@@ -92,14 +91,6 @@ public class DetalleRequerimiento implements Serializable {
 
 	public void setFoto(byte[] foto) {
 		this.foto = foto;
-	}
-
-	public String getNombre() {
-		return this.nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getDescripcion() {

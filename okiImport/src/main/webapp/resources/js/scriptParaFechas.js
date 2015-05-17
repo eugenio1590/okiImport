@@ -51,6 +51,7 @@ zk.afterLoad("zul.db", function () {
 					// close calendar and update value if already at the smallest allowed view
 					this.close();
 					this.parent.setValue(this.getTime());
+					this.parent.updateChange_();
 				}
 			} else {
 				_Cwgt._chooseDate.apply(this, arguments); //call the original method

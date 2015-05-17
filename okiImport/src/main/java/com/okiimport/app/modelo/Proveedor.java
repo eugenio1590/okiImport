@@ -110,4 +110,11 @@ public class Proveedor extends Persona implements Serializable {
 			List<ClasificacionRepuesto> clasificacionRepuestos) {
 		this.clasificacionRepuestos = clasificacionRepuestos;
 	}
+
+	/**METODOS OVERRIDE*/
+	@Override
+	public Integer getTipoMenu() {
+		// TODO Auto-generated method stub
+		return this.tipoMenu=3;
+	}
 }

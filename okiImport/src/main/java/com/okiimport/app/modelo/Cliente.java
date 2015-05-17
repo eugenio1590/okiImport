@@ -22,7 +22,7 @@ public class Cliente extends Persona implements Serializable {
 	private String estatus;
 	
 	//bi-directional many-to-one association to Proveedor
-	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY, orphanRemoval=true)
+	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
 
 	public Cliente() {
@@ -72,6 +72,13 @@ public class Cliente extends Persona implements Serializable {
 		requerimiento.setCliente(null);
 
 		return requerimiento;
+	}
+
+	/**METODOS OVERRIDE*/
+	@Override
+	public Integer getTipoMenu() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
