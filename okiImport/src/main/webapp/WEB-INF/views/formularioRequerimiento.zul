@@ -133,13 +133,11 @@
 												constraint="no empty:El Campo No Debe Estar Vacio" />
 
 											<label value="Año: *" />
-											<datebox id="annoV"
-												width="80%" sclass="datebox-year-only" format="yyyy"
-												value="@bind(vm.requerimiento.annoV)" />
+											<intbox placeholder="2008" constraint="no negative,no empty, no zero" width="80%" maxlength="4" 
+												value="@save(vm.requerimiento.annoV) 
+													@validator(vm.validatorAnno, maxValue=vm.yearDay, intbAnno=self)" />
 
 										</row>
-
-
 									</rows>
 								</grid>
 							</div>
@@ -209,10 +207,6 @@
 												</template>
 											</combobox>
 										
-											<label value="Año: " />
-												<intbox placeholder="0000" constraint="no negative,no empty, no zero" width="80%" 
-													value="@save(vm.requerimiento.annoV) 
-															@validator(vm.validatorAnno, maxValue=vm.yearDay, intbAnno=self)" />
 											</row>
 
 									</rows>
