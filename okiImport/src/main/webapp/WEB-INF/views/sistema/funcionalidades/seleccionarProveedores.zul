@@ -58,8 +58,8 @@
 
 											
 											<listbox
-												id="gridProveedores" model="@load(vm.proveedor.nombre)"
-												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.proveedoresSeleccionados)"
+												id="gridProveedores" model="@load(vm.listaProveedoresSeleccionados1)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.listaProveedoresSeleccionados2)"
 												>
 												
 												<listhead
@@ -84,10 +84,10 @@
 <div>
   		<groupbox closable="false">
 				<caption>
-					<label value="Mensaje: "  sclass="custom_caption"/>
+					<label value="Mensaje:"  sclass="custom_caption"/>
 		        </caption>
         <textbox id="mensaje" width="100%" rows="3" cols="35" readonly="" mold="rounded"
-		  constraint="no empty:El Campo No Debe Estar Vacio" />
+		 value= "Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión "  />
 		</groupbox>
 </div>			
 

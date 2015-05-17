@@ -15,13 +15,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -46,24 +46,20 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	private Groupbox grpDatosVehiculo;
 	
 	@Wire("#aDatosVehiculo")
-	private A aDatosVehiculo;
-	
-	@Wire("#cmbTransmision")
-	private Combobox cmbTransmision;
-	
-	@Wire("#cmbTraccion")
-	private Combobox cmbTraccion;
+	private A aDatosVehiculo; 
 	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
 	private List <Motor> listaMotor;
-	private Requerimiento requerimiento;
+	private List <DetalleRequerimiento> listaDetalleRequerimientoSeleccionados;
 	
+	private Requerimiento requerimiento;
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	
+
 	@AfterCompose
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
@@ -78,8 +74,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		
-		//cmbTransmision.setValue(this.requerimiento.determinarTransmision());
-		//cmbTraccion.setValue(this.requerimiento.determinarTraccion());
 	}
 	
 	/**INTERFACE*/
@@ -119,12 +113,15 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 
 	@Command
 	public void enviarSolicitudProv(@BindingParam("requerimiento") Requerimiento requerimiento){
-		
+		if( this.listaDetalleRequerimientoSeleccionados.size()>0)
+		{
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
+			parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
 			crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
-		
-		
+		}
+		else
+			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -200,4 +197,17 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public void setListaMotor(List<Motor> listaMotor) {
 		this.listaMotor = listaMotor;
 	}
+
+	public void setListaDetalleRequerimientoSeleccionados(
+			List<DetalleRequerimiento> listaDetalleRequerimientoSeleccionados) {
+		this.listaDetalleRequerimientoSeleccionados = listaDetalleRequerimientoSeleccionados;
+	}
+
+	public List<DetalleRequerimiento> getListaDetalleRequerimientoSeleccionados() {
+		return listaDetalleRequerimientoSeleccionados;
+	}
+
+	
+	
+
 }

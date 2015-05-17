@@ -290,14 +290,17 @@
 				</groupbox>
 			</hbox>
 		</groupbox>
-		<div sclass="panel-footer" align="right">
+		<hbox width="100%">
+			<label value="* Campos Obligatorios" hflex="1" />
 
-			<button label="Limpiar" type="submit"
-				onClick="@command('limpiar')" sclass="btn-primary" />
-			<button label="Enviar" type="submit"
-				onClick="@command('registrar')" sclass="btn-primary" />
-		</div>
+			<div sclass="panel-footer" align="right">
 
+				<button label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
+				<button label="Enviar" type="submit"
+					onClick="@command('registrar')" sclass="btn-primary" />
+			</div>
+		</hbox>
 	</window>
-	<label value="* Campos Obligatorios" />
+	
 </zk>

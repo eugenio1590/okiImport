@@ -102,7 +102,7 @@
 									<label value="Transmision: " />
 									<textbox
 										width="80%" readonly="true"
-										value="@bind(vm.transmision.nombre)" >
+										value="@bind(vm.requerimiento.determinarTransmision())" >
 									</textbox>	
 								</row>
 
@@ -110,7 +110,7 @@
 									<label value="Traccion: " />
 									<textbox
 										width="80%" readonly="true"
-										value="@bind(vm.traccion.nombre)">
+										value="@bind(vm.requerimiento.determinarTraccion())">
 									</textbox>
 								</row>
 							</rows>
@@ -124,51 +124,40 @@
 				<panel sclass="panel-primary">
 					<panelchildren>
 
-						<listbox mold="paging"
+						<listbox id="listRepuestos" mold="paging"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
+							selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)"
 							style="margin-top:10px" pageSize="5" checkmark="true" 
 							pagingPosition="top" multiple="true"  sclass="mylist">
 							 
 							<listhead>
 								<listheader label="CodigoOEM"
-									sort="auto" />
-								<listheader label="Nombre" 
-								    sort="auto" />
+									sort="auto"  width="130px" />
+								
 								<listheader label="Descripcion"
 									sort="auto" />
 								<listheader label="Cantidad"
 									sort="auto" />
 								<listheader label="Clasificacion"
-									sort="none" />
+									sort="none"  />
 								<listheader label="Foto" 
 								    sort="auto" />
 							</listhead>
 							<template name="model">
 								<listitem>
-									<listcell>
-										<textbox
-											value="@bind(each.codigoOem)" width="130px" readonly="true" />
+									<listcell label="@bind(each.codigoOem)" >
+										
 									</listcell>
-									<listcell>
-										<textbox
-											value="@bind(each.nombre)" readonly="true">
-										</textbox>
+									
+									<listcell label="@bind(each.descripcion)">
 									</listcell>
-									<listcell>
-										<textbox
-											value="@bind(each.descripcion)" readonly="true">
-										</textbox>
+									
+									<listcell label="@bind(each.cantidad)">
 									</listcell>
-									<listcell>
-										<spinner
-											value="@bind(each.cantidad)" readonly="true">
-										</spinner>
+									
+									<listcell label="@bind(each.clasificacionRepuesto.descripcion)" >
 									</listcell>
-									<listcell>
-										<combobox width="100%" readonly="true"
-											value="@bind(each.clasificacionRepuesto.descripcion)">
-										</combobox>
-									</listcell>
+									
 									<listcell>
 										<div>
 											<image width="50px"

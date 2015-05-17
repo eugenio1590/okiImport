@@ -22,6 +22,7 @@ import org.zkoss.zul.Paging;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractViewModel;
@@ -32,7 +33,9 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	
 	private Proveedor proveedor;
 	private List<Proveedor> listaProveedores;
-
+	private List<Proveedor> proveedoresSeleccionados;
+	private List<Proveedor> listaProveedoresSeleccionados1;
+	private List<Proveedor> listaProveedoresSeleccionados2;
 
 	@Wire("#pagProveedores")
 	private Paging pagProveedores;
@@ -43,24 +46,30 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	private STransaccion sTransaccion;
 
 	private Integer page_size = 3;
-	private List<Proveedor> proveedoresSeleccionados;
 	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
+	
+	@Wire("#gridProveedores")
 	private Listbox gridProveedores;
+	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
 	
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("ids") List <Integer> idsClasificacionRepuesto){
+			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
+		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
 		pagProveedores.setPageSize(page_size);
 		//*******parte de fase 2
 		//this.idsClasificacionRepuesto=idsClasificacionRepuesto;
-	
+		idsClasificacionRepuesto = new ArrayList<Integer>();
+		for(DetalleRequerimiento detalle:repuestosseleccionados)
+			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
+		    consultarProveedores(0);
 	}
 	
 	@Command
@@ -73,30 +82,17 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	@NotifyChange({"*"})
 	@Command
 	public void agregarProveedores(){
-		this.moveSelection(listaProveedores, proveedor.getNombre(), proveedoresSeleccionados , "No se puede agregar Proveedor");
+		super.moveSelection(listaProveedores,listaProveedoresSeleccionados1, proveedoresSeleccionados, "No se puede agregar Proveedor");
 		
 	}
 	
-	private void moveSelection(List<Proveedor> listaProveedores2,
-			String nombre, List<Proveedor> proveedoresSeleccionados2,
-			String failMessage) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@NotifyChange({"*"})
 	@Command
 	public void eliminarProveedores(){
-		this.moveSelection(proveedor.getNombre(), listaProveedores, proveedoresSeleccionados, "No se puede eliminar el Proveedor");
+		this.moveSelection( listaProveedoresSeleccionados1, listaProveedores, listaProveedoresSeleccionados2, "No se puede eliminar el Proveedor");
 	}
 	
-	
-	private void moveSelection(String nombre,
-			List<Proveedor> listaProveedores2,
-			List<Proveedor> proveedoresSeleccionados2, String failMessage) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@NotifyChange({"*"})
 	@Command
@@ -174,6 +170,40 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 
 	public void setIdsClasificacionRepuesto(List<Integer> idsClasificacionRepuesto) {
 		this.idsClasificacionRepuesto = idsClasificacionRepuesto;
+	}
+
+	public List<Proveedor> getListaProveedoresSeleccionados1() {
+		return listaProveedoresSeleccionados1;
+	}
+
+	public void setListaProveedoresSeleccionados1(
+			List<Proveedor> listaProveedoresSeleccionados1) {
+		this.listaProveedoresSeleccionados1 = listaProveedoresSeleccionados1;
+	}
+
+	public List<Proveedor> getListaProveedoresSeleccionados2() {
+		return listaProveedoresSeleccionados2;
+	}
+
+	public void setListaProveedoresSeleccionados2(
+			List<Proveedor> listaProveedoresSeleccionados2) {
+		this.listaProveedoresSeleccionados2 = listaProveedoresSeleccionados2;
+	}
+
+	public Listbox getGridProveedores() {
+		return gridProveedores;
+	}
+
+	public void setGridProveedores(Listbox gridProveedores) {
+		this.gridProveedores = gridProveedores;
+	}
+
+	public Listbox getGridProveedoresSeleccionados() {
+		return gridProveedoresSeleccionados;
+	}
+
+	public void setGridProveedoresSeleccionados(Listbox gridProveedoresSeleccionados) {
+		this.gridProveedoresSeleccionados = gridProveedoresSeleccionados;
 	}
 
 }
