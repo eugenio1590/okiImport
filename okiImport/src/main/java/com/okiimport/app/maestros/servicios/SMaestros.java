@@ -32,4 +32,7 @@ public interface SMaestros {
 	public Proveedor registrarProveedor(Proveedor proveedor);
 	
 	public Map<String,Object> ConsultarMotor(Integer page,Integer limit);
+	
+	public Map<String, Object> ConsultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
+			List<Integer> idsClasificacionRepuesto, int start, int limit);
 }

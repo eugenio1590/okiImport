@@ -1,7 +1,5 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +22,6 @@ import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -246,10 +243,4 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
-
-	
-	
-	
-	
-
 }

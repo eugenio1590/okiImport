@@ -1,0 +1,101 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winListProveedores" title="Lista de Proveedores" border="normal" width="70%"
+		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.SeleccionarProveedoresViewModel')"
+		form="@id('fx') @load(vm.proveedor)" closable="true">
+
+
+<div>
+								<borderlayout width="100%"
+									height="350px">
+									<west width="300px"
+										title="Proveedores" collapsible="true">
+										<vlayout>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowRight32.png"
+													tooltiptext="Agregar Proveedores a Consultar" onClick = "@command('agregarProveedores')"
+													 />
+											</toolbar>
+											<listbox id="gridProveedoresSeleccionados"
+											    mold="paging" checkmark="true" selectedItems="@bind(vm.proveedoresSeleccionados)"
+												multiple="true" model="@load(vm.listaProveedores)">
+												
+												<listhead
+													menupopup="auto">
+
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.nombre)" />
+														
+													</listitem>
+												</template>
+											
+											</listbox>
+											<paging id="pagProveedores"
+												 autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
+										</vlayout>
+									</west>
+									
+									<east id="borderEast"
+										title="Proveedores Seleccionados" width="62.5%">
+										<div>
+											<toolbar>
+												<toolbarbutton
+													height="45px"
+													image="resources/img/icons/ButtonArrowLeft32.png"
+													tooltiptext="Remover Proveedores" onClick = "@command('eliminarProveedores')"
+									                 />
+											</toolbar>
+											
+
+											
+											<listbox
+												id="gridProveedores" model="@load(vm.proveedor.nombre)"
+												mold="paging" checkmark="true" multiple="true" selectedItems="@bind(vm.proveedoresSeleccionados)"
+												>
+												
+												<listhead
+													menupopup="auto">
+													<listheader
+														label="Nombre" sort="auto" />
+												</listhead>
+												<template
+													name="model">
+													<listitem>
+														<listcell
+															label="@bind(each.nombre)" />
+														
+													</listitem>
+												</template>
+											</listbox>
+										</div>
+									</east>
+								</borderlayout>
+							</div>
+							
+<div>
+  		<groupbox closable="false">
+				<caption>
+					<label value="Mensaje: "  sclass="custom_caption"/>
+		        </caption>
+        <textbox id="mensaje" width="100%" rows="3" cols="35" readonly="" mold="rounded"
+		  constraint="no empty:El Campo No Debe Estar Vacio" />
+		</groupbox>
+</div>			
+
+<div sclass="panel-footer" align="right">
+			<button label="Limpiar" type="submit"
+				onClick="@command('limpiar')" sclass="btn-primary"/>
+			<button label="Enviar" type="submit"
+				onClick="@command('enviar')" sclass="btn-primary"/>
+		</div>				
+</window>
+</zk>
