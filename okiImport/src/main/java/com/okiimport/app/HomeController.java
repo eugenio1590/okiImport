@@ -3,6 +3,7 @@ package com.okiimport.app;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.mail.MailService;
 
 /**
  * Handles requests for the application home page.
@@ -26,6 +28,9 @@ public class HomeController {
 	
 	@Autowired
 	private SControlUsuario sControlUsuario;
+	
+	@Autowired
+	private MailService mailService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name. web/login
@@ -46,6 +51,9 @@ public class HomeController {
 	
 	@RequestMapping(value= "/inicioSession", method = RequestMethod.GET)
 	public String iniciarSession(){
+		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "PRUEBA DE MENSAJE");
+		//Map<String, Object> model = null;
+		//mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "mail_template/prueba.html", model);
 		return "security/index.zul";
 	}
 	
