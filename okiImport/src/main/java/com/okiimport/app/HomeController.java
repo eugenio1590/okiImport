@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.mail.MailService;
+import com.okiimport.app.modelo.Cliente;
 
 /**
  * Handles requests for the application home page.
@@ -58,8 +59,11 @@ public class HomeController {
 //		1. Simple
 //		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "PRUEBA DE MENSAJE");
 //		2.Completo
+//		//El Objecto que se envia debe declararse final, esto quiere decir que no puede instanciarse sino solo una vez
+//		final Cliente cliente = new Cliente("20186243"); 
 //		Map<String, Object> model = new HashMap<String, Object>();
 //		model.put("usuario", "Eugenio Caicedo");
+//		model.put("cliente", cliente);
 //		String archivo = obtenerDirectorioRecursos("prueba.html");
 //		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "prueba2.html", model, new File(archivo));
 		return "security/index.zul";
