@@ -4,13 +4,30 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Spinner;
 
-public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
+import com.okiimport.app.mail.MailService;
 
+public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
+	
+	@Autowired
+	@BeanInjector("mailService")
+	protected MailService mailService;
+	
+	/**SETTERS Y GETTERS*/	
+	public MailService getMailService() {
+		return mailService;
+	}
+
+	public void setMailService(MailService mailService) {
+		this.mailService = mailService;
+	}
+
+	/**METODOS PROPIOS DE LA CLASE*/
 	protected static List <ModeloCombo<Boolean>> llenarListaTraccion(){
 		List <ModeloCombo<Boolean>> listaTraccion = new ArrayList<ModeloCombo<Boolean>>();
 		listaTraccion.add(new ModeloCombo<Boolean>("4x2", true));
