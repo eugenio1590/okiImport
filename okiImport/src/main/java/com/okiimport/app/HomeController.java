@@ -1,7 +1,11 @@
 package com.okiimport.app;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -51,9 +55,13 @@ public class HomeController {
 	
 	@RequestMapping(value= "/inicioSession", method = RequestMethod.GET)
 	public String iniciarSession(){
-		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "PRUEBA DE MENSAJE");
-		//Map<String, Object> model = null;
-		//mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "mail_template/prueba.html", model);
+//		1. Simple
+//		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "PRUEBA DE MENSAJE");
+//		2.Completo
+//		Map<String, Object> model = new HashMap<String, Object>();
+//		model.put("usuario", "Eugenio Caicedo");
+//		String archivo = obtenerDirectorioRecursos("prueba.html");
+//		mailService.send("eugeniohernandez17@gmail.com", "SISTEMA", "prueba2.html", model, new File(archivo));
 		return "security/index.zul";
 	}
 	
@@ -82,5 +90,22 @@ public class HomeController {
 			}
  
 		return false;
+	}
+	
+	/** Metodo que permite obtener el directorio actual del proyecto */
+	public static String obtenerDirectorio() {
+		URL rutaURL = HomeController.class.getProtectionDomain().getCodeSource()
+				.getLocation();
+		String ruta = rutaURL.getPath();
+		//return "/" + ruta.substring(1, ruta.indexOf("SITEG"));
+		return ruta.substring(0, ruta.indexOf("WEB-INF"));
+	}
+	
+	public static String obtenerDirectorioRecursos(){
+		return obtenerDirectorio()+"resources/";
+	}
+	
+	public static String obtenerDirectorioRecursos(String path){
+		return obtenerDirectorioRecursos()+path;
 	}
 }
