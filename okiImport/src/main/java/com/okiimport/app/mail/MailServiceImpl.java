@@ -38,20 +38,20 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void send(String to, String subject, String text) {
 		// TODO Auto-generated method stub
-		send(to, subject, text);
+		send(to, subject, text, null, null, null);
 	}
 
 	@Override
 	public void send(String to, String subject, String text, File... attachments) {
 		// TODO Auto-generated method stub
-		send(to, subject, text, attachments);
+		send(to, subject, text, null, null, attachments);
 	}
 
 	@Override
 	public void send(String to, String subject, String template,
 			Map<String, Object> model) {
 		// TODO Auto-generated method stub
-		send(to, subject, null, template, model);
+		send(to, subject, null, template, model, null);
 	}
 
 	@Override
