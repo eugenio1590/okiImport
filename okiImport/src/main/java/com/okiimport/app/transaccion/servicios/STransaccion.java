@@ -1,5 +1,6 @@
 package com.okiimport.app.transaccion.servicios;
 
+import java.util.List;
 import java.util.Map;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -32,11 +33,14 @@ public interface STransaccion {
 	//Cotizaciones
 	public Map<String, Object> consultarSolicitudCotizaciones(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
 			Integer idRequerimiento, int idProveedor, int pagina, int limit);
+	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion);
+	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions);
+	
 	//Detalle de Cotizaciones
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,
 			String fieldSort, Boolean sortDirection, int start, int limit);
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
 	public Map <String, Object> ConsultarDetalleCotizacion(Integer idcotizacion,int pagina, int limit);
 	
-	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion);
+	
 }

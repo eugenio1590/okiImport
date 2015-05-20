@@ -29,7 +29,7 @@ public class DetalleCotizacion implements Serializable {
 	private Cotizacion cotizacion;
 	
 	//bi-directional many-to-one association to DetalleRequerimiento
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
+	@ManyToOne//(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
 	@JoinColumn(name="id_detalle_requerimiento")
 	private DetalleRequerimiento detalleRequerimiento;
 
@@ -83,5 +83,4 @@ public class DetalleCotizacion implements Serializable {
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}
-
 }

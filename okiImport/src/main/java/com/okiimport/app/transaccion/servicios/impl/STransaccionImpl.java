@@ -203,7 +203,7 @@ return parametros;
 		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
-
+	
 	@Override
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
@@ -211,5 +211,20 @@ return parametros;
 		for(DetalleCotizacion detalle : cotizacion.getDetalleCotizacions())
 			detalle.getDetalleRequerimiento().setEstatus("CT");
 		return cotizacionDAO.update(cotizacion);
+	}
+
+	@Override
+	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions) {
+		// TODO Auto-generated method stub
+		cotizacion.setEstatus("SC");
+		cotizacion.setFechaCreacion(calendar.getTime());
+		cotizacion = cotizacionDAO.save(cotizacion);
+		for(DetalleCotizacion detalleCotizacion : detalleCotizacions){
+			detalleCotizacion.getDetalleRequerimiento().setEstatus("CT");
+			detalleCotizacion.setCotizacion(cotizacion);
+			this.detalleCotizacionDAO.save(detalleCotizacion);
+		}
+		cotizacion.setDetalleCotizacions(detalleCotizacions);
+		return cotizacion;
 	}
 }

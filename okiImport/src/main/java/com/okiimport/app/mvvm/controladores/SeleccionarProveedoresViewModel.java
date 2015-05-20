@@ -69,6 +69,7 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
+		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ");
 		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
@@ -159,23 +160,20 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	@Command
 	@NotifyChange({"listaProveedoresSeleccionados1"})
 	public void enviar(){
-		if(!listaProveedoresSeleccionados1.isEmpty())
+		if(!listaProveedoresSeleccionados1.isEmpty()){
 			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				Cotizacion cotizacion=new Cotizacion();
 				cotizacion.setProveedor(proveedor);
 				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
-	                	
+
 				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
 					DetalleCotizacion detalleCotizacion = new DetalleCotizacion();
-	                       		detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
-					
+					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
 					detalleCotizacions.add(detalleCotizacion);
-	                	}
-		      		cotizacion.setDetalleCotizacions(detalleCotizacions);
-		      		sTransaccion.registrarCotizacion(cotizacion);
-		      		mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, null, null);
-				
+				}
+				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
 			}
+			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, null, null);
+		}
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
 	}

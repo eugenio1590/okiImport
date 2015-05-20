@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,11 +40,17 @@ public class Cotizacion implements Serializable{
 	private List<DetalleCotizacion> detalleCotizacions;
 
 	public Cotizacion() {
+		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+	}
+	
+	public Cotizacion(String mensaje){
+		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+		this.mensaje = mensaje;
 	}
 
 	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
 			String estatus, String mensaje) {
-		super();
+		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;
@@ -53,7 +60,7 @@ public class Cotizacion implements Serializable{
 
 	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
 			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
-		super();
+		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;
@@ -61,8 +68,6 @@ public class Cotizacion implements Serializable{
 		this.mensaje = mensaje;
 		this.proveedor = proveedor;
 	}
-
-
 
 	public Integer getIdCotizacion() {
 		return idCotizacion;
@@ -128,4 +133,18 @@ public class Cotizacion implements Serializable{
 		this.detalleCotizacions = detalleCotizacions;
 	}
 
+	public DetalleCotizacion addDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
+		getDetalleCotizacions().add(detalleCotizacion);
+		detalleCotizacion.setCotizacion(this);
+
+		return detalleCotizacion;
+	}
+
+	public DetalleCotizacion removeDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
+		getDetalleCotizacions().remove(detalleCotizacion);
+		detalleCotizacion.setCotizacion(null);
+
+		return detalleCotizacion;
+	}
+	
 }
