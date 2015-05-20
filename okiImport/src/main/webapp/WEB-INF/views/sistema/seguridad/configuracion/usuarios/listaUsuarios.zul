@@ -23,19 +23,19 @@
 						<radio label="Inactivo" value="false"/>
 					</radiogroup>
 					<separator orient="vertical" width="10px" bar="false" />
-					<button label="Limpiar" onClick="@command('limpiarRadios')" sclass="btn btn-minier btn-success"/>
+					<button label="Limpiar" onClick="@command('limpiarRadios')" sclass="btn-primary"/>
 				</auxheader>
 				<auxheader colspan="1"/>
 				<auxheader width="20%">
-					<button label="Nuevo Usuario" onClick="@command('nuevoUsuario')" sclass="btn btn-sm btn-info"/>
+					<button label="Nuevo Usuario" onClick="@command('nuevoUsuario')" sclass="btn-primary"/>
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
-				<listheader id="id" label="Codigo" sort="auto(id)"/>
-				<listheader id="username" label="Username" sort="auto(username)"/>
-				<listheader label="Estado" sort="none"/>
-				<listheader label="Foto" sort="none" align="center" width="150px"/>
-				<listheader label="Operaciones" width="20%" sort="none"/>
+				<listheader id="id" label="Codigo" sort="auto(id)" width="18%"/>
+				<listheader id="username" label="Username" sort="auto(username)" width="18%"/>
+				<listheader label="Estado" sort="none" width="31%"/>
+				<listheader label="Foto" sort="none" align="center" width="18%"/>
+				<listheader label="Operaciones" width="15%" sort="none"/>
 			</listhead>
 			<template name="model">
 				<listitem>

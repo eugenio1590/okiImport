@@ -206,8 +206,4 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public List<DetalleRequerimiento> getListaDetalleRequerimientoSeleccionados() {
 		return listaDetalleRequerimientoSeleccionados;
 	}
-
-	
-	
-
 }
