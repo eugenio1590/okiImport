@@ -22,6 +22,8 @@ import org.zkoss.zul.Paging;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.Cotizacion;
+import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
@@ -32,10 +34,17 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	
 	private Proveedor proveedor;
+	private Cotizacion cotizacion;
+	private DetalleRequerimiento detalleRequerimiento;
+	private DetalleCotizacion detalleCotizacion;
+	
 	private List<Proveedor> listaProveedores;
 	private List<Proveedor> proveedoresSeleccionados;
 	private List<Proveedor> listaProveedoresSeleccionados1;
 	private List<Proveedor> listaProveedoresSeleccionados2;
+	private List<DetalleRequerimiento> listaDetalleRequerimientos;
+
+	
 
 	@Wire("#pagProveedores")
 	private Paging pagProveedores;
@@ -60,12 +69,12 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
+		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
 		pagProveedores.setPageSize(page_size);
-		//*******parte de fase 2
-		//this.idsClasificacionRepuesto=idsClasificacionRepuesto;
+	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
 		for(DetalleRequerimiento detalle:repuestosseleccionados)
 			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
@@ -147,6 +156,32 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	}
 	
 	
+	@Command
+	@NotifyChange({"listaProveedoresSeleccionados1"})
+	public void enviar(){
+		if(!listaProveedoresSeleccionados1.isEmpty())
+			for(Proveedor proveedor:listaProveedoresSeleccionados1){
+				Cotizacion cotizacion=new Cotizacion();
+				cotizacion.setProveedor(proveedor);
+				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
+	                	
+				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
+					DetalleCotizacion detalleCotizacion = new DetalleCotizacion();
+	                       		detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
+					
+					detalleCotizacions.add(detalleCotizacion);
+	                	}
+		      		cotizacion.setDetalleCotizacions(detalleCotizacions);
+		      		sTransaccion.registrarCotizacion(cotizacion);
+		      		mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, null, null);
+				
+			}
+		else
+			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
+	}
+
+	
+	
 	public List<Proveedor> getListaProveedores() {
 		return listaProveedores;
 	}
@@ -205,4 +240,32 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	public void setGridProveedoresSeleccionados(Listbox gridProveedoresSeleccionados) {
 		this.gridProveedoresSeleccionados = gridProveedoresSeleccionados;
 	}
+
+	public List<DetalleRequerimiento> getListaDetalleRequerimientos() {
+		return listaDetalleRequerimientos;
+	}
+
+	public void setListaDetalleRequerimientos(
+			List<DetalleRequerimiento> listaDetalleRequerimientos) {
+		this.listaDetalleRequerimientos = listaDetalleRequerimientos;
+	}
+	
+	public Cotizacion getCotizacion() {
+		return cotizacion;
+	}
+
+	public void setCotizacion(Cotizacion cotizacion) {
+		this.cotizacion = cotizacion;
+	}
+
+	public DetalleRequerimiento getDetalleRequerimiento() {
+		return detalleRequerimiento;
+	}
+
+	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
+		this.detalleRequerimiento = detalleRequerimiento;
+	}
+	
+	
+	
 }
