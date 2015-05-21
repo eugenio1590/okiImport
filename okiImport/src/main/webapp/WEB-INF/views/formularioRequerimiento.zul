@@ -4,6 +4,7 @@
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')" >
 		
+		
 		<groupbox>
 			<hbox>
 				<vbox>
