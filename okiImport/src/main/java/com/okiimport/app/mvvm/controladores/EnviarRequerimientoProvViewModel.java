@@ -11,6 +11,8 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -82,6 +84,14 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public void onEvent(ClickEvent event) throws Exception {
 		winEnviarReqProv.detach();
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
+	}
+	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@NotifyChange("listaDetalleRequerimientoSeleccionados")
+	public void removerSeleccionados(){
+		if(listaDetalleRequerimientoSeleccionados!=null)
+			listaDetalleRequerimientoSeleccionados.clear();
 	}
 	
 	/**COMMAND*/

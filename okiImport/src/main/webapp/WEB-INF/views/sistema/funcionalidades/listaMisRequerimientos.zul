@@ -38,7 +38,7 @@
 				</listheader>
 				
 				<listheader value="estatus" label="Estado" sort="none" width="12%">
-					<combobox instant="true" placeholder="" selectedItem="@bind(vm.estatusFiltro)" 
+					<combobox instant="true" placeholder="" selectedItem="@bind(vm.estatusFiltro)" readonly="true"
 						model="@load(vm.listaEstatus)" onChange="@command('aplicarFiltro')" width="110px"
 						value="@bind(vm.estatusFiltro.nombre)">
 						<template name="model">
@@ -65,9 +65,9 @@
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
 								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
-									onClick="@command('editarReguerimiento', requerimiento = each)"/>
-								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"  
-								    onClick="@command('enviarRequerimientoProv', requerimiento = each)"/>
+									onClick="@command('operarReguerimiento', requerimiento = each)"/>
+<!-- 								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"   -->
+<!-- 								    onClick="@command('enviarRequerimientoProv', requerimiento = each)"/> -->
 							</div>
 						</hbox>
 					</listcell>

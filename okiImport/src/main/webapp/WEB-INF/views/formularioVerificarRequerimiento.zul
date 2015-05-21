@@ -51,7 +51,7 @@
 					<listheader value="fechaCreacion"
 						label="Fecha Creación" sort="auto(fechaCreacion)" width="200px">
 						<datebox
-							value="@bind(vm.requerimientoFiltro.fechaCreacion)"
+							value="@bind(vm.fechaCreacion)"
 							format="dd/HH/yyyy - a hh:mm" instant="true"
 							onChange="@command('aplicarFiltro')" width="100px" />
 						<div sclass="z-icon-filter bigger-200" />
@@ -68,10 +68,10 @@
 
 					<listheader value="serialCarroceriaV"
 						label="N° Serial" sort="auto(serialCarroceriaV)" width="150px">
-						<textbox
+						<textbox id="serialCarroCerialVM"
 							value="@bind(vm.requerimientoFiltro.serialCarroceriaV)"
 							constraint="no negative, no zero" instant="true"
-							onChange="@command('aplicarFiltro')" width="100px" />
+							onChange="@command('aplicarFiltro', txt=self)" width="100px" />
 						<div sclass="z-icon-filter bigger-200" />
 					</listheader>
 
@@ -82,7 +82,7 @@
 					<listitem>
 						<listcell label="@bind(each.idRequerimiento)" />
 						<listcell>
-							<datebox format="dd/HH/yyyy - a hh:mm" width="200px"
+							<datebox format="dd/MM/yyyy - a hh:mm" width="200px"
 								value=" @bind(each.fechaCreacion)" readonly="true"
 								buttonVisible="false" />
 						</listcell>

@@ -84,7 +84,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void registrar(){
 		if(checkIsFormValid()){
 			String tipo = (this.tipoPersona.getValor())?"J":"V";
-			cliente.setCedula(tipo+"-"+cliente.getCedula());
+			cliente.setCedula(tipo+cliente.getCedula());
 			cliente = sMaestros.registrarOActualizarCliente(cliente);
 			requerimiento.setCliente(cliente);
 			if(traccion!=null)
@@ -138,7 +138,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 			if(cliente!=null){
 				this.cliente = cliente;
 				this.cliente.setCedula(cedula.substring(1, cedula.length()));
-				//Tipo
+				this.comboTipoPersona.setValue(cedula.substring(0, 1));
 			}
 			else
 				this.cliente = new Cliente(cedula.substring(1, cedula.length()));

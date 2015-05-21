@@ -18,7 +18,9 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
@@ -31,7 +33,21 @@ import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class SeleccionarProveedoresViewModel extends AbstractViewModel {
+public class SeleccionarProveedoresViewModel extends AbstractViewModel implements EventListener<ClickEvent> {
+	
+	//Servicios
+	@BeanInjector("sMaestros")
+	private SMaestros sMaestros;
+	
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
+	
+	//GUI
+	@Wire("#winListProveedores")
+	private Window winListProveedores;
+	
+	@Wire("#pagProveedores")
+	private Paging pagProveedores;
 	
 	private Proveedor proveedor;
 	private Cotizacion cotizacion;
@@ -43,18 +59,8 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	private List<Proveedor> listaProveedoresSeleccionados1;
 	private List<Proveedor> listaProveedoresSeleccionados2;
 	private List<DetalleRequerimiento> listaDetalleRequerimientos;
-
 	
-
-	@Wire("#pagProveedores")
-	private Paging pagProveedores;
-	
-	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
-	@BeanInjector("sTransaccion")
-	private STransaccion sTransaccion;
-
-	private Integer page_size = 3;
+	private static Integer PAGE_SIZE = 3;
 	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
@@ -74,12 +80,20 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
-		pagProveedores.setPageSize(page_size);
+		pagProveedores.setPageSize(PAGE_SIZE);
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
 		for(DetalleRequerimiento detalle:repuestosseleccionados)
 			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
 		    consultarProveedores(0);
+	}
+	
+	/**Interface*/
+	@Override
+	public void onEvent(ClickEvent event) throws Exception {
+		// TODO Auto-generated method stub
+		winListProveedores.detach();
+		ejecutarGlobalCommand("removerSeleccionados", null);
 	}
 	
 	@Command
@@ -145,7 +159,7 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	
 	@NotifyChange({"listaProveedores"})
 	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, page_size);
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, PAGE_SIZE);
 		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
 		Integer total = (Integer) Parametros.get("total");
 		gridProveedores.setMultiple(true);
@@ -172,7 +186,7 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 				}
 				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
 			}
-			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, null, null);
+			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 		}
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
@@ -263,6 +277,8 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel {
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}
+
+	
 	
 	
 	

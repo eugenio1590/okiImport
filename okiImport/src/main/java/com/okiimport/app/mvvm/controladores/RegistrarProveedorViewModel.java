@@ -13,6 +13,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
@@ -41,6 +42,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Paging pagMarcas;
 	@Wire("#pagTipoRepuestos")
 	private Paging pagTipoRepuestos;
+	@Wire("#btnLimpiar")
+	private Button btnLimpiar;
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
 	@BeanInjector("sTransaccion")
@@ -65,6 +68,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	@Command
+	public void habilitarBtnLimpiar(@BindingParam("id") String id){
+		if(id.equalsIgnoreCase("tabDatosFiscales"))
+			btnLimpiar.setVisible(true);
+		else
+			btnLimpiar.setVisible(false);
+	}
+	
+	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
 		proveedor = new Proveedor();	
@@ -78,7 +89,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			
 			if(proveedor.getMarcaVehiculos().size()>0 && proveedor.getClasificacionRepuestos().size()>0){
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				proveedor.setCedula(tipo+"-"+proveedor.getCedula());
+				proveedor.setCedula(tipo+proveedor.getCedula());
 				proveedor = sMaestros.registrarProveedor(proveedor);
 			
 			
