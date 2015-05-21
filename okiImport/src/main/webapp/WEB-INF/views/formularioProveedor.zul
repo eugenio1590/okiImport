@@ -6,14 +6,20 @@
 		
 			<tabbox id="tabDatosProveedor" height="80%">
 				<tabs id="tabs">
-					<tab id="tabDatosFiscales">
-						<label value="Datos Fiscales" onClick="@command('deshabilitar',id=self.id)" />
+
+					<tab id="tabDatosFiscales" onClick="@command('habilitarBtnLimpiar', id=self.id)">
+						<label value="Datos Fiscales" />
+
 					</tab>
-					<tab id="tabMarcaVehiculo">
-						<label value="Marcas" onClick="@command('deshabilitar',id=self.id)" />
+
+					<tab id="tabMarcaVehiculo" onClick="@command('habilitarBtnLimpiar', id=self.id)">
+						<label value="Marcas" />
+
 					</tab>
-					<tab id="tabClasificacionRepuesto">
-						<label value="Clasificación Repuestos" onClick="@command('deshabilitar',id=self.id)"  />
+
+					<tab id="tabClasificacionRepuesto" onClick="@command('habilitarBtnLimpiar', id=self.id)">
+						<label value="Clasificación Repuestos" />
+
 					</tab>
 				</tabs>
 				<tabpanels>
@@ -266,8 +272,10 @@
 			</tabbox>
 		
 		<div sclass="panel-footer" align="right">
-			<button id= "btnLimpiar" label="Limpiar" type="submit"
+
+			<button id="btnLimpiar" label="Limpiar" type="submit"
 				onClick="@command('limpiar')" sclass="btn-primary"/>
+
 			<button label="Enviar" type="submit"
 				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>

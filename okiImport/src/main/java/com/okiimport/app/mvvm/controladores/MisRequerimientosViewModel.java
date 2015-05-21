@@ -138,22 +138,20 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	}
 	
 	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
+	 * Descripcion: permitira crear el emergente (modal) necesario para operar el requerimiento seleccionado de acuerdo a su estatus
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void operarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
-	}
-	
-	@Command
-	public void enviarRequerimientoProv(@BindingParam("requerimiento") Requerimiento requerimiento){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+		if(requerimiento.getEstatus().equalsIgnoreCase("CR"))
+			crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		else if(requerimiento.getEstatus().equalsIgnoreCase("E"))
+			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+		else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
+			crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

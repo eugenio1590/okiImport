@@ -35,7 +35,7 @@ public class Requerimiento implements Serializable {
 	private Date fechaCierre;
 
 	@Column(name="fecha_creacion", columnDefinition="date")
-	private Date fechaCreacion;
+	private Timestamp fechaCreacion;
 
 	@Column(name="fecha_vencimiento", columnDefinition="date")
 	private Date fechaVencimiento;
@@ -93,7 +93,7 @@ public class Requerimiento implements Serializable {
 		this.marcaVehiculo = marcaVehiculo;
 	}
 
-	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
+	public Requerimiento(Integer idRequerimiento, String estatus, Timestamp fechaCreacion, Date fechaVencimiento,
 			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo) {
 		super();
 		this.idRequerimiento = idRequerimiento;
@@ -142,7 +142,7 @@ public class Requerimiento implements Serializable {
 		return this.fechaCreacion;
 	}
 
-	public void setFechaCreacion(Date fechaCreacion) {
+	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 

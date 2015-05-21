@@ -96,11 +96,12 @@ public class RegistrarRequerimientoViewModel extends
 	}
 
 	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
-	public void registrar() {
-		if (checkIsFormValid()) {
-			String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-			cliente.setCedula(tipo + cliente.getCedula());
+
+	@NotifyChange({"requerimiento","cliente"})
+	public void registrar(){
+		if(checkIsFormValid()){
+			String tipo = (this.tipoPersona.getValor())?"J":"V";
+			cliente.setCedula(tipo+cliente.getCedula());
 			cliente = sMaestros.registrarOActualizarCliente(cliente);
 			requerimiento.setCliente(cliente);
 			if (traccion != null)
@@ -167,8 +168,9 @@ public class RegistrarRequerimientoViewModel extends
 			if (cliente != null) {
 				this.cliente = cliente;
 				this.cliente.setCedula(cedula.substring(1, cedula.length()));
-				// Tipo
-			} else
+				this.comboTipoPersona.setValue(cedula.substring(0, 1));
+			}
+			else
 				this.cliente = new Cliente(cedula.substring(1, cedula.length()));
 			this.requerimiento.setCliente(this.cliente);
 		}

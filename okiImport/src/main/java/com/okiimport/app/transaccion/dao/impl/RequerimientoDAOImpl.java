@@ -135,6 +135,12 @@ public class RequerimientoDAOImpl extends
 						"%"+ dateFormat.format(regFiltro.getFechaVencimiento()) +"%"));
 			}
 			
+			if(regFiltro.getSerialCarroceriaV() != null){
+				restricciones.add(this.criteriaBuilder.like(
+						this.criteriaBuilder.lower(this.entity.get("serialCarroceriaV").as(String.class)),
+						"%" + String.valueOf(regFiltro.getSerialCarroceriaV()).toLowerCase() + "%"));
+			}
+			
 			if (regFiltro.getEstatus() != null)
 			{
 				restricciones.add(this.criteriaBuilder.like(this.entity.get("estatus").as(String.class), 

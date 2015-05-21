@@ -69,14 +69,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	@Command
-	public void deshabilitar(@BindingParam("id") String id){
-		if(id.equalsIgnoreCase("tabDatosFiscales")){
-			btnLimpiar.setDisabled(true);
-			}
-			else
-				btnLimpiar.setDisabled(false);
+	public void habilitarBtnLimpiar(@BindingParam("id") String id){
+		if(id.equalsIgnoreCase("tabDatosFiscales"))
+			btnLimpiar.setVisible(true);
+		else
+			btnLimpiar.setVisible(false);
 	}
-	
 	
 	@Command
 	@NotifyChange({"proveedor"})

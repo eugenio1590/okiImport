@@ -1,5 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,8 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		//Atributos
 		private static final int PAGE_SIZE = 3;
 		
+		private Date fechaCreacion;
+		
 		private Cliente cliente;
 		
 		private Requerimiento requerimientoFiltro;
@@ -110,25 +114,19 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		@Command
 		@NotifyChange("listaRequerimientos")
 		public void buscarCliente(){
-			
-			if (this.cliente.getCedula()!= null)
-			{ 
+			if (this.cliente.getCedula()!= null && tipoPersona!=null)
+			{
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
 				cliente.setCedula(tipo+cliente.getCedula());
 				cambiarRequerimientos(0,null, null);
 				if (listaRequerimientos.size() > 0 )
-				{
 					misolicitudes.setVisible(true);
-				}
 				else
 				{
 					misolicitudes.setVisible(false);
 					mostrarMensaje("Informacion Importante","No posee Solicitudes", null, null, null, null);
-					
 				}
-					
 			}
-					
 		}
 		
 		
@@ -155,6 +153,10 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		@NotifyChange("*")
 		public void aplicarFiltro()
 		{
+			if(fechaCreacion!=null)
+				this.requerimientoFiltro.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
+			else
+				this.requerimientoFiltro.setFechaCreacion(null);
 			cambiarRequerimientos(0, null, null);
 		}
 		
@@ -223,5 +225,14 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 			this.tipoPersona = tipoPersona;
 		}
+
+		public Date getFechaCreacion() {
+			return fechaCreacion;
+		}
+
+		public void setFechaCreacion(Date fechaCreacion) {
+			this.fechaCreacion = fechaCreacion;
+		}
+		
 		
 }

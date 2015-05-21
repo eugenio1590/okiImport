@@ -1,5 +1,6 @@
 package com.okiimport.app.transaccion.servicios.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Date fechaCreacion = calendar.getTime();
 		Date fechaVencimiento = sumarORestarFDia(fechaCreacion, 15);
 		asignarRequerimiento(requerimiento, sMaestros);
-		requerimiento.setFechaCreacion(fechaCreacion);
+		requerimiento.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
 		requerimiento.setFechaVencimiento(fechaVencimiento);
 		requerimiento.setEstatus("CR");
 		for(DetalleRequerimiento detalle:requerimiento.getDetalleRequerimientos())
@@ -117,13 +118,12 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String fieldSort, Boolean sortDirection, String cedula, 
-			int pagina, int limit)  
-	{
+	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String fieldSort, 
+			Boolean sortDirection, String cedula, int pagina, int limit) {
 		// TODO Auto-generated method stub
-				Map<String, Object> parametros= new HashMap<String, Object>();
-				parametros.put("total", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, 0,-1).size());
-				parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, pagina*limit, limit));
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientosCliente(regFiltro,fieldSort, sortDirection, cedula, pagina*limit, limit));
 		return parametros;
 	}
 
@@ -208,9 +208,18 @@ return parametros;
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
 		cotizacion.setEstatus("C");
-		for(DetalleCotizacion detalle : cotizacion.getDetalleCotizacions())
-			detalle.getDetalleRequerimiento().setEstatus("CT");
-		return cotizacionDAO.update(cotizacion);
+		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
+		cotizacion = cotizacionDAO.update(cotizacion);
+		for(DetalleCotizacion detalle : detalles){
+			this.detalleCotizacionDAO.update(detalle);
+			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
+			detalleRequerimiento.setEstatus("CT");
+			this.detalleRequerimientoDAO.update(detalleRequerimiento);
+			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+			requerimiento.setEstatus("CT");
+			this.requerimientoDAO.update(requerimiento);
+		}
+		return cotizacion;
 	}
 
 	@Override
@@ -221,7 +230,8 @@ return parametros;
 		cotizacion = cotizacionDAO.save(cotizacion);
 		for(DetalleCotizacion detalleCotizacion : detalleCotizacions){
 			detalleCotizacion.getDetalleRequerimiento().setEstatus("CT");
-			detalleCotizacion.setCotizacion(cotizacion);
+			detalleCotizacion.setCotizacion(cotizacion); 
+			//FALTA CAMBIAR EL ESTATUS DEL REQUERIMIENTO
 			this.detalleCotizacionDAO.save(detalleCotizacion);
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);

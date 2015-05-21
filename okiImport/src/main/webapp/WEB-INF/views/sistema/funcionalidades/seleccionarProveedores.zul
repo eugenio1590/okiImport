@@ -7,8 +7,8 @@
 		
 		<div>
 			<borderlayout width="100%" height="350px">
-				<west width="300px" title="Proveedores"
-					collapsible="true">
+				<west width="37%" title="Proveedores" collapsible="true" 
+				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>
 						<toolbar>
 							<toolbarbutton height="45px"
@@ -41,7 +41,7 @@
 				</west>
 
 				<east id="borderEast" title="Proveedores Seleccionados"
-					width="62.5%">
+					width="63%">
 					<div>
 						<toolbar>
 							<toolbarbutton height="45px"
