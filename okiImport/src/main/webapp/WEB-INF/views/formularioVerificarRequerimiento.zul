@@ -18,8 +18,8 @@
 					</comboitem>
 				</template>
 			</combobox>
-			<intbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="401402375" maxlength="9"
-				constraint="no empty: introduzca RIF o Cedula solo Números sin guiones" style="font-size: 12px" onOK="@command('buscarCliente')" />
+			<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="401402375" maxlength="9"
+				constraint="no empty,/.[0-9]+/: introduzca RIF o Cedula solo Números sin guiones ejemplo 402405374" style="font-size: 12px" onOK="@command('buscarCliente')" />
 			<space></space>
 			<button label="Buscar" onClick="@command('buscarCliente')"
 				sclass="btn-primary" />
@@ -52,8 +52,8 @@
 						label="Fecha Creación" sort="auto(fechaCreacion)" width="200px">
 						<datebox
 							value="@bind(vm.requerimientoFiltro.fechaCreacion)"
-							format="dd/HH/yyyy - a hh:mm" instant="true"
-							onChange="@command('aplicarFiltro')" width="100px" />
+							format="dd/MM/yyyy - a hh:mm" instant="true"
+							onChange="@command('aplicarFiltro')" width="200px" />
 						<div sclass="z-icon-filter bigger-200" />
 					</listheader>
 
@@ -62,7 +62,7 @@
 						<textbox
 							value="@bind(vm.requerimientoFiltro.modeloV)" instant="true"
 							placeholder="" onChange="@command('aplicarFiltro')"
-							width="110px" />
+							width="130px" />
 						<div sclass="z-icon-filter bigger-200" />
 					</listheader>
 
@@ -71,7 +71,7 @@
 						<textbox
 							value="@bind(vm.requerimientoFiltro.serialCarroceriaV)"
 							constraint="no negative, no zero" instant="true"
-							onChange="@command('aplicarFiltro')" width="100px" />
+							onChange="@command('aplicarFiltro')" width="130px" />
 						<div sclass="z-icon-filter bigger-200" />
 					</listheader>
 
@@ -82,7 +82,7 @@
 					<listitem>
 						<listcell label="@bind(each.idRequerimiento)" />
 						<listcell>
-							<datebox format="dd/HH/yyyy - a hh:mm" width="200px"
+							<datebox format="dd/MM/yyyy - a hh:mm" width="290px"
 								value=" @bind(each.fechaCreacion)" readonly="true"
 								buttonVisible="false" />
 						</listcell>
@@ -108,5 +108,6 @@
 			</div>
 		</div>
 	</window>
+	<label value="* Campos Obligatorios" hflex="1" />
 </zk>
 

@@ -13,9 +13,11 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Tab;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
@@ -41,6 +43,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Paging pagMarcas;
 	@Wire("#pagTipoRepuestos")
 	private Paging pagTipoRepuestos;
+	@Wire("#btnLimpiar")
+	private Button btnLimpiar;
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
 	@BeanInjector("sTransaccion")
@@ -65,9 +69,19 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	@Command
+	public void deshabilitar(@BindingParam("id") String id){
+		if(id.equalsIgnoreCase("tabDatosFiscales")){
+			btnLimpiar.setDisabled(true);
+			}
+			else
+				btnLimpiar.setDisabled(false);
+	}
+	
+	
+	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
-		proveedor = new Proveedor();	
+		proveedor = new Proveedor();
 	}
 	
 	@Command
@@ -78,7 +92,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			
 			if(proveedor.getMarcaVehiculos().size()>0 && proveedor.getClasificacionRepuestos().size()>0){
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				proveedor.setCedula(tipo+"-"+proveedor.getCedula());
+				proveedor.setCedula(tipo+proveedor.getCedula());
 				proveedor = sMaestros.registrarProveedor(proveedor);
 			
 			

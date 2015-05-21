@@ -114,7 +114,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			if (this.cliente.getCedula()!= null)
 			{ 
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				cliente.setCedula(tipo+"-"+cliente.getCedula());
+				cliente.setCedula(tipo+cliente.getCedula());
 				cambiarRequerimientos(0,null, null);
 				if (listaRequerimientos.size() > 0 )
 				{

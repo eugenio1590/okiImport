@@ -11,7 +11,7 @@
 		    <space></space>
 		    <space></space> 
 		    <label value="Estado:" />
-		    <label value="@bind(vm.requerimiento.determinarEstatus())"/> 
+		    <label value="@bind(vm.requerimiento.determinarEstatus())" sclass="z-letra-grande" /> 
 		    
 		</div>
 			<groupbox closable="false">
@@ -139,3 +139,4 @@
 			
 		</groupbox>
 	</window>
+	

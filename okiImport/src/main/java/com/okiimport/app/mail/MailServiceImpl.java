@@ -68,7 +68,7 @@ public class MailServiceImpl implements MailService {
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
                 message.setTo(new InternetAddress(to));
-                message.setFrom(new InternetAddress("sgccondominios.android2@gmail.com")); // could be parameterized...
+                message.setFrom(new InternetAddress("requerimientos.urbicars@gmail.com")); // could be parameterized...
                 if(text!=null && !text.equalsIgnoreCase(""))
                 	message.setText(text);
                 else if(template!=null && !template.equalsIgnoreCase("")){
