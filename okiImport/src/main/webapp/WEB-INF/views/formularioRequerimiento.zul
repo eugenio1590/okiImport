@@ -39,7 +39,7 @@
 												width="70%" readonly="" mold="rounded"
 												value="@bind(vm.cliente.cedula)"
 												placeholder="Ej: 402405375" maxlength="12"
-												constraint="no empty:El Campo No Debe Estar Vacio" 
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" 
 												onBlur="@command('buscarCliente')" onOK="@command('buscarCliente')"/>
 										</hbox>
 

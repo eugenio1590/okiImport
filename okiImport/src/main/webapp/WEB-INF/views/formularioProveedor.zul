@@ -60,7 +60,7 @@
 												width="108%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.cedula)"
 												placeholder="Ej: 402405375" maxlength="12"
-												constraint="no empty:El Campo No Debe Estar Vacio" />
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
                                              </hbox>
 
 											<label
