@@ -18,8 +18,8 @@
 					</comboitem>
 				</template>
 			</combobox>
-			<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)"
-				type="password" style="font-size: 12px" />
+			<intbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="401402375" maxlength="9"
+				constraint="no empty: introduzca RIF o Cedula solo Números sin guiones" style="font-size: 12px" onOK="@command('buscarCliente')" />
 			<space></space>
 			<button label="Buscar" onClick="@command('buscarCliente')"
 				sclass="btn-primary" />
