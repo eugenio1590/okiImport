@@ -151,10 +151,8 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
  
 		@Command
 		@NotifyChange("*")
-		public void aplicarFiltro(@BindingParam("txt") Component txt)
+		public void aplicarFiltro()
 		{
-			if(txt!=null)
-				System.out.println(txt.getId());
 			if(fechaCreacion!=null)
 				this.requerimientoFiltro.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
 			else

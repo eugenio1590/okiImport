@@ -93,12 +93,12 @@ public class Requerimiento implements Serializable {
 		this.marcaVehiculo = marcaVehiculo;
 	}
 
-	public Requerimiento(Integer idRequerimiento, String estatus, Timestamp fechaCreacion, Date fechaVencimiento,
+	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
 			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo) {
 		super();
 		this.idRequerimiento = idRequerimiento;
 		this.estatus = estatus;
-		this.fechaCreacion = fechaCreacion;
+		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
 		this.fechaVencimiento = fechaVencimiento;
 		this.modeloV = modeloV;
 		this.analista = analista;

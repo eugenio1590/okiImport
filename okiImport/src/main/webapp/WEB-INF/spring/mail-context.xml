@@ -10,13 +10,13 @@
  	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     	<beans:property name="host" value="smtp.gmail.com"/>
     	<beans:property name="protocol" value="smtp"/>
-    	<beans:property name="username" value="sgccondominios.android2@gmail.com"/>
-    	<beans:property name="password" value="123sgcAndroid2"/>
+    	<beans:property name="username" value="requerimientos.urbicars@gmail.com"/>
+    	<beans:property name="password" value="R123456789"/>
     	 <beans:property name="javaMailProperties">
 			<beans:props>
 				<beans:prop key="mail.smtp.host">smtp.gmail.com</beans:prop>
-				<beans:prop key="mail.smtp.user">sgccondominios.android2@gmail.com</beans:prop>
-				<beans:prop key="mail.smtp.password">123sgcAndroid2</beans:prop>
+				<beans:prop key="mail.smtp.user">requerimientos.urbicars@gmail.com</beans:prop>
+				<beans:prop key="mail.smtp.password">R123456789</beans:prop>
 				<beans:prop key="mail.smtp.port">587</beans:prop>
 				<beans:prop key="mail.smtp.auth">true</beans:prop>
 				<beans:prop key="mail.smtp.quitwait">false</beans:prop>

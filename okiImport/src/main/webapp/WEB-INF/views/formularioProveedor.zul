@@ -6,14 +6,20 @@
 		
 			<tabbox id="tabDatosProveedor" height="80%">
 				<tabs id="tabs">
+
 					<tab id="tabDatosFiscales" onClick="@command('habilitarBtnLimpiar', id=self.id)">
 						<label value="Datos Fiscales" />
+
 					</tab>
+
 					<tab id="tabMarcaVehiculo" onClick="@command('habilitarBtnLimpiar', id=self.id)">
 						<label value="Marcas" />
+
 					</tab>
+
 					<tab id="tabClasificacionRepuesto" onClick="@command('habilitarBtnLimpiar', id=self.id)">
 						<label value="Clasificación Repuestos" />
+
 					</tab>
 				</tabs>
 				<tabpanels>
@@ -54,7 +60,7 @@
 												width="108%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.cedula)"
 												placeholder="Ej: 402405375" maxlength="12"
-												constraint="no empty:El Campo No Debe Estar Vacio" />
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
                                              </hbox>
 
 											<label
@@ -127,29 +133,6 @@
 											<listbox id="gridMarcas"
 											    mold="paging" checkmark="true" selectedItems="@bind(vm.marcaSeleccionadas)"
 												multiple="true" model="@load(vm.listaMarcaVehiculos)">
-												<!--
-												<auxhead
-													sclass="nombre-center">
-													<auxheader
-														colspan="1">
-														 
-															<image src="resources/iconos/filtro.png" />
-														
-														<textbox
-															 instant="true"
-															 width="100px" />
-													</auxheader>
-													<auxheader
-														colspan="1">
-														
-															<image src="resources/iconos/filtro.png" />
-														
-														
-													</auxheader>
-												</auxhead>-->
-												<!-- 
-													<frozen columns="1"/>
-												-->
 												<listhead
 													menupopup="auto">
 
@@ -170,21 +153,6 @@
 												 autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
 										</vlayout>
 									</west>
-									<!-- 
-										<center>
-										<div class="actionColumn">
-										<image sclass="pointer" tooltiptext="Add Project"
-										src="resources/img/icons/ButtonArrowRight32.png"
-										onClick="@command('agregarArticulos')">
-										</image>
-										<separator height="15px" />
-										<image sclass="pointer" tooltiptext="Remove Project"
-										src="resources/img/icons/ButtonArrowLeft32.png"
-										onClick="@command('removerArticulos')">
-										</image>
-										</div>
-										</center>  width="43.75%"
-									-->
 									<east id="borderEast"
 										title="Marcas a Vender" width="62.5%">
 										<div>
@@ -216,10 +184,7 @@
 													</listitem>
 												</template>
 											</listbox>
-											<!-- 
-												<paging id="pagArticulosCompra"
-												onPaging="@command('paginarLista')" autohide="true" />
-											-->
+											
 										</div>
 									</east>
 								</borderlayout>
@@ -268,21 +233,6 @@
 												 autohide="true" onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
 										</vlayout>
 									</west>
-									<!-- 
-										<center>
-										<div class="actionColumn">
-										<image sclass="pointer" tooltiptext="Add Project"
-										src="resources/img/icons/ButtonArrowRight32.png"
-										onClick="@command('agregarArticulos')">
-										</image>
-										<separator height="15px" />
-										<image sclass="pointer" tooltiptext="Remove Project"
-										src="resources/img/icons/ButtonArrowLeft32.png"
-										onClick="@command('removerArticulos')">
-										</image>
-										</div>
-										</center>  width="43.75%"
-									-->
 									<east id="borderEast2"
 										title="Tipo de Repuestos a Vender" width="62.5%">
 										<div>
@@ -311,10 +261,6 @@
 													</listitem>
 												</template>
 											</listbox>
-											<!-- 
-												<paging id="pagArticulosCompra"
-												onPaging="@command('paginarLista')" autohide="true" />
-											-->
 										</div>
 									</east>
 								</borderlayout>
@@ -324,16 +270,16 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-		<hbox width="100%">
-			<label value="* Campos Obligatorios" hflex="1" />
-
-
+		
 		<div sclass="panel-footer" align="right">
+
 			<button id="btnLimpiar" label="Limpiar" type="submit"
-				onClick="@command('limpiar', btn=self)" sclass="btn-primary"/>
+				onClick="@command('limpiar')" sclass="btn-primary"/>
+
 			<button label="Enviar" type="submit"
 				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
-		</hbox>
+		
 	</window>
+	<label value="* Campos Obligatorios" hflex="1"  />
 </zk>

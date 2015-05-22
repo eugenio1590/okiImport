@@ -1,8 +1,10 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -17,8 +19,10 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Tab;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
@@ -28,12 +32,12 @@ import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
-	
+
 	private Proveedor proveedor;
-	
+
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
-	
+
 	@Wire("#gridMarcas")
 	private Listbox gridMarcas;
 	@Wire("#gridClasificacionRepuesto")
@@ -49,14 +53,27 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 
+	@Autowired
+	@BeanInjector("mailService")
+	protected MailService mailService;
+
+	/** SETTERS Y GETTERS */
+	public MailService getMailService() {
+		return mailService;
+	}
+
+	public void setMailService(MailService mailService) {
+		this.mailService = mailService;
+	}
+
 	private Integer page_size = 6;
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
-	private List <ModeloCombo<Boolean>> listaTipoPersona;
+	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
 		pagMarcas.setPageSize(page_size);
@@ -66,99 +83,118 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
 	}
-	
+
 	@Command
-	public void habilitarBtnLimpiar(@BindingParam("id") String id){
-		if(id.equalsIgnoreCase("tabDatosFiscales"))
+	public void habilitarBtnLimpiar(@BindingParam("id") String id) {
+		if (id.equalsIgnoreCase("tabDatosFiscales"))
 			btnLimpiar.setVisible(true);
 		else
 			btnLimpiar.setVisible(false);
 	}
-	
+
 	@Command
-	@NotifyChange({"proveedor"})
-	public void limpiar(){
-		proveedor = new Proveedor();	
+	@NotifyChange({ "proveedor" })
+	public void limpiar() {
+		proveedor = new Proveedor();
 	}
-	
+
 	@Command
-	@NotifyChange({"proveedor"})
-	public void registrar(){
-		if(checkIsFormValid()){
-			
-			
-			if(proveedor.getMarcaVehiculos().size()>0 && proveedor.getClasificacionRepuestos().size()>0){
-				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				proveedor.setCedula(tipo+proveedor.getCedula());
+	@NotifyChange({ "proveedor" })
+	public void registrar() {
+		if (checkIsFormValid()) {
+
+			if (proveedor.getMarcaVehiculos().size() > 0
+					&& proveedor.getClasificacionRepuestos().size() > 0) {
+				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				proveedor.setCedula(tipo + proveedor.getCedula());
 				proveedor = sMaestros.registrarProveedor(proveedor);
-			
-			
-			String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-			Messagebox.show(str, "Informacion", Messagebox.OK,
-					Messagebox.INFORMATION, new EventListener() {
-						public void onEvent(Event event) throws Exception {
-							if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("nombreSolicitante", proveedor.getNombre());
+				model.put("cedula", proveedor.getCedula());
 
-								recargar();
+				// System.out.println("Nulo Mail " + (mailService == null));
+				mailService
+						.send(proveedor.getCorreo(), "Solicitud Proveedor",
+								"proveedor.html", model, null);
+
+				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+
+				Messagebox.show(str, "Informacion", Messagebox.OK,
+						Messagebox.INFORMATION, new EventListener() {
+							public void onEvent(Event event) throws Exception {
+								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+
+									recargar();
+								}
 							}
-						}
-					});
-		}
-		
-		else mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto", null, null, null, null);
-	
-	}
-	}
-	
-	
-	@NotifyChange({"*"})
-	@Command
-	public void agregarMarcas(){
-		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(), marcaSeleccionadas, "No se puede agregar Marca");
-	}
-	
-	@NotifyChange({"*"})
-	@Command
-	public void eliminarMarcas(){
-		this.moveSelection(proveedor.getMarcaVehiculos(), listaMarcaVehiculos, marcaSeleccionadas, "No se puede eliminar la Marca");
-	}
-	
-	@NotifyChange({"*"})
-	@Command
-	public void agregarTipoRepuesto(){
-		this.moveSelection(listaClasificacionRepuestos, proveedor.getClasificacionRepuestos(), tipoRepuestoSeleccionados, "No se puede agregar el Tipo de Repuesto");
-	}
-	
-	@NotifyChange({"*"})
-	@Command
-	public void eliminarTipoRepuesto(){
-		this.moveSelection(proveedor.getClasificacionRepuestos(), listaClasificacionRepuestos, tipoRepuestoSeleccionados, "No se puede eliminar el Tipo de Repuesto");
-	}
-	
-	
-	@NotifyChange({"*"})
-	@Command
-	public void paginarLista(@BindingParam("tipo")int tipo){
-		switch(tipo){
-		case 1: consultarMarcas(pagMarcas.getActivePage());
-		break;
+						});
+			}
+
+			else
+				mostrarMensaje(
+						"Información",
+						"Agregue al Menos una Marca y Una Clasificacion de Repuesto",
+						null, null, null, null);
+
 		}
 	}
-	
-	@NotifyChange({"*"})
+
+	@NotifyChange({ "*" })
 	@Command
-	public void paginarListaTipoRepuesto(@BindingParam("tipo")int tipo){
-		switch(tipo){
-		case 1: consultarTipoRepuesto(pagTipoRepuestos.getActivePage());
-		break;
+	public void agregarMarcas() {
+		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(),
+				marcaSeleccionadas, "No se puede agregar Marca");
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void eliminarMarcas() {
+		this.moveSelection(proveedor.getMarcaVehiculos(), listaMarcaVehiculos,
+				marcaSeleccionadas, "No se puede eliminar la Marca");
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void agregarTipoRepuesto() {
+		this.moveSelection(listaClasificacionRepuestos,
+				proveedor.getClasificacionRepuestos(),
+				tipoRepuestoSeleccionados,
+				"No se puede agregar el Tipo de Repuesto");
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void eliminarTipoRepuesto() {
+		this.moveSelection(proveedor.getClasificacionRepuestos(),
+				listaClasificacionRepuestos, tipoRepuestoSeleccionados,
+				"No se puede eliminar el Tipo de Repuesto");
+	}
+
+	@NotifyChange({ "*" })
+	@Command
+	public void paginarLista(@BindingParam("tipo") int tipo) {
+		switch (tipo) {
+		case 1:
+			consultarMarcas(pagMarcas.getActivePage());
+			break;
 		}
 	}
-	
+
+	@NotifyChange({ "*" })
+	@Command
+	public void paginarListaTipoRepuesto(@BindingParam("tipo") int tipo) {
+		switch (tipo) {
+		case 1:
+			consultarTipoRepuesto(pagTipoRepuestos.getActivePage());
+			break;
+		}
+	}
+
 	public void recargar() {
 		redireccionar("/");
 	}
-	
+
 	public Proveedor getProveedor() {
 		return proveedor;
 	}
@@ -182,10 +218,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-	
-	@NotifyChange({"listaMarcaVehiculos"})
-	private void consultarMarcas(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarMarca(page, page_size);
+
+	@NotifyChange({ "listaMarcaVehiculos" })
+	private void consultarMarcas(int page) {
+		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
+				page_size);
 		listaMarcaVehiculos = (List<MarcaVehiculo>) Parametros.get("marcas");
 		Integer total = (Integer) Parametros.get("total");
 		gridMarcas.setMultiple(true);
@@ -193,18 +230,20 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setActivePage(page);
 		pagMarcas.setTotalSize(total);
 	}
-	
-	@NotifyChange({"listaClasificacionRepuestos"})
-	private void consultarTipoRepuesto(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarClasificacionRepuesto(page, page_size);
-		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros.get("clasificacionRepuesto");
+
+	@NotifyChange({ "listaClasificacionRepuestos" })
+	private void consultarTipoRepuesto(int page) {
+		Map<String, Object> Parametros = sMaestros
+				.ConsultarClasificacionRepuesto(page, page_size);
+		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
+				.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
 		gridClasificacionRepuesto.setMultiple(true);
 		gridClasificacionRepuesto.setCheckmark(true);
 		pagTipoRepuestos.setActivePage(page);
 		pagTipoRepuestos.setTotalSize(total);
 	}
-	
+
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
 	}
@@ -212,7 +251,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setListaMarcaVehiculos(List<MarcaVehiculo> listaMarcaVehiculos) {
 		this.listaMarcaVehiculos = listaMarcaVehiculos;
 	}
-	
+
 	public List<MarcaVehiculo> getMarcaSeleccionadas() {
 		return marcaSeleccionadas;
 	}
@@ -238,7 +277,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			List<ClasificacionRepuesto> tipoRepuestoSeleccionados) {
 		this.tipoRepuestoSeleccionados = tipoRepuestoSeleccionados;
 	}
-	
+
 	public List<ModeloCombo<Boolean>> getListaTipoPersona() {
 		return listaTipoPersona;
 	}
