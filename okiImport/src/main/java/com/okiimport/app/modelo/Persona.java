@@ -39,7 +39,7 @@ public abstract class Persona implements Serializable {
 	@Column(name="tipo_menu")
 	protected Integer tipoMenu;
 	
-	//bi-directional many-to-one association to Usuario (Relacion Poliformica)
+	//bi-directional one-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
 	protected Usuario usuario;
 

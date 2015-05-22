@@ -25,7 +25,7 @@ public class Motor implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Requerimiento
+	//bi-directional one-to-many association to Requerimiento
 	@OneToMany(mappedBy="motor")
 	private List<Requerimiento> requerimientos;
 

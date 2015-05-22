@@ -20,7 +20,7 @@ public class Proveedor extends Persona implements Serializable {
 
 	private String estatus;
 	
-	//bi-directional many-to-many association to Cotizacion
+	//bi-directional one-to-many association to Cotizacion
 	@OneToMany(mappedBy="proveedor", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Cotizacion> cotizacions;
 		

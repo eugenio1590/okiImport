@@ -27,11 +27,11 @@ public class ClasificacionRepuesto implements Serializable {
 	
 	private String estatus;
 	
-	//bi-directional many-to-one association to DetalleRequerimiento
+	//bi-directional one-to-many association to DetalleRequerimiento
 	@OneToMany(mappedBy="clasificacionRepuesto", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<DetalleRequerimiento> detalleRequerimientos;
 	
-	//bi-directional many-to-one association to Proveedor
+	//bi-directional many-to-many association to Proveedor
 	@ManyToMany(mappedBy="clasificacionRepuestos", fetch=FetchType.LAZY)
 	private List<Proveedor> proveedores;
 

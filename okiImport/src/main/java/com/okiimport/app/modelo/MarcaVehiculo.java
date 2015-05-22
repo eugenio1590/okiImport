@@ -29,11 +29,11 @@ public class MarcaVehiculo implements Serializable {
 	
 	private String estatus;
 	
-	//bi-directional many-to-one association to Requerimiento
+	//bi-directional one-to-many association to Requerimiento
 	@OneToMany(mappedBy="marcaVehiculo", fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Requerimiento> requerimientos;
 	
-	//bi-directional many-to-one association to Proveedor
+	//bi-directional many-to-many association to Proveedor
 	@ManyToMany(mappedBy="marcaVehiculos", fetch=FetchType.LAZY)
 	private List<Proveedor> proveedores;
 

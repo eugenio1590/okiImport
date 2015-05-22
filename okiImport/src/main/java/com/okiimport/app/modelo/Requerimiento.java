@@ -72,7 +72,7 @@ public class Requerimiento implements Serializable {
 	@JoinColumn(name="id_motor_v")
 	private Motor motor;
 	
-	//bi-directional many-to-one association to DetalleRequerimiento
+	//bi-directional one-to-many association to DetalleRequerimiento
 	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<DetalleRequerimiento> detalleRequerimientos;
 
