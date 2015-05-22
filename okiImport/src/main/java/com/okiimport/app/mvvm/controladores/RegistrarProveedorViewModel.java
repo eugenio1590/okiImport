@@ -91,14 +91,15 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 					&& proveedor.getClasificacionRepuestos().size() > 0) {
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				proveedor.setCedula(tipo + proveedor.getCedula());
+				proveedor.setEstatus("solicitante");
 				proveedor = sMaestros.registrarProveedor(proveedor);
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", proveedor.getNombre());
 				model.put("cedula", proveedor.getCedula());
 				
-				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
-								"proveedor.html", model, null);
+//				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor", //Falta el template
+//								"proveedor.html", model, null);
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 

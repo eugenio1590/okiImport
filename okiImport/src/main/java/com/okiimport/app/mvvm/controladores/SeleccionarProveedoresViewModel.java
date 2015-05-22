@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,11 @@ import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class SeleccionarProveedoresViewModel extends AbstractViewModel implements EventListener<ClickEvent> {
+public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent> {
 	
 	//Servicios
 	@BeanInjector("sMaestros")
@@ -186,9 +187,8 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel implement
 			model.put("cedula", proveedor.getCedula());
 
 			// System.out.println("Nulo Mail " + (mailService == null));
-			mailService
-					.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-							"enviarrequisitoproveedor.html", model, null);
+//			mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
+//							"enviarrequisitoproveedor.html", model); //FALTA TEMPLATE
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 		}
 		else
