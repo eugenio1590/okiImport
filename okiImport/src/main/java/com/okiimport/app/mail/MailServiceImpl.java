@@ -92,5 +92,4 @@ public class MailServiceImpl implements MailService {
         };
         this.mailSender.send(preparator);
 	}
-   
 }

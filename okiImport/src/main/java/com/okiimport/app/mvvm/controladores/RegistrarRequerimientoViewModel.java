@@ -86,15 +86,16 @@ public class RegistrarRequerimientoViewModel extends
 	@NotifyChange({"requerimiento","cliente"})
 	public void registrar(){
 		if(checkIsFormValid()){
-			String tipo = (this.tipoPersona.getValor())?"J":"V";
-			cliente.setCedula(tipo+cliente.getCedula());
-			cliente = sMaestros.registrarOActualizarCliente(cliente);
-			requerimiento.setCliente(cliente);
-			if (traccion != null)
-				requerimiento.setTraccionV(traccion.getValor());
-			if (transmision != null)
-				requerimiento.setTransmisionV(transmision.getValor());
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
+				String tipo = (this.tipoPersona.getValor())?"J":"V";
+				cliente.setCedula(tipo+cliente.getCedula());
+				cliente = sMaestros.registrarOActualizarCliente(cliente);
+				requerimiento.setCliente(cliente);
+				if (traccion != null)
+					requerimiento.setTraccionV(traccion.getValor());
+				if (transmision != null)
+					requerimiento.setTransmisionV(transmision.getValor());
+
 				sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
 
 				// El Objecto que se envia debe declararse final, esto quiere
@@ -104,26 +105,27 @@ public class RegistrarRequerimientoViewModel extends
 				model.put("nroSolicitud", requerimiento.getIdRequerimiento());
 				model.put("usuario", cliente.getNombre());
 				model.put("cedula", cliente.getCedula());
-				
+
 				mailService.send(cliente.getCorreo(), "Registro Requerimiento",
 						"prueba2.html", model);
 				String str = "El Requerimiento ha sido registrado existosamente ";
 
 				Messagebox.show(str, "Informacion", Messagebox.OK,
 						Messagebox.INFORMATION, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+					public void onEvent(Event event) throws Exception {
+						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-									recargar();
-								}
-							}
-						});
-			} else
+							recargar();
+						}
+					}
+				});
+
+			}
+			else
 				mostrarMensaje("Información",
 						"Agregue al Menos un Requerimiento", null, null, null,
 						null);
-		}
-
+		} 
 	}
 
 	@Command

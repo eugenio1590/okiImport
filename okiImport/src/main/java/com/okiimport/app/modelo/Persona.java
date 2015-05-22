@@ -131,7 +131,8 @@ public abstract class Persona implements Serializable {
 	/**METODOS PROPIOS DE LA CLASE*/
 	public static Persona getNewInstance(){
 		return new Persona() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Integer getTipoMenu() {
 				// TODO Auto-generated method stub

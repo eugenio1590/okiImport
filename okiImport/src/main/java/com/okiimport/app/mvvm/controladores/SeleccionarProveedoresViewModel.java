@@ -47,7 +47,6 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel implement
 	private Proveedor proveedor;
 	private Cotizacion cotizacion;
 	private DetalleRequerimiento detalleRequerimiento;
-	private DetalleCotizacion detalleCotizacion;
 	
 	private List<Proveedor> listaProveedores;
 	private List<Proveedor> proveedoresSeleccionados;
