@@ -1,11 +1,9 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -14,22 +12,17 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.mail.MailService;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
@@ -50,19 +43,6 @@ public class SeleccionarProveedoresViewModel extends AbstractViewModel implement
 	
 	@Wire("#pagProveedores")
 	private Paging pagProveedores;
-	
-	@Autowired
-	@BeanInjector("mailService")
-	protected MailService mailService;
-
-	/** SETTERS Y GETTERS */
-	public MailService getMailService() {
-		return mailService;
-	}
-
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
-	}
 	
 	private Proveedor proveedor;
 	private Cotizacion cotizacion;

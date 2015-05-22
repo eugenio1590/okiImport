@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -19,10 +18,8 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Tab;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
@@ -52,19 +49,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private SMaestros sMaestros;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	@Autowired
-	@BeanInjector("mailService")
-	protected MailService mailService;
-
-	/** SETTERS Y GETTERS */
-	public MailService getMailService() {
-		return mailService;
-	}
-
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
-	}
 
 	private Integer page_size = 6;
 	private List<MarcaVehiculo> marcaSeleccionadas;
@@ -112,10 +96,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", proveedor.getNombre());
 				model.put("cedula", proveedor.getCedula());
-
-				// System.out.println("Nulo Mail " + (mailService == null));
-				mailService
-						.send(proveedor.getCorreo(), "Solicitud Proveedor",
+				
+				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
 								"proveedor.html", model, null);
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
