@@ -286,7 +286,7 @@
 			</hbox>
 		</groupbox>
 		<hbox width="100%">
-			<label value="* Campos Obligatorios" hflex="1" />
+			<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 
 			<div sclass="panel-footer" align="right">
 
