@@ -25,7 +25,7 @@ public class Analista extends Persona implements Serializable {
 	@Transient
 	private Long cantRequerimientos; 
 	
-	//bi-directional many-to-one association to Requerimiento
+	//bi-directional one-to-many association to Requerimiento
 	@OneToMany(mappedBy="analista", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
 

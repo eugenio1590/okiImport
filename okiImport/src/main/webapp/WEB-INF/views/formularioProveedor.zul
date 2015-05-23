@@ -270,7 +270,8 @@
 					</tabpanel>
 				</tabpanels>
 			</tabbox>
-		
+		<hbox width="100%">
+			<label value="* Campos Obligatorios" hflex="1" />
 		<div sclass="panel-footer" align="right">
 
 			<button id="btnLimpiar" label="Limpiar" type="submit"
@@ -279,7 +280,6 @@
 			<button label="Enviar" type="submit"
 				onClick="@command('registrar')" sclass="btn-primary"/>
 		</div>
-		
+		</hbox>
 	</window>
-	<label value="* Campos Obligatorios" hflex="1"  />
 </zk>

@@ -46,7 +46,7 @@ public class Menu implements Serializable, ModelNavbar{
 	@JoinColumn(name="id_padre")
 	private Menu padre;
 
-	//bi-directional many-to-one association to Menu
+	//bi-directional one-to-many association to Menu
 	@OneToMany(mappedBy="padre")
 	private List<Menu> hijos;
 

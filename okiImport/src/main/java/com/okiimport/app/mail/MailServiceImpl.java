@@ -69,6 +69,7 @@ public class MailServiceImpl implements MailService {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true);
                 message.setTo(new InternetAddress(to));
                 message.setFrom(new InternetAddress("requerimientos.urbicars@gmail.com")); // could be parameterized...
+                message.setSubject(subject);
                 if(text!=null && !text.equalsIgnoreCase(""))
                 	message.setText(text);
                 else if(template!=null && !template.equalsIgnoreCase("")){
@@ -91,5 +92,4 @@ public class MailServiceImpl implements MailService {
         };
         this.mailSender.send(preparator);
 	}
-   
 }

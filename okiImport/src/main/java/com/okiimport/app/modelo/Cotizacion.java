@@ -35,7 +35,12 @@ public class Cotizacion implements Serializable{
 	@JoinColumn(name="id_proveedor")
 	private Proveedor proveedor;
 	
-	//bi-directional many-to-one association to DetalleCotizacion
+	//bi-directional many-to-one association to HistoricoMoneda
+	@ManyToOne
+	@JoinColumn(name="id_historico_moneda")
+	private HistoricoMoneda historicoMoneda;
+	
+	//bi-directional one-to-many association to DetalleCotizacion
 	@OneToMany(mappedBy="cotizacion",fetch=FetchType.LAZY) //cascade=CascadeType.REMOVE, orphanRemoval=true
 	private List<DetalleCotizacion> detalleCotizacions;
 
@@ -123,6 +128,14 @@ public class Cotizacion implements Serializable{
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+
+	public HistoricoMoneda getHistoricoMoneda() {
+		return historicoMoneda;
+	}
+
+	public void setHistoricoMoneda(HistoricoMoneda historicoMoneda) {
+		this.historicoMoneda = historicoMoneda;
 	}
 
 	public List<DetalleCotizacion> getDetalleCotizacions() {

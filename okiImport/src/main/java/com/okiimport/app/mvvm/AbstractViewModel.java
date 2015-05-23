@@ -148,13 +148,20 @@ public abstract class AbstractViewModel {
 	 * */
 	private void buildInjection(Object objeto){
 		if(objeto!=null)
-			for(Field field : objeto.getClass().getDeclaredFields()){
+			buildInjection(objeto.getClass(), objeto);
+	}
+	
+	public void buildInjection(Class<?> clase, Object objeto){
+		if(clase.equals(Object.class))
+			return;
+		else {
+			for(Field field : clase.getDeclaredFields()){
 				if(field.isAnnotationPresent(BeanInjector.class)){
 					BeanInjector annotation=field.getAnnotation(BeanInjector.class);
 					//Object fieldInject = annotation.clase().cast(SpringUtil.getBean(annotation.beanName()));
-					Class<?> clase = (!annotation.clase().equals(Class.class)) 
+					Class<?> claseObjeto = (!annotation.clase().equals(Class.class)) 
 							? annotation.clase() : field.getType();
-					Object fieldInject = clase.cast(SpringUtil.getBean(annotation.value()));
+					Object fieldInject = claseObjeto.cast(SpringUtil.getBean(annotation.value()));
 					try {
 						BeanUtils.copyProperty(objeto, field.getName(), fieldInject);
 					} catch (IllegalAccessException e) {
@@ -169,6 +176,8 @@ public abstract class AbstractViewModel {
 					buildInjection(fieldInject);
 				}
 			}
+			buildInjection(clase.getSuperclass(), objeto);
+		}
 	}
 	
 	/**

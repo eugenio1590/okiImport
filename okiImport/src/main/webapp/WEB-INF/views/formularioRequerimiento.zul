@@ -285,8 +285,8 @@
 				</groupbox>
 			</hbox>
 		</groupbox>
-		
-			
+		<hbox width="100%">
+			<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 
 			<div sclass="panel-footer" align="right">
 
@@ -295,7 +295,7 @@
 				<button label="Enviar" type="submit"
 					onClick="@command('registrar')" sclass="btn-primary" />
 			</div>
-		
+		</hbox>
 	</window>
-	<label value="* Campos Obligatorios" hflex="1" />
+	
 </zk>

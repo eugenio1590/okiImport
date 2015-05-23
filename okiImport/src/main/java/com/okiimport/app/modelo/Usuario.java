@@ -44,14 +44,15 @@ public class Usuario implements Serializable {
 	@Column(nullable=false)
 	private Boolean activo;
 
-	//bi-directional many-to-one association to PersistentLogin
+	//bi-directional one-to-many association to PersistentLogin
 	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<PersistentLogin> persistentLogins;
 	
-	//bi-directional many-to-one association to HistoryLogin
+	//bi-directional one-to-many association to HistoryLogin
 	@OneToMany(mappedBy="usuario", fetch=FetchType.LAZY)
 	private List<HistoryLogin> historyLogins;
 	
+	//bi-directional one-to-one association to Persona
 	@Any(metaColumn=@Column(name="persona_type"), fetch=FetchType.LAZY)
 	@AnyMetaDef(idType="integer", metaType="string",
 			metaValues={

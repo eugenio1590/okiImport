@@ -17,6 +17,8 @@
 		<class>com.okiimport.app.modelo.ClasificacionRepuesto</class>
 		<class>com.okiimport.app.modelo.Cotizacion</class>
 		<class>com.okiimport.app.modelo.DetalleCotizacion</class>
+		<class>com.okiimport.app.modelo.Moneda</class>
+		<class>com.okiimport.app.modelo.HistoricoMoneda</class>
 		 <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
             <property name="hibernate.show_sql" value="true" />

@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.maestros.dao.ProveedorDAO;
 import com.okiimport.app.modelo.Persona;
@@ -41,21 +44,47 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		Map<String, Join> joins = this.crearJoins(entidades);
 		
 		//3. Creamos las Restricciones de la busqueda
+		this.distinct = true;
+		this.selected = new Selection[]{
+				entity.get("id"),
+				entity.get("cedula"),
+				entity.get("correo"),
+				entity.get("direccion"),
+				entity.get("nombre"),
+				entity.get("telefono"),
+				entity.get("estatus")
+		};
+		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		restricciones.add(joins.get("clasificacionRepuestos").get("idClasificacionRepuesto")
 				.in(idsClasificacionRepuesto));
 		Proveedor proveedor = (persona==null) ? new Proveedor() : new Proveedor(persona);
-		agregarRestriccionesPersona(proveedor, restricciones);
+		proveedor.setEstatus("activo");
+		agregarFiltros(proveedor, restricciones);
 		
 		//4. Creamos los campos de ordenamiento y ejecutamos
-		Map<String, Boolean> orders = new HashMap<String, Boolean>();
-		orders.put("id", true);
-		return this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
+		List<Order> orders = new ArrayList<Order>();
+		orders.add(criteriaBuilder.asc(entity.get("id")));
+		
+		List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
+		groupBy.add(entity.get("id"));
+		groupBy.add(entity.get("cedula"));
+		groupBy.add(entity.get("correo"));
+		groupBy.add(entity.get("direccion"));
+		groupBy.add(entity.get("nombre"));
+		groupBy.add(entity.get("telefono"));
+		groupBy.add(entity.get("estatus"));
+		
+		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy, orders, start, limit);
 	}
 
 	@Override
-	protected void agregarRestriccionesPersona(Proveedor persona, List<Predicate> restricciones) {
+	protected void agregarRestriccionesPersona(Proveedor personaF, List<Predicate> restricciones) {
 		// TODO Auto-generated method stub
-		
+		if(personaF.getEstatus()!=null){
+			restricciones.add(criteriaBuilder.like(
+					criteriaBuilder.lower(entity.get("estatus").as(String.class)), 
+					"%"+String.valueOf(personaF.getEstatus()).toLowerCase()+"%"));
+		}
 	}
 }

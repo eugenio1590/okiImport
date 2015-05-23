@@ -27,3 +27,8 @@
 	font-weight: bold;
 }	
 
+/* FUENTE PARA LOS CAMPOS REQUERIDOS*/
+.requerido {
+	color: red;
+	font-weight: bold;
+}

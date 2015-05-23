@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -22,6 +23,7 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Motor;
@@ -49,6 +51,8 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	
 	@Wire("#aDatosVehiculo")
 	private A aDatosVehiculo; 
+	
+	
 	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
