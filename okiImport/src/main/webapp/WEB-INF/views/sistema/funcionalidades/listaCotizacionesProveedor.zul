@@ -3,8 +3,8 @@
 		sclass="btn-info" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorViewModel')">
 		<borderlayout>
-		<west width="45%" title="Informacion del Vehiculo" collapsible="true" 
-			onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='55%')">
+		<west width="40%" title="Informacion del Vehiculo" collapsible="true" 
+			onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">
 			<div>
 				<groupbox closable="false">
 					
@@ -76,13 +76,13 @@
 					onPaging="@command('paginarLista')" autohide="true" />
 			</div>
 		</west>
-		<east id="eastCotizacion" width="55%" title="Cotizacion">
+		<east id="eastCotizacion" width="60%" title="Cotizacion">
 			<div>
 				<groupbox closable="false">
 					<grid>
 						<columns>
-							<column label="Fecha de Vencimiento:" width="25%"/>
-							<column label="Moneda:" width="25%"/>
+							<column label="Fecha de Vencimiento:" width="20%"/>
+							<column label="Moneda:" width="15%"/>
 							<column label="Condiciones:"/>
 						</columns>
 						<rows>
@@ -112,6 +112,15 @@
 						</rows>
 					</grid>
 				</groupbox>
+				<div width="100%" align="center">
+					<groupbox closable="false" width="99%">
+						<caption label="Flete" sclass="custom_caption_title" />
+						<div align="left">
+							<label value="Tipo de Flete:" />
+							<combobox />
+						</div>
+					</groupbox>
+				</div>
 				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%"
 					model="@load(vm.listaDetalleCotizacion)" mold="paging" pageSize="5"
 					emptyMessage="No se ha Seleccionado Ninguna Cotizacion">

@@ -74,6 +74,7 @@
     <beans:bean id="cotizacionDAO" class="com.okiimport.app.transaccion.dao.impl.CotizacionDAOImpl"/>
     <beans:bean id="detalleCotizacionDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleCotizacionDAOImpl"/>
     <beans:bean id="monedaDAO" class="com.okiimport.app.configuracion.dao.impl.MonedaDAOImpl"/>
+    <beans:bean id="historicoMonedaDAO" class="com.okiimport.app.configuracion.dao.impl.HistoricoMonedaDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

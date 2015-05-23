@@ -1,6 +1,15 @@
+/**GENERAL*/
+span {
+	color: black;
+}
+
 /**CAPTION*/
 .custom_caption {
 	font-size:12px;
+}
+
+.custom_caption_title {
+	font-size: 16px;
 }
 
 /* FUENTE PARA LAS LETRAS DE LA VENTANA*/
@@ -25,7 +34,7 @@
 	font-size: 17px;
 	color: #428bca;
 	font-weight: bold;
-}	
+}
 
 /* FUENTE PARA LOS CAMPOS REQUERIDOS*/
 .requerido {

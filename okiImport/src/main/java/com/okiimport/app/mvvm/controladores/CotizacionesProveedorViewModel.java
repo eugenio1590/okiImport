@@ -32,6 +32,7 @@ import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Requerimiento;
@@ -239,7 +240,9 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	public void seleccionMoneda(){
 		bandbMoneda.close();
 		if(this.cotizacionSelecionada!=null){
-			this.cotizacionSelecionada.getHistoricoMoneda().setMoneda(monedaSeleccionada); //Se Cambiara luego por el servicio
+			HistoricoMoneda historico = this.sControlConfiguracion.consultarActualConversion(monedaSeleccionada);
+			if(historico!=null)
+				this.cotizacionSelecionada.setHistoricoMoneda(historico);
 		}
 	}
 	
