@@ -46,16 +46,19 @@ public class Cotizacion implements Serializable{
 
 	public Cotizacion() {
 		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+		this.historicoMoneda = new HistoricoMoneda();
 	}
 	
 	public Cotizacion(String mensaje){
 		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+		this.historicoMoneda = new HistoricoMoneda();
 		this.mensaje = mensaje;
 	}
 
 	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
 			String estatus, String mensaje) {
 		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+		this.historicoMoneda = new HistoricoMoneda();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;
@@ -66,6 +69,7 @@ public class Cotizacion implements Serializable{
 	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
 			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
 		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
+		this.historicoMoneda = new HistoricoMoneda();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;

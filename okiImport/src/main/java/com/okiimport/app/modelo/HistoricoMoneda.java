@@ -42,7 +42,7 @@ public class HistoricoMoneda implements Serializable {
 	private List<Cotizacion> cotizacions;
 
 	public HistoricoMoneda() {
-		super();
+		this.moneda = new Moneda();
 	}   
 	public Integer getIdHistoria() {
 		return this.idHistoria;

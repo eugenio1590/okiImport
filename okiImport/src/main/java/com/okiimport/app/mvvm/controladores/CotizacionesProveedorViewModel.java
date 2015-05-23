@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.East;
@@ -27,9 +28,11 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.Moneda;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
@@ -46,6 +49,9 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
+	
+	@BeanInjector("sControlConfiguracion")
+	private SControlConfiguracion sControlConfiguracion;
 	
 	//GUI
 	@Wire("#winCotizaciones")
@@ -69,6 +75,12 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	@Wire("#txtCondicion")
 	private Textbox txtCondicion;
 	
+	@Wire("#bandbMoneda")
+	private Bandbox bandbMoneda;
+	
+	@Wire("#pagMonedas")
+	private Paging pagMonedas;
+	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
@@ -76,11 +88,13 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	
 	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
+	private List<Moneda> monedas;
 	
 	private Persona persona;
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
+	private Moneda monedaSeleccionada;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -94,9 +108,10 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		cotizacionFiltro = new Cotizacion();
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
+		cambiarMonedas(0);
 		agregarGridSort(gridCotizaciones);
 		pagCotizaciones.setPageSize(PAGE_SIZE);
-		eastCotizacion.setTitle(TITULO_EAST);
+		eastCotizacion.setTitle(TITULO_EAST);		
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -219,7 +234,46 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 			mostrarMensaje("Informacion", "Debe Seleccionar una Cotizacion", null, null, null, null);
 	}
 	
+	@Command
+	@NotifyChange("cotizacionSelecionada")
+	public void seleccionMoneda(){
+		bandbMoneda.close();
+		if(this.cotizacionSelecionada!=null){
+			this.cotizacionSelecionada.getHistoricoMoneda().setMoneda(monedaSeleccionada); //Se Cambiara luego por el servicio
+		}
+	}
+	
+	/*
+	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
+	 * @param Ninguno
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	@NotifyChange("*")
+	public void paginarListaMonedas(){
+		int page=pagMonedas.getActivePage();
+		cambiarMonedas(page);
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
+	/*
+	 * Descripcion permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
+	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
+	 * Retorno: Ninguno
+	 */
+	@SuppressWarnings("unchecked")
+	@NotifyChange("monedas")
+	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedas(page, PAGE_SIZE);
+		Integer total = (Integer) parametros.get("total");
+		monedas = (List<Moneda>) parametros.get("monedas");
+		//if(pagMonedas!=null){
+			pagMonedas.setActivePage(page);
+			pagMonedas.setTotalSize(total);
+			pagMonedas.setPageSize(PAGE_SIZE);
+		//}
+	}
+	
 	/*
 	 * Descripcion: Permitira mostrar los botones limpiar y enviar si la lista de detalles contiene datos
 	 * @param: Ninguno
@@ -244,6 +298,7 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	private void configurarAtributosCotizacion(boolean readOnly){
 		txtCondicion.setReadonly(readOnly);
 		dtbFecha.setButtonVisible(!readOnly);
+		bandbMoneda.setButtonVisible(!readOnly);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -263,6 +318,14 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		this.sControlUsuario = sControlUsuario;
 	}
 	
+	public SControlConfiguracion getsControlConfiguracion() {
+		return sControlConfiguracion;
+	}
+
+	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
+		this.sControlConfiguracion = sControlConfiguracion;
+	}
+
 	public List<Cotizacion> getListaCotizacion() {
 		return listaCotizacion;
 	}
@@ -278,6 +341,14 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	public void setListaDetalleCotizacion(
 			List<DetalleCotizacion> listaDetalleCotizacion) {
 		this.listaDetalleCotizacion = listaDetalleCotizacion;
+	}
+
+	public List<Moneda> getMonedas() {
+		return monedas;
+	}
+
+	public void setMonedas(List<Moneda> monedas) {
+		this.monedas = monedas;
 	}
 
 	public Requerimiento getRequerimiento() {
@@ -302,6 +373,14 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 
 	public void setCotizacionFiltro(Cotizacion cotizacionFiltro) {
 		this.cotizacionFiltro = cotizacionFiltro;
+	}
+
+	public Moneda getMonedaSeleccionada() {
+		return monedaSeleccionada;
+	}
+
+	public void setMonedaSeleccionada(Moneda monedaSeleccionada) {
+		this.monedaSeleccionada = monedaSeleccionada;
 	}
 
 	public String getTitulo() {

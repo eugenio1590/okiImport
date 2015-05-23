@@ -68,18 +68,19 @@
     <beans:bean id="clienteDAO" class="com.okiimport.app.maestros.dao.impl.ClienteDAOImpl"/>
     <beans:bean id="requerimientoDAO" class="com.okiimport.app.transaccion.dao.impl.RequerimientoDAOImpl"/>   
     <beans:bean id="motorDAO" class="com.okiimport.app.maestros.dao.impl.MotorDAOImpl"/>
-     <beans:bean id="proveedorDAO" class="com.okiimport.app.maestros.dao.impl.ProveedorDAOImpl"/>
+    <beans:bean id="proveedorDAO" class="com.okiimport.app.maestros.dao.impl.ProveedorDAOImpl"/>
     <beans:bean id="detalleRequerimientoDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleRequerimientoDAOImpl"/>
-     <beans:bean id="clasificacionRepuestoDAO" class="com.okiimport.app.maestros.dao.impl.ClasificacionRepuestoDAOImpl"/>
+    <beans:bean id="clasificacionRepuestoDAO" class="com.okiimport.app.maestros.dao.impl.ClasificacionRepuestoDAOImpl"/>
     <beans:bean id="cotizacionDAO" class="com.okiimport.app.transaccion.dao.impl.CotizacionDAOImpl"/>
     <beans:bean id="detalleCotizacionDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleCotizacionDAOImpl"/>
-    
+    <beans:bean id="monedaDAO" class="com.okiimport.app.configuracion.dao.impl.MonedaDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>
     <beans:bean id="sHistorial" class="com.okiimport.app.seguridad.servicios.impl.SHistorialImpl"/>
     <beans:bean id="sMaestros" class="com.okiimport.app.maestros.servicios.Impl.SMaestrosImpl"/>
     <beans:bean id="sTransaccion" class="com.okiimport.app.transaccion.servicios.impl.STransaccionImpl"/>
+    <beans:bean id="sControlConfiguracion" class="com.okiimport.app.configuracion.servicios.impl.SControlConfiguacionImpl"/>
     
     <!-- Transaction Manager -->
     <tx:annotation-driven />

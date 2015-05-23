@@ -73,4 +73,9 @@ public class Moneda implements Serializable {
 	public void setHistoricoMonedas(List<HistoricoMoneda> historicoMonedas) {
 		this.historicoMonedas = historicoMonedas;
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String simboloYNombre(){
+		return this.simbolo+" "+this.nombre;
+	}
 }

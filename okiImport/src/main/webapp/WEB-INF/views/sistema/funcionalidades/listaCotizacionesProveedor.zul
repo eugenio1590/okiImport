@@ -82,14 +82,32 @@
 					<grid>
 						<columns>
 							<column label="Fecha de Vencimiento:" width="25%"/>
+							<column label="Moneda:" width="25%"/>
 							<column label="Condiciones:"/>
 						</columns>
 						<rows>
 							<row>
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past"/>
-								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" 
-									rows="3" width="100%" readonly="true" style="resize: none;"/>
+									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past" />
+									
+								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%" readonly="true"
+									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)" buttonVisible="false">
+									<bandpopup>
+										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
+											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
+											<listhead>
+												<listheader label="Nombre" />
+											</listhead>
+											<template name="model">
+												<listitem label="@bind(each.simboloYNombre())" />
+											</template>
+										</listbox>
+										<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
+									</bandpopup>
+								</bandbox>
+								
+								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
+									width="100%" readonly="true" style="resize: none;" />
 							</row>
 						</rows>
 					</grid>
