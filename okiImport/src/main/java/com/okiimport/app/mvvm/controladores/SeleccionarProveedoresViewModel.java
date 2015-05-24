@@ -186,9 +186,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 			model.put("NroSolicitud", proveedor.getNombre());
 			model.put("cedula", proveedor.getCedula());
 
-			// System.out.println("Nulo Mail " + (mailService == null));
-//			mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-//							"enviarrequisitoproveedor.html", model); //FALTA TEMPLATE
+			mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
+							"enviarRequisitoProveedor.html", model);
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 		}
 		else

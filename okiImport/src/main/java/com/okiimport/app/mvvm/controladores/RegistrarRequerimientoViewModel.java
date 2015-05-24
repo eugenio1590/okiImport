@@ -103,11 +103,12 @@ public class RegistrarRequerimientoViewModel extends
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-				model.put("usuario", cliente.getNombre());
+				model.put("cliente", cliente.getNombre());
 				model.put("cedula", cliente.getCedula());
 
-				mailService.send(cliente.getCorreo(), "Registro Requerimiento",
-						"prueba2.html", model);
+				mailService.send(cliente.getCorreo(), "Registro de Requerimiento",
+						"registrarRequerimiento.html", model);
+				
 				String str = "El Requerimiento ha sido registrado existosamente ";
 
 				Messagebox.show(str, "Informacion", Messagebox.OK,

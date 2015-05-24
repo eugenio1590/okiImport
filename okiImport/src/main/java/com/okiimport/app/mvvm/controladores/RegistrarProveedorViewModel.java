@@ -98,8 +98,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				model.put("nombreSolicitante", proveedor.getNombre());
 				model.put("cedula", proveedor.getCedula());
 				
-//				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor", //Falta el template
-//								"proveedor.html", model, null);
+				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
+								"registrarProveedor.html", model);
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
