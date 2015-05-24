@@ -231,10 +231,15 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 				eastCotizacion.setTitle(TITULO_EAST);
 			}
 		}
-		else
+		else if(cotizacionSelecionada==null)
 			mostrarMensaje("Informacion", "Debe Seleccionar una Cotizacion", null, null, null, null);
 	}
 	
+	/*
+	 * Descripcion: Permitira asginar el historial mas actual de la moneda seleccionada
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
 	@Command
 	@NotifyChange("cotizacionSelecionada")
 	public void seleccionMoneda(){
@@ -256,6 +261,16 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	public void paginarListaMonedas(){
 		int page=pagMonedas.getActivePage();
 		cambiarMonedas(page);
+	}
+	
+	/*
+	 * Descripcion: Permitira cargar nuevamente la lista de requerimientos del proveedor
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void cargarRequerimientos(){
+		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

@@ -1,7 +1,8 @@
 <zk>
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-info" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorViewModel')"
+		onClose="@command('cargarRequerimientos')">
 		<borderlayout>
 		<west width="40%" title="Informacion del Vehiculo" collapsible="true" 
 			onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">
@@ -90,8 +91,9 @@
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
 									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past" />
 									
-								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%" readonly="true"
-									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)" buttonVisible="false">
+								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
+									readonly="true" buttonVisible="false" constraint="no empty"
+									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 									<bandpopup>
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
 											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">

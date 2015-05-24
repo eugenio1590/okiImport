@@ -240,9 +240,11 @@ public class RequerimientoDAOImpl extends
 		};
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
+		Join joinCotizacion = joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion");
 		restricciones.add(this.criteriaBuilder.equal(
-				joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion").join("proveedor").get("id"), 
+				joinCotizacion.join("proveedor").get("id"), 
 				idProveedor));
+		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "SC"));
 		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
 		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 		

@@ -150,11 +150,11 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 		while(noValido){
 			noValido = sControlUsuario.verificarUsername(username);
 			if(noValido)
-				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.ESPECIALES, 3);
+				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.MAYUSCULAS, 3);
 		}
 		this.usuario.setUsername(username);
-		this.usuario.setPasword(PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS+
-		                   PasswordGenerator.ESPECIALES,10));
+		this.usuario.setPasword(PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS
+				+PasswordGenerator.NUMEROS,10));
 	}
 	
 	@Command
