@@ -1,5 +1,5 @@
 <zk>
-	<window id="winUsuario" title="Registrar Nuevo Usuario"
+	<window id="winUsuario" title="Registrar Nuevo Usuario" sclass="btn-info"
 		border="none" width="1000px" height="500px" closable="true"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.configuracion.FormularioUsuariosViewModel')"
@@ -68,7 +68,7 @@
 					form="@id('fx') @load(vm.personaSeleccionada) 
 					@save(vm.personaSeleccionada, before='guardar')">
 					
-					<window title="Nuevo Usuario" border="none">
+					<window title="Nuevo Usuario" border="none" sclass="btn-info">
 						<grid>
 							<columns>
 								<column width="120px" />

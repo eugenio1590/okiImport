@@ -16,7 +16,6 @@ public interface SControlUsuario {
 	public Usuario grabarUsuario(Usuario usuario);
 	public Usuario actualizarUsuario(Usuario usuario, boolean encriptar);
 	public Boolean cambiarEstadoUsuario(Usuario usuario, boolean estado);
-	public Boolean eliminarUsuario(Usuario usuario);
 	public Boolean validarAutenticacion(User user);
 	public UsernamePasswordAuthenticationToken consultarAutenticacion(User user);
 	public Map<String, Object> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 

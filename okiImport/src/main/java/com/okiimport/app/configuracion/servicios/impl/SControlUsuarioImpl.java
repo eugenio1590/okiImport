@@ -116,16 +116,6 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	}
 	
 	@Override
-	public Boolean eliminarUsuario(Usuario usuario){
-		if((usuario=consultarUsuario(usuario.getId()))!=null) {
-			usuarioDAO.delete(usuario);
-			return true;
-		}
-		
-		return false;
-	}
-	
-	@Override
 	public Boolean validarAutenticacion(User user){
 		try{
 			UsernamePasswordAuthenticationToken auth = consultarAutenticacion(user);

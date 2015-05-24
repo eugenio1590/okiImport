@@ -48,7 +48,6 @@ public class ListaUsuariosViewModel extends AbstractViewModel implements EventLi
 	
 	//Modelos
 	private List<Usuario> usuarios;
-	private Set<Usuario> usuariosSeleccionados;
 	private Usuario usuarioFiltro;
 	
 	//Atributos
@@ -86,8 +85,6 @@ public class ListaUsuariosViewModel extends AbstractViewModel implements EventLi
 		Map<String, Object> parametros = sControlUsuario.consultarUsuarios(usuarioFiltro, fieldSort, sortDirection, page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		usuarios = (List<Usuario>) parametros.get("usuarios");
-		gridUsuarios.setMultiple(true);
-		gridUsuarios.setCheckmark(true);
 		pagUsuarios.setActivePage(page);
 		pagUsuarios.setTotalSize(total);
 	}
@@ -148,31 +145,6 @@ public class ListaUsuariosViewModel extends AbstractViewModel implements EventLi
 			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
 	}
 	
-	@Command
-	@NotifyChange("usuarios")
-	public void eliminarUsuario(@BindingParam("usuario") Usuario usuario){
-		Usuario userSession = consultarUsuarioSession();
-		if(usuario!=null){
-			if(userSession.getId()!=usuario.getId())
-				if(sControlUsuario.eliminarUsuario(usuario)){
-					mostrarMensaje("Informacion", "Usuario Eliminado Exitosamente", null, null, null, null);
-					paginarLista();
-				}
-				else
-					mostrarMensaje("Informacion", "El Usuario no se ha podido Eliminar", Messagebox.ERROR, null, null, null);
-			else
-				mostrarMensaje("Error", "No se puede Eliminar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-		
-		}
-		else if(usuariosSeleccionados!=null){
-			for(Usuario usuarioSeleccionado : usuariosSeleccionados)
-				if(userSession.getId()!=usuarioSeleccionado.getId())
-					sControlUsuario.eliminarUsuario(usuarioSeleccionado);
-			cambiarUsuarios(0, null, null);
-			mostrarMensaje("Informacion", "Usuarios Eliminados Exitosamente", null, null, null, null);
-		}
-	}
-	
 	/**METODOS PROPIOS DE LA CLASE*/
 	private Usuario consultarUsuarioSession(){
 		UserDetails user = this.getUser();
@@ -198,14 +170,6 @@ public class ListaUsuariosViewModel extends AbstractViewModel implements EventLi
 	
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	public Set<Usuario> getUsuariosSeleccionados() {
-		return usuariosSeleccionados;
-	}
-
-	public void setUsuariosSeleccionados(Set<Usuario> usuariosSeleccionados) {
-		this.usuariosSeleccionados = usuariosSeleccionados;
 	}
 	
 	public Usuario getUsuarioFiltro() {
