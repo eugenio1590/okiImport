@@ -114,6 +114,15 @@
 						</rows>
 					</grid>
 				</groupbox>
+				<div width="100%" align="center">
+					<groupbox closable="false" width="99%">
+						<caption label="Flete" sclass="custom_caption_title" />
+						<div align="left">
+							<label value="Tipo de Flete:" />
+							<combobox />
+						</div>
+					</groupbox>
+				</div>
 				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%"
 					model="@load(vm.listaDetalleCotizacion)" mold="paging" pageSize="5"
 					emptyMessage="No se ha Seleccionado Ninguna Cotizacion">

@@ -180,14 +180,19 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					detalleCotizacions.add(detalleCotizacion);
 				}
 				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
+				
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("nombreSolicitante", proveedor.getNombre());
+				model.put("cedula", proveedor.getCedula());
+				model.put("mensaje", cotizacion.getMensaje());
+				mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
+						"enviarRequisitoProveedor.html", model);
 			}
 			
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("NroSolicitud", proveedor.getNombre());
-			model.put("cedula", proveedor.getCedula());
+			
 
-			mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-							"enviarRequisitoProveedor.html", model);
+//			System.out.println(proveedor.getCorreo());
+			
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 		}
 		else
