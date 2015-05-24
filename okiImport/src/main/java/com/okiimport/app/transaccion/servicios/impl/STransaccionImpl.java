@@ -147,7 +147,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros= new HashMap<String, Object>();
 		parametros.put("total", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, 0, -1).size());
 		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesAsignadas(cotFiltro, fieldSort, sortDirection, idrequerimiento,estatus, pagina*limit, limit));
-return parametros;
+		return parametros;
 	}
 	
 	@Override
@@ -207,6 +207,9 @@ return parametros;
 	@Override
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
+		Map<String, Object> parametros = this.ConsultarRequerimientosConSolicitudesCotizacion(
+				null, null, null, cotizacion.getProveedor().getId(), 0, 1);
+		int nroRequerimientos = (Integer) parametros.get("total");
 		cotizacion.setEstatus("C");
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
 		cotizacion = cotizacionDAO.update(cotizacion);
@@ -215,9 +218,12 @@ return parametros;
 			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
 			detalleRequerimiento.setEstatus("CT");
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			requerimiento.setEstatus("CT");
-			this.requerimientoDAO.update(requerimiento);
+			
+			if(nroRequerimientos==0){
+				Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+				requerimiento.setEstatus("CT");
+				this.requerimientoDAO.update(requerimiento);
+			}
 		}
 		return cotizacion;
 	}
