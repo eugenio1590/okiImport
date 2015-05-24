@@ -164,7 +164,7 @@
 							style="margin-top:10px" pageSize="5">
 
 							<listhead>
-								<listheader label="CodigoOEM"
+								<listheader label="Codigo OEM *"
 									sort="auto" />
 								<listheader label="Descripcion *"
 									sort="auto" />
@@ -177,18 +177,17 @@
 							<template name="model">
 								<listitem>
 									<listcell>
-										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" />
+										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" 
+											constraint="no empty:El Campo No Debe Estar Vacio"/>
 									</listcell>
 									<listcell>
 										<textbox value="@bind(each.descripcion)"  readonly="@bind(!vm.editar)" 
-											constraint="no empty:El Campo No Debe Estar Vacio">
-										</textbox>
+											constraint="no empty:El Campo No Debe Estar Vacio"/>
 									</listcell>
 									<listcell>
 										<spinner value="@bind(each.cantidad)" 
 											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"
-											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros">
-										</spinner>
+											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros"/>
 									</listcell>
 									<listcell>
 										<combobox width="100%" readonly="true" buttonVisible="@bind(vm.editar)"

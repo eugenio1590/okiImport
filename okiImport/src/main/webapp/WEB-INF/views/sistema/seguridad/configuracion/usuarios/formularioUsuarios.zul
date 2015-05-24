@@ -31,25 +31,17 @@
 									instant="true" placeholder="Buscar por Nombre"
 									onChange="@command('aplicarFiltro')" />
 							</auxheader>
-							<auxheader colspan="1">
-								<div sclass="z-icon-filter bigger-200" />
-								<textbox value="@bind(vm.personaFiltro.apellido)"
-									instant="true" placeholder="Buscar por Apellido"
-									onChange="@command('aplicarFiltro')" />
-							</auxheader>
 							<auxheader colspan="1"></auxheader>
 						</auxhead>
 						<listhead menupopup="auto">
 							<listheader id="cedula" label="Cedula" sort="auto(cedula)" />
 							<listheader id="nombre" label="Nombre" sort="auto(nombre)" />
-							<listheader id="apellido" label="Apellido" sort="auto(apellido)" />
 							<listheader width="10%" />
 						</listhead>
 						<template name="model">
 							<listitem>
 								<listcell label="@bind(each.cedula)" />
 								<listcell label="@bind(each.nombre)" />
-								<listcell label="@bind(each.apellido)" />
 								<listcell>
 									<div sclass=" action">
 										<a iconSclass="z-icon-pencil green bigger-200"

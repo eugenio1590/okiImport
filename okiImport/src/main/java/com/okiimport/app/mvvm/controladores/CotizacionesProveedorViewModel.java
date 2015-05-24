@@ -148,8 +148,12 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
 		pagCotizaciones.setActivePage(page);
 		pagCotizaciones.setTotalSize(total);
-		/**FALTA*/
-		//Si la lista esta vacia cerrarse la ventana
+		
+		if(total==0){
+			mostrarMensaje("Informacion", "No Existen mas Solicitudes de Cotizacion para el Requerimiento", 
+					null, null, null, null);
+			this.winCotizaciones.onClose();
+		}
 	}
 	
 	/**COMMAND*/
@@ -182,6 +186,7 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	 * Retorno: Ninguno
 	 * */
 	@Command
+	@SuppressWarnings("unchecked")
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
