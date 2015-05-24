@@ -216,6 +216,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		for(DetalleCotizacion detalle : detalles){
 			this.detalleCotizacionDAO.update(detalle);
 			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
+			
 			detalleRequerimiento.setEstatus("CT");
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
 			
@@ -235,10 +236,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		cotizacion.setFechaCreacion(calendar.getTime());
 		cotizacion = cotizacionDAO.save(cotizacion);
 		for(DetalleCotizacion detalleCotizacion : detalleCotizacions){
-			detalleCotizacion.getDetalleRequerimiento().setEstatus("CT");
+			detalleCotizacion.getDetalleRequerimiento().setEstatus("EP");
 			detalleCotizacion.setCotizacion(cotizacion); 
-			//FALTA CAMBIAR EL ESTATUS DEL REQUERIMIENTO
 			this.detalleCotizacionDAO.save(detalleCotizacion);
+			
+			DetalleRequerimiento detalleRequerimiento = detalleCotizacion.getDetalleRequerimiento();
+			detalleRequerimiento.setEstatus("EP");
+			this.detalleRequerimientoDAO.update(detalleRequerimiento);
+			
+			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+			requerimiento.setEstatus("EP");
+			this.requerimientoDAO.update(requerimiento);
+			
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);
 		return cotizacion;

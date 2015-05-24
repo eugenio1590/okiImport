@@ -138,6 +138,11 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
 	
+	@Command
+	public void actualizarRequerimientos(){
+		ejecutarGlobalCommand("cambiarRequerimientos", null);
+	}
+	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

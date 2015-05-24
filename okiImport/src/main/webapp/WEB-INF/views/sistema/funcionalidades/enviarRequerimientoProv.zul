@@ -1,7 +1,8 @@
 <zk>
 	<window id="winEnviarReqProv" title="Solicitar Repuesto" border="none" width="80%" closable="true"
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"  
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')"
+		onClose="@command('actualizarRequerimientos')">
 		<groupbox closable="false">
 			<groupbox closable="false">
 				<caption label="Datos Personales" sclass="custom_caption" />
