@@ -2,6 +2,7 @@ package com.okiimport.app.transaccion.servicios.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -245,8 +246,11 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
 			
 			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			requerimiento.setEstatus("EP");
-			this.requerimientoDAO.update(requerimiento);
+			if(requerimiento.getFechaSolicitud()==null){
+				requerimiento.setEstatus("EP");
+				requerimiento.setFechaSolicitud(new Timestamp(Calendar.getInstance().getTime().getTime()));
+				this.requerimientoDAO.update(requerimiento);
+			}
 			
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);

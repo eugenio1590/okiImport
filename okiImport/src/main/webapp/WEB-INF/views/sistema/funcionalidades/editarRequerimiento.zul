@@ -85,9 +85,8 @@
 										value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 
 									<label value="Año: " />
-									
-									<datebox width="80%" format="yyyy" readonly="true" buttonVisible="false"
-										value="@bind(vm.requerimiento.annoV)"/>
+									<intbox width="80%" readonly="true" 
+										value="@bind(vm.requerimiento.annoV)" />
 										
 								</row>
 
