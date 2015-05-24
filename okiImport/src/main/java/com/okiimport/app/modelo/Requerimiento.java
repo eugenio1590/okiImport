@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +39,9 @@ public class Requerimiento implements Serializable {
 
 	@Column(name="fecha_creacion", columnDefinition="date")
 	private Timestamp fechaCreacion;
+	
+	@Column(name="fecha_solicitud")
+	private Timestamp fechaSolicitud;
 
 	@Column(name="fecha_vencimiento", columnDefinition="date")
 	private Date fechaVencimiento;
@@ -144,6 +150,14 @@ public class Requerimiento implements Serializable {
 
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Timestamp getFechaSolicitud() {
+		return fechaSolicitud;
+	}
+
+	public void setFechaSolicitud(Timestamp fechaSolicitud) {
+		this.fechaSolicitud = fechaSolicitud;
 	}
 
 	public Date getFechaVencimiento() {
@@ -282,5 +296,17 @@ public class Requerimiento implements Serializable {
 		
 		if(this.motor==null)
 			this.motor = new Motor(especificacion);
+	}
+	
+	public boolean editar(){
+		return (this.estatus.equalsIgnoreCase("CR") || this.estatus.equalsIgnoreCase("E")) ? true : false;
+	}
+	
+	public boolean cerrarSolicitud(){
+		boolean solicitud = false;
+		if(this.fechaSolicitud!=null)
+			solicitud = (AbstractServiceImpl.diferenciaHoras(fechaSolicitud, Calendar.getInstance().getTime()) >= 48) 
+					? true : false;
+		return solicitud;
 	}
 }

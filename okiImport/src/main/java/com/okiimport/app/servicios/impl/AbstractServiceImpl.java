@@ -55,5 +55,16 @@ public abstract class AbstractServiceImpl {
 	public static Date sumarORestarFAnno(Date fecha, int annos){
 		return sumarORestarFecha(fecha, Calendar.YEAR, annos);
 	}
+	
+	/**DIFERENCIA DE HORAS*/
+	public static Long diferenciaHoras(Date fecha1, Date fecha2){
+		Calendar calendar1 = GregorianCalendar.getInstance();
+		calendar1.setTime(fecha1);
+		Calendar calendar2 = GregorianCalendar.getInstance();
+		calendar2.setTime(fecha2);
+		long milis1 = calendar1.getTimeInMillis();
+		long milis2 = calendar2.getTimeInMillis();
+		return (milis2 - milis1) / (60 * 60 * 1000);
+	}
 
 }

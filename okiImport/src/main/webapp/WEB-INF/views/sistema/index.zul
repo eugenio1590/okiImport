@@ -28,9 +28,6 @@
   						<!-- Search input-->
 						
 					</div>
-					<div sclass="nav-search">
-						<bandbox placeholder="Search ..." sclass="input-prepend"/>
-					</div>
 				</div>
 				<include id="mainInclude" self="@define(content)"/>
 			</vlayout>

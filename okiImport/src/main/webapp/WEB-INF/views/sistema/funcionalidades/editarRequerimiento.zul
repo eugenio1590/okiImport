@@ -111,21 +111,23 @@
 
 							<rows>
 								<row>
-									<label value="Motor: " />
+									<label value="Motor: *" />
 									<combobox value="@bind(vm.requerimiento.motor.nombre)"
-										selectedItem="@bind(vm.requerimiento.motor)" readonly="true"
+										selectedItem="@bind(vm.requerimiento.motor)" 
+										readonly="true" buttonVisible="@bind(vm.editar)"
 										placeholder="Seleccione..." width="80%"
-										model="@load(vm.listaMotor)">
+										model="@load(vm.listaMotor)" constraint="no empty">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
 									</combobox>
 
-									<label value="Transmision: " />
+									<label value="Transmision: *" />
 									<combobox id="cmbTransmision"
-										placeholder="Seleccione..." width="80%" readonly="true"
+										placeholder="Seleccione..." width="80%" 
+										readonly="true" buttonVisible="@bind(vm.editar)"
 										selectedItem="@bind(vm.transmision)"
-										model="@load(vm.listaTransmision)">
+										model="@load(vm.listaTransmision)" constraint="no empty">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
@@ -134,11 +136,12 @@
 
 								<row>
 
-									<label value="Traccion: " />
+									<label value="Traccion: *" />
 									<combobox id="cmbTraccion"
-										placeholder="Seleccione..." width="80%" readonly="true"
+										placeholder="Seleccione..." width="80%"
+										readonly="true" buttonVisible="@bind(vm.editar)"
 										selectedItem="@bind(vm.traccion)"
-										model="@load(vm.listaTraccion)">
+										model="@load(vm.listaTraccion)" constraint="no empty">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
@@ -164,34 +167,32 @@
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto" />
-								<listheader label="Descripcion"
+								<listheader label="Descripcion *"
 									sort="auto" />
-								<listheader label="Cantidad"
+								<listheader label="Cantidad *"
 									sort="auto" />
-								<listheader label="Clasificacion"
+								<listheader label="Clasificacion *"
 									sort="none" />
 								<listheader label="Foto" sort="auto" />
 							</listhead>
 							<template name="model">
 								<listitem>
 									<listcell>
-										<textbox
-											value="@bind(each.codigoOem)" />
+										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" />
 									</listcell>
 									<listcell>
-										<textbox
-											value="@bind(each.descripcion)"
+										<textbox value="@bind(each.descripcion)"  readonly="@bind(!vm.editar)" 
 											constraint="no empty:El Campo No Debe Estar Vacio">
 										</textbox>
 									</listcell>
 									<listcell>
-										<spinner
-											value="@bind(each.cantidad)"
+										<spinner value="@bind(each.cantidad)" 
+											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"
 											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros">
 										</spinner>
 									</listcell>
 									<listcell>
-										<combobox width="100%" readonly="true"
+										<combobox width="100%" readonly="true" buttonVisible="@bind(vm.editar)"
 											value="@bind(each.clasificacionRepuesto.descripcion)"
 											model="@bind(vm.listaClasificacionRepuesto)"
 											selectedItem="@bind(each.clasificacionRepuesto)"
@@ -214,14 +215,19 @@
 					</panelchildren>
 				</panel>
 			</groupbox>
-			<div width="100%" align="right">
-				<div sclass="btn btn-xs btn-info">
-					<button label="Limpiar" type="submit"
-						onClick="@command('limpiar')" />
-					<button label="Enviar" type="submit"
-						onClick="@command('actualizar')" />
+			<hbox width="100%" visible="@bind(vm.editar)">
+				<div hflex="1" align="center">
+					<label value="* Campos Obligatorios" hflex="1" sclass="requerido" />
 				</div>
-			</div>
+				<div align="right">
+					<div sclass="btn btn-xs btn-info">
+						<button label="Limpiar" type="submit"
+							onClick="@command('limpiar')" />
+						<button label="Enviar" type="submit"
+							onClick="@command('actualizar')" />
+					</div>
+				</div>
+			</hbox>
 		</groupbox>
 	</window>
 </zk>

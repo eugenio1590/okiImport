@@ -63,12 +63,16 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	
+	private Boolean editar;
+	
 	@AfterCompose
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("editar") boolean editar)
 	{
 		super.doAfterCompose(view);
+		this.editar = editar;
 		this.requerimiento = requerimiento;
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
@@ -196,5 +200,13 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 
 	public void setListaMotor(List<Motor> listaMotor) {
 		this.listaMotor = listaMotor;
+	}
+
+	public Boolean getEditar() {
+		return editar;
+	}
+
+	public void setEditar(Boolean editar) {
+		this.editar = editar;
 	}
 }

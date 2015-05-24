@@ -103,8 +103,6 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		gridMisRequerimientos.setMultiple(true);
-		gridMisRequerimientos.setCheckmark(true);
 		pagMisRequerimientos.setActivePage(page);
 		pagMisRequerimientos.setTotalSize(total);
 	}
@@ -138,21 +136,51 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	}
 	
 	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para operar el requerimiento seleccionado de acuerdo a su estatus
+	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void operarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		if(requerimiento.getEstatus().equalsIgnoreCase("CR"))
-			crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
-		else if(requerimiento.getEstatus().equalsIgnoreCase("E"))
-			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
-		else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
-			crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
+		parametros.put("editar", true);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
+	
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion 
+	 * a los proveedores del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void enviarProveedores(@BindingParam("requerimiento") Requerimiento requerimiento){
+		if(!requerimiento.cerrarSolicitud()){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("requerimiento", requerimiento);
+			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+		}
+		else
+			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
+	}
+	
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void verRequerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("editar", false);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+	}
+	
+	//Aprobar Cotizacion
+//	else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
+//	crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
