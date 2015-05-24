@@ -39,6 +39,9 @@ public abstract class Persona implements Serializable {
 	@Column(name="tipo_menu")
 	protected Integer tipoMenu;
 	
+	@Column(length=50)
+	private String estatus;
+	
 	//bi-directional one-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
 	protected Usuario usuario;
@@ -47,12 +50,12 @@ public abstract class Persona implements Serializable {
 	}
 	
 	public Persona(Persona persona){
-		this(persona.getId(), persona.getApellido(), persona.getCedula(), persona.getCorreo(),
-				persona.getDireccion(), persona.getNombre(), persona.getTelefono(), persona.getUsuario());
+		this(persona.getId(), persona.getApellido(), persona.getCedula(), persona.getCorreo(), persona.getDireccion(), 
+				persona.getNombre(), persona.getTelefono(), persona.getUsuario(), persona.getEstatus());
 	}
 
 	public Persona(Integer id, String apellido, String cedula, String correo,
-			String direccion, String nombre, String telefono, Usuario usuario) {
+			String direccion, String nombre, String telefono, Usuario usuario, String estatus) {
 		super();
 		this.id = id;
 		this.apellido = apellido;
@@ -62,6 +65,7 @@ public abstract class Persona implements Serializable {
 		this.nombre = nombre;
 		this.telefono = telefono;
 		this.usuario = usuario;
+		this.estatus = estatus;
 	}
 
 	public Integer getId() {
@@ -128,6 +132,14 @@ public abstract class Persona implements Serializable {
 		this.usuario = usuario;
 	}
 	
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public static Persona getNewInstance(){
 		return new Persona() {

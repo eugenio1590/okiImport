@@ -108,6 +108,12 @@ public abstract class PersonaDAOImpl<T extends Persona> extends AbstractJpaDao<T
 						"%"+personaF.getApellido().toLowerCase()+"%"
 						));
 			}
+			
+			if(personaF.getEstatus()!=null){
+				restricciones.add(criteriaBuilder.like(
+						criteriaBuilder.lower(this.entity.<String>get("estatus")), 
+						"%"+String.valueOf(personaF.getEstatus()).toLowerCase()+"%"));
+			}
 			agregarRestriccionesPersona(personaF, restricciones);
 		}
 	}

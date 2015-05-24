@@ -16,8 +16,7 @@ public class ClienteDAOImpl extends PersonaDAOImpl<Cliente> implements ClienteDA
 
 	/**METODOS OVERRIDE*/
 	@Override
-	protected void agregarRestriccionesPersona(Cliente persona,
-			List<Predicate> restricciones) {
+	protected void agregarRestriccionesPersona(Cliente persona, List<Predicate> restricciones) {
 		// TODO Auto-generated method stub
 		
 	}

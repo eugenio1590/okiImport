@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 
+import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Menu;
 import com.okiimport.app.modelo.Usuario;
 
@@ -13,7 +14,7 @@ public interface SControlUsuario {
 	//Usuarios
 	public Usuario consultarUsuario(Integer id);
 	public Usuario consultarUsuario(String usuario, String clave);
-	public Usuario grabarUsuario(Usuario usuario);
+	public Usuario grabarUsuario(Usuario usuario, SMaestros smaestros);
 	public Usuario actualizarUsuario(Usuario usuario, boolean encriptar);
 	public Boolean cambiarEstadoUsuario(Usuario usuario, boolean estado);
 	public Boolean validarAutenticacion(User user);

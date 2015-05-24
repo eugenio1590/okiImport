@@ -16,9 +16,6 @@ import javax.persistence.*;
 public class Analista extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Column(length=50)
-	private String estatus;
-	
 	@Column
 	private Boolean administrador;
 	
@@ -34,14 +31,6 @@ public class Analista extends Persona implements Serializable {
 	
 	public Analista(Persona persona) {
 		super(persona);
-	}
-	
-	public String getEstatus() {
-		return estatus;
-	}
-
-	public void setEstatus(String estatus) {
-		this.estatus = estatus;
 	}
 
 	public Boolean getAdministrador() {

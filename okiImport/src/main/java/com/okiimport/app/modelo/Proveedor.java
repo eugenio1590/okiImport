@@ -17,8 +17,6 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name="id_proveedor")
 public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private String estatus;
 	
 	//bi-directional one-to-many association to Cotizacion
 	@OneToMany(mappedBy="proveedor", fetch=FetchType.LAZY, orphanRemoval=true)
@@ -70,16 +68,7 @@ public class Proveedor extends Persona implements Serializable {
 	
 	public Proveedor(Integer id,String cedula, String correo,
 			String direccion, String nombre, String telefono, String estatus) {
-		super(id, null, cedula, correo, direccion, nombre, telefono, null);
-		this.estatus = estatus;
-	}
-
-	public String getEstatus() {
-		return this.estatus;
-	}
-
-	public void setEstatus(String estatus) {
-		this.estatus = estatus;
+		super(id, null, cedula, correo, direccion, nombre, telefono, null, estatus);
 	}
 
 	public List<Cotizacion> getCotizacions() {

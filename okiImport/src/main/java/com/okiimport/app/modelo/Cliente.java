@@ -19,8 +19,6 @@ public class Cliente extends Persona implements Serializable {
 	
 	private Boolean juridico;
 	
-	private String estatus;
-	
 	//bi-directional one-to-many association to Proveedor
 	@OneToMany(mappedBy="cliente", fetch=FetchType.LAZY)
 	private List<Requerimiento> requerimientos;
@@ -42,14 +40,6 @@ public class Cliente extends Persona implements Serializable {
 
 	public void setJuridico(Boolean juridico) {
 		this.juridico = juridico;
-	}
-
-	public String getEstatus() {
-		return estatus;
-	}
-
-	public void setEstatus(String estatus) {
-		this.estatus = estatus;
 	}
 
 	public List<Requerimiento> getRequerimientos() {

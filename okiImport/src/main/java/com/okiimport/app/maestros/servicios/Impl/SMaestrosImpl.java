@@ -11,6 +11,7 @@ import com.okiimport.app.maestros.dao.ClasificacionRepuestoDAO;
 import com.okiimport.app.maestros.dao.ClienteDAO;
 import com.okiimport.app.maestros.dao.MarcaVehiculoDAO;
 import com.okiimport.app.maestros.dao.MotorDAO;
+import com.okiimport.app.maestros.dao.PersonaDAO;
 import com.okiimport.app.maestros.dao.ProveedorDAO;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
@@ -55,6 +56,20 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		Parametros.put("total", marcaVehiculoDAO.listaMarcasVehiculosActivas(0, -1).size());
 		Parametros.put("marcas", marcaVehiculoDAO.listaMarcasVehiculosActivas(page*limit, limit));
 		return Parametros;
+	}
+	
+	//Persona
+	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public <T extends Persona> T acutalizarPersona(T persona){
+		PersonaDAO dao = determinarPersonaDAO(persona.getClass());
+		if(dao!=null){
+			if(persona.getId()!=null)
+				persona = (T) dao.update(persona);
+			else
+				persona = (T) dao.save(persona);
+		}
+		return persona;
 	}
 	
 	//Cliente
@@ -142,6 +157,21 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		parametros.put("total", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection, idsClasificacionRepuesto, 0, -1).size());
 		parametros.put("proveedores", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection,idsClasificacionRepuesto, start*limit, limit));
 		return parametros;
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	@SuppressWarnings({ "rawtypes", "unused", "unchecked" })
+	private <T extends PersonaDAO, Y extends Persona> T determinarPersonaDAO(Class<Y> clase){
+		T dao = null;
+		if(clase != null){
+			if(clase.equals(Analista.class))
+				dao = (T) this.analistaDAO;
+			else if(clase.equals(Proveedor.class))
+				dao = (T) this.proveedorDAO;
+			else if(clase.equals(Cliente.class))
+				dao = (T) this.clienteDAO;
+		}
+		return dao;
 	}
 
 	/**SETTERS Y GETTERS*/

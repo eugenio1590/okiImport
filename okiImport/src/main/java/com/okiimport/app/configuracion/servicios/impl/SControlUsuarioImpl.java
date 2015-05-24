@@ -19,7 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.okiimport.app.configuracion.dao.MenuDAO;
 import com.okiimport.app.configuracion.dao.UsuarioDAO;
+import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Menu;
+import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
@@ -27,7 +29,7 @@ import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
 @Service
 public class SControlUsuarioImpl extends AbstractServiceImpl implements SControlUsuario, UserDetailsService {
-	
+
 	@Autowired
 	@BeanInjector("bcryptEncoder")
 	private BCryptPasswordEncoder bcryptEncoder; //Encriptador de Claves
@@ -91,10 +93,15 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 	}
 
 	@Override
-	public Usuario grabarUsuario(Usuario usuario) {
+	public Usuario grabarUsuario(Usuario usuario, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
 		//usuario.setPasword(this.bcryptEncoder.encode(usuario.getPasword()));
-		return usuarioDAO.save(usuario);
+		Persona persona = usuario.getPersona();
+		persona.getTipoMenu();
+		usuario = usuarioDAO.save(usuario);
+		persona = sMaestros.acutalizarPersona(persona);
+		usuario.setPersona(persona);
+		return usuario;
 	}
 	
 	@Override

@@ -81,10 +81,5 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 	@Override
 	protected void agregarRestriccionesPersona(Proveedor personaF, List<Predicate> restricciones) {
 		// TODO Auto-generated method stub
-		if(personaF.getEstatus()!=null){
-			restricciones.add(criteriaBuilder.like(
-					criteriaBuilder.lower(entity.get("estatus").as(String.class)), 
-					"%"+String.valueOf(personaF.getEstatus()).toLowerCase()+"%"));
-		}
 	}
 }

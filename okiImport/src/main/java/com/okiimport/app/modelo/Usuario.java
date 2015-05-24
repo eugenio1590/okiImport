@@ -149,5 +149,4 @@ public class Usuario implements Serializable {
 	public String isActivo(){
 		return (this.activo) ? "Activo" : "Inactivo";
 	}
-
 }

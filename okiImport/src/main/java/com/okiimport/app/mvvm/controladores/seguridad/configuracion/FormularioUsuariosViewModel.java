@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -14,7 +13,6 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
@@ -32,6 +30,7 @@ import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.PasswordGenerator;
 
 public class FormularioUsuariosViewModel extends AbstractViewModel implements  EventListener<SortEvent>{
 	
@@ -49,8 +48,6 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	@Wire("#pagPersonas")
 	private Paging pagPersonas;
 	
-	private Textbox txtUsername;
-	
 	//Modelos
 	private List<Persona> personasSinUsuario;
 	private Persona personaSeleccionada;
@@ -61,7 +58,6 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	private static final int PAGE_SIZE = 5;
 	private List<ModeloCombo<Integer>> tiposUsuario;
 	private ModeloCombo<Integer> tipoSeleccionado;
-	private AbstractValidator validadorUsername;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -75,28 +71,6 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 		tiposUsuario.add(new ModeloCombo<Integer>("Administradores", 2));
 		tiposUsuario.add(new ModeloCombo<Integer>("Proveedores", 3));
 		agregarGridSort(gridPersonas);
-		
-		validadorUsername = new AbstractValidator() {
-			
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				String username = (String) ctx.getProperty().getValue();
-				txtUsername = (Textbox) ctx.getBindContext().getValidatorArg("txtUsername");
-				if(username!=null){
-					if(sControlUsuario.verificarUsername(username)){
-						String mensaje = "El Username "+username+" ya esta en uso!";
-						mostrarNotification(mensaje, "error", 5000, true, txtUsername);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-				else{
-					String mensaje = "No se permiten campos en blanco.";
-					mostrarNotification(mensaje, "error", 5000, true, txtUsername);
-					addInvalidMessage(ctx, mensaje);
-				}
-			}
-		};
 	}
 	
 	@Override
@@ -112,6 +86,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	
 	/**GLOBAL COMMAND*/
 	@GlobalCommand
+	@SuppressWarnings("unchecked")
 	@NotifyChange({"personasSinUsuario", "usuario"})
 	public void cambiarPersonas(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
@@ -138,7 +113,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 				break;
 			default: return;
 			}
-		
+			
 			Integer total = (Integer) parametros.get("total");
 			pagPersonas.setActivePage(page);
 			pagPersonas.setTotalSize(total);
@@ -166,23 +141,34 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	}
 	
 	@Command
-	@NotifyChange("personaSeleccionada")
+	@NotifyChange({"personaSeleccionada", "usuario"})
 	public void verInfoPersona(@BindingParam("persona") Persona persona){
 		personaSeleccionada = persona;
+		String usuario = personaSeleccionada.getNombre().split(" ")[0].toLowerCase();
+		String username = usuario;
+		boolean noValido = true;
+		while(noValido){
+			noValido = sControlUsuario.verificarUsername(username);
+			if(noValido)
+				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.ESPECIALES, 3);
+		}
+		this.usuario.setUsername(username);
+		this.usuario.setPasword(PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS+
+		                   PasswordGenerator.ESPECIALES,10));
 	}
 	
 	@Command
 	@NotifyChange({"personasSinUsuario", "usuario", "personaSeleccionada"})
 	public void guardar(@BindingParam("txtPassword") Textbox txtPassword){
 		if(personaSeleccionada.getCedula()!=null && !txtPassword.getValue().toString().equalsIgnoreCase("")){
+			personaSeleccionada.setEstatus("activo");
 			usuario.setActivo(true);
 			usuario.setPersona(personaSeleccionada);
-			sControlUsuario.grabarUsuario(usuario);
+			sControlUsuario.grabarUsuario(usuario, sMaestros);
 			mostrarMensaje("Informacion", "Usuario Creado Exitosamente", null, null, null, null);
 			personaSeleccionada = Persona.getNewInstance();
 			int page = pagPersonas.getActivePage();
 			cambiarPersonas(page, null, null);
-			txtUsername.setValue(null);
 		}
 		else if(txtPassword.getValue().toString().equalsIgnoreCase(""))
 			mostrarNotification("No se permiten campos en blanco.", "error", 5000, true, txtPassword);
@@ -258,13 +244,5 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 
 	public void setTiposUsuario(List<ModeloCombo<Integer>> tiposUsuario) {
 		this.tiposUsuario = tiposUsuario;
-	}
-
-	public AbstractValidator getValidadorUsername() {
-		return validadorUsername;
-	}
-
-	public void setValidadorUsername(AbstractValidator validadorUsername) {
-		this.validadorUsername = validadorUsername;
 	}
 }

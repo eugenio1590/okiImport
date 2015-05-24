@@ -12,6 +12,9 @@ public interface SMaestros {
 	//Marcas
 	public Map<String,Object> ConsultarMarca(Integer page,Integer limit);
 	
+	//Personas
+	public <T extends Persona> T acutalizarPersona(T persona);
+	
 	//Cliente
 	public Cliente registrarOActualizarCliente(Cliente cliente);
 	public Cliente consultarCliente(Cliente cliente);

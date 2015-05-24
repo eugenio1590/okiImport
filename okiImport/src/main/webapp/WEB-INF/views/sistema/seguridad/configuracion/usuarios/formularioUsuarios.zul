@@ -84,17 +84,13 @@
 									<textbox readonly="true" value="@bind(fx.nombre)"/>
 								</row>
 								<row>
-									<label value="Apellido"/>
-									<textbox readonly="true" value="@bind(fx.apellido)"/>
+									<label value="Usuario" />
+									<textbox readonly="true" value="@bind(vm.usuario.username)"/>
 								</row>
 								<row>
-									<label value="Username" />
-									<textbox value="@save(vm.usuario.username, before='guardar') 
-										@validator(vm.validadorUsername, txtUsername = self)"/>
-								</row>
-								<row>
-									<label value="Password"/>
-									<textbox id="txtPassword" value="@bind(vm.usuario.pasword)" type="password"/>
+									<label value="Clave"/>
+									<textbox id="txtPassword" readonly="true" type="password"
+										value="@bind(vm.usuario.pasword)" />
 								</row>
 							</rows>
 						</grid>
