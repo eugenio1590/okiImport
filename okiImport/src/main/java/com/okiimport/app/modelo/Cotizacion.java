@@ -164,4 +164,17 @@ public class Cotizacion implements Serializable{
 		return detalleCotizacion;
 	}
 	
+	/**EVENTOS*/
+	@PrePersist
+	public void prePersist(){
+		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)
+			this.historicoMoneda = null;
+	}
+	
+	@PreUpdate
+	public void preUpdate(){
+		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)
+			this.historicoMoneda = null;
+	}
+	
 }
