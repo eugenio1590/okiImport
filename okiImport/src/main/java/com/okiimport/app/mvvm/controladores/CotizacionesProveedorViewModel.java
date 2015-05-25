@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.East;
@@ -39,6 +40,7 @@ import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
@@ -82,6 +84,9 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	@Wire("#pagMonedas")
 	private Paging pagMonedas;
 	
+	@Wire("#cmbFlete")
+	private Combobox cmbFlete;
+	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
@@ -96,6 +101,9 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 	private Moneda monedaSeleccionada;
+	
+	private List<ModeloCombo<Boolean>> tiposFlete;
+	private ModeloCombo<Boolean> tipoFlete;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -112,7 +120,10 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		cambiarMonedas(0);
 		agregarGridSort(gridCotizaciones);
 		pagCotizaciones.setPageSize(PAGE_SIZE);
-		eastCotizacion.setTitle(TITULO_EAST);		
+		eastCotizacion.setTitle(TITULO_EAST);	
+		
+		tiposFlete = llenarTiposFleteNacional();
+		tipoFlete = tiposFlete.get(0);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -272,6 +283,16 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
+	@Command
+	@NotifyChange("listaDetalleCotizacion")
+	public void seleccionarTipoFlete(){
+		if(!this.tipoFlete.getValor()){
+			System.out.println("CAMBIO FLETE");
+			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
+				detalle.setPrecioFlete(null);
+		}
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	/*
 	 * Descripcion permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
@@ -316,6 +337,7 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		txtCondicion.setReadonly(readOnly);
 		dtbFecha.setButtonVisible(!readOnly);
 		bandbMoneda.setButtonVisible(!readOnly);
+		cmbFlete.setButtonVisible(!readOnly);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -406,5 +428,21 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public List<ModeloCombo<Boolean>> getTiposFlete() {
+		return tiposFlete;
+	}
+
+	public void setTiposFlete(List<ModeloCombo<Boolean>> tiposFlete) {
+		this.tiposFlete = tiposFlete;
+	}
+
+	public ModeloCombo<Boolean> getTipoFlete() {
+		return tipoFlete;
+	}
+
+	public void setTipoFlete(ModeloCombo<Boolean> tipoFlete) {
+		this.tipoFlete = tipoFlete;
 	}
 }

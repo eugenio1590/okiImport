@@ -119,7 +119,13 @@
 						<caption label="Flete" sclass="custom_caption_title" />
 						<div align="left">
 							<label value="Tipo de Flete:" />
-							<combobox />
+							<combobox id="cmbFlete" buttonVisible="false" readonly="true" width="250px"
+								model="@load(vm.tiposFlete)" selectedItem="@bind(vm.tipoFlete)"
+								onSelect="@command('seleccionarTipoFlete')">
+								<template name="model">
+									<comboitem label="@bind(each.nombre)"/>
+								</template>
+							</combobox>
 						</div>
 					</groupbox>
 				</div>
@@ -133,6 +139,7 @@
 						<listheader label="Marca" />
 						<listheader label="Cant. Cotizada" />
 						<listheader label="Precio de Venta" />
+						<listheader label="Precio de Flete" visible="@bind(vm.tipoFlete.valor)"/>
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -156,6 +163,11 @@
 							<listcell>
 								<decimalbox format="###.##"
 									value="@bind(each.precioVenta)" width="100px"
+									constraint="no empty, no zero, no negative" />
+							</listcell>
+							<listcell visible="@bind(vm.tipoFlete.valor)">
+								<decimalbox format="###.##" 
+									value="@bind(each.precioFlete)" width="100px"
 									constraint="no empty, no zero, no negative" />
 							</listcell>
 						</listitem>

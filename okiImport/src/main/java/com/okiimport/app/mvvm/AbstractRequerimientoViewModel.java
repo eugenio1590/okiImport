@@ -60,6 +60,13 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaEstatus;
 	}
 	
+	protected static List<ModeloCombo<Boolean>> llenarTiposFleteNacional(){
+		List<ModeloCombo<Boolean>> listaTiposFlete = new ArrayList<ModeloCombo<Boolean>>();
+		listaTiposFlete.add(new ModeloCombo<Boolean>("Incluido en el Precio de Venta", false));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("No Incluido en el Precio de Venta", true));
+		return listaTiposFlete;
+	}
+	
 	public int getYearDay(){
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}

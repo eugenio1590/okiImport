@@ -22,6 +22,9 @@ public class DetalleCotizacion implements Serializable {
 	@Column(name="precio_venta", scale=2)
 	private Float precioVenta;
 	
+	@Column(name="precio_flete", scale=2)
+	private Float precioFlete;
+	
 	private Long cantidad;
 	
 	//bi-directional many-to-one association to Cotizacion
@@ -59,6 +62,14 @@ public class DetalleCotizacion implements Serializable {
 
 	public void setPrecioVenta(Float precioVenta) {
 		this.precioVenta = precioVenta;
+	}
+
+	public Float getPrecioFlete() {
+		return precioFlete;
+	}
+
+	public void setPrecioFlete(Float precioFlete) {
+		this.precioFlete = precioFlete;
 	}
 
 	public Long getCantidad() {
