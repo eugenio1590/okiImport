@@ -148,12 +148,6 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
 		pagCotizaciones.setActivePage(page);
 		pagCotizaciones.setTotalSize(total);
-		
-		if(total==0){
-			mostrarMensaje("Informacion", "No Existen mas Solicitudes de Cotizacion para el Requerimiento", 
-					null, null, null, null);
-			this.winCotizaciones.onClose();
-		}
 	}
 	
 	/**COMMAND*/

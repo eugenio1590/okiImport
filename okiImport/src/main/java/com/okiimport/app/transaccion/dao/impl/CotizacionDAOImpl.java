@@ -47,7 +47,7 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 				this.entity.get("proveedor"),
 		};
 		List<Predicate> restricciones = new ArrayList<Predicate>();
-		AgregarFiltro(cotizacion,restricciones,joins);
+		agregarFiltro(cotizacion,restricciones,joins);
 		restricciones.add(criteriaBuilder.equal(
 					joins.get("detalleCotizacions").join("detalleRequerimiento").join("requerimiento").get("idRequerimiento"), 
 					idRequerimiento));
@@ -62,28 +62,9 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 				
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
-
-	private void AgregarFiltro(Cotizacion cotizacionF,List<Predicate> restricciones,Map<String, Join> joins){
-		if (cotizacionF != null){
-			if (cotizacionF.getIdCotizacion() != null){
-				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("idCotizacion").as(String.class)), "%"+String.valueOf(cotizacionF.getIdCotizacion()).toLowerCase()+"%"));
-			}
-			if (cotizacionF.getFechaCreacion() != null){
-				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaCreacion").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaCreacion()).toLowerCase()+"%"));
-			}
-			if (cotizacionF.getFechaVencimiento() != null){
-				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaVencimiento").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaVencimiento()).toLowerCase()+"%"));
-			}
-			if(joins.get("proveedor") != null && cotizacionF.getProveedor() != null){
-				if(cotizacionF.getProveedor().getNombre() != null){
-					restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(joins.get("proveedor").get("nombre").as(String.class)), "%"+String.valueOf(cotizacionF.getProveedor().getNombre()).toLowerCase()+"%"));
-				}
-			}
-		}
-	}
 	
 	@Override
-	public List<Cotizacion> consultarSolicitudCotizaciones(Cotizacion cotizacion, String fieldSort, Boolean sortDirection,
+	public List<Cotizacion> consultarSolicitudCotizaciones(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
 			Integer idRequerimiento, int idProveedor, List<String> estatus, int start, int limit) {
 		// TODO Auto-generated method stub
 		// 1. Creamos el Criterio de busqueda
@@ -114,7 +95,7 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		
 		restricciones.add(criteriaBuilder.equal(joins.get("proveedor").get("id"), idProveedor));
 		restricciones.add(entity.get("estatus").in(estatus));
-
+		agregarFiltro(cotizacionF, restricciones, joins);
 		// 4. Creamos los campos de ordenamiento y ejecutamos
 		List<Order> orders = new ArrayList<Order>();
 
@@ -123,5 +104,24 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 					this.criteriaBuilder.desc(this.entity.get(fieldSort)));
 
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
+	}
+	
+	private void agregarFiltro(Cotizacion cotizacionF,List<Predicate> restricciones,Map<String, Join> joins){
+		if (cotizacionF != null){
+			if (cotizacionF.getIdCotizacion() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("idCotizacion").as(String.class)), "%"+String.valueOf(cotizacionF.getIdCotizacion()).toLowerCase()+"%"));
+			}
+			if (cotizacionF.getFechaCreacion() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaCreacion").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaCreacion()).toLowerCase()+"%"));
+			}
+			if (cotizacionF.getFechaVencimiento() != null){
+				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaVencimiento").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaVencimiento()).toLowerCase()+"%"));
+			}
+			if(joins.get("proveedor") != null && cotizacionF.getProveedor() != null){
+				if(cotizacionF.getProveedor().getNombre() != null){
+					restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(joins.get("proveedor").get("nombre").as(String.class)), "%"+String.valueOf(cotizacionF.getProveedor().getNombre()).toLowerCase()+"%"));
+				}
+			}
+		}
 	}
 }
