@@ -3,6 +3,10 @@ span {
 	color: black;
 }
 
+.no_rezise {
+	resize: none;
+}
+
 /**CAPTION*/
 .custom_caption {
 	font-size:12px;
@@ -10,6 +14,19 @@ span {
 
 .custom_caption_title {
 	font-size: 16px;
+}
+
+/**NOTAS*/
+.notas {
+	font-family: monospace;
+	font-size: 11px;
+	font-style: italic;
+	color: #838383;
+}
+
+.no_rezise.notas {
+	border: none;
+	background-color: white;
 }
 
 /* FUENTE PARA LAS LETRAS DE LA VENTANA*/

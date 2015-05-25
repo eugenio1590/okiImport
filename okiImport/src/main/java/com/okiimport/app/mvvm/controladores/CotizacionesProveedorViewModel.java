@@ -21,8 +21,8 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.East;
+import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
@@ -70,7 +70,7 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	private East eastCotizacion;
 	
 	@Wire("#btnBotones")
-	private Div btnBotones;
+	private Hbox btnBotones;
 	
 	@Wire("#dtbFecha")
 	private Datebox dtbFecha;
