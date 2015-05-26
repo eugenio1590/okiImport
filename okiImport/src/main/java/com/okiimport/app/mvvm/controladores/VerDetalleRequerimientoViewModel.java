@@ -21,12 +21,12 @@ import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.controladores.seguridad.configuracion.EditarUsuarioViewModel;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class VerDetalleRequerimientoViewModel extends AbstractViewModel  {
+public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewModel  {
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;

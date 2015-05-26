@@ -3,11 +3,16 @@ package com.okiimport.app.mvvm;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Messagebox.Button;
+import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Spinner;
 
 import com.okiimport.app.mail.MailService;
@@ -18,6 +23,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	@BeanInjector("mailService")
 	protected MailService mailService;
 	
+	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
+	
 	/**SETTERS Y GETTERS*/	
 	public MailService getMailService() {
 		return mailService;
@@ -27,6 +34,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		this.mailService = mailService;
 	}
 
+	/**METODOS SOBREESCRITOS*/
+	@Override
+	protected void mostrarMensaje(String titulo, String mensaje, String icon, Button[] botones, 
+			EventListener<ClickEvent> clickEvent, Map<String, String> params) {
+		// TODO Auto-generated method stub
+		Messagebox.setTemplate(RUTA_MESSAGEBOX);
+		super.mostrarMensaje(titulo, mensaje, icon, botones, clickEvent, params);
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	protected static List <ModeloCombo<Boolean>> llenarListaTraccion(){
 		List <ModeloCombo<Boolean>> listaTraccion = new ArrayList<ModeloCombo<Boolean>>();

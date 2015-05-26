@@ -31,8 +31,7 @@ import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends
-		AbstractRequerimientoViewModel {
+public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;

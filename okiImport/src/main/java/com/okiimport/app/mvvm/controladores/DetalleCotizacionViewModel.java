@@ -27,11 +27,11 @@ import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class DetalleCotizacionViewModel extends AbstractViewModel  {
+public class DetalleCotizacionViewModel extends AbstractRequerimientoViewModel  {
 
 	//Servicios
 		@BeanInjector("sTransaccion")

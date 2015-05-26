@@ -29,11 +29,11 @@ import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class CotizacionesViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class CotizacionesViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")

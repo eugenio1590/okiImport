@@ -8,9 +8,9 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Borderlayout;
 
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
-public class InicioViewModel extends AbstractViewModel {
+public class InicioViewModel extends AbstractRequerimientoViewModel {
 	
 	@Wire("#principal")
 	private Borderlayout principal;
