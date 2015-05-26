@@ -142,7 +142,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("usuario", usuario);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedor.zul", parametros);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

@@ -1,7 +1,7 @@
 <zk>
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-info" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorViewModel')"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"
 		onClose="@command('cargarRequerimientos')">
 		<borderlayout>
 		<west width="40%" title="Informacion del Vehiculo" collapsible="true" 
@@ -173,7 +173,7 @@
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" 
 									value="@bind(each.precioFlete)" width="100px"
-									constraint="no empty, no zero, no negative" />
+									constraint="@bind(vm.constraint_precio_flete)" />
 							</listcell>
 						</listitem>
 					</template>

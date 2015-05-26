@@ -44,7 +44,7 @@ import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -90,7 +90,10 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	//Atributos
 	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
+	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
+	
 	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String constraint_precio_flete;
 	
 	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
@@ -284,13 +287,16 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 	}
 	
 	@Command
-	@NotifyChange("listaDetalleCotizacion")
+	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
 		if(!this.tipoFlete.getValor()){
+			this.constraint_precio_flete = null;
 			System.out.println("CAMBIO FLETE");
 			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
 				detalle.setPrecioFlete(null);
 		}
+		else
+			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -428,6 +434,14 @@ public class CotizacionesProveedorViewModel extends AbstractRequerimientoViewMod
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getConstraint_precio_flete() {
+		return constraint_precio_flete;
+	}
+
+	public void setConstraint_precio_flete(String constraint_precio_flete) {
+		this.constraint_precio_flete = constraint_precio_flete;
 	}
 
 	public List<ModeloCombo<Boolean>> getTiposFlete() {
