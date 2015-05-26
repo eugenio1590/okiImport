@@ -28,7 +28,7 @@ public interface STransaccion {
 			int pagina, int limit);
 
 	public Map <String, Object> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
-			Boolean sortDirection, int idProveedor, int pagina, int limit);
+			Boolean sortDirection, Integer idProveedor, int pagina, int limit);
 	
 	//Cotizaciones
 	public Map<String, Object> consultarSolicitudCotizaciones(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,

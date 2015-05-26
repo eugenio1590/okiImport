@@ -153,7 +153,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	
 	@Override
 	public Map<String, Object> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
-			Boolean sortDirection, int idProveedor, int pagina, int limit) {
+			Boolean sortDirection, Integer idProveedor, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		List<String> estatus=new ArrayList<String>();
 		estatus.add("CT");
@@ -209,7 +209,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros = this.ConsultarRequerimientosConSolicitudesCotizacion(
-				null, null, null, cotizacion.getProveedor().getId(), 0, 1);
+				null, null, null, null, 0, 1);
 		int nroRequerimientos = (Integer) parametros.get("total");
 		cotizacion.setEstatus("C");
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();

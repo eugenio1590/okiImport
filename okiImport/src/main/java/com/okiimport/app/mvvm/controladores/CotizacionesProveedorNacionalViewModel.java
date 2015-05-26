@@ -221,6 +221,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 				detalle.setMarcaRepuesto(null);
 				detalle.setCantidad(null);
 				detalle.setPrecioVenta(null);
+				detalle.setPrecioFlete(null);
 			}
 	}
 	

@@ -213,7 +213,7 @@ public class RequerimientoDAOImpl extends
 
 	@Override
 	public List<Requerimiento> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
-			Boolean sortDirection, int idProveedor, List<String> estatus, int start, int limit) {
+			Boolean sortDirection, Integer idProveedor, List<String> estatus, int start, int limit) {
 		// TODO Auto-generated method stub
 		// 1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -241,9 +241,12 @@ public class RequerimientoDAOImpl extends
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		Join joinCotizacion = joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion");
-		restricciones.add(this.criteriaBuilder.equal(
-				joinCotizacion.join("proveedor").get("id"), 
-				idProveedor));
+		
+		if(idProveedor!=null)
+			restricciones.add(this.criteriaBuilder.equal(
+					joinCotizacion.join("proveedor").get("id"), 
+					idProveedor));
+		
 		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "SC"));
 		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
 		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
