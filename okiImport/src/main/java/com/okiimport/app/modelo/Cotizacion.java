@@ -30,6 +30,15 @@ public class Cotizacion implements Serializable{
 	
 	private String mensaje;
 	
+	@Transient
+	private Float totalPrecioVenta=new Float(0);
+	
+	@Transient
+	private Float totalFlete=new Float(0);
+	
+	@Transient
+	private Float totalCotizacion=new Float(0);
+	
 	//bi-directional many-to-one association to Proveedor
 	@ManyToOne
 	@JoinColumn(name="id_proveedor")
@@ -164,13 +173,38 @@ public class Cotizacion implements Serializable{
 		return detalleCotizacion;
 	}
 	
+	//Trasient
+	public Float getTotalPrecioVenta() {
+		return totalPrecioVenta;
+	}
+
+	public void setTotalPrecioVenta(Float totalPrecioVenta) {
+		this.totalPrecioVenta = totalPrecioVenta;
+	}
+
+	public Float getTotalFlete() {
+		return totalFlete;
+	}
+
+	public void setTotalFlete(Float totalFlete) {
+		this.totalFlete = totalFlete;
+	}
+	
+	public Float getTotalCotizacion() {
+		return totalCotizacion;
+	}
+
+	public void setTotalCotizacion(Float totalCotizacion) {
+		this.totalCotizacion = totalCotizacion;
+	}
+	
 	/**EVENTOS*/
 	@PrePersist
 	public void prePersist(){
 		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)
 			this.historicoMoneda = null;
 	}
-	
+
 	@PreUpdate
 	public void preUpdate(){
 		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)

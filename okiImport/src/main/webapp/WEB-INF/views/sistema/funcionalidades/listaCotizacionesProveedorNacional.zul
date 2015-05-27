@@ -168,12 +168,14 @@
 							<listcell>
 								<decimalbox format="###.##"
 									value="@bind(each.precioVenta)" width="100%"
-									constraint="no empty, no zero, no negative" />
+									constraint="no empty, no zero, no negative"
+									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" 
 									value="@bind(each.precioFlete)" width="100px"
-									constraint="@bind(vm.constraint_precio_flete)" />
+									constraint="@bind(vm.constraint_precio_flete)" 
+									onChange="@command('calcularPrecio', tipo=2)"/>
 							</listcell>
 						</listitem>
 					</template>
@@ -183,8 +185,14 @@
 						<listfooter/>
 						<listfooter/>
 						<listfooter/>
-						<listfooter/>
-						<listfooter label="Total:"/>
+						<listfooter>
+							<label value="Total:"/>
+							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)"/>
+						</listfooter>
+						<listfooter>
+							<label value="Total:"/>
+							<label value="@bind(vm.cotizacionSelecionada.totalFlete)"/>
+						</listfooter>
 					</listfoot>
 				</listbox>
 				<hbox id="btnBotones" width="100%" visible="false" >

@@ -300,6 +300,25 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 	}
 	
+	@Command
+	@NotifyChange("cotizacionSelecionada")
+	public void calcularPrecio(@BindingParam("tipo") int tipo){
+		float total = 0;
+		for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
+			switch(tipo){
+			case 1: total+=(detalle.getPrecioVenta()!=null)?detalle.getPrecioVenta():0; break;
+			case 2: total+=(detalle.getPrecioFlete()!=null)?detalle.getPrecioFlete():0; break;
+			default: break;
+			}
+		}
+		
+		switch(tipo){
+		case 1: this.cotizacionSelecionada.setTotalPrecioVenta(total); break;
+		case 2: this.cotizacionSelecionada.setTotalFlete(total); break;
+		default: break;
+		}
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	/*
 	 * Descripcion permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
