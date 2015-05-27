@@ -143,6 +143,12 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
+	@Command
+	@NotifyChange("listaDetalleRequerimientoSeleccionados")
+	public void limpiar(){
+		this.listaDetalleRequerimientoSeleccionados=null;
+	}
+	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

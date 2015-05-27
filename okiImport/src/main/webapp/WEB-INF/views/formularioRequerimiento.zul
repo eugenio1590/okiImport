@@ -27,7 +27,8 @@
 											<combobox id="comboTipoPersona" width="30%"
 												readonly="true"
 												selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)">
+												model="@load(vm.listaTipoPersona)"
+												constraint="no empty">
 												<template
 													name="model">
 													<comboitem

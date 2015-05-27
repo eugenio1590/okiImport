@@ -7,11 +7,12 @@
 		<window id="ventanaCliente" border="normal" sclass="btn-primary"
 			width="40%">
 
-			RIF/Cédula: *
+			<label value="RIF/Cédula: *"/>
 			<space></space>
 			<combobox width="10%" readonly="true"
 				selectedItem="@bind(vm.tipoPersona)"
-				model="@load(vm.listaTipoPersona)">
+				model="@load(vm.listaTipoPersona)"
+				constraint="no empty">
 				<template name="model">
 					<comboitem label="@bind(each.nombre)">
 
@@ -27,15 +28,20 @@
 		</window>
 
 		<separator width="100%" orient="horizontal" bar="true"></separator>
-		<div id="misolicitudes" visible="false">
-			<label value="Mis Solicitudes" sclass="z-letra-grande" />
+		<div id="misolicitudes" visible="false" width="95%" style="border: 3px solid #428bca;" >
+			
 
 
 
 			<listbox id="gridRequerimientosCliente" mold="paging"
 				checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
 				sclass="mylist" model="@load(vm.listaRequerimientos)">
-
+				
+				<auxhead>
+					<auxheader colspan="5" align="center">
+						<label value="Mis Solicitudes" sclass="z-letra-grande" style="color:black;" />
+					</auxheader>
+				</auxhead>
 				<listhead>
 
 					<listheader value="idRequerimiento"
@@ -111,7 +117,8 @@
 					onPaging="@command('paginarLista')" autohide="true" />
 			</div>
 		</div>
+		<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 	</window>
-	<label value="* Campos Obligatorios" hflex="1" />
+	
 </zk>
 

@@ -46,7 +46,8 @@
 											<combobox width="30%"
 												readonly="true"
 												selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)">
+												model="@load(vm.listaTipoPersona)"
+												constraint="no empty">
 												<template
 													name="model">
 													<comboitem
@@ -271,7 +272,9 @@
 				</tabpanels>
 			</tabbox>
 		<hbox width="100%">
-			<label value="* Campos Obligatorios" hflex="1" />
+		<div hflex="1" align="center">
+			<label value="* Campos Obligatorios"  sclass="requerido"/>
+			</div>
 		<div sclass="panel-footer" align="right">
 
 			<button id="btnLimpiar" label="Limpiar" type="submit"
