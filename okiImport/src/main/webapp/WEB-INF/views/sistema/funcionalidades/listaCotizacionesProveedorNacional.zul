@@ -156,23 +156,24 @@
 								label="@bind(each.detalleRequerimiento.cantidad)" />
 							<listcell>
 								<textbox value="@bind(each.marcaRepuesto)" width="100%"
-									constraint="no empty"/>
+									constraint="no empty" tooltiptext="Marca del Repuesto"/>
 							</listcell>
 							<listcell>
 								<spinner value="@save(each.cantidad, before='enviar') 
 									@validator(vm.validatorCantidad, spnCantidad=self, 
 									cantidad=each.detalleRequerimiento.cantidad)"
+									tooltiptext="Cantidad Cotizada del Repuesto"
 									width="100%" constraint="no empty, no negative, no zero" 
 									/>
 							</listcell>
 							<listcell>
-								<decimalbox format="###.##"
+								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
 									constraint="no empty, no zero, no negative"
 									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
-								<decimalbox format="###.##" 
+								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
 									value="@bind(each.precioFlete)" width="100px"
 									constraint="@bind(vm.constraint_precio_flete)" 
 									onChange="@command('calcularPrecio', tipo=2)"/>
