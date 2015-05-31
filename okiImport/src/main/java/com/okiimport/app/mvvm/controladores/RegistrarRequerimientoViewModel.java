@@ -149,17 +149,22 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void buscarCliente() {
 		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-		String cedula = tipo + cliente.getCedula();
+		String cedula = cliente.getCedula();
+		String cedulaBuscar = tipo + cedula;
 		if (cedula != null && !cedula.equalsIgnoreCase("")) {
-			Cliente cliente = sMaestros.consultarCliente(new Cliente(cedula));
+			Cliente cliente = sMaestros.consultarCliente(new Cliente(cedulaBuscar));
 			if (cliente != null) {
 				this.cliente = cliente;
-				this.cliente.setCedula(cedula.substring(1, cedula.length()));
-				this.comboTipoPersona.setValue(cedula.substring(0, 1));
+				this.cliente.setCedula(cedulaBuscar.substring(1, cedulaBuscar.length()));
+				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
 			}
 			else
-				this.cliente = new Cliente(cedula.substring(1, cedula.length()));
+				this.cliente = new Cliente(cedulaBuscar.substring(1, cedulaBuscar.length()));
 			this.requerimiento.setCliente(this.cliente);
+		}
+		else {
+			this.cliente.setCedula(null);
+			cedulaRif.getValue();
 		}
 	}
 
