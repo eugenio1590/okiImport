@@ -26,6 +26,9 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class STransaccionImpl extends AbstractServiceImpl implements STransaccion {
 	
+	private static List<String> ESTATUS_EMITIDOS;
+	private static List<String> ESTATUS_PROCESADOS;
+	
 	@Autowired
 	@BeanInjector("cotizacionDAO")
 	private CotizacionDAO cotizacionDAO;
@@ -41,6 +44,20 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleCotizacionDAO")
 	private DetalleCotizacionDAO detalleCotizacionDAO;
+
+	public STransaccionImpl() {
+		super();
+		
+		ESTATUS_EMITIDOS = new ArrayList<String>();
+		ESTATUS_EMITIDOS.add("CR");
+		ESTATUS_EMITIDOS.add("E");
+		ESTATUS_EMITIDOS.add("EP");
+		
+		ESTATUS_PROCESADOS = new ArrayList<String>();
+		ESTATUS_PROCESADOS.add("CT");
+		ESTATUS_PROCESADOS.add("O");
+		ESTATUS_PROCESADOS.add("CC");
+	}
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
 		return detalleRequerimientoDAO;
@@ -97,24 +114,35 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
 		List<String> estatus=new ArrayList<String>();
-		estatus.add("CR");
-		estatus.add("R");
-		estatus.add("EP");
+		estatus.addAll(ESTATUS_EMITIDOS);
+//		estatus.add("CR");
+//		estatus.add("E");
+//		estatus.add("EP");
 		estatus.add("CT");
 		estatus.add("O");
-		List<Analista> analistas = sMaestros.consultarCantRequerimientos(estatus, 0, -1);
+		List<Analista> analistas = sMaestros.consultarCantRequerimientos(estatus, 0, 1);
 		if(analistas.size()>0)
 			requerimiento.setAnalista(analistas.get(0));
 	}
 	
 	
 	@Override
-	public Map<String, Object> ConsultarMisRequerimientos(
+	public Map<String, Object> consultarMisRequerimientosEmitidos(
 			Requerimiento regFiltro,  String fieldSort, Boolean sortDirection, Integer idusuario, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros= new HashMap<String, Object>();
-		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, 0,-1).size());
-		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, pagina*limit, limit));
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_EMITIDOS, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_EMITIDOS, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarMisRequerimientosProcesados(
+			Requerimiento regFiltro,  String fieldSort, Boolean sortDirection, Integer idusuario, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_PROCESADOS, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_PROCESADOS, pagina*limit, limit));
 		return parametros;
 	}
 	
@@ -200,8 +228,17 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			String fieldSort, Boolean sortDirection, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
+			String fieldSort, Boolean sortDirection, int pagina, int limit){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
 	

@@ -39,6 +39,10 @@ public class DetalleCotizacion implements Serializable {
 
 	public DetalleCotizacion() {
 	}
+	
+	public DetalleCotizacion(Cotizacion cotizacion){
+		this.cotizacion = cotizacion;
+	}
 
 	public Integer getIdDetalleCotizacion() {
 		return idDetalleCotizacion;

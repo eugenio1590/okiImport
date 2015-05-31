@@ -6,7 +6,7 @@ import com.okiimport.app.dao.IGenericDao;
 import com.okiimport.app.modelo.DetalleCotizacion;
 
 public interface DetalleCotizacionDAO extends IGenericDao<DetalleCotizacion, Integer> {
-	public List<DetalleCotizacion> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,
+	public List<DetalleCotizacion> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idCotizacion, Integer idRequerimiento,
 			String fieldSort, Boolean sortDirection, int start, int limit);
 	public List<DetalleCotizacion> ConsultarDetalleCotizacion(int idCotizacion, int page, int limit);
 }

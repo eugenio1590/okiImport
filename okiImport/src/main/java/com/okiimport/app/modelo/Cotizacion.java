@@ -86,6 +86,10 @@ public class Cotizacion implements Serializable{
 		this.mensaje = mensaje;
 		this.proveedor = proveedor;
 	}
+	
+	public Cotizacion(Proveedor proveedor){
+		this.proveedor = proveedor;
+	}
 
 	public Integer getIdCotizacion() {
 		return idCotizacion;

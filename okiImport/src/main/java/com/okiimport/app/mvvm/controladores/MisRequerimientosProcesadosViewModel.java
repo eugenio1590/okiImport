@@ -30,7 +30,7 @@ import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -99,7 +99,7 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarMisRequerimientos(requerimientoFiltro, 
+		Map<String, Object> parametros = sTransaccion.consultarMisRequerimientosProcesados(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
@@ -136,36 +136,6 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 	}
 	
 	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", requerimiento);
-		parametros.put("editar", true);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
-	}
-	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion 
-	 * a los proveedores del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	public void enviarProveedores(@BindingParam("requerimiento") Requerimiento requerimiento){
-		if(!requerimiento.cerrarSolicitud()){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("requerimiento", requerimiento);
-			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
-		}
-		else
-			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
-	}
-	
-	/*
 	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
@@ -178,9 +148,17 @@ public class MisRequerimientosViewModel extends AbstractRequerimientoViewModel i
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
 	
-	//Aprobar Cotizacion
-//	else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
-//	crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void aprobarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
+	}
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {

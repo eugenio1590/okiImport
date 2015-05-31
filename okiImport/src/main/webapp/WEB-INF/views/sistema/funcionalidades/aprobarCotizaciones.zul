@@ -1,0 +1,79 @@
+<zk>
+	<window title="@bind(vm.titulo)" border="none" width="95%" height="95%" closable="true"
+	 sclass="btn-info" apply="org.zkoss.bind.BindComposer" 
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
+		<listbox id="gridDetalleCotizacion" mold="paging"
+			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
+			sclass="mylist" model="@load(vm.listaDetalleCotizacion)">
+
+			<listhead>
+
+				<listheader 
+					label="N° Cotizacion" sort="none"
+					width="200px">
+					<spinner constraint="no negative, no zero" value="@bind(vm.detalleCotizacionFiltro.cotizacion.idCotizacion)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader 
+					label="Proveedor" sort="none">
+					<textbox instant="true" placeholder="" value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
+						onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="marcaRepuesto" label="Marca"
+					sort="auto(marcaRepuesto)" width="170px">
+					<textbox instant="true" placeholder="" value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
+						onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader label="Cant. Solicitada"
+					sort="none" width="125px">
+				</listheader>
+
+				<listheader value="cantidad" label="Cant. Ofrecida"
+					sort="auto(cantidad)" width="200px">
+					<spinner constraint="no negative, no zero" value="@bind(vm.detalleCotizacionFiltro.cantidad)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+				<listheader value="precioVenta" label="Precio de Venta"
+					sort="auto(precioVenta)" width="200px">
+					<decimalbox format="###.##" value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" constraint="no negative, no zero"/>
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="precioFlete" label="Precio de Flete"
+					sort="auto(precioFlete)" width="200px">
+					<decimalbox format="###.##" value="@bind(vm.detalleCotizacionFiltro.precioFlete)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" constraint="no negative, no zero"/>
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@bind(each.cotizacion.idCotizacion)" />
+					<listcell label="@bind(each.cotizacion.proveedor.nombre)" />
+					<listcell label="@bind(each.marcaRepuesto)" />
+					<listcell label="@bind(each.detalleRequerimiento.cantidad)" />
+					<listcell label="@bind(each.cantidad)" />
+					<listcell label="@bind(each.precioVenta)" />
+					<listcell label="@bind(each.precioFlete)" />
+				</listitem>
+			</template>
+
+		</listbox>
+		<paging id="pagDetalleCotizacion"
+			onPaging="@command('paginarLista')" autohide="true" />
+	</window>
+</zk>

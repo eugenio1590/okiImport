@@ -29,7 +29,7 @@ public class RequerimientoDAOImpl extends
 	@Override
 	public List<Requerimiento> ConsultarRequerimientoUsuario(
 			Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
-			Integer idusuario, int start, int limit) {
+			Integer idusuario, List<String> estatus, int start, int limit) {
 		// TODO Auto-generated method stub
 
 		// 1. Creamos el Criterio de busqueda
@@ -46,6 +46,10 @@ public class RequerimientoDAOImpl extends
 
 		restricciones.add(criteriaBuilder.equal(
 				joins.get("analista").get("id"), idusuario));
+		
+		if(estatus!=null && !estatus.isEmpty())
+			restricciones.add(this.entity.get("estatus").in(estatus));
+		
 		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 
 		// 4. Creamos los campos de ordenamiento y ejecutamos

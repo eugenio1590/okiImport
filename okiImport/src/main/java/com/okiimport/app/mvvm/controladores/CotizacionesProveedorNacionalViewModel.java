@@ -91,8 +91,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
+	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	
-	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private String constraint_precio_flete;
 	
 	private List<Cotizacion> listaCotizacion;

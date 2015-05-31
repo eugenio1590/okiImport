@@ -14,7 +14,10 @@ public interface STransaccion {
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
-	public Map <String, Object> ConsultarMisRequerimientos(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
+	public Map <String, Object> consultarMisRequerimientosEmitidos(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
+			int pagina, int limit);
+	
+	public Map <String, Object> consultarMisRequerimientosProcesados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit);
 
 	public Map <String, Object> ConsultarRequerimientosCliente(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, String cedula,
@@ -38,9 +41,10 @@ public interface STransaccion {
 	
 	//Detalle de Cotizaciones
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,
-			String fieldSort, Boolean sortDirection, int start, int limit);
+			String fieldSort, Boolean sortDirection, int pagina, int limit);
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
+			String fieldSort, Boolean sortDirection, int pagina, int limit);
+	
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
 	public Map <String, Object> ConsultarDetalleCotizacion(Integer idcotizacion,int pagina, int limit);
-	
-	
 }

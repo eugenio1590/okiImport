@@ -1,6 +1,6 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosProcesadosViewModel')">
 		<listbox id="gridMisRequerimientos" mold="paging" pageSize="10" pagingPosition="top"
 			sclass="mylist" model="@load(vm.listaRequerimientos)">
 
@@ -63,12 +63,10 @@
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
-									onClick="@command('editarReguerimiento', requerimiento = each)" if="${ each.editar() }"/>
 								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Requerimiento"  
 								    onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
-								<button iconSclass="z-icon-truck red bigger-160" tooltiptext="Enviar a Proveedores"
-									onClick="@command('enviarProveedores', requerimiento=each)" if="${ !each.cerrarSolicitud() }"/>
+								<button  iconSclass="z-icon-book blue bigger-160" tooltiptext="Ver Requerimiento"  
+								    onClick="@command('aprobarCotizaciones', requerimiento = each)" if="${ !each.editar() }"/>
 							</div>
 						</hbox>
 					</listcell>
