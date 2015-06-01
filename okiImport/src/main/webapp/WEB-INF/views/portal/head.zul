@@ -1,0 +1,39 @@
+<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+
+	<hbox sclass="header" width="100%">
+		<space />
+		<image src="/resources/img/topLogo5.png" width="250px" />
+		<space hflex="1" />
+
+		<div class="card-wrap">
+			<div class="card-inner">
+				<h:ul class="nav nav-list">
+					<h:li>
+						<h:a class="tile" href="javascript:void(0)" 
+							onClick="@command('registrarRequerimiento')" >
+							Home
+						</h:a>
+					</h:li>
+					<h:li>
+						<h:a class="tile" href="javascript:void(0)"
+							onClick="@command('registrarProveedor')">
+							Solicitar Ser Proveedor
+						</h:a>
+					</h:li>
+					<h:li>
+						<h:a class="tile" href="javascript:void(0)"
+							onClick="@command('verificarRequerimiento')">
+							Verificar Requerimiento
+						</h:a>
+					</h:li>
+				</h:ul>
+			</div>
+		</div>
+<!-- DIV ANTERIOR DE ENLACES -->
+<!-- 		<div id="hrefEnlacesMenu" align="left"> -->
+<!--   				<button label="Home" onClick="@command('registrarRequerimiento')" sclass="btn-primary"/> -->
+<!-- 				<button label="Solicitar Ser Proveedor" onClick="@command('registrarProveedor')" sclass="btn-primary" /> -->
+<!-- 				<button label="Verificar Requerimiento" onClick="@command('verificarRequerimiento')" sclass="btn-primary"/> -->
+<!-- 			</div> -->
+	</hbox>
+</zk>

@@ -7,6 +7,10 @@ span {
 	resize: none;
 }
 
+.header-custom {
+	background-color:#2196f3;
+}
+
 /**CAPTION*/
 .custom_caption {
 	font-size:12px;
@@ -53,8 +57,13 @@ span {
 	font-weight: bold;
 }
 
+/*FUENTES*/
 /* FUENTE PARA LOS CAMPOS REQUERIDOS*/
 .requerido {
 	color: red;
 	font-weight: bold;
+}
+
+.titulo_blanco span{
+	color: white;
 }

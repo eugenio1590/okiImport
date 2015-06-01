@@ -1,35 +1,32 @@
 <?page title="::Sistema Requerimiento Autopartes::" contentType="text/html;charset=UTF-8"?>
-<?link href="/resources/css/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/aplication.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
-<zk>
+
+<!-- MATERIAL DESIGN -->
+<?link href="/resources/css/material-design/css/base.min.css" rel="stylesheet"?>
+
+<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+	<script src="/resources/css/material-design/js/base.min.js" type="text/javascript"/>
+	
 	<borderlayout id="principal" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer" 
 	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.InicioViewModel')">
-		
-		<north><!-- height="60px" border="none" -->
-			<div sclass="navbar" height="59px">
-			     <image src="/resources/img/topLogo5.png" width="260px"></image>
+	
+		<north class="avoid-fout page-blue" height="10%">
+			<!-- EN EL INCLUDE SE EJECUTARAN LOS COMMAND DEL VIEWMODEL (vm) -->
+			<div>
+				<include src="/WEB-INF/views/portal/head.zul" />
 			</div>
 		</north>
-		<!-- width="300px" minsize="300" width="15%"  -->
 		
 		<center autoscroll="true" style="border-style: solid;">
 			<vlayout width="100%" sclass="z-fondo-principal" >
-				<div  sclass="breadcrumbs">
-					<div id="hrefEnlacesMenu"  sclass="breadcrumbs" align="right">
-  						<!-- Search input-->
-  						<button label="Home" type="submit" onClick="@command('registrarRequerimiento')" sclass="btn-primary"/>
-						<button label="Solicitar Ser Proveedor" type="submit" onClick="@command('registrarProveedor')" sclass="btn-primary" />
-						<button label="Verificar Requerimiento" type="submit" onClick="@command('verificarRequerimiento')" sclass="btn-primary"/>
-					</div>
-				</div>
+				<div sclass="breadcrumbs" style="min-height:10px;"/>
 				<div align="center" width="100%">
-				<!-- 
-				<include src="/WEB-INF/views/formularioRequerimiento.zul" /> -->
-				<include id="mainInclude" self="@define(content)"/>
+					<include id="mainInclude" self="@define(content)"/>
 				</div>
 			</vlayout>
 			
@@ -37,8 +34,7 @@
 		
 		<south height="30px" style="border-style: solid;"  sclass="btn-primary">
 			<!-- 
-			<include
-				src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />
+			<include src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />
 			-->
 		</south>
 		
