@@ -101,7 +101,9 @@
 												<listheader label="Nombre" />
 											</listhead>
 											<template name="model">
-												<listitem label="@bind(each.simboloYNombre())" />
+												<listitem >
+													<listcell iconSclass="@bind(each.simbolo)" label="@bind(each.nombre)"/>
+												</listitem>
 											</template>
 										</listbox>
 										<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>

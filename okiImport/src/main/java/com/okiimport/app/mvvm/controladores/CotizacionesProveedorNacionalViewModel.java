@@ -260,8 +260,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		bandbMoneda.close();
 		if(this.cotizacionSelecionada!=null){
 			HistoricoMoneda historico = this.sControlConfiguracion.consultarActualConversion(monedaSeleccionada);
-			if(historico!=null)
-				this.cotizacionSelecionada.setHistoricoMoneda(historico);
+			this.cotizacionSelecionada.setHistoricoMoneda(historico);
 		}
 	}
 	
@@ -328,7 +327,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
-		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedas(page, PAGE_SIZE);
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
 		//if(pagMonedas!=null){

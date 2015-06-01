@@ -63,7 +63,7 @@
 					<listcell>
 						<hbox spacing="20px">
 							<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitudes"
+								<button iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Ver Solicitudes"
 									onClick="@command('verSolicitudes', requerimiento = each)"/>
 							</div>
 						</hbox>

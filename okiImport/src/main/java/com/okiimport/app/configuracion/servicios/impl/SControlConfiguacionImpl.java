@@ -1,6 +1,7 @@
 package com.okiimport.app.configuracion.servicios.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,11 @@ public class SControlConfiguacionImpl implements SControlConfiguracion {
 	}
 
 	@Override
-	public Map<String, Object> consultarMonedas(int page, int limite) {
+	public Map<String, Object> consultarMonedasConHistorico(int page, int limite) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", Long.valueOf(monedaDAO.countAll()).intValue());
-		parametros.put("monedas", monedaDAO.findAll(page*limite, limite));
+		parametros.put("total", monedaDAO.consultarMonedasConHistorico(0, -1).size());
+		parametros.put("monedas", monedaDAO.consultarMonedasConHistorico(page*limite, limite));
 		return parametros;
 	}
 
