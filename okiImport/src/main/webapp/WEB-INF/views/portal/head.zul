@@ -2,7 +2,7 @@
 
 	<hbox sclass="header" width="100%">
 		<space />
-		<image src="/resources/img/topLogo5.png" width="250px" />
+		<image src="/resources/img/Logo.png" width="200px" />
 		<space hflex="1" />
 
 		<div class="card-wrap">

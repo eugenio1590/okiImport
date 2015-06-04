@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?page language="xul/html"?>
- 
-<window title="${arg.title}" border="normal" closable="false" sclass="btn btn-info" 
-	 use="org.zkoss.zul.impl.MessageboxDlg" width="300px">
- 
-    <panel border="none">
-        <panelchildren>
-            <hbox>
-                <div class="${arg.icon}" />
-                <div sclass="z-messagebox" width="100%">
-                    <label multiline="true" value="${arg.message}"
-                        sclass="word-wrap" width="100%" />
-                </div>
-            </hbox>
-            <hbox style="margin-left:auto; margin-right:auto;">
-                <button identity="${arg.OK}" autodisable="self"
-                    sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.OK}" />
-                <button identity="${arg.CANCEL}" autodisable="self"
-                    sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.CANCEL}" />
-                <button identity="${arg.YES}" 
-                	sclass="btn btn-infoz-messagebox-btn" autodisable="self"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.YES}" />
-                <button identity="${arg.NO}" autodisable="self"
-                	sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.NO}" />
-                <button identity="${arg.RETRY}" autodisable="self"
-                    sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.RETRY}" />
-                <button identity="${arg.ABORT}" autodisable="self"
-                    sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.ABORT}" />
-                <button identity="${arg.IGNORE}" autodisable="self"
-                    sclass="btn btn-info z-messagebox-btn"
-                    use="org.zkoss.zul.impl.MessageboxDlg$Button"
-                    if="${!empty arg.IGNORE}" />
-            </hbox>
-            <separator/>
-        </panelchildren>
-    </panel>
-</window>
+
+<zk xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:zk="http://www.zkoss.org/2005/zk">
+	<window title="${arg.title}" border="normal" closable="false" width="300px" sclass="btn-primary card-header"
+		use="org.zkoss.zul.impl.MessageboxDlg">
+
+		<hbox>
+			<div class="${arg.icon}" />
+			<div sclass="z-messagebox" width="100%">
+				<label multiline="true" sclass="word-wrap" width="100%"
+					value="${arg.message}" />
+			</div>
+		</hbox>
+		
+		<hbox style="margin-left:auto; margin-right:auto;">
+			<button identity="${arg.OK}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.OK}" />
+			<button identity="${arg.CANCEL}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.CANCEL}" />
+			<button identity="${arg.YES}"
+				sclass="btn btn-infoz-messagebox-btn" autodisable="self"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.YES}" />
+			<button identity="${arg.NO}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.NO}" />
+			<button identity="${arg.RETRY}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.RETRY}" />
+			<button identity="${arg.ABORT}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.ABORT}" />
+			<button identity="${arg.IGNORE}" autodisable="self"
+				sclass="btn btn-info z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.IGNORE}" />
+		</hbox>
+	</window>
+</zk>
