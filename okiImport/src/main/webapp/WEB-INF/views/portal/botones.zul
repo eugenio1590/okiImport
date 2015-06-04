@@ -1,0 +1,20 @@
+<zk>
+	<div sclass="breadcrumbs">
+		<!-- hoverImage="/resources/img/user1.png" -->
+		<div class="btn-group btn-group-sm" hflex="1">
+		
+			<a image="/resources/img/botones/home.png"
+				href="javascript:void(0)" tooltiptext="Home"
+				onClick="@command('registrarRequerimiento')" />
+
+			<a image="/resources/img/botones/serProveedor.png"
+				href="javascript:void(0)" tooltiptext="Solicitar Ser Proveedor"
+				onClick="@command('registrarProveedor')" />
+
+			<a image="/resources/img/botones/consultarRequerimiento.png"
+				href="javascript:void(0)" tooltiptext="Consultar Requerimiento"
+				onClick="@command('verificarRequerimiento')" />
+
+		</div>
+	</div>
+</zk>
