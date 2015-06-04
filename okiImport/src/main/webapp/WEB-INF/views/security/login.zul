@@ -2,7 +2,7 @@
 
 <zk>
 	<div align="center">
-		<h:form id="formLogin" class="form" action="/app/login" method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
+		<h:form id="formLogin" class="form" action="login" method="POST" xmlns:h="http://www.w3.org/1999/xhtml">
 			<div width="350px" sclass="alert alert-info" align="center">
 				<grid>
 					<columns>

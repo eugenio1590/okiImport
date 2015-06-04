@@ -78,11 +78,12 @@
 
 								<row>
 
-									<label value="Serial Carroceria: " />
+									<label value="Serial Carroceria: *" />
 
 									<textbox id="serialCarroceria2"
-										width="80%" readonly="true" mold="rounded"
-										value="@bind(vm.requerimiento.serialCarroceriaV)"/>
+										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
+										value="@bind(vm.requerimiento.serialCarroceriaV)"
+										constraint="no empty:El campo no puede estar vacio"/>
 
 									<label value="Año: " />
 									<intbox width="80%" readonly="true" 

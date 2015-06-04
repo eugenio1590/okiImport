@@ -125,14 +125,13 @@
 										<row>
 
 											<label
-												value="Serial Carroceria: *" />
+												value="Serial Carroceria: " />
 
 											<textbox
 												id="serialCarroceria2" width="80%" readonly=""
 												mold="rounded"
 												value="@bind(vm.requerimiento.serialCarroceriaV)"
-												maxlength="11" placeholder="Ej: xA245D25623"
-												constraint="no empty:El Campo No Debe Estar Vacio" />
+												maxlength="11" placeholder="Ej: xA245D25623" />
 
 											<label value="Año: *" />
 											<intbox placeholder="2008" constraint="no negative,no empty, no zero" width="80%" maxlength="4" 
