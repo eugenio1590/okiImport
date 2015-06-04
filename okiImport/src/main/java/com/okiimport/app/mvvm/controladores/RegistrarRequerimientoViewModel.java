@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Messagebox;
@@ -81,10 +82,12 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	}
 
 	@Command
-
 	@NotifyChange({"requerimiento","cliente"})
-	public void registrar(){
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
+			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
+			btnEnviar.setDisabled(true);
+			btnLimpiar.setDisabled(true);
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
 				cliente.setCedula(tipo+cliente.getCedula());

@@ -1,6 +1,6 @@
 <zk>
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
-		sclass="btn-info" apply="org.zkoss.bind.BindComposer"
+		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"
 		onClose="@command('cargarRequerimientos')">
 		<borderlayout>
@@ -203,12 +203,10 @@
 						<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 					</div>
 					<div align="right">
-						<div  sclass="btn btn-xs btn-info">
-							<button label="Limpiar" type="submit"
-								onClick="@command('limpiar')" />
-							<button label="Enviar" type="submit"
-								onClick="@command('enviar')" />
-						</div>
+						<button id="btnLimpiar" label="Limpiar" type="submit"
+							onClick="@command('limpiar')" sclass="btn-primary" />
+						<button label="Enviar" type="submit"
+							onClick="@command('enviar', btnEnviar=self, btnLimpiar=btnLimpiar)" sclass="btn-primary" />
 					</div>
 				</hbox>
 			</div>

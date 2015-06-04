@@ -84,11 +84,15 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	@Command
 	@NotifyChange({ "proveedor" })
-	public void registrar() {
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
+			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		if (checkIsFormValid()) {
 
 			if (proveedor.getMarcaVehiculos().size() > 0
 					&& proveedor.getClasificacionRepuestos().size() > 0) {
+				
+				btnEnviar.setDisabled(true);
+				btnLimpiar.setDisabled(true);
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				proveedor.setCedula(tipo + proveedor.getCedula());
 				proveedor.setEstatus("solicitante");
