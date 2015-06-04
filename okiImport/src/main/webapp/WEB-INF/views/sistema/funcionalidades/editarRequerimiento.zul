@@ -105,8 +105,8 @@
 							<columns>
 								<column width="35%" align="right" />
 								<column width="65%" />
-								<column width="40%" align="right" />
-								<column width="60%" />
+								<column width="35%" align="right" />
+								<column width="65%" />
 							</columns>
 
 							<rows>
@@ -122,7 +122,7 @@
 										</template>
 									</combobox>
 
-									<label value="Transmision: *"/>
+									<label value="Transmision: *" />
 									<combobox id="cmbTransmision"
 										placeholder="Seleccione..." width="80%" 
 										readonly="true" buttonVisible="@bind(vm.editar)"
@@ -156,7 +156,8 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption label="Datos Repuestos" sclass="custom_caption" />
-				<panel sclass="panel-primary">
+				<panel apply="org.zkoss.bind.BindComposer"
+					sclass="panel-primary">
 					<panelchildren>
 
 						<listbox mold="paging"
@@ -205,11 +206,6 @@
 										<div>
 											<image width="50px"
 												height="50px" src="@bind(each.getFoto64())" />
-												
-											<button label="..."
-													sclass="btn-primary" style="margin-bottom:0px"
-													upload="true"
-													onUpload="@command('cambiarFoto', media=event.media, detalle = each)" />
 										</div>
 									</listcell>
 								</listitem>

@@ -10,7 +10,6 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -22,7 +21,6 @@ import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -110,29 +108,6 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		}
 		else
 			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
-	}
-	
-	/*
-	 * Descripcion: Permitira limpiar los campos de la vista del formulario
-	 * @param Ninguno
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	@NotifyChange({"requerimiento", "traccion", "transmision"})
-	public void limpiar(){
-		/*this.traccion = null;
-		this.transmision = null;
-		this.requerimiento.setMotor(null);
-		this.requerimiento.setTraccionV(null);
-		this.requerimiento.setTransmisionV(null);*/
-		this.requerimiento.setSerialCarroceriaV(null);
-		for(DetalleRequerimiento detalle:this.requerimiento.getDetalleRequerimientos()){
-			detalle.setCodigoOem("");
-			detalle.setCantidad(new Long(0));
-			detalle.setDescripcion("");
-			detalle.setClasificacionRepuesto(null);
-			detalle.setFoto(null);
-		}
 	}
 	
 	/*

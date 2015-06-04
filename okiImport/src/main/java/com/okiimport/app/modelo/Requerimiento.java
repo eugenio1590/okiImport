@@ -58,9 +58,6 @@ public class Requerimiento implements Serializable {
 	@Column(name="traccion_v")
 	private Boolean traccionV;
 	
-	@Column(name="tipoRepuesto")
-	private Boolean tipoRepuesto;
-	
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
 	@JoinColumn(name="id_analista")
@@ -221,14 +218,6 @@ public class Requerimiento implements Serializable {
 
 	public void setTraccionV(Boolean traccionV) {
 		this.traccionV = traccionV;
-	}
-
-	public Boolean getTipoRepuesto() {
-		return tipoRepuesto;
-	}
-
-	public void setTipoRepuesto(Boolean tipoRepuesto) {
-		this.tipoRepuesto = tipoRepuesto;
 	}
 
 	public void setMarcaVehiculo(MarcaVehiculo marcaVehiculo) {

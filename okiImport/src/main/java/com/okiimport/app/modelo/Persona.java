@@ -45,11 +45,6 @@ public abstract class Persona implements Serializable {
 	//bi-directional one-to-one association to Usuario (Relacion Poliformica)
 	@OneToOne(mappedBy="persona")
 	protected Usuario usuario;
-	
-	//bi-directional many-to-one association to Ciudad
-	@ManyToOne
-	@JoinColumn(name="id_ciudad")
-	protected Ciudad ciudad;
 
 	public Persona() {
 	}
@@ -137,14 +132,6 @@ public abstract class Persona implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
-	}
-
 	public String getEstatus() {
 		return estatus;
 	}

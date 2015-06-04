@@ -275,4 +275,16 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
+
+	@Command
+	@NotifyChange("*")
+	public void cambiarFoto(@BindingParam("media") Media media,
+			@BindingParam("detalle") DetalleRequerimiento detalle) {
+		if (media instanceof org.zkoss.image.Image)
+			detalle.setFoto(((org.zkoss.image.Image) media).getByteData());
+		else if (media != null)
+			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
+					null, null);
+	}
+
 }
