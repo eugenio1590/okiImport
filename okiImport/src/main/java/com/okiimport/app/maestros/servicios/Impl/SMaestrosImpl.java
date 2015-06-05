@@ -7,8 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.dao.AnalistaDAO;
+import com.okiimport.app.maestros.dao.CiudadDAO;
 import com.okiimport.app.maestros.dao.ClasificacionRepuestoDAO;
 import com.okiimport.app.maestros.dao.ClienteDAO;
+import com.okiimport.app.maestros.dao.EstadoDAO;
 import com.okiimport.app.maestros.dao.MarcaVehiculoDAO;
 import com.okiimport.app.maestros.dao.MotorDAO;
 import com.okiimport.app.maestros.dao.PersonaDAO;
@@ -28,6 +30,14 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	@Autowired
 	@BeanInjector("marcaVehiculoDAO")
 	private MarcaVehiculoDAO marcaVehiculoDAO;
+	
+	@Autowired
+	@BeanInjector("estadoDAO")
+	private EstadoDAO estadoDAO;
+	
+	@Autowired
+	@BeanInjector("ciudadDAO")
+	private CiudadDAO ciudadDAO;
 	
 	@Autowired
 	@BeanInjector("clienteDAO")
@@ -57,6 +67,24 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		Parametros.put("marcas", marcaVehiculoDAO.listaMarcasVehiculosActivas(page*limit, limit));
 		return Parametros;
 	}
+	
+	//Estados
+		@Override
+		public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {
+			Map<String, Object> Parametros= new HashMap<String, Object>();
+			Parametros.put("total", estadoDAO.listaEstadosActivos(0, -1).size());
+			Parametros.put("estados", estadoDAO.listaEstadosActivos(page*limit, limit));
+			return Parametros;
+		}
+		
+		//Ciudades
+				@Override
+				public Map<String, Object> ConsultarCiudad(Integer idEstado,Integer page, Integer limit) {
+					Map<String, Object> Parametros= new HashMap<String, Object>();
+					Parametros.put("total", ciudadDAO.listaCiudadesActivas(idEstado, 0, -1).size());
+					Parametros.put("ciudades", ciudadDAO.listaCiudadesActivas(idEstado,page*limit, limit));
+					return Parametros;
+				}
 	
 	//Persona
 	@Override

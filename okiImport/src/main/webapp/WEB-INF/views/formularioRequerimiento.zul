@@ -1,10 +1,11 @@
 <zk xmlns:w="client" xmlns:n="native">
-<!-- 	<script src="/resources/js/scriptParaFechas.js" /> -->
-	<window id="winFormularioRequerimiento" title="Ingrese Su Requerimiento" border="normal" width="95%" sclass="btn-primary"
-		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')" >
-		
-		
+	<!-- 	<script src="/resources/js/scriptParaFechas.js" /> -->
+	<window id="winFormularioRequerimiento"
+		title="Ingrese Su Requerimiento" border="normal" width="95%"
+		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
+
+
 		<groupbox>
 			<hbox>
 				<vbox>
@@ -24,11 +25,10 @@
 									<row>
 										<label value="Cedula/RIF: *" />
 										<hbox>
-											<combobox id="comboTipoPersona" width="30%"
-												readonly="true"
+											<combobox
+												id="comboTipoPersona" width="30%" readonly="true"
 												selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)"
-												constraint="no empty">
+												model="@load(vm.listaTipoPersona)" constraint="no empty">
 												<template
 													name="model">
 													<comboitem
@@ -38,10 +38,11 @@
 											</combobox>
 											<textbox id="cedulaRif"
 												width="70%" readonly="" mold="rounded"
-												value="@bind(vm.cliente.cedula)"
-												placeholder="Ej: 402405375" maxlength="12"
-												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" 
-												onBlur="@command('buscarCliente')" onOK="@command('buscarCliente')"/>
+												value="@bind(vm.cliente.cedula)" placeholder="Ej: 402405375"
+												maxlength="12"
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"
+												onBlur="@command('buscarCliente')"
+												onOK="@command('buscarCliente')" />
 										</hbox>
 
 										<label
@@ -70,6 +71,34 @@
 											placeholder="Ej. fusa@gmail.com"
 											constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
 										</textbox>
+									</row>
+									<row>
+										<label value="Estado: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.estado)"
+											model="@load(vm.listaEstados)"
+											onSelect="@command('buscarCiudades')">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+
+												</comboitem>
+											</template>
+										</combobox>
+
+										<label value="Ciudad: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.ciudad)"
+											model="@load(vm.listaCiudades)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+
+												</comboitem>
+											</template>
+										</combobox>
 									</row>
 
 
@@ -134,7 +163,9 @@
 												maxlength="11" placeholder="Ej: xA245D25623" />
 
 											<label value="Año: *" />
-											<intbox placeholder="2008" constraint="no negative,no empty, no zero" width="80%" maxlength="4" 
+											<intbox placeholder="2008"
+												constraint="no negative,no empty, no zero" width="80%"
+												maxlength="4"
 												value="@save(vm.requerimiento.annoV) 
 													@validator(vm.validatorAnno, maxValue=vm.yearDay, intbAnno=self)" />
 
@@ -207,8 +238,9 @@
 													</comboitem>
 												</template>
 											</combobox>
-											
-											<label value="Tipo Repuesto: " />
+
+											<label
+												value="Tipo Repuesto: " />
 											<combobox
 												placeholder="Seleccione..." width="80%" readonly="true"
 												selectedItem="@bind(vm.tipoRepuesto)"
@@ -220,8 +252,8 @@
 													</comboitem>
 												</template>
 											</combobox>
-										
-											</row>
+
+										</row>
 
 									</rows>
 								</grid>
@@ -249,7 +281,7 @@
 								<listhead>
 									<listheader label="CodigoOEM"
 										sort="auto" width="140px" />
-										
+
 									<listheader label="Descripcion *"
 										width="300px" sort="auto" />
 									<listheader label="Cantidad *"
@@ -266,7 +298,8 @@
 
 										</listcell>
 										<listcell>
-											<textbox width="275px" multiline="true" rows="2" sclass="no_rezise"
+											<textbox width="275px"
+												multiline="true" rows="2" sclass="no_rezise"
 												value="@bind(each.descripcion)"
 												constraint="no empty:El campo no puede estar vacio, escriba solo numeros">
 											</textbox>
@@ -300,16 +333,18 @@
 		</groupbox>
 		<hbox width="100%">
 			<div hflex="1" align="center">
-				<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
+				<label value="* Campos Obligatorios" hflex="1"
+					sclass="requerido" />
 			</div>
 			<div sclass="panel-footer" align="right">
 
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn-primary" />
 				<button label="Enviar" type="submit"
-					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)" sclass="btn-primary" />
+					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
 			</div>
 		</hbox>
 	</window>
-	
+
 </zk>

@@ -20,7 +20,9 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -31,6 +33,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
 	private Proveedor proveedor;
+	private Ciudad ciudad;
 
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
@@ -45,8 +48,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Paging pagTipoRepuestos;
 	@Wire("#btnLimpiar")
 	private Button btnLimpiar;
-	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
+	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 
@@ -55,17 +57,23 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
+	private List<ModeloCombo<Boolean>> listaTipoProveedor;
+	private ModeloCombo<Boolean> tipoProveedor;
+	private List<Estado> listaEstados;
+	
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
+		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(page_size);
 		pagTipoRepuestos.setPageSize(page_size);
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
+		listaTipoProveedor = llenarListaTipoProveedor();
 	}
 
 	@Command
@@ -82,6 +90,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		proveedor = new Proveedor();
 	}
 
+	
+	
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -280,4 +290,56 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoProveedor() {
+		return listaTipoProveedor;
+	}
+
+	public void setListaTipoProveedor(List<ModeloCombo<Boolean>> listaTipoProveedor) {
+		this.listaTipoProveedor = listaTipoProveedor;
+	}
+
+	public ModeloCombo<Boolean> getTipoProveedor() {
+		return tipoProveedor;
+	}
+
+	public void setTipoProveedor(ModeloCombo<Boolean> tipoProveedor) {
+		this.tipoProveedor = tipoProveedor;
+	}
+
+	public List<Estado> getListaEstados() {
+		return listaEstados;
+	}
+
+	public void setListaEstados(List<Estado> listaEstados) {
+		this.listaEstados = listaEstados;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public List<Ciudad> getListaCiudades() {
+		return listaCiudades;
+	}
+
+	public void setListaCiudades(List<Ciudad> listaCiudades) {
+		this.listaCiudades = listaCiudades;
+	}
+	
+	
+	
+	
 }

@@ -22,8 +22,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
@@ -36,8 +38,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;
-	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
+	private Ciudad ciudad;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
@@ -51,10 +52,12 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 	private List<MarcaVehiculo> listaMarcasVehiculo;
 	private List<Motor> listaMotor;
+	private List<Estado> listaEstados;
 	private List<ModeloCombo<Boolean>> listaTraccion;
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
+	
 
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
@@ -68,6 +71,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		limpiar();
 		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0,
 				-1).get("marcas");
+		listaEstados = llenarListaEstados();
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
@@ -297,6 +301,31 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setTipoRepuesto(ModeloCombo<Boolean> tipoRepuesto) {
 		this.tipoRepuesto = tipoRepuesto;
 	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public List<Estado> getListaEstados() {
+		return listaEstados;
+	}
+
+	public void setListaEstados(List<Estado> listaEstados) {
+		this.listaEstados = listaEstados;
+	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+	
 	
 	
 }
