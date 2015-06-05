@@ -54,11 +54,13 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private List<ModeloCombo<Boolean>> listaTraccion;
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
+	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
 
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	private List<DetalleRequerimiento> eliminarDetalle;
 	private ModeloCombo<Boolean> tipoPersona;
+	private ModeloCombo<Boolean> tipoRepuesto;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
@@ -71,6 +73,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		listaTransmision = llenarListaTransmision();
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
+		listaTipoRepuesto = llenarListaTipoRepuesto();
 	}
 
 	@Command
@@ -278,4 +281,22 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
+		return listaTipoRepuesto;
+	}
+
+	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+		this.listaTipoRepuesto = listaTipoRepuesto;
+	}
+
+	public ModeloCombo<Boolean> getTipoRepuesto() {
+		return tipoRepuesto;
+	}
+
+	public void setTipoRepuesto(ModeloCombo<Boolean> tipoRepuesto) {
+		this.tipoRepuesto = tipoRepuesto;
+	}
+	
+	
 }
