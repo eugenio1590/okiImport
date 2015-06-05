@@ -2,7 +2,7 @@
 
 	<hbox sclass="header" width="100%"><!-- sclass="navbar" sclass="header" -->
 		<space />
-		<image src="/resources/img/LogoNuevo.png" width="200px" />
+		<image src="/resources/img/LogoSinSombreado.png" width="200px" />
 		<space hflex="1" />
 <!-- 		<space hflex="1" /> -->
 <!-- 		<div class="card-wrap"> -->
