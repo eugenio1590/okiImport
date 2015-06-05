@@ -69,22 +69,22 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	}
 	
 	//Estados
-		@Override
-		public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {
-			Map<String, Object> Parametros= new HashMap<String, Object>();
-			Parametros.put("total", estadoDAO.listaEstadosActivos(0, -1).size());
-			Parametros.put("estados", estadoDAO.listaEstadosActivos(page*limit, limit));
-			return Parametros;
-		}
-		
-		//Ciudades
-				@Override
-				public Map<String, Object> ConsultarCiudad(Integer idEstado,Integer page, Integer limit) {
-					Map<String, Object> Parametros= new HashMap<String, Object>();
-					Parametros.put("total", ciudadDAO.listaCiudadesActivas(idEstado, 0, -1).size());
-					Parametros.put("ciudades", ciudadDAO.listaCiudadesActivas(idEstado,page*limit, limit));
-					return Parametros;
-				}
+	@Override
+	public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", estadoDAO.countAll());
+		Parametros.put("estados", estadoDAO.findAll());
+		return Parametros;
+	}
+
+	//Ciudades
+	@Override
+	public Map<String, Object> ConsultarCiudad(Integer idEstado,Integer page, Integer limit) {
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", ciudadDAO.listaCiudadesEstado(idEstado, 0, -1).size());
+		Parametros.put("ciudades", ciudadDAO.listaCiudadesEstado(idEstado,page*limit, limit));
+		return Parametros;
+	}
 	
 	//Persona
 	@Override
