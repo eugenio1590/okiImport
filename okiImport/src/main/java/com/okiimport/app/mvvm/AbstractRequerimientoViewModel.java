@@ -19,14 +19,24 @@ import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Spinner;
 
+import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.mail.MailService;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Estado;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	@Autowired
 	@BeanInjector("mailService")
 	protected MailService mailService;
+	
+	@BeanInjector("sMaestros")
+	protected SMaestros sMaestros;
+	
+	protected List<Ciudad> listaCiudades;
+
+	protected Estado estado;
 	
 	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
 	
@@ -50,6 +60,21 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
 					null, null);
 	}
+	
+	/**COMMANDS*/
+	public List<Estado> llenarListaEstados(){
+		return  (List<Estado>) sMaestros.ConsultarEstado(0,
+				-1).get("estados");
+	}
+	
+	@Command
+	@NotifyChange({ "listaCiudades" })
+	public void buscarCiudades(){
+		if (this.estado != null){
+			listaCiudades = (List<Ciudad>) sMaestros.ConsultarCiudad(estado.getIdEstado(), 0, -1).get("ciudades");
+		}
+	}
+	
 
 	/**METODOS SOBREESCRITOS*/
 	@Override
@@ -80,6 +105,20 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaTipoPersona.add(new ModeloCombo<Boolean>("J", true));
 		listaTipoPersona.add(new ModeloCombo<Boolean>("V", false));
 		return listaTipoPersona;
+	}
+	
+	protected static List <ModeloCombo<Boolean>> llenarListaTipoRepuesto(){
+		List <ModeloCombo<Boolean>> listaTipoRepuesto = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Reemplazo", true));
+		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Original", false));
+		return listaTipoRepuesto;
+	}
+	
+	protected static List <ModeloCombo<Boolean>> llenarListaTipoProveedor(){
+		List <ModeloCombo<Boolean>> listaTipoProveedor = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Nacional", true));
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Internacional", false));
+		return listaTipoProveedor;
 	}
 	
 	protected static List<ModeloCombo<String>> llenarListaEstatus(){
@@ -165,4 +204,30 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			}
 		};
 	}
+
+	public SMaestros getsMaestros() {
+		return sMaestros;
+	}
+
+	public void setsMaestros(SMaestros sMaestros) {
+		this.sMaestros = sMaestros;
+	}
+
+	public List<Ciudad> getListaCiudades() {
+		return listaCiudades;
+	}
+
+	public void setListaCiudades(List<Ciudad> listaCiudades) {
+		this.listaCiudades = listaCiudades;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	
+	
 }
