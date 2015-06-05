@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
@@ -49,7 +50,7 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 	
 	@Override
 	public List<DetalleCotizacion> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idCotizacion, Integer idRequerimiento,
-			boolean distinct, String fieldSort, Boolean sortDirection, int start, int limit) {
+			boolean distinct,  boolean cantExacta, String fieldSort, Boolean sortDirection, int start, int limit) {
 		// TODO Auto-generated method stub
 		// 1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -61,12 +62,16 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 		Map<String, Join> joins = this.crearJoins(entidades);
 		
 		if(distinct){
-//			this.distinct = distinct;
-//			this.selected = new Selection[]{
-//					joins.get("cotizacion"),
-//					this.entity.get("marcaRepuesto"),
-//					
-//			};
+			this.distinct = distinct;
+			this.selected = new Selection[]{
+					this.entity.get("idDetalleCotizacion"),
+					this.entity.get("marcaRepuesto"),
+					this.entity.get("precioVenta"),
+					this.entity.get("precioFlete"),
+					this.entity.get("cantidad"),
+					joins.get("cotizacion"),
+					joins.get("detalleRequerimiento"),
+			};
 		}
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
@@ -81,7 +86,7 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 					joins.get("detalleRequerimiento").join("requerimiento").get("idRequerimiento"), 
 					idRequerimiento));
 		
-		agregarRestricciones(detalleF, restricciones, joins);
+		agregarRestricciones(detalleF, restricciones, joins, cantExacta);
 		
 		// 4. Creamos los campos de ordenamiento y ejecutamos
 		List<Order> orders = new ArrayList<Order>();
@@ -89,20 +94,38 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 		if (fieldSort != null && sortDirection != null)
 				orders.add((sortDirection) ? this.criteriaBuilder.asc(this.entity.get(fieldSort)) : 
 					this.criteriaBuilder.desc(this.entity.get(fieldSort)));
-		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
+		
+		List<Expression<?>> groupBy = null;
+		
+		if(distinct){
+			groupBy = new ArrayList<Expression<?>>();
+			groupBy.add(this.entity.get("idDetalleCotizacion"));
+			groupBy.add(joins.get("cotizacion"));
+			groupBy.add(this.entity.get("precioVenta"));
+			groupBy.add(this.entity.get("precioFlete"));
+			groupBy.add(this.entity.get("cantidad"));
+			groupBy.add(joins.get("detalleRequerimiento"));
+			groupBy.add(this.entity.get("marcaRepuesto"));
+		}
+		
+		return ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy, orders, start, limit);
 	}
 	
-	private void agregarRestricciones(DetalleCotizacion detalleF, List<Predicate> restricciones, Map<String, Join> joins){
+	private void agregarRestricciones(DetalleCotizacion detalleF, List<Predicate> restricciones, Map<String, Join> joins, boolean cantExacta){
 		if(detalleF!=null){
 			if(detalleF.getMarcaRepuesto()!=null)
 				restricciones.add(criteriaBuilder.like(
 						criteriaBuilder.lower(this.entity.get("marcaRepuesto").as(String.class)),
 						"%"+String.valueOf(detalleF.getMarcaRepuesto()).toLowerCase()+"%"));
 			
-			if(detalleF.getCantidad()!=null)
-				restricciones.add(criteriaBuilder.like(
-						criteriaBuilder.lower(this.entity.get("cantidad").as(String.class)),
-						"%"+String.valueOf(detalleF.getCantidad()).toLowerCase()+"%"));
+			if(detalleF.getCantidad()!=null){
+				if(cantExacta)
+					restricciones.add(criteriaBuilder.like(
+							criteriaBuilder.lower(this.entity.get("cantidad").as(String.class)),
+							"%"+String.valueOf(detalleF.getCantidad()).toLowerCase()+"%"));
+				else
+					restricciones.add(criteriaBuilder.greaterThanOrEqualTo(this.entity.get("cantidad").as(Long.class), detalleF.getCantidad()));
+			}
 			
 			if(detalleF.getPrecioVenta()!=null)
 				restricciones.add(criteriaBuilder.like(
