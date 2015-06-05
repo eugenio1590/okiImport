@@ -9,6 +9,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Selection;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
 import com.okiimport.app.modelo.Cotizacion;
@@ -48,7 +49,7 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 	
 	@Override
 	public List<DetalleCotizacion> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idCotizacion, Integer idRequerimiento,
-			String fieldSort, Boolean sortDirection, int start, int limit) {
+			boolean distinct, String fieldSort, Boolean sortDirection, int start, int limit) {
 		// TODO Auto-generated method stub
 		// 1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -58,6 +59,15 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 		entidades.put("cotizacion", JoinType.INNER);
 		entidades.put("detalleRequerimiento", JoinType.INNER);
 		Map<String, Join> joins = this.crearJoins(entidades);
+		
+		if(distinct){
+//			this.distinct = distinct;
+//			this.selected = new Selection[]{
+//					joins.get("cotizacion"),
+//					this.entity.get("marcaRepuesto"),
+//					
+//			};
+		}
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 

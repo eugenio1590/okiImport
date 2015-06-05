@@ -227,17 +227,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			String fieldSort, Boolean sortDirection, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
 	
 	@Override
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
 			String fieldSort, Boolean sortDirection, int pagina, int limit){
+		detalleF.getCotizacion().setEstatus("C");
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
 	}
 	
