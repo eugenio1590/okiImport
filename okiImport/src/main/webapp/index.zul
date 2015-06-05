@@ -24,7 +24,8 @@
 		
 		<center autoscroll="true" style="border-style: solid;">
 			<vlayout width="100%" sclass="z-fondo-principal" >
-				<div sclass="breadcrumbs" style="min-height:10px;"/>
+				<!-- EN EL INCLUDE SE EJECUTARAN LOS COMMAND DEL VIEWMODEL (vm) -->
+				<include src="/WEB-INF/views/portal/botones.zul" />
 				<div align="center" width="100%">
 					<include id="mainInclude" self="@define(content)"/>
 				</div>
@@ -32,11 +33,9 @@
 			
 		</center>
 		
-		<south height="30px" style="border-style: solid;"  sclass="btn-primary">
-			<!-- 
-			<include src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" />
-			-->
-		</south>
+<!-- 		<south height="30px" style="border-style: solid;"  sclass="btn-primary"> -->
+<!-- 			<include src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" /> -->
+<!-- 		</south> -->
 		
 	</borderlayout>
 </zk>

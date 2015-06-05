@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
@@ -120,11 +121,6 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	@Command
 	@NotifyChange({"requerimiento", "traccion", "transmision"})
 	public void limpiar(){
-		/*this.traccion = null;
-		this.transmision = null;
-		this.requerimiento.setMotor(null);
-		this.requerimiento.setTraccionV(null);
-		this.requerimiento.setTransmisionV(null);*/
 		this.requerimiento.setSerialCarroceriaV(null);
 		for(DetalleRequerimiento detalle:this.requerimiento.getDetalleRequerimientos()){
 			detalle.setCodigoOem("");
@@ -141,8 +137,11 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void actualizar(){
+	public void actualizar(@BindingParam("btnEnviar") Button btnEnviar,
+			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
+			btnEnviar.setDisabled(true);
+			btnLimpiar.setDisabled(true);
 			if(traccion!=null)
 				requerimiento.setTraccionV(traccion.getValor());
 			if(transmision!=null)

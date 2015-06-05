@@ -7,7 +7,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
+import org.zkoss.bind.annotation.BindingParam;
+import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
@@ -16,6 +20,7 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Spinner;
 
 import com.okiimport.app.mail.MailService;
+import com.okiimport.app.modelo.DetalleRequerimiento;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
@@ -32,6 +37,18 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public void setMailService(MailService mailService) {
 		this.mailService = mailService;
+	}
+	
+	/**COMMADN*/
+	@Command
+	@NotifyChange("*")
+	public void cambiarFoto(@BindingParam("media") Media media,
+			@BindingParam("detalle") DetalleRequerimiento detalle) {
+		if (media instanceof org.zkoss.image.Image)
+			detalle.setFoto(((org.zkoss.image.Image) media).getByteData());
+		else if (media != null)
+			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
+					null, null);
 	}
 
 	/**METODOS SOBREESCRITOS*/

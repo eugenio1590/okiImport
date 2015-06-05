@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.East;
@@ -232,7 +233,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * */
 	@Command
 	@NotifyChange("*")
-	public void enviar(){
+	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
+			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(cotizacionSelecionada!=null){
 			if(checkIsFormValid()){
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);

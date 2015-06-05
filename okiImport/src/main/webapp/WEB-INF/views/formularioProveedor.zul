@@ -281,7 +281,7 @@
 				onClick="@command('limpiar')" sclass="btn-primary"/>
 
 			<button label="Enviar" type="submit"
-				onClick="@command('registrar')" sclass="btn-primary"/>
+				onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)" sclass="btn-primary"/>
 		</div>
 		</hbox>
 	</window>

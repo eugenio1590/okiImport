@@ -1,0 +1,22 @@
+<zk>
+	<div sclass="breadcrumbs">
+		<div class="btn-group btn-group-sm" hflex="1">
+			
+			<a image="/resources/img/botones/HomeCasaOscuro.png"
+				hoverImage="/resources/img/botones/HomeCasaClara.png" 
+				href="javascript:void(0)" tooltiptext="Home"
+				onClick="@command('registrarRequerimiento')" />
+
+			<a image="/resources/img/botones/SerProveedorOscuro.png"
+				hoverImage="/resources/img/botones/SerProveedorClaro.png"
+				href="javascript:void(0)" tooltiptext="Solicitar Ser Proveedor"
+				onClick="@command('registrarProveedor')" />
+
+			<a image="/resources/img/botones/ConsultarOscuro.png"
+				hoverImage="/resources/img/botones/ConsultarClaro.png"
+				href="javascript:void(0)" tooltiptext="Consultar Requerimiento"
+				onClick="@command('verificarRequerimiento')" />
+			
+		</div>
+	</div>
+</zk>

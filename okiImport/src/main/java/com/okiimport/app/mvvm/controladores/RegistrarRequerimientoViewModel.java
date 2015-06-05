@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Messagebox;
@@ -81,10 +82,12 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	}
 
 	@Command
-
 	@NotifyChange({"requerimiento","cliente"})
-	public void registrar(){
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
+			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
+			btnEnviar.setDisabled(true);
+			btnLimpiar.setDisabled(true);
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
 				cliente.setCedula(tipo+cliente.getCedula());
@@ -275,16 +278,4 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
-
-	@Command
-	@NotifyChange("*")
-	public void cambiarFoto(@BindingParam("media") Media media,
-			@BindingParam("detalle") DetalleRequerimiento detalle) {
-		if (media instanceof org.zkoss.image.Image)
-			detalle.setFoto(((org.zkoss.image.Image) media).getByteData());
-		else if (media != null)
-			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
-					null, null);
-	}
-
 }
