@@ -184,7 +184,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			Boolean sortDirection, Integer idProveedor, int pagina, int limit) {
 		// TODO Auto-generated method stub
 		List<String> estatus=new ArrayList<String>();
-		estatus.add("CT");
 		estatus.add("O");
 		estatus.add("CC");
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -245,9 +244,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Override
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
-		Map<String, Object> parametros = this.ConsultarRequerimientosConSolicitudesCotizacion(
-				null, null, null, null, 0, 1);
-		int nroRequerimientos = (Integer) parametros.get("total");
 		cotizacion.setEstatus("C");
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
 		cotizacion = cotizacionDAO.update(cotizacion);
@@ -257,12 +253,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			
 			detalleRequerimiento.setEstatus("CT");
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-			
-			if(nroRequerimientos==0){
-				Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-				requerimiento.setEstatus("CT");
-				this.requerimientoDAO.update(requerimiento);
-			}
+		
+			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+			requerimiento.setEstatus("CT");
+			this.requerimientoDAO.update(requerimiento);
 		}
 		return cotizacion;
 	}

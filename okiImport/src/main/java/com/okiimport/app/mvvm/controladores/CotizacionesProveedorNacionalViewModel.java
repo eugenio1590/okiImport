@@ -200,7 +200,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
 		cotizacionSelecionada = cotizacion;
-		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, cotizacion.getIdCotizacion(), 
+		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
 				null, null, 0, -1);
 		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
 		limpiarCotizacionSeleccionada();
