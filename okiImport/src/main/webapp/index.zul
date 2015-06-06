@@ -25,8 +25,8 @@
 		<center autoscroll="true" style="border-style: solid;">
 			<vlayout width="100%" sclass="z-fondo-principal" >
 				<!-- EN EL INCLUDE SE EJECUTARAN LOS COMMAND DEL VIEWMODEL (vm) -->
-				<include src="/WEB-INF/views/portal/botones.zul" />
-				<div align="center" width="100%">
+				<include src="/WEB-INF/views/portal/botones.zul" hflex="1"/>
+				<div align="center" width="100%" hflex="1">
 					<include id="mainInclude" self="@define(content)"/>
 				</div>
 			</vlayout>
