@@ -172,13 +172,13 @@
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
 									constraint="no empty, no zero, no negative"
-									onChange="@command('calcularPrecio', tipo=1)" />
+									onChange="@command('calcularPrecio', column=1)" />
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
 									value="@bind(each.precioFlete)" width="100px"
 									constraint="@bind(vm.constraint_precio_flete)" 
-									onChange="@command('calcularPrecio', tipo=2)"/>
+									onChange="@command('calcularPrecio', column=2)"/>
 							</listcell>
 						</listitem>
 					</template>

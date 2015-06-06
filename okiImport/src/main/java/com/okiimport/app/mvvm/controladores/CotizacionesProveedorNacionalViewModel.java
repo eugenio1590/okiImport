@@ -239,6 +239,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			if(checkIsFormValid()){
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
 				sTransaccion.registrarCotizacion(cotizacionSelecionada);
+				this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, null, null);
 				cotizacionSelecionada = null;
 				listaDetalleCotizacion = null;
 				mostrarBotones();
@@ -288,6 +289,11 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
+	/*
+	 * Descripcion: Permitira especificar el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente
+	 * @param Ninguno
+	 * Retorno: Ninguno 
+	 */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
@@ -301,19 +307,24 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 	}
 	
+	/*
+	 * Descripcion: Permitira calcular el precio de la columna especificado como parametro
+	 * @param column: nro. de columna
+	 * Retorno: Ninguno
+	 */
 	@Command
 	@NotifyChange("cotizacionSelecionada")
-	public void calcularPrecio(@BindingParam("tipo") int tipo){
+	public void calcularPrecio(@BindingParam("column") int column){
 		float total = 0;
 		for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
-			switch(tipo){
+			switch(column){
 			case 1: total+=(detalle.getPrecioVenta()!=null)?detalle.getPrecioVenta():0; break;
 			case 2: total+=(detalle.getPrecioFlete()!=null)?detalle.getPrecioFlete():0; break;
 			default: break;
 			}
 		}
 		
-		switch(tipo){
+		switch(column){
 		case 1: this.cotizacionSelecionada.setTotalPrecioVenta(total); break;
 		case 2: this.cotizacionSelecionada.setTotalFlete(total); break;
 		default: break;
@@ -332,11 +343,9 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
-		//if(pagMonedas!=null){
-			pagMonedas.setActivePage(page);
-			pagMonedas.setTotalSize(total);
-			pagMonedas.setPageSize(PAGE_SIZE);
-		//}
+		pagMonedas.setActivePage(page);
+		pagMonedas.setTotalSize(total);
+		pagMonedas.setPageSize(PAGE_SIZE);
 	}
 	
 	/*
@@ -353,6 +362,11 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		btnBotones.setVisible(false);
 	}
 	
+	/*
+	 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
+	 * @param: Ninguno
+	 * Retorno: Ninguno 
+	 */
 	private void limpiarCotizacionSeleccionada(){
 		if(cotizacionSelecionada!=null){
 			cotizacionSelecionada.setFechaVencimiento(AbstractServiceImpl.sumarORestarFDia(new Date(), 1));
@@ -360,6 +374,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
+	/*
+	 * Descripcion: permitira preparar los componentes graficos para cotizar 
+	 * de acuerdo al atributo pasado como parametro
+	 * @param readOnly: indicara si el campo es de solo lectura o no
+	 * Retorno: Ninguno
+	 */
 	private void configurarAtributosCotizacion(boolean readOnly){
 		txtCondicion.setReadonly(readOnly);
 		dtbFecha.setButtonVisible(!readOnly);

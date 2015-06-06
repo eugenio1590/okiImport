@@ -1,5 +1,5 @@
 <zk>
-	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
+	<window id="winCotizar" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizarProveedorInternacionalViewModel')">
 		<borderlayout>
@@ -15,10 +15,10 @@
 						<rows>
 							<row>
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past" />
+									format="dd/MM/yyyy" readonly="true" constraint="no past" />
 									
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
-									readonly="true" buttonVisible="false" constraint="no empty"
+									constraint="no empty" readonly="true"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 									<bandpopup>
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
@@ -37,7 +37,7 @@
 								</bandbox>
 								
 								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
-									width="100%" readonly="true" sclass="no_rezise" />
+									width="100%" sclass="no_rezise" />
 							</row>
 						</rows>
 					</grid>
@@ -47,7 +47,7 @@
 						<caption label="Flete" sclass="custom_caption_title" />
 						<div align="left">
 							<label value="Tipo de Flete:" />
-							<combobox id="cmbFlete" buttonVisible="false" readonly="true" width="225px"
+							<combobox id="cmbFlete" width="225px" readonly="true"
 								model="@load(vm.tiposFlete)" selectedItem="@bind(vm.tipoFlete)"
 								onSelect="@command('seleccionarTipoFlete')">
 								<template name="model">
@@ -124,7 +124,7 @@
 						</listfooter>
 					</listfoot>
 				</listbox>
-				<hbox id="btnBotones" width="100%" visible="false" >
+				<hbox id="btnBotones" width="100%" >
 					<div hflex="1" align="center">
 						<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 					</div>

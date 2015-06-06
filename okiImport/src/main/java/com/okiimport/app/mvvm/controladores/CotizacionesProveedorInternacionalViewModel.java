@@ -20,7 +20,6 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Window;
 
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Persona;
@@ -37,9 +36,6 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	private STransaccion sTransaccion;
 	
 	//GUI
-	@Wire("#winCotizaciones")
-	private Window winCotizaciones;
-	
 	@Wire("#gridCotizaciones")
 	private Listbox gridCotizaciones;
 	
@@ -143,8 +139,8 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("proveedor", this.persona);
-		parametros.put("requermiento", this.requerimiento);
+		parametros.put("persona", this.persona);
+		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}

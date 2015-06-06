@@ -277,8 +277,9 @@ public abstract class AbstractViewModel {
 	 * @param clickEvent: evento al presionar algun evento de los botones
 	 * Retorno: Ninguno
 	 * */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void mostrarMensaje(String titulo, String mensaje, String icon, Button[] botones, 
-			EventListener<Messagebox.ClickEvent> clickEvent, Map<String, String> params){
+			EventListener clickEvent, Map<String, String> params){
 		
 		botones = (botones==null) ? new Button[]{org.zkoss.zul.Messagebox.Button.OK} : botones;
 		icon = (icon==null) ? Messagebox.INFORMATION : icon;

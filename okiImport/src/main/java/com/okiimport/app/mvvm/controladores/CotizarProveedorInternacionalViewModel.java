@@ -12,81 +12,53 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Datebox;
 import org.zkoss.zul.East;
-import org.zkoss.zul.Hbox;
-import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
-import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class CotizarProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class CotizarProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<Event>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
 	@BeanInjector("sControlConfiguracion")
 	private SControlConfiguracion sControlConfiguracion;
 	
 	//GUI
-	@Wire("#winCotizaciones")
-	private Window winCotizaciones;
-	
-	@Wire("#gridCotizaciones")
-	private Listbox gridCotizaciones;
-	
-	@Wire("#pagCotizaciones")
-	private Paging pagCotizaciones;
+	@Wire("#winCotizar")
+	private Window winCotizar;
 	
 	@Wire("#eastCotizacion")
 	private East eastCotizacion;
-	
-	@Wire("#btnBotones")
-	private Hbox btnBotones;
-	
-	@Wire("#dtbFecha")
-	private Datebox dtbFecha;
-	
-	@Wire("#txtCondicion")
-	private Textbox txtCondicion;
 	
 	@Wire("#bandbMoneda")
 	private Bandbox bandbMoneda;
 	
 	@Wire("#pagMonedas")
 	private Paging pagMonedas;
-	
-	@Wire("#cmbFlete")
-	private Combobox cmbFlete;
 	
 	//Atributos
 	private static final int PAGE_SIZE = 3;
@@ -96,13 +68,10 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	private String constraint_precio_flete;
 	
-	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	
-	private Persona persona;
 	private Requerimiento requerimiento;
-	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 	private Moneda monedaSeleccionada;
 	
@@ -110,21 +79,21 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private ModeloCombo<Boolean> tipoFlete;
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("cotizacion") Cotizacion cotizacion){
 		super.doAfterCompose(view);
 		
-		this.persona = usuario.getPersona();
 		this.requerimiento = requerimiento;
-		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion();
+		this.cotizacionSelecionada = cotizacion;
 		titulo = titulo + requerimiento.getIdRequerimiento();
-		cambiarCotizaciones(0, null, null);
 		cambiarMonedas(0);
-		agregarGridSort(gridCotizaciones);
-		pagCotizaciones.setPageSize(PAGE_SIZE);
-		eastCotizacion.setTitle(TITULO_EAST);	
+		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacionSelecionada.getIdCotizacion());	
+		
+		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
+				null, null, 0, -1);
+		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
+		limpiarCotizacionSeleccionada();
 		
 		tiposFlete = llenarTiposFleteNacional();
 		tipoFlete = tiposFlete.get(0);
@@ -133,81 +102,21 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**Interface: EventListener<SortEvent>*/
 	@Override
 	@NotifyChange("listaCotizacion")
-	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub		
-		if(event.getTarget() instanceof Listheader){
+	public void onEvent(Event event) throws Exception {
+		// TODO Auto-generated method stub	
+		if(event instanceof SortEvent && event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-			parametros.put("sortDirection", event.isAscending());
+			parametros.put("sortDirection", ((SortEvent) event).isAscending());
 			ejecutarGlobalCommand("cambiarCotizaciones", parametros );
+		}
+		else if(event instanceof Messagebox.ClickEvent){
+			winCotizar.onClose(); //Falta Mensaje
+			ejecutarGlobalCommand("cambiarCotizaciones", null);
 		}
 	}
 	
-	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
-	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
-	 * @param fieldSort: campo de ordenamiento, puede ser nulo
-	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
-	 * */
-	@GlobalCommand
-	@SuppressWarnings("unchecked")
-	@NotifyChange("listaCotizacion")
-	public void cambiarCotizaciones(@Default("0") @BindingParam("page") int page, 
-			@BindingParam("fieldSort") String fieldSort, 
-			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.consultarSolicitudCotizaciones(cotizacionFiltro, fieldSort, 
-				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, PAGE_SIZE);
-		Integer total = (Integer) parametros.get("total");
-		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
-		pagCotizaciones.setActivePage(page);
-		pagCotizaciones.setTotalSize(total);
-	}
-	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	@NotifyChange("*")
-	public void paginarLista(){
-		int page=pagCotizaciones.getActivePage();
-		cambiarCotizaciones(page, null, null);
-	}
-	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	@NotifyChange("listaCotizacion")
-	public void aplicarFiltro(){
-		cambiarCotizaciones(0, null, null);
-	}
-	
-	/*
-	 * Descripcion: permitira cargar la lista de detalles de la cotizacion seleccionada
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	@SuppressWarnings("unchecked")
-	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
-	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
-		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
-		cotizacionSelecionada = cotizacion;
-		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
-				null, null, 0, -1);
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
-		limpiarCotizacionSeleccionada();
-		mostrarBotones();
-		configurarAtributosCotizacion(false);
-	}
-	
 	/*
 	 * Descripcion: permitira limpiar los campos editable de la grid de detalles de la cotizacion seleccionada
 	 * @param Ninguno
@@ -235,20 +144,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
-		if(cotizacionSelecionada!=null){
-			if(checkIsFormValid()){
-				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
-				sTransaccion.registrarCotizacion(cotizacionSelecionada);
-				cotizacionSelecionada = null;
-				listaDetalleCotizacion = null;
-				mostrarBotones();
-				configurarAtributosCotizacion(true);
-				cambiarCotizaciones(0, null, null);
-				eastCotizacion.setTitle(TITULO_EAST);
-			}
+		if(checkIsFormValid()){
+			cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
+			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
 		}
-		else if(cotizacionSelecionada==null)
-			mostrarMensaje("Informacion", "Debe Seleccionar una Cotizacion", null, null, null, null);
 	}
 	
 	/*
@@ -279,15 +179,10 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	}
 	
 	/*
-	 * Descripcion: Permitira cargar nuevamente la lista de requerimientos del proveedor
-	 * @param: Ninguno
-	 * Retorno: Ninguno
+	 * Descripcion: Permitira especificar el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente
+	 * @param Ninguno
+	 * Retorno: Ninguno 
 	 */
-	@Command
-	public void cargarRequerimientos(){
-		ejecutarGlobalCommand("cambiarRequerimientos", null);
-	}
-	
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
@@ -301,6 +196,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 	}
 	
+	/*
+	 * Descripcion: Permitira calcular el precio de la columna especificado como parametro
+	 * @param column: nro. de columna
+	 * Retorno: Ninguno
+	 */
 	@Command
 	@NotifyChange("cotizacionSelecionada")
 	public void calcularPrecio(@BindingParam("tipo") int tipo){
@@ -332,39 +232,21 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
-		//if(pagMonedas!=null){
-			pagMonedas.setActivePage(page);
-			pagMonedas.setTotalSize(total);
-			pagMonedas.setPageSize(PAGE_SIZE);
-		//}
+		pagMonedas.setActivePage(page);
+		pagMonedas.setTotalSize(total);
+		pagMonedas.setPageSize(PAGE_SIZE);
 	}
 	
 	/*
-	 * Descripcion: Permitira mostrar los botones limpiar y enviar si la lista de detalles contiene datos
+	 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
 	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 * */
-	private void mostrarBotones(){
-		if(listaDetalleCotizacion!=null)
-			if(listaDetalleCotizacion.size()>0){
-				btnBotones.setVisible(true);
-				return;
-			}
-		btnBotones.setVisible(false);
-	}
-	
+	 * Retorno: Ninguno 
+	 */
 	private void limpiarCotizacionSeleccionada(){
 		if(cotizacionSelecionada!=null){
 			cotizacionSelecionada.setFechaVencimiento(AbstractServiceImpl.sumarORestarFDia(new Date(), 1));
 			cotizacionSelecionada.setCondiciones(null);
 		}
-	}
-	
-	private void configurarAtributosCotizacion(boolean readOnly){
-		txtCondicion.setReadonly(readOnly);
-		dtbFecha.setButtonVisible(!readOnly);
-		bandbMoneda.setButtonVisible(!readOnly);
-		cmbFlete.setButtonVisible(!readOnly);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -375,14 +257,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
 	
 	public SControlConfiguracion getsControlConfiguracion() {
 		return sControlConfiguracion;
@@ -390,14 +264,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
 		this.sControlConfiguracion = sControlConfiguracion;
-	}
-
-	public List<Cotizacion> getListaCotizacion() {
-		return listaCotizacion;
-	}
-
-	public void setListaCotizacion(List<Cotizacion> listaCotizacion) {
-		this.listaCotizacion = listaCotizacion;
 	}
 
 	public List<DetalleCotizacion> getListaDetalleCotizacion() {
@@ -431,14 +297,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setCotizacionSelecionada(Cotizacion cotizacionSelecionada) {
 		this.cotizacionSelecionada = cotizacionSelecionada;
-	}
-
-	public Cotizacion getCotizacionFiltro() {
-		return cotizacionFiltro;
-	}
-
-	public void setCotizacionFiltro(Cotizacion cotizacionFiltro) {
-		this.cotizacionFiltro = cotizacionFiltro;
 	}
 
 	public Moneda getMonedaSeleccionada() {
