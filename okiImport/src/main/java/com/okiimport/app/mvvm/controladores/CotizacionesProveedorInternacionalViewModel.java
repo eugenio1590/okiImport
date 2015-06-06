@@ -142,11 +142,11 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
-//		Map<String, Object> parametros = new HashMap<String, Object>();
-//		parametros.put("proveedor", this.persona);
-//		parametros.put("requermiento", this.requerimiento);
-//		parametros.put("cotizacion", cotizacion);
-//		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("proveedor", this.persona);
+		parametros.put("requermiento", this.requerimiento);
+		parametros.put("cotizacion", cotizacion);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}
 	
 	/*
