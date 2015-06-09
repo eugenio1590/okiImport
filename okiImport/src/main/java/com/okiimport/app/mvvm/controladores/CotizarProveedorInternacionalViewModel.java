@@ -71,12 +71,15 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	
+	
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionSelecionada=null;
 	private Moneda monedaSeleccionada;
 	
 	private List<ModeloCombo<Boolean>> tiposFlete;
+	private List<ModeloCombo<Boolean>> formasFlete;
 	private ModeloCombo<Boolean> tipoFlete;
+	private ModeloCombo<Boolean> formaFlete;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
@@ -95,7 +98,10 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
 		limpiarCotizacionSeleccionada();
 		
-		tiposFlete = llenarTiposFleteNacional();
+		formasFlete = llenarFormasDeFleteInternacional();
+		formaFlete = formasFlete.get(0);
+		
+		tiposFlete = llenarTiposFleteInternacional();
 		tipoFlete = tiposFlete.get(0);
 	}
 	
@@ -189,8 +195,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		if(!this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
 			System.out.println("CAMBIO FLETE");
-			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
+			for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
+				detalle.setAlto(null);
+				detalle.setAncho(null);
+				detalle.setLargo(null);
+				detalle.setPeso(null);
+			}
 		}
 		else
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
@@ -331,11 +342,27 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.tiposFlete = tiposFlete;
 	}
 
+	public List<ModeloCombo<Boolean>> getFormasFlete() {
+		return formasFlete;
+	}
+
+	public void setFormasFlete(List<ModeloCombo<Boolean>> formasFlete) {
+		this.formasFlete = formasFlete;
+	}
+
 	public ModeloCombo<Boolean> getTipoFlete() {
 		return tipoFlete;
 	}
 
 	public void setTipoFlete(ModeloCombo<Boolean> tipoFlete) {
 		this.tipoFlete = tipoFlete;
+	}
+
+	public ModeloCombo<Boolean> getFormaFlete() {
+		return formaFlete;
+	}
+
+	public void setFormaFlete(ModeloCombo<Boolean> formaFlete) {
+		this.formaFlete = formaFlete;
 	}
 }
