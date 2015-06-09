@@ -40,19 +40,6 @@ public class DetalleCotizacion implements Serializable {
 	public DetalleCotizacion() {
 	}
 	
-	public DetalleCotizacion(Integer idDetalleCotizacion, String marcaRepuesto,
-			Float precioVenta, Float precioFlete, Long cantidad,
-			Cotizacion cotizacion, DetalleRequerimiento detalleRequerimiento) {
-		super();
-		this.idDetalleCotizacion = idDetalleCotizacion;
-		this.marcaRepuesto = marcaRepuesto;
-		this.precioVenta = precioVenta;
-		this.precioFlete = precioFlete;
-		this.cantidad = cantidad;
-		this.cotizacion = cotizacion;
-		this.detalleRequerimiento = detalleRequerimiento;
-	}
-
 	public DetalleCotizacion(Cotizacion cotizacion){
 		this.cotizacion = cotizacion;
 	}

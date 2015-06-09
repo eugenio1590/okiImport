@@ -24,7 +24,6 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -54,7 +53,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	private List <Requerimiento> listaRequerimientos;
 	
 	private Usuario usuario;
-	private Proveedor proveedor;
 	private Requerimiento requerimientoFiltro;
 	
 	private List<ModeloCombo<String>> listaEstatus;
@@ -65,7 +63,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		UserDetails user = this.getUser();
 		requerimientoFiltro = new Requerimiento(new Cliente(), new MarcaVehiculo());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-		proveedor = (Proveedor) usuario.getPersona();
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(PAGE_SIZE);
@@ -145,10 +142,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("usuario", usuario);
-		if(proveedor.getTipoProveedor().equals(true)) //Nacional
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
-		else //Internacional
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
