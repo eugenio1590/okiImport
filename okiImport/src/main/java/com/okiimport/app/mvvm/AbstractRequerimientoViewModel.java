@@ -16,7 +16,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
-import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Spinner;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -63,8 +62,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	/**COMMANDS*/
 	public List<Estado> llenarListaEstados(){
-		return  (List<Estado>) sMaestros.ConsultarEstado(0,
-				-1).get("estados");
+		return  (List<Estado>) sMaestros.ConsultarEstado(0, -1).get("estados");
 	}
 	
 	@Command
@@ -78,9 +76,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	/**METODOS SOBREESCRITOS*/
 	@Override
+	@SuppressWarnings("rawtypes")
 	protected void mostrarMensaje(String titulo, String mensaje, String icon, Button[] botones, 
-			EventListener<ClickEvent> clickEvent, Map<String, String> params) {
-		// TODO Auto-generated method stub
+			EventListener clickEvent, Map<String, String> params) {
 		Messagebox.setTemplate(RUTA_MESSAGEBOX);
 		super.mostrarMensaje(titulo, mensaje, icon, botones, clickEvent, params);
 	}

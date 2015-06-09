@@ -30,6 +30,8 @@ public class Moneda implements Serializable {
 	
 	private String simbolo;
 	
+	private String estatus;
+	
 	//bi-directional one-to-many association to HistoricoMoneda
 	@OneToMany(mappedBy="moneda", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<HistoricoMoneda> historicoMonedas;
@@ -66,6 +68,14 @@ public class Moneda implements Serializable {
 		this.simbolo = simbolo;
 	}
 	
+	public String getEstatus() {
+		return estatus;
+	}
+	
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+	
 	public List<HistoricoMoneda> getHistoricoMonedas() {
 		return historicoMonedas;
 	}
@@ -74,8 +84,4 @@ public class Moneda implements Serializable {
 		this.historicoMonedas = historicoMonedas;
 	}
 	
-	/**METODOS PROPIOS DE LA CLASE*/
-	public String simboloYNombre(){
-		return this.simbolo+" "+this.nombre;
-	}
 }

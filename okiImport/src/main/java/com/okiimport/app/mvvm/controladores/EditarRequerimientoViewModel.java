@@ -84,8 +84,13 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		
-		cmbTransmision.setValue(this.requerimiento.determinarTransmision());
-		cmbTraccion.setValue(this.requerimiento.determinarTraccion());
+		String transmision = this.requerimiento.determinarTransmision();
+		if (transmision!=null)
+			cmbTransmision.setValue(transmision);
+		
+		String traccion = this.requerimiento.determinarTraccion();
+		if (traccion!=null)
+			cmbTraccion.setValue(traccion);
 	}
 	
 	/**INTERFACE*/

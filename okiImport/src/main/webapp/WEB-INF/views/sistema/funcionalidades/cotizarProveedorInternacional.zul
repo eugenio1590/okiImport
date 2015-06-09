@@ -1,83 +1,9 @@
 <zk>
-	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
+	<window id="winCotizar" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"
-		onClose="@command('cargarRequerimientos')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizarProveedorInternacionalViewModel')">
 		<borderlayout>
-		<west width="40%" title="Informacion del Vehiculo" collapsible="true" 
-			onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">
-			<div>
-				<groupbox closable="false">
-					
-					<grid>
-						<columns>
-							<column label="Marca:"/>
-							<column label="Modelo:"/>
-							<column label="Motor:"/>
-						</columns>
-						<rows>
-							<row>
-								<textbox value="@bind(vm.requerimiento.marcaVehiculo.nombre)" readonly="true"/>
-								<textbox value="@bind(vm.requerimiento.modeloV)" readonly="true"/>
-								<textbox value="@bind(vm.requerimiento.motor.nombre)" readonly="true"/>
-							</row>
-						</rows>
-					</grid>
-				</groupbox>
-				<listbox id="gridCotizaciones" sclass="mylist" model="@load(vm.listaCotizacion)">
-					<auxhead>
-						<auxheader colspan="3" label="Solicitudes de Cotizacion"/>
-					</auxhead>
-					<listhead>
-
-						<listheader value="idCotizacion"
-							label="N° Solicitud" sort="auto(idCotizacion)" width="90px">
-							<spinner constraint="no negative, no zero"
-								value="@bind(vm.cotizacionFiltro.idCotizacion)" instant="true"
-								placeholder="" onChange="@command('aplicarFiltro')"
-								width="100px" />
-							<div sclass="z-icon-filter bigger-200" />
-						</listheader>
-
-						<listheader value="nombre" label="F. Creacion"
-							sort="auto(fechaCreacion)" width="90px">
-							<datebox format="dd/MM/yyyy"
-								value="@bind(vm.cotizacionFiltro.fechaCreacion)" instant="true"
-								onChange="@command('aplicarFiltro')" width="100px" />
-							<div sclass="z-icon-filter bigger-200" />
-						</listheader>
-
-						<listheader width="8%" label="Operaciones" />
-
-					</listhead>
-					<template name="model">
-						<listitem>
-							<listcell label="@bind(each.idCotizacion)" />
-							<listcell>
-								<datebox format="dd/MM/yyyy"
-									value="@bind(each.fechaCreacion)" readonly="true"
-									buttonVisible="false" />
-							</listcell>
-							<listcell>
-								<hbox spacing="20px">
-									<div
-										class="btn-group btn-group-sm">
-										<button
-											iconSclass="z-icon-pencil green bigger-160"
-											tooltiptext="Cotizar"
-											onClick="@command('cotizar', cotizacion = each)" />
-									</div>
-								</hbox>
-							</listcell>
-						</listitem>
-					</template>
-
-				</listbox>
-				<paging id="pagCotizaciones"
-					onPaging="@command('paginarLista')" autohide="true" />
-			</div>
-		</west>
-		<east id="eastCotizacion" width="60%" title="Cotizacion">
+		<east id="eastCotizacion" width="100%" title="Cotizacion">
 			<div>
 				<groupbox closable="false">
 					<grid>
@@ -89,10 +15,10 @@
 						<rows>
 							<row>
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past" />
+									format="dd/MM/yyyy" readonly="true" constraint="no past" />
 									
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
-									readonly="true" buttonVisible="false" constraint="no empty"
+									constraint="no empty" readonly="true"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 									<bandpopup>
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
@@ -111,7 +37,7 @@
 								</bandbox>
 								
 								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
-									width="100%" readonly="true" sclass="no_rezise" />
+									width="100%" sclass="no_rezise" />
 							</row>
 						</rows>
 					</grid>
@@ -121,7 +47,7 @@
 						<caption label="Flete" sclass="custom_caption_title" />
 						<div align="left">
 							<label value="Tipo de Flete:" />
-							<combobox id="cmbFlete" buttonVisible="false" readonly="true" width="225px"
+							<combobox id="cmbFlete" width="225px" readonly="true"
 								model="@load(vm.tiposFlete)" selectedItem="@bind(vm.tipoFlete)"
 								onSelect="@command('seleccionarTipoFlete')">
 								<template name="model">
@@ -172,13 +98,13 @@
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
 									constraint="no empty, no zero, no negative"
-									onChange="@command('calcularPrecio', column=1)" />
+									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
 									value="@bind(each.precioFlete)" width="100px"
 									constraint="@bind(vm.constraint_precio_flete)" 
-									onChange="@command('calcularPrecio', column=2)"/>
+									onChange="@command('calcularPrecio', tipo=2)"/>
 							</listcell>
 						</listitem>
 					</template>
@@ -198,7 +124,7 @@
 						</listfooter>
 					</listfoot>
 				</listbox>
-				<hbox id="btnBotones" width="100%" visible="false" >
+				<hbox id="btnBotones" width="100%" >
 					<div hflex="1" align="center">
 						<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
 					</div>

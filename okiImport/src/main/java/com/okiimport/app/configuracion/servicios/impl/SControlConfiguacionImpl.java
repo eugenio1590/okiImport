@@ -49,8 +49,8 @@ public class SControlConfiguacionImpl implements SControlConfiguracion {
 	public Map<String, Object> consultarMonedasConHistorico(int page, int limite) {
 		// TODO Auto-generated method stub
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", monedaDAO.consultarMonedasConHistorico(0, -1).size());
-		parametros.put("monedas", monedaDAO.consultarMonedasConHistorico(page*limite, limite));
+		parametros.put("total", monedaDAO.consultarMonedasConHistorico("activo", 0, -1).size());
+		parametros.put("monedas", monedaDAO.consultarMonedasConHistorico("activo", page*limite, limite));
 		return parametros;
 	}
 

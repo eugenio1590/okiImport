@@ -5,15 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 
 import org.springframework.stereotype.Repository;
 
 import com.okiimport.app.configuracion.dao.MonedaDAO;
 import com.okiimport.app.dao.impl.AbstractJpaDao;
-import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
 
 @Repository
@@ -25,7 +22,7 @@ public class MonedaDAOImpl extends AbstractJpaDao<Moneda, Integer> implements Mo
 	}
 
 	@Override
-	public List<Moneda> consultarMonedasConHistorico(int start, int limit) {
+	public List<Moneda> consultarMonedasConHistorico(String estatus, int start, int limit) {
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -37,6 +34,11 @@ public class MonedaDAOImpl extends AbstractJpaDao<Moneda, Integer> implements Mo
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 
 		restricciones.add(criteriaBuilder.isNotEmpty(this.entity.get("historicoMonedas").as(List.class)));
+		
+		if(estatus!=null)
+			restricciones.add(this.criteriaBuilder.like(
+					this.criteriaBuilder.lower(this.entity.get("estatus").as(String.class)), 
+					"%"+estatus+"%"));
 
 		//4. Creamos los campos de ordenamiento y ejecutamos
 		Map<String, Boolean> orders = new HashMap<String, Boolean>();
@@ -44,5 +46,4 @@ public class MonedaDAOImpl extends AbstractJpaDao<Moneda, Integer> implements Mo
 
 		return this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
-
 }
