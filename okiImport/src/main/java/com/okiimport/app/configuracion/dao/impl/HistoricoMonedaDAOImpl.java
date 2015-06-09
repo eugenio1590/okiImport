@@ -28,7 +28,6 @@ public class HistoricoMonedaDAOImpl extends AbstractJpaDao<HistoricoMoneda, Inte
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
-
 		
 		//2. Generamos los Joins
 		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
