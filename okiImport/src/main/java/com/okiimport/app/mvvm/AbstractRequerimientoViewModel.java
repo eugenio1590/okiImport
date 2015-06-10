@@ -144,11 +144,11 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaTiposFlete;
 	}
 	
-	protected static List<ModeloCombo<Boolean>> llenarFormasDeFleteInternacional(){
-		List<ModeloCombo<Boolean>> listaTiposFlete = new ArrayList<ModeloCombo<Boolean>>();
-		listaTiposFlete.add(new ModeloCombo<Boolean>("Aéreo", false));
-		listaTiposFlete.add(new ModeloCombo<Boolean>("Maritimo", true));
-		return listaTiposFlete;
+	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio(){
+		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", false));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", true));
+		return listaFormasEnvio;
 	}
 	
 	public static int getYearDay(){

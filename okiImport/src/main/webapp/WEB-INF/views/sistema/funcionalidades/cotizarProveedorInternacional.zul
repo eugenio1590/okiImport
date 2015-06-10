@@ -55,9 +55,9 @@
 								</template>
 							</combobox>
 							<space />
-							<label value="Forma de Flete:"/>
-							<combobox id="cmbFormaFlete" width="215px" readonly="true" disabled="@bind(!vm.tipoFlete.valor)"
-								model="@load(vm.formasFlete)" selectedItem="@bind(vm.formaFlete)"
+							<label value="Forma de Envio:"/>
+							<combobox id="cmbFormaFlete" width="215px" readonly="true"
+								model="@load(vm.formasEnvio)" selectedItem="@bind(vm.formaEnvio)"
 								onSelect="@command('seleccionarTipoFlete')">
 								<template name="model">
 									<comboitem label="@bind(each.nombre)"/>

@@ -77,9 +77,9 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private Moneda monedaSeleccionada;
 	
 	private List<ModeloCombo<Boolean>> tiposFlete;
-	private List<ModeloCombo<Boolean>> formasFlete;
+	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
-	private ModeloCombo<Boolean> formaFlete;
+	private ModeloCombo<Boolean> formaEnvio;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
@@ -98,8 +98,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
 		limpiarCotizacionSeleccionada();
 		
-		formasFlete = llenarFormasDeFleteInternacional();
-		formaFlete = formasFlete.get(0);
+		formasEnvio = llenarFormasDeEnvio();
+		formaEnvio = formasEnvio.get(0);
 		
 		tiposFlete = llenarTiposFleteInternacional();
 		tipoFlete = tiposFlete.get(0);
@@ -342,12 +342,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.tiposFlete = tiposFlete;
 	}
 
-	public List<ModeloCombo<Boolean>> getFormasFlete() {
-		return formasFlete;
+	public List<ModeloCombo<Boolean>> getFormasEnvio() {
+		return formasEnvio;
 	}
 
-	public void setFormasFlete(List<ModeloCombo<Boolean>> formasFlete) {
-		this.formasFlete = formasFlete;
+	public void setFormasEnvio(List<ModeloCombo<Boolean>> formasEnvio) {
+		this.formasEnvio = formasEnvio;
 	}
 
 	public ModeloCombo<Boolean> getTipoFlete() {
@@ -358,11 +358,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.tipoFlete = tipoFlete;
 	}
 
-	public ModeloCombo<Boolean> getFormaFlete() {
-		return formaFlete;
+	public ModeloCombo<Boolean> getFormaEnvio() {
+		return formaEnvio;
 	}
 
-	public void setFormaFlete(ModeloCombo<Boolean> formaFlete) {
-		this.formaFlete = formaFlete;
+	public void setFormaEnvio(ModeloCombo<Boolean> formaEnvio) {
+		this.formaEnvio = formaEnvio;
 	}
 }
