@@ -119,19 +119,16 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 				mailService.send(cliente.getCorreo(), "Registro de Requerimiento",
 						"registrarRequerimiento.html", model);
-				
-				String str = "El Requerimiento ha sido registrado existosamente ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", "El Requerimiento ha sido registrado existosamente ", null, null, 
+						new EventListener() {
 					public void onEvent(Event event) throws Exception {
 						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
 							recargar();
 						}
 					}
-				});
-
+				}, null);
 			}
 			else
 				mostrarMensaje("Información",

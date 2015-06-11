@@ -23,8 +23,11 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
@@ -56,6 +59,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
+	
+	private String ubicacion;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -63,7 +68,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
-		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()));
+		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()), new DetalleRequerimiento());
 		
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
@@ -123,7 +128,19 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	@Command
 	@NotifyChange("listaDetalleCotizacion")
 	public void aplicarFiltro(){
+		agregarUbicacion();
 		consultarDetalleCotizacion(0, null, null);
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	/*
+	 * Descripcion: permitira asignar la ubicacion del proveedor
+	 * @param Ninguno
+	 * Retorno: Ninguno 
+	 */
+	private void agregarUbicacion(){
+		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion().getProveedor();
+		proveedor.setCiudad(new Ciudad(ubicacion, new Estado(ubicacion)));
 	}
 
 	/**SETTERS Y GETTERS*/
@@ -168,5 +185,12 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setTitulo(String titulo) {
 		AprobarCotizacionViewModel.titulo = titulo;
 	}
-	
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
 }

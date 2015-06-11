@@ -11,8 +11,11 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 
 import com.okiimport.app.dao.impl.AbstractJpaDao;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 
@@ -115,11 +118,53 @@ public class DetalleCotizacionDAOImpl extends AbstractJpaDao<DetalleCotizacion, 
 				//Proveedor
 				Proveedor proveedor = cotizacion.getProveedor();
 				if(proveedor!=null){
+					Join joinP = joins.get("cotizacion").join("proveedor");
 					if(proveedor.getNombre()!=null)
 						restricciones.add(criteriaBuilder.like(
-								criteriaBuilder.lower(joins.get("cotizacion").join("proveedor").get("nombre").as(String.class)),
+								criteriaBuilder.lower(joinP.get("nombre").as(String.class)),
 								"%"+String.valueOf(proveedor.getNombre()).toLowerCase()+"%"));
+					
+					/**Ubicacion*/
+					//Ciudad
+					Ciudad ciudadP = proveedor.getCiudad();
+					if(ciudadP!=null){
+						Join joinC = joinP.join("ciudad");
+						
+						//Estado
+						Estado estadoP = ciudadP.getEstado();
+						if(estadoP!=null){
+							Join joinE = joinC.join("estado");
+							if(estadoP.getNombre()!=null && ciudadP.getNombre()!=null)
+								restricciones.add(criteriaBuilder.or(
+										criteriaBuilder.like(
+												criteriaBuilder.lower(joinC.get("nombre").as(String.class)),
+													"%"+String.valueOf(ciudadP.getNombre()).toLowerCase()+"%"),
+												criteriaBuilder.like(
+														criteriaBuilder.lower(joinE.get("nombre").as(String.class)),
+														"%"+String.valueOf(estadoP.getNombre()).toLowerCase()+"%")
+										));
+							else if(estadoP.getNombre()!=null)
+								restricciones.add(criteriaBuilder.like(
+										criteriaBuilder.lower(joinE.get("nombre").as(String.class)),
+										"%"+String.valueOf(estadoP.getNombre()).toLowerCase()+"%"));
+						}
+						else {
+							if(ciudadP.getNombre()!=null)
+								restricciones.add(criteriaBuilder.like(
+										criteriaBuilder.lower(joinC.get("nombre").as(String.class)),
+										"%"+String.valueOf(ciudadP.getNombre()).toLowerCase()+"%"));
+						}
+					}
 				}
+			}
+			
+			//Detalle Requerimiento
+			DetalleRequerimiento detalleR = detalleF.getDetalleRequerimiento();
+			if(detalleR!=null){
+				if(detalleR.getDescripcion()!=null)
+					restricciones.add(criteriaBuilder.like(
+							criteriaBuilder.lower(joins.get("detalleRequerimiento").get("descripcion").as(String.class)),
+							"%"+String.valueOf(detalleR.getDescripcion()).toLowerCase()+"%"));
 			}
 		}
 	}

@@ -60,19 +60,19 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 					null, null);
 	}
 	
-	/**COMMANDS*/
+	@Command
+	@SuppressWarnings("unchecked")
 	public List<Estado> llenarListaEstados(){
 		return  (List<Estado>) sMaestros.ConsultarEstado(0, -1).get("estados");
 	}
 	
 	@Command
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaCiudades" })
 	public void buscarCiudades(){
-		if (this.estado != null){
+		if (this.estado != null)
 			listaCiudades = (List<Ciudad>) sMaestros.ConsultarCiudad(estado.getIdEstado(), 0, -1).get("ciudades");
-		}
 	}
-	
 
 	/**METODOS SOBREESCRITOS*/
 	@Override
@@ -137,7 +137,21 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaTiposFlete;
 	}
 	
-	public int getYearDay(){
+	protected static List<ModeloCombo<Boolean>> llenarTiposFleteInternacional(){
+		List<ModeloCombo<Boolean>> listaTiposFlete = new ArrayList<ModeloCombo<Boolean>>();
+		listaTiposFlete.add(new ModeloCombo<Boolean>("CIF", false));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("FOB", true));
+		return listaTiposFlete;
+	}
+	
+	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio(){
+		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", false));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", true));
+		return listaFormasEnvio;
+	}
+	
+	public static int getYearDay(){
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 	
@@ -226,6 +240,5 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
 	
 }

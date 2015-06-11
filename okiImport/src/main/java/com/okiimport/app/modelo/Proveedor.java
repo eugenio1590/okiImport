@@ -127,4 +127,17 @@ public class Proveedor extends Persona implements Serializable {
 		// TODO Auto-generated method stub
 		return this.tipoMenu=3;
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String ubicacion(String separador){
+		String ubicacion = "";
+		if(ciudad!=null){
+			Estado estado = ciudad.getEstado();
+			if(estado!=null)
+				ubicacion += estado.getNombre()+separador;
+			
+			ubicacion+= ciudad.getNombre();
+		}
+		return ubicacion;
+	}
 }
