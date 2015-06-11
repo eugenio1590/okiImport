@@ -19,11 +19,14 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.Motor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -56,15 +59,22 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	@Wire("#cmbTraccion")
 	private Combobox cmbTraccion;
 	
+	@Wire("#txtTipoRepuesto")
+	private Textbox txtTipoRepuesto;
+	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
 	private List <Motor> listaMotor;
 	private Requerimiento requerimiento;
+	private Estado estado;
+	private Ciudad ciudad;
 	
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
+	private List <ModeloCombo<Boolean>> listaTipoRepuesto;
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
+	private ModeloCombo<Boolean> tipoRepuesto;
 	
 	private Boolean editar;
 	
@@ -72,17 +82,22 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("estado") Estado estado,
 			@ExecutionArgParam("editar") boolean editar)
 	{
 		super.doAfterCompose(view);
 		this.editar = editar;
 		this.requerimiento = requerimiento;
+		
+		this.estado = requerimiento.getCliente().getCiudad().getEstado();
+		this.ciudad = requerimiento.getCliente().getCiudad();
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
+		listaTipoRepuesto = llenarListaTipoRepuesto();
 		
 		String transmision = this.requerimiento.determinarTransmision();
 		if (transmision!=null)
@@ -91,6 +106,10 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		String traccion = this.requerimiento.determinarTraccion();
 		if (traccion!=null)
 			cmbTraccion.setValue(traccion);
+		
+		String tipoRepuesto = this.requerimiento.determinarTipoRepuesto();
+		if (tipoRepuesto!=null)
+			txtTipoRepuesto.setValue(tipoRepuesto);
 	}
 	
 	/**INTERFACE*/
@@ -151,6 +170,8 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 				requerimiento.setTraccionV(traccion.getValor());
 			if(transmision!=null)
 				requerimiento.setTransmisionV(transmision.getValor());
+			if(tipoRepuesto!=null)
+				requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
 			requerimiento.setEstatus("E");
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			mostrarMensaje("Informacion", "Requerimiento Actualizado Exitosamente", null, null, this, null);
@@ -238,4 +259,39 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	public void setEditar(Boolean editar) {
 		this.editar = editar;
 	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
+		return listaTipoRepuesto;
+	}
+
+	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+		this.listaTipoRepuesto = listaTipoRepuesto;
+	}
+
+	public ModeloCombo<Boolean> getTipoRepuesto() {
+		return tipoRepuesto;
+	}
+
+	public void setTipoRepuesto(ModeloCombo<Boolean> tipoRepuesto) {
+		this.tipoRepuesto = tipoRepuesto;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+	
+	
+	
 }

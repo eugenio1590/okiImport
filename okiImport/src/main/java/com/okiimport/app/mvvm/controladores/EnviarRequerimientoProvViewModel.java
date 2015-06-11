@@ -19,11 +19,13 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.mail.MailService;
+import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Motor;
@@ -52,6 +54,9 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	@Wire("#aDatosVehiculo")
 	private A aDatosVehiculo; 
 	
+	@Wire("#txtTipoRepuesto")
+	private Textbox txtTipoRepuesto;
+	
 	
 	
 	//Atributos
@@ -62,8 +67,10 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	private Requerimiento requerimiento;
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
+	private List <ModeloCombo<Boolean>> listaTipoRepuesto;
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
+	private Ciudad ciudad;
 	
 
 	@AfterCompose
@@ -73,12 +80,17 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	{
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
+		this.ciudad = requerimiento.getCliente().getCiudad();
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
-		
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
+		listaTipoRepuesto = llenarListaTipoRepuesto();
+		
+		String tipoRepuesto = this.requerimiento.determinarTipoRepuesto();
+		if (tipoRepuesto!=null)
+			txtTipoRepuesto.setValue(tipoRepuesto);
 		
 	}
 	
@@ -231,4 +243,25 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public List<DetalleRequerimiento> getListaDetalleRequerimientoSeleccionados() {
 		return listaDetalleRequerimientoSeleccionados;
 	}
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
+		return listaTipoRepuesto;
+	}
+
+	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+		this.listaTipoRepuesto = listaTipoRepuesto;
+	}
+
+	
+	
+	
+	
 }

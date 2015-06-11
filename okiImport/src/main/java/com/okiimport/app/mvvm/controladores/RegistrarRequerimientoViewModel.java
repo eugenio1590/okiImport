@@ -104,6 +104,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 					requerimiento.setTraccionV(traccion.getValor());
 				if (transmision != null)
 					requerimiento.setTransmisionV(transmision.getValor());
+				if (tipoRepuesto != null)
+					requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
 
 				sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
 

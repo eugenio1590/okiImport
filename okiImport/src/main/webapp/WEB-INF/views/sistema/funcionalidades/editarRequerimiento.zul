@@ -27,6 +27,7 @@
 								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)" />
 							</row>
+						
 
 							<row>
 
@@ -39,6 +40,19 @@
 								
 								<textbox id="email" width="80%" readonly="true" mold="rounded" 
 									value="@bind(vm.requerimiento.cliente.correo)"/>
+							</row>
+							
+								<row>
+							<label value="Estado: " />
+
+								<textbox id="estado" width="80%" readonly="true"
+									mold="rounded" tabbable="false" 
+									value="@bind(vm.estado.nombre)"/>
+
+								<label value="Ciudad: " />
+
+								<textbox id="ciudad" width="80%" readonly="true" mold="rounded"
+									value="@bind(vm.ciudad.nombre)" />
 							</row>
 
 						</rows>
@@ -80,7 +94,7 @@
 
 									<label value="Serial Carroceria: *" />
 
-									<textbox id="serialCarroceria2"
+									<textbox id="serialCarroceria"
 										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"
 										constraint="no empty:El campo no puede estar vacio"/>
@@ -146,6 +160,12 @@
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
 									</combobox>
+									
+									<label value="Tipo Repuesto:" />
+									<textbox id="txtTipoRepuesto" width="80%"
+										readonly="true">
+										
+									</textbox>
 
 								</row>
 							</rows>

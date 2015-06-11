@@ -281,6 +281,13 @@ public class Requerimiento implements Serializable {
 		return texto;
 	}
 	
+	public String determinarTipoRepuesto(){
+		String texto = null;
+		if(tipoRepuesto!=null)
+			texto = (tipoRepuesto) ? "Original" : "Reemplazo";
+		return texto;
+	}
+	
 	public String determinarEstatus(){
 		if(this.estatus.equalsIgnoreCase("CR"))
 			return "Requerimiento Emitido";
