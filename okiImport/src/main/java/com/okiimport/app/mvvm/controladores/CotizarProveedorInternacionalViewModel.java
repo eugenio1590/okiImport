@@ -29,6 +29,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
 import com.okiimport.app.modelo.Requerimiento;
@@ -68,7 +69,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	private String constraint_precio_flete;
 	
-	private List<DetalleCotizacion> listaDetalleCotizacion;
+	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	
 	
@@ -95,7 +96,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		
 		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
 				null, null, 0, -1);
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
+		listaDetalleCotizacion = (List<DetalleCotizacionInternacional>) parametros.get("detallesCotizacion");
 		limpiarCotizacionSeleccionada();
 		
 		formasEnvio = llenarFormasDeEnvio();
@@ -150,11 +151,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
-		if(checkIsFormValid()){
-			cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
-			sTransaccion.registrarCotizacion(cotizacionSelecionada);
-			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
-		}
+//		if(checkIsFormValid()){
+//			cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
+//			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+//			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
+//		}
 	}
 	
 	/*
@@ -195,7 +196,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		if(!this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
 			System.out.println("CAMBIO FLETE");
-			for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
+			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
 				detalle.setAlto(null);
 				detalle.setAncho(null);
@@ -277,12 +278,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
-	public List<DetalleCotizacion> getListaDetalleCotizacion() {
+	public List<DetalleCotizacionInternacional> getListaDetalleCotizacion() {
 		return listaDetalleCotizacion;
 	}
 
 	public void setListaDetalleCotizacion(
-			List<DetalleCotizacion> listaDetalleCotizacion) {
+			List<DetalleCotizacionInternacional> listaDetalleCotizacion) {
 		this.listaDetalleCotizacion = listaDetalleCotizacion;
 	}
 

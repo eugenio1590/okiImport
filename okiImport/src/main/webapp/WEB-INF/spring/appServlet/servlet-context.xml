@@ -77,6 +77,7 @@
     <beans:bean id="historicoMonedaDAO" class="com.okiimport.app.configuracion.dao.impl.HistoricoMonedaDAOImpl"/>
     <beans:bean id="estadoDAO" class="com.okiimport.app.maestros.dao.impl.EstadoDAOImpl"/>
     <beans:bean id="ciudadDAO" class="com.okiimport.app.maestros.dao.impl.CiudadDAOImpl"/>
+    <beans:bean id="detalleCotizacionInternacionalDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleCotizacionInternacionalDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

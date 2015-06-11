@@ -21,6 +21,7 @@
 		<class>com.okiimport.app.modelo.HistoricoMoneda</class>
 		<class>com.okiimport.app.modelo.Estado</class>
 		<class>com.okiimport.app.modelo.Ciudad</class>
+		<class>com.okiimport.app.modelo.DetalleCotizacionInternacional</class>
 		 <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
             <property name="hibernate.show_sql" value="true" />
