@@ -61,8 +61,9 @@ public class DetalleCotizacion implements Serializable {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}
 
-	public DetalleCotizacion(Cotizacion cotizacion){
+	public DetalleCotizacion(Cotizacion cotizacion, DetalleRequerimiento detalleRequerimiento){
 		this.cotizacion = cotizacion;
+		this.detalleRequerimiento = detalleRequerimiento;
 	}
 
 	public Integer getIdDetalleCotizacion() {
@@ -166,5 +167,19 @@ public class DetalleCotizacion implements Serializable {
 	public Long calcularPesoDeCubicaje(Long pieCubico, Long minPieCubico){
 		Long pesoC = (pieCubico!=null && pieCubico!=new Long(0)) ? volumen()/pieCubico : 0;
 		return (minPieCubico!=null && pesoC<minPieCubico) ? minPieCubico : pesoC;
+	}
+	
+	public Float calcularTotal(){
+		Proveedor proveedor = this.cotizacion.getProveedor();
+		if(proveedor.getTipoProveedor()){ //Nacional
+			if(this.precioFlete!=null)
+				return this.precioVenta+this.precioFlete;
+			else
+				return this.precioVenta;
+		}
+		else { //Internacional
+			//Falta
+		}
+		return new Float(0);
 	}
 }
