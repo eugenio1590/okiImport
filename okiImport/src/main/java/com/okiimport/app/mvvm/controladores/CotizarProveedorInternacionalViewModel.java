@@ -193,7 +193,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
-		if(!this.tipoFlete.getValor()){
+		if(this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
 			System.out.println("CAMBIO FLETE");
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){

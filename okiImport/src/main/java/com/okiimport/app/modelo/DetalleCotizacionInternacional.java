@@ -6,10 +6,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: DetalleCotizacionInternacional
- *
- */
 @Entity
 @NamedQuery(name="DetalleCotizacionInternacional.findAll", query="SELECT d FROM DetalleCotizacionInternacional d")
 @PrimaryKeyJoinColumn(name="id_detalle_cotizacion_internacional")
@@ -23,6 +19,10 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	private Long alto;
 
 	private Long peso;
+	
+	private Boolean tipoFlete;
+	
+	private Boolean formaFlete;
 
 	public DetalleCotizacionInternacional() {
 		super();
@@ -60,6 +60,22 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		this.peso = peso;
 	}
 	
+	public Boolean getTipoFlete() {
+		return tipoFlete;
+	}
+
+	public void setTipoFlete(Boolean tipoFlete) {
+		this.tipoFlete = tipoFlete;
+	}
+
+	public Boolean getFormaFlete() {
+		return formaFlete;
+	}
+
+	public void setFormaFlete(Boolean formaFlete) {
+		this.formaFlete = formaFlete;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Long volumen(){
 		return largo*ancho*alto;
@@ -74,4 +90,29 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		Float pesoC = volumen()/new Float(1728);
 		return (pesoC<5) ? 5 : pesoC;
 	}
+	
+	public boolean verificarCondFlete(){
+		return (largo!=null && ancho!=null && alto!=null);
+	}
+	
+	public Float calcularTotal(boolean conversion){
+		Float precioTotal = new Float(0);
+		
+		if(this.tipoFlete) //CIF
+			precioTotal = this.getPrecioFlete();
+		else if(verificarCondFlete()){ //FOB
+			Float pesoTotal = (formaFlete) ?  /*Aereo*/ calcularPesoVolumetrico() : /*Maritimo*/ calcularPesoDeCubicaje();
+			precioTotal = 5*pesoTotal; //Falta el Valor de la Libra = 5
+		}
+		
+		Cotizacion cotizacion = this.getCotizacion();
+		HistoricoMoneda hMoneda = null;
+		if(cotizacion!=null && (hMoneda=cotizacion.getHistoricoMoneda())!=null && precioTotal!=null && conversion)
+			precioTotal = precioTotal*hMoneda.getMontoConversion();
+		else if(conversion)
+			precioTotal = new Float(0);
+			
+		return precioTotal;
+	}
+	
 }

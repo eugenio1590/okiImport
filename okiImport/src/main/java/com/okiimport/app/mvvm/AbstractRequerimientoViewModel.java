@@ -140,15 +140,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	protected static List<ModeloCombo<Boolean>> llenarTiposFleteInternacional(){
 		List<ModeloCombo<Boolean>> listaTiposFlete = new ArrayList<ModeloCombo<Boolean>>();
-		listaTiposFlete.add(new ModeloCombo<Boolean>("CIF", false));
-		listaTiposFlete.add(new ModeloCombo<Boolean>("FOB", true));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("CIF", true));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("FOB", false));
 		return listaTiposFlete;
 	}
 	
 	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio(){
 		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", false));
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
 	}
 	

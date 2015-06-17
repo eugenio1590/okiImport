@@ -117,16 +117,10 @@ public class DetalleCotizacion implements Serializable {
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Float calcularTotal(){
-		Proveedor proveedor = this.cotizacion.getProveedor();
-		if(proveedor.getTipoProveedor()){ //Nacional
-			if(this.precioFlete!=null)
-				return this.precioVenta+this.precioFlete;
-			else
-				return this.precioVenta;
-		}
-		else { //Internacional
-			//Falta
-		}
-		return new Float(0);
+		if(this.precioFlete!=null)
+			return this.precioVenta+this.precioFlete;
+		else
+			return this.precioVenta;
 	}
+	
 }
