@@ -22,7 +22,7 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	
 	private Boolean tipoFlete;
 	
-	private Boolean formaFlete;
+	private Boolean formaEnvio;
 
 	public DetalleCotizacionInternacional() {
 		super();
@@ -67,15 +67,15 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	public void setTipoFlete(Boolean tipoFlete) {
 		this.tipoFlete = tipoFlete;
 	}
-
-	public Boolean getFormaFlete() {
-		return formaFlete;
-	}
-
-	public void setFormaFlete(Boolean formaFlete) {
-		this.formaFlete = formaFlete;
-	}
 	
+	public Boolean getFormaEnvio() {
+		return formaEnvio;
+	}
+
+	public void setFormaEnvio(Boolean formaEnvio) {
+		this.formaEnvio = formaEnvio;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Long volumen(){
 		return largo*ancho*alto;
@@ -101,7 +101,7 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		if(this.tipoFlete) //CIF
 			precioTotal = this.getPrecioFlete();
 		else if(verificarCondFlete()){ //FOB
-			Float pesoTotal = (formaFlete) ?  /*Aereo*/ calcularPesoVolumetrico() : /*Maritimo*/ calcularPesoDeCubicaje();
+			Float pesoTotal = (formaEnvio) ?  /*Aereo*/ calcularPesoVolumetrico() : /*Maritimo*/ calcularPesoDeCubicaje();
 			precioTotal = 5*pesoTotal; //Falta el Valor de la Libra = 5
 		}
 		

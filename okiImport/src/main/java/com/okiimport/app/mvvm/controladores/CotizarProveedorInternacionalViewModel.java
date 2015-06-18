@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -134,11 +135,15 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void limpiar(){
 		limpiarCotizacionSeleccionada();
 		if(listaDetalleCotizacion!=null)
-			for(DetalleCotizacion detalle : listaDetalleCotizacion){
+			for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion){
 				detalle.setMarcaRepuesto(null);
 				detalle.setCantidad(null);
 				detalle.setPrecioVenta(null);
 				detalle.setPrecioFlete(null);
+				detalle.setAlto(null);
+				detalle.setAncho(null);
+				detalle.setLargo(null);
+				detalle.setPeso(null);
 			}
 	}
 	
@@ -151,11 +156,18 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
-//		if(checkIsFormValid()){
-//			cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
-//			sTransaccion.registrarCotizacion(cotizacionSelecionada);
-//			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
-//		}
+		if(checkIsFormValid()){
+			List<DetalleCotizacion> detallesCotizacion = new ArrayList<DetalleCotizacion>();
+			for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion){
+				detalle.setFormaEnvio(this.formaEnvio.getValor());
+				detalle.setTipoFlete(this.tipoFlete.getValor());
+				detallesCotizacion.add(detalle);
+			}
+			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
+			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
+			winCotizar.onClose();
+		}
 	}
 	
 	/*
@@ -195,7 +207,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void seleccionarTipoFlete(){
 		if(this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
-			System.out.println("CAMBIO FLETE");
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
 				detalle.setAlto(null);

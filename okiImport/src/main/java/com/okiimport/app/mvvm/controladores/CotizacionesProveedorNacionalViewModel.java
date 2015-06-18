@@ -299,7 +299,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void seleccionarTipoFlete(){
 		if(!this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
-			System.out.println("CAMBIO FLETE");
 			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
 				detalle.setPrecioFlete(null);
 		}
