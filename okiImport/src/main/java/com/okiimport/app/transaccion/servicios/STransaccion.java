@@ -14,6 +14,9 @@ public interface STransaccion {
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
+	public Map<String, Object> consultarRequerimientosGeneral(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
+			int pagina, int limit);
+	
 	public Map <String, Object> consultarMisRequerimientosEmitidos(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit);
 	
