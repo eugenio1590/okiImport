@@ -140,6 +140,15 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			requerimiento.setAnalista(analistas.get(0));
 	}
 	
+	@Override
+	public Map<String, Object> consultarRequerimientosGeneral(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
+			int pagina, int limit){
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", Long.valueOf(requerimientoDAO.countAll()).intValue());
+		parametros.put("requerimientos", requerimientoDAO.findAll(pagina*limit, limit));
+		return parametros;
+	}
 	
 	@Override
 	public Map<String, Object> consultarMisRequerimientosEmitidos(
