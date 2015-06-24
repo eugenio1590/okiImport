@@ -53,7 +53,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
+	private static final int PAGE_SIZE = 10;
 	
 	private Usuario usuario;
 	private Cotizacion cotizacionFiltro;

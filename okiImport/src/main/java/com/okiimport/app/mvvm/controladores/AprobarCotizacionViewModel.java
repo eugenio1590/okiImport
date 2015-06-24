@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,10 +46,14 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private SControlUsuario sControlUsuario;
 
 	private List <DetalleCotizacion> listaDetalleCotizacion;
+	private List <DetalleCotizacion> listaDetalleSeleccion;
+	private List <DetalleCotizacion> listaDetalleSeleccionado;
 
 	//GUI
 	@Wire("#gridDetalleCotizacion")
 	private Listbox gridDetalleCotizacion;
+	@Wire("#gridDetalleSeleccion")
+	private Listbox gridDetalleSeleccion;
 
 	@Wire("#pagDetalleCotizacion")
 	private Paging pagDetalleCotizacion;
@@ -59,6 +64,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
+	private DetalleCotizacion detalleCotizacion;
 	
 	private String ubicacion;
 
@@ -69,6 +75,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()), new DetalleRequerimiento());
+		listaDetalleSeleccionado = new ArrayList<DetalleCotizacion>();
 		
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
@@ -86,6 +93,21 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 			parametros.put("sortDirection", event.isAscending());
 			ejecutarGlobalCommand("consultarDetalleCotizacion", parametros );
 		}
+		
+	}
+	
+	@NotifyChange({"*"})
+	@Command
+	public void agregarSeleccion(){
+		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
+		
+	}
+	@NotifyChange({"*"})
+	@Command
+	public void guardar(){
+		for (DetalleCotizacion detalleCotizacion: listaDetalleSeleccionado)
+		sTransaccion.guardarSeleccionRequerimiento(detalleCotizacion);
+		mostrarMensaje("Informacion", "Seleccion Guardada Exitosamente", null, null, null, null);
 		
 	}
 	
@@ -193,4 +215,32 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+
+	public List<DetalleCotizacion> getListaDetalleSeleccion() {
+		return listaDetalleSeleccion;
+	}
+
+	public void setListaDetalleSeleccion(
+			List<DetalleCotizacion> listaDetalleSeleccion) {
+		this.listaDetalleSeleccion = listaDetalleSeleccion;
+	}
+
+	public List<DetalleCotizacion> getListaDetalleSeleccionado() {
+		return listaDetalleSeleccionado;
+	}
+
+	public void setListaDetalleSeleccionado(
+			List<DetalleCotizacion> listaDetalleSeleccionado) {
+		this.listaDetalleSeleccionado = listaDetalleSeleccionado;
+	}
+
+	public DetalleCotizacion getDetalleCotizacion() {
+		return detalleCotizacion;
+	}
+
+	public void setDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
+		this.detalleCotizacion = detalleCotizacion;
+	}
+	
+	
 }

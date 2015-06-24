@@ -28,6 +28,8 @@ public class DetalleCotizacion implements Serializable {
 	
 	private Long cantidad;
 	
+	private String estatus;
+	
 	//bi-directional many-to-one association to Cotizacion
 	@ManyToOne
 	@JoinColumn(name="id_cotizacion")
@@ -98,6 +100,14 @@ public class DetalleCotizacion implements Serializable {
 	public void setCantidad(Long cantidad) {
 		this.cantidad = cantidad;
 	}
+	
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
 
 	public Cotizacion getCotizacion() {
 		return cotizacion;
@@ -122,5 +132,4 @@ public class DetalleCotizacion implements Serializable {
 		else
 			return this.precioVenta;
 	}
-	
 }

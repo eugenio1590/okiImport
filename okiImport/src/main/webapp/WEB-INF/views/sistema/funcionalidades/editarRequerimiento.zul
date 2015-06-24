@@ -8,52 +8,53 @@
 				<div>
 					<grid>
 						<columns>
-							<column width="35%" align="center" />
-							<column width="33%" align="center"/>
-							<column width="32%" align="center"/>
-							<column width="35%" align="center" />
-							<column width="33%" align="center"/>
-							<column width="32%" align="center"/>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
 						</columns>
 
 						<rows>
-							<row align="center">
+							<row>
 								<label value="Cedula/RIF: " />
 
-								<textbox id="cedulaRif" width="100%%" readonly="true"
+								<textbox id="cedulaRif" width="80%" readonly="true"
 									mold="rounded" tabbable="false" 
 									value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 								<label value="Nombre/Razón Social: " />
 
-								<textbox id="nombreRazonSocial" width="100%" readonly="true" mold="rounded"
+								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)" />
-									
+							</row>
+						
+
+							<row>
+
 								<label value="Teléfono: " />
 
-								<textbox id="telefono" width="100%" readonly="true" mold="rounded"
+								<textbox id="telefono" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.telefono)"/>
-							</row>
-
-							<row align="center">
 
 								<label value="E-mail:" />
 								
-								<textbox id="email" width="100%" readonly="true" mold="rounded" 
+								<textbox id="email" width="80%" readonly="true" mold="rounded" 
 									value="@bind(vm.requerimiento.cliente.correo)"/>
-							
-
-								<label value="Estado:" />
-								
-								<textbox id="estado" width="100%" readonly="true" mold="rounded" 
-									value="@bind(vm.requerimiento.cliente.ciudad.estado.nombre)"/>
-							
-
-								<label value="Ciudad:" />
-								
-								<textbox id="ciudad" width="100%" readonly="true" mold="rounded" 
-									value="@bind(vm.requerimiento.cliente.ciudad.nombre)"/>
 							</row>
+							
+								<row>
+							<label value="Estado: " />
+
+								<textbox id="estado" width="80%" readonly="true"
+									mold="rounded" tabbable="false" 
+									value="@bind(vm.estado.nombre)"/>
+
+								<label value="Ciudad: " />
+
+								<textbox id="ciudad" width="80%" readonly="true" mold="rounded"
+									value="@bind(vm.ciudad.nombre)" />
+							</row>
+
 						</rows>
 					</grid>
 				</div>
@@ -93,7 +94,7 @@
 
 									<label value="Serial Carroceria: *" />
 
-									<textbox id="serialCarroceria2"
+									<textbox id="serialCarroceria"
 										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"
 										constraint="no empty:El campo no puede estar vacio"/>
@@ -159,6 +160,12 @@
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
 									</combobox>
+									
+									<label value="Tipo Repuesto:" />
+									<textbox id="txtTipoRepuesto" width="80%"
+										readonly="true">
+										
+									</textbox>
 
 								</row>
 							</rows>

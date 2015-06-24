@@ -13,6 +13,7 @@ public interface STransaccion {
 	
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
+	public void guardarSeleccionRequerimiento(DetalleCotizacion detalleCotizacion);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
 	public Map<String, Object> consultarRequerimientosGeneral(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,

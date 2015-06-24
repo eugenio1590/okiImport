@@ -6,5 +6,7 @@ import com.okiimport.app.dao.IGenericDao;
 import com.okiimport.app.modelo.Ciudad;
 
 public interface CiudadDAO extends IGenericDao<Ciudad, Integer> {
-	public List<Ciudad> listaCiudadesEstado(Integer idEstado, int start, int limit);
+	
+	public List<Ciudad> listaCiudadesActivas(Integer idEstado, Integer start, Integer limit);
+
 }

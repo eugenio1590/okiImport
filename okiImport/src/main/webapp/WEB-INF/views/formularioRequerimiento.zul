@@ -1,24 +1,10 @@
-<zk xmlns:w="client" xmlns:n="native" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+<zk xmlns:w="client" xmlns:n="native">
 	<!-- 	<script src="/resources/js/scriptParaFechas.js" /> -->
-<!-- 	<window id="winFormularioRequerimiento" -->
-<!-- 		title="Ingrese Su Requerimiento" border="normal" width="95%" -->
-<!-- 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer" -->
-<!-- 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')"> -->
+	<window id="winFormularioRequerimiento"
+		title="Ingrese Su Requerimiento" border="normal" width="95%"
+		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
 
-<div align="center" sclass="z-fondo-principal" style="margin:0px; pandding:0px;">
-		<div class="card-wrap" width="95%">
-			<div class="card">
-				<div class="card-main">
-					<div class="btn-primary card-header" height="50px">
-						<div class="card-inner" height="100%">
-							<h:h1 class="card-heading titulo_blanco" height="100%">
-								Ingrese Su Requerimiento
-							</h:h1>
-						</div>
-					</div>
-					<div class="card-inner" align="center"
-					apply="org.zkoss.bind.BindComposer"
-					viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
 
 		<groupbox>
 			<hbox>
@@ -359,14 +345,6 @@
 					sclass="btn-primary" />
 			</div>
 		</hbox>
-		
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-		
-		
-<!-- 	</window> -->
+	</window>
 
 </zk>
