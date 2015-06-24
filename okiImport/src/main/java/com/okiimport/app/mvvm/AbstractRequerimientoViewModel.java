@@ -2,6 +2,7 @@ package com.okiimport.app.mvvm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.util.media.Media;
@@ -72,6 +74,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void buscarCiudades(){
 		if (this.estado != null)
 			listaCiudades = (List<Ciudad>) sMaestros.ConsultarCiudad(estado.getIdEstado(), 0, -1).get("ciudades");
+	}
+	
+	@Command
+	public void ampliarImagen(@Default("Titulo") @BindingParam("titulo") String titulo,
+			@BindingParam("imagen") String imagen){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("title", titulo);
+		parametros.put("image", imagen);
+		crearModal("/WEB-INF/views/sistema/configuracion/ampliarImagen.zul", parametros);
 	}
 
 	/**METODOS SOBREESCRITOS*/
