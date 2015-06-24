@@ -35,6 +35,8 @@ public class DetalleCotizacion implements Serializable {
 	
 	private Long peso;
 	
+	private String estatus;
+	
 	//bi-directional many-to-one association to Cotizacion
 	@ManyToOne
 	@JoinColumn(name="id_cotizacion")
@@ -170,7 +172,7 @@ public class DetalleCotizacion implements Serializable {
 	}
 	
 	public Float calcularTotal(){
-		Proveedor proveedor = this.cotizacion.getProveedor();
+		/*Proveedor proveedor = this.cotizacion.getProveedor();
 		if(proveedor.getTipoProveedor()){ //Nacional
 			if(this.precioFlete!=null)
 				return this.precioVenta+this.precioFlete;
@@ -179,7 +181,17 @@ public class DetalleCotizacion implements Serializable {
 		}
 		else { //Internacional
 			//Falta
-		}
+		}*/
 		return new Float(0);
 	}
+
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+	
+	
 }

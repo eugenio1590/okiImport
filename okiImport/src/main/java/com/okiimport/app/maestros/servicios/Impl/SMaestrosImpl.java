@@ -22,6 +22,7 @@ import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -142,6 +143,21 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		return analistaDAO.consultarCantRequerimientos(estatus, page, limit);
 	}
 	
+	@Override
+	public Map<String, Object> consultarAnalistas(Analista analista, int page,
+			int limit) {
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", Long.valueOf(analistaDAO.countAll()).intValue());
+		parametros.put("analistas", analistaDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Analista registrarAnalista(Analista analista) {
+	   return analistaDAO.save(analista);
+	}
+	
+	
 	//Proveedores
 	@Override
 	public Map<String, Object> consultarProveedoresSinUsuarios(Persona personaF, String fieldSort, Boolean sortDirection,
@@ -250,4 +266,10 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	public void setMotorDAO(MotorDAO motorDAO) {
 		this.motorDAO = motorDAO;
 	}
+
+	
+
+
+	
+	
 }

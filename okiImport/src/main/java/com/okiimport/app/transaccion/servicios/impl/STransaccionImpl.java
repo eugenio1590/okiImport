@@ -109,6 +109,14 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento){
 		return this.requerimientoDAO.update(requerimiento);
 	}
+	
+	@Override
+	public void guardarSeleccionRequerimiento(
+			DetalleCotizacion detalleCotizacion) {
+		// TODO Auto-generated method stub
+		detalleCotizacion.setEstatus("seleccionado");
+		this.detalleCotizacionDAO.update(detalleCotizacion);
+	}
 
 	@Override
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
@@ -287,4 +295,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		cotizacion.setDetalleCotizacions(detalleCotizacions);
 		return cotizacion;
 	}
+
+	
 }

@@ -7,6 +7,7 @@ import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Usuario;
 
 public interface SMaestros {
 	//Marcas
@@ -25,6 +26,11 @@ public interface SMaestros {
 	public Map<String, Object> consultarAdministradoresSinUsuarios(Persona personaF,  String fieldSort, Boolean sortDirection, 
 			int pagina, int limit);
 	public List<Analista> consultarCantRequerimientos(List<String> estatus, int page, int limit);
+	public Map<String, Object> consultarAnalistas(Analista analista, int page, int limit);
+	/*public Map<String, Object> consultarAnalistas(Analista analistaF, String fieldSort, Boolean sortDirection, 
+			int pagina, int limit);*/
+	public Analista registrarAnalista(Analista analista);
+	
 	
 	//Proveedores
 	public Map<String, Object> consultarProveedoresSinUsuarios(Persona personaF, String fieldSort, Boolean sortDirection,
