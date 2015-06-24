@@ -59,7 +59,6 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private Paging pagDetalleCotizacion;
 
 	//Atributos
-	private static final int PAGE_SIZE = 5;
 	private static String titulo = "Repuestos Cotizados del Requerimiento N° ";
 	
 	private Requerimiento requerimiento;
@@ -79,7 +78,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
-		pagDetalleCotizacion.setPageSize(PAGE_SIZE);
+		pagDetalleCotizacion.setPageSize(pageSize);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -119,7 +118,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		
 		/**FALTA FILTRAR POR ESTATUS DE DETALLE COTIZACION*/
 		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(detalleCotizacionFiltro, requerimiento.getIdRequerimiento(),
-				fieldSort, sortDirection, page, PAGE_SIZE);
+				fieldSort, sortDirection, page, pageSize);
 		
 		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
 		Integer total = (Integer) parametros.get("total");

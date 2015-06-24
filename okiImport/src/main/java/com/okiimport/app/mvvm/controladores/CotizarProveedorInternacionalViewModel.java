@@ -63,10 +63,10 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private Paging pagMonedas;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
-	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String titulo;
 	
 	private String constraint_precio_flete;
 	
@@ -91,7 +91,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		
 		this.requerimiento = requerimiento;
 		this.cotizacionSelecionada = cotizacion;
-		titulo = titulo + requerimiento.getIdRequerimiento();
+		titulo = TITULO_BASE + requerimiento.getIdRequerimiento();
 		cambiarMonedas(0);
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacionSelecionada.getIdCotizacion());	
 		
@@ -166,7 +166,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
-			winCotizar.onClose();
 		}
 	}
 	
@@ -252,12 +251,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
-		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
 		pagMonedas.setActivePage(page);
 		pagMonedas.setTotalSize(total);
-		pagMonedas.setPageSize(PAGE_SIZE);
+		pagMonedas.setPageSize(pageSize);
 	}
 	
 	/*

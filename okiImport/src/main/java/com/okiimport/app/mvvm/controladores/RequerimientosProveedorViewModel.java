@@ -49,8 +49,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	private Paging pagMisRequerimientos;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
-	
 	private List <Requerimiento> listaRequerimientos;
 	
 	private Usuario usuario;
@@ -68,7 +66,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		proveedor = (Proveedor) usuario.getPersona();
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		pagMisRequerimientos.setPageSize(pageSize);
 		listaEstatus = llenarListaEstatus();
 	}
 	
@@ -101,7 +99,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosConSolicitudesCotizacion(requerimientoFiltro, 
-				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
+				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridMisRequerimientos.setMultiple(true);

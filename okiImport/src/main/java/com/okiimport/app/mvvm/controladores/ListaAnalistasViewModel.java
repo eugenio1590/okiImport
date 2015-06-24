@@ -28,11 +28,12 @@ import org.zkoss.zul.Radiogroup;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 
-public class ListaAnalistasViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sMaestros")
@@ -51,13 +52,12 @@ public class ListaAnalistasViewModel extends AbstractViewModel implements EventL
 	private Analista analistaFiltro;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 10;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
 		analistaFiltro = new Analista();
-		pagAnalistas.setPageSize(PAGE_SIZE);
+		pagAnalistas.setPageSize(pageSize);
 		agregarGridSort(gridAnalistas);
 		cambiarAnalistas(0, null, null);
 	}
@@ -82,7 +82,7 @@ public class ListaAnalistasViewModel extends AbstractViewModel implements EventL
 	public void cambiarAnalistas(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarAnalistas(analistaFiltro, page, PAGE_SIZE);
+		Map<String, Object> parametros = sMaestros.consultarAnalistas(analistaFiltro, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		analistas = (List<Analista>) parametros.get("analistas");
 		pagAnalistas.setActivePage(page);

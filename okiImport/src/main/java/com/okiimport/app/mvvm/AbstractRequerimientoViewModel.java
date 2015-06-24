@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -28,7 +27,9 @@ import com.okiimport.app.modelo.Estado;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
-	@Autowired
+	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
+	
+	//Servicios
 	@BeanInjector("mailService")
 	protected MailService mailService;
 	
@@ -39,7 +40,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected Estado estado;
 	
-	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
+	protected int pageSize = 10;
 	
 	/**SETTERS Y GETTERS*/	
 	public MailService getMailService() {
