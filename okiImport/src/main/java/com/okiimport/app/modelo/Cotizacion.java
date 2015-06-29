@@ -30,6 +30,8 @@ public class Cotizacion implements Serializable{
 	
 	private String mensaje;
 	
+	private Float precioFlete;
+	
 	@Transient
 	private Float totalPrecioVenta=new Float(0);
 	
@@ -137,6 +139,14 @@ public class Cotizacion implements Serializable{
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public Float getPrecioFlete() {
+		return precioFlete;
+	}
+
+	public void setPrecioFlete(Float precioFlete) {
+		this.precioFlete = precioFlete;
 	}
 
 	public Proveedor getProveedor() {

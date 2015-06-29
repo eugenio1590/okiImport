@@ -46,9 +46,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 	@Wire("#pagMisRequerimientos")
 	private Paging pagMisRequerimientos;
 	
-	//Atributos
-	private static final int PAGE_SIZE = 3;
-	
+	//Atributos	
 	private List <Requerimiento> listaRequerimientos;
 	
 	private Usuario usuario;
@@ -65,7 +63,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		pagMisRequerimientos.setPageSize(pageSize);
 		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
 		listaEstatus = llenarListaEstatus();
 		listaEstatus.add(estatusFiltro);
@@ -100,7 +98,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.consultarMisRequerimientosEmitidos(requerimientoFiltro, 
-				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
+				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		pagMisRequerimientos.setActivePage(page);

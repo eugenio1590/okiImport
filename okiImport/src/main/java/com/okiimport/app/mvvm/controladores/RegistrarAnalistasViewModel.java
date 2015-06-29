@@ -40,7 +40,6 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	private Ciudad ciudad;
 	private Estado estado;
 	
-	private Integer page_size = 6;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;

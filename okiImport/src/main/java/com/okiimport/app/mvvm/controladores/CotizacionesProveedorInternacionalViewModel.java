@@ -43,7 +43,6 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	
 	private String constraint_precio_flete;
@@ -68,7 +67,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
-		pagCotizaciones.setPageSize(PAGE_SIZE);
+		pagCotizaciones.setPageSize(pageSize);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -99,7 +98,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.consultarSolicitudCotizaciones(cotizacionFiltro, fieldSort, 
-				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, PAGE_SIZE);
+				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
 		pagCotizaciones.setActivePage(page);

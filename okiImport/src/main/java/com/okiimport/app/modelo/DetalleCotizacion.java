@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="detalle_cotizacion")
+@Inheritance(strategy=InheritanceType.JOINED)
 @NamedQuery(name="DetalleCotizacion.findAll", query="SELECT d FROM DetalleCotizacion d")
 public class DetalleCotizacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,14 +27,6 @@ public class DetalleCotizacion implements Serializable {
 	private Float precioFlete;
 	
 	private Long cantidad;
-	
-	private Long largo;
-	
-	private Long ancho;
-	
-	private Long alto;
-	
-	private Long peso;
 	
 	private String estatus;
 	
@@ -107,37 +100,13 @@ public class DetalleCotizacion implements Serializable {
 	public void setCantidad(Long cantidad) {
 		this.cantidad = cantidad;
 	}
-
-	public Long getLargo() {
-		return largo;
+	
+	public String getEstatus() {
+		return estatus;
 	}
 
-	public void setLargo(Long largo) {
-		this.largo = largo;
-	}
-
-	public Long getAncho() {
-		return ancho;
-	}
-
-	public void setAncho(Long ancho) {
-		this.ancho = ancho;
-	}
-
-	public Long getAlto() {
-		return alto;
-	}
-
-	public void setAlto(Long alto) {
-		this.alto = alto;
-	}
-
-	public Long getPeso() {
-		return peso;
-	}
-
-	public void setPeso(Long peso) {
-		this.peso = peso;
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
 	}
 
 	public Cotizacion getCotizacion() {
@@ -157,41 +126,10 @@ public class DetalleCotizacion implements Serializable {
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	public Long volumen(){
-		return largo*ancho*alto;
-	}
-	
-	public Long calcularPesoVolumetrico(Long libra){
-		Long pesoV = (libra!=null && libra!=new Long(0)) ? volumen()/libra : 0;
-		return (pesoV>peso) ? pesoV : peso;
-	}
-	
-	public Long calcularPesoDeCubicaje(Long pieCubico, Long minPieCubico){
-		Long pesoC = (pieCubico!=null && pieCubico!=new Long(0)) ? volumen()/pieCubico : 0;
-		return (minPieCubico!=null && pesoC<minPieCubico) ? minPieCubico : pesoC;
-	}
-	
 	public Float calcularTotal(){
-		/*Proveedor proveedor = this.cotizacion.getProveedor();
-		if(proveedor.getTipoProveedor()){ //Nacional
-			if(this.precioFlete!=null)
-				return this.precioVenta+this.precioFlete;
-			else
-				return this.precioVenta;
-		}
-		else { //Internacional
-			//Falta
-		}*/
-		return new Float(0);
+		if(this.precioFlete!=null)
+			return this.precioVenta+this.precioFlete;
+		else
+			return this.precioVenta;
 	}
-
-	public String getEstatus() {
-		return estatus;
-	}
-
-	public void setEstatus(String estatus) {
-		this.estatus = estatus;
-	}
-	
-	
 }

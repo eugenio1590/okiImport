@@ -2,13 +2,14 @@ package com.okiimport.app.mvvm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.util.media.Media;
@@ -26,7 +27,9 @@ import com.okiimport.app.modelo.Estado;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
-	@Autowired
+	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
+	
+	//Servicios
 	@BeanInjector("mailService")
 	protected MailService mailService;
 	
@@ -37,7 +40,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected Estado estado;
 	
-	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
+	protected int pageSize = 10;
 	
 	/**SETTERS Y GETTERS*/	
 	public MailService getMailService() {
@@ -72,6 +75,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void buscarCiudades(){
 		if (this.estado != null)
 			listaCiudades = (List<Ciudad>) sMaestros.ConsultarCiudad(estado.getIdEstado(), 0, -1).get("ciudades");
+	}
+	
+	@Command
+	public void ampliarImagen(@Default("Titulo") @BindingParam("titulo") String titulo,
+			@BindingParam("imagen") String imagen){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("title", titulo);
+		parametros.put("image", imagen);
+		crearModal("/WEB-INF/views/sistema/configuracion/ampliarImagen.zul", parametros);
 	}
 
 	/**METODOS SOBREESCRITOS*/
@@ -134,6 +146,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	protected static List <ModeloCombo<Boolean>> llenarListaTipoRepuesto(){
 		List <ModeloCombo<Boolean>> listaTipoRepuesto = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Indistinto", null));
 		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Reemplazo", true));
 		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Original", false));
 		return listaTipoRepuesto;
@@ -166,15 +179,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	protected static List<ModeloCombo<Boolean>> llenarTiposFleteInternacional(){
 		List<ModeloCombo<Boolean>> listaTiposFlete = new ArrayList<ModeloCombo<Boolean>>();
-		listaTiposFlete.add(new ModeloCombo<Boolean>("CIF", false));
-		listaTiposFlete.add(new ModeloCombo<Boolean>("FOB", true));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("CIF", true));
+		listaTiposFlete.add(new ModeloCombo<Boolean>("FOB", false));
 		return listaTiposFlete;
 	}
 	
 	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio(){
 		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", false));
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
 	}
 	
