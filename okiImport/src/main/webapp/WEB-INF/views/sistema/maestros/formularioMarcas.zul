@@ -1,0 +1,46 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winFormularioMarca" title="Registrar Marca"
+		border="normal" width="40%" apply="org.zkoss.bind.BindComposer"
+		sclass="btn-primary" closable="true"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarMarcasViewModel')"
+		form="@id('fx') @load(vm.marca) @save(vm.marca, before='registrar')">
+		<groupbox>
+
+			<div>
+
+				<grid>
+					<columns>
+						<column width="35%" align="right" />
+						<column width="65%" />
+					</columns>
+
+					<rows>
+						<row>
+						
+							<label value="Nombre Marca: *" />
+
+							<textbox id="nombre" width="60%"
+								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
+								placeholder="Ej: Toyota"
+								constraint="no empty:El Campo No Debe Estar Vacio" />
+						</row>
+					</rows>
+				</grid>
+			</div>
+		</groupbox>
+		<hbox width="100%">
+			<div hflex="1" align="center">
+				<label value="* Campos Obligatorios" sclass="requerido" />
+			</div>
+			<div sclass="panel-footer" align="right">
+
+				<button id="btnLimpiar" label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
+
+				<button id="btnEnviar" label="Enviar" type="submit"
+					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
+			</div>
+		</hbox>
+	</window>
+</zk>

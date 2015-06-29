@@ -69,6 +69,11 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		return Parametros;
 	}
 	
+	@Override
+	public MarcaVehiculo registrarMarca(MarcaVehiculo marca) {
+	   return marcaVehiculoDAO.save(marca);
+	}
+	
 	//Estados
 		@Override
 		public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {

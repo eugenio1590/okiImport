@@ -84,6 +84,33 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
+	
+	protected static List<ModeloCombo<String>> llenarListaBancoPago(){
+		List<ModeloCombo<String>> listaBancoPago = new ArrayList<ModeloCombo<String>>();
+		listaBancoPago .add(new ModeloCombo<String>("Banco Exterior", "EXTERIOR"));
+		listaBancoPago .add(new ModeloCombo<String>("Banco Provincial", "PROVINCIAL"));
+		listaBancoPago .add(new ModeloCombo<String>("Banco Banesco", "BANESCO"));
+		listaBancoPago .add(new ModeloCombo<String>("Banco de Venezuela", "BDVENEZUELA"));
+		listaBancoPago .add(new ModeloCombo<String>("Banco Mercantil", "MERCANTIL"));
+		listaBancoPago .add(new ModeloCombo<String>("Banco BOD", "BOD"));
+		return listaBancoPago;
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEmpresaEncomiendas(){
+		List<ModeloCombo<String>> listaEmpresaEncomiendas = new ArrayList<ModeloCombo<String>>();
+		listaEmpresaEncomiendas .add(new ModeloCombo<String>("Zoom", "ZOOM"));
+		listaEmpresaEncomiendas .add(new ModeloCombo<String>("Domesa", "DOMESA"));
+		listaEmpresaEncomiendas .add(new ModeloCombo<String>("Mrw", "MRW"));
+		return listaEmpresaEncomiendas;
+	}
+	
+	protected static List <ModeloCombo<Boolean>> llenarListaOficinaDireccion(){
+		List <ModeloCombo<Boolean>> listaOficinaDireccion = new ArrayList<ModeloCombo<Boolean>>();
+		listaOficinaDireccion.add(new ModeloCombo<Boolean>("Oficina Empresa Encomiendas", true));
+		listaOficinaDireccion.add(new ModeloCombo<Boolean>("Direccion Particular", false));
+		return listaOficinaDireccion;
+	}
+	
 	protected static List <ModeloCombo<Boolean>> llenarListaTraccion(){
 		List <ModeloCombo<Boolean>> listaTraccion = new ArrayList<ModeloCombo<Boolean>>();
 		listaTraccion.add(new ModeloCombo<Boolean>("4x2", true));
