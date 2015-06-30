@@ -142,7 +142,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		
 		if(listaDetalleRequerimientoSeleccionados!= null && this.listaDetalleRequerimientoSeleccionados.size()>0)
 		{
-			if (validarListaClasificacion() = true)
+			if (validarListaClasificacion()==true) 
 			{
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
@@ -151,9 +151,11 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 			}
 			else
 			{
-				mostrarMensaje("Información", "Seleccione al menos una clasificacion", null, null, null, null);
-			}
-		}
+				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados ", null, null, null, null);
+		    }
+
+			
+		} 
 		else
 			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
@@ -170,9 +172,18 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	}
 	
 	@Command
-	public void validarListaClasificacion(){
+	public boolean validarListaClasificacion(){
 		
-		ejecutarGlobalCommand("cambiarRequerimientos", null);
+		if (listaDetalleRequerimientoSeleccionados!= null)
+		{
+			for( DetalleRequerimiento detalleReq: listaDetalleRequerimientoSeleccionados)
+			{
+				if ( detalleReq.getClasificacionRepuesto()==null)
+				     return false;
+			}
+		}
+		
+			return true;
 	}
 	
 	
