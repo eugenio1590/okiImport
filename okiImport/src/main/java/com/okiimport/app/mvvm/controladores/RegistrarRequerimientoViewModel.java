@@ -93,9 +93,9 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
-			btnEnviar.setDisabled(true);
-			btnLimpiar.setDisabled(true);
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
+				btnEnviar.setDisabled(true);
+				btnLimpiar.setDisabled(true);
 				String tipo = (this.tipoPersona.getValor())?"J":"V";
 				cliente.setCedula(tipo+cliente.getCedula());
 				cliente = sMaestros.registrarOActualizarCliente(cliente);
@@ -123,10 +123,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				mostrarMensaje("Informacion", "El Requerimiento ha sido registrado existosamente ", null, null, 
 						new EventListener() {
 					public void onEvent(Event event) throws Exception {
-						if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
-							recargar();
-						}
+						recargar();
 					}
 				}, null);
 			}

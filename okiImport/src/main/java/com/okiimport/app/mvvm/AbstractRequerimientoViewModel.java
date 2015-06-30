@@ -164,7 +164,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaFormasEnvio;
 	}
 	
-	public static int getYearDay(){
+	public int getYearDay(){
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 	
@@ -253,5 +253,4 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
 }
