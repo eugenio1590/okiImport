@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -24,13 +23,12 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -46,10 +44,9 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	@Wire("#pagMisRequerimientos")
 	private Paging pagMisRequerimientos;
 	
-	//Atributos	
+	//Atributos
 	private List <Requerimiento> listaRequerimientos;
 	
-	private Usuario usuario;
 	private Requerimiento requerimientoFiltro;
 	
 	private List<ModeloCombo<String>> listaEstatus;
@@ -58,9 +55,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		UserDetails user = this.getUser();
 		requerimientoFiltro = new Requerimiento(new Cliente());
-		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
@@ -97,8 +92,8 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.consultarMisRequerimientosProcesados(requerimientoFiltro, 
-				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarRequerimientosGeneral(requerimientoFiltro, 
+				fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		pagMisRequerimientos.setActivePage(page);
@@ -134,6 +129,36 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	}
 	
 	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("editar", true);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+	}
+	
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion 
+	 * a los proveedores del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void enviarProveedores(@BindingParam("requerimiento") Requerimiento requerimiento){
+		if(!requerimiento.cerrarSolicitud()){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("requerimiento", requerimiento);
+			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+		}
+		else
+			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
+	}
+	
+	/*
 	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
@@ -144,18 +169,6 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", false);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
-	}
-	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
-	 * */
-	@Command
-	public void aprobarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

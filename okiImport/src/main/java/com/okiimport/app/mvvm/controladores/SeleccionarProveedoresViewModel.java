@@ -79,7 +79,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
-		pagProveedores.setPageSize(PAGE_SIZE);
+		pagProveedores.setPageSize(pageSize);
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
 		for(DetalleRequerimiento detalle:repuestosseleccionados)
@@ -207,6 +207,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
+
+	
+	
 	
 	
 	public List<Proveedor> getListaProveedores() {

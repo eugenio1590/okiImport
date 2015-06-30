@@ -88,5 +88,7 @@ public class Analista extends Persona implements Serializable {
 			this.tipoMenu=2;
 		return this.tipoMenu;
 	}
+
+	
 	
 }

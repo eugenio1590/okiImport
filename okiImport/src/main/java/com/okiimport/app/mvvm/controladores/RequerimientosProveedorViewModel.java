@@ -24,6 +24,7 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.MarcaVehiculo;
+import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -48,11 +49,10 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	private Paging pagMisRequerimientos;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
-	
 	private List <Requerimiento> listaRequerimientos;
 	
 	private Usuario usuario;
+	private Proveedor proveedor;
 	private Requerimiento requerimientoFiltro;
 	
 	private List<ModeloCombo<String>> listaEstatus;
@@ -63,9 +63,10 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		UserDetails user = this.getUser();
 		requerimientoFiltro = new Requerimiento(new Cliente(), new MarcaVehiculo());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		proveedor = (Proveedor) usuario.getPersona();
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		pagMisRequerimientos.setPageSize(pageSize);
 		listaEstatus = llenarListaEstatus();
 	}
 	
@@ -98,7 +99,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosConSolicitudesCotizacion(requerimientoFiltro, 
-				fieldSort, sortDirection,usuario.getPersona().getId(), page, PAGE_SIZE);
+				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridMisRequerimientos.setMultiple(true);
@@ -142,7 +143,10 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("usuario", usuario);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+		if(proveedor.getTipoProveedor().equals(true)) //Nacional
+			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+		else //Internacional
+			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

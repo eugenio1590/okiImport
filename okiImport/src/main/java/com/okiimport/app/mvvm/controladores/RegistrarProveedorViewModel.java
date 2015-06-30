@@ -51,8 +51,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	private Integer page_size = 6;
+	
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
@@ -67,8 +66,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		super.doAfterCompose(view);
 		limpiar();
 		listaEstados = llenarListaEstados();
-		pagMarcas.setPageSize(page_size);
-		pagTipoRepuestos.setPageSize(page_size);
+		pagMarcas.setPageSize(pageSize);
+		pagTipoRepuestos.setPageSize(pageSize);
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
 		listaTipoPersona = llenarListaTipoPersona();
@@ -219,7 +218,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
-				page_size);
+				pageSize);
 		listaMarcaVehiculos = (List<MarcaVehiculo>) Parametros.get("marcas");
 		Integer total = (Integer) Parametros.get("total");
 		gridMarcas.setMultiple(true);
@@ -231,7 +230,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
 		Map<String, Object> Parametros = sMaestros
-				.ConsultarClasificacionRepuesto(page, page_size);
+				.ConsultarClasificacionRepuesto(page, pageSize);
 		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
 				.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");

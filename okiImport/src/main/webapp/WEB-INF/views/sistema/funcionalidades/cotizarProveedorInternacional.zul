@@ -63,8 +63,13 @@
 									<comboitem label="@bind(each.nombre)"/>
 								</template>
 							</combobox>
-							<textbox rows="2" width="56%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete por producto tendra las mismas unidades de moneda que el precio de venta. El precio del flete es obligatorio."/>
+							<space />
+							<label value="Precio de Flete:" />
+							<decimalbox id="txtPrecioFlete" format="###.##"
+								constraint="no empty, no zero, no negative"
+								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
+							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
+							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto. El precio del flete es obligatorio."/>
 						</div>
 					</groupbox>
 				</div>
@@ -81,11 +86,11 @@
 						<listheader label="Marca *" width="15%"/>
 						<listheader label="Cant. Cotizada *" width="13%"/>
 						<listheader label="Precio de Venta *" width="15%"/>
-						<listheader label="Precio de Flete (**)" visible="@bind(vm.tipoFlete.valor)" width="15%"/>
-						<listheader label="Peso" visible="@bind(vm.tipoFlete.valor)" width="10%"/>
-						<listheader label="Largo" visible="@bind(vm.tipoFlete.valor)" width="10%"/>
-						<listheader label="Ancho" visible="@bind(vm.tipoFlete.valor)" width="10%"/>
-						<listheader label="Alto" visible="@bind(vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Precio de Flete (**)" visible="@bind(!vm.tipoFlete.valor)" width="15%"/>
+						<listheader label="Peso" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Largo" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Ancho" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Alto" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -113,25 +118,25 @@
 									constraint="no empty, no zero, no negative"
 									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
-							<listcell visible="@bind(vm.tipoFlete.valor)">
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
 									value="@bind(each.precioFlete)" width="100px"
 									onChange="@command('calcularPrecio', tipo=2)"/>
 <!-- 																		constraint="@bind(vm.constraint_precio_flete)"  -->
 							</listcell>
-							<listcell visible="@bind(vm.tipoFlete.valor)">
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
 									value="@bind(each.peso)" width="100px"/>
 							</listcell>
-							<listcell visible="@bind(vm.tipoFlete.valor)">
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
 									value="@bind(each.largo)" width="100px"/>
 							</listcell>
-							<listcell visible="@bind(vm.tipoFlete.valor)">
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
 									value="@bind(each.ancho)" width="100px"/>
 							</listcell>
-							<listcell visible="@bind(vm.tipoFlete.valor)">
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
 									value="@bind(each.alto)" width="100px"/>
 							</listcell>
