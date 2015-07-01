@@ -33,8 +33,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
 	private Proveedor proveedor;
-	private Ciudad ciudad;
-
+	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 
@@ -116,21 +115,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", str, null, null,
+						new EventListener() {
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
 									recargar();
-								}
 							}
-						});
+						}, null);
 			}
 
 			else
-				mostrarMensaje(
-						"Información",
-						"Agregue al Menos una Marca y Una Clasificacion de Repuesto",
+				mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto",
 						null, null, null, null);
 
 		}
@@ -320,14 +314,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
-	}
-
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
 	}
 
 	public List<Ciudad> getListaCiudades() {

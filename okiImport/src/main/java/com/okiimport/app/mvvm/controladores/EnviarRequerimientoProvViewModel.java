@@ -139,13 +139,23 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 
 	@Command
 	public void enviarSolicitudProv(@BindingParam("requerimiento") Requerimiento requerimiento){
-		if( this.listaDetalleRequerimientoSeleccionados.size()>0)
+		
+		if(listaDetalleRequerimientoSeleccionados!= null && this.listaDetalleRequerimientoSeleccionados.size()>0)
 		{
+			if (validarListaClasificacion()==true) 
+			{
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
 			parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
 			crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
-		}
+			}
+			else
+			{
+				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados ", null, null, null, null);
+		    }
+
+			
+		} 
 		else
 			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
@@ -160,6 +170,22 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public void limpiar(){
 		this.listaDetalleRequerimientoSeleccionados=null;
 	}
+	
+	@Command
+	public boolean validarListaClasificacion(){
+		
+		if (listaDetalleRequerimientoSeleccionados!= null)
+		{
+			for( DetalleRequerimiento detalleReq: listaDetalleRequerimientoSeleccionados)
+			{
+				if ( detalleReq.getClasificacionRepuesto()==null)
+				     return false;
+			}
+		}
+		
+			return true;
+	}
+	
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
