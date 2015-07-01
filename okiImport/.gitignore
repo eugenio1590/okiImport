@@ -1,7 +1,3 @@
 /target/
-<<<<<<< HEAD
-/pom.xml
-=======
 pom.xml
 .classpath
->>>>>>> branch 'develop' of https://github.com/eugenio1590/okiImport
