@@ -116,21 +116,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", str, null, null,
+						new EventListener() {
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
 									recargar();
-								}
 							}
-						});
+						}, null);
 			}
 
 			else
-				mostrarMensaje(
-						"Información",
-						"Agregue al Menos una Marca y Una Clasificacion de Repuesto",
+				mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto",
 						null, null, null, null);
 
 		}

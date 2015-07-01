@@ -128,9 +128,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				}, null);
 			}
 			else
-				mostrarMensaje("Información",
-						"Agregue al Menos un Requerimiento", null, null, null,
-						null);
+				mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
 		} 
 	}
 

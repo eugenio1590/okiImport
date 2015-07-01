@@ -1,11 +1,10 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormularioRequerimiento"
-		title="Registrese Como Proveedor" border="normal" width="70%"
+		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')"
-		form="@id('fx') @load(vm.proveedor) @save(vm.proveedor, before='registrar')">
-
-		<tabbox id="tabDatosProveedor" height="80%">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
+					
+		<tabbox id="tabDatosProveedor" maximalHeight="true">
 			<tabs id="tabs">
 
 				<tab id="tabDatosFiscales"
@@ -26,25 +25,23 @@
 
 				</tab>
 			</tabs>
+			
 			<tabpanels>
+				<!-- DATOS GENERALES -->
 				<tabpanel>
 					<groupbox>
-
 						<div>
-
 							<grid>
 								<columns>
-									<column width="35%" align="right" />
+									<column width="35%" align="right"/>
 									<column width="65%" />
 									<column width="35%" align="right" />
 									<column width="65%" />
 								</columns>
-
 								<rows>
 									<row>
 										<label value="RIF: *" />
-
-										<hbox>
+									<hbox>
 											<combobox width="30%"
 												readonly="true" selectedItem="@bind(vm.tipoPersona)"
 												model="@load(vm.listaTipoPersona)" constraint="no empty">
@@ -153,23 +150,20 @@
 											</template>
 										</combobox>
 									</row>
-
-
 								</rows>
 							</grid>
 						</div>
 					</groupbox>
 				</tabpanel>
+				
+				<!-- MARCAS DE VEHICULOS -->
 				<tabpanel>
-
 					<groupbox>
-
 						<div>
-
-							<borderlayout width="100%" height="350px">
-								<west width="300px" title="Marcas"
-									collapsible="true">
-									<vlayout>
+							<borderlayout height="470px">
+								<west width="300px" title="Marcas" size="25%" flex="true" maxsize="250" 
+									collapsible="true" border="normal">
+									<vlayout height="100%" vflex="1">
 										<toolbar>
 											<toolbarbutton height="45px"
 												image="resources/img/icons/ButtonArrowRight32.png"
@@ -180,11 +174,8 @@
 											mold="paging" checkmark="true"
 											selectedItems="@bind(vm.marcaSeleccionadas)" multiple="true"
 											model="@load(vm.listaMarcaVehiculos)">
-											<listhead
-												menupopup="auto">
-
-												<listheader
-													label="Nombre" sort="auto" />
+											<listhead>
+												<listheader label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
@@ -215,10 +206,9 @@
 											<!-- 
 												<frozen columns="1"/>
 											-->
-											<listhead
-												menupopup="auto">
+											<listhead>
 												<listheader
-													label="Nombre" sort="auto" />
+													label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
@@ -234,15 +224,15 @@
 							</borderlayout>
 						</div>
 					</groupbox>
-
 				</tabpanel>
+				<!-- TIPOS DE REPUESTO -->
 				<tabpanel>
 
 					<groupbox>
 
 						<div>
 
-							<borderlayout width="100%" height="350px">
+							<borderlayout width="100%" height="470px">
 								<west width="300px"
 									title="Tipo de Repuestos" collapsible="true">
 									<vlayout>
@@ -258,17 +248,13 @@
 											checkmark="true"
 											selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
 											multiple="true">
-											<listhead
-												menupopup="auto">
-
-												<listheader
-													label="Nombre" sort="auto" />
+											<listhead>
+												<listheader label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
 													<listcell
 														label="@bind(each.descripcion)" />
-
 												</listitem>
 											</template>
 
@@ -292,10 +278,9 @@
 											model="@load(vm.proveedor.clasificacionRepuestos)"
 											mold="paging" checkmark="true" multiple="true"
 											selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
-											<listhead
-												menupopup="auto">
+											<listhead>
 												<listheader
-													label="Nombre" sort="auto" />
+													label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
@@ -314,6 +299,7 @@
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
+		<!-- BOTONES -->
 		<hbox width="100%">
 			<div hflex="1" align="center">
 				<label value="* Campos Obligatorios" sclass="requerido" />
