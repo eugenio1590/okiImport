@@ -1,9 +1,10 @@
 <zk>
 	<window id="winEditarUsuario" title="Editar Usuario"
-		border="none" width="500px"  closable="true"
+		border="none" width="500px"  closable="true" sclass="btn-primary"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.configuracion.EditarUsuarioViewModel')"
 		form="@id('fx') @load(vm.usuario) @save(vm.usuario, before='guardar')">
+		
 		<columnlayout>
 			<columnchildren width="60%">
 				<grid>
@@ -40,13 +41,15 @@
 			<columnchildren width="40%">
 				<vbox width="100%" align="center">
 					<image id="imgFoto" width="110px" height="110px" src="@bind(vm.usuario.getFoto64())" />
-					<button id="btnCambFoto" label="..." sclass="btn-success" 
+					<button id="btnCambFoto" label="..." sclass="btn-primary" 
 						upload="true" style="margin-bottom:0px" />
 				</vbox>
+				
+				
 			</columnchildren>
 		</columnlayout>
 		<toolbar>
-			<button label="Guardar" sclass="btn btn-sm btn-info" onClick="@command('guardar')"/>
+			<button label="Guardar" sclass="btn-primary" onClick="@command('guardar')"/>
         </toolbar>
 	</window>
 </zk>
