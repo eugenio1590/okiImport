@@ -89,7 +89,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	private Combobox cmbFlete;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
@@ -123,7 +122,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		cambiarCotizaciones(0, null, null);
 		cambiarMonedas(0);
 		agregarGridSort(gridCotizaciones);
-		pagCotizaciones.setPageSize(PAGE_SIZE);
+		pagCotizaciones.setPageSize(pageSize);
 		eastCotizacion.setTitle(TITULO_EAST);	
 		
 		tiposFlete = llenarTiposFleteNacional();
@@ -158,7 +157,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.consultarSolicitudCotizaciones(cotizacionFiltro, fieldSort, 
-				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, PAGE_SIZE);
+				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
 		pagCotizaciones.setActivePage(page);
@@ -299,7 +298,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void seleccionarTipoFlete(){
 		if(!this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
-			System.out.println("CAMBIO FLETE");
 			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
 				detalle.setPrecioFlete(null);
 		}
@@ -340,12 +338,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
-		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
 		pagMonedas.setActivePage(page);
 		pagMonedas.setTotalSize(total);
-		pagMonedas.setPageSize(PAGE_SIZE);
+		pagMonedas.setPageSize(pageSize);
 	}
 	
 	/*

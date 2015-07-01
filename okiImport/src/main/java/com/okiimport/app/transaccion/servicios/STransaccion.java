@@ -6,12 +6,14 @@ import java.util.Map;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.Requerimiento;
 
 public interface STransaccion {
 	
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
+	public void guardarSeleccionRequerimiento(DetalleCotizacion detalleCotizacion);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
 	public Map<String, Object> consultarRequerimientosGeneral(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
@@ -41,13 +43,16 @@ public interface STransaccion {
 			Integer idRequerimiento, int idProveedor, int pagina, int limit);
 	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion);
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions);
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
 	
 	//Detalle de Cotizaciones
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,
 			String fieldSort, Boolean sortDirection, int pagina, int limit);
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
 			String fieldSort, Boolean sortDirection, int pagina, int limit);
-	
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
 	public Map <String, Object> ConsultarDetalleCotizacion(Integer idcotizacion,int pagina, int limit);
+	
+		//Internacional
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacionInternacional detalleF, int idCotizacion,
+			String fieldSort, Boolean sortDirection, int pagina, int limit);
 }

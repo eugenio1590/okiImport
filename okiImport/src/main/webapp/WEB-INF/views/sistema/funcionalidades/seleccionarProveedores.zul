@@ -87,7 +87,7 @@
 		<div sclass="panel-footer" align="right">
 			<button label="Limpiar" type="submit"
 				onClick="@command('limpiar')" sclass="btn-primary" />
-			<button label="Enviar" type="submit"
+			<button id= "btn_enviar" label="Enviar" type="submit"
 				onClick="@command('enviar')" sclass="btn-primary" />
 		</div>
 	</window>

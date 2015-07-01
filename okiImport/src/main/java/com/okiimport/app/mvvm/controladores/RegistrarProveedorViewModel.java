@@ -33,8 +33,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
 	private Proveedor proveedor;
-	private Ciudad ciudad;
-
+	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 
@@ -51,8 +50,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	private Integer page_size = 6;
+	
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
@@ -67,8 +65,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		super.doAfterCompose(view);
 		limpiar();
 		listaEstados = llenarListaEstados();
-		pagMarcas.setPageSize(page_size);
-		pagTipoRepuestos.setPageSize(page_size);
+		pagMarcas.setPageSize(pageSize);
+		pagTipoRepuestos.setPageSize(pageSize);
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
 		listaTipoPersona = llenarListaTipoPersona();
@@ -117,21 +115,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", str, null, null,
+						new EventListener() {
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
 									recargar();
-								}
 							}
-						});
+						}, null);
 			}
 
 			else
-				mostrarMensaje(
-						"Información",
-						"Agregue al Menos una Marca y Una Clasificacion de Repuesto",
+				mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto",
 						null, null, null, null);
 
 		}
@@ -219,7 +212,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
-				page_size);
+				pageSize);
 		listaMarcaVehiculos = (List<MarcaVehiculo>) Parametros.get("marcas");
 		Integer total = (Integer) Parametros.get("total");
 		gridMarcas.setMultiple(true);
@@ -231,7 +224,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
 		Map<String, Object> Parametros = sMaestros
-				.ConsultarClasificacionRepuesto(page, page_size);
+				.ConsultarClasificacionRepuesto(page, pageSize);
 		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
 				.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
@@ -321,14 +314,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
-	}
-
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
 	}
 
 	public List<Ciudad> getListaCiudades() {

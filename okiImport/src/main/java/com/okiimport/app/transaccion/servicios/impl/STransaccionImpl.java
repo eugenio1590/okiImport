@@ -14,12 +14,14 @@ import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 import com.okiimport.app.transaccion.dao.CotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
+import com.okiimport.app.transaccion.dao.DetalleCotizacionInternacionalDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -44,6 +46,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleCotizacionDAO")
 	private DetalleCotizacionDAO detalleCotizacionDAO;
+	
+	@Autowired
+	@BeanInjector("detalleCotizacionInternacionalDAO")
+	private DetalleCotizacionInternacionalDAO detalleCotizacionInternacionalDAO;
 
 	public STransaccionImpl() {
 		super();
@@ -91,6 +97,15 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		this.detalleCotizacionDAO = detalleCotizacionDAO;
 	}
 
+	public DetalleCotizacionInternacionalDAO getDetalleCotizacionInternacionalDAO() {
+		return detalleCotizacionInternacionalDAO;
+	}
+
+	public void setDetalleCotizacionInternacionalDAO(
+			DetalleCotizacionInternacionalDAO detalleCotizacionInternacionalDAO) {
+		this.detalleCotizacionInternacionalDAO = detalleCotizacionInternacionalDAO;
+	}
+
 	@Override
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
@@ -108,6 +123,14 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Override
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento){
 		return this.requerimientoDAO.update(requerimiento);
+	}
+	
+	@Override
+	public void guardarSeleccionRequerimiento(
+			DetalleCotizacion detalleCotizacion) {
+		// TODO Auto-generated method stub
+		detalleCotizacion.setEstatus("seleccionado");
+		this.detalleCotizacionDAO.update(detalleCotizacion);
 	}
 
 	@Override
@@ -229,26 +252,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("cotizaciones", cotizacionDAO.consultarSolicitudCotizaciones(cotizacionF, fieldSort, sortDirection, idRequerimiento, idProveedor, estatus, pagina*limit, limit));
 		return parametros;
 	}
-
-	//Detalles Cotizacion
-	@Override
-	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion, 
-			String fieldSort, Boolean sortDirection, int pagina, int limit) {
-		// TODO Auto-generated method stub
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, fieldSort, sortDirection, pagina*limit, limit));
-		return parametros;
-	}
-	
-	@Override
-	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
-			String fieldSort, Boolean sortDirection, int pagina, int limit){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, fieldSort, sortDirection, pagina*limit, limit));
-		return parametros;
-	}
 	
 	@Override
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
@@ -295,5 +298,44 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);
 		return cotizacion;
+	}
+	
+	//Detalles Cotizacion
+	@Override
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion, 
+			String fieldSort, Boolean sortDirection, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
+			String fieldSort, Boolean sortDirection, int pagina, int limit){
+		boolean nuloCantidad = false;
+		detalleF.getCotizacion().setEstatus("C");
+		if(detalleF.getCantidad()==null){
+			nuloCantidad = true;
+			detalleF.setCantidad(new Long(0));
+		}
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit));
+		if(nuloCantidad)
+			detalleF.setCantidad(null);
+		return parametros;
+	}
+	
+		//Internacional
+	@Override
+	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacionInternacional detalleF, int idCotizacion, 
+			String fieldSort, Boolean sortDirection, int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCotizacion", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
 	}
 }

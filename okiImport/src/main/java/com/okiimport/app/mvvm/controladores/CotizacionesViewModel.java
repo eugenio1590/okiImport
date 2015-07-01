@@ -53,8 +53,6 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
-	
 	private Usuario usuario;
 	private Cotizacion cotizacionFiltro;
 	private Requerimiento requerimiento;
@@ -71,7 +69,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
-		pagCotizaciones.setPageSize(PAGE_SIZE);
+		pagCotizaciones.setPageSize(pageSize);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -102,7 +100,8 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	public void cambiarCotizaciones(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarCotizacionesRequerimiento(cotizacionFiltro, fieldSort, sortDirection, requerimiento.getIdRequerimiento(), page, PAGE_SIZE);
+		Map<String, Object> parametros = sTransaccion.ConsultarCotizacionesRequerimiento(cotizacionFiltro, fieldSort, sortDirection, 
+				requerimiento.getIdRequerimiento(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaCotizaciones = (List<Cotizacion>) parametros.get("cotizaciones");
 		gridCotizaciones.setMultiple(true);

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -24,7 +23,6 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
@@ -47,11 +45,8 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	private Paging pagMisRequerimientos;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
-	
 	private List <Requerimiento> listaRequerimientos;
 	
-	private Usuario usuario;
 	private Requerimiento requerimientoFiltro;
 	
 	private List<ModeloCombo<String>> listaEstatus;
@@ -60,12 +55,10 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		UserDetails user = this.getUser();
 		requerimientoFiltro = new Requerimiento(new Cliente());
-		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
-		pagMisRequerimientos.setPageSize(PAGE_SIZE);
+		pagMisRequerimientos.setPageSize(pageSize);
 		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
 		listaEstatus = llenarListaEstatus();
 		listaEstatus.add(estatusFiltro);
@@ -100,7 +93,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sTransaccion.consultarRequerimientosGeneral(requerimientoFiltro, 
-				fieldSort, sortDirection, page, PAGE_SIZE);
+				fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		pagMisRequerimientos.setActivePage(page);
@@ -177,10 +170,6 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		parametros.put("editar", false);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
-	
-	//Aprobar Cotizacion
-//	else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
-//	crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {

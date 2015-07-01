@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
 import com.okiimport.app.modelo.Requerimiento;
@@ -61,14 +63,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private Paging pagMonedas;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
-	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String titulo;
 	
 	private String constraint_precio_flete;
 	
-	private List<DetalleCotizacion> listaDetalleCotizacion;
+	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	
 	
@@ -89,13 +91,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		
 		this.requerimiento = requerimiento;
 		this.cotizacionSelecionada = cotizacion;
-		titulo = titulo + requerimiento.getIdRequerimiento();
+		titulo = TITULO_BASE + requerimiento.getIdRequerimiento();
 		cambiarMonedas(0);
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacionSelecionada.getIdCotizacion());	
 		
 		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
 				null, null, 0, -1);
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
+		listaDetalleCotizacion = (List<DetalleCotizacionInternacional>) parametros.get("detallesCotizacion");
 		limpiarCotizacionSeleccionada();
 		
 		formasEnvio = llenarFormasDeEnvio();
@@ -133,11 +135,15 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void limpiar(){
 		limpiarCotizacionSeleccionada();
 		if(listaDetalleCotizacion!=null)
-			for(DetalleCotizacion detalle : listaDetalleCotizacion){
+			for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion){
 				detalle.setMarcaRepuesto(null);
 				detalle.setCantidad(null);
 				detalle.setPrecioVenta(null);
 				detalle.setPrecioFlete(null);
+				detalle.setAlto(null);
+				detalle.setAncho(null);
+				detalle.setLargo(null);
+				detalle.setPeso(null);
 			}
 	}
 	
@@ -151,7 +157,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
-			cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
+			List<DetalleCotizacion> detallesCotizacion = new ArrayList<DetalleCotizacion>();
+			for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion){
+				detalle.setFormaEnvio(this.formaEnvio.getValor());
+				detalle.setTipoFlete(this.tipoFlete.getValor());
+				detallesCotizacion.add(detalle);
+			}
+			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
 		}
@@ -192,10 +204,9 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
-		if(!this.tipoFlete.getValor()){
+		if(this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
-			System.out.println("CAMBIO FLETE");
-			for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
+			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
 				detalle.setAlto(null);
 				detalle.setAncho(null);
@@ -240,12 +251,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
-		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, PAGE_SIZE);
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
 		pagMonedas.setActivePage(page);
 		pagMonedas.setTotalSize(total);
-		pagMonedas.setPageSize(PAGE_SIZE);
+		pagMonedas.setPageSize(pageSize);
 	}
 	
 	/*
@@ -277,12 +288,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
-	public List<DetalleCotizacion> getListaDetalleCotizacion() {
+	public List<DetalleCotizacionInternacional> getListaDetalleCotizacion() {
 		return listaDetalleCotizacion;
 	}
 
 	public void setListaDetalleCotizacion(
-			List<DetalleCotizacion> listaDetalleCotizacion) {
+			List<DetalleCotizacionInternacional> listaDetalleCotizacion) {
 		this.listaDetalleCotizacion = listaDetalleCotizacion;
 	}
 

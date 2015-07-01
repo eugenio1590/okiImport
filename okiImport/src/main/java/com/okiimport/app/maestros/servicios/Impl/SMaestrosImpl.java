@@ -22,6 +22,7 @@ import com.okiimport.app.modelo.Cliente;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -69,22 +70,24 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	}
 	
 	//Estados
-		@Override
-		public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {
-			Map<String, Object> Parametros= new HashMap<String, Object>();
-			Parametros.put("total", estadoDAO.listaEstadosActivos(0, -1).size());
-			Parametros.put("estados", estadoDAO.listaEstadosActivos(page*limit, limit));
-			return Parametros;
-		}
+	public Map<String, Object> ConsultarEstado(Integer page, Integer limit) {
+		if(limit==null)
+			limit = -1;
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", estadoDAO.listaEstadosActivos(0, -1).size());
+		Parametros.put("estados", estadoDAO.listaEstadosActivos(page*limit, limit));
+		return Parametros;
+	}
 		
 		//Ciudades
-				@Override
-				public Map<String, Object> ConsultarCiudad(Integer idEstado,Integer page, Integer limit) {
-					Map<String, Object> Parametros= new HashMap<String, Object>();
-					Parametros.put("total", ciudadDAO.listaCiudadesActivas(idEstado, 0, -1).size());
-					Parametros.put("ciudades", ciudadDAO.listaCiudadesActivas(idEstado,page*limit, limit));
-					return Parametros;
-				}
+	public Map<String, Object> ConsultarCiudad(Integer idEstado,Integer page, Integer limit) {
+		if(limit==null)
+			limit = -1;
+		Map<String, Object> Parametros= new HashMap<String, Object>();
+		Parametros.put("total", ciudadDAO.listaCiudadesActivas(idEstado, 0, -1).size());
+		Parametros.put("ciudades", ciudadDAO.listaCiudadesActivas(idEstado,page*limit, limit));
+		return Parametros;
+	}
 	
 	//Persona
 	@Override
@@ -141,6 +144,21 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	public List<Analista> consultarCantRequerimientos(List<String> estatus, int page, int limit){
 		return analistaDAO.consultarCantRequerimientos(estatus, page, limit);
 	}
+	
+	@Override
+	public Map<String, Object> consultarAnalistas(Analista analista, int page,
+			int limit) {
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", Long.valueOf(analistaDAO.countAll()).intValue());
+		parametros.put("analistas", analistaDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Analista registrarAnalista(Analista analista) {
+	   return analistaDAO.save(analista);
+	}
+	
 	
 	//Proveedores
 	@Override
@@ -250,4 +268,10 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	public void setMotorDAO(MotorDAO motorDAO) {
 		this.motorDAO = motorDAO;
 	}
+
+	
+
+
+	
+	
 }
