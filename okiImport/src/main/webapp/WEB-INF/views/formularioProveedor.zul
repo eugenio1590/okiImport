@@ -124,7 +124,7 @@
 										<label value="Ciudad: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.ciudad)"
+											selectedItem="@bind(vm.proveedor.ciudad)"
 											model="@load(vm.listaCiudades)"
 											
 											>

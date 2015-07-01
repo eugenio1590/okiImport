@@ -33,8 +33,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
 	private Proveedor proveedor;
-	private Ciudad ciudad;
-
+	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 
@@ -315,14 +314,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
-	}
-
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
 	}
 
 	public List<Ciudad> getListaCiudades() {
