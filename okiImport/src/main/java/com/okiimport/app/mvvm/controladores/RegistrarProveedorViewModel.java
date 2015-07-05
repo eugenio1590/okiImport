@@ -41,6 +41,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Listbox gridMarcas;
 	@Wire("#gridClasificacionRepuesto")
 	private Listbox gridClasificacionRepuesto;
+	@Wire("#gridMarcasVender")
+	private Listbox gridMarcasVender;
+	@Wire("#gridTipoRepuestosVender")
+	private Listbox gridTipoRepuestosVender;
 	@Wire("#pagMarcas")
 	private Paging pagMarcas;
 	@Wire("#pagTipoRepuestos")
@@ -67,6 +71,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
+		gridMarcasVender.setPageSize(pageSize);
+		gridTipoRepuestosVender.setPageSize(pageSize);
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
 		listaTipoPersona = llenarListaTipoPersona();
