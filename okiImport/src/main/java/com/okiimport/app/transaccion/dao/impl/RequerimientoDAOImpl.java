@@ -251,7 +251,7 @@ public class RequerimientoDAOImpl extends
 					joinCotizacion.join("proveedor").get("id"), 
 					idProveedor));
 		
-		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "EP"));
+		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "SC"));
 		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
 		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
 		
