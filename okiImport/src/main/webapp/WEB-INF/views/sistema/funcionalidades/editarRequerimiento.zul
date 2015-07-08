@@ -225,7 +225,10 @@
 									<listcell>
 										<div>
 											<image width="50px"
-												height="50px" src="@bind(each.getFoto64())" />
+													height="50px" src="@bind(each.getFoto64())" 
+													hover="/resources/img/icons/ampliar.png"
+													tooltiptext="Ampliar"
+													onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
 												
 											<button label="..." visible="@bind(vm.editar)"
 													sclass="btn-primary" style="margin-bottom:0px"
@@ -246,7 +249,7 @@
 				<div align="right">
 					<button id="btnLimpiar" label="Limpiar" type="submit"
 						onClick="@command('limpiar')" sclass="btn-primary" />
-					<button label="Enviar" type="submit"
+					<button label="Editar" type="submit"
 						onClick="@command('actualizar', btnEnviar=self, btnLimpiar=btnLimpiar)" sclass="btn-primary" />
 				</div>
 			</hbox>
