@@ -91,8 +91,7 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Datos Repuestos" />
-				<panel apply="org.zkoss.bind.BindComposer"
-					sclass="panel-primary">
+				<panel sclass="panel-primary">
 					<panelchildren>
 
 
