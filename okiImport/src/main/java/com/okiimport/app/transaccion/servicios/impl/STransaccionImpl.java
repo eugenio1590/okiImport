@@ -315,10 +315,12 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, Integer idRequerimiento,
 			String fieldSort, Boolean sortDirection, int pagina, int limit){
 		boolean nuloCantidad = false;
-		detalleF.getCotizacion().setEstatus("C");
-		if(detalleF.getCantidad()==null){
-			nuloCantidad = true;
-			detalleF.setCantidad(new Long(0));
+		if(detalleF!=null){
+			detalleF.getCotizacion().setEstatus("C");
+			if(detalleF.getCantidad()==null){
+				nuloCantidad = true;
+				detalleF.setCantidad(new Long(0));
+			}
 		}
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size());
