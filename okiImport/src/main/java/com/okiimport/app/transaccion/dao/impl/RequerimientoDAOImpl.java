@@ -228,6 +228,7 @@ public class RequerimientoDAOImpl extends
 		entidades.put("cliente", JoinType.INNER);
 		entidades.put("detalleRequerimientos", JoinType.INNER);
 		entidades.put("marcaVehiculo", JoinType.LEFT);
+		entidades.put("motor", JoinType.LEFT);
 		Map<String, Join> joins = this.crearJoins(entidades);
 		
 		// 3. Creamos las Restricciones de la busqueda y los campos a seleccionar
@@ -238,9 +239,10 @@ public class RequerimientoDAOImpl extends
 				this.entity.get("fechaCreacion"),
 				this.entity.get("fechaVencimiento"),
 				this.entity.get("modeloV"),
-				this.entity.get("analista"),
-				this.entity.get("cliente"),
-				this.entity.get("marcaVehiculo")
+				joins.get("analista"),
+				joins.get("cliente"),
+				joins.get("marcaVehiculo"),
+				joins.get("motor")
 		};
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
@@ -277,9 +279,10 @@ public class RequerimientoDAOImpl extends
 		groupBy.add(entity.get("fechaCreacion"));
 		groupBy.add(entity.get("fechaVencimiento"));
 		groupBy.add(entity.get("modeloV"));
-		groupBy.add(entity.get("analista"));
-		groupBy.add(entity.get("cliente"));
-		groupBy.add(entity.get("marcaVehiculo"));
+		groupBy.add(joins.get("analista"));
+		groupBy.add(joins.get("cliente"));
+		groupBy.add(joins.get("marcaVehiculo"));
+		groupBy.add(joins.get("motor"));
 		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy , orders, start, limit);
 	}
 
