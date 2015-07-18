@@ -21,6 +21,7 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Decimalbox;
 import org.zkoss.zul.East;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
@@ -61,6 +62,9 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	@Wire("#pagMonedas")
 	private Paging pagMonedas;
+	
+	@Wire("#txtPrecioFlete")
+	private Decimalbox txtPrecioFlete;
 	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
@@ -105,6 +109,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		
 		tiposFlete = llenarTiposFleteInternacional();
 		tipoFlete = tiposFlete.get(0);
+		
+		seleccionarTipoFlete();
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -204,6 +210,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
+		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
@@ -213,9 +220,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setLargo(null);
 				detalle.setPeso(null);
 			}
+			this.txtPrecioFlete.setConstraint(CONTRAINT_PRECIO_FLETE);
 		}
-		else
+		else {
+			this.txtPrecioFlete.setConstraint("");
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
+		}
 	}
 	
 	/*
@@ -224,13 +234,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 */
 	@Command
-	@NotifyChange("cotizacionSelecionada")
+	@NotifyChange("*")
 	public void calcularPrecio(@BindingParam("tipo") int tipo){
 		float total = 0;
-		for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
+		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 			switch(tipo){
 			case 1: total+=(detalle.getPrecioVenta()!=null)?detalle.getPrecioVenta():0; break;
 			case 2: total+=(detalle.getPrecioFlete()!=null)?detalle.getPrecioFlete():0; break;
+			case 3: total+=(detalle.getPrecioTotal()!=null)?detalle.getPrecioTotal():0; break;
 			default: break;
 			}
 		}
@@ -238,7 +249,24 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		switch(tipo){
 		case 1: this.cotizacionSelecionada.setTotalPrecioVenta(total); break;
 		case 2: this.cotizacionSelecionada.setTotalFlete(total); break;
+		case 3: this.cotizacionSelecionada.setTotalFleteCalculado(total); break;
 		default: break;
+		}
+	}
+	
+	/*
+	 * Descripcion: Permitira calcular el total del flete por medio de las dimensiones del producto
+	 * @param
+	 * Retorno: Ninguno 
+	 */
+	@Command
+	@NotifyChange("*")
+	public void calcularTotalFlete(@BindingParam("detalleCotizacion") DetalleCotizacionInternacional detalleCotizacion){
+		if(detalleCotizacion!=null){
+			detalleCotizacion.setCotizacion(cotizacionSelecionada);
+			detalleCotizacion.setTipoFlete(tipoFlete.getValor());
+			detalleCotizacion.calcularTotal(true);
+			calcularPrecio(3);
 		}
 	}
 	

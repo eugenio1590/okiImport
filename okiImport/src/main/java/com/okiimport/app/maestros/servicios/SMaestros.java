@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Usuario;
@@ -12,6 +13,7 @@ import com.okiimport.app.modelo.Usuario;
 public interface SMaestros {
 	//Marcas
 	public Map<String,Object> ConsultarMarca(Integer page,Integer limit);
+	public MarcaVehiculo registrarMarca(MarcaVehiculo marca);
 	
 	//Personas
 	public <T extends Persona> T acutalizarPersona(T persona);

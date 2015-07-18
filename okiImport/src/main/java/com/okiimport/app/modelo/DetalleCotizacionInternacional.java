@@ -23,6 +23,9 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	private Boolean tipoFlete;
 	
 	private Boolean formaEnvio;
+	
+	@Transient
+	private Float precioTotal;
 
 	public DetalleCotizacionInternacional() {
 		super();
@@ -76,14 +79,23 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		this.formaEnvio = formaEnvio;
 	}
 
+	//Transient
+	public Float getPrecioTotal() {
+		return precioTotal;
+	}
+
+	public void setPrecioTotal(Float precioTotal) {
+		this.precioTotal = precioTotal;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Long volumen(){
 		return largo*ancho*alto;
 	}
-	
+
 	public Float calcularPesoVolumetrico(){
 		Float pesoV = volumen()/new Float(1.66);
-		return (pesoV>peso) ? pesoV : peso;
+		return (peso!=null && pesoV>peso) ? pesoV : peso;
 	}
 	
 	public Float calcularPesoDeCubicaje(){
@@ -96,7 +108,7 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	}
 	
 	public Float calcularTotal(boolean conversion){
-		Float precioTotal = new Float(0);
+		precioTotal = new Float(0);
 		
 		if(this.tipoFlete) //CIF
 			precioTotal = this.getPrecioFlete();

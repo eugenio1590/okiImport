@@ -1,0 +1,266 @@
+<zk>
+	<window id="winFormRegistrarPago" border="none"  
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarPagoViewModel')">
+		<groupbox closable="false">
+			<groupbox closable="false">
+				<caption label="Datos Del Pago" sclass="custom_caption" />
+				<div>
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label
+									value="N Deposito / Transferencia: " />
+
+								<textbox id="idDepositoTransferencia" placeholder="0102125485622"
+									width="80%" readonly="true" mold="rounded" tabbable="false" />
+
+								<label value="Nombre Depositante: " />
+
+								<textbox id="nombreDepositante" placeholder="Jose Perez"
+									width="80%" readonly="true" mold="rounded" />
+							</row>
+							<row>
+								<label value="Monto: " />
+
+								<textbox id="Monto" width="80%" placeholder="12000"
+									readonly="true" mold="rounded" />
+
+								<label value="Banco donde Pago:" />
+								<combobox id="cmbBancoPago"
+									value="@bind(vm.bancoPago.nombre)"
+									selectedItem="@bind(vm.bancoPago.nombre)" readonly="true"
+									placeholder="Seleccione..." width="80%"
+									model="@load(vm.listaBancoPago)" constraint="no empty">
+									<template name="model">
+										<comboitem
+											label="@bind(each.nombre)" />
+									</template>
+								</combobox>
+							</row>
+
+							<row>
+								<label value="Fecha del Pago: " />
+
+								<textbox id="fechaPago" width="80%" placeholder="12-06-2015"
+									readonly="true" mold="rounded" tabbable="false" />
+
+								<label value="Hora Aproximada: " />
+								<textbox id="horaPago" width="80%" placeholder="9y35am"
+									readonly="true" mold="rounded" />
+							</row>
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+			<groupbox id="tabDatosFacturacion" closable="false">
+				<caption label="Datos Facturacion"
+					sclass="custom_caption" />
+
+				<div>
+
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label
+									value="Nombre Cliente / Razon Social: " />
+								<textbox width="80%" readonly="true" placeholder=" Urbicars C.A"/>
+
+								<label value="Cedula/RIF: *" />
+										<hbox>
+											<combobox
+												id="comboTipoPersona" width="30%" readonly="true"
+												selectedItem="@bind(vm.tipoPersona)"
+												model="@load(vm.listaTipoPersona)" constraint="no empty">
+												<template
+													name="model">
+													<comboitem
+														label="@bind(each.nombre)">
+													</comboitem>
+												</template>
+											</combobox>
+											<textbox id="cedulaRif"
+												width="100%" readonly="" mold="rounded"
+												value="@bind(vm.cliente.cedula)" placeholder="Ej: 402405375"
+												maxlength="12"
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"
+												 />
+										</hbox>
+							</row>
+
+							<row>
+
+								<label value="Direccion Fiscal: *" />
+
+								<textbox id="direccionFiscal" maxlength="100" rows="2"
+									width="80%" mold="rounded" placeholder="Zona Industrial 2"
+									constraint="no empty:El campo no puede estar vacio" />
+
+								<label value="Telefono: " />
+								<intbox width="80%" readonly="true" placeholder="02514150878"
+								constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+
+							</row>
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+
+			<groupbox id="tabDatosEnvio" closable="false">
+				<caption label="Datos Envio" sclass="custom_caption" />
+				<div>
+
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label
+									value="Empresa Encomiendas: *" />
+								<combobox id="cmbEmpresaEncomiendas"
+									value="@bind(vm.empresaEncomiendas.nombre)"
+									selectedItem="@bind(vm.empresaEncomiendas.nombre)"
+									readonly="true" placeholder="Seleccione..." width="80%"
+									model="@load(vm.listaEmpresaEncomiendas)"
+									constraint="no empty">
+									<template name="model">
+										<comboitem
+											label="@bind(each.nombre)" />
+									</template>
+								</combobox>
+
+								<label value="Direccion de Envio: *" />
+								<textbox id="direccionEnvio" width="80%" maxlength="100" rows="2"
+									mold="rounded" placeholder="av 19 con calle 46 y 45"
+									constraint="no empty:El campo no puede estar vacio" />
+							</row>
+
+							<row>
+
+								<label
+									value="Oficina/Direccion Particular *" />
+								<combobox id="cmbOficinaDireccion"
+									placeholder="Seleccione..." width="80%" readonly="true"
+									selectedItem="@bind(vm.oficinaDireccion)"
+									model="@load(vm.listaOficinaDireccion)"
+									constraint="no empty">
+									<template name="model">
+										<comboitem
+											label="@bind(each.nombre)" />
+									</template>
+								</combobox>
+
+								<label value="Estado: *" />
+								<combobox placeholder="Seleccione..."
+									width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+									model="@load(vm.listaEstados)"
+									onSelect="@command('buscarCiudades')">
+									<template name="model">
+										<comboitem
+											label="@bind(each.nombre)">
+
+										</comboitem>
+									</template>
+								</combobox>
+
+							</row>
+
+							<row>
+
+
+								<label value="Ciudad: *" />
+								<combobox placeholder="Seleccione..."
+									width="80%" readonly="true" selectedItem="@bind(vm.ciudad)"
+									model="@load(vm.listaCiudades)">
+									<template name="model">
+										<comboitem
+											label="@bind(each.nombre)">
+
+										</comboitem>
+									</template>
+								</combobox>
+
+								<label value="Municipio:" />
+								<textbox id="Municipio" width="80%"
+									readonly="true" placeholder="Iribarren">
+
+								</textbox>
+
+
+							</row>
+
+							<row>
+
+								<label value="Quien Recibe *" />
+								<textbox id="quienRecibe" width="80%"
+									readonly="true" placeholder="Jose Perez">
+
+								</textbox>
+
+								<label value="Cedula:" />
+								<textbox id="cedula" width="80%"
+									readonly="true" 
+									constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"
+									placeholder="19482487">
+
+								</textbox>
+
+							</row>
+							<row>
+
+								<label value="Telefono: *" />
+								<textbox id="telefonoQuienRecibe"
+									width="80%" readonly="true" placeholder="02514157258"
+									constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555">
+
+								</textbox>
+
+								<label value="Articulos que Compro:" />
+								<textbox id="artCompra" width="80%" maxlength="100" rows="2"
+									readonly="true" placeholder="2 Muñones Hyundai Atos">
+
+								</textbox>
+
+							</row>
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+
+			<hbox width="100%">
+				<div hflex="1" align="center">
+					<label value="* Campos Obligatorios" hflex="1"
+						sclass="requerido" />
+				</div>
+				<div align="right">
+					<button id="btnLimpiar" label="Limpiar"
+						type="submit" onClick="@command('limpiar')" sclass="btn-primary" />
+					<button label="Enviar" type="submit"
+						onClick="@command('actualizar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+						sclass="btn-primary" />
+				</div>
+			</hbox>
+		</groupbox>
+	</window>
+</zk>

@@ -38,7 +38,6 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;
-	private Ciudad ciudad;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
@@ -311,15 +310,4 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setListaEstados(List<Estado> listaEstados) {
 		this.listaEstados = listaEstados;
 	}
-
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
-	}
-	
-	
-	
 }

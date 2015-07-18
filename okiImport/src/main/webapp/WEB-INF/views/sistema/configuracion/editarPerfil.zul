@@ -1,81 +1,80 @@
 <zk>
-<window title="Perfil del Usuario" border="none" width="100%" closable="false"
-		sclass="btn-primary" apply="org.zkoss.bind.BindComposer" 
+	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.configuracion.EditarPerfilViewModel')"
 		form="@id('rs') @load(vm.usuario) @save(vm.usuario, before='enviar')">
+		<groupbox closable="false" width="80%">
 
-		<groupbox closable="false">
-		
-			<grid>
-			
-				
-				
-				<rows>
-				
+			<caption label="Datos Personales" sclass="custom_caption" />
+			<div align="center">
+
+				<grid>
+					<columns>
+						<column width="35%" align="right" />
+						<column width="65%" />
+						<column width="35%" align="right" />
+						<column width="65%" />
+					</columns>
+					<rows>
 					<row spans="4">
-						<div>
-							<image id="imgFoto" width="110px" height="110px" src="@bind(vm.usuario.getFoto64())" />
-							
-							<button id="btnCambFoto" label="..." sclass="btn-primary"
-								upload="true" style="margin-bottom:0px" />		
+						<div align="right">
+							<image id="imgFoto" width="110px"
+								height="110px" src="@bind(vm.usuario.getFoto64())" />
+
+							<button id="btnCambFoto" label="..."
+								sclass="btn-primary" upload="true" style="margin-bottom:0px" />
 						</div>
 					</row>
 					
-					
-					<row>
-						Usuario:
-						<textbox id="txtUsername" width="180px" disabled="true"
-							value="@bind(rs.username)" />
+						<row>
+						</row>
+						<row>
+							<label value="Usuario: " />
+							<textbox id="txtUsername" width="100%"
+								disabled="true" value="@bind(rs.username)" />
 
-						Cédula:
-						<textbox id="txtcodCedula" width="180px" disabled="true" />
-					</row>
+							<label value="Cédula: " />
+							<textbox id="txtcodCedula" width="100%"
+								disabled="true" value="@bind(rs.persona.cedula)" />
+						</row>
+						<row>
+							<label value="Nombre: " />
+							<textbox id="txtNombre" width="100%"
+								disabled="true" value="@bind(rs.persona.nombre)" />
 
+							<label value="Apellido: " />
+							<textbox id="txtApellido" width="100%"
+								disabled="true" value="@bind(rs.persona.apellido)" />
+						</row>
 
-					<row>
-						Nombre:
-						<textbox id="txtNombre" width="180px" disabled="true" />
+						<row>
+							<label value="Dirección: " />
+							<textbox id="txtDireccion" width="100%"
+								disabled="true" maxlength="100" rows="2"
+								value="@bind(rs.persona.direccion)" />
 
-						Apellido:
-						<textbox id="txtApellido" width="180px" disabled="true" />
-					</row>
-
-
-					<row>
-						Dirección:
-						<textbox id="txtDireccion" width="200px" disabled="true"
-								maxlength="100" rows="3"/>	
-				   		
-						Correo:
-						<textbox id="txtCorreo" width="180px" disabled="true" 
-								maxlength="50"  />
-					</row>
-
-
-					<row>
-						Nueva Contraseña:
-						<textbox id="txtClaveNueva" width="180px" type="password"
-							maxlength="50" />
-							
-						Confirmar Contraseña:
-						<textbox id="txtClaveNuevaConf" width="180px" type="password"
-							maxlength="50" />
-					</row>
+							<label value="Correo: " />
+							<textbox id="txtCorreo" width="100%"
+								disabled="true" maxlength="50" value="@bind(rs.persona.correo)" />
+						</row>
+						<row>
+							<label value="Nueva Contraseña: " />
+							<textbox id="txtClaveNueva" width="100%"
+								type="password" maxlength="50" />
+							<label value="Confirmar Contraseña: " />
+							<textbox id="txtClaveNuevaConf" width="100%"
+								type="password" maxlength="50" />
+						</row>
 
 					</rows>
-					
-					</grid>
-					
-					
-					<div align="right">
-					
-					<separator></separator>
-					<button id="btnAceptar" label="Enviar" sclass="btn-primary" onClick="@command('enviar')"/>
-					<button id="btnCancelar" label="Cancelar" sclass="btn-primary"/>
-				    </div>
-				    
-				
-			
+				</grid>
+			</div>
+			<div align="right">
+				<button id="btnLimpiar" label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
+				<button label="Enviar" type="submit"
+					onClick="@command('actualizar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
+			</div>
 		</groupbox>
 	</window>
 </zk>
