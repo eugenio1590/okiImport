@@ -63,6 +63,9 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Wire("#pagMonedas")
 	private Paging pagMonedas;
 	
+	@Wire("#txtPrecioFlete")
+	private Decimalbox txtPrecioFlete;
+	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
@@ -106,6 +109,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		
 		tiposFlete = llenarTiposFleteInternacional();
 		tipoFlete = tiposFlete.get(0);
+		
+		seleccionarTipoFlete();
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -205,6 +210,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
+		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
 			this.constraint_precio_flete = null;
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
@@ -214,9 +220,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setLargo(null);
 				detalle.setPeso(null);
 			}
+			this.txtPrecioFlete.setConstraint(CONTRAINT_PRECIO_FLETE);
 		}
-		else
+		else {
+			this.txtPrecioFlete.setConstraint("");
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
+		}
 	}
 	
 	/*
