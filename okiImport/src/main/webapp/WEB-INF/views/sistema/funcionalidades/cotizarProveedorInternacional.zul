@@ -91,6 +91,7 @@
 						<listheader label="Largo" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 						<listheader label="Ancho" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 						<listheader label="Alto" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Total del Flete" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -109,8 +110,7 @@
 									@validator(vm.validatorCantidad, spnCantidad=self, 
 									cantidad=each.detalleRequerimiento.cantidad)"
 									tooltiptext="Cantidad Cotizada del Repuesto"
-									width="100%" constraint="no empty, no negative, no zero" 
-									/>
+									width="100%" constraint="no empty, no negative, no zero"/>
 							</listcell>
 							<listcell>
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
@@ -126,19 +126,27 @@
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
-									value="@bind(each.peso)" width="100px"/>
+									value="@bind(each.peso)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
-									value="@bind(each.largo)" width="100px"/>
+									value="@bind(each.largo)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
-									value="@bind(each.ancho)" width="100px"/>
+									value="@bind(each.ancho)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
-									value="@bind(each.alto)" width="100px"/>
+									value="@bind(each.alto)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+							</listcell>
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
+								<decimalbox format="###.##" tooltiptext="Total del Flete" readonly="true"
+									value="@bind(each.calcularTotal(true))" width="100px"/>
 							</listcell>
 						</listitem>
 					</template>
@@ -155,6 +163,14 @@
 						<listfooter>
 							<label value="Total:"/>
 							<label value="@bind(vm.cotizacionSelecionada.totalFlete)"/>
+						</listfooter>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter>
+							<label value="Total:"/>
+							<label value="@bind(vm.cotizacionSelecionada.totalFleteCalculado)"/>
 						</listfooter>
 					</listfoot>
 				</listbox>

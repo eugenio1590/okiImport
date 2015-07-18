@@ -21,6 +21,7 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Decimalbox;
 import org.zkoss.zul.East;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
@@ -224,13 +225,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 */
 	@Command
-	@NotifyChange("cotizacionSelecionada")
+	@NotifyChange("*")
 	public void calcularPrecio(@BindingParam("tipo") int tipo){
 		float total = 0;
-		for(DetalleCotizacion detalle : this.listaDetalleCotizacion){
+		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 			switch(tipo){
 			case 1: total+=(detalle.getPrecioVenta()!=null)?detalle.getPrecioVenta():0; break;
 			case 2: total+=(detalle.getPrecioFlete()!=null)?detalle.getPrecioFlete():0; break;
+			case 3: total+=(detalle.getPrecioTotal()!=null)?detalle.getPrecioTotal():0; break;
 			default: break;
 			}
 		}
@@ -238,7 +240,24 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		switch(tipo){
 		case 1: this.cotizacionSelecionada.setTotalPrecioVenta(total); break;
 		case 2: this.cotizacionSelecionada.setTotalFlete(total); break;
+		case 3: this.cotizacionSelecionada.setTotalFleteCalculado(total); break;
 		default: break;
+		}
+	}
+	
+	/*
+	 * Descripcion: Permitira calcular el total del flete por medio de las dimensiones del producto
+	 * @param
+	 * Retorno: Ninguno 
+	 */
+	@Command
+	@NotifyChange("*")
+	public void calcularTotalFlete(@BindingParam("detalleCotizacion") DetalleCotizacionInternacional detalleCotizacion){
+		if(detalleCotizacion!=null){
+			detalleCotizacion.setCotizacion(cotizacionSelecionada);
+			detalleCotizacion.setTipoFlete(tipoFlete.getValor());
+			detalleCotizacion.calcularTotal(true);
+			calcularPrecio(3);
 		}
 	}
 	
