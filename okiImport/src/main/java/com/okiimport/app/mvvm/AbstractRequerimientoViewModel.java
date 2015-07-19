@@ -139,6 +139,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	protected static List <ModeloCombo<Boolean>> llenarListaTipoPersona(){
 		List <ModeloCombo<Boolean>> listaTipoPersona = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoPersona.add(new ModeloCombo<Boolean>("E", null));
 		listaTipoPersona.add(new ModeloCombo<Boolean>("J", true));
 		listaTipoPersona.add(new ModeloCombo<Boolean>("V", false));
 		return listaTipoPersona;

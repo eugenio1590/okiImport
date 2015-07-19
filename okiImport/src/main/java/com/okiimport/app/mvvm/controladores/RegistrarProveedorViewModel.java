@@ -107,7 +107,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				String tipo = null;
+				if(this.tipoPersona.getValor()== null)
+					tipo = "E";
+				else 
+					tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				proveedor.setCedula(tipo + proveedor.getCedula());
 				proveedor.setEstatus("solicitante");
 				proveedor = sMaestros.registrarProveedor(proveedor);
