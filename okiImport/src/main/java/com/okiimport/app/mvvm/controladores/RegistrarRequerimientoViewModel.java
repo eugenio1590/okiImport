@@ -95,11 +95,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = null;
-				if(this.tipoPersona.getValor()== null)
-					tipo = "E";
-				else 
-					tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				String tipo = (this.tipoPersona.getValor())?"J":"V";
 				cliente.setCedula(tipo+cliente.getCedula());
 				cliente = sMaestros.registrarOActualizarCliente(cliente);
 				requerimiento.setCliente(cliente);
@@ -155,11 +151,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void buscarCliente() {
-		String tipo = null;
-		if(this.tipoPersona.getValor()== null)
-			tipo = "E";
-		else 
-			tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 		String cedula = cliente.getCedula();
 		String cedulaBuscar = tipo + cedula;
 		if (cedula != null && !cedula.equalsIgnoreCase("")) {
