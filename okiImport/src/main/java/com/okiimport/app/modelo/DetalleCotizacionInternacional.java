@@ -12,13 +12,17 @@ import javax.persistence.*;
 public class DetalleCotizacionInternacional extends DetalleCotizacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Long largo;
+	@Column(scale=2)
+	private Float largo;
 
-	private Long ancho;
+	@Column(scale=2)
+	private Float ancho;
 
-	private Long alto;
+	@Column(scale=2)
+	private Float alto;
 
-	private Long peso;
+	@Column(scale=2)
+	private Float peso;
 	
 	private Boolean tipoFlete;
 	
@@ -31,35 +35,35 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		super();
 	}
 
-	public Long getLargo() {
+	public Float getLargo() {
 		return largo;
 	}
 
-	public void setLargo(Long largo) {
+	public void setLargo(Float largo) {
 		this.largo = largo;
 	}
 
-	public Long getAncho() {
+	public Float getAncho() {
 		return ancho;
 	}
 
-	public void setAncho(Long ancho) {
+	public void setAncho(Float ancho) {
 		this.ancho = ancho;
 	}
 
-	public Long getAlto() {
+	public Float getAlto() {
 		return alto;
 	}
 
-	public void setAlto(Long alto) {
+	public void setAlto(Float alto) {
 		this.alto = alto;
 	}
 
-	public Long getPeso() {
+	public Float getPeso() {
 		return peso;
 	}
 
-	public void setPeso(Long peso) {
+	public void setPeso(Float peso) {
 		this.peso = peso;
 	}
 	
@@ -89,13 +93,13 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	public Long volumen(){
+	public Float volumen(){
 		return largo*ancho*alto;
 	}
 
 	public Float calcularPesoVolumetrico(){
 		Float pesoV = volumen()/new Float(1.66);
-		return (peso!=null && pesoV>peso) ? pesoV : peso;
+		return (verificarCondPeso() && pesoV>peso) ? pesoV : peso;
 	}
 	
 	public Float calcularPesoDeCubicaje(){
@@ -107,12 +111,16 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		return (largo!=null && ancho!=null && alto!=null);
 	}
 	
+	public boolean verificarCondPeso(){
+		return (this.peso!=null);
+	}
+	
 	public Float calcularTotal(boolean conversion){
 		precioTotal = new Float(0);
 		
-		if(this.tipoFlete) //CIF
+		if(this.tipoFlete!=null && this.tipoFlete) //CIF
 			precioTotal = this.getPrecioFlete();
-		else if(verificarCondFlete()){ //FOB
+		else if(formaEnvio!=null && verificarCondFlete() && verificarCondPeso()){ //FOB
 			Float pesoTotal = (formaEnvio) ?  /*Aereo*/ calcularPesoVolumetrico() : /*Maritimo*/ calcularPesoDeCubicaje();
 			precioTotal = 5*pesoTotal; //Falta el Valor de la Libra = 5
 		}
