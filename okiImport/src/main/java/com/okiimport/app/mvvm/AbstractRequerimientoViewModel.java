@@ -17,13 +17,14 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
-import org.zkoss.zul.Spinner;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
@@ -195,28 +196,33 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 	
-	public AbstractValidator getValidatorCantidad(){
-		return new AbstractValidator(){
-
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				Integer cantidadOfrecida = (Integer) ctx.getProperty().getValue();
-				Spinner spnCantidad = (Spinner) ctx.getBindContext().getValidatorArg("spnCantidad");
-				Long cantidadRequerida = (Long) ctx.getBindContext().getValidatorArg("cantidad");
-				
-				if(spnCantidad==null)
-					System.out.println("***Error en la Validacion***");
-				else if(cantidadOfrecida!=null && cantidadRequerida!=null){
-					if(cantidadOfrecida > cantidadRequerida){
-						String mensaje = "La cantidad ofrecida no puede ser mayor que "+cantidadRequerida+" !";
-						mostrarNotification(mensaje, "error", 5000, true, spnCantidad);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-			}
-			
-		};
+	public CustomConstraint getValidatorCantidad(@BindingParam("cantidadRequerida") Long cantidadRequerida){
+		return new MayorCantidadConstraint(cantidadRequerida, 
+				CustomConstraint.EConstraint.NO_EMPTY,
+				CustomConstraint.EConstraint.NO_NEGATIVE,
+				CustomConstraint.EConstraint.NO_ZERO,
+				CustomConstraint.EConstraint.CUSTOM);
+//		return new AbstractValidator(){
+//
+//			@Override
+//			public void validate(ValidationContext ctx) {
+//				// TODO Auto-generated method stub
+//				Integer cantidadOfrecida = (Integer) ctx.getProperty().getValue();
+//				Spinner spnCantidad = (Spinner) ctx.getBindContext().getValidatorArg("spnCantidad");
+//				Long cantidadRequerida = (Long) ctx.getBindContext().getValidatorArg("cantidad");
+//				
+//				if(spnCantidad==null)
+//					System.out.println("***Error en la Validacion***");
+//				else if(cantidadOfrecida!=null && cantidadRequerida!=null){
+//					if(cantidadOfrecida > cantidadRequerida){
+//						String mensaje = "La cantidad ofrecida no puede ser mayor que "+cantidadRequerida+" !";
+//						mostrarNotification(mensaje, "error", 5000, true, spnCantidad);
+//						addInvalidMessage(ctx, mensaje);
+//					}
+//				}
+//			}
+//			
+//		};
 	}
 
 	public AbstractValidator getValidatorAnno(){
