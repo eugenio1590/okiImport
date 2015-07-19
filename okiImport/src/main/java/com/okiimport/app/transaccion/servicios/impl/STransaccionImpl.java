@@ -256,7 +256,9 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Override
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
 		// TODO Auto-generated method stub
-		cotizacion.setEstatus("C");
+		if(cotizacion.getEstatus()==null)
+			cotizacion.setEstatus("C");
+		
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
 		cotizacion = cotizacionDAO.update(cotizacion);
 		for(DetalleCotizacion detalle : detalles){
