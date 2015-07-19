@@ -181,12 +181,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 */
 	@Command
-	@NotifyChange("cotizacionSelecionada")
+	@NotifyChange({"cotizacionSelecionada", "listaDetalleCotizacion"})
 	public void seleccionMoneda(){
 		bandbMoneda.close();
 		if(this.cotizacionSelecionada!=null){
 			HistoricoMoneda historico = this.sControlConfiguracion.consultarActualConversion(monedaSeleccionada);
 			this.cotizacionSelecionada.setHistoricoMoneda(historico);
+			
+			actualizarListaDetalleCotizacion();
 		}
 	}
 	
@@ -208,7 +210,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno 
 	 */
 	@Command
-	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
+	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
 		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
@@ -225,6 +227,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		else {
 			this.txtPrecioFlete.setConstraint("");
 			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
+			actualizarListaDetalleCotizacion();
 		}
 	}
 	
@@ -256,15 +259,16 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	/*
 	 * Descripcion: Permitira calcular el total del flete por medio de las dimensiones del producto
-	 * @param
+	 * @param detalleCotizacion: objeto seleccionado
 	 * Retorno: Ninguno 
 	 */
 	@Command
-	@NotifyChange("*")
+	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
 	public void calcularTotalFlete(@BindingParam("detalleCotizacion") DetalleCotizacionInternacional detalleCotizacion){
 		if(detalleCotizacion!=null){
 			detalleCotizacion.setCotizacion(cotizacionSelecionada);
 			detalleCotizacion.setTipoFlete(tipoFlete.getValor());
+			detalleCotizacion.setFormaEnvio(formaEnvio.getValor());
 			detalleCotizacion.calcularTotal(true);
 			calcularPrecio(3);
 		}
@@ -278,7 +282,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 */
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
-	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
+	private void cambiarMonedas(@Default("0") @BindingParam("page") int page){
 		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		monedas = (List<Moneda>) parametros.get("monedas");
@@ -292,11 +296,23 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * @param: Ninguno
 	 * Retorno: Ninguno 
 	 */
+	@NotifyChange("cotizacionSelecionada")
 	private void limpiarCotizacionSeleccionada(){
 		if(cotizacionSelecionada!=null){
 			cotizacionSelecionada.setFechaVencimiento(AbstractServiceImpl.sumarORestarFDia(new Date(), 1));
 			cotizacionSelecionada.setCondiciones(null);
 		}
+	}
+	
+	/*
+	 * Descripcion: Permitira actualizar la lista de detalles de cotizacion calculando su precio de flete
+	 * @param: Ninguno
+	 * Retorno: Ninguno 
+	 */
+	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
+	private void actualizarListaDetalleCotizacion(){
+		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion)
+			calcularTotalFlete(detalle);
 	}
 	
 	/**SETTERS Y GETTERS*/
