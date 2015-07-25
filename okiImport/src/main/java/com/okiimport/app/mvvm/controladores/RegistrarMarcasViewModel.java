@@ -18,6 +18,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
@@ -39,6 +40,9 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	private MarcaVehiculo marca;
 	
 	private Integer page_size = 10;
+	
+	@Wire("#winFormularioMarca")
+	private Window winFormularioMarca;
 	
 	
 	@AfterCompose
@@ -77,7 +81,10 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	public void recargar() {
-		redireccionar("/WEB-INF/views/sistema/maestros/listaMarcas.zul");
+		
+		// cerrar emergente
+		//formularioMarcas.onclose()
+		winFormularioMarca.onClose();
 	}
 	
 	@Command

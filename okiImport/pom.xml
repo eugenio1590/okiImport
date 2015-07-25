@@ -199,9 +199,9 @@
 		
 		<!-- Base de Datos -->      
 		<dependency>
-            <groupId>org.postgresql</groupId>
+            <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
+            <version>9.0-801.jdbc4</version>
         </dependency>
  
      	<dependency>

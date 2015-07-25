@@ -14,19 +14,26 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
+import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.AbstractViewModel;
@@ -45,14 +52,25 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	
 	@Wire("#pagAnalistas")
 	private Paging pagAnalistas;
-
+	
+	private Textbox txtUsername;
+	
 	
 	//Modelos
 	private List<Analista> analistas;
 	private Analista analistaFiltro;
 	
+	//private Persona persona;
+	//private Usuario usuario;
+	
 	//Atributos
 
+	
+	/*private AbstractValidator validadorUsername;
+	private String username;*/
+	
+	
+	
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -87,6 +105,13 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		analistas = (List<Analista>) parametros.get("analistas");
 		pagAnalistas.setActivePage(page);
 		pagAnalistas.setTotalSize(total);
+	}     
+	
+	@Command
+	@NotifyChange("*")
+	public void cerrarvista(){
+		
+		cambiarAnalistas(0, null, null);
 	}
 	
 	/**COMMAND*/
@@ -97,6 +122,32 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		cambiarAnalistas(page, null, null);
 	}
 	
+	
+	@Command
+	public void verAnalista(@BindingParam("analista") Analista analista){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("analista", analista);
+		parametros.put("editar", false);
+		llamarFormulario("ver Analistas.zul", parametros);
+	}
+	
+	
+	@Command
+	public void editarAnalista(@BindingParam("analista") Analista analista){
+		
+		
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("analista", analista);
+			parametros.put("editar", true);
+			llamarFormulario("editarAnalistas.zul", parametros);
+	}
+	
+	
+	@Command
+	public void nuevoAnalista(){
+		llamarFormulario("formularioAnalistas.zul", null);
+	}
+	
 	/*@Command
 	@NotifyChange("analistas")
 	public void aplicarFiltro(){
@@ -105,30 +156,36 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		cambiarAnalistas(0, null, null);
 	}
 	
-	@Command
-	@NotifyChange("analistas")
-	public void limpiarRadios(){
-		this.analistaFiltro.setActivo(null);
-		radEstado.setSelectedIndex(-1);
-		aplicarFiltro();
-	}*/
+	
 	
 	@Command
 	public void nuevoAnalista(){
 		llamarFormulario("formularioAnalistas.zul", null);
 	}
 	
-	/*@Command
+	
+	
+	@Command
+	public void verAnalista(@BindingParam("analista") Analista analista){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("analista", analista);
+		parametros.put("editar", false);
+		llamarFormulario("editarAnalistas.zul", parametros);
+	}
+	
+	
+	
+	@Command
 	public void editarAnalista(@BindingParam("analista") Analista analista){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=analista.getId()){
+		
+		
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("analista", analista);
-			llamarFormulario("editarAnalista.zul", parametros);
-		}
-		else
-			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
+			parametros.put("editar", true);
+			llamarFormulario("editarAnalistas.zul", parametros);
+	}
+	
+	
 	
 	/*@Command
 	@NotifyChange("analistas")

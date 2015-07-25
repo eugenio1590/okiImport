@@ -45,7 +45,7 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	
-	private Estado estado;
+	
 	private Ciudad ciudad;
 	private Cliente cliente;
 	
