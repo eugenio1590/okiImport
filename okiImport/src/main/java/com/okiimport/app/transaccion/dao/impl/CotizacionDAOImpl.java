@@ -74,6 +74,7 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
 		entidades.put("detalleCotizacions", JoinType.INNER);
 		entidades.put("proveedor", JoinType.INNER);
+		entidades.put("historicoMoneda", JoinType.LEFT);
 		Map<String, Join> joins = this.crearJoins(entidades);
 		
 		// 3. Creamos las Restricciones de la busqueda
@@ -84,7 +85,8 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 				this.entity.get("fechaVencimiento"),
 				this.entity.get("estatus"),
 				this.entity.get("mensaje"),
-				this.entity.get("proveedor")
+				this.entity.get("proveedor"),
+				joins.get("historicoMoneda")
 		};
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();

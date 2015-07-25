@@ -66,10 +66,10 @@
 							<space />
 							<label value="Precio de Flete:" />
 							<decimalbox id="txtPrecioFlete" format="###.##"
-								constraint="no empty, no zero, no negative"
+								readonly="@bind(!vm.tipoFlete.valor)"
 								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
 							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto. El precio del flete es obligatorio."/>
+							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."/>
 						</div>
 					</groupbox>
 				</div>
@@ -86,11 +86,11 @@
 						<listheader label="Marca *" width="15%"/>
 						<listheader label="Cant. Cotizada *" width="13%"/>
 						<listheader label="Precio de Venta *" width="15%"/>
-						<listheader label="Precio de Flete (**)" visible="@bind(!vm.tipoFlete.valor)" width="15%"/>
 						<listheader label="Peso" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 						<listheader label="Largo" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 						<listheader label="Ancho" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 						<listheader label="Alto" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Flete Calculado (**)" visible="@bind(!vm.tipoFlete.valor)" width="20%"/>
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -109,8 +109,7 @@
 									@validator(vm.validatorCantidad, spnCantidad=self, 
 									cantidad=each.detalleRequerimiento.cantidad)"
 									tooltiptext="Cantidad Cotizada del Repuesto"
-									width="100%" constraint="no empty, no negative, no zero" 
-									/>
+									width="100%" constraint="no empty, no negative, no zero"/>
 							</listcell>
 							<listcell>
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
@@ -118,27 +117,30 @@
 									constraint="no empty, no zero, no negative"
 									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
-							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
-									value="@bind(each.precioFlete)" width="100px"
-									onChange="@command('calcularPrecio', tipo=2)"/>
-<!-- 																		constraint="@bind(vm.constraint_precio_flete)"  -->
-							</listcell>
+							
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
-									value="@bind(each.peso)" width="100px"/>
+									value="@bind(each.peso)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
-									value="@bind(each.largo)" width="100px"/>
+									value="@bind(each.largo)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
-									value="@bind(each.ancho)" width="100px"/>
+									value="@bind(each.ancho)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
-									value="@bind(each.alto)" width="100px"/>
+									value="@bind(each.alto)" width="100px"
+									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+							</listcell>
+							<listcell visible="@bind(!vm.tipoFlete.valor)">
+								<decimalbox format="###.##" tooltiptext="Total del Flete" readonly="true"
+									value="@bind(each.calcularTotal(true))" width="200px"/>
 							</listcell>
 						</listitem>
 					</template>
@@ -152,9 +154,14 @@
 							<label value="Total:"/>
 							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)"/>
 						</listfooter>
+						
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
 						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.cotizacionSelecionada.totalFlete)"/>
+							<label value="Total de Flete:"/>
+							<label value="@bind(vm.cotizacionSelecionada.totalFleteCalculado)"/>
 						</listfooter>
 					</listfoot>
 				</listbox>

@@ -41,6 +41,9 @@ public class Cotizacion implements Serializable{
 	@Transient
 	private Float totalCotizacion=new Float(0);
 	
+	@Transient
+	private Float totalFleteCalculado=new Float(0);
+	
 	//bi-directional many-to-one association to Proveedor
 	@ManyToOne
 	@JoinColumn(name="id_proveedor")
@@ -77,8 +80,8 @@ public class Cotizacion implements Serializable{
 		this.mensaje = mensaje;
 	}
 
-	public Cotizacion(Integer idCotizacion, Date fechaCreacion,
-			Date fechaVencimiento, String estatus, String mensaje, Proveedor proveedor) {
+	public Cotizacion(Integer idCotizacion, Date fechaCreacion, Date fechaVencimiento, 
+			String estatus, String mensaje, Proveedor proveedor, HistoricoMoneda historicoMoneda) {
 		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
 		this.historicoMoneda = new HistoricoMoneda();
 		this.idCotizacion = idCotizacion;
@@ -87,6 +90,7 @@ public class Cotizacion implements Serializable{
 		this.estatus = estatus;
 		this.mensaje = mensaje;
 		this.proveedor = proveedor;
+		this.historicoMoneda = historicoMoneda;
 	}
 	
 	public Cotizacion(Proveedor proveedor){
@@ -212,6 +216,14 @@ public class Cotizacion implements Serializable{
 		this.totalCotizacion = totalCotizacion;
 	}
 	
+	public Float getTotalFleteCalculado() {
+		return totalFleteCalculado;
+	}
+
+	public void setTotalFleteCalculado(Float totalFleteCalculado) {
+		this.totalFleteCalculado = totalFleteCalculado;
+	}
+
 	/**EVENTOS*/
 	@PrePersist
 	public void prePersist(){

@@ -103,7 +103,7 @@ public class Requerimiento implements Serializable {
 	}
 
 	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
-			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo) {
+			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo, Motor motor) {
 		super();
 		this.idRequerimiento = idRequerimiento;
 		this.estatus = estatus;
@@ -113,6 +113,7 @@ public class Requerimiento implements Serializable {
 		this.analista = analista;
 		this.cliente = cliente;
 		this.marcaVehiculo = marcaVehiculo;
+		this.motor = motor;
 	}
 
 	public Integer getIdRequerimiento() {
@@ -285,6 +286,8 @@ public class Requerimiento implements Serializable {
 		String texto = null;
 		if(tipoRepuesto!=null)
 			texto = (tipoRepuesto) ? "Original" : "Reemplazo";
+		else
+			texto = "Indistinto";
 		return texto;
 	}
 	
