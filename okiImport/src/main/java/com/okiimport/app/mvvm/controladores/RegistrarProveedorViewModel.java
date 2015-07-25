@@ -16,7 +16,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -28,6 +27,10 @@ import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
@@ -187,6 +190,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 
+	//VALIDATOR
+	public CustomConstraint getSoloNumeros(){
+		RegExpression[] constrains = new RegExpression[]{
+				new RegExpression("/.[0-9]+/", "Solo n\u00fameros son permitidos")
+		};
+		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY);
+	}
+	
 	public void recargar() {
 		redireccionar("/");
 	}

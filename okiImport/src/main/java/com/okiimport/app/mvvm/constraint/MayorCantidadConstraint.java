@@ -2,17 +2,18 @@ package com.okiimport.app.mvvm.constraint;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
-import org.zkoss.zul.Label;
-import org.zkoss.zul.Separator;
 
 public class MayorCantidadConstraint extends CustomConstraint {
 	
 	//Atributos
 	private Long cantidadRequerida;
 
-	public MayorCantidadConstraint(Long cantidadRequerida, EConstraint... eConstraints) {
+	public MayorCantidadConstraint(Long cantidadRequerida) {
 		// TODO Auto-generated constructor stub
-		super(eConstraints);
+		super(CustomConstraint.EConstraint.NO_EMPTY,
+				CustomConstraint.EConstraint.NO_NEGATIVE,
+				CustomConstraint.EConstraint.NO_ZERO,
+				CustomConstraint.EConstraint.CUSTOM);
 		this.cantidadRequerida = cantidadRequerida;
 	}
 
@@ -22,33 +23,8 @@ public class MayorCantidadConstraint extends CustomConstraint {
 		Integer cantidadOfrecida = (Integer) value;
 		if(cantidadOfrecida!=null && cantidadRequerida!=null && cantidadOfrecida > cantidadRequerida){
 			String mensaje = "No puede ser mayor que "+cantidadRequerida+" !";
-			
-			if(separator==null){
-				separator = new Separator();
-				separator.setWidth("100%");
-				separator.setBar(true);
-				separator.setStyle("color:red");
-			}
-			
-			if(componentError==null){
-				componentError = new Label();
-				componentError.setWidth("100%");
-				componentError.setStyle("color: red");
-				
-			}
-			
-			componentError.setValue(mensaje);
-			//parent.appendChild(separator);
-			parent.appendChild(componentError);
-			//throw new WrongValueException(comp, null);
+			throw new WrongValueException(comp, mensaje);
 		}
-		else {
-			//parent.removeChild(separator);
-			parent.removeChild(componentError);
-		}
-		
-		parent.applyProperties();
-			
 	}
 
 }

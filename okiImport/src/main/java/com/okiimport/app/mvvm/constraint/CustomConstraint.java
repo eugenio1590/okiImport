@@ -1,25 +1,25 @@
 package com.okiimport.app.mvvm.constraint;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.Separator;
 import org.zkoss.zul.SimpleConstraint;
 
-public abstract class CustomConstraint implements Constraint {
+public abstract class CustomConstraint implements Constraint, org.zkoss.zul.CustomConstraint {
 	
 	/**ENUM OF CONSTRAINT POSIBLE*/
 	public enum EConstraint {
-		NO_POSITIVE(SimpleConstraint.NO_POSITIVE, null),
-		NO_NEGATIVE(SimpleConstraint.NO_NEGATIVE, null),
-		NO_ZERO(SimpleConstraint.NO_ZERO, null),
-		NO_EMPTY(SimpleConstraint.NO_EMPTY, null),
+		NO_POSITIVE(SimpleConstraint.NO_POSITIVE, "Solo n\u00fameros negativos"),
+		NO_NEGATIVE(SimpleConstraint.NO_NEGATIVE, "Solo n\u00fameros positivos"),
+		NO_ZERO(SimpleConstraint.NO_ZERO, "Valor 0 no permitido"),
+		NO_EMPTY(SimpleConstraint.NO_EMPTY, "Valor vacio no permitido"),
 		STRICT(SimpleConstraint.STRICT, null),
 		SERVER(SimpleConstraint.SERVER, null),
-		NO_FUTURE(SimpleConstraint.NO_FUTURE, null),
-		NO_PAST(SimpleConstraint.NO_PAST, null),
-		NO_TODAY(SimpleConstraint.NO_TODAY, null),
+		NO_FUTURE(SimpleConstraint.NO_FUTURE, "Valores futuros no permitido"),
+		NO_PAST(SimpleConstraint.NO_PAST, "Valores pasados no permitido"),
+		NO_TODAY(SimpleConstraint.NO_TODAY, "El dida de hoy no permitido"),
 		BEFORE_START(SimpleConstraint.BEFORE_START, null),
 		BEFORE_END(SimpleConstraint.BEFORE_END, null),
 		END_BEFORE(SimpleConstraint.END_BEFORE, null),
@@ -67,44 +67,67 @@ public abstract class CustomConstraint implements Constraint {
 	}
 	
 	//GUI
-	protected Component parent;
-	protected Separator separator;
-	protected Label componentError;
+	private Component parent;
+	private Label componentError;
 	
 	//ATRIBUTOS
 	private EConstraint[] eConstraints;
+	private EConstraint eConstraint;
 	
 	/**Constructor*/
 	public CustomConstraint(EConstraint... eConstraints){
-		if(!EConstraint.checkCustomValue(eConstraints))
-			eConstraints[eConstraints.length]=EConstraint.CUSTOM;
-		
 		this.eConstraints = eConstraints;
+		
+		if(!EConstraint.checkCustomValue(eConstraints))
+			this.eConstraints=concatArrayConstraint(eConstraints, new EConstraint[]{EConstraint.CUSTOM});
 	}
 
 	/**METODOS OVERRIDE*/
 	@Override
 	public void validate(Component comp, Object value) throws WrongValueException {
 		// TODO Auto-generated method stub
-		SimpleConstraint simpleCostraint;
 		for(EConstraint constraint : eConstraints){
+			eConstraint = constraint;
+			
 			if(parent==null && comp!=null)
 				parent = comp.getParent();
 			
-			if(constraint.equals(EConstraint.CUSTOM)){
+			if(constraint.equals(EConstraint.CUSTOM))
 				validateCustom(comp, value);
-			}
 			else {
-				if(parent!=null /*&& separator!=null*/ && componentError!=null){
-					//parent.removeChild(separator);
+				if(parent!=null && componentError!=null)
 					parent.removeChild(componentError);
-				}
-				simpleCostraint = new SimpleConstraint(constraint.getValue());
+				SimpleConstraint simpleCostraint = new SimpleConstraint(constraint.getValue());
 				simpleCostraint.validate(comp, value);
 			}
 		}
 	}
 	
+	@Override
+	public void showCustomError(Component comp, WrongValueException ex) {
+		// TODO Auto-generated method stub
+		if(componentError==null){
+			componentError = new Label();
+			componentError.setWidth("100%");
+			componentError.setStyle("color: red");
+			
+		}
+		
+		if(eConstraint.equals(EConstraint.CUSTOM) && ex!=null)
+			componentError.setValue(ex.getMessage());
+		else 
+			componentError.setValue(eConstraint.getMensaje());
+		
+		parent.appendChild(componentError);
+		
+		parent.applyProperties();
+	}
+
 	/**METODOS ABSTRACTOS DE LA CLASE*/
 	protected abstract void validateCustom(Component comp, Object value) throws WrongValueException;
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	protected EConstraint[] concatArrayConstraint(EConstraint[] array, EConstraint... eConstraints){
+		return (EConstraint[]) ArrayUtils.addAll(array, eConstraints);
+	}
 }
