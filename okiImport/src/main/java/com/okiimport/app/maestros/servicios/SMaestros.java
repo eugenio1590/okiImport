@@ -47,6 +47,8 @@ public interface SMaestros {
 	public Map<String, Object> ConsultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
 			List<Integer> idsClasificacionRepuesto, int start, int limit);
 	
+	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page, int limit);
+	
 	//Estados
 		public Map<String,Object> ConsultarEstado(Integer page,Integer limit);
 		

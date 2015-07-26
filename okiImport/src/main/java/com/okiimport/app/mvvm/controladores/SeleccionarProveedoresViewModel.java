@@ -174,9 +174,11 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 //			System.out.println(proveedor.getCorreo());
 			
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
+			winListProveedores.onClose();
 		}
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
+		    
 	}
 	
 	
@@ -208,9 +210,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		this.sTransaccion = sTransaccion;
 	}
 
-	
-	
-	
 	
 	public List<Proveedor> getListaProveedores() {
 		return listaProveedores;

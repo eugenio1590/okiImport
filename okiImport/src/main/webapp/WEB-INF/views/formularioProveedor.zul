@@ -33,14 +33,32 @@
 						<div>
 							<grid>
 								<columns>
+								    <column width="35%" align="right"/>
+									<column width="65%" />
 									<column width="35%" align="right"/>
 									<column width="65%" />
 									<column width="35%" align="right" />
 									<column width="65%" />
 								</columns>
 								<rows>
-									<row>
-										<label value="RIF: *" />
+								   
+								    <row>
+								    
+								        <label
+											value="Tipo Proveedor: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.tipoProveedor)"
+											model="@load(vm.listaTipoProveedor)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+												</comboitem>
+											</template>
+										</combobox>
+								    
+										
+											<label value="RIF: *" />
 										<hbox>
 											<combobox width="30%"
 												readonly="true" selectedItem="@bind(vm.tipoPersona)"
@@ -58,8 +76,23 @@
 											</vbox>
 										</hbox>
 
+									</row>
+								    
+					
+								
+								
+									<row>
+									  <label value="Teléfono: *" />
+
+										<textbox id="telefono"
+											width="80%" readonly="" mold="rounded"
+											value="@bind(vm.proveedor.telefono)" maxlength="11"
+											placeholder="Ej: 02512552233"
+											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+											
+										
 										<label
-											value="Nombre/Razón Social: *" />
+											value="Nombre/Razón Social:*" />
 										<vbox width="80%">
 											<textbox id="nombreRazonSocial"
 												readonly="" mold="rounded"
@@ -67,27 +100,11 @@
 												placeholder="Ej: Empresa C.A"
 												constraint="@bind(vm.getNotEmptyValidator())" />
 										</vbox>
+											
 									</row>
 
-									<row>
 
-										<label value="Teléfono: *" />
-										<vbox width="80%">
-											<textbox id="telefono"
-												readonly="" mold="rounded"
-												value="@bind(vm.proveedor.telefono)" maxlength="11"
-												placeholder="Ej: 02512552233"
-												constraint="@bind(vm.getSoloNumeros())" />
-										</vbox>
-										
-										<label value="E-mail: *" />
-										<vbox width="80%">
-											<textbox id="email"
-												readonly="" mold="rounded" value="@bind(vm.proveedor.correo)"
-												placeholder="Ej. fusa@gmail.com"
-												constraint="@bind(vm.getEmailValidator())"/>
-										</vbox>
-									</row>
+									
 									<row>
 
 										<label value="Dirección: *" />
@@ -113,12 +130,9 @@
 												</comboitem>
 											</template>
 										</combobox>
-
-
-									</row>
-
-									<row>
-										<label value="Ciudad: *" />
+										
+										
+										   <label value="Ciudad: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.proveedor.ciudad)"
@@ -131,20 +145,10 @@
 												</comboitem>
 											</template>
 										</combobox>
+                              </row>
+                              
 
-										<label
-											value="Tipo Proveedor: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.tipoProveedor)"
-											model="@load(vm.listaTipoProveedor)">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-												</comboitem>
-											</template>
-										</combobox>
-									</row>
+									
 								</rows>
 							</grid>
 						</div>

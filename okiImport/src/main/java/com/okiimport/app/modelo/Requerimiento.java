@@ -285,7 +285,7 @@ public class Requerimiento implements Serializable {
 	public String determinarTipoRepuesto(){
 		String texto = null;
 		if(tipoRepuesto!=null)
-			texto = (tipoRepuesto) ? "Original" : "Reemplazo";
+			texto = (tipoRepuesto) ? "Reemplazo" : "Original";
 		else
 			texto = "Indistinto";
 		return texto;
@@ -321,6 +321,10 @@ public class Requerimiento implements Serializable {
 	
 	public boolean editar(){
 		return (this.estatus.equalsIgnoreCase("CR") || this.estatus.equalsIgnoreCase("E")) ? true : false;
+	}
+	
+	public boolean editarCotizacion(){
+		return this.estatus.equalsIgnoreCase("EC");
 	}
 	
 	public boolean cerrarSolicitud(){

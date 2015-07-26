@@ -140,4 +140,9 @@ public class Proveedor extends Persona implements Serializable {
 		}
 		return ubicacion;
 	}
+	
+	@Transient
+	public boolean isSolicitante(){
+		return this.getEstatus().equalsIgnoreCase("solicitante");
+	}
 }

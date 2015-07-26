@@ -66,6 +66,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	
+	
+	
+	//private List<Pais> listaPais;
+	
+	
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {

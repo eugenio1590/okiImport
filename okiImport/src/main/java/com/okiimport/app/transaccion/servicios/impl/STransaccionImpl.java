@@ -61,6 +61,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		
 		ESTATUS_PROCESADOS = new ArrayList<String>();
 		ESTATUS_PROCESADOS.add("CT");
+		ESTATUS_PROCESADOS.add("EC");
 		ESTATUS_PROCESADOS.add("O");
 		ESTATUS_PROCESADOS.add("CC");
 	}
