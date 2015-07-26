@@ -1,0 +1,69 @@
+<zk>
+	<window border="none" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaProveedoresViewModel')">
+		<listbox id="gridProveedores" mold="paging"
+			model="@load(vm.proveedores)">
+			<auxhead sclass="nombre-center">
+				<auxheader>
+					<div sclass="z-icon-filter bigger-200" />
+					<spinner constraint="no negative, no zero"
+						width="150px" value="@bind(vm.proveedorFiltro.id)" instant="true"
+						placeholder="Buscar por Codigo"
+						onChange="@command('aplicarFiltro')" />
+				</auxheader>
+				<auxheader colspan="1">
+					<div sclass="z-icon-filter bigger-200" />
+					<textbox value="@bind(vm.proveedorFiltro.nombre)"
+						instant="true" placeholder="Buscar por Nombre"
+						onChange="@command('aplicarFiltro')" />
+				</auxheader>
+				<auxheader colspan="1">
+					<div sclass="z-icon-filter bigger-200" />
+					<label value="Estado: " />
+
+					<separator orient="vertical" width="10px"
+						bar="false" />
+				</auxheader>
+				<auxheader colspan="1" />
+				<auxheader width="20%">
+					<button label="Nuevo Proveedor"
+						onClick="@command('nuevoProveedor')" sclass="btn-primary" />
+				</auxheader>
+			</auxhead>
+			<listhead menupopup="auto">
+				<listheader id="id" label="Codigo" sort="auto(id)"
+					width="18%" />
+				<listheader id="nombre" label="Nombre"
+					sort="auto(nombre)" width="18%" />
+				<listheader label="Estado" sort="none" width="31%" />
+				<listheader label="Foto" sort="none" align="center"
+					width="18%" />
+				<listheader label="Operaciones" width="15%" sort="none" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@bind(each.id)" />
+					<listcell label="@bind(each.nombre)" />
+					<listcell></listcell>
+					<listcell></listcell>
+					<listcell>
+
+						<div sclass=" action">
+							<a
+								iconSclass="z-icon-eye blue bigger-200" tooltiptext="Ver"
+								onClick="@command('editarProveedor', usuario = each)" />
+							<a
+								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
+								onClick="@command('editarProveedor', usuario = each)" />
+							<a
+								iconSclass="z-icon-remove green bigger-200" tooltiptext="Eliminar"
+								onClick="@command('editarProveedor', usuario = each)" />
+						</div>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pagProveedores" onPaging="@command('paginarLista')"
+			autohide="true" />
+	</window>
+</zk>

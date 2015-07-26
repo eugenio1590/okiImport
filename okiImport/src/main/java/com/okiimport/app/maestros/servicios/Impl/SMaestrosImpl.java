@@ -210,6 +210,15 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		return parametros;
 	}
 	
+	@Override
+	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page,
+			int limit) {
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", Long.valueOf(proveedorDAO.countAll()).intValue());
+		parametros.put("proveedores", proveedorDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	@SuppressWarnings({ "rawtypes", "unused", "unchecked" })
 	private <T extends PersonaDAO, Y extends Persona> T determinarPersonaDAO(Class<Y> clase){
