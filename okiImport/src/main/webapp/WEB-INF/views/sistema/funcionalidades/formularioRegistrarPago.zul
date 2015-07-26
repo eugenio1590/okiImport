@@ -20,23 +20,23 @@
 									value="N Deposito / Transferencia: " />
 
 								<textbox id="idDepositoTransferencia" placeholder="0102125485622"
-									width="80%" readonly="true" mold="rounded" tabbable="false" />
+									width="80%" readonly="false" mold="rounded" tabbable="false" />
 
 								<label value="Nombre Depositante: " />
 
 								<textbox id="nombreDepositante" placeholder="Jose Perez"
-									width="80%" readonly="true" mold="rounded" />
+									width="80%" readonly="false" mold="rounded" />
 							</row>
 							<row>
 								<label value="Monto: " />
 
 								<textbox id="Monto" width="80%" placeholder="12000"
-									readonly="true" mold="rounded" />
+									readonly="false" mold="rounded" />
 
 								<label value="Banco donde Pago:" />
 								<combobox id="cmbBancoPago"
 									value="@bind(vm.bancoPago.nombre)"
-									selectedItem="@bind(vm.bancoPago.nombre)" readonly="true"
+									selectedItem="@bind(vm.bancoPago.nombre)" readonly="false"
 									placeholder="Seleccione..." width="80%"
 									model="@load(vm.listaBancoPago)" constraint="no empty">
 									<template name="model">
@@ -50,11 +50,11 @@
 								<label value="Fecha del Pago: " />
 
 								<textbox id="fechaPago" width="80%" placeholder="12-06-2015"
-									readonly="true" mold="rounded" tabbable="false" />
+									readonly="false" mold="rounded" tabbable="false" />
 
 								<label value="Hora Aproximada: " />
 								<textbox id="horaPago" width="80%" placeholder="9y35am"
-									readonly="true" mold="rounded" />
+									readonly="false" mold="rounded" />
 							</row>
 
 						</rows>
@@ -79,12 +79,12 @@
 							<row>
 								<label
 									value="Nombre Cliente / Razon Social: " />
-								<textbox width="80%" readonly="true" placeholder=" Urbicars C.A"/>
+								<textbox width="80%" readonly="false" placeholder=" Urbicars C.A"/>
 
 								<label value="Cedula/RIF: *" />
 										<hbox>
 											<combobox
-												id="comboTipoPersona" width="30%" readonly="true"
+												id="comboTipoPersona" width="30%" readonly="false"
 												selectedItem="@bind(vm.tipoPersona)"
 												model="@load(vm.listaTipoPersona)" constraint="no empty">
 												<template
@@ -98,8 +98,7 @@
 												width="100%" readonly="" mold="rounded"
 												value="@bind(vm.cliente.cedula)" placeholder="Ej: 402405375"
 												maxlength="12"
-												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"
-												 />
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"/>
 										</hbox>
 							</row>
 
@@ -112,7 +111,7 @@
 									constraint="no empty:El campo no puede estar vacio" />
 
 								<label value="Telefono: " />
-								<intbox width="80%" readonly="true" placeholder="02514150878"
+								<intbox width="80%" readonly="false" placeholder="02514150878"
 								constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
 
 							</row>
@@ -141,7 +140,7 @@
 								<combobox id="cmbEmpresaEncomiendas"
 									value="@bind(vm.empresaEncomiendas.nombre)"
 									selectedItem="@bind(vm.empresaEncomiendas.nombre)"
-									readonly="true" placeholder="Seleccione..." width="80%"
+									readonly="false" placeholder="Seleccione..." width="80%"
 									model="@load(vm.listaEmpresaEncomiendas)"
 									constraint="no empty">
 									<template name="model">
@@ -161,7 +160,7 @@
 								<label
 									value="Oficina/Direccion Particular *" />
 								<combobox id="cmbOficinaDireccion"
-									placeholder="Seleccione..." width="80%" readonly="true"
+									placeholder="Seleccione..." width="80%" readonly="false"
 									selectedItem="@bind(vm.oficinaDireccion)"
 									model="@load(vm.listaOficinaDireccion)"
 									constraint="no empty">
@@ -173,13 +172,12 @@
 
 								<label value="Estado: *" />
 								<combobox placeholder="Seleccione..."
-									width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+									width="80%" readonly="false" selectedItem="@bind(vm.estado)"
 									model="@load(vm.listaEstados)"
 									onSelect="@command('buscarCiudades')">
 									<template name="model">
 										<comboitem
 											label="@bind(each.nombre)">
-
 										</comboitem>
 									</template>
 								</combobox>
@@ -187,40 +185,33 @@
 							</row>
 
 							<row>
-
-
 								<label value="Ciudad: *" />
 								<combobox placeholder="Seleccione..."
-									width="80%" readonly="true" selectedItem="@bind(vm.ciudad)"
+									width="80%" readonly="false" selectedItem="@bind(vm.ciudad)"
 									model="@load(vm.listaCiudades)">
 									<template name="model">
 										<comboitem
 											label="@bind(each.nombre)">
-
 										</comboitem>
 									</template>
 								</combobox>
 
 								<label value="Municipio:" />
 								<textbox id="Municipio" width="80%"
-									readonly="true" placeholder="Iribarren">
-
+									readonly="false" placeholder="Iribarren">
 								</textbox>
-
 
 							</row>
 
 							<row>
-
 								<label value="Quien Recibe *" />
 								<textbox id="quienRecibe" width="80%"
-									readonly="true" placeholder="Jose Perez">
-
+									readonly="false" placeholder="Jose Perez">
 								</textbox>
-
+								
 								<label value="Cedula:" />
 								<textbox id="cedula" width="80%"
-									readonly="true" 
+									readonly="false" 
 									constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio"
 									placeholder="19482487">
 
@@ -231,14 +222,14 @@
 
 								<label value="Telefono: *" />
 								<textbox id="telefonoQuienRecibe"
-									width="80%" readonly="true" placeholder="02514157258"
+									width="80%" readonly="false" placeholder="02514157258"
 									constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555">
 
 								</textbox>
 
 								<label value="Articulos que Compro:" />
-								<textbox id="artCompra" width="80%" maxlength="100" rows="2"
-									readonly="true" placeholder="2 Muñones Hyundai Atos">
+								<textbox id="artCompra" width="80%" maxlength="100" rows="4"
+									readonly="false" placeholder="2 Muñones Hyundai Atos">
 
 								</textbox>
 

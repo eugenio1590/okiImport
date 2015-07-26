@@ -33,14 +33,32 @@
 						<div>
 							<grid>
 								<columns>
+								    <column width="35%" align="right"/>
+									<column width="65%" />
 									<column width="35%" align="right"/>
 									<column width="65%" />
 									<column width="35%" align="right" />
 									<column width="65%" />
 								</columns>
 								<rows>
-									<row>
-										<label value="RIF: *" />
+								   
+								    <row>
+								    
+								        <label
+											value="Tipo Proveedor: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.tipoProveedor)"
+											model="@load(vm.listaTipoProveedor)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+												</comboitem>
+											</template>
+										</combobox>
+								    
+										
+											<label value="RIF: *" />
 									<hbox>
 											<combobox width="30%"
 												readonly="true" selectedItem="@bind(vm.tipoPersona)"
@@ -61,38 +79,42 @@
 												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
 										</hbox>
 
-										<label
-											value="Nombre/Razón Social: *" />
-
-										<textbox id="nombreRazonSocial"
-											width="80%" readonly="" mold="rounded"
-											value="@bind(vm.proveedor.nombre)"
-											placeholder="Ej: Empresa C.A"
-											constraint="no empty:El Campo No Debe Estar Vacio" />
 									</row>
-
+								    
+					
+								
+								
 									<row>
-
-										<label value="Teléfono: *" />
+									  <label value="Teléfono: *" />
 
 										<textbox id="telefono"
 											width="80%" readonly="" mold="rounded"
 											value="@bind(vm.proveedor.telefono)" maxlength="11"
 											placeholder="Ej: 02512552233"
 											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+											
+										
+										<label
+											value="Nombre/Razón Social:*" />
+
+										<textbox id="nombreRazonSocial"
+											width="80%" readonly="" mold="rounded"
+											value="@bind(vm.proveedor.nombre)"
+											placeholder="Ej: Empresa C.A"
+											constraint="no empty:El Campo No Debe Estar Vacio" />
+											
+									</row>
 
 
+									<row>
 										<label value="E-mail: *" />
 										<textbox id="email" width="80%"
 											readonly="" mold="rounded" value="@bind(vm.proveedor.correo)"
 											placeholder="Ej. fusa@gmail.com"
 											constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
 										</textbox>
-
-
-									</row>
-									<row>
-
+										
+										
 										<label value="Dirección: *" />
 
 										<textbox id="direccion"
@@ -100,9 +122,12 @@
 											value="@bind(vm.proveedor.direccion)"
 											placeholder="Ej: zona industrial 2 "
 											constraint="no empty:El Campo No Debe Estar Vacio" />
+									</row>
+									
+									
+									<row>
 
-
-										<label value="Estado: *" />
+									<label value="Estado: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.estado)"
@@ -116,18 +141,13 @@
 												</comboitem>
 											</template>
 										</combobox>
-
-
-									</row>
-
-									<row>
-										<label value="Ciudad: *" />
+										
+										
+										   <label value="Ciudad: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.proveedor.ciudad)"
-											model="@load(vm.listaCiudades)"
-											
-											>
+											model="@load(vm.listaCiudades)">
                                             
 											<template name="model">
 												<comboitem
@@ -136,20 +156,10 @@
 												</comboitem>
 											</template>
 										</combobox>
+                              </row>
+                              
 
-										<label
-											value="Tipo Proveedor: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.tipoProveedor)"
-											model="@load(vm.listaTipoProveedor)">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-												</comboitem>
-											</template>
-										</combobox>
-									</row>
+									
 								</rows>
 							</grid>
 						</div>

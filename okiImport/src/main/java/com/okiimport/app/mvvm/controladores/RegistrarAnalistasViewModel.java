@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -18,6 +19,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
@@ -38,19 +40,24 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	
 	private Analista analista;
 	private Ciudad ciudad;
-	private Estado estado;
 	
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
 	
+	@Wire("#winFormularioAnalista")
+	private Window winFormularioAnalista;
+	
+	
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view ) {
 		super.doAfterCompose(view);
 		limpiar();
+		
 		listaEstados = llenarListaEstados();
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
+		
 		
 	}
 	
@@ -85,7 +92,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	public void recargar() {
-		redireccionar("/WEB-INF/views/sistema/maestros/listaAnalistas.zul");
+		
+		winFormularioAnalista.onClose();
 	}
 	
 	@Command
@@ -158,9 +166,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		this.listaCiudades = listaCiudades;
 	}
 	
-	
-	
-	
+
 	
 
 }
