@@ -44,7 +44,7 @@
 				<listitem>
 					<listcell label="@bind(each.id)" />
 					<listcell label="@bind(each.nombre)" />
-					<listcell></listcell>
+					<listcell label="@bind(each.estatus)" />
 					<listcell></listcell>
 					<listcell>
 

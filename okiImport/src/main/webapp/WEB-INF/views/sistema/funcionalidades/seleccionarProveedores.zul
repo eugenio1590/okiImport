@@ -23,7 +23,7 @@
 
 							<listhead menupopup="auto">
 
-								<listheader label="Nombre" sort="auto" />
+								<listheader label="Nombre" sort="auto(nombre)" />
 							</listhead>
 
 							<template name="model">

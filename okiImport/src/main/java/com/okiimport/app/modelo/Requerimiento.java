@@ -285,7 +285,7 @@ public class Requerimiento implements Serializable {
 	public String determinarTipoRepuesto(){
 		String texto = null;
 		if(tipoRepuesto!=null)
-			texto = (tipoRepuesto) ? "Original" : "Reemplazo";
+			texto = (tipoRepuesto) ? "Reemplazo" : "Original";
 		else
 			texto = "Indistinto";
 		return texto;
