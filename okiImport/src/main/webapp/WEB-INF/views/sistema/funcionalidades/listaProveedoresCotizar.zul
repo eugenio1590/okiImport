@@ -1,0 +1,61 @@
+<zk>
+	<window border="none" title="Lista de Proveedores" apply="org.zkoss.bind.BindComposer" 
+		width="@bind(vm.size)" height="@bind(vm.size)" closable="true" sclass="btn-primary"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaProveedoresViewModel')">
+		<listbox id="gridProveedores" mold="paging"
+			model="@load(vm.proveedores)">
+			<auxhead sclass="nombre-center">
+				<auxheader>
+					<div sclass="z-icon-filter bigger-200" />
+					<spinner constraint="no negative, no zero"
+						width="150px" value="@bind(vm.proveedorFiltro.id)" instant="true"
+						placeholder="Buscar por Codigo"
+						onChange="@command('aplicarFiltro')" />
+				</auxheader>
+				<auxheader colspan="1">
+					<div sclass="z-icon-filter bigger-200" />
+					<textbox value="@bind(vm.proveedorFiltro.nombre)"
+						instant="true" placeholder="Buscar por Nombre"
+						onChange="@command('aplicarFiltro')" />
+				</auxheader>
+				<auxheader colspan="1">
+					<div sclass="z-icon-filter bigger-200" />
+					<label value="Estado: " />
+
+					<separator orient="vertical" width="10px"
+						bar="false" />
+				</auxheader>
+				<auxheader colspan="1" />
+				<auxheader width="20%"/>
+			</auxhead>
+			<listhead menupopup="auto">
+				<listheader id="id" label="Codigo" sort="auto(id)"
+					width="18%" />
+				<listheader id="nombre" label="Nombre"
+					sort="auto(nombre)" width="18%" />
+				<listheader label="Estado" sort="none" width="31%" />
+				<listheader label="Foto" sort="none" align="center"
+					width="18%" />
+				<listheader label="Operaciones" width="15%" sort="none" />
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@bind(each.id)" />
+					<listcell label="@bind(each.nombre)" />
+					<listcell></listcell>
+					<listcell></listcell>
+					<listcell>
+						<div class="btn-group btn-group-sm">
+							<button
+								iconSclass="z-icon-pencil green bigger-160"
+								tooltiptext="Cotizar" if="${ !each.isSolicitante() }"
+								onClick="@command('cotizar', proveedor = each)" />
+						</div>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<paging id="pagProveedores" onPaging="@command('paginarLista')"
+			autohide="true" />
+	</window>
+</zk>

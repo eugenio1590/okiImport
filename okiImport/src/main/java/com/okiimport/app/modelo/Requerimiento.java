@@ -323,6 +323,10 @@ public class Requerimiento implements Serializable {
 		return (this.estatus.equalsIgnoreCase("CR") || this.estatus.equalsIgnoreCase("E")) ? true : false;
 	}
 	
+	public boolean editarCotizacion(){
+		return this.estatus.equalsIgnoreCase("EC");
+	}
+	
 	public boolean cerrarSolicitud(){
 		boolean solicitud = false;
 		if(this.fechaSolicitud!=null)

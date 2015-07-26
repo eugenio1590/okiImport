@@ -3,15 +3,14 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
@@ -20,19 +19,13 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Radio;
-import org.zkoss.zul.Radiogroup;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -52,11 +45,18 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	private List<Proveedor> proveedores;
 	private Proveedor proveedorFiltro;
 	
+	private Requerimiento requerimiento;
+	
 	//Atributos
+	private String size;
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("size") String size){
 		super.doAfterCompose(view);
+		this.requerimiento = requerimiento;
+		this.size = size;
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
@@ -146,6 +146,22 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
 	}*/
 	
+	/*
+	 * Descripcion: permitira viszualizar la lista de proveedores para poder cotizar un requerimiento
+	 * @param proveedor: proveedor seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void cotizar(@BindingParam("proveedor") Proveedor proveedor){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", this.requerimiento);
+		parametros.put("usuario", proveedor.getUsuario());
+		if(proveedor.getTipoProveedor())
+			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+		else
+			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	/*private Usuario consultarUsuarioSession(){
 		UserDetails user = this.getUser();
@@ -190,6 +206,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	public void setsMaestros(SMaestros sMaestros) {
 		this.sMaestros = sMaestros;
 	}
-	
-	
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}	
 }
