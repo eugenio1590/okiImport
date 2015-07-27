@@ -6,9 +6,8 @@
 
 			<listhead>
 
-				<listheader value="idRequerimiento"
-					label="N° Requerimiento" sort="auto(idRequerimiento)"
-					width="150px">
+				<listheader value="idRequerimiento" width="75px"
+					label="Nro." sort="auto(idRequerimiento)">
 					<spinner constraint="no negative, no zero" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
 						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
 						width="70px" />
@@ -38,7 +37,6 @@
 				
 				<listheader value="analista" label="Analista"
 					sort="none" width="120px">
-					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 				
 				<listheader value="estatus" label="Estado" sort="none" width="12%">

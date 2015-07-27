@@ -293,17 +293,19 @@ public class Requerimiento implements Serializable {
 	
 	public String determinarEstatus(){
 		if(this.estatus.equalsIgnoreCase("CR"))
-			return "Requerimiento Emitido";
+			return "Emitido";
 		else if(this.estatus.equalsIgnoreCase("E"))
-			return "Requerimiento Recibido y Editado por el Analista asignado";
+			return "Recibido y Editado";
 		else if(this.estatus.equalsIgnoreCase("EP"))
-			return "Requerimiento Enviado a Proveedores";
+			return "Enviado a Proveedores";
 		else if(this.estatus.equalsIgnoreCase("CT"))
-			return "Requerimiento con Cotizaciones Asignadas";
+			return "Con Cotizaciones Asignadas";
+		else if(this.estatus.equalsIgnoreCase("EC"))
+			return "Con Cotizaciones Incompletas";
 		else if(this.estatus.equalsIgnoreCase("O"))
-			return "Requerimiento Ofertado";
+			return "Ofertado";
 		else if(this.estatus.equalsIgnoreCase("CC"))
-			return "Requerimiento Concretado";
+			return "Concretado";
 		return "";
 	}
 
