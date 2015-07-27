@@ -166,6 +166,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaEstatus.add(new ModeloCombo<String>("Recibido y Editado", "E"));
 		listaEstatus.add(new ModeloCombo<String>("Enviado a Proveedores", "EP"));
 		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Asignadas", "CT"));
+		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Incompletas", "EC"));
 		listaEstatus.add(new ModeloCombo<String>("Ofertado", "O"));
 		listaEstatus.add(new ModeloCombo<String>("Concretado", "CC"));
 		return listaEstatus;
