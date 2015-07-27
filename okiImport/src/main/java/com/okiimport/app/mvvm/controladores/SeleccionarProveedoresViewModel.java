@@ -24,6 +24,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -154,7 +155,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
 
 				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
-					DetalleCotizacion detalleCotizacion = new DetalleCotizacion();
+					DetalleCotizacion detalleCotizacion = (proveedor.getTipoProveedor()) ? new DetalleCotizacion() : new DetalleCotizacionInternacional();
 					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
 					detalleCotizacions.add(detalleCotizacion);
 				}

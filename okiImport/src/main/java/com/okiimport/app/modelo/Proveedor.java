@@ -69,9 +69,10 @@ public class Proveedor extends Persona implements Serializable {
 		clasificacionRepuestos = new ArrayList<ClasificacionRepuesto>();
 	}
 	
-	public Proveedor(Integer id,String cedula, String correo,
-			String direccion, String nombre, String telefono, String estatus) {
+	public Proveedor(Integer id,String cedula, String correo, String direccion, 
+			String nombre, String telefono, String estatus, Boolean tipoProveedor) {
 		super(id, null, cedula, correo, direccion, nombre, telefono, null, estatus);
+		this.tipoProveedor = tipoProveedor;
 	}
 
 	public Boolean getTipoProveedor() {
