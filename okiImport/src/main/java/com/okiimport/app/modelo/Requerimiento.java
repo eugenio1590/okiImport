@@ -324,7 +324,7 @@ public class Requerimiento implements Serializable {
 	}
 	
 	public boolean editarCotizacion(){
-		return this.estatus.equalsIgnoreCase("EC");
+		return (this.estatus.equalsIgnoreCase("EC") || this.estatus.equalsIgnoreCase("EP") || this.estatus.equalsIgnoreCase("CT"));
 	}
 	
 	public boolean cerrarSolicitud(){
