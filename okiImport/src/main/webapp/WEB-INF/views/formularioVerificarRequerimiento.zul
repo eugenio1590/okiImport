@@ -34,7 +34,7 @@
 
 
 			<listbox id="gridRequerimientosCliente" mold="paging"
-				checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
+				checkmark="true" pagingPosition="top" multiple="true"
 				sclass="mylist" model="@load(vm.listaRequerimientos)">
 				
 				<auxhead>
