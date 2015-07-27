@@ -27,12 +27,12 @@ import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.mvvm.PasswordGenerator;
 
-public class FormularioUsuariosViewModel extends AbstractViewModel implements  EventListener<SortEvent>{
+public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel implements  EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sControlUsuario")

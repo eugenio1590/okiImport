@@ -21,10 +21,10 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 
-public class EditarUsuarioViewModel extends AbstractViewModel implements EventListener<UploadEvent> {
+public class EditarUsuarioViewModel extends AbstractRequerimientoViewModel implements EventListener<UploadEvent> {
 	
 	//Servicios
 	@BeanInjector("sControlUsuario")
