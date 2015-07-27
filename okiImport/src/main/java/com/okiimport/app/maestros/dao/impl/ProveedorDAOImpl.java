@@ -52,7 +52,8 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 				entity.get("direccion"),
 				entity.get("nombre"),
 				entity.get("telefono"),
-				entity.get("estatus")
+				entity.get("estatus"),
+				entity.get("tipoProveedor")
 		};
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
@@ -74,6 +75,7 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		groupBy.add(entity.get("nombre"));
 		groupBy.add(entity.get("telefono"));
 		groupBy.add(entity.get("estatus"));
+		groupBy.add(entity.get("tipoProveedor"));
 		
 		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy, orders, start, limit);
 	}
