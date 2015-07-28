@@ -27,6 +27,7 @@ import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -70,7 +71,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
-	
+	private Requerimiento requerimiento;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -83,9 +84,11 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		pagProveedores.setPageSize(pageSize);
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
-		for(DetalleRequerimiento detalle:repuestosseleccionados)
+		for(DetalleRequerimiento detalle:repuestosseleccionados){
+			requerimiento = detalle.getRequerimiento();
 			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
-		    consultarProveedores(0);
+		}
+		consultarProveedores(0);
 	}
 	
 	/**Interface*/
@@ -130,7 +133,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	
 	@NotifyChange({"listaProveedores"})
 	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, PAGE_SIZE);
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, PAGE_SIZE);
 		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
 		Integer total = (Integer) Parametros.get("total");
 		gridProveedores.setMultiple(true);

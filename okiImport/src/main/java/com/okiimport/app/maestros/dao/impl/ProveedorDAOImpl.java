@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Selection;
+import javax.persistence.criteria.Subquery;
 
 import com.okiimport.app.maestros.dao.ProveedorDAO;
+import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Proveedor;
 
@@ -33,7 +34,7 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 	
 	@Override
 	public List<Proveedor> consultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
-			List<Integer> idsClasificacionRepuesto, int start, int limit) {
+			Integer idRequerimiento, List<Integer> idsClasificacionRepuesto, int start, int limit) {
 		// TODO Auto-generated method stub
 		//1. Creamos el Criterio de busqueda
 		this.crearCriteria();
@@ -57,8 +58,33 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		};
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
-		restricciones.add(joins.get("clasificacionRepuestos").get("idClasificacionRepuesto")
-				.in(idsClasificacionRepuesto));
+		restricciones.add(joins.get("clasificacionRepuestos").get("idClasificacionRepuesto").in(idsClasificacionRepuesto));
+		
+		entidades = new HashMap<String, JoinType>();
+		entidades.put("proveedor", JoinType.INNER);
+		entidades.put("detalleCotizacions", JoinType.INNER);
+		Map<String, Object> paramSubquery = createSubquery(Cotizacion.class, "idCotizacion", entidades);
+		Subquery<Cotizacion> subQuCotizacion = (Subquery<Cotizacion>) paramSubquery.get("subquery");
+		Map<String, Join> joinsSubquery = (Map<String, Join>) paramSubquery.get("joins");
+		
+		Join joinDetalleRequerimiento = joinsSubquery.get("detalleCotizacions").join("detalleRequerimiento");
+		Join joinProveedor = joinsSubquery.get("proveedor");
+		
+		List<Predicate> restriccionesSubquery = new ArrayList<Predicate>();
+		
+		restriccionesSubquery.add(this.criteriaBuilder.equal(
+				joinDetalleRequerimiento.join("requerimiento").get("idRequerimiento"),
+				idRequerimiento
+		));
+		
+		restriccionesSubquery.add(this.criteriaBuilder.equal(joinProveedor.get("id"), this.entity.get("id")));
+		restriccionesSubquery.add(joinDetalleRequerimiento.join("clasificacionRepuesto", JoinType.LEFT)
+			.in(idsClasificacionRepuesto));
+		
+		subQuCotizacion=addRestriccionesSubquery(subQuCotizacion, concatenaArrayPredicate(restriccionesSubquery));
+		
+		restricciones.add(this.criteriaBuilder.not(this.criteriaBuilder.exists(subQuCotizacion)));
+		
 		Proveedor proveedor = (persona==null) ? new Proveedor() : new Proveedor(persona);
 		proveedor.setEstatus("activo");
 		agregarFiltros(proveedor, restricciones);
@@ -67,17 +93,7 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		List<Order> orders = new ArrayList<Order>();
 		orders.add(criteriaBuilder.asc(entity.get("id")));
 		
-		List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
-		groupBy.add(entity.get("id"));
-		groupBy.add(entity.get("cedula"));
-		groupBy.add(entity.get("correo"));
-		groupBy.add(entity.get("direccion"));
-		groupBy.add(entity.get("nombre"));
-		groupBy.add(entity.get("telefono"));
-		groupBy.add(entity.get("estatus"));
-		groupBy.add(entity.get("tipoProveedor"));
-		
-		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy, orders, start, limit);
+		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, null, orders, start, limit);
 	}
 
 	@Override
