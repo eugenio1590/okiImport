@@ -3,7 +3,6 @@ package com.okiimport.app.mvvm.controladores.seguridad.configuracion;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
@@ -25,12 +24,12 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
 
-import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.BeanInjector;
 
-public class ListaUsuariosViewModel extends AbstractViewModel implements EventListener<SortEvent>{
+public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sControlUsuario")

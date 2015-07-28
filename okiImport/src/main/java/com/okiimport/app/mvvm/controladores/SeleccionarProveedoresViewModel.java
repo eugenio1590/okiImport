@@ -60,8 +60,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private List<Proveedor> listaProveedoresSeleccionados2;
 	private List<DetalleRequerimiento> listaDetalleRequerimientos;
 	
-	private static Integer PAGE_SIZE = 3;
-	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
 	
@@ -130,7 +128,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	
 	@NotifyChange({"listaProveedores"})
 	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, PAGE_SIZE);
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, pageSize);
 		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
 		Integer total = (Integer) Parametros.get("total");
 		gridProveedores.setMultiple(true);
