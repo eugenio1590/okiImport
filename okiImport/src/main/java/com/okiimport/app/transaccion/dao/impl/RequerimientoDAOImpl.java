@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Order;
@@ -66,9 +65,10 @@ public class RequerimientoDAOImpl extends
 						.desc(this.entity.get(fieldSort)));
 
 		}
+		else
+			orders.add(this.criteriaBuilder.asc(entity.get("idRequerimiento")));
 
-		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders,
-				start, limit);
+		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 
 	@Override
@@ -95,6 +95,7 @@ public class RequerimientoDAOImpl extends
 		// 4. Creamos los campos de ordenamiento y ejecutamos
 		Map<String, Boolean> orders = new HashMap<String, Boolean>();
 		orders.put("fechaCreacion", false); // true ascendente
+		orders.put("idRequerimiento", true);
 
 		/**
 		 * //4. Creamos los campos de ordenamiento y ejecutamos Map<String,
@@ -107,10 +108,112 @@ public class RequerimientoDAOImpl extends
 		 * */
 
 		// Faltan los filtros
-		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders,
-				start, limit);
+		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 
+	@Override
+	public List<Requerimiento> ConsultarRequerimientosCotizados(
+			Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
+			Integer idusuario, int start, int limit) {
+		// TODO Auto-generated method stub
+		// 1. Creamos el Criterio de busqueda
+		this.crearCriteria();
+
+		// 2. Generamos los Joins
+		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
+		entidades.put("analista", JoinType.INNER);
+		entidades.put("cliente", JoinType.INNER);
+		Map<String, Join> joins = this.crearJoins(entidades);
+
+		// 3. Creamos las Restricciones de la busqueda
+		List<Predicate> restricciones = new ArrayList<Predicate>();
+
+		restricciones.add(criteriaBuilder.equal(
+				joins.get("analista").get("id"), idusuario));
+		restricciones.add(criteriaBuilder.equal(entity.get("estatus"), "CT"));
+		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
+
+		// 4. Creamos los campos de ordenamiento y ejecutamos
+		List<Order> orders = new ArrayList<Order>();
+
+		if (fieldSort != null && sortDirection != null) {
+			if (fieldSort.equalsIgnoreCase("nombre"))
+				orders.add((sortDirection) ? this.criteriaBuilder.asc(joins
+						.get("cliente").get("nombre")) : this.criteriaBuilder
+						.desc(joins.get("cliente").get("nombre")));
+			else
+				orders.add((sortDirection) ? this.criteriaBuilder
+						.asc(this.entity.get(fieldSort)) : this.criteriaBuilder
+						.desc(this.entity.get(fieldSort)));
+
+		}
+		else
+			orders.add(this.criteriaBuilder.asc(entity.get("idRequerimiento")));
+
+		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
+	}
+
+	@Override
+	public List<Requerimiento> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
+			Boolean sortDirection, Integer idProveedor, List<String> estatus, int start, int limit) {
+		// TODO Auto-generated method stub
+		// 1. Creamos el Criterio de busqueda
+		this.crearCriteria();
+		
+		// 2. Generamos los Joins
+		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
+		entidades.put("analista", JoinType.INNER);
+		entidades.put("cliente", JoinType.INNER);
+		entidades.put("detalleRequerimientos", JoinType.INNER);
+		entidades.put("marcaVehiculo", JoinType.LEFT);
+		entidades.put("motor", JoinType.LEFT);
+		Map<String, Join> joins = this.crearJoins(entidades);
+		
+		// 3. Creamos las Restricciones de la busqueda y los campos a seleccionar
+		this.distinct = true;
+		this.selected=new Selection[]{
+				this.entity.get("idRequerimiento"),
+				this.entity.get("estatus"),
+				this.entity.get("fechaCreacion"),
+				this.entity.get("fechaVencimiento"),
+				this.entity.get("modeloV"),
+				joins.get("analista"),
+				joins.get("cliente"),
+				joins.get("marcaVehiculo"),
+				joins.get("motor")
+		};
+		
+		List<Predicate> restricciones = new ArrayList<Predicate>();
+		Join joinCotizacion = joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion");
+		
+		if(idProveedor!=null)
+			restricciones.add(this.criteriaBuilder.equal(
+					joinCotizacion.join("proveedor").get("id"), 
+					idProveedor));
+		
+		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "SC"));
+		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
+		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
+		
+		// 4. Creamos los campos de ordenamiento y ejecutamos
+		List<Order> orders = new ArrayList<Order>();
+
+		if (fieldSort != null && sortDirection != null) {
+			if (fieldSort.equalsIgnoreCase("nombre"))
+				orders.add((sortDirection) ? this.criteriaBuilder.asc(joins
+						.get("cliente").get("nombre")) : this.criteriaBuilder
+						.desc(joins.get("cliente").get("nombre")));
+			else
+				orders.add((sortDirection) ? this.criteriaBuilder
+						.asc(this.entity.get(fieldSort)) : this.criteriaBuilder
+						.desc(this.entity.get(fieldSort)));
+		}
+		else
+			orders.add(this.criteriaBuilder.asc(entity.get("idRequerimiento")));
+		
+		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, null , orders, start, limit);
+	}
+	
 	private void agregarRestriccionesFiltros(List<Predicate> restricciones,
 			Requerimiento regFiltro, Map<String, Join> joins) {
 
@@ -171,119 +274,6 @@ public class RequerimientoDAOImpl extends
 				}
 			}
 		}
-	}
-
-	@Override
-	public List<Requerimiento> ConsultarRequerimientosCotizados(
-			Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
-			Integer idusuario, int start, int limit) {
-		// TODO Auto-generated method stub
-		// 1. Creamos el Criterio de busqueda
-		this.crearCriteria();
-
-		// 2. Generamos los Joins
-		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
-		entidades.put("analista", JoinType.INNER);
-		entidades.put("cliente", JoinType.INNER);
-		Map<String, Join> joins = this.crearJoins(entidades);
-
-		// 3. Creamos las Restricciones de la busqueda
-		List<Predicate> restricciones = new ArrayList<Predicate>();
-
-		restricciones.add(criteriaBuilder.equal(
-				joins.get("analista").get("id"), idusuario));
-		restricciones.add(criteriaBuilder.equal(entity.get("estatus"), "CT"));
-		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
-
-		// 4. Creamos los campos de ordenamiento y ejecutamos
-		List<Order> orders = new ArrayList<Order>();
-
-		if (fieldSort != null && sortDirection != null) {
-			if (fieldSort.equalsIgnoreCase("nombre"))
-				orders.add((sortDirection) ? this.criteriaBuilder.asc(joins
-						.get("cliente").get("nombre")) : this.criteriaBuilder
-						.desc(joins.get("cliente").get("nombre")));
-			else
-				orders.add((sortDirection) ? this.criteriaBuilder
-						.asc(this.entity.get(fieldSort)) : this.criteriaBuilder
-						.desc(this.entity.get(fieldSort)));
-
-		}
-
-		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders,
-				start, limit);
-
-	}
-
-	@Override
-	public List<Requerimiento> ConsultarRequerimientosConSolicitudesCotizacion(Requerimiento regFiltro, String fieldSort, 
-			Boolean sortDirection, Integer idProveedor, List<String> estatus, int start, int limit) {
-		// TODO Auto-generated method stub
-		// 1. Creamos el Criterio de busqueda
-		this.crearCriteria();
-		
-		// 2. Generamos los Joins
-		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
-		entidades.put("analista", JoinType.INNER);
-		entidades.put("cliente", JoinType.INNER);
-		entidades.put("detalleRequerimientos", JoinType.INNER);
-		entidades.put("marcaVehiculo", JoinType.LEFT);
-		entidades.put("motor", JoinType.LEFT);
-		Map<String, Join> joins = this.crearJoins(entidades);
-		
-		// 3. Creamos las Restricciones de la busqueda y los campos a seleccionar
-		this.distinct = true;
-		this.selected=new Selection[]{
-				this.entity.get("idRequerimiento"),
-				this.entity.get("estatus"),
-				this.entity.get("fechaCreacion"),
-				this.entity.get("fechaVencimiento"),
-				this.entity.get("modeloV"),
-				joins.get("analista"),
-				joins.get("cliente"),
-				joins.get("marcaVehiculo"),
-				joins.get("motor")
-		};
-		
-		List<Predicate> restricciones = new ArrayList<Predicate>();
-		Join joinCotizacion = joins.get("detalleRequerimientos").join("detalleCotizacions").join("cotizacion");
-		
-		if(idProveedor!=null)
-			restricciones.add(this.criteriaBuilder.equal(
-					joinCotizacion.join("proveedor").get("id"), 
-					idProveedor));
-		
-		restricciones.add(this.criteriaBuilder.equal(joinCotizacion.get("estatus"), "SC"));
-		restricciones.add(this.criteriaBuilder.not(this.entity.get("estatus").in(estatus)));
-		agregarRestriccionesFiltros(restricciones, regFiltro, joins);
-		
-		// 4. Creamos los campos de ordenamiento y ejecutamos
-		List<Order> orders = new ArrayList<Order>();
-
-		if (fieldSort != null && sortDirection != null) {
-			if (fieldSort.equalsIgnoreCase("nombre"))
-				orders.add((sortDirection) ? this.criteriaBuilder.asc(joins
-						.get("cliente").get("nombre")) : this.criteriaBuilder
-						.desc(joins.get("cliente").get("nombre")));
-			else
-				orders.add((sortDirection) ? this.criteriaBuilder
-						.asc(this.entity.get(fieldSort)) : this.criteriaBuilder
-						.desc(this.entity.get(fieldSort)));
-
-		}
-		
-		
-		List<Expression<?>> groupBy = new ArrayList<Expression<?>>();
-		groupBy.add(entity.get("idRequerimiento"));
-		groupBy.add(entity.get("estatus"));
-		groupBy.add(entity.get("fechaCreacion"));
-		groupBy.add(entity.get("fechaVencimiento"));
-		groupBy.add(entity.get("modeloV"));
-		groupBy.add(joins.get("analista"));
-		groupBy.add(joins.get("cliente"));
-		groupBy.add(joins.get("marcaVehiculo"));
-		groupBy.add(joins.get("motor"));
-		return this.ejecutarCriteriaOrder(concatenaArrayPredicate(restricciones), null, groupBy , orders, start, limit);
 	}
 
 }

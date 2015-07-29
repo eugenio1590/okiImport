@@ -6,7 +6,7 @@
 
 			<listhead>
 
-				<listheader value="idRequerimiento" width="75px"
+				<listheader value="idRequerimiento" width="100px"
 					label="Nro." sort="auto(idRequerimiento)">
 					<spinner constraint="no negative, no zero" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
 						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
