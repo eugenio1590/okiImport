@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 
 import org.springframework.stereotype.Repository;
@@ -92,6 +94,37 @@ public class UsuarioDAOImpl extends AbstractJpaDao<Usuario, Integer> implements 
 		else
 			orders.put("id", true);
 		return this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, pagina, limit);
+	}
+
+	@Override
+	public Usuario consultarUsuario(Integer idPersona) {
+		// TODO Auto-generated method stub
+		//1. Creamos el Criterio de busqueda
+		this.crearCriteria();
+
+		//2. Generamos los Joins
+		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
+		entidades.put("persona", JoinType.INNER);
+		Map<String, Join> joins = this.crearJoins(entidades);
+
+		//3. Creamos las Restricciones de la busqueda
+		List<Predicate> restricciones = new ArrayList<Predicate>();
+
+		if(idPersona!=null)
+			restricciones.add(this.criteriaBuilder.equal(
+					joins.get("persona").get("id"), 
+					idPersona
+					));
+
+		//4. Creamos los campos de ordenamiento y ejecutamos
+		Map<String, Boolean> orders = new HashMap<String, Boolean>();
+		orders.put("id", true);
+
+		List<Usuario> usuarios = this.ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, 0, -1);
+		if(usuarios.size()>0)
+			return usuarios.get(0);
+		else
+			return null;
 	}
 
 }

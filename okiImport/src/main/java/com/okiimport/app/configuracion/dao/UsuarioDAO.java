@@ -9,4 +9,5 @@ public interface UsuarioDAO extends IGenericDao<Usuario, Integer> {
 	public Usuario consultarUsuario(String usuario, String clave);
 	public List<Usuario> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
 			int pagina, int limit);
+	public Usuario consultarUsuario(Integer idPersona);
 }

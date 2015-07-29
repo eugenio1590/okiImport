@@ -10,4 +10,6 @@ public interface ProveedorDAO extends PersonaDAO<Proveedor> {
 			int start, int limit);
 	public List<Proveedor> consultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
 			Integer idRequerimiento, List<Integer> idsClasificacionRepuesto, int start, int limit);
+	public List<Proveedor> consultarProveedoresConSolicitudCotizaciones(Proveedor proveedor, Integer idRequerimiento, 
+			String fieldSort, Boolean sortDirection, int start, int limit);
 }

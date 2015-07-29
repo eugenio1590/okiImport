@@ -19,10 +19,9 @@ import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.MarcaVehiculo;
+import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -210,12 +209,21 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		return parametros;
 	}
 	
+	//DEBE CAMBIARSE
 	@Override
-	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page,
-			int limit) {
+	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page, int limit) {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("total", Long.valueOf(proveedorDAO.countAll()).intValue());
 		parametros.put("proveedores", proveedorDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarProveedoresConSolicitudCotizaciones(Proveedor proveedor, Integer idRequerimiento, 
+			String fieldSort, Boolean sortDirection, int page, int limit){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", proveedorDAO.consultarProveedoresConSolicitudCotizaciones(proveedor, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("proveedores", proveedorDAO.consultarProveedoresConSolicitudCotizaciones(proveedor, idRequerimiento, fieldSort, sortDirection, page*limit, limit));
 		return parametros;
 	}
 	

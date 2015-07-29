@@ -158,6 +158,12 @@ public class SControlUsuarioImpl extends AbstractServiceImpl implements SControl
 		return (usuario!=null);
 	}
 	
+	@Override
+	public Usuario consultarUsuario(int idPersona) {
+		// TODO Auto-generated method stub
+		return usuarioDAO.consultarUsuario(idPersona);
+	}
+	
 	//2. Menus
 	@Override
 	public List<Menu> consultarPadresMenuUsuario(Integer tipo) {
