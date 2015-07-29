@@ -61,8 +61,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private List<Proveedor> listaProveedoresSeleccionados2;
 	private List<DetalleRequerimiento> listaDetalleRequerimientos;
 	
-	private static Integer PAGE_SIZE = 3;
-	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
 	
@@ -82,6 +80,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		super.doAfterCompose(view);
 		limpiar();
 		pagProveedores.setPageSize(pageSize);
+		
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
 		for(DetalleRequerimiento detalle:repuestosseleccionados){
@@ -133,7 +132,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	
 	@NotifyChange({"listaProveedores"})
 	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, PAGE_SIZE);
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, pageSize);
 		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
 		Integer total = (Integer) Parametros.get("total");
 		gridProveedores.setMultiple(true);
@@ -154,7 +153,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				
 			
 			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				cotizacion.setProveedor(proveedor);
+				
+				Cotizacion cotizacion2 =  cotizacion.clon();
+				cotizacion2.setProveedor(proveedor);
 				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
 
 				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
@@ -162,7 +163,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
 					detalleCotizacions.add(detalleCotizacion);
 				}
-				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
+				sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 				
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", proveedor.getNombre());
@@ -298,4 +299,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}	
+	
+	
 }

@@ -115,7 +115,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				proveedor.setCedula(tipo + proveedor.getCedula());
 				proveedor.setEstatus("solicitante");
+
+				if (tipoProveedor != null)
+
 				proveedor.setTipoProveedor(this.tipoProveedor.getValor());
+
 				proveedor = sMaestros.registrarProveedor(proveedor);
 
 				Map<String, Object> model = new HashMap<String, Object>();
