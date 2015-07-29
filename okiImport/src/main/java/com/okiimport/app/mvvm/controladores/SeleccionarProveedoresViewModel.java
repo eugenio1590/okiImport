@@ -79,6 +79,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		super.doAfterCompose(view);
 		limpiar();
 		pagProveedores.setPageSize(pageSize);
+		
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
 		for(DetalleRequerimiento detalle:repuestosseleccionados)
@@ -149,7 +150,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				
 			
 			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				cotizacion.setProveedor(proveedor);
+				
+				Cotizacion cotizacion2 =  cotizacion.clon();
+				cotizacion2.setProveedor(proveedor);
 				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
 
 				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
@@ -157,7 +160,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
 					detalleCotizacions.add(detalleCotizacion);
 				}
-				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
+				sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 				
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", proveedor.getNombre());
@@ -293,4 +296,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}	
+	
+	
 }

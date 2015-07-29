@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="cotizacion")
 @NamedQuery(name="Cotizacion.findAll", query="SELECT c FROM Cotizacion c")
-public class Cotizacion implements Serializable{
+public class Cotizacion implements Serializable, Cloneable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -236,5 +236,13 @@ public class Cotizacion implements Serializable{
 		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)
 			this.historicoMoneda = null;
 	}
-	
+	 public Cotizacion clon(){
+		 try {
+			return (Cotizacion) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return null;
+	 }
 }

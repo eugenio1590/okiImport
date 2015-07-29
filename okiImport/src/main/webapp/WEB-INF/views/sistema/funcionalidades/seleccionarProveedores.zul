@@ -6,7 +6,7 @@
 		form="@id('fx') @load(vm.proveedor)" closable="true">
 		
 		<div>
-			<borderlayout width="100%" height="350px">
+			<borderlayout width="100%" height="500px">
 				<west width="37%" title="Proveedores" collapsible="true" 
 				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>
@@ -36,7 +36,7 @@
 
 						</listbox>
 						<paging id="pagProveedores" autohide="true"
-							onPaging="@command('paginarLista',tipo = 1)" />
+							onPaging="@command('paginarLista')" />
 					</vlayout>
 				</west>
 
@@ -90,5 +90,6 @@
 			<button id= "btn_enviar" label="Enviar" type="submit"
 				onClick="@command('enviar')" sclass="btn-primary" />
 		</div>
+			
 	</window>
 </zk>
