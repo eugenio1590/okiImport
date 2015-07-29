@@ -6,7 +6,7 @@
 		form="@id('fx') @load(vm.proveedor)" closable="true">
 		
 		<div>
-			<borderlayout width="100%" height="500px">
+			<borderlayout width="100%" height="450px">
 				<west width="37%" title="Proveedores" collapsible="true" 
 				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>

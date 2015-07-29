@@ -78,7 +78,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
-		pagProveedores.setPageSize(pageSize);
+		pagProveedores.setPageSize(pageSize=9);
 		
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
@@ -119,11 +119,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	@NotifyChange({"*"})
 	@Command
-	public void paginarLista(@BindingParam("tipo")int tipo){
-		switch(tipo){
-		case 1: consultarProveedores(pagProveedores.getActivePage());
-		break;
-		}
+	public void paginarLista(){
+		consultarProveedores(pagProveedores.getActivePage());
 	}
 	
 	
