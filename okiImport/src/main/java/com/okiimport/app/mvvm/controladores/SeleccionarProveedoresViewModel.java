@@ -24,8 +24,10 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -59,8 +61,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private List<Proveedor> listaProveedoresSeleccionados2;
 	private List<DetalleRequerimiento> listaDetalleRequerimientos;
 	
-	private static Integer PAGE_SIZE = 3;
-	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
 	
@@ -69,7 +69,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
-	
+	private Requerimiento requerimiento;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -79,12 +79,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
-		pagProveedores.setPageSize(pageSize);
+		pagProveedores.setPageSize(pageSize=9);
+		
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
-		for(DetalleRequerimiento detalle:repuestosseleccionados)
+		for(DetalleRequerimiento detalle:repuestosseleccionados){
+			requerimiento = detalle.getRequerimiento();
 			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
-		    consultarProveedores(0);
+		}
+		consultarProveedores(0);
 	}
 	
 	/**Interface*/
@@ -119,17 +122,14 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	@NotifyChange({"*"})
 	@Command
-	public void paginarLista(@BindingParam("tipo")int tipo){
-		switch(tipo){
-		case 1: consultarProveedores(pagProveedores.getActivePage());
-		break;
-		}
+	public void paginarLista(){
+		consultarProveedores(pagProveedores.getActivePage());
 	}
 	
 	
 	@NotifyChange({"listaProveedores"})
 	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, PAGE_SIZE);
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, pageSize);
 		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
 		Integer total = (Integer) Parametros.get("total");
 		gridProveedores.setMultiple(true);
@@ -150,15 +150,17 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				
 			
 			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				cotizacion.setProveedor(proveedor);
+				
+				Cotizacion cotizacion2 =  cotizacion.clon();
+				cotizacion2.setProveedor(proveedor);
 				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
 
 				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
-					DetalleCotizacion detalleCotizacion = new DetalleCotizacion();
+					DetalleCotizacion detalleCotizacion = (proveedor.getTipoProveedor()) ? new DetalleCotizacion() : new DetalleCotizacionInternacional();
 					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
 					detalleCotizacions.add(detalleCotizacion);
 				}
-				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
+				sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 				
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", proveedor.getNombre());
@@ -294,4 +296,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}	
+	
+	
 }

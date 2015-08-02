@@ -176,7 +176,7 @@
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
-									value="@bind(each.precioFlete)" width="100px"
+									value="@bind(each.precioFlete)" width="100%"
 									constraint="@bind(vm.constraint_precio_flete)" 
 									onChange="@command('calcularPrecio', column=2)"/>
 							</listcell>

@@ -158,6 +158,19 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
 	}
 	
+	/*
+	 * Descripcion: permitira visualizar los proveedores para luego registrar la cotizacion respectiva
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void cotizar(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("size", "90%");
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
+	}
+	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

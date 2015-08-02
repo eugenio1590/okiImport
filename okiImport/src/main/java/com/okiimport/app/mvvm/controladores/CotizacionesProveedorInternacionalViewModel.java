@@ -59,7 +59,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 			@ExecutionArgParam("usuario") Usuario usuario, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
-		
+		System.out.println("NULO USUARIO: "+(usuario==null));
 		this.persona = usuario.getPersona();
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();

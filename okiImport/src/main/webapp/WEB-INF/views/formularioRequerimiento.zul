@@ -160,7 +160,7 @@
 												id="serialCarroceria2" width="80%" readonly=""
 												mold="rounded"
 												value="@bind(vm.requerimiento.serialCarroceriaV)"
-												maxlength="11" placeholder="Ej: xA245D25623" />
+												maxlength="25" placeholder="Ej: xA245D25623" />
 
 											<label value="Año: *" />
 											<intbox placeholder="2008"
@@ -305,7 +305,7 @@
 											</textbox>
 										</listcell>
 										<listcell>
-											<spinner width="70px"
+											<spinner width="70px" onOK="@command('agregarRepuesto')"
 												constraint="no empty,min 1 max 1000, /.[0-9]+/"
 												value="@bind(each.cantidad)">
 											</spinner>

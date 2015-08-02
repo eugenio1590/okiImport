@@ -1,10 +1,9 @@
-package com.okiimport.app.mvvm.controladores.seguridad.configuracion;
+package com.okiimport.app.mvvm.controladores;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -19,118 +18,110 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Radio;
-import org.zkoss.zul.Radiogroup;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 
-public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
+	@BeanInjector("sMaestros")
+	protected SMaestros sMaestros;
 	
 	//GUI
-	@Wire("#gridUsuarios")
-	private Listbox gridUsuarios;
+	@Wire("#gridProveedores")
+	private Listbox gridProveedores;
 	
-	@Wire("#pagUsuarios")
-	private Paging pagUsuarios;
-	
-	@Wire("#radEstado")
-	private Radiogroup radEstado;
+	@Wire("#pagProveedores")
+	protected Paging pagProveedores;
+
 	
 	//Modelos
-	private List<Usuario> usuarios;
-	private Usuario usuarioFiltro;
+	protected List<Proveedor> proveedores;
+	protected Proveedor proveedorFiltro;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		usuarioFiltro = new Usuario();
-		pagUsuarios.setPageSize(PAGE_SIZE);
-		agregarGridSort(gridUsuarios);
-		cambiarUsuarios(0, null, null);
+		proveedorFiltro = new Proveedor();
+		pagProveedores.setPageSize(pageSize);
+		agregarGridSort(gridProveedores);
+		cambiarProveedores(0, null, null);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
 	@Override
-	@NotifyChange("usuarios")
+	@NotifyChange("proveedores")
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort",  event.getTarget().getId().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarUsuarios", parametros );
+			ejecutarGlobalCommand("cambiarProveedores", parametros );
 		}
 		
 	}
 	
 	/**GLOBAL COMMAND*/
 	@GlobalCommand
-	@NotifyChange("usuarios")
-	public void cambiarUsuarios(@Default("0") @BindingParam("page") int page, 
+	@NotifyChange("proveedores")
+	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sControlUsuario.consultarUsuarios(usuarioFiltro, fieldSort, sortDirection, page, PAGE_SIZE);
+		Map<String, Object> parametros = sMaestros.consultarProveedores(proveedorFiltro, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
-		usuarios = (List<Usuario>) parametros.get("usuarios");
-		pagUsuarios.setActivePage(page);
-		pagUsuarios.setTotalSize(total);
+		proveedores = (List<Proveedor>) parametros.get("proveedores");
+		pagProveedores.setActivePage(page);
+		pagProveedores.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
-		int page=pagUsuarios.getActivePage();
-		cambiarUsuarios(page, null, null);
+		int page=pagProveedores.getActivePage();
+		cambiarProveedores(page, null, null);
 	}
 	
 	@Command
-	@NotifyChange("usuarios")
+	@NotifyChange("*")
 	public void aplicarFiltro(){
-		Radio selectedItem = radEstado.getSelectedItem();
-		this.usuarioFiltro.setActivo((selectedItem!=null) ? Boolean.valueOf((String)selectedItem.getValue()) : null);
-		cambiarUsuarios(0, null, null);
+		cambiarProveedores(0, null, null);
 	}
 	
-	@Command
-	@NotifyChange("usuarios")
+	/*@Command
+	@NotifyChange("analistas")
 	public void limpiarRadios(){
-		this.usuarioFiltro.setActivo(null);
+		this.analistaFiltro.setActivo(null);
 		radEstado.setSelectedIndex(-1);
 		aplicarFiltro();
-	}
+	}*/
 	
 	@Command
-	public void nuevoUsuario(){
-		llamarFormulario("formularioUsuarios.zul", null);
+	public void nuevoProveedor(){
+		llamarFormulario("formularioAnalistas.zul", null);
 	}
 	
-	@Command
-	public void editarUsuario(@BindingParam("usuario") Usuario usuario){
+	/*@Command
+	public void editarAnalista(@BindingParam("analista") Analista analista){
 		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=usuario.getId()){
+		if(userSession.getId()!=analista.getId()){
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("usuario", usuario);
-			llamarFormulario("editarUsuario.zul", parametros);
+			parametros.put("analista", analista);
+			llamarFormulario("editarAnalista.zul", parametros);
 		}
 		else
 			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}
+	}*/
 	
-	@Command
-	@NotifyChange("usuarios")
+	/*@Command
+	@NotifyChange("analistas")
 	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
 		Usuario userSession = consultarUsuarioSession();
 		if(userSession.getId()!=usuario.getId()){
@@ -142,36 +133,50 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 		}
 		else
 			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}
+	}*/
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	private Usuario consultarUsuarioSession(){
+	/*private Usuario consultarUsuarioSession(){
 		UserDetails user = this.getUser();
 		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	}
+	}*/
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/seguridad/configuracion/usuarios/"+ruta, parametros);
+		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/
-	public SControlUsuario getsControlUsuario() {
+	/*public SControlUsuario getsControlUsuario() {
 		return sControlUsuario;
 	}
 
 	public void setsControlUsuario(SControlUsuario sControlUsuario) {
 		this.sControlUsuario = sControlUsuario;
+	}*/
+
+	
+
+	public SMaestros getsMaestros() {
+		return sMaestros;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
+	public List<Proveedor> getProveedores() {
+		return proveedores;
 	}
-	
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+
+	public void setProveedores(List<Proveedor> proveedores) {
+		this.proveedores = proveedores;
 	}
-	
-	public Usuario getUsuarioFiltro() {
-		return usuarioFiltro;
+
+	public Proveedor getProveedorFiltro() {
+		return proveedorFiltro;
+	}
+
+	public void setProveedorFiltro(Proveedor proveedorFiltro) {
+		this.proveedorFiltro = proveedorFiltro;
+	}
+
+	public void setsMaestros(SMaestros sMaestros) {
+		this.sMaestros = sMaestros;
 	}
 }

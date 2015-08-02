@@ -163,12 +163,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
+			Boolean tipoFlete = this.tipoFlete.getValor();
+			boolean incompleto = false;
 			List<DetalleCotizacion> detallesCotizacion = new ArrayList<DetalleCotizacion>();
 			for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion){
 				detalle.setFormaEnvio(this.formaEnvio.getValor());
-				detalle.setTipoFlete(this.tipoFlete.getValor());
+				detalle.setTipoFlete(tipoFlete);
 				detallesCotizacion.add(detalle);
+				boolean cond = (detalle.verificarCondFlete() && detalle.verificarCondPeso());
+				if(cond)
+					incompleto = cond;
 			}
+			if(tipoFlete!=null && !tipoFlete)
+				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
