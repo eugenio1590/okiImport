@@ -66,7 +66,7 @@
 								    onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
 								<button  iconSclass="z-icon-book blue bigger-160" tooltiptext="Ver Requerimiento"  
 								    onClick="@command('aprobarCotizaciones', requerimiento = each)" if="${ !each.editar() }"/>
-								<button iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Cotizar" if="${ each.editarCotizacion() }"
+								<button iconSclass="fa fa-users purple bigger-160" tooltiptext="Cotizar" if="${ each.editarCotizacion() }"
 									onClick="@command('cotizar', requerimiento = each)"/>
 							</div>
 						</hbox>

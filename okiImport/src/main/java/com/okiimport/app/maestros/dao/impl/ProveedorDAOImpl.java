@@ -125,10 +125,12 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		restricciones.add(this.criteriaBuilder.isNotEmpty(this.entity.<List>get("cotizacions")));
+		restricciones.add(this.criteriaBuilder.equal(joins.get("cotizacions").get("estatus"), "SC"));
 		restricciones.add(this.criteriaBuilder.equal(
 				joins.get("cotizacions").join("detalleCotizacions").join("detalleRequerimiento")
 				.join("requerimiento").get("idRequerimiento"),
 				idRequerimiento));
+		
 		
 		proveedor = (proveedor==null) ? new Proveedor() : proveedor;
 		proveedor.setEstatus("activo");

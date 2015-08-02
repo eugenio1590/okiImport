@@ -236,6 +236,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(cotizacionSelecionada!=null){
 			if(checkIsFormValid()){
+				cotizacionSelecionada.setEstatus("C");
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
 				sTransaccion.registrarCotizacion(cotizacionSelecionada);
 				this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, null, null);
