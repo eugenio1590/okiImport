@@ -7,13 +7,10 @@ import java.util.Map;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.zk.ui.Component;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Proveedor;
@@ -32,10 +29,8 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	private String size;
 	
 	@AfterCompose(superclass=true)
-	public void doAfterCompose(/*@ContextParam(ContextType.VIEW) Component view,*/
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+	public void doAfterCompose(@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("size") String size){
-		//super.doAfterCompose(view);
 		this.size = size;
 		this.requerimiento = requerimiento;
 		cambiarProveedores(0, null, null);
@@ -57,8 +52,6 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 			pagProveedores.setTotalSize(total);
 		}
 	}
-	
-	/**COMMAND OVERRIDE*/
 	
 	/**COMMAND*/
 	/*
@@ -83,6 +76,7 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
+	/**GETTERS Y SETTERS*/
 	public SControlUsuario getsControlUsuario() {
 		return sControlUsuario;
 	}

@@ -154,7 +154,10 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		this.sControlUsuario = sControlUsuario;
 	}*/
 
-	
+	@Command
+	public void registrarProveedor(){
+		crearModal("/WEB-INF/views/sistema/maestros/registrarProveedorInterno.zul", null);
+	}
 
 	public SMaestros getsMaestros() {
 		return sMaestros;

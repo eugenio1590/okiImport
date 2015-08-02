@@ -32,7 +32,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
-	private Proveedor proveedor;
+	protected Proveedor proveedor;
 	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
@@ -112,23 +112,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-				proveedor.setCedula(tipo + proveedor.getCedula());
-				proveedor.setEstatus("solicitante");
-
-				if (tipoProveedor != null)
-
-				proveedor.setTipoProveedor(this.tipoProveedor.getValor());
-
-				proveedor = sMaestros.registrarProveedor(proveedor);
-
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nombreSolicitante", proveedor.getNombre());
-				model.put("cedula", proveedor.getCedula());
 				
-				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
-								"registrarProveedor.html", model);
-
+				registrarProveedor(true);
+				
 				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
 				mostrarMensaje("Informacion", str, null, null,
@@ -196,8 +182,30 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			break;
 		}
 	}
+	
+	protected Proveedor registrarProveedor(boolean enviarEmail){
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		proveedor.setCedula(tipo + proveedor.getCedula());
+		proveedor.setEstatus("solicitante");
 
-	public void recargar() {
+		if (tipoProveedor != null)
+
+		proveedor.setTipoProveedor(this.tipoProveedor.getValor());
+
+		proveedor = sMaestros.registrarProveedor(proveedor);
+
+		if(enviarEmail){
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombreSolicitante", proveedor.getNombre());
+			model.put("cedula", proveedor.getCedula());
+
+			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
+					"registrarProveedor.html", model);
+		}
+		return proveedor;
+	}
+
+	protected void recargar() {
 		redireccionar("/");
 	}
 

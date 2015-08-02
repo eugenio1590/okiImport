@@ -27,7 +27,7 @@
 				<auxheader colspan="1" />
 				<auxheader width="20%">
 					<button label="Nuevo Proveedor"
-						onClick="@command('nuevoProveedor')" sclass="btn-primary" />
+						onClick="@command('registrarProveedor')" sclass="btn-primary" />
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
@@ -38,7 +38,7 @@
 				<listheader label="Estado" sort="none" width="31%" />
 				<listheader label="Foto" sort="none" align="center"
 					width="18%" />
-				<listheader label="Operaciones" width="15%" sort="none" />
+				<listheader label="Operaciones" width="15%" sort="none"/>
 			</listhead>
 			<template name="model">
 				<listitem>
