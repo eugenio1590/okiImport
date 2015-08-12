@@ -11,6 +11,10 @@
 				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>
 						<toolbar>
+							<toolbarbutton
+								sclass="fa fa-user purple bigger-160"
+								tooltiptext="Registrar Nuevo Proveedor"
+								onClick="@command('registrarProveedor')"/>
 							<toolbarbutton height="45px"
 								image="/resources/img/icons/ButtonArrowRight32.png"
 								tooltiptext="Agregar Proveedores a Consultar"

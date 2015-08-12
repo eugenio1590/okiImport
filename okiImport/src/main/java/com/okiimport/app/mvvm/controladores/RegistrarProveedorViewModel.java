@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -63,15 +64,17 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	
-	
+	private Boolean cerrar;
 	
 	//private List<Pais> listaPais;
 	
 	
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
+		this.cerrar = (cerrar==null) ? false : cerrar;
 		limpiar();
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
@@ -346,6 +349,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
+	}
+
+	public Boolean getCerrar() {
+		return cerrar;
+	}
+
+	public void setCerrar(Boolean cerrar) {
+		this.cerrar = cerrar;
 	}
 	
 	

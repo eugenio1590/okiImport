@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -181,6 +180,13 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
 		    
+	}
+	
+	@Command
+	public void registrarProveedor(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("cerrar", true);
+		crearModal("/WEB-INF/views/formularioProveedor.zul", parametros);
 	}
 	
 	
