@@ -70,10 +70,13 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private Listbox gridProveedoresSeleccionados;
 	
 	private Requerimiento requerimiento;
+	private Boolean enviar;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("enviar") Boolean enviar,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
+		this.enviar = enviar;
 		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ");
 		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
@@ -147,40 +150,38 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		if(!listaProveedoresSeleccionados1.isEmpty()){
 			if(checkIsFormValid())
 			{
-				
-			
-			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				
-				Cotizacion cotizacion2 =  cotizacion.clon();
-				cotizacion2.setProveedor(proveedor);
-				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
+				for(Proveedor proveedor:listaProveedoresSeleccionados1){
 
-				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
-					DetalleCotizacion detalleCotizacion = (proveedor.getTipoProveedor()) ? new DetalleCotizacion() : new DetalleCotizacionInternacional();
-					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
-					detalleCotizacions.add(detalleCotizacion);
+					Cotizacion cotizacion2 =  cotizacion.clon();
+					cotizacion2.setProveedor(proveedor);
+					List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
+
+					for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
+						DetalleCotizacion detalleCotizacion = (proveedor.getTipoProveedor()) ? new DetalleCotizacion() : new DetalleCotizacionInternacional();
+						detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
+						detalleCotizacions.add(detalleCotizacion);
+					}
+					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
+
+					if(enviar){
+						Map<String, Object> model = new HashMap<String, Object>();
+						model.put("nombreSolicitante", proveedor.getNombre());
+						model.put("cedula", proveedor.getCedula());
+						model.put("mensaje", cotizacion.getMensaje());
+						mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
+								"enviarRequisitoProveedor.html", model);
+					}
 				}
-				sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
-				
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nombreSolicitante", proveedor.getNombre());
-				model.put("cedula", proveedor.getCedula());
-				model.put("mensaje", cotizacion.getMensaje());
-				mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-						"enviarRequisitoProveedor.html", model);
+				btn_enviar.setDisabled(true);
 			}
-			    btn_enviar.setDisabled(true);
-			}
+			//			System.out.println(proveedor.getCorreo());
 
-
-//			System.out.println(proveedor.getCorreo());
-			
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 			winListProveedores.onClose();
 		}
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
-		    
+
 	}
 	
 	
@@ -295,7 +296,13 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
+	}
+
+	public Boolean getEnviar() {
+		return enviar;
+	}
+
+	public void setEnviar(Boolean enviar) {
+		this.enviar = enviar;
 	}	
-	
-	
 }
