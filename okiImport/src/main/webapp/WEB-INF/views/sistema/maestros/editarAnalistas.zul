@@ -33,7 +33,7 @@
 									</template>
 								</combobox>
 
-								<textbox id="cedula/Rif" width="108%"
+								<textbox id="cedulaRif" width="108%"
 									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
 									maxlength="12" />
 							</hbox>
