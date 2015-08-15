@@ -84,12 +84,14 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
 		Map<String, Object> parametros = sMaestros.ConsultarMarca(page,
-				PAGE_SIZE);
+				PAGE_SIZE);//marcaFiltro,
 		Integer total = (Integer) parametros.get("total");
 		marcas = (List<MarcaVehiculo>) parametros.get("marcas");
 		pagMarcas.setActivePage(page);
 		pagMarcas.setTotalSize(total);
 	}
+	
+	
 
 	/** COMMAND */
 	@Command

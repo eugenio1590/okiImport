@@ -72,19 +72,20 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
-		if (checkIsFormValid()) {
+		
 				
-			    btnGuardar.setDisabled(true);
-				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-				analista.setCedula(tipo + analista.getCedula());
+			    
+				
+				analista.setCedula( analista.getCedula());
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
+				model.put("direccion", analista.getDireccion());
+				model.put("estado", analista.getCiudad().getEstado());
 				
-				String str = "Analista Registrado con Exito ";
+				String str = "Analista Actualizado con Exito ";
 
 				Messagebox.show(str, "Informacion", Messagebox.OK,
 						Messagebox.INFORMATION, new EventListener() {
@@ -95,7 +96,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 								}
 							}
 						});
-			}	
+				
 	}
 	
 	public void recargar() {
