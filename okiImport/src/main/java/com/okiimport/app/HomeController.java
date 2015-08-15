@@ -51,7 +51,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "../../index.zul";
 	}
 	
 	@RequestMapping(value= "/inicioSession", method = RequestMethod.GET)
