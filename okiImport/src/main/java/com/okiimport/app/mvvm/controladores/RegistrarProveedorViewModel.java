@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -63,6 +64,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	
+	private boolean makeAsReadOnly;
+	
 	
 	
 	//private List<Pais> listaPais;
@@ -70,9 +73,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("proveedor") Proveedor proveedor,
+			@ExecutionArgParam("recordMode") String recordMode) {
 		super.doAfterCompose(view);
-		limpiar();
+		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
@@ -347,6 +352,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
+	
 	
 	
 	

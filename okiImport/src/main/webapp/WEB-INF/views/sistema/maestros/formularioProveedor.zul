@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento"
+	<window id="winFormularioRequerimiento" closable="true"
 		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
@@ -60,8 +60,8 @@
 										
 											<label value="RIF: *" />
 									<hbox>
-											<combobox width="30%"
-												readonly="true" selectedItem="@bind(vm.tipoPersona)"
+											<combobox width="30%" value="@bind(vm.tipoPersona)"
+												readonly="@load(vm.makeAsReadOnly)" selectedItem="@bind(vm.tipoPersona)"
 												model="@load(vm.listaTipoPersona)" constraint="no empty">
 												<template
 													name="model">

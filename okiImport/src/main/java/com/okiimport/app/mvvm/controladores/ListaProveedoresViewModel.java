@@ -13,12 +13,15 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Proveedor;
@@ -37,6 +40,10 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	@Wire("#pagProveedores")
 	protected Paging pagProveedores;
+	
+	Window window = null;
+	int idcount = 0;
+	private boolean makeAsReadOnly;
 
 	
 	//Modelos
@@ -106,6 +113,43 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Command
 	public void nuevoProveedor(){
 		llamarFormulario("formularioAnalistas.zul", null);
+	}
+	
+	@Command
+	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("proveedor", proveedor);
+		map.put("recordMode", "EDIT");
+		Sessions.getCurrent().setAttribute("allmyvalues", map);
+		if (window != null) {
+			window.detach();
+			window.setId(null);
+		}
+		window = (Window) Executions.createComponents(
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window.setMaximizable(true);
+		window.doModal();
+		window.setId("doModal" + "" + idcount + "");
+		
+		
+	}
+	
+	@Command
+	public void verProveedor(
+			@BindingParam("proveedor") Proveedor proveedor) {
+		final HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("proveedor", proveedor);
+		map.put("recordMode", "READ");
+		Sessions.getCurrent().setAttribute("allmyvalues", map);
+		if (window != null) {
+			window.detach();
+			window.setId(null);
+		}
+		window = (Window) Executions.createComponents(
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window.setMaximizable(true);
+		window.doModal();
+		window.setId("doModal" + "" + idcount + "");
 	}
 	
 	/*@Command
@@ -182,4 +226,14 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	public void setsMaestros(SMaestros sMaestros) {
 		this.sMaestros = sMaestros;
 	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
+	
 }
