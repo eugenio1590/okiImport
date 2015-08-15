@@ -11,9 +11,11 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
@@ -42,7 +44,7 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 	@Wire("winListaAnalistas")
 	private Window winListaAnalistas;
 	
-	private Boolean editar;
+	//private Boolean editar;
 	
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("analista") Analista analista)
@@ -50,10 +52,8 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 		super.doAfterCompose(view);
 		
 		this.analista = analista;
-		
+		this.ciudad = analista.getCiudad();
 	}
-	
-	
 	
 
 	@Command
@@ -126,14 +126,14 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 		this.listaCiudades = listaCiudades;
 	}
 
-	public Boolean getEditar() {
+	/*public Boolean getEditar() {
 		return editar;
 	}
 
 	public void setEditar(Boolean editar) {
 		this.editar = editar;
 	}
-
+*/
 	
 
 }

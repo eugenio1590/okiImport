@@ -65,7 +65,8 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 		//listaTipoPersona = llenarListaTipoPersona();
 		//this.tipoPersona = listaTipoPersona.get(1);
 		this.analista = analista;
-		
+		this.ciudad = analista.getCiudad();
+		this.estado = this.ciudad.getEstado();
 	}
 	
 	@Command
@@ -78,6 +79,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				btnLimpiar.setDisabled(true);
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				analista.setCedula(tipo + analista.getCedula());
+				analista.setCiudad(ciudad);
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();

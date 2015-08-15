@@ -71,6 +71,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				btnLimpiar.setDisabled(true);
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				analista.setCedula(tipo + analista.getCedula());
+				analista.setCiudad(ciudad);
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();

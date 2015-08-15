@@ -22,18 +22,9 @@
 							<label value="Cedula/RIF:" />
 
 							<hbox>
-								<combobox width="30%" readonly="true"
-									selectedItem="@bind(vm.tipoPersona)"
-									model="@load(vm.listaTipoPersona)" >
-									<template name="model">
-										<comboitem
-											label="@bind(each.nombre)">
+								
 
-										</comboitem>
-									</template>
-								</combobox>
-
-								<textbox id="cedula/Rif" width="108%"
+								<textbox id="cedulaRif" width="108%"
 									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
 									maxlength="12" />
 							</hbox>
@@ -73,7 +64,9 @@
 
 							<label value="Estado: " />
 							<combobox 
+							   
 								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+								value="@bind(vm.estado.nombre)"
 								model="@load(vm.listaEstados)"
 								onSelect="@command('buscarCiudades')">
 								<template name="model">
@@ -89,6 +82,7 @@
 							<label value="Ciudad: " />
 							<combobox 
 								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
+								value="@bind(vm.ciudad.nombre)"
 								model="@load(vm.listaCiudades)">
 
 								<template name="model">

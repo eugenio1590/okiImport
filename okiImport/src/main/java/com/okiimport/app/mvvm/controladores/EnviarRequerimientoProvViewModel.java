@@ -138,23 +138,20 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	}
 
 	@Command
-	public void enviarSolicitudProv(@BindingParam("requerimiento") Requerimiento requerimiento){
-		
-		if(listaDetalleRequerimientoSeleccionados!= null && this.listaDetalleRequerimientoSeleccionados.size()>0)
-		{
-			if (validarListaClasificacion()==true) 
-			{
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("requerimiento", requerimiento);
-			parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
-			crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
+	public void enviarSolicitudProv(
+			@Default("false") @BindingParam("enviar") Boolean enviar,
+			@BindingParam("requerimiento") Requerimiento requerimiento){
+		if(listaDetalleRequerimientoSeleccionados!= null && this.listaDetalleRequerimientoSeleccionados.size()>0){
+			if (validarListaClasificacion()==true){
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				parametros.put("enviar", enviar);
+				parametros.put("requerimiento", requerimiento);
+				parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
+				crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
 			}
 			else
-			{
-				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados ", null, null, null, null);
-		    }
-
-			
+				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados", 
+						null, null, null, null);
 		} 
 		else
 			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);

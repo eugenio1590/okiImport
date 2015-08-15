@@ -20,7 +20,7 @@
 						<row>
 							<label value="Cedula/RIF: " />
 
-								<textbox id="cedula/Rif" width="80%"
+								<textbox id="cedulaRif" width="80%"
 									readonly="true" mold="rounded" 
 									value= "@bind(vm.analista.cedula)" />
 							
@@ -28,7 +28,8 @@
 							<label value="Nombre: " />
 
 							<textbox id="nombre" width="80%"
-								readonly="true" mold="rounded" value="@bind(vm.analista.nombre)"/>
+								readonly="true" mold="rounded" 
+								value="@bind(vm.analista.nombre)"/>
 						</row>
 
 						<row>
@@ -36,12 +37,14 @@
 							<label value="Teléfono: " />
 
 							<textbox id="telefono" width="80%"
-								readonly="true" mold="rounded" value="@bind(vm.analista.telefono)" />
+								readonly="true" mold="rounded" 
+								value="@bind(vm.analista.telefono)" />
 
 
 							<label value="E-mail: " />
-							<textbox id="email" width="80%" readonly="true"
-								mold="rounded" value="@bind(vm.analista.correo)"/>
+							<textbox id="email" width="80%" 
+							    readonly="true" mold="rounded" 
+							    value="@bind(vm.analista.correo)"/>
 						</row>
 						
 						<row>
@@ -55,7 +58,8 @@
 
 							<label value="Estado:" />
 							<combobox 
-								width="80%" readonly="true" value="@bind(vm.estado)">
+								width="80%" readonly="true" buttonVisible="false"
+								value="@bind(vm.ciudad.estado.nombre)">
 								
 							</combobox>
 						</row>
@@ -63,7 +67,8 @@
 						<row>
 							<label value="Ciudad: *" />
 							<combobox 
-								width="80%" readonly="true" value= "@bind(vm.ciudad)">
+								width="80%" readonly="true" buttonVisible="false"
+								value= "@bind(vm.ciudad.nombre)">
 
 							</combobox>
 
