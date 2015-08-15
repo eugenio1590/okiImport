@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" closable="@bind(vm.cerrar)"
+	<window id="winProveedor" closable="@bind(!vm.cerrar)"
 		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">

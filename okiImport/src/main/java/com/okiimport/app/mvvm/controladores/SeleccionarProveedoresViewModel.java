@@ -9,7 +9,9 @@ import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
@@ -100,6 +102,22 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		ejecutarGlobalCommand("removerSeleccionados", null);
 	}
 	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@NotifyChange({"listaProveedores"})
+	public void consultarProveedores(@Default("0") int page){
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(proveedor, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, pageSize);
+		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
+		Integer total = (Integer) Parametros.get("total");
+		gridProveedores.setMultiple(true);
+		gridProveedores.setCheckmark(true);
+		gridProveedoresSeleccionados.setMultiple(true);
+		gridProveedoresSeleccionados.setCheckmark(true);
+		pagProveedores.setActivePage(page);
+		pagProveedores.setTotalSize(total);
+	}
+	
+	/**COMMAND*/
 	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
@@ -128,20 +146,11 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		consultarProveedores(pagProveedores.getActivePage());
 	}
 	
-	
-	@NotifyChange({"listaProveedores"})
-	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, pageSize);
-		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
-		Integer total = (Integer) Parametros.get("total");
-		gridProveedores.setMultiple(true);
-		gridProveedores.setCheckmark(true);
-		gridProveedoresSeleccionados.setMultiple(true);
-		gridProveedoresSeleccionados.setCheckmark(true);
-		pagProveedores.setActivePage(page);
-		pagProveedores.setTotalSize(total);
+	@NotifyChange({"*"})
+	@Command
+	public void aplicarFiltro(){
+		consultarProveedores(0);
 	}
-	
 	
 	@Command
 	@NotifyChange({"listaProveedoresSeleccionados1"})
@@ -186,7 +195,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Command
 	public void registrarProveedor(){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("cerrar", true);
+		parametros.put("cerrar", false);
 		crearModal("/WEB-INF/views/formularioProveedor.zul", parametros);
 	}
 	

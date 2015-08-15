@@ -27,7 +27,12 @@
 
 							<listhead menupopup="auto">
 
-								<listheader label="Nombre" sort="auto(nombre)" />
+								<listheader label="Nombre" sort="auto(nombre)">
+									<div sclass="z-icon-filter bigger-200" />
+									<textbox value="@bind(vm.proveedor.nombre)"
+										instant="true" placeholder="Buscar por Nombre"
+										onChange="@command('aplicarFiltro')" />
+								</listheader>
 							</listhead>
 
 							<template name="model">
@@ -77,7 +82,7 @@
 			</borderlayout>
 		</div>
 
-		<div>
+		<div visible="@bind(vm.enviar)">
 			<groupbox closable="false">
 				<caption>
 					<label value="Mensaje:" sclass="custom_caption" />
