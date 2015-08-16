@@ -44,6 +44,8 @@ public interface STransaccion {
 	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion);
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions);
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
+	public Map<String, Object> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int pagina, int limit);
 	
 	//Detalle de Cotizaciones
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,

@@ -255,28 +255,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
-		// TODO Auto-generated method stub
-		if(cotizacion.getEstatus()==null)
-			cotizacion.setEstatus("C");
-		
-		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
-		cotizacion = cotizacionDAO.update(cotizacion);
-		for(DetalleCotizacion detalle : detalles){
-			this.detalleCotizacionDAO.update(detalle);
-			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
-			
-			detalleRequerimiento.setEstatus("CT");
-			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-		
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			requerimiento.setEstatus("CT");
-			this.requerimientoDAO.update(requerimiento);
-		}
-		return cotizacion;
-	}
-
-	@Override
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions) {
 		// TODO Auto-generated method stub
 		cotizacion.setEstatus("SC");
@@ -301,6 +279,44 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);
 		return cotizacion;
+	}
+	
+	@Override
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
+		// TODO Auto-generated method stub
+		String estatusRequerimiento = "CT";
+		if(cotizacion.getEstatus()==null)
+			cotizacion.setEstatus("C");
+		else if(cotizacion.getEstatus().equalsIgnoreCase("EC"))
+			estatusRequerimiento = "EC";
+		
+		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
+		cotizacion = cotizacionDAO.update(cotizacion);
+		for(DetalleCotizacion detalle : detalles){
+			this.detalleCotizacionDAO.update(detalle);
+			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
+			
+			detalleRequerimiento.setEstatus("CT");
+			this.detalleRequerimientoDAO.update(detalleRequerimiento);
+		
+			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+			if(!requerimiento.getEstatus().equalsIgnoreCase("EC")){
+				requerimiento.setEstatus(estatusRequerimiento);
+				this.requerimientoDAO.update(requerimiento);
+			}
+		}
+		return cotizacion;
+	}
+	
+	@Override
+	public Map<String, Object> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("EC");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, pagina*limit, limit));
+		return parametros;
 	}
 	
 	//Detalles Cotizacion

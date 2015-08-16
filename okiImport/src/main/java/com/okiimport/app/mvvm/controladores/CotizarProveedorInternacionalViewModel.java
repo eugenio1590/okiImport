@@ -171,8 +171,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setTipoFlete(tipoFlete);
 				detallesCotizacion.add(detalle);
 				boolean cond = (detalle.verificarCondFlete() && detalle.verificarCondPeso());
-				if(cond)
-					incompleto = cond;
+				if(!cond)
+					incompleto = !cond;
 			}
 			if(tipoFlete!=null && !tipoFlete)
 				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");

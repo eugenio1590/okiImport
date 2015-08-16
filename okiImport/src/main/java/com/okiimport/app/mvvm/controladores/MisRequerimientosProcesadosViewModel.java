@@ -171,6 +171,18 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
 	}
 	
+	/*
+	 * Descripcion: permitira visualizar la lista de cotizaciones a editar del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno ninguno
+	 */
+	@Command
+	public void editarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){//EC
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesAnalista.zul", parametros);
+	}
+	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
