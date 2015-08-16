@@ -51,8 +51,8 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
 	
-	@Wire("winListaAnalistas")
-	private Window winListaAnalistas;
+	@Wire("#winFormularioAnalista")
+	private Window winFormularioAnalista;
 	
 	private Boolean editar;
 	
@@ -88,21 +88,21 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				
 				String str = "Analista Registrado con Exito ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", "El Analista ha sido actualizado existosamente ", null, null, new EventListener()
+				{
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+								//if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-									recargar();
-								}
+									winFormularioAnalista.onClose();
+								//}
 							}
-						});
+						},null);
 			}	
 	}
 	
 	public void recargar() {
 		
-		winListaAnalistas.onClose();
+		winFormularioAnalista.onClose();
 	}
 	
 	@Command
