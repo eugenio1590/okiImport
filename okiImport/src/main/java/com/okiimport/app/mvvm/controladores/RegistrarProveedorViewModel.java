@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -16,8 +17,8 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Ciudad;
@@ -37,6 +38,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 
+	@Wire("#winProveedor")
+	private Window winProveedor;
 	@Wire("#gridMarcas")
 	private Listbox gridMarcas;
 	@Wire("#gridClasificacionRepuesto")
@@ -63,16 +66,21 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	
-	
+	private boolean makeAsReadOnly;
+	private Boolean cerrar;
 	
 	//private List<Pais> listaPais;
 	
 	
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("proveedor") Proveedor proveedor,
+			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
-		limpiar();
+		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
+		this.cerrar = (cerrar==null) ? true : cerrar;
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
@@ -113,16 +121,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
 				
-				registrarProveedor(true);
-				
-				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
-
-				mostrarMensaje("Informacion", str, null, null,
-						new EventListener() {
-							public void onEvent(Event event) throws Exception {
-									recargar();
-							}
-						}, null);
+				registrarProveedor(cerrar);
 			}
 
 			else
@@ -201,12 +200,21 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
 					"registrarProveedor.html", model);
+			
+			String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							redireccionar("/");
+						}
+					}, null);
+		}
+		else {
+			winProveedor.onClose();
+			ejecutarGlobalCommand("consultarProveedores", null);
 		}
 		return proveedor;
-	}
-
-	protected void recargar() {
-		redireccionar("/");
 	}
 
 	public Proveedor getProveedor() {
@@ -347,8 +355,21 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
 	
-	
-	
+	public Boolean getCerrar() {
+		return cerrar;
+	}
+
+	public void setCerrar(Boolean cerrar) {
+		this.cerrar = cerrar;
+	}
 	
 }

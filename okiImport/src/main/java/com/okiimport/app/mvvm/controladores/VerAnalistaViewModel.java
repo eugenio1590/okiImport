@@ -52,7 +52,7 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 		super.doAfterCompose(view);
 		
 		this.analista = analista;
-		
+		this.ciudad = analista.getCiudad();
 	}
 	
 

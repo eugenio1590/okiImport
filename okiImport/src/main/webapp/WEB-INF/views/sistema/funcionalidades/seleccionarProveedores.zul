@@ -11,6 +11,10 @@
 				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>
 						<toolbar>
+							<toolbarbutton
+								sclass="fa fa-user purple bigger-160"
+								tooltiptext="Registrar Nuevo Proveedor"
+								onClick="@command('registrarProveedor')"/>
 							<toolbarbutton height="45px"
 								image="/resources/img/icons/ButtonArrowRight32.png"
 								tooltiptext="Agregar Proveedores a Consultar"
@@ -23,7 +27,12 @@
 
 							<listhead menupopup="auto">
 
-								<listheader label="Nombre" sort="auto(nombre)" />
+								<listheader label="Nombre" sort="auto(nombre)">
+									<div sclass="z-icon-filter bigger-200" />
+									<textbox value="@bind(vm.proveedor.nombre)"
+										instant="true" placeholder="Buscar por Nombre"
+										onChange="@command('aplicarFiltro')" />
+								</listheader>
 							</listhead>
 
 							<template name="model">
@@ -73,7 +82,7 @@
 			</borderlayout>
 		</div>
 
-		<div>
+		<div visible="@bind(vm.enviar)">
 			<groupbox closable="false">
 				<caption>
 					<label value="Mensaje:" sclass="custom_caption" />

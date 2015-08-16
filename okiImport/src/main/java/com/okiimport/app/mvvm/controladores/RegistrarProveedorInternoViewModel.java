@@ -68,6 +68,7 @@ public class RegistrarProveedorInternoViewModel extends RegistrarProveedorViewMo
 	@Command
 	public void actualizarListaProveedores(){
 		ejecutarGlobalCommand("cambiarProveedores", null);
+		ejecutarGlobalCommand("consultarProveedores", null);
 	}
 	
 	/**GETTERS Y SETTERS*/

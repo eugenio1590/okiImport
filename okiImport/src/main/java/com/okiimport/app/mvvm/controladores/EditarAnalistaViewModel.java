@@ -65,6 +65,8 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
 		this.analista = analista;
+		this.ciudad = analista.getCiudad();
+		this.estado = this.ciudad.getEstado();
 		
 	}
 	

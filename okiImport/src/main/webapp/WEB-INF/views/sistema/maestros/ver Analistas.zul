@@ -58,7 +58,8 @@
 
 							<label value="Estado:" />
 							<combobox 
-								width="80%" readonly="true" value="@bind(vm.ciudad.estado.nombre)">
+								width="80%" readonly="true" buttonVisible="false"
+								value="@bind(vm.ciudad.estado.nombre)">
 								
 							</combobox>
 						</row>
@@ -66,7 +67,8 @@
 						<row>
 							<label value="Ciudad: *" />
 							<combobox 
-								width="80%" readonly="true" value= "@bind(vm.estado.nombre)">
+								width="80%" readonly="true" buttonVisible="false"
+								value= "@bind(vm.ciudad.nombre)">
 
 							</combobox>
 

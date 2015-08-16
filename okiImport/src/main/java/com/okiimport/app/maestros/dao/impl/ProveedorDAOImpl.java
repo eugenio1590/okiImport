@@ -87,7 +87,6 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		restricciones.add(this.criteriaBuilder.not(this.criteriaBuilder.exists(subQuCotizacion)));
 		
 		Proveedor proveedor = (persona==null) ? new Proveedor() : new Proveedor(persona);
-		proveedor.setEstatus("activo");
 		agregarFiltros(proveedor, restricciones);
 		
 		//4. Creamos los campos de ordenamiento y ejecutamos

@@ -68,6 +68,7 @@
 							<combobox 
 							   
 								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+								value="@bind(vm.estado.nombre)"
 								model="@load(vm.listaEstados)"
 								onSelect="@command('buscarCiudades')">
 								<template name="model">
@@ -83,6 +84,7 @@
 							<label value="Ciudad: " />
 							<combobox 
 								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
+								value="@bind(vm.ciudad.nombre)"
 								model="@load(vm.listaCiudades)">
 
 								<template name="model">
