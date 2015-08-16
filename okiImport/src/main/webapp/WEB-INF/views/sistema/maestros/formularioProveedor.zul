@@ -1,0 +1,328 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winFormularioRequerimiento" closable="true"
+		title="Registrese Como Proveedor" border="normal" width="95%"
+		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
+					
+		<tabbox id="tabDatosProveedor" maximalHeight="true">
+			<tabs id="tabs">
+
+				<tab id="tabDatosFiscales"
+					onClick="@command('habilitarBtnLimpiar', id=self.id)">
+					<label value="Datos Fiscales" />
+
+				</tab>
+
+				<tab id="tabMarcaVehiculo"
+					onClick="@command('habilitarBtnLimpiar', id=self.id)">
+					<label value="Marcas" />
+
+				</tab>
+
+				<tab id="tabClasificacionRepuesto"
+					onClick="@command('habilitarBtnLimpiar', id=self.id)">
+					<label value="Clasificación Repuestos" />
+
+				</tab>
+			</tabs>
+			
+			<tabpanels>
+				<!-- DATOS GENERALES -->
+				<tabpanel>
+					<groupbox>
+						<div>
+							<grid>
+								<columns>
+								    <column width="35%" align="right"/>
+									<column width="65%" />
+									<column width="35%" align="right"/>
+									<column width="65%" />
+									<column width="35%" align="right" />
+									<column width="65%" />
+								</columns>
+								<rows>
+								   
+								    <row>
+								    
+								        <label
+											value="Tipo Proveedor: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.tipoProveedor)"
+											model="@load(vm.listaTipoProveedor)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+												</comboitem>
+											</template>
+										</combobox>
+								    
+										
+											<label value="RIF: *" />
+									<hbox>
+											<combobox width="30%" value="@bind(vm.tipoPersona)"
+												readonly="@load(vm.makeAsReadOnly)" selectedItem="@bind(vm.tipoPersona)"
+												model="@load(vm.listaTipoPersona)" constraint="no empty">
+												<template
+													name="model">
+													<comboitem
+														label="@bind(each.nombre)">
+
+													</comboitem>
+												</template>
+											</combobox>
+
+											<textbox id="cedulaRif"
+												width="108%" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.cedula)"
+												placeholder="Ej: 402405375" maxlength="12"
+												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
+										</hbox>
+
+									</row>
+								    
+					
+								
+								
+									<row>
+									  <label value="Teléfono: *" />
+
+										<textbox id="telefono"
+											width="80%" readonly="" mold="rounded"
+											value="@bind(vm.proveedor.telefono)" maxlength="11"
+											placeholder="Ej: 02512552233"
+											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+											
+										
+										<label
+											value="Nombre/Razón Social:*" />
+
+										<textbox id="nombreRazonSocial"
+											width="80%" readonly="" mold="rounded"
+											value="@bind(vm.proveedor.nombre)"
+											placeholder="Ej: Empresa C.A"
+											constraint="no empty:El Campo No Debe Estar Vacio" />
+											
+									</row>
+
+
+									<row>
+										<label value="E-mail: *" />
+										<textbox id="email" width="80%"
+											readonly="" mold="rounded" value="@bind(vm.proveedor.correo)"
+											placeholder="Ej. fusa@gmail.com"
+											constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
+										</textbox>
+										
+										
+										<label value="Dirección: *" />
+
+										<textbox id="direccion"
+											width="80%" rows="3" cols="35" readonly="" mold="rounded"
+											value="@bind(vm.proveedor.direccion)"
+											placeholder="Ej: zona industrial 2 "
+											constraint="no empty:El Campo No Debe Estar Vacio" />
+									</row>
+									
+									
+									<row>
+
+									<label value="Estado: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.estado)"
+											model="@load(vm.listaEstados)"
+											
+											onSelect="@command('buscarCiudades')">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+
+												</comboitem>
+											</template>
+										</combobox>
+										
+										
+										   <label value="Ciudad: *" />
+										<combobox
+											placeholder="Seleccione..." width="80%" readonly="true"
+											selectedItem="@bind(vm.proveedor.ciudad)"
+											model="@load(vm.listaCiudades)">
+                                            
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)">
+
+												</comboitem>
+											</template>
+										</combobox>
+                              </row>
+                              
+
+									
+								</rows>
+							</grid>
+						</div>
+					</groupbox>
+				</tabpanel>
+				
+				<!-- MARCAS DE VEHICULOS -->
+				<tabpanel>
+					<groupbox>
+						<div>
+							<borderlayout height="470px">
+								<west width="300px" title="Marcas" size="25%" flex="true" maxsize="250" 
+									collapsible="true" border="normal">
+									<vlayout height="100%" vflex="1">
+										<toolbar>
+											<toolbarbutton height="45px"
+												image="resources/img/icons/ButtonArrowRight32.png"
+												tooltiptext="Agregar Marcas a Vender"
+												onClick="@command('agregarMarcas')" />
+										</toolbar>
+										<listbox id="gridMarcas"
+											mold="paging" checkmark="true"
+											selectedItems="@bind(vm.marcaSeleccionadas)" multiple="true"
+											model="@load(vm.listaMarcaVehiculos)">
+											<listhead>
+												<listheader label="Nombre" sort="none" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@bind(each.nombre)" />
+
+												</listitem>
+											</template>
+
+										</listbox>
+										<paging id="pagMarcas"
+											autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
+									</vlayout>
+								</west>
+								<east id="borderEast"
+									title="Marcas a Vender" width="62.5%">
+									<div>
+										<toolbar>
+											<toolbarbutton height="45px"
+												image="resources/img/icons/ButtonArrowLeft32.png"
+												tooltiptext="Remover Marcas a Vender"
+												onClick="@command('eliminarMarcas')" />
+										</toolbar>
+										<listbox id="gridMarcasVender"
+											model="@load(vm.proveedor.marcaVehiculos)" mold="paging"
+											checkmark="true" multiple="true"
+											selectedItems="@bind(vm.marcaSeleccionadas)">
+											<!-- 
+												<frozen columns="1"/>
+											-->
+											<listhead>
+												<listheader
+													label="Nombre" sort="none" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@bind(each.nombre)" />
+
+												</listitem>
+											</template>
+										</listbox>
+
+									</div>
+								</east>
+							</borderlayout>
+						</div>
+					</groupbox>
+				</tabpanel>
+				<!-- TIPOS DE REPUESTO -->
+				<tabpanel>
+
+					<groupbox>
+
+						<div>
+
+							<borderlayout width="100%" height="470px">
+								<west width="300px"
+									title="Tipo de Repuestos" collapsible="true">
+									<vlayout>
+										<toolbar>
+											<toolbarbutton height="45px"
+												image="resources/img/icons/ButtonArrowRight32.png"
+												tooltiptext="Agregar Tipo Repuesto a Vender"
+												onClick="@command('agregarTipoRepuesto')" />
+										</toolbar>
+										<listbox
+											id="gridClasificacionRepuesto"
+											model="@load(vm.listaClasificacionRepuesto)" mold="paging"
+											checkmark="true"
+											selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
+											multiple="true">
+											<listhead>
+												<listheader label="Nombre" sort="none" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@bind(each.descripcion)" />
+												</listitem>
+											</template>
+
+										</listbox>
+										<paging id="pagTipoRepuestos"
+											autohide="true"
+											onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+									</vlayout>
+								</west>
+								<east id="borderEast2"
+									title="Tipo de Repuestos a Vender" width="62.5%">
+									<div>
+										<toolbar>
+											<toolbarbutton height="45px"
+												image="resources/img/icons/ButtonArrowLeft32.png"
+												tooltiptext="Remover Tipo de Repuesto a Vender"
+												onClick="@command('eliminarTipoRepuesto')" />
+										</toolbar>
+										<listbox
+											id="gridTipoRepuestosVender"
+											model="@load(vm.proveedor.clasificacionRepuestos)"
+											mold="paging" checkmark="true" multiple="true"
+											selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
+											<listhead>
+												<listheader
+													label="Nombre" sort="none" />
+											</listhead>
+											<template name="model">
+												<listitem>
+													<listcell
+														label="@bind(each.descripcion)" />
+
+												</listitem>
+											</template>
+										</listbox>
+									</div>
+								</east>
+							</borderlayout>
+						</div>
+					</groupbox>
+
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+		<!-- BOTONES -->
+		<hbox width="100%">
+			<div hflex="1" align="center">
+				<label value="* Campos Obligatorios" sclass="requerido" />
+			</div>
+			<div sclass="panel-footer" align="right">
+
+				<button id="btnLimpiar" label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
+
+				<button label="Enviar" type="submit"
+					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
+			</div>
+		</hbox>
+	</window>
+</zk>

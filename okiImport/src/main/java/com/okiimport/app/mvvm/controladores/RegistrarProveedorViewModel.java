@@ -17,7 +17,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
@@ -67,6 +66,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	
+	private boolean makeAsReadOnly;
 	private Boolean cerrar;
 	
 	//private List<Pais> listaPais;
@@ -75,10 +75,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("proveedor") Proveedor proveedor,
+			@ExecutionArgParam("recordMode") String recordMode,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
+		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
-		limpiar();
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
@@ -354,6 +356,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.listaCiudades = listaCiudades;
 	}
 
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
 	public Boolean getCerrar() {
 		return cerrar;
 	}
@@ -361,8 +371,5 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setCerrar(Boolean cerrar) {
 		this.cerrar = cerrar;
 	}
-	
-	
-	
 	
 }
