@@ -59,28 +59,26 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("analista") Analista analista ) {
 		super.doAfterCompose(view);
-		limpiar();
+		//limpiar();
 		
 		listaEstados = llenarListaEstados();
-		listaTipoPersona = llenarListaTipoPersona();
-		this.tipoPersona = listaTipoPersona.get(1);
+		//listaTipoPersona = llenarListaTipoPersona();
+		//this.tipoPersona = listaTipoPersona.get(1);
 		this.analista = analista;
 		this.ciudad = analista.getCiudad();
 		this.estado = this.ciudad.getEstado();
-		
 	}
 	
 	@Command
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
-		
-		if (checkIsFormValid()){
-			
+		if (checkIsFormValid()) {
+				
 			    btnGuardar.setDisabled(true);
-			    btnLimpiar.setDisabled(true);
-			    String tipo = (this.tipoPersona.getValor())? "J" : "V";
-			    analista.setCedula(tipo + analista.getCedula());
+				btnLimpiar.setDisabled(true);
+				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				analista.setCedula(tipo + analista.getCedula());
 				analista.setCiudad(ciudad);
 				analista = sMaestros.registrarAnalista(analista);
 
@@ -88,20 +86,24 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
 				
-				
-				
-				mostrarMensaje("Informacion", "El Analista ha sido registrado existosamente ", null, null, new EventListener()
+				String str = "Analista Registrado con Exito ";
+
+				mostrarMensaje("Informacion", "El Analista ha sido actualizado existosamente ", null, null, new EventListener()
 				{
 							public void onEvent(Event event) throws Exception {
-								
+								//if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+
 									winFormularioAnalista.onClose();
+								//}
 							}
 						},null);
-				
-		}
-				
+			}	
 	}
 	
+	public void recargar() {
+		
+		winFormularioAnalista.onClose();
+	}
 	
 	@Command
 	@NotifyChange({ "analista" })
