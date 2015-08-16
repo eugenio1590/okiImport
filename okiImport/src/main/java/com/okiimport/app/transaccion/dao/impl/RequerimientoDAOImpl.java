@@ -177,6 +177,7 @@ public class RequerimientoDAOImpl extends
 				this.entity.get("fechaCreacion"),
 				this.entity.get("fechaVencimiento"),
 				this.entity.get("modeloV"),
+				this.entity.get("tipoRepuesto"),
 				joins.get("analista"),
 				joins.get("cliente"),
 				joins.get("marcaVehiculo"),
