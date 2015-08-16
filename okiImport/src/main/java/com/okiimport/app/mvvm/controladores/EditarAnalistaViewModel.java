@@ -59,11 +59,11 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("analista") Analista analista ) {
 		super.doAfterCompose(view);
-		//limpiar();
+		limpiar();
 		
 		listaEstados = llenarListaEstados();
-		//listaTipoPersona = llenarListaTipoPersona();
-		//this.tipoPersona = listaTipoPersona.get(1);
+		listaTipoPersona = llenarListaTipoPersona();
+		this.tipoPersona = listaTipoPersona.get(1);
 		this.analista = analista;
 		
 	}
@@ -72,32 +72,31 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
-				
-				analista.setCedula( analista.getCedula());
+		
+		if (checkIsFormValid()){
+			
+			    btnGuardar.setDisabled(true);
+			    btnLimpiar.setDisabled(true);
+			    String tipo = (this.tipoPersona.getValor())? "J" : "V";
+			    analista.setCedula(tipo + analista.getCedula());
+				analista.setCiudad(ciudad);
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
-				model.put("direccion", analista.getDireccion());
-				//model.put("estado", analista.getCiudad().getEstado());
 				
-				//String str = "Analista Actualizado con Exito ";
-
-				//Messagebox.show(str, "Informacion", Messagebox.OK,
-					//	Messagebox.INFORMATION, new EventListener()
 				
-				mostrarMensaje("Informacion", "El Analista ha sido actualizado existosamente ", null, null, new EventListener()
+				
+				mostrarMensaje("Informacion", "El Analista ha sido registrado existosamente ", null, null, new EventListener()
 				{
 							public void onEvent(Event event) throws Exception {
-								//if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
+								
 									winFormularioAnalista.onClose();
-								//}
 							}
 						},null);
 				
-				
+		}
 				
 	}
 	
