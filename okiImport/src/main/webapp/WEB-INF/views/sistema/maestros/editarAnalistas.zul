@@ -25,7 +25,7 @@
 								
 
 								<textbox id="cedulaRif" width="108%"
-									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
+									readonly="true" mold="rounded" value="@bind(vm.analista.cedula)"
 									maxlength="12" />
 							</hbox>
 

@@ -51,8 +51,8 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
 	
-	@Wire("winListaAnalistas")
-	private Window winListaAnalistas;
+	@Wire("#winFormularioAnalista")
+	private Window winFormularioAnalista;
 	
 	private Boolean editar;
 	
@@ -72,9 +72,6 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
-		
-				
-			    
 				
 				analista.setCedula( analista.getCedula());
 				analista = sMaestros.registrarAnalista(analista);
@@ -83,26 +80,27 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
 				model.put("direccion", analista.getDireccion());
-				model.put("estado", analista.getCiudad().getEstado());
+				//model.put("estado", analista.getCiudad().getEstado());
 				
-				String str = "Analista Actualizado con Exito ";
+				//String str = "Analista Actualizado con Exito ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				//Messagebox.show(str, "Informacion", Messagebox.OK,
+					//	Messagebox.INFORMATION, new EventListener()
+				
+				mostrarMensaje("Informacion", "El Analista ha sido actualizado existosamente ", null, null, new EventListener()
+				{
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+								//if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-									recargar();
-								}
+									winFormularioAnalista.onClose();
+								//}
 							}
-						});
+						},null);
+				
+				
 				
 	}
 	
-	public void recargar() {
-		
-		winListaAnalistas.onClose();
-	}
 	
 	@Command
 	@NotifyChange({ "analista" })
