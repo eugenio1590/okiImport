@@ -15,14 +15,19 @@ import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
+import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+import com.okiimport.app.transaccion.dao.CompraDAO;
 import com.okiimport.app.transaccion.dao.CotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionInternacionalDAO;
+import com.okiimport.app.transaccion.dao.DetalleOfertaDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
+import com.okiimport.app.transaccion.dao.OfertaDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
@@ -50,6 +55,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleCotizacionInternacionalDAO")
 	private DetalleCotizacionInternacionalDAO detalleCotizacionInternacionalDAO;
+	
+	@Autowired
+	@BeanInjector("ofertaDAO")
+	private OfertaDAO ofertaDAO;
+	
+	@Autowired
+	@BeanInjector("detalleOfertaDAO")
+	private DetalleOfertaDAO detalleOfertaDAO;
+	
+	@Autowired
+	@BeanInjector("compraDAO")
+	private CompraDAO compraDAO;
 
 	public STransaccionImpl() {
 		super();
@@ -107,6 +124,30 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		this.detalleCotizacionInternacionalDAO = detalleCotizacionInternacionalDAO;
 	}
 
+	public OfertaDAO getOfertaDAO() {
+		return ofertaDAO;
+	}
+
+	public void setOfertaDAO(OfertaDAO ofertaDAO) {
+		this.ofertaDAO = ofertaDAO;
+	}
+
+	public DetalleOfertaDAO getDetalleOfertaDAO() {
+		return detalleOfertaDAO;
+	}
+
+	public void setDetalleOfertaDAO(DetalleOfertaDAO detalleOfertaDAO) {
+		this.detalleOfertaDAO = detalleOfertaDAO;
+	}
+
+	public CompraDAO getCompraDAO() {
+		return compraDAO;
+	}
+
+	public void setCompraDAO(CompraDAO compraDAO) {
+		this.compraDAO = compraDAO;
+	}
+
 	@Override
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
@@ -127,11 +168,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public void guardarSeleccionRequerimiento(
-			DetalleCotizacion detalleCotizacion) {
-		// TODO Auto-generated method stub
-		detalleCotizacion.setEstatus("seleccionado");
-		this.detalleCotizacionDAO.update(detalleCotizacion);
+	public void guardarSeleccionRequerimiento(List<DetalleCotizacion> detalleCotizaciones) {
+		Date fechaCreacion = calendar.getTime();
+		Oferta oferta = new Oferta();
+		oferta.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
+		oferta.setEstatus("solicitud");
+		oferta = ofertaDAO.save(oferta);
+		for (DetalleCotizacion detalleCotizacion: detalleCotizaciones){
+			DetalleOferta detalleOferta = new DetalleOferta();
+			detalleOferta.setDetalleCotizacion(detalleCotizacion);
+			detalleOferta.setOferta(oferta);
+			detalleOferta.setEstatus("seleccion");
+			detalleOfertaDAO.save(detalleOferta);
+		}
 	}
 
 	@Override

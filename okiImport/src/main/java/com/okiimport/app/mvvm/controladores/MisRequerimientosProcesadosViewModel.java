@@ -152,7 +152,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void aprobarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void seleccionarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
@@ -231,5 +231,4 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	public void setEstatusFiltro(ModeloCombo<String> estatusFiltro) {
 		this.estatusFiltro = estatusFiltro;
 	}
-
 }
