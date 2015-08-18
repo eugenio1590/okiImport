@@ -141,6 +141,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		parametros.put("persona", this.persona);
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
+		parametros.put("obligatorioTodosCampos", false);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}
 	
