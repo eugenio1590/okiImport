@@ -37,6 +37,11 @@ public class Compra {
 	@JoinColumn(name="id_requerimiento")
 	private Requerimiento requerimiento;
 	
+	//bi-directional many-to-one association to HistoricoMoneda
+	@ManyToOne
+	@JoinColumn(name="id_historico_moneda")
+	private HistoricoMoneda historicoMoneda;
+	
 	//bi-directional many-to-one association to DetalleOferta
 	@OneToMany(mappedBy="compra", fetch=FetchType.LAZY)
 	private List<DetalleOferta> detalleOfertas;
@@ -82,6 +87,14 @@ public class Compra {
 
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
+	}
+
+	public HistoricoMoneda getHistoricoMoneda() {
+		return historicoMoneda;
+	}
+
+	public void setHistoricoMoneda(HistoricoMoneda historicoMoneda) {
+		this.historicoMoneda = historicoMoneda;
 	}
 
 	public List<DetalleOferta> getDetalleOfertas() {

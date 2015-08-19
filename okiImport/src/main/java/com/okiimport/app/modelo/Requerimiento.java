@@ -84,6 +84,10 @@ public class Requerimiento implements Serializable {
 	//bi-directional one-to-many association to DetalleRequerimiento
 	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<DetalleRequerimiento> detalleRequerimientos;
+	
+	//bi-directional one-to-many association to Compra
+	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Compra> compras;
 
 	public Requerimiento() {
 		detalleRequerimientos = new ArrayList<DetalleRequerimiento>();
@@ -268,6 +272,28 @@ public class Requerimiento implements Serializable {
 		return detalleRequerimiento;
 	}
 	
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
+	
+	public Compra addCompra(Compra compra){
+		getCompras().add(compra);
+		compra.setRequerimiento(this);
+		
+		return compra;
+	}
+	
+	public Compra removeCompra(Compra compra){
+		getCompras().remove(compra);
+		compra.setRequerimiento(null);
+		
+		return compra;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public String determinarTransmision(){
 		String texto = null;
