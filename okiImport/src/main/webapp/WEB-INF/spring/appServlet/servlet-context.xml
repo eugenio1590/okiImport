@@ -78,6 +78,9 @@
     <beans:bean id="estadoDAO" class="com.okiimport.app.maestros.dao.impl.EstadoDAOImpl"/>
     <beans:bean id="ciudadDAO" class="com.okiimport.app.maestros.dao.impl.CiudadDAOImpl"/>
     <beans:bean id="detalleCotizacionInternacionalDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleCotizacionInternacionalDAOImpl"/>
+    <beans:bean id="ofertaDAO" class="com.okiimport.app.transaccion.dao.impl.OfertaDAOImpl"/>
+    <beans:bean id="detalleOfertaDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleOfertaDAOImpl"/>
+    <beans:bean id="compraDAO" class="com.okiimport.app.transaccion.dao.impl.CompraDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

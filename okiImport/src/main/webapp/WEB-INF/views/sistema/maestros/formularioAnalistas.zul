@@ -27,11 +27,12 @@
 									<template name="model">
 										<comboitem
 											label="@bind(each.nombre)">
+
 										</comboitem>
 									</template>
 								</combobox>
 
-								<textbox id="cedulaRif" width="108%"
+								<textbox id="cedula/Rif" width="108%"
 									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
 									placeholder="Ej: 402405375" maxlength="12"
 									constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />

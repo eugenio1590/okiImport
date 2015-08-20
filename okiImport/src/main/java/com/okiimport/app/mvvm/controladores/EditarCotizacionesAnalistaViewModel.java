@@ -29,7 +29,7 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class CotizacionesProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -43,24 +43,20 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private static String titulo = "Cotizacion del Requerimiento N° ";
 	
 	private String constraint_precio_flete;
 	
 	private List<Cotizacion> listaCotizacion;
 	
-	private Persona persona;
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
-		System.out.println("NULO USUARIO: "+(usuario==null));
-		this.persona = usuario.getPersona();
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
 		cotizacionFiltro = new Cotizacion();
@@ -97,8 +93,8 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	public void cambiarCotizaciones(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.consultarSolicitudCotizaciones(cotizacionFiltro, fieldSort, 
-				sortDirection, requerimiento.getIdRequerimiento(), persona.getId(), page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarCotizacionesParaEditar(cotizacionFiltro, fieldSort, 
+				sortDirection, requerimiento.getIdRequerimiento(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
 		pagCotizaciones.setActivePage(page);
@@ -138,10 +134,10 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("persona", this.persona);
+		parametros.put("persona", cotizacion.getProveedor());
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
-		parametros.put("obligatorioTodosCampos", false);
+		parametros.put("obligatorioTodosCampos", true);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}
 	

@@ -13,7 +13,7 @@ public interface STransaccion {
 	
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	public Requerimiento actualizarRequerimiento(Requerimiento requerimiento);
-	public void guardarSeleccionRequerimiento(DetalleCotizacion detalleCotizacion);
+	public void guardarSeleccionRequerimiento(List<DetalleCotizacion> detalleCotizaciones);
 	public void asignarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros);
 	
 	public Map<String, Object> consultarRequerimientosGeneral(Requerimiento regFiltro, String fieldSort, Boolean sortDirection,
@@ -44,6 +44,8 @@ public interface STransaccion {
 	public Cotizacion ActualizarCotizacion(Cotizacion cotizacion);
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions);
 	public Cotizacion registrarCotizacion(Cotizacion cotizacion);
+	public Map<String, Object> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int pagina, int limit);
 	
 	//Detalle de Cotizaciones
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion,

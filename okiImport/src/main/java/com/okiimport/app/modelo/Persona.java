@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -50,6 +51,10 @@ public abstract class Persona implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_ciudad")
 	protected Ciudad ciudad;
+	
+	//bi-directional many-to-one association to PagoCompra
+	@OneToMany(mappedBy="persona", fetch=FetchType.LAZY)
+	private List<PagoCompra> pagoCompras;
 
 	public Persona() {
 	}
@@ -151,6 +156,28 @@ public abstract class Persona implements Serializable {
 
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+	
+	public List<PagoCompra> getPagoCompras() {
+		return pagoCompras;
+	}
+
+	public void setPagoCompras(List<PagoCompra> pagoCompras) {
+		this.pagoCompras = pagoCompras;
+	}
+	
+	public PagoCompra addPagoCompra(PagoCompra pagoCompra){
+		getPagoCompras().add(pagoCompra);
+		pagoCompra.setPersona(this);
+		
+		return pagoCompra;
+	}
+	
+	public PagoCompra removePagoCompra(PagoCompra pagoCompra){
+		getPagoCompras().remove(pagoCompra);
+		pagoCompra.setPersona(null);
+		
+		return pagoCompra;
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/

@@ -1,9 +1,14 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the detalle_cotizacion database table.
+ * 
+ */
 @Entity
 @Table(name="detalle_cotizacion")
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -39,6 +44,10 @@ public class DetalleCotizacion implements Serializable {
 	@ManyToOne//(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
 	@JoinColumn(name="id_detalle_requerimiento")
 	private DetalleRequerimiento detalleRequerimiento;
+	
+	//bi-directional many-to-one association to DetalleOferta
+	@OneToMany(mappedBy="detalleCotizacion", fetch=FetchType.LAZY)
+	private List<DetalleOferta> detalleOfertas;
 
 	public DetalleCotizacion() {
 	}
@@ -123,6 +132,28 @@ public class DetalleCotizacion implements Serializable {
 
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
+	}
+	
+	public List<DetalleOferta> getDetalleOfertas() {
+		return detalleOfertas;
+	}
+
+	public void setDetalleOfertas(List<DetalleOferta> detalleOfertas) {
+		this.detalleOfertas = detalleOfertas;
+	}
+	
+	public DetalleOferta addDetalleOferta(DetalleOferta detalleOferta){
+		getDetalleOfertas().add(detalleOferta);
+		detalleOferta.setDetalleCotizacion(this);
+		
+		return detalleOferta;
+	}
+	
+	public DetalleOferta removeDetalleOferta(DetalleOferta detalleOferta){
+		getDetalleOfertas().remove(detalleOferta);
+		detalleOferta.setDetalleCotizacion(null);
+		
+		return detalleOferta;
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
