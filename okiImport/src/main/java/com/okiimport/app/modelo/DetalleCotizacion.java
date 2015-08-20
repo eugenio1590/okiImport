@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the detalle_cotizacion database table.
+ * 
+ */
 @Entity
 @Table(name="detalle_cotizacion")
 @Inheritance(strategy=InheritanceType.JOINED)

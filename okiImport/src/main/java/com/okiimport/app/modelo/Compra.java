@@ -29,8 +29,9 @@ public class Compra {
 	@Column(name="precio_flete")
 	private Float precioFlete;
 	
-//	@Column(name="monto_iva")
-//	private Float montoIva;
+	//bi-directional one-to-one association to FormaPago
+	@OneToOne(mappedBy="compra")
+	private PagoCompra pagoCompra;
 	
 	//bi-directional many-to-one association to Requerimiento
 	@ManyToOne
@@ -42,11 +43,12 @@ public class Compra {
 	@JoinColumn(name="id_historico_moneda")
 	private HistoricoMoneda historicoMoneda;
 	
-	//bi-directional many-to-one association to DetalleOferta
+	//bi-directional one-to-many association to DetalleOferta
 	@OneToMany(mappedBy="compra", fetch=FetchType.LAZY)
 	private List<DetalleOferta> detalleOfertas;
 
 	public Compra() {
+		
 	}
 
 	public Integer getIdCompra() {
@@ -79,6 +81,14 @@ public class Compra {
 
 	public void setPrecioFlete(Float precioFlete) {
 		this.precioFlete = precioFlete;
+	}
+
+	public PagoCompra getPagoCompra() {
+		return pagoCompra;
+	}
+
+	public void setPagoCompra(PagoCompra pagoCompra) {
+		this.pagoCompra = pagoCompra;
 	}
 
 	public Requerimiento getRequerimiento() {

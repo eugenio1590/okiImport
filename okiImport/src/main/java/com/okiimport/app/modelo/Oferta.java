@@ -23,6 +23,8 @@ public class Oferta {
 	@Column(name="fecha_creacion")
 	private Timestamp fechaCreacion;
 	
+	private String observacion;
+	
 	private String estatus;
 	
 	@OneToMany(mappedBy="oferta", fetch=FetchType.LAZY)
@@ -45,6 +47,14 @@ public class Oferta {
 
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 
 	public String getEstatus() {
