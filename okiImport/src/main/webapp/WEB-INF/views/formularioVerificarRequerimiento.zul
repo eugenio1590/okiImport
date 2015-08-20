@@ -106,6 +106,10 @@
 									<button
 										iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"
 										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+									
+									<button
+										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta"
+										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 
 								</div>
 							</hbox>

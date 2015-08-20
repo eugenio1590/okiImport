@@ -48,7 +48,6 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 	private Paging pagMarcas;
 
 	// Modelos
-	//Modelos
 	
 	private List<MarcaVehiculo> marcas;
 	private MarcaVehiculo marcaFiltro;
@@ -93,7 +92,6 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 		pagMarcas.setTotalSize(total);
 	}
 	
-	
 
 	/** COMMAND */
 	@Command
@@ -127,6 +125,7 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 
 	@Command
 	public void verMarca(@BindingParam("marcas") MarcaVehiculo marcas){
+		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("marcas", marcas);
 		//parametros.put("editar", false);
@@ -136,7 +135,6 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 
 	@Command
 	public void editarMarca(@BindingParam("marcas") MarcaVehiculo marcas){
-		
 		
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("marcas", marcas);
