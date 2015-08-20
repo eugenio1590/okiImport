@@ -81,6 +81,7 @@
     <beans:bean id="ofertaDAO" class="com.okiimport.app.transaccion.dao.impl.OfertaDAOImpl"/>
     <beans:bean id="detalleOfertaDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleOfertaDAOImpl"/>
     <beans:bean id="compraDAO" class="com.okiimport.app.transaccion.dao.impl.CompraDAOImpl"/>
+    <beans:bean id="bancoDAO" class="com.okiimport.app.maestros.dao.impl.BancoDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>
