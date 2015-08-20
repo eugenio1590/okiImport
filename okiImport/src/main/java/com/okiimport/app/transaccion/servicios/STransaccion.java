@@ -7,6 +7,7 @@ import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
+import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 
 public interface STransaccion {
@@ -57,4 +58,11 @@ public interface STransaccion {
 		//Internacional
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacionInternacional detalleF, int idCotizacion,
 			String fieldSort, Boolean sortDirection, int pagina, int limit);
+	
+	//Ofertas
+	public Map<String, Object> consultarOfertasPorRequerimiento(int idRequerimiento, String fieldSort, Boolean sortDirection, 
+			int pagina, int limit);
+	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit);
+	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento);
+	public Oferta actualizarOferta(Oferta oferta);
 }

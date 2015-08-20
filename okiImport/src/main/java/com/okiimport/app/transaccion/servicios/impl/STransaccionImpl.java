@@ -172,8 +172,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Date fechaCreacion = calendar.getTime();
 		Oferta oferta = new Oferta();
 		oferta.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
-		oferta.setEstatus("solicitud");
-		oferta = ofertaDAO.save(oferta);
+		oferta = actualizarOferta(oferta);
 		for (DetalleCotizacion detalleCotizacion: detalleCotizaciones){
 			DetalleOferta detalleOferta = new DetalleOferta();
 			detalleOferta.setDetalleCotizacion(detalleCotizacion);
@@ -407,5 +406,52 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("total", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, 0, -1).size());
 		parametros.put("detallesCotizacion", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
+	}
+
+	//Ofertas
+	@Override
+	public Map<String, Object> consultarOfertasPorRequerimiento(int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("recibida");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, pagina*limit, limit));
+		return parametros;
+	}
+
+	@Override
+	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento) {
+		// TODO Auto-generated method stub
+		Oferta oferta = null;
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("enviada");
+		List<Oferta> ofertas = ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, 1);
+		if(ofertas!=null && !ofertas.isEmpty()){
+			oferta = ofertas.get(0);
+			oferta.setDetalleOfertas(detalleOfertaDAO.consultarDetalleOferta(oferta.getIdOferta(), 0, -1));
+		}
+		return oferta;
+	}
+
+	@Override
+	public Oferta actualizarOferta(Oferta oferta) {
+		// TODO Auto-generated method stub
+		if(oferta.getIdOferta()==null){
+			oferta.setEstatus("solicitado");
+			oferta = ofertaDAO.save(oferta);
+		}
+		else
+			oferta = ofertaDAO.update(oferta);
+		return oferta;
 	}
 }

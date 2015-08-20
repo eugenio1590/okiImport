@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.dao.AnalistaDAO;
+import com.okiimport.app.maestros.dao.BancoDAO;
 import com.okiimport.app.maestros.dao.CiudadDAO;
 import com.okiimport.app.maestros.dao.ClasificacionRepuestoDAO;
 import com.okiimport.app.maestros.dao.ClienteDAO;
@@ -58,6 +59,10 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	@Autowired
 	@BeanInjector("motorDAO")
 	private MotorDAO motorDAO;
+	
+	@Autowired
+	@BeanInjector("bancoDAO")
+	private BancoDAO bancoDAO;
 		
 	//Marcas
 	@Override
@@ -227,8 +232,17 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		return parametros;
 	}
 	
+	@Override
+	public Map<String, Object> consultarBancos(int page, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", bancoDAO.findAll(0, -1).size());
+		parametros.put("bancos", bancoDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
-	@SuppressWarnings({ "rawtypes", "unused", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private <T extends PersonaDAO, Y extends Persona> T determinarPersonaDAO(Class<Y> clase){
 		T dao = null;
 		if(clase != null){
@@ -291,9 +305,27 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		this.motorDAO = motorDAO;
 	}
 
-	
+	public EstadoDAO getEstadoDAO() {
+		return estadoDAO;
+	}
 
+	public void setEstadoDAO(EstadoDAO estadoDAO) {
+		this.estadoDAO = estadoDAO;
+	}
 
-	
-	
+	public CiudadDAO getCiudadDAO() {
+		return ciudadDAO;
+	}
+
+	public void setCiudadDAO(CiudadDAO ciudadDAO) {
+		this.ciudadDAO = ciudadDAO;
+	}
+
+	public BancoDAO getBancoDAO() {
+		return bancoDAO;
+	}
+
+	public void setBancoDAO(BancoDAO bancoDAO) {
+		this.bancoDAO = bancoDAO;
+	}
 }
