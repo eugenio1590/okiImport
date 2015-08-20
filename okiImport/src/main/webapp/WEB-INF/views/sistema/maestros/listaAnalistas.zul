@@ -51,13 +51,11 @@
 						<div sclass=" action">
 							<a
 								iconSclass="z-icon-eye blue bigger-200" tooltiptext="Ver"
-								onClick="@command('verAnalista', usuario = each)" />
+								onClick="@command('verAnalista', analista = each)" />
 							<a
 								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
-								onClick="@command('editarAnalista', usuario = each)" />
-							<a
-								iconSclass="z-icon-remove green bigger-200" tooltiptext="Eliminar"
-								onClick="@command('editarUsuario', usuario = each)" />
+								onClick="@command('editarAnalista', analista = each)" />
+							
 						</div>
 					</listcell>
 				</listitem>

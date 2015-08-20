@@ -94,7 +94,7 @@
 
 									<label value="Serial Carroceria: *" />
 
-									<textbox id="serialCarroceria"
+									<textbox id="serialCarroceria" maxlength="25"
 										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"
 										constraint="no empty:El campo no puede estar vacio"/>

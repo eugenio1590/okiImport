@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winProveedor" closable="@bind(!vm.cerrar)"
+	<window id="winFormularioRequerimiento"
 		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
@@ -127,13 +127,11 @@
 									
 									<row>
 
-									<label value="Estado: *" />
+									<label value="Pais: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.estado)"
-											model="@load(vm.listaEstados)"
-											
-											onSelect="@command('buscarCiudades')">
+											selectedItem="@bind(vm.pais)"
+											model="@load(vm.listaPais)">
 											<template name="model">
 												<comboitem
 													label="@bind(each.nombre)">
@@ -142,24 +140,8 @@
 											</template>
 										</combobox>
 										
-										
-										   <label value="Ciudad: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.proveedor.ciudad)"
-											model="@load(vm.listaCiudades)">
-                                            
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
                               </row>
                               
-
-									
 								</rows>
 							</grid>
 						</div>

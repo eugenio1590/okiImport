@@ -171,11 +171,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setTipoFlete(tipoFlete);
 				detallesCotizacion.add(detalle);
 				boolean cond = (detalle.verificarCondFlete() && detalle.verificarCondPeso());
-				if(cond)
-					incompleto = cond;
+				if(!cond)
+					incompleto = !cond;
 			}
 			if(tipoFlete!=null && !tipoFlete)
 				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");
+			else
+				cotizacionSelecionada.setEstatus("C");
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
@@ -279,6 +281,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			detalleCotizacion.calcularTotal(true);
 			calcularPrecio(3);
 		}
+	}
+	
+	@Command
+	public void actualizarCotizaciones(){
+		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

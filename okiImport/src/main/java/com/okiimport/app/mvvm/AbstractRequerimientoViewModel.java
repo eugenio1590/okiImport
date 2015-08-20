@@ -19,11 +19,13 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Spinner;
 
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
+import com.okiimport.app.modelo.Persona;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
@@ -191,6 +193,18 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
+	}
+	
+	protected String buscarUsername(Persona persona, SControlUsuario sControlUsuario){
+		boolean noValido = true;
+		String usuario = persona.getNombre().split(" ")[0].toLowerCase();
+		String username = usuario;
+		while(noValido){
+			noValido = sControlUsuario.verificarUsername(username);
+			if(noValido)
+				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.MAYUSCULAS, 3);
+		}
+		return username;
 	}
 	
 	public int getYearDay(){

@@ -73,19 +73,13 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 							public void onEvent(Event event) throws Exception {
 								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-									recargar();
+									winFormularioMarca.onClose();
 								}
 							}
 						});
 			}	
 	}
 	
-	public void recargar() {
-		
-		// cerrar emergente
-		//formularioMarcas.onclose()
-		winFormularioMarca.onClose();
-	}
 	
 	@Command
 	@NotifyChange({ "marca" })

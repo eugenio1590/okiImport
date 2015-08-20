@@ -1,7 +1,7 @@
 <zk>
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="85%" height="85%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorInternacionalViewModel')"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarCotizacionesAnalistaViewModel')"
 		onClose="@command('cargarRequerimientos')">
 		
 		<borderlayout>
@@ -28,7 +28,7 @@
 				</groupbox>
 				<listbox id="gridCotizaciones" sclass="mylist" model="@load(vm.listaCotizacion)">
 					<auxhead>
-						<auxheader colspan="3" label="Solicitudes de Cotizacion"/>
+						<auxheader colspan="3" label="Cotizaciones"/>
 					</auxhead>
 					<listhead>
 

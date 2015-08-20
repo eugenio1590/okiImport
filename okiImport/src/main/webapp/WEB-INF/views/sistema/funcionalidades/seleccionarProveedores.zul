@@ -6,11 +6,15 @@
 		form="@id('fx') @load(vm.proveedor)" closable="true">
 		
 		<div>
-			<borderlayout width="100%" height="350px">
+			<borderlayout width="100%" height="450px">
 				<west width="37%" title="Proveedores" collapsible="true" 
 				onOpen="@command('openRegionWest', west=self, east=borderEast, baseW='63%')">
 					<vlayout>
 						<toolbar>
+							<toolbarbutton
+								sclass="fa fa-user purple bigger-160"
+								tooltiptext="Registrar Nuevo Proveedor"
+								onClick="@command('registrarProveedor')"/>
 							<toolbarbutton height="45px"
 								image="/resources/img/icons/ButtonArrowRight32.png"
 								tooltiptext="Agregar Proveedores a Consultar"
@@ -23,7 +27,12 @@
 
 							<listhead menupopup="auto">
 
-								<listheader label="Nombre" sort="auto(nombre)" />
+								<listheader label="Nombre" sort="auto(nombre)">
+									<div sclass="z-icon-filter bigger-200" />
+									<textbox value="@bind(vm.proveedor.nombre)"
+										instant="true" placeholder="Buscar por Nombre"
+										onChange="@command('aplicarFiltro')" />
+								</listheader>
 							</listhead>
 
 							<template name="model">
@@ -36,7 +45,7 @@
 
 						</listbox>
 						<paging id="pagProveedores" autohide="true"
-							onPaging="@command('paginarLista',tipo = 1)" />
+							onPaging="@command('paginarLista')" />
 					</vlayout>
 				</west>
 
@@ -58,7 +67,7 @@
 							selectedItems="@bind(vm.listaProveedoresSeleccionados2)">
 
 							<listhead menupopup="auto">
-								<listheader label="Nombre" sort="auto" />
+								<listheader label="Nombre" sort="auto(nombre)" />
 							</listhead>
 							<template name="model">
 								<listitem>
@@ -73,7 +82,7 @@
 			</borderlayout>
 		</div>
 
-		<div>
+		<div visible="@bind(vm.enviar)">
 			<groupbox closable="false">
 				<caption>
 					<label value="Mensaje:" sclass="custom_caption" />
@@ -90,5 +99,6 @@
 			<button id= "btn_enviar" label="Enviar" type="submit"
 				onClick="@command('enviar')" sclass="btn-primary" />
 		</div>
+			
 	</window>
 </zk>

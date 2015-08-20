@@ -27,12 +27,12 @@ import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.mvvm.PasswordGenerator;
 
-public class FormularioUsuariosViewModel extends AbstractViewModel implements  EventListener<SortEvent>{
+public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel implements  EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sControlUsuario")
@@ -55,14 +55,13 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	private Persona personaFiltro;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 5;
 	private List<ModeloCombo<Integer>> tiposUsuario;
 	private ModeloCombo<Integer> tipoSeleccionado;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		pagPersonas.setPageSize(PAGE_SIZE);
+		pagPersonas.setPageSize(pageSize);
 		usuario = new Usuario();
 		personaFiltro = Persona.getNewInstance();
 		personaSeleccionada = Persona.getNewInstance();
@@ -98,17 +97,17 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 			switch (tipoSeleccionado.getValor()) {
 			case 1:
 				parametros = (Map<String, Object>) sMaestros.consultarAnalistasSinUsuarios(personaFiltro, fieldSort, sortDirection, 
-						page, PAGE_SIZE);
+						page, pageSize);
 				personasSinUsuario = (List<Persona>) parametros.get("analistas");
 				break;
 			case 2:
 				parametros = (Map<String, Object>) sMaestros.consultarAdministradoresSinUsuarios(personaFiltro, fieldSort, sortDirection,
-						page, PAGE_SIZE);
+						page, pageSize);
 				personasSinUsuario = (List<Persona>) parametros.get("administradores");
 				break;
 			case 3:
 				parametros = (Map<String, Object>) sMaestros.consultarProveedoresSinUsuarios(personaFiltro, 
-						fieldSort, sortDirection, page, PAGE_SIZE);
+						fieldSort, sortDirection, page, pageSize);
 				personasSinUsuario = (List<Persona>) parametros.get("proveedores");
 				break;
 			default: return;
@@ -144,15 +143,7 @@ public class FormularioUsuariosViewModel extends AbstractViewModel implements  E
 	@NotifyChange({"personaSeleccionada", "usuario"})
 	public void verInfoPersona(@BindingParam("persona") Persona persona){
 		personaSeleccionada = persona;
-		String usuario = personaSeleccionada.getNombre().split(" ")[0].toLowerCase();
-		String username = usuario;
-		boolean noValido = true;
-		while(noValido){
-			noValido = sControlUsuario.verificarUsername(username);
-			if(noValido)
-				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.MAYUSCULAS, 3);
-		}
-		this.usuario.setUsername(username);
+		this.usuario.setUsername(buscarUsername(personaSeleccionada, sControlUsuario));
 		this.usuario.setPasword(PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS
 				+PasswordGenerator.NUMEROS,10));
 	}

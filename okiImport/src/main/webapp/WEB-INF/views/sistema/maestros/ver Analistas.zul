@@ -1,0 +1,85 @@
+<zk>
+	<window id="winFormularioAnalista" title="Analista"
+		border="normal" width="70%" apply="org.zkoss.bind.BindComposer"
+		sclass="btn-primary" closable="true"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerAnalistaViewModel')"
+		>
+		<groupbox >
+		
+			<div>
+
+				<grid>
+					<columns>
+						<column width="35%" align="right" />
+						<column width="65%" />
+						<column width="35%" align="right" />
+						<column width="65%" />
+					</columns>
+
+					<rows>
+						<row>
+							<label value="Cedula/RIF: " />
+
+								<textbox id="cedulaRif" width="80%"
+									readonly="true" mold="rounded" 
+									value= "@bind(vm.analista.cedula)" />
+							
+
+							<label value="Nombre: " />
+
+							<textbox id="nombre" width="80%"
+								readonly="true" mold="rounded" 
+								value="@bind(vm.analista.nombre)"/>
+						</row>
+
+						<row>
+
+							<label value="Teléfono: " />
+
+							<textbox id="telefono" width="80%"
+								readonly="true" mold="rounded" 
+								value="@bind(vm.analista.telefono)" />
+
+
+							<label value="E-mail: " />
+							<textbox id="email" width="80%" 
+							    readonly="true" mold="rounded" 
+							    value="@bind(vm.analista.correo)"/>
+						</row>
+						
+						<row>
+
+							<label value="Dirección:" />
+
+							<textbox id="direccion" width="80%" rows="3"
+								cols="35" readonly="true" mold="rounded"
+								value="@bind(vm.analista.direccion)"/>
+
+
+							<label value="Estado:" />
+							<combobox 
+								width="80%" readonly="true" buttonVisible="false"
+								value="@bind(vm.ciudad.estado.nombre)">
+								
+							</combobox>
+						</row>
+
+						<row>
+							<label value="Ciudad: *" />
+							<combobox 
+								width="80%" readonly="true" buttonVisible="false"
+								value= "@bind(vm.ciudad.nombre)">
+
+							</combobox>
+
+						</row>
+
+
+					</rows>
+				</grid>
+			</div>
+		</groupbox>
+			
+		
+	</window>
+</zk>

@@ -1,0 +1,114 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winFormularioAnalista" title="Editar Analista"
+		border="normal" width="70%" apply="org.zkoss.bind.BindComposer"
+		sclass="btn-primary" closable="true"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarAnalistaViewModel')"
+		form="@id('fx') @load(vm.analista) @save(vm.analista, before='registrar')"
+		onClose="@command('CerrarVista')">
+		<groupbox>
+
+			<div>
+
+				<grid>
+					<columns>
+						<column width="35%" align="right" />
+						<column width="65%" />
+						<column width="35%" align="right" />
+						<column width="65%" />
+					</columns>
+
+					<rows>
+						<row>
+							<label value="Cedula/RIF:" />
+
+							<hbox>
+								
+
+								<textbox id="cedulaRif" width="108%"
+									readonly="true" mold="rounded" value="@bind(vm.analista.cedula)"
+									maxlength="12" />
+							</hbox>
+
+							<label value="Nombre: " />
+
+							<textbox id="nombre" width="80%"
+								readonly="" mold="rounded" value="@bind(vm.analista.nombre)"
+								/>
+						</row>
+
+						<row>
+
+							<label value="Teléfono: " />
+
+							<textbox id="telefono" width="80%"
+								readonly="" mold="rounded" value="@bind(vm.analista.telefono)"
+								maxlength="11"  />
+
+
+							<label value="E-mail: " />
+							<textbox id="email" width="80%" readonly=""
+								mold="rounded" value="@bind(vm.analista.correo)"
+								>
+							</textbox>
+
+
+						</row>
+						<row>
+
+							<label value="Dirección: " />
+
+							<textbox id="direccion" width="80%" rows="3"
+								cols="35" readonly="" mold="rounded"
+								value="@bind(vm.analista.direccion)"/>
+
+
+							<label value="Estado: " />
+							<combobox 
+							   
+								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+								value="@bind(vm.estado.nombre)"
+								model="@load(vm.listaEstados)"
+								onSelect="@command('buscarCiudades')">
+								<template name="model">
+									<comboitem
+										label="@bind(each.nombre)">
+
+									</comboitem>
+								</template>
+							</combobox>
+						</row>
+
+						<row>
+							<label value="Ciudad: " />
+							<combobox 
+								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
+								value="@bind(vm.ciudad.nombre)"
+								model="@load(vm.listaCiudades)">
+
+								<template name="model">
+									<comboitem
+										label="@bind(each.nombre)">
+
+									</comboitem>
+								</template>
+							</combobox>
+
+						</row>
+
+
+					</rows>
+				</grid>
+			</div>
+		</groupbox>
+			
+			<div sclass="panel-footer" align="right">
+
+				<button id="btnLimpiar" label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
+
+				<button id="btnGuardar" label="Registrar" type="submit"
+					onClick="@command('registrar', btnGuardar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
+			</div>
+	</window>
+</zk>

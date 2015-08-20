@@ -22,6 +22,7 @@ public interface SControlUsuario {
 	public Map<String, Object> consultarUsuarios(Usuario usuarioF, String fieldSort, Boolean sortDirection, 
 			int pagina, int limit);
 	public boolean verificarUsername(String username);
+	public Usuario consultarUsuario(int idPersona);
 	
 	//Menu
 	public List<Menu> consultarPadresMenuUsuario(Integer tipo);

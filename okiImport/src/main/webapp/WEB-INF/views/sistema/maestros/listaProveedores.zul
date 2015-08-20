@@ -27,7 +27,7 @@
 				<auxheader colspan="1" />
 				<auxheader width="20%">
 					<button label="Nuevo Proveedor"
-						onClick="@command('nuevoProveedor')" sclass="btn-primary" />
+						onClick="@command('registrarProveedor')" sclass="btn-primary" />
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
@@ -38,7 +38,7 @@
 				<listheader label="Estado" sort="none" width="31%" />
 				<listheader label="Foto" sort="none" align="center"
 					width="18%" />
-				<listheader label="Operaciones" width="15%" sort="none" />
+				<listheader label="Operaciones" width="15%" sort="none"/>
 			</listhead>
 			<template name="model">
 				<listitem>
@@ -51,13 +51,13 @@
 						<div sclass=" action">
 							<a
 								iconSclass="z-icon-eye blue bigger-200" tooltiptext="Ver"
-								onClick="@command('editarProveedor', usuario = each)" />
+								onClick="@command('editarProveedor', proveedor = each)" />
 							<a
 								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
-								onClick="@command('editarProveedor', usuario = each)" />
+								onClick="@command('verProveedor', proveedor = each)" />
 							<a
-								iconSclass="z-icon-remove green bigger-200" tooltiptext="Eliminar"
-								onClick="@command('editarProveedor', usuario = each)" />
+								iconSclass="z-icon-trash-o red bigger-200" tooltiptext="Eliminar"
+								onClick="@command('elimnarProveedor', proveedor = each)" />
 						</div>
 					</listcell>
 				</listitem>

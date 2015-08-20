@@ -9,31 +9,37 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Ciudad;
+import com.okiimport.app.modelo.Estado;
+import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.transaccion.servicios.STransaccion;
+
+import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Paging;
+
+import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel {
+
+public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
+
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
@@ -48,26 +54,28 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	@Wire("#winFormularioAnalista")
 	private Window winFormularioAnalista;
 	
+	private Boolean editar;
 	
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view ) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("analista") Analista analista ) {
 		super.doAfterCompose(view);
-		limpiar();
+		//limpiar();
 		
 		listaEstados = llenarListaEstados();
-		listaTipoPersona = llenarListaTipoPersona();
-		this.tipoPersona = listaTipoPersona.get(1);
-		
-		
+		//listaTipoPersona = llenarListaTipoPersona();
+		//this.tipoPersona = listaTipoPersona.get(1);
+		this.analista = analista;
+		this.ciudad = analista.getCiudad();
+		this.estado = this.ciudad.getEstado();
 	}
 	
 	@Command
 	@NotifyChange({ "analista" })
-	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
+	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		if (checkIsFormValid()) {
 				
-				btnEnviar.setDisabled(true);
+			    btnGuardar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				analista.setCedula(tipo + analista.getCedula());
@@ -80,15 +88,15 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				
 				String str = "Analista Registrado con Exito ";
 
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
+				mostrarMensaje("Informacion", "El Analista ha sido actualizado existosamente ", null, null, new EventListener()
+				{
 							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+								//if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-									recargar();
-								}
+									winFormularioAnalista.onClose();
+								//}
 							}
-						});
+						},null);
 			}	
 	}
 	
@@ -103,6 +111,12 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		analista = new Analista();
 	}
 
+	@Command
+	public void CerrarVista()
+	{
+		ejecutarGlobalCommand("cambiarAnalistas", null);
+	}
+	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -166,8 +180,14 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
-	
+
+	public Boolean getEditar() {
+		return editar;
+	}
+
+	public void setEditar(Boolean editar) {
+		this.editar = editar;
+	}
 
 	
-
 }
