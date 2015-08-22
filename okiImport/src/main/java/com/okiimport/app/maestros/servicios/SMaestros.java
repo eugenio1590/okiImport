@@ -56,4 +56,5 @@ public interface SMaestros {
 		
     //Ciudades
 	  public Map<String,Object> ConsultarCiudad(Integer idEstado,Integer page,Integer limit);
+	  
 }
