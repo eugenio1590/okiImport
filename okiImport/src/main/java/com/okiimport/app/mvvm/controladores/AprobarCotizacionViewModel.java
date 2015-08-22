@@ -48,6 +48,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private List <DetalleCotizacion> listaDetalleCotizacion;
 	private List <DetalleCotizacion> listaDetalleSeleccion;
 	private List <DetalleCotizacion> listaDetalleSeleccionado;
+	private List <DetalleCotizacion> eliminarDetalle;
 
 	//GUI
 	@Wire("#gridDetalleCotizacion")
@@ -101,6 +102,14 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
 		
 	}
+	
+	@Command
+	@NotifyChange({ "*" })
+	public void eliminarSeleccion() {
+	
+		listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+	}
+	
 	@NotifyChange({"*"})
 	@Command
 	public void guardar(){
@@ -239,6 +248,16 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
 		this.detalleCotizacion = detalleCotizacion;
 	}
+
+	public List<DetalleCotizacion> getEliminarDetalle() {
+		return eliminarDetalle;
+	}
+
+	public void setEliminarDetalle(List<DetalleCotizacion> eliminarDetalle) {
+		this.eliminarDetalle = eliminarDetalle;
+	}
+	
+	
 	
 	
 }
