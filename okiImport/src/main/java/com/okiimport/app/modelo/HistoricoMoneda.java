@@ -40,6 +40,10 @@ public class HistoricoMoneda implements Serializable {
 	//bi-directional one-to-many association to Cotizacion
 	@OneToMany(mappedBy="historicoMoneda")
 	private List<Cotizacion> cotizacions;
+	
+	//bi-directional one-to-many association to Cotizacion
+	@OneToMany(mappedBy="historicoMoneda")
+	private List<Compra> compras;
 
 	public HistoricoMoneda() {
 		this.moneda = new Moneda();
@@ -79,5 +83,41 @@ public class HistoricoMoneda implements Serializable {
 	
 	public void setCotizacions(List<Cotizacion> cotizacions) {
 		this.cotizacions = cotizacions;
+	}
+	
+	public Cotizacion addCotizacion(Cotizacion cotizacion){
+		getCotizacions().add(cotizacion);
+		cotizacion.setHistoricoMoneda(this);
+		
+		return cotizacion;
+	}
+	
+	public Cotizacion removeCotizacion(Cotizacion cotizacion){
+		getCotizacions().remove(cotizacion);
+		cotizacion.setHistoricoMoneda(null);
+		
+		return cotizacion;
+	}
+	
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
+	
+	public Compra addCompra(Compra compra){
+		getCompras().add(compra);
+		compra.setHistoricoMoneda(this);
+		
+		return compra;
+	}
+	
+	public Compra removeCompra(Compra compra){
+		getCompras().remove(compra);
+		compra.setHistoricoMoneda(null);
+		
+		return compra;
 	}
 }

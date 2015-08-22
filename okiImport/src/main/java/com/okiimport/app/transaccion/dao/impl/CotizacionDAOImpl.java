@@ -108,6 +108,50 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
 	}
 	
+	@Override
+	public List<Cotizacion> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, List<String> estatus, int start, int limit) {
+		// TODO Auto-generated method stub
+		// 1. Creamos el Criterio de busqueda
+		this.crearCriteria();
+
+		// 2. Generamos los Joins
+		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
+		entidades.put("detalleCotizacions", JoinType.INNER);
+		entidades.put("proveedor", JoinType.INNER);
+		entidades.put("historicoMoneda", JoinType.LEFT);
+		Map<String, Join> joins = this.crearJoins(entidades);
+
+		// 3. Creamos las Restricciones de la busqueda
+		this.distinct=true;
+		this.selected=new Selection[]{
+				this.entity.get("idCotizacion"),
+				this.entity.get("fechaCreacion"),
+				this.entity.get("fechaVencimiento"),
+				this.entity.get("estatus"),
+				this.entity.get("mensaje"),
+				this.entity.get("proveedor"),
+				joins.get("historicoMoneda")
+		};
+
+		List<Predicate> restricciones = new ArrayList<Predicate>();
+
+		restricciones.add(criteriaBuilder.equal(
+				joins.get("detalleCotizacions").join("detalleRequerimiento").join("requerimiento").get("idRequerimiento"), 
+				idRequerimiento));
+		
+		restricciones.add(entity.get("estatus").in(estatus));
+		agregarFiltro(cotizacionF, restricciones, joins);
+		// 4. Creamos los campos de ordenamiento y ejecutamos
+		List<Order> orders = new ArrayList<Order>();
+
+		if (fieldSort != null && sortDirection != null)
+			orders.add((sortDirection) ? this.criteriaBuilder.asc(this.entity.get(fieldSort)) : 
+				this.criteriaBuilder.desc(this.entity.get(fieldSort)));
+
+		return ejecutarCriteria(concatenaArrayPredicate(restricciones), orders, start, limit);
+	}
+	
 	private void agregarFiltro(Cotizacion cotizacionF,List<Predicate> restricciones,Map<String, Join> joins){
 		if (cotizacionF != null){
 			if (cotizacionF.getIdCotizacion() != null){
@@ -126,4 +170,6 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 			}
 		}
 	}
+
+	
 }

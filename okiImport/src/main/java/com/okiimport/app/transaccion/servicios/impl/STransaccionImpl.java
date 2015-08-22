@@ -15,14 +15,19 @@ import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
+import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+import com.okiimport.app.transaccion.dao.CompraDAO;
 import com.okiimport.app.transaccion.dao.CotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionInternacionalDAO;
+import com.okiimport.app.transaccion.dao.DetalleOfertaDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
+import com.okiimport.app.transaccion.dao.OfertaDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
@@ -50,6 +55,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleCotizacionInternacionalDAO")
 	private DetalleCotizacionInternacionalDAO detalleCotizacionInternacionalDAO;
+	
+	@Autowired
+	@BeanInjector("ofertaDAO")
+	private OfertaDAO ofertaDAO;
+	
+	@Autowired
+	@BeanInjector("detalleOfertaDAO")
+	private DetalleOfertaDAO detalleOfertaDAO;
+	
+	@Autowired
+	@BeanInjector("compraDAO")
+	private CompraDAO compraDAO;
 
 	public STransaccionImpl() {
 		super();
@@ -107,6 +124,30 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		this.detalleCotizacionInternacionalDAO = detalleCotizacionInternacionalDAO;
 	}
 
+	public OfertaDAO getOfertaDAO() {
+		return ofertaDAO;
+	}
+
+	public void setOfertaDAO(OfertaDAO ofertaDAO) {
+		this.ofertaDAO = ofertaDAO;
+	}
+
+	public DetalleOfertaDAO getDetalleOfertaDAO() {
+		return detalleOfertaDAO;
+	}
+
+	public void setDetalleOfertaDAO(DetalleOfertaDAO detalleOfertaDAO) {
+		this.detalleOfertaDAO = detalleOfertaDAO;
+	}
+
+	public CompraDAO getCompraDAO() {
+		return compraDAO;
+	}
+
+	public void setCompraDAO(CompraDAO compraDAO) {
+		this.compraDAO = compraDAO;
+	}
+
 	@Override
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
@@ -127,11 +168,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public void guardarSeleccionRequerimiento(
-			DetalleCotizacion detalleCotizacion) {
-		// TODO Auto-generated method stub
-		detalleCotizacion.setEstatus("seleccionado");
-		this.detalleCotizacionDAO.update(detalleCotizacion);
+	public void guardarSeleccionRequerimiento(List<DetalleCotizacion> detalleCotizaciones) {
+		Date fechaCreacion = calendar.getTime();
+		Oferta oferta = new Oferta();
+		oferta.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
+		oferta = actualizarOferta(oferta);
+		for (DetalleCotizacion detalleCotizacion: detalleCotizaciones){
+			DetalleOferta detalleOferta = new DetalleOferta();
+			detalleOferta.setDetalleCotizacion(detalleCotizacion);
+			detalleOferta.setOferta(oferta);
+			detalleOferta.setEstatus("seleccion");
+			detalleOfertaDAO.save(detalleOferta);
+		}
 	}
 
 	@Override
@@ -255,28 +303,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
-		// TODO Auto-generated method stub
-		if(cotizacion.getEstatus()==null)
-			cotizacion.setEstatus("C");
-		
-		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
-		cotizacion = cotizacionDAO.update(cotizacion);
-		for(DetalleCotizacion detalle : detalles){
-			this.detalleCotizacionDAO.update(detalle);
-			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
-			
-			detalleRequerimiento.setEstatus("CT");
-			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-		
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			requerimiento.setEstatus("CT");
-			this.requerimientoDAO.update(requerimiento);
-		}
-		return cotizacion;
-	}
-
-	@Override
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions) {
 		// TODO Auto-generated method stub
 		cotizacion.setEstatus("SC");
@@ -301,6 +327,44 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		cotizacion.setDetalleCotizacions(detalleCotizacions);
 		return cotizacion;
+	}
+	
+	@Override
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
+		// TODO Auto-generated method stub
+		String estatusRequerimiento = "CT";
+		if(cotizacion.getEstatus()==null)
+			cotizacion.setEstatus("C");
+		else if(cotizacion.getEstatus().equalsIgnoreCase("EC"))
+			estatusRequerimiento = "EC";
+		
+		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
+		cotizacion = cotizacionDAO.update(cotizacion);
+		for(DetalleCotizacion detalle : detalles){
+			this.detalleCotizacionDAO.update(detalle);
+			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
+			
+			detalleRequerimiento.setEstatus("CT");
+			this.detalleRequerimientoDAO.update(detalleRequerimiento);
+		
+			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
+			if(!requerimiento.getEstatus().equalsIgnoreCase("EC")){
+				requerimiento.setEstatus(estatusRequerimiento);
+				this.requerimientoDAO.update(requerimiento);
+			}
+		}
+		return cotizacion;
+	}
+	
+	@Override
+	public Map<String, Object> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("EC");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, pagina*limit, limit));
+		return parametros;
 	}
 	
 	//Detalles Cotizacion
@@ -342,5 +406,52 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("total", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, 0, -1).size());
 		parametros.put("detallesCotizacion", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, pagina*limit, limit));
 		return parametros;
+	}
+
+	//Ofertas
+	@Override
+	public Map<String, Object> consultarOfertasPorRequerimiento(int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("recibida");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, pagina*limit, limit));
+		return parametros;
+	}
+
+	@Override
+	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento) {
+		// TODO Auto-generated method stub
+		Oferta oferta = null;
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("enviada");
+		List<Oferta> ofertas = ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, 1);
+		if(ofertas!=null && !ofertas.isEmpty()){
+			oferta = ofertas.get(0);
+			oferta.setDetalleOfertas(detalleOfertaDAO.consultarDetalleOferta(oferta.getIdOferta(), 0, -1));
+		}
+		return oferta;
+	}
+
+	@Override
+	public Oferta actualizarOferta(Oferta oferta) {
+		// TODO Auto-generated method stub
+		if(oferta.getIdOferta()==null){
+			oferta.setEstatus("solicitado");
+			oferta = ofertaDAO.save(oferta);
+		}
+		else
+			oferta = ofertaDAO.update(oferta);
+		return oferta;
 	}
 }

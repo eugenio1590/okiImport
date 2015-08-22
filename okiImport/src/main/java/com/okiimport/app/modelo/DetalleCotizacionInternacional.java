@@ -6,7 +6,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the detalle_cotizacion_internacional database table.
+ * 
+ */
 @Entity
+@Table(name="detalle_cotizacion_internacional")
 @NamedQuery(name="DetalleCotizacionInternacional.findAll", query="SELECT d FROM DetalleCotizacionInternacional d")
 @PrimaryKeyJoinColumn(name="id_detalle_cotizacion_internacional")
 public class DetalleCotizacionInternacional extends DetalleCotizacion implements Serializable {

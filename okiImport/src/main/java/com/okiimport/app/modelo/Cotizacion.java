@@ -7,6 +7,10 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the cotizacion database table.
+ * 
+ */
 @Entity
 @Table(name="cotizacion")
 @NamedQuery(name="Cotizacion.findAll", query="SELECT c FROM Cotizacion c")

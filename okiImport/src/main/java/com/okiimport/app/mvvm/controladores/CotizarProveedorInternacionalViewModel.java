@@ -70,9 +70,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
-	private String titulo;
 	
-	private String constraint_precio_flete;
 	
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
@@ -86,13 +84,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
+	
+	private String titulo;
+	private String constraintCampoObligatorio;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
-			@ExecutionArgParam("cotizacion") Cotizacion cotizacion){
+			@ExecutionArgParam("cotizacion") Cotizacion cotizacion,
+			@ExecutionArgParam("obligatorioTodosCampos") Boolean obligatorio){
 		super.doAfterCompose(view);
 		
+		this.constraintCampoObligatorio = (obligatorio) ? "no empty" : null;
+				
 		this.requerimiento = requerimiento;
 		this.cotizacionSelecionada = cotizacion;
 		titulo = TITULO_BASE + requerimiento.getIdRequerimiento();
@@ -171,8 +175,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setTipoFlete(tipoFlete);
 				detallesCotizacion.add(detalle);
 				boolean cond = (detalle.verificarCondFlete() && detalle.verificarCondPeso());
-				if(cond)
-					incompleto = cond;
+				if(!cond)
+					incompleto = !cond;
 			}
 			if(tipoFlete!=null && !tipoFlete)
 				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");
@@ -223,7 +227,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void seleccionarTipoFlete(){
 		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
-			this.constraint_precio_flete = null;
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
 				detalle.setAlto(null);
@@ -235,7 +238,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 		else {
 			this.txtPrecioFlete.setConstraint("");
-			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 			actualizarListaDetalleCotizacion();
 		}
 	}
@@ -387,22 +389,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.monedaSeleccionada = monedaSeleccionada;
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getConstraint_precio_flete() {
-		return constraint_precio_flete;
-	}
-
-	public void setConstraint_precio_flete(String constraint_precio_flete) {
-		this.constraint_precio_flete = constraint_precio_flete;
-	}
-
 	public List<ModeloCombo<Boolean>> getTiposFlete() {
 		return tiposFlete;
 	}
@@ -433,5 +419,21 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setFormaEnvio(ModeloCombo<Boolean> formaEnvio) {
 		this.formaEnvio = formaEnvio;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getConstraintCampoObligatorio() {
+		return constraintCampoObligatorio;
+	}
+
+	public void setConstraintCampoObligatorio(String constraintCampoObligatorio) {
+		this.constraintCampoObligatorio = constraintCampoObligatorio;
 	}
 }
