@@ -16,6 +16,7 @@ public class FormaPago {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="forma_pago_id_seq")
 	@SequenceGenerator(name="forma_pago_id_seq", sequenceName="forma_pago_id_seq", initialValue=1, allocationSize=1)
+	@Column(name="id_forma_pago")
 	private Integer idFormaPago;
 	
 	private String nombre;

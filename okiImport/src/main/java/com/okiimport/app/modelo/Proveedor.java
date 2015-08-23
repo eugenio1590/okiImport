@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class Proveedor extends Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Column
+	@Column(name="tipo_proveedor")
 	private Boolean tipoProveedor;
 	
 	//bi-directional one-to-many association to Cotizacion

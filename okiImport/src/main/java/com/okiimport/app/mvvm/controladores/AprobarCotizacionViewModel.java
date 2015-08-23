@@ -74,6 +74,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()), new DetalleRequerimiento());
+		detalleCotizacionFiltro.eliminarPrecios();
 		listaDetalleSeleccionado = new ArrayList<DetalleCotizacion>();
 		
 		consultarDetalleCotizacion(0, null, null);

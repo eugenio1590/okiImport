@@ -16,6 +16,7 @@ public class PagoCompra {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pago_compra_id_seq")
 	@SequenceGenerator(name="pago_compra_id_seq", sequenceName="pago_compra_id_seq", initialValue=1, allocationSize=1)
+	@Column(name="id_pago_compra")
 	private Integer idPagoCompra;
 	
 	@Column(name="fecha_creacion")
