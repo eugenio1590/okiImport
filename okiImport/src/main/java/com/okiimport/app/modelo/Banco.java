@@ -14,6 +14,9 @@ import javax.persistence.*;
 public class Banco {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="banco_id_seq")
+	@SequenceGenerator(name="banco_id_seq", sequenceName="banco_id_seq", initialValue=1, allocationSize=1)
+	@Column(name="id_banco")
 	private Integer idBanco;
 	
 	private String nombre;

@@ -1,6 +1,8 @@
 package com.okiimport.app.modelo;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -23,7 +25,11 @@ public class Oferta {
 	@Column(name="fecha_creacion")
 	private Timestamp fechaCreacion;
 	
-	private String observacion;
+	@Column(name="porct_iva", scale=2)
+	private Float porctIva;
+
+	@Column(name="porct_ganancia", scale=2)
+	private Float porctGanancia;
 	
 	private String estatus;
 	
@@ -37,6 +43,16 @@ public class Oferta {
 
 	public Oferta() {
 	}
+
+	public Oferta(Integer idOferta, Date fechaCreacion, String estatus) {
+		super();
+		this.idOferta = idOferta;
+		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
+		this.estatus = estatus;
+		this.detalleOfertas = new ArrayList<DetalleOferta>();
+	}
+
+
 
 	public Integer getIdOferta() {
 		return idOferta;
@@ -53,13 +69,21 @@ public class Oferta {
 	public void setFechaCreacion(Timestamp fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
-
-	public String getObservacion() {
-		return observacion;
+	
+	public Float getPorctIva() {
+		return porctIva;
 	}
 
-	public void setObservacion(String observacion) {
-		this.observacion = observacion;
+	public void setPorctIva(Float porctIva) {
+		this.porctIva = porctIva;
+	}
+
+	public Float getPorctGanancia() {
+		return porctGanancia;
+	}
+
+	public void setPorctGanancia(Float porctGanancia) {
+		this.porctGanancia = porctGanancia;
 	}
 
 	public String getEstatus() {

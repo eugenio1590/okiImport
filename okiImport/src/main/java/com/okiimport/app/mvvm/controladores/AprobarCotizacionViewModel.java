@@ -48,6 +48,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private List <DetalleCotizacion> listaDetalleCotizacion;
 	private List <DetalleCotizacion> listaDetalleSeleccion;
 	private List <DetalleCotizacion> listaDetalleSeleccionado;
+	private List <DetalleCotizacion> eliminarDetalle;
 
 	//GUI
 	@Wire("#gridDetalleCotizacion")
@@ -59,7 +60,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private Paging pagDetalleCotizacion;
 
 	//Atributos
-	private static String titulo = "Repuestos Cotizados del Requerimiento N° ";
+	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
 	
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
@@ -74,6 +75,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()), new DetalleRequerimiento());
+		detalleCotizacionFiltro.eliminarPrecios();
 		listaDetalleSeleccionado = new ArrayList<DetalleCotizacion>();
 		
 		consultarDetalleCotizacion(0, null, null);
@@ -101,6 +103,14 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
 		
 	}
+	
+	@Command
+	@NotifyChange({ "*" })
+	public void eliminarSeleccion() {
+	
+		listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+	}
+	
 	@NotifyChange({"*"})
 	@Command
 	public void guardar(){
@@ -203,7 +213,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	}
 
 	public void setTitulo(String titulo) {
-		AprobarCotizacionViewModel.titulo = titulo;
+		this.titulo = titulo;
 	}
 
 	public String getUbicacion() {
@@ -239,6 +249,16 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
 		this.detalleCotizacion = detalleCotizacion;
 	}
+
+	public List<DetalleCotizacion> getEliminarDetalle() {
+		return eliminarDetalle;
+	}
+
+	public void setEliminarDetalle(List<DetalleCotizacion> eliminarDetalle) {
+		this.eliminarDetalle = eliminarDetalle;
+	}
+	
+	
 	
 	
 }

@@ -26,12 +26,12 @@ public class DetalleCotizacion implements Serializable {
 	private String marcaRepuesto;
 	
 	@Column(name="precio_venta", scale=2)
-	private Float precioVenta;
+	private Float precioVenta = new Float(0);
 	
 	@Column(name="precio_flete", scale=2)
-	private Float precioFlete;
+	private Float precioFlete = new Float(0);
 	
-	private Long cantidad;
+	private Long cantidad = new Long(0);
 	
 	private String estatus;
 	
@@ -159,8 +159,18 @@ public class DetalleCotizacion implements Serializable {
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Float calcularTotal(){
 		if(this.precioFlete!=null)
-			return this.precioVenta+this.precioFlete;
+			return calcularCosto()+this.precioFlete;
 		else
 			return this.precioVenta;
+	}
+	
+	public Float calcularCosto(){
+		return this.precioVenta*this.cantidad;
+	}
+	
+	public void eliminarPrecios(){
+		this.setCantidad(null);
+		this.setPrecioVenta(null);
+		this.setPrecioFlete(null);
 	}
 }

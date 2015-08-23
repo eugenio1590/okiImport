@@ -112,7 +112,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	@Command
 	public void nuevoProveedor(){
-		llamarFormulario("formularioAnalistas.zul", null);
+		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
 	}
 	
 	@Command
@@ -152,6 +152,13 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
+	}
+	
+	@NotifyChange("proveedores")
+	@Command
+	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		proveedor.setEstatus("eliminado");
+		sMaestros.acutalizarPersona(proveedor);
 	}
 	
 	/*@Command
@@ -199,10 +206,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	public void setsControlUsuario(SControlUsuario sControlUsuario) {
 		this.sControlUsuario = sControlUsuario;
 	}*/
+	
 
 	@Command
 	public void registrarProveedor(){
-		crearModal("/WEB-INF/views/sistema/maestros/registrarProveedorInterno.zul", null);
+		window = crearModal("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		window.setMaximizable(true);
 	}
 
 	public SMaestros getsMaestros() {

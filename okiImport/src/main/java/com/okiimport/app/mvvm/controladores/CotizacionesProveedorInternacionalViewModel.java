@@ -56,11 +56,10 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario, 
+			@ExecutionArgParam("persona") Persona persona, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
-		System.out.println("NULO USUARIO: "+(usuario==null));
-		this.persona = usuario.getPersona();
+		this.persona = persona;
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
 		cotizacionFiltro = new Cotizacion();

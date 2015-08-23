@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
@@ -30,6 +31,7 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
+
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
@@ -54,6 +56,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Paging pagTipoRepuestos;
 	@Wire("#btnLimpiar")
 	private Button btnLimpiar;
+	@Wire("#cmbEstado")
+	private Combobox cmbEstado;
+	@Wire("#cmbCiudad")
+	private Combobox cmbCiudad;
+	
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
@@ -62,12 +69,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
+	private ModeloCombo<Boolean> tipoPersonaCed;
 	private List<ModeloCombo<Boolean>> listaTipoProveedor;
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
+	private List<Ciudad> listaCiudad;
+	private Estado estadoSeleccionado;
 	
 	private boolean makeAsReadOnly;
 	private Boolean cerrar;
+	private String recordMode;
 	
 	//private List<Pais> listaPais;
 	
@@ -79,6 +90,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("recordMode") String recordMode,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
+	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		listaEstados = llenarListaEstados();
@@ -91,6 +103,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
 		listaTipoProveedor = llenarListaTipoProveedor();
+		tipoProveedor=consultarTipoProveedor(this.proveedor.getTipoProveedor(),listaTipoProveedor);
+		tipoPersona=consultarTipoPersona(this.proveedor.getCedula(),listaTipoPersona);
+		String cedula = this.proveedor.getCedula();
+		if(cedula!=null)
+			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 	}
 
 	@Command
@@ -107,6 +124,28 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		proveedor = new Proveedor();
 	}
 
+	
+	public ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
+		if(tipoProveedor!=null)
+			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
+				if (tipoProveedorl.getValor() == tipoProveedor)
+					return tipoProveedorl;
+			
+		return null;
+		
+	}
+	
+	public ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
+		if (cedula!=null){
+			String tipoPersona = cedula.substring(0, 1);
+			for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
+				if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
+					return tipoPersonal;
+		}
+		return this.tipoPersona;
+		
+	}
+	
 	
 	
 	@Command
@@ -131,6 +170,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 
+	
+	
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarMarcas() {
@@ -371,5 +412,33 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setCerrar(Boolean cerrar) {
 		this.cerrar = cerrar;
 	}
+
+	public List<Ciudad> getListaCiudad() {
+		return listaCiudad;
+	}
+
+	public void setListaCiudad(List<Ciudad> listaCiudad) {
+		this.listaCiudad = listaCiudad;
+	}
+
+	public Estado getEstadoSeleccionado() {
+		return estadoSeleccionado;
+	}
+
+	public void setEstadoSeleccionado(Estado estadoSeleccionado) {
+		this.estadoSeleccionado = estadoSeleccionado;
+	}
+
+	public ModeloCombo<Boolean> getTipoPersonaCed() {
+		return tipoPersonaCed;
+	}
+
+	public void setTipoPersonaCed(ModeloCombo<Boolean> tipoPersonaCed) {
+		this.tipoPersonaCed = tipoPersonaCed;
+	}
+	
+	
+	
+	
 	
 }

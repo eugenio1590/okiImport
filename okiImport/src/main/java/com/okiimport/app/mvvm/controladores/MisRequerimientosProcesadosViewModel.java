@@ -172,6 +172,19 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	}
 	
 	/*
+	 * Descripcion: permitira visualizar las Ofertas para luego enviar al cliente respectivo
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void enviarOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("size", "90%");
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaOfertasCliente.zul", parametros );
+	}
+	
+	/*
 	 * Descripcion: permitira visualizar la lista de cotizaciones a editar del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno ninguno

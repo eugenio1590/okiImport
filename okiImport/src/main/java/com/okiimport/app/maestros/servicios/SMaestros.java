@@ -55,8 +55,11 @@ public interface SMaestros {
 	public Map<String,Object> ConsultarEstado(Integer page, Integer limit);
 		
     //Ciudades
+
+	 
 	public Map<String,Object> ConsultarCiudad(Integer idEstado, Integer page, Integer limit);
 	  
 	//Banco
 	public Map<String, Object> consultarBancos(int page, int limit);
+
 }

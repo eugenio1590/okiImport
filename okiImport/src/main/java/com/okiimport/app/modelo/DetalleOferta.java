@@ -17,15 +17,10 @@ public class DetalleOferta {
 	@Column(name="id_detalle_oferta")
 	private Integer idDetalleOferta;
 	
-	@Column(name="precio_venta")
-	private Float precioVenta;
-	
-	@Column(name="precio_flete")
-	private Float precioFlete;
-	
-	private Boolean aprobado;
-	
 	private String estatus;
+	
+	@Transient
+	private Boolean aprobado;
 	
 	//bi-directional many-to-one association to Oferta
 	@ManyToOne
@@ -54,36 +49,20 @@ public class DetalleOferta {
 		this.idDetalleOferta = idDetalleOferta;
 	}
 
-	public Float getPrecioVenta() {
-		return precioVenta;
-	}
-
-	public void setPrecioVenta(Float precioVenta) {
-		this.precioVenta = precioVenta;
-	}
-
-	public Float getPrecioFlete() {
-		return precioFlete;
-	}
-
-	public void setPrecioFlete(Float precioFlete) {
-		this.precioFlete = precioFlete;
-	}
-
-	public Boolean getAprobado() {
-		return aprobado;
-	}
-
-	public void setAprobado(Boolean aprobado) {
-		this.aprobado = aprobado;
-	}
-
 	public String getEstatus() {
 		return estatus;
 	}
 
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
+	}
+	
+	public Boolean getAprobado() {
+		return aprobado;
+	}
+
+	public void setAprobado(Boolean aprobado) {
+		this.aprobado = aprobado;
 	}
 
 	public Oferta getOferta() {
@@ -108,5 +87,15 @@ public class DetalleOferta {
 
 	public void setDetalleCotizacion(DetalleCotizacion detalleCotizacion) {
 		this.detalleCotizacion = detalleCotizacion;
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	public Float calcularPrecioVenta(){
+		Float costo = this.detalleCotizacion.calcularTotal();
+		Float porctGanancia = this.oferta.getPorctGanancia();
+//		Float costo = (detalleCotizacion instanceof DetalleCotizacion) 
+//				? this.detalleCotizacion.calcularTotal() : 
+//					((DetalleCotizacionInternacional) this.detalleCotizacion).calcularTotal();
+		return (porctGanancia!=0) ? (costo*(1+this.oferta.getPorctIva()))/porctGanancia : new Float(0);
 	}
 }

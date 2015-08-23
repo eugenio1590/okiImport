@@ -61,15 +61,9 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	 */
 	@Command
 	public void cotizar(@BindingParam("proveedor") Proveedor proveedor){
-		Usuario usuario = proveedor.getUsuario();
-		if(usuario==null)
-			usuario = sControlUsuario.consultarUsuario((int) proveedor.getId());
-		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", this.requerimiento);
-		parametros.put("usuario", usuario);
-		System.out.println("PROVEEDOR ID"+proveedor.getId());
-		System.out.println("NULO USUARIO - PROVEEDOR: "+(usuario==null));
+		parametros.put("persona", proveedor);
 		if(proveedor.getTipoProveedor())
 			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
 		else

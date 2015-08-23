@@ -28,6 +28,7 @@
 		<class>com.okiimport.app.modelo.FormaPago</class>
 		<class>com.okiimport.app.modelo.PagoCompra</class>
 		<class>com.okiimport.app.modelo.Banco</class>
+		<class>com.okiimport.app.modelo.Configuracion</class>
 		 <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
             <property name="hibernate.show_sql" value="true" />

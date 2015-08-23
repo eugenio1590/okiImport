@@ -30,7 +30,7 @@
         <beans:property name="driverClassName" value="org.postgresql.Driver" />
         <beans:property name="url" value="jdbc:postgresql://localhost:5432/requerimientos" />
         <beans:property name="username" value="postgres" />
-        <beans:property name="password" value="postgres" />
+        <beans:property name="password" value="1234" />
         <beans:property name="maxActive" value="100" /> <!-- indica el nÃºmero mÃ¡ximo de conexiones que pueden usarse. -->
         <beans:property name="maxIdle" value="30"/> <!-- indica el nÃºmero mÃ¡ximo de conexiones que puede haber esperando a que llegue un usuario para usarlas.  -->
         <beans:property name="maxWait" value="10000"/> <!-- indica el tiempo en ms que esperarÃ¡ Tomcat a que haya una conexiÃ³n libre en caso de que no hubiera ninguna libre en ese instante. -->
@@ -82,6 +82,7 @@
     <beans:bean id="detalleOfertaDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleOfertaDAOImpl"/>
     <beans:bean id="compraDAO" class="com.okiimport.app.transaccion.dao.impl.CompraDAOImpl"/>
     <beans:bean id="bancoDAO" class="com.okiimport.app.maestros.dao.impl.BancoDAOImpl"/>
+    <beans:bean id="configuracionDAO" class="com.okiimport.app.configuracion.dao.impl.ConfiguracionDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

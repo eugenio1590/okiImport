@@ -37,7 +37,6 @@ public class OfertaDAOImpl extends AbstractJpaDao<Oferta, Integer> implements Of
 		this.selected = new Selection[]{
 			this.entity.get("idOferta"),
 			this.entity.get("fechaCreacion"),
-			this.entity.get("observacion"),
 			this.entity.get("estatus")
 		};
 		
