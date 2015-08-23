@@ -1,6 +1,8 @@
 package com.okiimport.app.modelo;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -32,6 +34,18 @@ public class Oferta {
 
 	public Oferta() {
 	}
+
+	public Oferta(Integer idOferta, Date fechaCreacion,
+			String observacion, String estatus) {
+		super();
+		this.idOferta = idOferta;
+		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
+		this.observacion = observacion;
+		this.estatus = estatus;
+		this.detalleOfertas = new ArrayList<DetalleOferta>();
+	}
+
+
 
 	public Integer getIdOferta() {
 		return idOferta;

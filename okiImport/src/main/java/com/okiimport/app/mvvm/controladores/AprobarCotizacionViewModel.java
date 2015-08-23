@@ -60,7 +60,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private Paging pagDetalleCotizacion;
 
 	//Atributos
-	private static String titulo = "Repuestos Cotizados del Requerimiento N° ";
+	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
 	
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
@@ -212,7 +212,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	}
 
 	public void setTitulo(String titulo) {
-		AprobarCotizacionViewModel.titulo = titulo;
+		this.titulo = titulo;
 	}
 
 	public String getUbicacion() {

@@ -1,0 +1,48 @@
+<zk>
+	<window border="none" apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-info"
+		width="50%" height="40%" title="@bind(vm.titulo)" id="winListaOfertas"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaOfertasClienteViewModel')">
+		<listbox id="gridOfertasCliente" mold="paging" pageSize="10" pagingPosition="top"
+			sclass="mylist" model="@load(vm.listaOfertas)">
+
+			<listhead>
+
+				<listheader value="idOferta" width="150px"
+					label="Nro." sort="auto(idOferta)">
+					<spinner constraint="no negative, no zero" value="@bind(vm.ofertaFiltro.idOferta)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+				<listheader value="fechaCreacion" label="F. Creación"
+					sort="auto(fechaCreacion)" width="200px">
+					<datebox format="dd/MM/yyyy" value="@bind(vm.ofertaFiltro.fechaCreacion)"
+						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@bind(each.idOferta)" />
+		
+					<listcell>
+						<datebox value="@bind(each.fechaCreacion)" format="dd/MM/yyyy" 
+							buttonVisible="false" readonly="true"/>
+					</listcell>
+				
+				</listitem>
+			</template>
+
+		</listbox>
+		<paging id="pagOfertasCliente"
+			onPaging="@command('paginarLista')" autohide="true" />
+			<div width="100%" align="right">
+			<div sclass="btn btn-xs btn-info">
+			    <button label="Enviar a Cliente" type="submit"
+					onClick="@command('enviarCliente', oferta=null)" />
+			</div>
+		</div>
+	</window>
+</zk>
