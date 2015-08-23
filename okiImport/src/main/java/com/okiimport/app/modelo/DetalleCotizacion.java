@@ -31,7 +31,7 @@ public class DetalleCotizacion implements Serializable {
 	@Column(name="precio_flete", scale=2)
 	private Float precioFlete = new Float(0);
 	
-	private Long cantidad;
+	private Long cantidad = new Long(0);
 	
 	private String estatus;
 	
@@ -169,6 +169,7 @@ public class DetalleCotizacion implements Serializable {
 	}
 	
 	public void eliminarPrecios(){
+		this.setCantidad(null);
 		this.setPrecioVenta(null);
 		this.setPrecioFlete(null);
 	}
