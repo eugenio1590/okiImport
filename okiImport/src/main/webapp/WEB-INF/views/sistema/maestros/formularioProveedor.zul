@@ -47,7 +47,7 @@
 								        <label
 											value="Tipo Proveedor: *" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="@load(vm.makeAsReadOnly)"
+											placeholder="Seleccione..." width="80%" readonly="@bind(vm.makeAsReadOnly)"
 											selectedItem="@bind(vm.tipoProveedor)" value="@bind(vm.tipoProveedor.nombre)"
 											model="@load(vm.listaTipoProveedor)">
 											<template name="model">
@@ -60,8 +60,8 @@
 										
 											<label value="RIF: *" />
 									<hbox>
-											<combobox width="30%" value="@bind(vm.tipoPersona.nombre)"
-												readonly="@load(vm.makeAsReadOnly)" selectedItem="@bind(vm.tipoPersona)"
+											<combobox width="30%" value="@bind(vm.tipoPersona.nombre)" buttonVisible="@bind(!vm.makeAsReadOnly)"
+												readonly="@bind(vm.makeAsReadOnly)" selectedItem="@bind(vm.tipoPersona)"
 												model="@load(vm.listaTipoPersona)" constraint="no empty">
 												<template
 													name="model">
@@ -73,7 +73,7 @@
 											</combobox>
 
 											<textbox id="cedulaRif"
-												width="108%" readonly="@load(vm.makeAsReadOnly)" mold="rounded"
+												width="108%" readonly="@bind(vm.makeAsReadOnly)" mold="rounded"
 												value="@bind(vm.proveedor.cedula)"
 												placeholder="Ej: 402405375" maxlength="12"
 												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
@@ -88,7 +88,7 @@
 									  <label value="Teléfono: *" />
 
 										<textbox id="telefono"
-											width="80%" readonly="@load(vm.makeAsReadOnly)" mold="rounded"
+											width="80%" readonly="@bind(vm.makeAsReadOnly)" mold="rounded"
 											value="@bind(vm.proveedor.telefono)" maxlength="11"
 											placeholder="Ej: 02512552233"
 											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
@@ -98,7 +98,7 @@
 											value="Nombre/Razón Social:*" />
 
 										<textbox id="nombreRazonSocial"
-											width="80%" readonly="@load(vm.makeAsReadOnly)" mold="rounded"
+											width="80%" readonly="@bind(vm.makeAsReadOnly)" mold="rounded"
 											value="@bind(vm.proveedor.nombre)"
 											placeholder="Ej: Empresa C.A"
 											constraint="no empty:El Campo No Debe Estar Vacio" />
@@ -109,7 +109,7 @@
 									<row>
 										<label value="E-mail: *" />
 										<textbox id="email" width="80%"
-											readonly="@load(vm.makeAsReadOnly)" mold="rounded" value="@bind(vm.proveedor.correo)"
+											readonly="@bind(vm.makeAsReadOnly)" mold="rounded" value="@bind(vm.proveedor.correo)"
 											placeholder="Ej. fusa@gmail.com"
 											constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
 										</textbox>
@@ -118,7 +118,7 @@
 										<label value="Dirección: *" />
 
 										<textbox id="direccion"
-											width="80%" rows="3" cols="35" readonly="@load(vm.makeAsReadOnly)" mold="rounded"
+											width="80%" rows="3" cols="35" readonly="@bind(vm.makeAsReadOnly)" mold="rounded"
 											value="@bind(vm.proveedor.direccion)"
 											placeholder="Ej: zona industrial 2 "
 											constraint="no empty:El Campo No Debe Estar Vacio" />
@@ -129,9 +129,9 @@
 
 									<label value="Estado: *" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="@load(vm.makeAsReadOnly)"
-											selectedItem="@bind(vm.estado)" id="cmbEstado"
-											model="@load(vm.listaEstados)"
+											placeholder="Seleccione..." width="80%" readonly="@bind(vm.makeAsReadOnly)"
+											selectedItem="@bind(vm.estado)" id="cmbEstado" 
+											model="@load(vm.listaEstados)" buttonVisible="@bind(!vm.makeAsReadOnly)"
 											value="@bind(vm.proveedor.ciudad.estado.nombre)"
 											onSelect="@command('buscarCiudades')">
 											<template name="model">
@@ -145,9 +145,9 @@
 										
 										   <label value="Ciudad: *" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="@load(vm.makeAsReadOnly)"
+											placeholder="Seleccione..." width="80%" readonly="@bind(vm.makeAsReadOnly)"
 											selectedItem="@bind(vm.proveedor.ciudad)" value="@load(vm.proveedor.ciudad.nombre)"
-											model="@load(vm.listaCiudades)" id="cmbCiudad">
+											model="@load(vm.listaCiudades)" id="cmbCiudad" buttonVisible="@bind(!vm.makeAsReadOnly)">
                                             
 											<template name="model">
 												<comboitem
@@ -172,7 +172,7 @@
 						<div>
 							<borderlayout height="470px">
 								<west width="300px" title="Marcas" size="25%" flex="true" maxsize="250" 
-									collapsible="true" border="normal">
+									collapsible="true" border="normal" visible="@bind(!vm.makeAsReadOnly)">
 									<vlayout height="100%" vflex="1">
 										<toolbar>
 											<toolbarbutton height="45px"
@@ -180,7 +180,7 @@
 												tooltiptext="Agregar Marcas a Vender"
 												onClick="@command('agregarMarcas')" />
 										</toolbar>
-										<listbox id="gridMarcas"
+										<listbox id="gridMarcas" 
 											mold="paging" checkmark="true"
 											selectedItems="@bind(vm.marcaSeleccionadas)" multiple="true"
 											model="@load(vm.listaMarcaVehiculos)">
@@ -243,7 +243,7 @@
 						<div>
 
 							<borderlayout width="100%" height="470px">
-								<west width="300px"
+								<west width="300px" visible="@bind(!vm.makeAsReadOnly)"
 									title="Tipo de Repuestos" collapsible="true">
 									<vlayout>
 										<toolbar>
@@ -310,7 +310,7 @@
 			</tabpanels>
 		</tabbox>
 		<!-- BOTONES -->
-		<hbox width="100%">
+		<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)">
 			<div hflex="1" align="center">
 				<label value="* Campos Obligatorios" sclass="requerido" />
 			</div>

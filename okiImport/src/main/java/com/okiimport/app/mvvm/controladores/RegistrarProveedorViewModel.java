@@ -90,7 +90,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("recordMode") String recordMode,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
-	
+	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		listaEstados = llenarListaEstados();
@@ -103,9 +103,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
 		listaTipoProveedor = llenarListaTipoProveedor();
-		tipoProveedor=consultarTipoProveedor(proveedor.getTipoProveedor(),listaTipoProveedor);
-		tipoPersona=consultarTipoPersona(proveedor.getCedula().substring(0, 1),listaTipoPersona);
-		proveedor.setCedula(proveedor.getCedula().substring(1));
+		tipoProveedor=consultarTipoProveedor(this.proveedor.getTipoProveedor(),listaTipoProveedor);
+		tipoPersona=consultarTipoPersona(this.proveedor.getCedula(),listaTipoPersona);
+		String cedula = this.proveedor.getCedula();
+		if(cedula!=null)
+			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 	}
 
 	@Command
@@ -123,21 +125,24 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 
 	
-	public ModeloCombo<Boolean> consultarTipoProveedor(boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
-		for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
-			if (tipoProveedorl.getValor() == tipoProveedor)
-			return tipoProveedorl;
+	public ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
+		if(tipoProveedor!=null)
+			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
+				if (tipoProveedorl.getValor() == tipoProveedor)
+					return tipoProveedorl;
 			
 		return null;
 		
 	}
 	
-	public ModeloCombo<Boolean> consultarTipoPersona(String tipoPersona, List <ModeloCombo<Boolean>> listaTipoPersona){
-		for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
-			if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
-			return tipoPersonal;
-			
-		return null;
+	public ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
+		if (cedula!=null){
+			String tipoPersona = cedula.substring(0, 1);
+			for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
+				if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
+					return tipoPersonal;
+		}
+		return this.tipoPersona;
 		
 	}
 	
