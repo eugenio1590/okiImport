@@ -34,6 +34,7 @@ public class Cotizacion implements Serializable, Cloneable{
 	
 	private String mensaje;
 	
+	@Column(name="precio_flete", scale=2)
 	private Float precioFlete;
 	
 	@Transient

@@ -142,7 +142,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	public void verSolicitudes(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		parametros.put("usuario", usuario);
+		parametros.put("persona", usuario.getPersona());
 		if(proveedor.getTipoProveedor().equals(true)) //Nacional
 			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
 		else //Internacional

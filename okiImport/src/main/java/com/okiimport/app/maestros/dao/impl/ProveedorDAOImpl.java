@@ -106,7 +106,7 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		//2. Generamos los Joins
 		Map<String, JoinType> entidades = new HashMap<String, JoinType>();
 		entidades.put("cotizacions", JoinType.INNER);
-		entidades.put("usuario", JoinType.INNER);
+		entidades.put("usuario", JoinType.LEFT);
 		Map<String, Join> joins = this.crearJoins(entidades);
 
 		//3. Creamos las Restricciones de la busqueda
@@ -132,7 +132,6 @@ public class ProveedorDAOImpl extends PersonaDAOImpl<Proveedor> implements Prove
 		
 		
 		proveedor = (proveedor==null) ? new Proveedor() : proveedor;
-		proveedor.setEstatus("activo");
 		agregarFiltros(proveedor, restricciones);
 		
 		//4. Creamos los campos de ordenamiento y ejecutamos

@@ -29,6 +29,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
+import com.okiimport.app.modelo.Configuracion;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
@@ -106,6 +107,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
 				null, null, 0, -1);
 		listaDetalleCotizacion = (List<DetalleCotizacionInternacional>) parametros.get("detallesCotizacion");
+		prepararListaDetalleCotizacion();
 		limpiarCotizacionSeleccionada();
 		
 		formasEnvio = llenarFormasDeEnvio();
@@ -280,7 +282,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			detalleCotizacion.setCotizacion(cotizacionSelecionada);
 			detalleCotizacion.setTipoFlete(tipoFlete.getValor());
 			detalleCotizacion.setFormaEnvio(formaEnvio.getValor());
-			detalleCotizacion.calcularTotal(true);
+			detalleCotizacion.calcularTotal();
 			calcularPrecio(3);
 		}
 	}
@@ -329,6 +331,18 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private void actualizarListaDetalleCotizacion(){
 		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion)
 			calcularTotalFlete(detalle);
+	}
+	
+	/*
+	 * Descripcion: Permitira asignar la configuracion actual de la libra a los detalles de cotizacion
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
+	private void prepararListaDetalleCotizacion(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		Float valorLibra = configuracion.getValorLibra();
+		for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion)
+			detalle.setValorLibra(valorLibra);
 	}
 	
 	/**SETTERS Y GETTERS*/

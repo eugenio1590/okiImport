@@ -29,6 +29,8 @@ public class Compra {
 	@Column(name="precio_flete")
 	private Float precioFlete;
 	
+	private String observacion;
+	
 	//bi-directional one-to-one association to FormaPago
 	@OneToOne(mappedBy="compra")
 	private PagoCompra pagoCompra;
@@ -81,6 +83,14 @@ public class Compra {
 
 	public void setPrecioFlete(Float precioFlete) {
 		this.precioFlete = precioFlete;
+	}
+	
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
 	}
 
 	public PagoCompra getPagoCompra() {

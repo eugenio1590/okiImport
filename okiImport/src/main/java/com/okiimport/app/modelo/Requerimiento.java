@@ -58,7 +58,7 @@ public class Requerimiento implements Serializable {
 	@Column(name="traccion_v")
 	private Boolean traccionV;
 	
-	@Column(name="tipoRepuesto")
+	@Column(name="tipo_repuesto")
 	private Boolean tipoRepuesto;
 	
 	//bi-directional many-to-one association to Analista
