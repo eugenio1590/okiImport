@@ -39,12 +39,10 @@ public class Oferta {
 	public Oferta() {
 	}
 
-	public Oferta(Integer idOferta, Date fechaCreacion,
-			String observacion, String estatus) {
+	public Oferta(Integer idOferta, Date fechaCreacion, String estatus) {
 		super();
 		this.idOferta = idOferta;
 		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
-		this.observacion = observacion;
 		this.estatus = estatus;
 		this.detalleOfertas = new ArrayList<DetalleOferta>();
 	}
