@@ -1,6 +1,102 @@
-<?page title="Oferta" contentType="text/html;charset=UTF-8"?>
-<zk>
-<window title="Oferta" border="normal">
-New Content Here!
-</window>
-</zk>
+<window  border="none" width="60%" title="Oferta"
+		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')">
+		<groupbox closable="false">
+		<div> 
+		    <space></space>
+		    <space></space> 
+		    <label value="N° Oferta:" />
+		    <label value="@bind(vm.oferta.idOferta)"/>
+		 
+		    
+		</div>
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Basicos" />
+				<div>
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label value="Fecha: " />
+									
+							    <datebox id="fecha"  width="80%" format="dd/MM/yyyy" 
+							    value="@bind(vm.oferta.fechaCreacion)" instant="true" readonly="true"/>
+
+
+								<label value="Observacion: " />
+
+								<textbox id="observacion"
+									width="80%" readonly="true" mold="rounded"
+									value="@bind(vm.oferta.observacion)" />
+							</row>
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+			
+			
+			<groupbox closable="false">
+				<caption sclass="custom_caption" label="Detalle Oferta" />
+				<panel sclass="panel-primary">
+					<panelchildren>
+
+
+						<listbox mold="paging"
+							model="@load(vm.oferta.detalleOfertas)"
+							style="margin-top:10px" pageSize="5" >
+
+
+							<listhead>
+								
+								<listheader label="Descripcion"
+									sort="auto"  />
+								
+								<listheader label="Marca"
+									sort="auto" />
+									
+								<listheader label="Cantidad"
+									sort="auto" />
+									
+							    <listheader label="Cant. Encontrada"
+									sort="auto" />
+									
+								<listheader label="Precio Venta " 
+								    sort="auto" />
+									
+							</listhead>
+							
+							<template name="model">
+								<listitem>
+									
+									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)"/>
+									<listcell label="@bind(each.detalleCotizacion.marca)"/>
+									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)"/>
+									<listcell label="@bind(each.detalleCotizacion.cantidad)"/>
+									<listcell label="@bind(each.precioVenta)"/>
+									
+								</listitem>
+							</template>
+						</listbox>
+
+						<paging id="listaOf" pageSize="5" />
+
+					</panelchildren>
+				</panel>
+			</groupbox>
+			
+			<div align="right"> 
+		    <space></space>
+		    <space></space> 
+		    <label value="Total:" />
+		    <textbox value="@bind(vm.oferta.total)"/>
+		    </div>
+			
+		</groupbox>
+	</window>

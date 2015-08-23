@@ -109,7 +109,7 @@
 									
 									<button
 										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta"
-										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+										onClick="@command('verOferta',requerimiento = each)" />
 
 								</div>
 							</hbox>

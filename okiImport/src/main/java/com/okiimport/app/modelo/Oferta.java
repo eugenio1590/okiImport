@@ -27,6 +27,11 @@ public class Oferta {
 	
 	private String estatus;
 	
+	@Transient
+	private Float total;
+	
+	
+
 	@OneToMany(mappedBy="oferta", fetch=FetchType.LAZY)
 	private List<DetalleOferta> detalleOfertas;
 
@@ -87,4 +92,24 @@ public class Oferta {
 		return detalleOferta;
 	}
 
+	
+	public Float getTotal() {
+		return total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
+	}
+	
+	
+    public Float calcularTotal()
+    {
+    	float total = 0;
+    	if ( detalleOfertas != null && !detalleOfertas.isEmpty())
+    	 {
+    		
+    		//Realizar For para calcular el total de la oferta
+    	 }
+    	return total;
+    }
 }
