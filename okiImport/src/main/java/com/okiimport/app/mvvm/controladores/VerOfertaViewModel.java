@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-
+import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 
@@ -35,6 +36,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
 {
 	private Requerimiento requerimiento;
+
     private Oferta oferta;
     private DetalleOferta detalleOferta;
     private Cotizacion cotizacion;
@@ -46,6 +48,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	private STransaccion sTransaccion;
 	
     private List <Oferta> listaOferta;
+    
+    private List<ModeloCombo<Boolean>> listaTipoRepuesto;
     
 	//	private List <Requerimiento> listaRequerimientos;
     
@@ -113,6 +117,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 
 	public void setListaOferta(List<Oferta> listaOferta) {
 		this.listaOferta = listaOferta;
+	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
+		return listaTipoRepuesto;
+	}
+
+	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
 	
 	
