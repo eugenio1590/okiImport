@@ -55,11 +55,15 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
     
     
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("oferta") Oferta oferta)
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
+			/*@ExecutionArgParam("oferta") Oferta oferta*/
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
+			//Lo que obtenemos de la lista es un requerimiento no una oferta
 	{
 		super.doAfterCompose(view);
 		
-		this.oferta = oferta;
+		//this.oferta = oferta; //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
+								//se puede hacer en un metodo aparte para que se pueda usar mas adelante
 		
 	}
 

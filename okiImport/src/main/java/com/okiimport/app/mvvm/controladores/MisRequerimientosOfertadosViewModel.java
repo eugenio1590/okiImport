@@ -97,7 +97,7 @@ public class MisRequerimientosOfertadosViewModel extends AbstractRequerimientoVi
 		public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sTransaccion.consultarMisRequerimientosProcesados(requerimientoFiltro, 
+			Map<String, Object> parametros = sTransaccion.consultarMisRequerimientosOfertados(requerimientoFiltro, 
 					fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
