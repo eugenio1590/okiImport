@@ -35,6 +35,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	
 	private static List<String> ESTATUS_EMITIDOS;
 	private static List<String> ESTATUS_PROCESADOS;
+	private static List<String> ESTATUS_OFERTADOS;
 	
 	@Autowired
 	@BeanInjector("cotizacionDAO")
@@ -79,8 +80,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		ESTATUS_PROCESADOS = new ArrayList<String>();
 		ESTATUS_PROCESADOS.add("CT");
 		ESTATUS_PROCESADOS.add("EC");
-		ESTATUS_PROCESADOS.add("O");
-		ESTATUS_PROCESADOS.add("CC");
+		
+		ESTATUS_OFERTADOS = new ArrayList<String>();
+		ESTATUS_OFERTADOS.add("O");
+		ESTATUS_OFERTADOS.add("Z");
 	}
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
@@ -224,6 +227,16 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros= new HashMap<String, Object>();
 		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_PROCESADOS, 0,-1).size());
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_PROCESADOS, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map <String, Object> consultarMisRequerimientosOfertados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
+			int pagina, int limit){
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size());
+		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit));
 		return parametros;
 	}
 	

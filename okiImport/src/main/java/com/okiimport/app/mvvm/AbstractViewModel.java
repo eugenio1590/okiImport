@@ -10,7 +10,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +66,8 @@ import net.sf.jasperreports.view.JasperViewer;
 public abstract class AbstractViewModel {
 	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
 	public static final String BasePackageSistema = "/WEB-INF/views/SistemaOrion/Contenido/";
+	
+	private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private Component form;
 	
@@ -430,6 +436,10 @@ public abstract class AbstractViewModel {
 		}
 		
 		return parametros;
+	}
+	
+	public String getFormatoFecha(Timestamp fecha){
+		return formatDate.format(new Date(fecha.getTime()));
 	}
 	
 	/**REPORTES*/

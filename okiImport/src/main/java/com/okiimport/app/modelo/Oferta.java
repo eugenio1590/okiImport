@@ -33,11 +33,6 @@ public class Oferta {
 	
 	private String estatus;
 	
-	@Transient
-	private Float total;
-	
-	
-
 	@OneToMany(mappedBy="oferta", fetch=FetchType.LAZY)
 	private List<DetalleOferta> detalleOfertas;
 
@@ -116,24 +111,19 @@ public class Oferta {
 		return detalleOferta;
 	}
 
-	
-	public Float getTotal() {
-		return total;
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String determinarEstatus(){
+		if(this.estatus.equalsIgnoreCase("solicitado"))
+			return "No Enviada";
+		else if(this.estatus.equalsIgnoreCase("enviada"))
+			return "Enviada";
+		else if(this.estatus.equalsIgnoreCase("recibida"))
+			return "Recibida";
+		else
+			return "";
 	}
-
-	public void setTotal(Float total) {
-		this.total = total;
+	
+	public boolean enviar(){
+		return this.estatus.equalsIgnoreCase("solicitado");
 	}
-	
-	
-    public Float calcularTotal()
-    {
-    	float total = 0;
-    	if ( detalleOfertas != null && !detalleOfertas.isEmpty())
-    	 {
-    		
-    		//Realizar For para calcular el total de la oferta
-    	 }
-    	return total;
-    }
 }
