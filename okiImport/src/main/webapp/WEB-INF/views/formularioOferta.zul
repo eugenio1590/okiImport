@@ -84,7 +84,7 @@
 					<panelchildren>
 
 
-						<listbox mold="paging"
+						<listbox id="listaOferta" mold="paging"
 							model="@load(vm.oferta.detalleOfertas)"
 							style="margin-top:10px" pageSize="5" >
 
@@ -147,10 +147,7 @@
 		    </div>
 			
 		</groupbox>
-		
-		
-		
-			
+	
 			<div sclass="panel-footer" align="right">
 
 				<button id="btnLimpiar" label="Limpiar" type="submit"
