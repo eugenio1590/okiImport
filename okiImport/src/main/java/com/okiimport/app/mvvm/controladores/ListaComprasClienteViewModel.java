@@ -23,14 +23,13 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Oferta;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class ListaOfertasClienteViewModel extends
-		AbstractRequerimientoViewModel implements EventListener<SortEvent> {
+public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
 	// Servicios
 	@BeanInjector("sTransaccion")
@@ -40,30 +39,31 @@ public class ListaOfertasClienteViewModel extends
 	private SControlUsuario sControlUsuario;
 
 	// GUI
-	@Wire("#gridOfertasCliente")
-	private Listbox gridOfertasCliente;
+	@Wire("#gridComprasCliente")
+	private Listbox gridComprasCliente;
 
-	@Wire("#pagOfertasCliente")
-	private Paging pagOfertasCliente;
+	@Wire("#pagComprasCliente")
+	private Paging pagComprasCliente;
 	
-	@Wire("#winListaOfertas")
-	private Window winListaOfertas;
+	@Wire("#winListaCompras")
+	private Window winListaCompras;
 
 	// Atributos
-	private List<Oferta> listaOfertas;
+	private List<Compra> listaCompras;
 	private Requerimiento requerimiento;
-	private String titulo = "Ofertas del Requerimiento N° ";
+	private Compra compra;
+	private String titulo = "Solicitudes de Compra del Requerimiento N° ";
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
-		
+		this.compra = new Compra();
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
-		agregarGridSort(gridOfertasCliente);
-		pagOfertasCliente.setPageSize(pageSize);
-		cambiarOfertas(0, null, null);
+		agregarGridSort(gridComprasCliente);
+		pagComprasCliente.setPageSize(pageSize);
+		cambiarCompras(0, null, null);
 	}
 	
 	@Override
@@ -73,22 +73,22 @@ public class ListaOfertasClienteViewModel extends
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarOfertas", parametros );
+			ejecutarGlobalCommand("cambiarCompras", parametros );
 		}
 	}
 
 	/**GLOBAL COMMAND*/
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
-	@NotifyChange("listaOfertas")
-	public void cambiarOfertas(@Default("0") @BindingParam("page") int page,
+	@NotifyChange("listaCompras")
+	public void cambiarCompras(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sTransaccion.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarComprasPorRequerimiento(compra, requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
-		listaOfertas = (List<Oferta>) parametros.get("ofertas");
-		pagOfertasCliente.setActivePage(page);
-		pagOfertasCliente.setTotalSize(total);
+		listaCompras = (List<Compra>) parametros.get("compras");
+		pagComprasCliente.setActivePage(page);
+		pagComprasCliente.setTotalSize(total);
 	}
 
 	/** COMMAND */
@@ -101,38 +101,19 @@ public class ListaOfertasClienteViewModel extends
 	@Command
 	@NotifyChange("*")
 	public void paginarLista() {
-		int page = pagOfertasCliente.getActivePage();
-		cambiarOfertas(page, null, null);
+		int page = pagComprasCliente.getActivePage();
+		cambiarCompras(page, null, null);
 	}
 	
 	@Command
 	@NotifyChange("*")
-	public void verOferta(@BindingParam("oferta") Oferta oferta){
+	public void verCompra(@BindingParam("compra") Compra compra){
 		
 	}
-
+	
 	@Command
-	public void enviarCliente(){
-		for(Oferta oferta : listaOfertas ){
-			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
-				oferta.setEstatus("enviada");
-				sTransaccion.actualizarOferta(oferta);
-			}
-		}
-		requerimiento.setEstatus("O");
-		sTransaccion.actualizarRequerimiento(requerimiento);
+	public void registrarCompra(@BindingParam("compra") Compra compra){
 		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-		model.put("cliente", requerimiento.getCliente().getNombre());
-		model.put("cedula", requerimiento.getCliente().getCedula());
-
-		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
-				"registrarRequerimiento.html", model);
-		winListaOfertas.detach();
-		
-		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
-
 	}
 	
 	@Command
@@ -140,17 +121,31 @@ public class ListaOfertasClienteViewModel extends
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 
-	/**METODOS PROPIOS DE LA CLASE*/
-	public boolean enviarACliente(){
-		boolean enviar = false;
-		for(Oferta oferta : listaOfertas)
-			if(oferta.enviar()){
-				enviar = true;
-				break;
-			}
-		return enviar;
+	@Command
+	public void enviarCliente(){
+//		for(Oferta oferta : listaCompras ){
+//			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
+//				oferta.setEstatus("enviada");
+//				sTransaccion.actualizarOferta(oferta);
+//			}
+//		}
+//		requerimiento.setEstatus("O");
+//		sTransaccion.actualizarRequerimiento(requerimiento);
+//		
+//		Map<String, Object> model = new HashMap<String, Object>();
+//		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
+//		model.put("cliente", requerimiento.getCliente().getNombre());
+//		model.put("cedula", requerimiento.getCliente().getCedula());
+//
+//		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
+//				"registrarRequerimiento.html", model);
+//		winListaOfertas.detach();
+//		
+//		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
+
 	}
-	
+
+	/**METODOS PROPIOS DE LA CLASE*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -159,12 +154,12 @@ public class ListaOfertasClienteViewModel extends
 		this.sTransaccion = sTransaccion;
 	}
 
-	public List<Oferta> getListaOfertas() {
-		return listaOfertas;
+	public List<Compra> getListaCompras() {
+		return listaCompras;
 	}
 
-	public void setListaOfertas(List<Oferta> listaOfertas) {
-		this.listaOfertas = listaOfertas;
+	public void setListaCompras(List<Compra> listaCompras) {
+		this.listaCompras = listaCompras;
 	}
 
 	public SControlUsuario getsControlUsuario() {

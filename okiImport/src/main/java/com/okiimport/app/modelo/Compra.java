@@ -34,6 +34,8 @@ public class Compra {
 	
 	private String observacion;
 	
+	private String estatus;
+	
 	//bi-directional one-to-one association to FormaPago
 	@OneToOne(mappedBy="compra")
 	private PagoCompra pagoCompra;
@@ -104,6 +106,14 @@ public class Compra {
 		this.observacion = observacion;
 	}
 
+	public String getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(String estatus) {
+		this.estatus = estatus;
+	}
+
 	public PagoCompra getPagoCompra() {
 		return pagoCompra;
 	}
@@ -150,4 +160,8 @@ public class Compra {
 		return detalleOferta;
 	}
 
+	/**METODOS PROPIOS DE LA CLASE*/
+	public String determinarEstatus(){
+		return null;
+	}
 }

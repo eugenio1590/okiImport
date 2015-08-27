@@ -235,9 +235,16 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Map <String, Object> consultarMisRequerimientosOfertados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit){
 		// TODO Auto-generated method stub
+		Integer total = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size();
+		List<Requerimiento> requerimientos = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit);
+		int nroOfertas;
+		for(Requerimiento requerimiento : requerimientos){
+			nroOfertas = (Integer) this.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), null, null, 0, 1).get("total");
+			requerimiento.setNroOfertas(nroOfertas);
+		}
 		Map<String, Object> parametros= new HashMap<String, Object>();
-		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size());
-		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit));
+		parametros.put("total", total);
+		parametros.put("requerimientos", requerimientos);
 		return parametros;
 	}
 	
