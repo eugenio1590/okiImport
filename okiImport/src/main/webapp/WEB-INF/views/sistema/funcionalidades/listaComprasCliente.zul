@@ -51,9 +51,9 @@
 								<listcell>
 									<hbox spacing="20px">
 										<div class="btn-group btn-group-sm">
-											<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Compra"  
+											<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitud de Compra"  
 								    			onClick="@command('verCompra', compra = each)"/>
-								    		<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Compra"  
+								    		<button  iconSclass="fa fa-credit-card green bigger-160" tooltiptext="Registrar Compra"  
 								    			onClick="@command('registrarCompra', compra = each)"/>
 										</div>
 									</hbox>
