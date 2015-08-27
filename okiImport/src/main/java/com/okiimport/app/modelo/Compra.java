@@ -29,6 +29,9 @@ public class Compra {
 	@Column(name="precio_flete")
 	private Float precioFlete;
 	
+	@Column(name="tipo_flete")
+	private String tipoFlete;
+	
 	private String observacion;
 	
 	//bi-directional one-to-one association to FormaPago
@@ -85,6 +88,14 @@ public class Compra {
 		this.precioFlete = precioFlete;
 	}
 	
+	public String getTipoFlete() {
+		return tipoFlete;
+	}
+
+	public void setTipoFlete(String tipoFlete) {
+		this.tipoFlete = tipoFlete;
+	}
+
 	public String getObservacion() {
 		return observacion;
 	}

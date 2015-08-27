@@ -114,11 +114,14 @@ public class ListaOfertasClienteViewModel extends
 	@Command
 	public void enviarCliente(){
 		for(Oferta oferta : listaOfertas ){
-			oferta.setEstatus("enviada");
-			sTransaccion.actualizarOferta(oferta);
+			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
+				oferta.setEstatus("enviada");
+				sTransaccion.actualizarOferta(oferta);
+			}
 		}
 		requerimiento.setEstatus("O");
 		sTransaccion.actualizarRequerimiento(requerimiento);
+		
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
 		model.put("cliente", requerimiento.getCliente().getNombre());
@@ -127,6 +130,7 @@ public class ListaOfertasClienteViewModel extends
 		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
 				"registrarRequerimiento.html", model);
 		winListaOfertas.detach();
+		
 		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
 
 	}
