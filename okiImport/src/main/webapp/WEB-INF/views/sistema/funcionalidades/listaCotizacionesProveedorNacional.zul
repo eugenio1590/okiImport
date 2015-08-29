@@ -2,7 +2,7 @@
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"
-		onClose="@command('cargarRequerimientos')">
+		onClose="@command('onCloseWindow')">
 		<borderlayout>
 		<west width="40%" title="Informacion del Vehiculo" collapsible="true" 
 			onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">

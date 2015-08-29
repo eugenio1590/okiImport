@@ -135,7 +135,12 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	
 	@Override
 	public Float calcularTotal(){
-		return this.calcularCosto()+calcularFlete(true);
+		return this.calcularCosto()+calcularFlete();
+	}
+	
+	@Override
+	public Float calcularFlete(){
+		return this.calcularFlete(true);
 	}
 	
 	public Float calcularFlete(boolean conversion){

@@ -410,9 +410,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 				detalleF.setCantidad(new Long(0));
 			}
 		}
+		Integer total = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size();
+		List<DetalleCotizacion> detallesCotizacion = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit);
+		for(int i=0; i<detallesCotizacion.size(); i++){
+			DetalleCotizacion detalle = detallesCotizacion.get(i);
+			DetalleCotizacionInternacional detalleInter = this.detalleCotizacionInternacionalDAO.findByPrimaryKey(detalle.getIdDetalleCotizacion());
+			if(detalleInter != null){
+				detallesCotizacion.remove(i);
+				detallesCotizacion.add(i, detalleInter);
+			}
+		}
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", total);
+		parametros.put("detallesCotizacion", detallesCotizacion);
 		if(nuloCantidad)
 			detalleF.setCantidad(null);
 		return parametros;

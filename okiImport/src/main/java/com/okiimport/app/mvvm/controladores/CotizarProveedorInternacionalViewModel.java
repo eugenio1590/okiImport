@@ -287,8 +287,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
+	/*
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
 	@Command
-	public void actualizarCotizaciones(){
+	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
