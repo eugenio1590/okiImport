@@ -11,14 +11,22 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Oferta;
+import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.Compra;
@@ -35,11 +43,17 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
 {
+	
+	@Wire("#winOferta")
+	private Window winOferta;
+	
 	private Requerimiento requerimiento;
 
     private Oferta oferta;
     private DetalleOferta detalleOferta;
     private Cotizacion cotizacion;
+    
+    private boolean cerrar;
     
     @BeanInjector("sMaestros")
 	private SMaestros sMaestros;
@@ -51,21 +65,89 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
     
     private List<ModeloCombo<Boolean>> listaTipoRepuesto;
     
+    
 	//	private List <Requerimiento> listaRequerimientos;
     
     
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			/*@ExecutionArgParam("oferta") Oferta oferta*/
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 			//Lo que obtenemos de la lista es un requerimiento no una oferta
-	{
-		super.doAfterCompose(view);
-		
-		//this.oferta = oferta; //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
-								//se puede hacer en un metodo aparte para que se pueda usar mas adelante
+	{	
+		super.doAfterCompose(view);	
+		this.requerimiento = requerimiento;
+		cargarOferta();
+	    //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
+	   //se puede hacer en un metodo aparte para que se pueda usar mas adelante
 		
 	}
+	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@NotifyChange("oferta")
+	public void cargarOferta(){
+		
+		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+
+	}
+	
+	
+	@Command
+	@NotifyChange({ "oferta" })
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
+		
+		//1ero Actualizar Estatus de la Oferta
+		
+		oferta.setEstatus("recibida");
+		sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
+		
+		if (checkIsFormValid()) {
+
+			if (oferta.getDetalleOfertas().size() > 0)
+			{
+				
+				btnEnviar.setDisabled(true);
+				
+				registrarOferta(cerrar);
+			}
+
+			else
+				mostrarMensaje("Información", "Desea Revisar Otra Oferta?",
+						null, null, null, null);
+
+		}
+	}
+	
+	
+	
+	protected Oferta registrarOferta(boolean enviarEmail)
+	{
+	
+		oferta = sTransaccion.actualizarOferta(oferta);
+
+		if(enviarEmail){
+			Map<String, Object> model = new HashMap<String, Object>();
+			 
+			
+
+			//mailService.send(oferta.getCorreo(), "Oferta Enviada al Analista", "enconstruccion.html", model);
+			
+			String str = "Su Oferta Ha sido Enviada Exitosamente para ser confirmada, Se Enviara su pedido en 48 Horas ";
+
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							redireccionar("/");
+						}
+					}, null);
+		}
+		else {
+			winOferta.onClose();
+		}
+		return oferta;
+	}
+
+	
 
 	public Requerimiento getRequerimiento() {
 		return requerimiento;

@@ -26,12 +26,15 @@ public class Oferta {
 	private Timestamp fechaCreacion;
 	
 	@Column(name="porct_iva", scale=2)
-	private Float porctIva;
+	private Float porctIva = new Float(0);
 
 	@Column(name="porct_ganancia", scale=2)
-	private Float porctGanancia;
+	private Float porctGanancia = new Float(0);
 	
 	private String estatus;
+	
+	@Transient
+	private Float total;
 	
 	@OneToMany(mappedBy="oferta", fetch=FetchType.LAZY)
 	private List<DetalleOferta> detalleOfertas;
@@ -97,6 +100,16 @@ public class Oferta {
 		this.detalleOfertas = detalleOfertas;
 	}
 	
+	
+	
+	public Float getTotal() {
+		return total;
+	}
+
+	public void setTotal(Float total) {
+		this.total = total;
+	}
+
 	public DetalleOferta addDetalleOferta(DetalleOferta detalleOferta){
 		getDetalleOfertas().add(detalleOferta);
 		detalleOferta.setOferta(this);
@@ -126,4 +139,18 @@ public class Oferta {
 	public boolean enviar(){
 		return this.estatus.equalsIgnoreCase("solicitado");
 	}
+	
+	
+	public Float calcularTotal()
+    {
+    	float total = 0;
+    	if ( detalleOfertas != null && !detalleOfertas.isEmpty())
+    	 {
+    		for(DetalleOferta detalleOferta : detalleOfertas )
+    		{
+    			total = total + detalleOferta.calcularPrecioVenta();
+    		}
+    	 }
+    	return total;
+    }
 }

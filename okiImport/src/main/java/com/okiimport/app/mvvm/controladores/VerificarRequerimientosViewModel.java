@@ -131,10 +131,10 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	
 	
 	@Command
-	public void verOferta(@BindingParam("oferta") Oferta oferta){
+	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
 
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("oferta",oferta);
+		parametros.put("requerimiento", requerimiento);
 		llamarFormulario("formularioOferta.zul", parametros);
 
 	}
