@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
@@ -68,4 +69,8 @@ public interface STransaccion {
 	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit);
 	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento);
 	public Oferta actualizarOferta(Oferta oferta);
+	
+	//Compras
+	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limite);
 }

@@ -26,6 +26,7 @@ import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
@@ -162,16 +163,27 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaTipoProveedor;
 	}
 	
-	protected static List<ModeloCombo<String>> llenarListaEstatus(){
+	private static List<ModeloCombo<String>> llenarListaEstatus(List<EEstatusRequerimiento> listEstatus){
 		List<ModeloCombo<String>> listaEstatus = new ArrayList<ModeloCombo<String>>();
-		listaEstatus.add(new ModeloCombo<String>("Emitido", "CR"));
-		listaEstatus.add(new ModeloCombo<String>("Recibido y Editado", "E"));
-		listaEstatus.add(new ModeloCombo<String>("Enviado a Proveedores", "EP"));
-		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Asignadas", "CT"));
-		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Incompletas", "EC"));
-		listaEstatus.add(new ModeloCombo<String>("Ofertado", "O"));
-		listaEstatus.add(new ModeloCombo<String>("Concretado", "CC"));
+		for(EEstatusRequerimiento estatus : listEstatus)
+			listaEstatus.add(new ModeloCombo<String>(estatus.getNombre(), estatus.getValue()));
 		return listaEstatus;
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusEmitidos(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusEmitidos());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusProcesados(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusProcesados());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusOfertados(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusOfertados());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusGeneral(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusGeneral());
 	}
 	
 	protected static List<ModeloCombo<Boolean>> llenarTiposFleteNacional(){

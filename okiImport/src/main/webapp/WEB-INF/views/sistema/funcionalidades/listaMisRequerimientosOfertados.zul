@@ -64,12 +64,12 @@
 							<div class="btn-group btn-group-sm">
 								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Requerimiento"  
 								    onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
-								<button iconSclass="fa fa-users purple bigger-160" tooltiptext="Enviar Oferta"
-									onClick="@command('enviarOferta', requerimiento = each)"/>
-								<button iconSclass="z-icon-book blue red bigger-160" tooltiptext="Editar Cotizaciones" if="${ each.editarCotizacion() }"
-									onClick="@command('editarCotizaciones', requerimiento = each)"/>
+								<button iconSclass="fa fa-envelope-o red bigger-160" tooltiptext="Ofertas"
+									onClick="@command('mostrarOfertas', requerimiento = each)"/>
 								<button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Seleccionar Cotizaciones"  
-								    onClick="@command('seleccionarCotizaciones', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() }"/>
+								    onClick="@command('seleccionarCotizaciones', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() and each.seleccionarCotizacion() }"/>
+								<button  iconSclass="fa fa-shopping-cart green bigger-160" tooltiptext="Ver Compras"  
+								    onClick="@command('verCompras', requerimiento = each)"/>
 							</div>
 						</hbox>
 					</listcell>

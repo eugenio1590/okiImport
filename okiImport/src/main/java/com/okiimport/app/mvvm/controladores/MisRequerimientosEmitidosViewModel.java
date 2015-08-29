@@ -65,7 +65,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
 		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
-		listaEstatus = llenarListaEstatus();
+		listaEstatus = llenarListaEstatusEmitidos();
 		listaEstatus.add(estatusFiltro);
 	}
 	

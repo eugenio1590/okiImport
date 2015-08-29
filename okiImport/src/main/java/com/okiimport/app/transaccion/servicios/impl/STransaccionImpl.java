@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
@@ -234,9 +235,16 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	public Map <String, Object> consultarMisRequerimientosOfertados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
 			int pagina, int limit){
 		// TODO Auto-generated method stub
+		Integer total = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size();
+		List<Requerimiento> requerimientos = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit);
+		int nroOfertas;
+		for(Requerimiento requerimiento : requerimientos){
+			nroOfertas = (Integer) this.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), null, null, 0, 1).get("total");
+			requerimiento.setNroOfertas(nroOfertas);
+		}
 		Map<String, Object> parametros= new HashMap<String, Object>();
-		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size());
-		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit));
+		parametros.put("total", total);
+		parametros.put("requerimientos", requerimientos);
 		return parametros;
 	}
 	
@@ -466,5 +474,16 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		else
 			oferta = ofertaDAO.update(oferta);
 		return oferta;
+	}
+
+	//Compras
+	@Override
+	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("compras", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, pagina*limite, limite));
+		return parametros;
 	}
 }

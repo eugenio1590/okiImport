@@ -61,6 +61,9 @@ public class Requerimiento implements Serializable {
 	@Column(name="tipo_repuesto")
 	private Boolean tipoRepuesto;
 	
+	@Transient
+	private Integer nroOfertas;
+	
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
 	@JoinColumn(name="id_analista")
@@ -294,6 +297,14 @@ public class Requerimiento implements Serializable {
 		return compra;
 	}
 
+	public Integer getNroOfertas() {
+		return nroOfertas;
+	}
+
+	public void setNroOfertas(Integer nroOfertas) {
+		this.nroOfertas = nroOfertas;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public String determinarTransmision(){
 		String texto = null;
@@ -358,6 +369,12 @@ public class Requerimiento implements Serializable {
 	
 	public boolean editarCotizacion(){
 		return this.estatus.equalsIgnoreCase("EC");
+	}
+	
+	public boolean seleccionarCotizacion(){
+		if(this.nroOfertas!=null && this.nroOfertas<3)
+			return true;
+		return false;
 	}
 	
 	public boolean cerrarSolicitud(){
