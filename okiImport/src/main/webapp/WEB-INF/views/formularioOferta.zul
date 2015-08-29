@@ -1,4 +1,4 @@
-<window  border="none" width="60%" title="Oferta"
+<window id="winOferta" border="none" width="60%" title="Oferta"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')">
 		<groupbox closable="false">
@@ -33,6 +33,38 @@
 		 
 		    
 		</div>
+		
+		<groupbox closable="false">
+				<caption sclass="custom_caption" label="Datos Del Requerimiento" />
+				<div>
+					<grid>
+						<columns>
+							<column width="35%" align="right" />
+							<column width="65%" />
+							<column width="35%" align="right" />
+							<column width="65%" />
+						</columns>
+
+						<rows>
+							<row>
+								<label value="Numero: " />
+								<textbox value="@bind(vm.requerimiento.idRequerimiento)"
+									width="80%" readonly="true"/>
+								
+
+								<label value="Fecha Creacion: " />
+								<textbox  width="80%"
+									readonly="true" mold="rounded"
+									value="@bind(vm.requerimiento.fechaCreacion)"/>
+									
+							</row>
+
+						</rows>
+					</grid>
+				</div>
+			</groupbox>
+		
+		
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Datos Del Vehiculo" />
 				<div>
@@ -55,21 +87,10 @@
 								<textbox id="modelo" width="80%"
 									readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.modeloV)"/>
-							</row>
-
-							<row>
-
-								<label value="Serial Carroceria: " />
-								<textbox id="serialCarroceria"
-									width="80%" readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.serialCarroceriaV)"
-									maxlength="11"/>
 									
-									
-								<label value="Tipo Repuesto: " />
-								<combobox value="@bind(vm.listaTipoRepuesto)"
+									<label value="Tipo Repuesto: " />
+								<textbox value="@bind(vm.requerimiento.determinarTipoRepuesto())"
 									width="80%" readonly="true"/>
-								
 							</row>
 
 						</rows>
@@ -78,13 +99,17 @@
 			</groupbox>
 			
 			
+			
+			
+			
+			
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Detalle Oferta" />
 				<panel sclass="panel-primary">
 					<panelchildren>
 
 
-						<listbox mold="paging"
+						<listbox id="listaOferta" mold="paging"
 							model="@load(vm.oferta.detalleOfertas)"
 							style="margin-top:10px" pageSize="5" >
 
@@ -97,13 +122,16 @@
 								<listheader label="Marca"
 									sort="auto" />
 									
-								<listheader label="Cantidad"
+								<listheader label="Cantidad Solicitada"
 									sort="auto" />
 									
 							    <listheader label="Cant. Encontrada"
 									sort="auto" />
 									
 								<listheader label="Precio Venta S/F" 
+								    sort="auto" />
+								    
+								<listheader label="Seleccion" 
 								    sort="auto" />
 									
 							</listhead>
@@ -112,16 +140,16 @@
 								<listitem>
 									
 									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)"/>
-									<listcell label="@bind(each.detalleCotizacion.marca)"/>
+									<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)"/>
 									<listcell label="@bind(each.detalleCotizacion.cantidad)"/>
-									<listcell label="@bind(each.detalleOferta.calcularPrecioVenta())"/>
+									<listcell label="@bind(each.calcularPrecioVenta())"/>
 									<listcell>
 							         <hbox spacing="20px">
 								     <div class="btn-group btn-group-sm">
 
-									  <button
-										iconSclass="z-check-square-o blue bigger-160" tooltiptext="Aceptar Oferta"
+									  <button label="Aceptar"  sclass="btn-primary"
+										iconSclass="fa fa-check-square blue bigger-160" tooltiptext="Aceptar Oferta"
 										onClick="@command('aceptarOferta',oferta = each)" />
 
 								      </div>
@@ -130,6 +158,20 @@
 									
 								</listitem>
 							</template>
+							
+							<listfoot>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						
+						<listfooter>
+							<label value="Total:"/>
+							<label value="@bind(vm.oferta.calcularTotal())"/>
+						</listfooter>
+						</listfoot>
+							
+							
 						</listbox>
 
 						<paging id="listaOf" pageSize="5" />
@@ -138,19 +180,9 @@
 				</panel>
 			</groupbox>
 			
-			<div align="right"> 
-		    <space></space>
-		    <space></space> 
-		    <label value="Total:" />
-		    
-		    <textbox value="@bind(vm.oferta.total())"/>
-		    </div>
 			
 		</groupbox>
-		
-		
-		
-			
+	
 			<div sclass="panel-footer" align="right">
 
 				<button id="btnLimpiar" label="Limpiar" type="submit"
