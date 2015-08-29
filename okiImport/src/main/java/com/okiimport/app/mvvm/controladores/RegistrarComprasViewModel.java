@@ -88,7 +88,7 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange("oferta")
 	public void cargarOferta(){
 		
-		compra = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+		//compra = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
 
 	}
 	
@@ -99,10 +99,10 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 		
 		//1ero Actualizar Estatus de la Oferta
 		
-		compra.setEstatus("recibida");
-		sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
+		//compra.setEstatus("recibida");
+		//sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
 		
-		if (checkIsFormValid()) {
+		/*if (checkIsFormValid()) {
 
 			if (oferta.getDetalleOfertas().size() > 0)
 			{
@@ -116,15 +116,15 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 				mostrarMensaje("Información", "Desea Revisar Otra Oferta?",
 						null, null, null, null);
 
-		}
+		}*/
 	}
 	
 	
 	
-	protected Oferta registrarOferta(boolean enviarEmail)
+	/*protected Oferta registrarOferta(boolean enviarEmail)
 	{
 	
-		/*compra = sTransaccion.actualizarOferta(compra);
+		compra = sTransaccion.actualizarOferta(compra);
 
 		if(enviarEmail){
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -145,8 +145,8 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 		else {
 			winCompras.onClose();
 		}
-		return oferta;*/
-	}
+		return oferta;
+	}*/
 
 	
 
