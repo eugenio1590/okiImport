@@ -497,6 +497,27 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		parametros.put("compras", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, pagina*limite, limite));
 		return parametros;
 	}
+	
+	@Override
+	public Compra registrarOActualizarCompra(Compra compra){
+		if(compra.getIdCompra()==null)
+			compra=this.compraDAO.save(compra);
+		else
+			compra=this.compraDAO.update(compra);
+		return compra;
+	}
+	
+	@Override
+	public Compra registrarSolicitudCompra(Compra compra) {
+		compra.setEstatus("solicitada");
+		return registrarOActualizarCompra(compra);
+	}
+
+	@Override
+	public Compra registrarCompra(Compra compra) {
+		compra.setEstatus("cerrada");
+		return registrarOActualizarCompra(compra);
+	}
 
 	//DetalleCompra
 	@Override

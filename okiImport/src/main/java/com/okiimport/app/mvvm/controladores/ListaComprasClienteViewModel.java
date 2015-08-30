@@ -115,6 +115,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	public void registrarCompra(@BindingParam("compra") Compra compra){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("compra", compra);
+		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/formularioCompra.zul", parametros);
 	}
 	

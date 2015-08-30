@@ -2,7 +2,8 @@
 	<window id="winCompras" border="none" width="80%" title="Compra"
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarCompraViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarCompraViewModel')"
+		onClose="@command('onCloseWindow')">
 		<groupbox closable="false">
 			<div>
 				<space></space>

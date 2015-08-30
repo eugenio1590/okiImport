@@ -19,7 +19,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.Requerimiento;
@@ -29,10 +28,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	
-    //Servicios
-    @BeanInjector("sMaestros")
-	private SMaestros sMaestros;
-    
+    //Servicios   
     @BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
     
@@ -98,18 +94,18 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
-		
+		if(checkIsFormValid()){
+			this.sTransaccion.registrarCompra(compra);
+			winCompras.onClose();
+		}
+	}
+	
+	@Command
+	public void onCloseWindow(){
+		ejecutarGlobalCommand("cambiarCompras", null);
 	}
 	
 	/**GETTERS Y SETTERS*/
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
-	}
-
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

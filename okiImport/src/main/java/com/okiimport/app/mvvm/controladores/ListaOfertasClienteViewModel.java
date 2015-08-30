@@ -22,7 +22,9 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.modelo.Configuracion;
 import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -38,6 +40,9 @@ public class ListaOfertasClienteViewModel extends
 
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
+	
+	@BeanInjector("sControlConfiguracion")
+	private SControlConfiguracion sControlConfiguracion;
 
 	// GUI
 	@Wire("#gridOfertasCliente")
@@ -113,8 +118,11 @@ public class ListaOfertasClienteViewModel extends
 
 	@Command
 	public void enviarCliente(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
 		for(Oferta oferta : listaOfertas ){
 			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
+				oferta.setPorctIva(configuracion.getPorctIva());
+				oferta.setPorctGanancia(configuracion.getPorctGanancia());
 				oferta.setEstatus("enviada");
 				sTransaccion.actualizarOferta(oferta);
 			}
@@ -159,20 +167,28 @@ public class ListaOfertasClienteViewModel extends
 		this.sTransaccion = sTransaccion;
 	}
 
-	public List<Oferta> getListaOfertas() {
-		return listaOfertas;
-	}
-
-	public void setListaOfertas(List<Oferta> listaOfertas) {
-		this.listaOfertas = listaOfertas;
-	}
-
 	public SControlUsuario getsControlUsuario() {
 		return sControlUsuario;
 	}
 
 	public void setsControlUsuario(SControlUsuario sControlUsuario) {
 		this.sControlUsuario = sControlUsuario;
+	}
+	
+	public SControlConfiguracion getsControlConfiguracion() {
+		return sControlConfiguracion;
+	}
+
+	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
+		this.sControlConfiguracion = sControlConfiguracion;
+	}
+
+	public List<Oferta> getListaOfertas() {
+		return listaOfertas;
+	}
+
+	public void setListaOfertas(List<Oferta> listaOfertas) {
+		this.listaOfertas = listaOfertas;
 	}
 
 	public Requerimiento getRequerimiento() {

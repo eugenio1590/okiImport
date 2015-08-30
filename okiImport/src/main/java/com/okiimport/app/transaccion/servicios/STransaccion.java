@@ -74,6 +74,9 @@ public interface STransaccion {
 	//Compras
 	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,
 			int pagina, int limite);
+	public Compra registrarOActualizarCompra(Compra compra);
+	public Compra registrarSolicitudCompra(Compra compra);
+	public Compra registrarCompra(Compra compra);
 	
 	//DetalleCompra
 	public Map<String, Object> consultarDetallesCompra(int idCompra, String fieldSort, Boolean sortDirection, 
