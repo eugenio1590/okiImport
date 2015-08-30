@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" closable="true"
+	<window id="winProveedor" closable="true"
 		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
@@ -176,7 +176,7 @@
 									<vlayout height="100%" vflex="1">
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowRight32.png"
+												image="/resources/img/icons/ButtonArrowRight32.png"
 												tooltiptext="Agregar Marcas a Vender"
 												onClick="@command('agregarMarcas')" />
 										</toolbar>
@@ -205,7 +205,7 @@
 									<div>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowLeft32.png"
+												image="/resources/img/icons/ButtonArrowLeft32.png"
 												tooltiptext="Remover Marcas a Vender"
 												onClick="@command('eliminarMarcas')" />
 										</toolbar>
@@ -248,7 +248,7 @@
 									<vlayout>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowRight32.png"
+												image="/resources/img/icons/ButtonArrowRight32.png"
 												tooltiptext="Agregar Tipo Repuesto a Vender"
 												onClick="@command('agregarTipoRepuesto')" />
 										</toolbar>
@@ -279,7 +279,7 @@
 									<div>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowLeft32.png"
+												image="/resources/img/icons/ButtonArrowLeft32.png"
 												tooltiptext="Remover Tipo de Repuesto a Vender"
 												onClick="@command('eliminarTipoRepuesto')" />
 										</toolbar>
