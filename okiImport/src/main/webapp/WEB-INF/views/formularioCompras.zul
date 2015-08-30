@@ -1,6 +1,6 @@
 <window id="winCompras" border="none" width="80%" title="Compras"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarComprasViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')">
 		<groupbox closable="false">
 		<div> 
 		    <space></space>

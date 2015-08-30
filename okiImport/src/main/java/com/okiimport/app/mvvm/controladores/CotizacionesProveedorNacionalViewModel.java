@@ -238,7 +238,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			if(checkIsFormValid()){
 				cotizacionSelecionada.setEstatus("C");
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
-				sTransaccion.registrarCotizacion(cotizacionSelecionada);
+				sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 				this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, null, null);
 				cotizacionSelecionada = null;
 				listaDetalleCotizacion = null;

@@ -185,7 +185,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			else
 				cotizacionSelecionada.setEstatus("C");
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
-			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+			sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
 		}
 	}

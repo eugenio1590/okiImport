@@ -351,13 +351,20 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion, Requerimiento requerimiento) {
 		// TODO Auto-generated method stub
 		String estatusRequerimiento = "CT";
+		List<Cotizacion> cotizaciones = (List<Cotizacion>) consultarCotizacionesParaEditar(null, null, null, requerimiento.getIdRequerimiento(), 0, 1).get("cotizaciones");
 		if(cotizacion.getEstatus()==null)
 			cotizacion.setEstatus("C");
-		else if(cotizacion.getEstatus().equalsIgnoreCase("EC"))
+		
+		if(cotizacion.getEstatus().equalsIgnoreCase("EC")) //Incompleto
 			estatusRequerimiento = "EC";
+		else if(!cotizaciones.isEmpty()) //Completo
+			estatusRequerimiento = "EC";
+		
+		requerimiento.setEstatus(estatusRequerimiento);
+		this.requerimientoDAO.update(requerimiento);
 		
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
 		cotizacion = cotizacionDAO.update(cotizacion);
@@ -367,12 +374,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			
 			detalleRequerimiento.setEstatus("CT");
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-		
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			if(!requerimiento.getEstatus().equalsIgnoreCase("EC")){
-				requerimiento.setEstatus(estatusRequerimiento);
-				this.requerimientoDAO.update(requerimiento);
-			}
 		}
 		return cotizacion;
 	}
@@ -494,6 +495,17 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("total", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
 		parametros.put("compras", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, pagina*limite, limite));
+		return parametros;
+	}
+
+	//DetalleCompra
+	@Override
+	public Map<String, Object> consultarDetallesCompra(int idCompra, String fieldSort, Boolean sortDirection, 
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCompra", this.detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, pagina*limite, limite));
 		return parametros;
 	}
 }
