@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -65,13 +66,16 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
     
     private List<ModeloCombo<Boolean>> listaTipoRepuesto;
     
+    private List<DetalleOferta> listaDetOferta;
+    
     
 	//	private List <Requerimiento> listaRequerimientos;
     
     
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento, 
+			@ExecutionArgParam("detallesOfertas") List<DetalleOferta> listaDetOferta )
 			//Lo que obtenemos de la lista es un requerimiento no una oferta
 	{	
 		super.doAfterCompose(view);	
@@ -79,6 +83,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 		cargarOferta();
 	    //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
 	   //se puede hacer en un metodo aparte para que se pueda usar mas adelante
+		
+		this.listaDetOferta = (listaDetOferta == null ) ? new ArrayList<DetalleOferta>(): listaDetOferta;
 		
 	}
 	
@@ -96,26 +102,67 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange({ "oferta" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
 		
+		
+		if ( checkIsFormValid() )
+		{
+			
+		
 		//1ero Actualizar Estatus de la Oferta
 		
 		oferta.setEstatus("recibida");
 		sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
 		
-		if (checkIsFormValid()) {
-
-			if (oferta.getDetalleOfertas().size() > 0)
-			{
-				
-				btnEnviar.setDisabled(true);
-				
-				registrarOferta(cerrar);
-			}
-
-			else
-				mostrarMensaje("Información", "Desea Revisar Otra Oferta?",
-						null, null, null, null);
-
+		//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
+		
+		cargarOferta();
+		
+		registrarOferta(cerrar);
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("detallesOfertas", listaDetOferta);
+		
+		
+		if (oferta != null)
+		{
+			//redireccionar
+			ejecutarGlobalCommand("verOferta", parametros);
+			
 		}
+		else
+		{
+			
+			
+			//antes cerrar formulario de oferta
+			
+			llamarFormulario("formularioCompras.zul", parametros);
+			
+		}
+		}
+		
+	}
+	
+	
+	private void llenarListAprobados() {
+		
+		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas())
+		{
+			if (detalleOferta.getAprobado() != null)
+				
+			{
+				if(detalleOferta.getAprobado()) 
+					listaDetOferta.add(detalleOferta);
+				
+				
+			}
+		}
+			
+	}
+	
+	
+	
+	private void llamarFormulario(String ruta, Map<String, Object> parametros){
+		crearModal("/WEB-INF/views/"+ruta, parametros);
 	}
 	
 	

@@ -148,9 +148,10 @@
 							         <hbox spacing="20px">
 								     <div class="btn-group btn-group-sm">
 
-									  <button label="Aceptar"  sclass="btn-primary"
+									  <checkbox label="Aceptar"  sclass="btn-primary"
+									  value="@bind(each.aprobado)"
 										iconSclass="fa fa-check-square blue bigger-160" tooltiptext="Aceptar Oferta"
-										onClick="@command('aceptarOferta',oferta = each)" />
+										 />
 
 								      </div>
 							          </hbox>

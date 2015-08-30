@@ -40,6 +40,7 @@ public class Oferta {
 	private List<DetalleOferta> detalleOfertas;
 
 	public Oferta() {
+		this.detalleOfertas = new ArrayList<DetalleOferta>();
 	}
 
 	public Oferta(Integer idOferta, Date fechaCreacion, String estatus) {
