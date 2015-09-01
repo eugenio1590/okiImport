@@ -236,9 +236,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 		String str = null;
 		if(recordMode.equalsIgnoreCase("EDIT"))
-			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
-		else
 			str = "Proveedor Actualizado Exitosamente";
+		else
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
 		if(enviarEmail){
 			Map<String, Object> model = new HashMap<String, Object>();
