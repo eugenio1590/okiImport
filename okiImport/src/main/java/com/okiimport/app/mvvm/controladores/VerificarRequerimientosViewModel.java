@@ -101,6 +101,18 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		pagRequerimientosCliente.setActivePage(page);
 		pagRequerimientosCliente.setTotalSize(total);
 	}
+	
+	@GlobalCommand
+	
+	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
+
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		llamarFormulario("formularioOferta.zul", parametros);
+
+	}
+	
+	
 
 	// Comand 
 
@@ -130,14 +142,8 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	}
 	
 	
-	@Command
-	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
-
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", requerimiento);
-		llamarFormulario("formularioOferta.zul", parametros);
-
-	}
+	
+	
 
 	@Command
 	@NotifyChange("*")
