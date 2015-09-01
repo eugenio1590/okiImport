@@ -145,13 +145,14 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	}
 	
 	/*
-	 * Descripcion: Permitira cargar nuevamente la lista de requerimientos del proveedor
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * @param: Ninguno
 	 * Retorno: Ninguno
 	 */
 	@Command
-	public void cargarRequerimientos(){
+	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
+		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

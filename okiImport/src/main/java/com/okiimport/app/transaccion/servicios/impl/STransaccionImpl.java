@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
@@ -35,6 +36,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	
 	private static List<String> ESTATUS_EMITIDOS;
 	private static List<String> ESTATUS_PROCESADOS;
+	private static List<String> ESTATUS_OFERTADOS;
 	
 	@Autowired
 	@BeanInjector("cotizacionDAO")
@@ -79,8 +81,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		ESTATUS_PROCESADOS = new ArrayList<String>();
 		ESTATUS_PROCESADOS.add("CT");
 		ESTATUS_PROCESADOS.add("EC");
-		ESTATUS_PROCESADOS.add("O");
-		ESTATUS_PROCESADOS.add("CC");
+		
+		ESTATUS_OFERTADOS = new ArrayList<String>();
+		ESTATUS_OFERTADOS.add("O");
+		ESTATUS_OFERTADOS.add("Z");
 	}
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
@@ -228,6 +232,23 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
+	public Map <String, Object> consultarMisRequerimientosOfertados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
+			int pagina, int limit){
+		// TODO Auto-generated method stub
+		Integer total = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size();
+		List<Requerimiento> requerimientos = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit);
+		int nroOfertas;
+		for(Requerimiento requerimiento : requerimientos){
+			nroOfertas = (Integer) this.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), null, null, 0, 1).get("total");
+			requerimiento.setNroOfertas(nroOfertas);
+		}
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", total);
+		parametros.put("requerimientos", requerimientos);
+		return parametros;
+	}
+	
+	@Override
 	public Map<String, Object> ConsultarRequerimientosCliente (Requerimiento regFiltro, String fieldSort, 
 			Boolean sortDirection, String cedula, int pagina, int limit) {
 		// TODO Auto-generated method stub
@@ -330,13 +351,20 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion, Requerimiento requerimiento) {
 		// TODO Auto-generated method stub
 		String estatusRequerimiento = "CT";
+		List<Cotizacion> cotizaciones = (List<Cotizacion>) consultarCotizacionesParaEditar(null, null, null, requerimiento.getIdRequerimiento(), 0, 1).get("cotizaciones");
 		if(cotizacion.getEstatus()==null)
 			cotizacion.setEstatus("C");
-		else if(cotizacion.getEstatus().equalsIgnoreCase("EC"))
+		
+		if(cotizacion.getEstatus().equalsIgnoreCase("EC")) //Incompleto
 			estatusRequerimiento = "EC";
+		else if(!cotizaciones.isEmpty()) //Completo
+			estatusRequerimiento = "EC";
+		
+		requerimiento.setEstatus(estatusRequerimiento);
+		this.requerimientoDAO.update(requerimiento);
 		
 		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
 		cotizacion = cotizacionDAO.update(cotizacion);
@@ -346,12 +374,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 			
 			detalleRequerimiento.setEstatus("CT");
 			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-		
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			if(!requerimiento.getEstatus().equalsIgnoreCase("EC")){
-				requerimiento.setEstatus(estatusRequerimiento);
-				this.requerimientoDAO.update(requerimiento);
-			}
 		}
 		return cotizacion;
 	}
@@ -389,9 +411,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 				detalleF.setCantidad(new Long(0));
 			}
 		}
+		Integer total = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size();
+		List<DetalleCotizacion> detallesCotizacion = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit);
+		for(int i=0; i<detallesCotizacion.size(); i++){
+			DetalleCotizacion detalle = detallesCotizacion.get(i);
+			DetalleCotizacionInternacional detalleInter = this.detalleCotizacionInternacionalDAO.findByPrimaryKey(detalle.getIdDetalleCotizacion());
+			if(detalleInter != null){
+				detallesCotizacion.remove(i);
+				detallesCotizacion.add(i, detalleInter);
+			}
+		}
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", total);
+		parametros.put("detallesCotizacion", detallesCotizacion);
 		if(nuloCantidad)
 			detalleF.setCantidad(null);
 		return parametros;
@@ -453,5 +485,48 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		else
 			oferta = ofertaDAO.update(oferta);
 		return oferta;
+	}
+
+	//Compras
+	@Override
+	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("compras", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, pagina*limite, limite));
+		return parametros;
+	}
+	
+	@Override
+	public Compra registrarOActualizarCompra(Compra compra){
+		if(compra.getIdCompra()==null)
+			compra=this.compraDAO.save(compra);
+		else
+			compra=this.compraDAO.update(compra);
+		return compra;
+	}
+	
+	@Override
+	public Compra registrarSolicitudCompra(Compra compra) {
+		compra.setEstatus("solicitada");
+		return registrarOActualizarCompra(compra);
+	}
+
+	@Override
+	public Compra registrarCompra(Compra compra) {
+		compra.setEstatus("cerrada");
+		return registrarOActualizarCompra(compra);
+	}
+
+	//DetalleCompra
+	@Override
+	public Map<String, Object> consultarDetallesCompra(int idCompra, String fieldSort, Boolean sortDirection, 
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCompra", this.detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, pagina*limite, limite));
+		return parametros;
 	}
 }

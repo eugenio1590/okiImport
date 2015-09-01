@@ -22,9 +22,13 @@
 							<label value="Cedula/RIF:" />
 
 							<hbox>
-								
 
-								<textbox id="cedulaRif" width="108%"
+								<textbox width="20%" readonly="true"
+								    value= "@bind(vm.tipoPersona.nombre)"/>
+
+
+								<textbox id="cedula_Rif" width="80%"
+
 									readonly="true" mold="rounded" value="@bind(vm.analista.cedula)"
 									maxlength="12" />
 							</hbox>

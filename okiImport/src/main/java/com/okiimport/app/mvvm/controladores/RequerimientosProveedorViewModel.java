@@ -67,7 +67,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
-		listaEstatus = llenarListaEstatus();
+		listaEstatus = llenarListaEstatusGeneral();
 	}
 	
 	/**Interface: EventListener<SortEvent>*/

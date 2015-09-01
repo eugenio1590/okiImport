@@ -22,7 +22,9 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.modelo.Configuracion;
 import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -38,6 +40,9 @@ public class ListaOfertasClienteViewModel extends
 
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
+	
+	@BeanInjector("sControlConfiguracion")
+	private SControlConfiguracion sControlConfiguracion;
 
 	// GUI
 	@Wire("#gridOfertasCliente")
@@ -54,8 +59,6 @@ public class ListaOfertasClienteViewModel extends
 	private Requerimiento requerimiento;
 	private String titulo = "Ofertas del Requerimiento N° ";
 
-	private Oferta ofertaFiltro;
-
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
@@ -63,48 +66,35 @@ public class ListaOfertasClienteViewModel extends
 		this.requerimiento = requerimiento;
 		
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
-		ofertaFiltro = new Oferta();
 		agregarGridSort(gridOfertasCliente);
 		pagOfertasCliente.setPageSize(pageSize);
 		cambiarOfertas(0, null, null);
 	}
+	
+	@Override
+	public void onEvent(SortEvent event) throws Exception {
+		// TODO Auto-generated method stub
+		if(event.getTarget() instanceof Listheader){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+			parametros.put("sortDirection", event.isAscending());
+			ejecutarGlobalCommand("cambiarOfertas", parametros );
+		}
+	}
 
+	/**GLOBAL COMMAND*/
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
 	@NotifyChange("listaOfertas")
 	public void cambiarOfertas(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sTransaccion
-				.consultarOfertasPorRequerimiento(
-						requerimiento.getIdRequerimiento(), fieldSort,
-						sortDirection, page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaOfertas = (List<Oferta>) parametros.get("ofertas");
 		pagOfertasCliente.setActivePage(page);
 		pagOfertasCliente.setTotalSize(total);
 	}
-	
-	@Command
-	public void enviarCliente()
-			{
-				for(Oferta oferta : listaOfertas ){
-				oferta.setEstatus("enviada");
-				sTransaccion.actualizarOferta(oferta);
-				}
-				requerimiento.setEstatus("O");
-				sTransaccion.actualizarRequerimiento(requerimiento);
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-				model.put("cliente", requerimiento.getCliente().getNombre());
-				model.put("cedula", requerimiento.getCliente().getCedula());
-
-				mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
-						"registrarRequerimiento.html", model);
-				winListaOfertas.detach();
-				mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
-
-				}
 
 	/** COMMAND */
 	/*
@@ -119,18 +109,56 @@ public class ListaOfertasClienteViewModel extends
 		int page = pagOfertasCliente.getActivePage();
 		cambiarOfertas(page, null, null);
 	}
-
-	@Override
-	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub
-		if(event.getTarget() instanceof Listheader){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarOfertas", parametros );
-		}
+	
+	@Command
+	@NotifyChange("*")
+	public void verOferta(@BindingParam("oferta") Oferta oferta){
+		
 	}
 
+	@Command
+	public void enviarCliente(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		for(Oferta oferta : listaOfertas ){
+			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
+				oferta.setPorctIva(configuracion.getPorctIva());
+				oferta.setPorctGanancia(configuracion.getPorctGanancia());
+				oferta.setEstatus("enviada");
+				sTransaccion.actualizarOferta(oferta);
+			}
+		}
+		requerimiento.setEstatus("O");
+		sTransaccion.actualizarRequerimiento(requerimiento);
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
+		model.put("cliente", requerimiento.getCliente().getNombre());
+		model.put("cedula", requerimiento.getCliente().getCedula());
+
+		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
+				"registrarRequerimiento.html", model);
+		winListaOfertas.detach();
+		
+		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
+
+	}
+	
+	@Command
+	public void cambiarRequerimientos(){
+		ejecutarGlobalCommand("cambiarRequerimientos", null);
+	}
+
+	/**METODOS PROPIOS DE LA CLASE*/
+	public boolean enviarACliente(){
+		boolean enviar = false;
+		for(Oferta oferta : listaOfertas)
+			if(oferta.enviar()){
+				enviar = true;
+				break;
+			}
+		return enviar;
+	}
+	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -139,12 +167,20 @@ public class ListaOfertasClienteViewModel extends
 		this.sTransaccion = sTransaccion;
 	}
 
-	public Oferta getOfertaFiltro() {
-		return ofertaFiltro;
+	public SControlUsuario getsControlUsuario() {
+		return sControlUsuario;
 	}
 
-	public void setOfertaFiltro(Oferta ofertaFiltro) {
-		this.ofertaFiltro = ofertaFiltro;
+	public void setsControlUsuario(SControlUsuario sControlUsuario) {
+		this.sControlUsuario = sControlUsuario;
+	}
+	
+	public SControlConfiguracion getsControlConfiguracion() {
+		return sControlConfiguracion;
+	}
+
+	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
+		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
 	public List<Oferta> getListaOfertas() {
@@ -155,12 +191,12 @@ public class ListaOfertasClienteViewModel extends
 		this.listaOfertas = listaOfertas;
 	}
 
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
+	public Requerimiento getRequerimiento() {
+		return requerimiento;
 	}
 
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
+	public void setRequerimiento(Requerimiento requerimiento) {
+		this.requerimiento = requerimiento;
 	}
 
 	public String getTitulo() {
@@ -170,7 +206,4 @@ public class ListaOfertasClienteViewModel extends
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	
-	
-
 }

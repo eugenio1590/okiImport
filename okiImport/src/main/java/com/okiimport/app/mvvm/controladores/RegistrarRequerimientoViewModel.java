@@ -68,8 +68,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
-		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0,
-				-1).get("marcas");
+		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
 		listaEstados = llenarListaEstados();
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
