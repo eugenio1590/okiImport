@@ -42,7 +42,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 
 
-public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel 
+public class RegistrarSolicitudDePedidoViewModel extends AbstractRequerimientoViewModel 
 {
 	
 	@Wire("#winCompras")
