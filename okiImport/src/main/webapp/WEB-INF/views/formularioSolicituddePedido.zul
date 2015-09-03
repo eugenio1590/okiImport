@@ -9,12 +9,19 @@
 		        
 		          <rows>
 		           <row align="center">
-		            <label   value="N° Pedido:" />
-		            <label value="@bind(vm.compra.idCompra)" width="50px"/>
+		           
 		 
 		           <label value="Fecha: " />
 			       <datebox  format="dd/MM/yyyy" 
                       value="@bind(vm.compra.fechaCreacion)" instant="true" readonly="true" width="150px"/>
+                      <label width="200px" value="Desea Incluir el Precio del Flete:" />
+					<combobox readonly="true" width="150px" 
+						value="@bind(vm.tipoFlete.nombre)"
+						model="@load(vm.listaTipoFlete)"><!-- selectedItem="@bind(vm.tipoFlete)" -->
+						<template name="model">
+							<comboitem label="@bind(each.nombre)"/>
+						</template>
+					</combobox>
 		           </row>
 		    
 		          <row align="center">
@@ -23,14 +30,7 @@
 		          <textbox  value="@bind(vm.compra.observacion)"  width="200px" rows="2" />
 		          
 		          
-		           <label width="200px" value="Desea Incluir el Precio del Flete:" />
-					<combobox readonly="true" width="150px" 
-						value="@bind(vm.tipoFlete.nombre)"
-						model="@load(vm.listaTipoFlete)"><!-- selectedItem="@bind(vm.tipoFlete)" -->
-						<template name="model">
-							<comboitem label="@bind(each.nombre)"/>
-						</template>
-					</combobox>
+		           
 		         </row>	
             
                 </rows>	 
