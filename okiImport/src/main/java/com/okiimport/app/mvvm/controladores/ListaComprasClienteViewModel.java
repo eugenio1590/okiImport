@@ -113,38 +113,17 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	
 	@Command
 	public void registrarCompra(@BindingParam("compra") Compra compra){
-		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("compra", compra);
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/formularioCompra.zul", parametros);
 	}
 	
 	@Command
 	public void cambiarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
-
-	@Command
-	public void enviarCliente(){
-//		for(Oferta oferta : listaCompras ){
-//			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
-//				oferta.setEstatus("enviada");
-//				sTransaccion.actualizarOferta(oferta);
-//			}
-//		}
-//		requerimiento.setEstatus("O");
-//		sTransaccion.actualizarRequerimiento(requerimiento);
-//		
-//		Map<String, Object> model = new HashMap<String, Object>();
-//		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-//		model.put("cliente", requerimiento.getCliente().getNombre());
-//		model.put("cedula", requerimiento.getCliente().getCedula());
-//
-//		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
-//				"registrarRequerimiento.html", model);
-//		winListaOfertas.detach();
-//		
-//		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
-
-	}
-
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

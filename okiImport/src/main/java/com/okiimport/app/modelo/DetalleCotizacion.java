@@ -159,13 +159,17 @@ public class DetalleCotizacion implements Serializable {
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Float calcularTotal(){
 		if(this.precioFlete!=null)
-			return calcularCosto()+this.precioFlete;
+			return calcularCosto()+calcularFlete();
 		else
-			return this.precioVenta;
+			return calcularCosto();
 	}
 	
 	public Float calcularCosto(){
 		return this.precioVenta*this.cantidad;
+	}
+	
+	public Float calcularFlete(){
+		return this.getPrecioFlete();
 	}
 	
 	public void eliminarPrecios(){

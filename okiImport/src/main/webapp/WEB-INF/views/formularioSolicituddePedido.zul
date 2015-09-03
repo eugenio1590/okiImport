@@ -1,9 +1,9 @@
 <window id="winCompras" border="none" width="80%" title="Solicitud de Pedido"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudDePedidoViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')">
 		<groupbox closable="false">
 		
-				<caption sclass="custom_caption"/>
+			<caption sclass="custom_caption"/>
 		      <div>
 		       <grid>
 		        
@@ -13,7 +13,7 @@
 		            <label value="@bind(vm.compra.idCompra)" width="50px"/>
 		 
 		           <label value="Fecha: " />
-			       <datebox id="fecha"   format="dd/MM/yyyy" 
+			       <datebox  format="dd/MM/yyyy" 
                       value="@bind(vm.compra.fechaCreacion)" instant="true" readonly="true" width="150px"/>
 		           </row>
 		    
@@ -24,10 +24,13 @@
 		          
 		          
 		           <label width="200px" value="Desea Incluir el Precio del Flete:" />
-			<combobox readonly="true" width="150px">
-					<comboitem label="Si"/>
-					<comboitem label="No"/>
-			</combobox>
+					<combobox readonly="true" width="150px" 
+						value="@bind(vm.tipoFlete.nombre)"
+						model="@load(vm.listaTipoFlete)"><!-- selectedItem="@bind(vm.tipoFlete)" -->
+						<template name="model">
+							<comboitem label="@bind(each.nombre)"/>
+						</template>
+					</combobox>
 		         </row>	
             
                 </rows>	 
@@ -64,40 +67,7 @@
 						</rows>
 					</grid>
 				</div>
-			</groupbox>
-			
-			
-			<groupbox closable="false">
-				<caption sclass="custom_caption" label="Datos Del Cliente" />
-				<div>
-					<grid>
-						<columns>
-							<column width="35%" align="right" />
-							<column width="65%" />
-							<column width="35%" align="right" />
-							<column width="65%" />
-						</columns>
-
-						<rows>
-							<row>
-								<label value="Cedula: " />
-								<textbox value="@bind(vm.requerimiento.cliente.cedula)"
-									width="80%" readonly="true"/>
-								
-
-								<label value="Nombre: " />
-								<textbox  width="80%"
-									readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.nombre)"/>
-									
-							</row>
-
-						</rows>
-					</grid>
-				</div>
-			</groupbox>
-			
-		
+			</groupbox>	
 		
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Datos Del Vehiculo" />
@@ -118,7 +88,7 @@
 								
 
 								<label value="Modelo: " />
-								<textbox id="modelo" width="80%"
+								<textbox width="80%"
 									readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.modeloV)"/>
 									
@@ -134,13 +104,13 @@
 			
 			
 			<groupbox closable="false">
-				<caption sclass="custom_caption" label="Detalle Oferta" />
+				<caption sclass="custom_caption" label="Detalle de la Compra" />
 				<panel sclass="panel-primary">
 					<panelchildren>
 
 
-						<listbox id="listaOferta" mold="paging"
-							model="@load(vm.oferta.detalleOfertas)"
+						<listbox mold="paging"
+							model="@load(vm.compra.detalleOfertas)"
 							style="margin-top:10px" pageSize="5" >
 
 
@@ -181,7 +151,7 @@
 						
 						<listfooter>
 							<label value="Total:"/>
-							<label value="@bind(vm.oferta.calcularTotal())"/>
+<!-- 							<label value="@bind(vm.oferta.calcularTotal())"/> -->
 						</listfooter>
 						</listfoot>
 							
@@ -196,12 +166,12 @@
 		</groupbox>
 					<div sclass="panel-footer" align="right">
 
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
+<!-- 				<button id="btnLimpiar" label="Limpiar" type="submit" -->
+<!-- 					onClick="@command('limpiar')" sclass="btn-primary" /> -->
 
-				<button label="Enviar" type="submit"
-					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
+<!-- 				<button label="Enviar" type="submit" -->
+<!-- 					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)" -->
+<!-- 					sclass="btn-primary" /> -->
 			</div>
 		
 	</window>

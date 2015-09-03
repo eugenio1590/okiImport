@@ -193,7 +193,12 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 			clasificacion.getProveedores().add(proveedor);
 		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos())
 			marca.getProveedores().add(proveedor);
-	   return proveedorDAO.save(proveedor);
+
+		if(proveedor.getId()==null)
+			proveedor = proveedorDAO.save(proveedor);
+		else
+			proveedor = proveedorDAO.update(proveedor);
+		return proveedor;
 	}
 	
 	

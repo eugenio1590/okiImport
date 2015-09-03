@@ -2,7 +2,7 @@
 	<window id="winCotizar" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizarProveedorInternacionalViewModel')"
-		onClose="@command('actualizarCotizaciones')">
+		onClose="@command('onCloseWindow')">
 		<borderlayout>
 		<east id="eastCotizacion" width="100%" title="Cotizacion">
 			<div>
@@ -157,7 +157,7 @@
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Total del Flete" readonly="true"
-									value="@bind(each.calcularFlete(true))" width="100%"/>
+									value="@bind(each.calcularFlete())" width="100%"/>
 							</listcell>
 						</listitem>
 					</template>

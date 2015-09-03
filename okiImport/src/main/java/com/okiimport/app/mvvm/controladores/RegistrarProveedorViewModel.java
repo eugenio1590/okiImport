@@ -233,6 +233,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		proveedor.setTipoProveedor(this.tipoProveedor.getValor());
 
 		proveedor = sMaestros.registrarProveedor(proveedor);
+		
+		String str = null;
+		if(recordMode.equalsIgnoreCase("EDIT"))
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+		else
+			str = "Proveedor Actualizado Exitosamente";
 
 		if(enviarEmail){
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -241,8 +247,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
 					"registrarProveedor.html", model);
-			
-			String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
 
 			mostrarMensaje("Informacion", str, null, null,
 					new EventListener() {
@@ -252,8 +256,13 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 					}, null);
 		}
 		else {
-			winProveedor.onClose();
-			ejecutarGlobalCommand("consultarProveedores", null);
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							winProveedor.onClose();
+							ejecutarGlobalCommand("consultarProveedores", null);
+						}
+					}, null);
 		}
 		return proveedor;
 	}

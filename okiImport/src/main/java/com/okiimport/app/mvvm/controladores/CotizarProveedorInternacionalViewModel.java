@@ -185,7 +185,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			else
 				cotizacionSelecionada.setEstatus("C");
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
-			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+			sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
 		}
 	}
@@ -287,8 +287,13 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
+	/*
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
 	@Command
-	public void actualizarCotizaciones(){
+	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
