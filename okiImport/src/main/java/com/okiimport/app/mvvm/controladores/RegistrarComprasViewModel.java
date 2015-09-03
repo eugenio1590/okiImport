@@ -1,44 +1,56 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.Oferta;
+import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.modelo.DetalleOferta;
+import com.okiimport.app.modelo.Compra;
+import com.okiimport.app.modelo.Cotizacion;
+import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
+
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
+
+
+public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel 
 {
 	
-	@Wire("#winOferta")
-	private Window winOferta;
+	@Wire("#winCompras")
+	private Window winCompras;
 	
 	private Requerimiento requerimiento;
 
-    private Oferta oferta;
+    private Compra compra;
     private DetalleOferta detalleOferta;
     private Cotizacion cotizacion;
     
@@ -54,93 +66,65 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
     
     private List<ModeloCombo<Boolean>> listaTipoRepuesto;
     
-    private List<DetalleOferta> listaDetOferta;
-    
     
 	//	private List <Requerimiento> listaRequerimientos;
     
     
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento, 
-			@ExecutionArgParam("detallesOfertas") List<DetalleOferta> listaDetOferta )
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
+			//Lo que obtenemos de la lista es un requerimiento no una oferta
 	{	
 		super.doAfterCompose(view);	
 		this.requerimiento = requerimiento;
-		this.listaDetOferta = (listaDetOferta == null) ? new ArrayList<DetalleOferta>() : listaDetOferta;
-		cargarOferta();
+		//cargarOferta();
+	    //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
+	   //se puede hacer en un metodo aparte para que se pueda usar mas adelante
+		
 	}
 	
-	/**GLOBAL COMMAND*/
-	@Command
+	/*/**GLOBAL COMMAND*/
+	/*@GlobalCommand
 	@NotifyChange("oferta")
 	public void cargarOferta(){
-		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
-	}
-	
-	
-	@Command
-	@NotifyChange({ "oferta" })
-	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
-		if ( checkIsFormValid() ) {
-			
-			//1ero Actualizar Estatus de la Oferta
-			oferta.setEstatus("recibida");
-			oferta = sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
-
-			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-
-			cargarOferta();
-
-			//registrarOferta(cerrar);
-
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("requerimiento", requerimiento);
-			parametros.put("detallesOfertas", listaDetOferta);
-
-
-			if (oferta != null)
-			{
-				//redireccionar
-				ejecutarGlobalCommand("verOferta", parametros);
-			}
-			else
-			{
-				//antes cerrar formulario de oferta
-				llamarFormulario("formularioSolicituddePedido.zul", parametros);
-			}
-		}
-	}
-	
-	
-	private void llenarListAprobados() {
 		
-		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas())
-		{
-			if (detalleOferta.getAprobado() != null)
-				
+		//compra = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+
+	}
+	*/
+	
+	/*@Command
+	@NotifyChange({ "oferta" })
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
+		
+		//1ero Actualizar Estatus de la Oferta
+		
+		//compra.setEstatus("recibida");
+		//sTransaccion.actualizarOferta(oferta); // Se implementara la cascada
+		
+		/*if (checkIsFormValid()) {
+
+			if (oferta.getDetalleOfertas().size() > 0)
 			{
-				if(detalleOferta.getAprobado()) 
-					listaDetOferta.add(detalleOferta);
 				
+				btnEnviar.setDisabled(true);
 				
+				registrarOferta(cerrar);
 			}
+
+			else
+				mostrarMensaje("Información", "Desea Revisar Otra Oferta?",
+						null, null, null, null);
+
 		}
-			
-	}
+	}*/
 	
 	
 	
-	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/"+ruta, parametros);
-	}
-	
-	
-	
-	protected Oferta registrarOferta(boolean enviarEmail)
+	/*protected Oferta registrarOferta(boolean enviarEmail)
 	{
 	
-		
+		compra = sTransaccion.actualizarOferta(compra);
 
 		if(enviarEmail){
 			Map<String, Object> model = new HashMap<String, Object>();
@@ -159,10 +143,10 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 					}, null);
 		}
 		else {
-			winOferta.onClose();
+			winCompras.onClose();
 		}
 		return oferta;
-	}
+	}*/
 
 	
 
@@ -174,12 +158,22 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 		this.requerimiento = requerimiento;
 	}
 
-	public Oferta getOferta() {
-		return oferta;
+	
+
+	public Window getWinCompras() {
+		return winCompras;
 	}
 
-	public void setOferta(Oferta oferta) {
-		this.oferta = oferta;
+	public void setWinCompras(Window winCompras) {
+		this.winCompras = winCompras;
+	}
+
+	public Compra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
 	}
 
 	public DetalleOferta getDetalleOferta() {
@@ -229,9 +223,5 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
 		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
-	
-	
-    
-    
+	    
 }
-
