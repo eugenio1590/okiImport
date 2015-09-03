@@ -105,7 +105,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	
 	@GlobalCommand
 	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
-			@Default("null") @BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
+			@BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
 
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);

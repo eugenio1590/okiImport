@@ -57,6 +57,10 @@ public class Compra {
 	public Compra() {
 		
 	}
+	
+	public Compra(Requerimiento requerimiento){
+		this.requerimiento = requerimiento;
+	}
 
 	public Integer getIdCompra() {
 		return idCompra;
