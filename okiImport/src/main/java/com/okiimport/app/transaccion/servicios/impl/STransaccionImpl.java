@@ -500,9 +500,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	
 	@Override
 	public Compra registrarOActualizarCompra(Compra compra){
-		if(compra.getIdCompra()==null)
+		if(compra.getIdCompra()==null){
+			compra.setFechaCreacion(new Timestamp(this.calendar.getTime().getTime()));
 			compra=this.compraDAO.save(compra);
-		else
+		}else
 			compra=this.compraDAO.update(compra);
 		return compra;
 	}
