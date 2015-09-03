@@ -135,7 +135,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			
 			//antes cerrar formulario de oferta
 			
-			llamarFormulario("formularioCompras.zul", parametros);
+			llamarFormulario("formularioSolicituddePedido.zul", parametros);
 			
 		}
 		}

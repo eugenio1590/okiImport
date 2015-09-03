@@ -77,23 +77,23 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 	{	
 		super.doAfterCompose(view);	
 		this.requerimiento = requerimiento;
-		cargarOferta();
+		//cargarOferta();
 	    //aca llamamos es al servicio y buscamos la oferta de acuerdo al requerimiento
 	   //se puede hacer en un metodo aparte para que se pueda usar mas adelante
 		
 	}
 	
-	/**GLOBAL COMMAND*/
-	@GlobalCommand
+	/*/**GLOBAL COMMAND*/
+	/*@GlobalCommand
 	@NotifyChange("oferta")
 	public void cargarOferta(){
 		
 		//compra = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
 
 	}
+	*/
 	
-	
-	@Command
+	/*@Command
 	@NotifyChange({ "oferta" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
 		
@@ -116,8 +116,8 @@ public class RegistrarComprasViewModel extends AbstractRequerimientoViewModel
 				mostrarMensaje("Información", "Desea Revisar Otra Oferta?",
 						null, null, null, null);
 
-		}*/
-	}
+		}
+	}*/
 	
 	
 	
