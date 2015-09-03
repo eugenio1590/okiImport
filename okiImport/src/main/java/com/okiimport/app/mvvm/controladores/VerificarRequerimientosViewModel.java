@@ -24,6 +24,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -103,11 +104,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	}
 	
 	@GlobalCommand
-	
-	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
+			@Default("null") @BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
 
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
+		parametros.put("detallesOfertas", detallesOfertas);
 		llamarFormulario("formularioOferta.zul", parametros);
 
 	}
