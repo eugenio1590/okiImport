@@ -15,13 +15,11 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
@@ -30,98 +28,95 @@ import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 
-public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel
-		implements EventListener<SortEvent> {
-
-	// Servicios
+public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+	
+	//Servicios
 	@BeanInjector("sMaestros")
 	protected SMaestros sMaestros;
-
-	// GUI
+	
+	//GUI
 	@Wire("#gridProveedores")
 	private Listbox gridProveedores;
-
+	
 	@Wire("#pagProveedores")
 	protected Paging pagProveedores;
-
+	
 	Window window = null;
 	int idcount = 0;
 	private boolean makeAsReadOnly;
 
-	// Modelos
+	
+	//Modelos
 	protected List<Proveedor> proveedores;
 	protected Proveedor proveedorFiltro;
-
-	// Atributos
+	
+	//Atributos
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
 		cambiarProveedores(0, null, null);
 	}
-
-	/** Interface: EventListener<SortEvent> */
+	
+	/**Interface: EventListener<SortEvent>*/
 	@Override
 	@NotifyChange("proveedores")
 	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub
-		if (event.getTarget() instanceof Listheader) {
+		// TODO Auto-generated method stub		
+		if(event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", event.getTarget().getId().toString());
+			parametros.put("fieldSort",  event.getTarget().getId().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarProveedores", parametros);
+			ejecutarGlobalCommand("cambiarProveedores", parametros );
 		}
-
+		
 	}
-
-	/** GLOBAL COMMAND */
+	
+	/**GLOBAL COMMAND*/
 	@GlobalCommand
 	@NotifyChange("proveedores")
-	public void cambiarProveedores(
-			@Default("0") @BindingParam("page") int page,
-			@BindingParam("fieldSort") String fieldSort,
-			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sMaestros.consultarProveedores(
-				proveedorFiltro, page, pageSize);
+	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
+			@BindingParam("fieldSort") String fieldSort, 
+			@BindingParam("sortDirection") Boolean sortDirection){
+		Map<String, Object> parametros = sMaestros.consultarProveedores(proveedorFiltro, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		proveedores = (List<Proveedor>) parametros.get("proveedores");
 		pagProveedores.setActivePage(page);
 		pagProveedores.setTotalSize(total);
 	}
-
-	/** COMMAND */
+	
+	/**COMMAND*/
 	@Command
 	@NotifyChange("*")
-	public void paginarLista() {
-		int page = pagProveedores.getActivePage();
+	public void paginarLista(){
+		int page=pagProveedores.getActivePage();
 		cambiarProveedores(page, null, null);
 	}
-
+	
 	@Command
 	@NotifyChange("*")
-	public void aplicarFiltro() {
+	public void aplicarFiltro(){
 		cambiarProveedores(0, null, null);
 	}
-
-	/*
-	 * @Command
-	 * 
-	 * @NotifyChange("analistas") public void limpiarRadios(){
-	 * this.analistaFiltro.setActivo(null); radEstado.setSelectedIndex(-1);
-	 * aplicarFiltro(); }
-	 */
-
+	
+	/*@Command
+	@NotifyChange("analistas")
+	public void limpiarRadios(){
+		this.analistaFiltro.setActivo(null);
+		radEstado.setSelectedIndex(-1);
+		aplicarFiltro();
+	}*/
+	
 	@Command
-	public void nuevoProveedor() {
-		llamarFormulario(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+	public void nuevoProveedor(){
+		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
 	}
-
+	
 	@Command
-	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor) {
+	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "EDIT");
@@ -132,16 +127,17 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel
 			window.setId(null);
 		}
 		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul",
-				null, map);
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
-
+		
+		
 	}
-
+	
 	@Command
-	public void verProveedor(@BindingParam("proveedor") Proveedor proveedor) {
+	public void verProveedor(
+			@BindingParam("proveedor") Proveedor proveedor) {
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "READ");
@@ -152,88 +148,69 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel
 			window.setId(null);
 		}
 		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul",
-				null, map);
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
 	}
-
+	
 	@NotifyChange("proveedores")
 	@Command
-	public void eliminarProveedor(@BindingParam("proveedor") final Proveedor proveedor){
-		
-		mostrarMensaje("Eliminar Proveedor", "El Proveedor seleccionado  \""
-				+ proveedor.getNombre() + "\" sera borrado.", Messagebox.QUESTION ,new Messagebox.Button[]{ Messagebox.Button.OK , Messagebox.Button.CANCEL}, 				new EventListener() {
-					public void onEvent(Event event) throws Exception { 
-						if (((Messagebox.Button) event.getData()).id  == Messagebox.OK) {
-							proveedor.setEstatus("eliminado");
-							sMaestros.acutalizarPersona(proveedor);
-							
-							mostrarMensaje("Mensaje", "El proveedor ha sido eliminado exitosamente",Messagebox.INFORMATION, new Messagebox.Button[]{ Messagebox.Button.OK }, new EventListener() {
-								public void onEvent(
-										Event event)
-										throws Exception {
-									if (((Messagebox.Button) event
-											.getData()).id == Messagebox.OK);
-									}
-					}, null);
-				
-									
-						}
-					}
-		}, null);
-}
-
-	/*
-	 * @Command public void editarAnalista(@BindingParam("analista") Analista
-	 * analista){ Usuario userSession = consultarUsuarioSession();
-	 * if(userSession.getId()!=analista.getId()){ Map<String, Object> parametros
-	 * = new HashMap<String, Object>(); parametros.put("analista", analista);
-	 * llamarFormulario("editarAnalista.zul", parametros); } else
-	 * mostrarMensaje("Error", "No se puede Editar el Usuario de la Session",
-	 * Messagebox.ERROR, null, null, null); }
-	 */
-
-	/*
-	 * @Command
-	 * 
-	 * @NotifyChange("analistas") public void
-	 * actualizarEstado(@BindingParam("usuario") Usuario usuario,
-	 * @BindingParam("estado") Boolean estado){ Usuario userSession =
-	 * consultarUsuarioSession(); if(userSession.getId()!=usuario.getId()){
-	 * if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){ String mensaje
-	 * = (estado) ? "Activado" : "Desactivado"; mostrarMensaje("Informacion",
-	 * "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-	 * paginarLista(); } } else mostrarMensaje("Error",
-	 * "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR,
-	 * null, null, null); }
-	 */
-
-	/** METODOS PROPIOS DE LA CLASE */
-	/*
-	 * private Usuario consultarUsuarioSession(){ UserDetails user =
-	 * this.getUser(); return
-	 * sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	 * }
-	 */
-
-	private void llamarFormulario(String ruta, Map<String, Object> parametros) {
-		crearModal("/WEB-INF/views/sistema/maestros/" + ruta, parametros);
+	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		proveedor.setEstatus("eliminado");
+		sMaestros.acutalizarPersona(proveedor);
+	}
+	
+	/*@Command
+	public void editarAnalista(@BindingParam("analista") Analista analista){
+		Usuario userSession = consultarUsuarioSession();
+		if(userSession.getId()!=analista.getId()){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("analista", analista);
+			llamarFormulario("editarAnalista.zul", parametros);
+		}
+		else
+			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
+	}*/
+	
+	/*@Command
+	@NotifyChange("analistas")
+	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
+		Usuario userSession = consultarUsuarioSession();
+		if(userSession.getId()!=usuario.getId()){
+			if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
+				String mensaje = (estado) ? "Activado" : "Desactivado";
+				mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
+				paginarLista();
+			}
+		}
+		else
+			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
+	}*/
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	/*private Usuario consultarUsuarioSession(){
+		UserDetails user = this.getUser();
+		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+	}*/
+	
+	private void llamarFormulario(String ruta, Map<String, Object> parametros){
+		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
 	}
 
-	/** SETTERS Y GETTERS */
-	/*
-	 * public SControlUsuario getsControlUsuario() { return sControlUsuario; }
-	 * 
-	 * public void setsControlUsuario(SControlUsuario sControlUsuario) {
-	 * this.sControlUsuario = sControlUsuario; }
-	 */
+	/**SETTERS Y GETTERS*/
+	/*public SControlUsuario getsControlUsuario() {
+		return sControlUsuario;
+	}
+
+	public void setsControlUsuario(SControlUsuario sControlUsuario) {
+		this.sControlUsuario = sControlUsuario;
+	}*/
+	
 
 	@Command
-	public void registrarProveedor() {
-		window = crearModal(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+	public void registrarProveedor(){
+		window = crearModal("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
 		window.setMaximizable(true);
 	}
 
@@ -268,5 +245,6 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel
 	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
 		this.makeAsReadOnly = makeAsReadOnly;
 	}
-
+	
+	
 }

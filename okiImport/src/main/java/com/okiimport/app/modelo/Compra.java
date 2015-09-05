@@ -1,6 +1,7 @@
 package com.okiimport.app.modelo;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class Compra {
 	private Float precioFlete;
 	
 	@Column(name="tipo_flete")
-	private String tipoFlete;
+	private Boolean tipoFlete;
 	
 	private String observacion;
 	
@@ -58,8 +59,9 @@ public class Compra {
 		
 	}
 	
-	public Compra(Requerimiento requerimiento){
+	public Compra(Requerimiento requerimiento, Date fechaCreacion){
 		this.requerimiento = requerimiento;
+		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
 	}
 
 	public Integer getIdCompra() {
@@ -94,11 +96,11 @@ public class Compra {
 		this.precioFlete = precioFlete;
 	}
 	
-	public String getTipoFlete() {
+	public Boolean getTipoFlete() {
 		return tipoFlete;
 	}
 
-	public void setTipoFlete(String tipoFlete) {
+	public void setTipoFlete(Boolean tipoFlete) {
 		this.tipoFlete = tipoFlete;
 	}
 
@@ -168,4 +170,17 @@ public class Compra {
 	public String determinarEstatus(){
 		return null;
 	}
+	
+	public Float calcularTotal()
+    {
+    	float total = 0;
+    	if ( detalleOfertas != null && !detalleOfertas.isEmpty())
+    	 {
+    		for(DetalleOferta detalleOferta : detalleOfertas )
+    		{
+    			total = total + detalleOferta.calcularPrecioVenta();
+    		}
+    	 }
+    	return total;
+    }
 }

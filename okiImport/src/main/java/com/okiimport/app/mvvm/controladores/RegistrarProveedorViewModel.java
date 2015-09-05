@@ -151,8 +151,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar,
-			@BindingParam("recordMode") String recordMode) {
+			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		if (checkIsFormValid()) {
 
 			if (proveedor.getMarcaVehiculos().size() > 0
@@ -237,9 +236,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 		String str = null;
 		if(recordMode.equalsIgnoreCase("EDIT"))
-			str = "Proveedor Actualizado Exitosamente";
-		else
 			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+		else
+			str = "Proveedor Actualizado Exitosamente";
 
 		if(enviarEmail){
 			Map<String, Object> model = new HashMap<String, Object>();

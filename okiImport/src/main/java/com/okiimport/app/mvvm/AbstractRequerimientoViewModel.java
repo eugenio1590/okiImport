@@ -2,6 +2,7 @@ package com.okiimport.app.mvvm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	@BeanInjector("sMaestros")
 	protected SMaestros sMaestros;
+	
+	//Atributos
+	protected Calendar calendar = GregorianCalendar.getInstance();
 	
 	protected List<Ciudad> listaCiudades;
 

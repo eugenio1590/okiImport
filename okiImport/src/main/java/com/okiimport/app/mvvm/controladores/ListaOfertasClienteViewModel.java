@@ -57,7 +57,6 @@ public class ListaOfertasClienteViewModel extends
 	// Atributos
 	private List<Oferta> listaOfertas;
 	private Requerimiento requerimiento;
-	
 	private String titulo = "Ofertas del Requerimiento N° ";
 
 	@AfterCompose
@@ -114,12 +113,7 @@ public class ListaOfertasClienteViewModel extends
 	@Command
 	@NotifyChange("*")
 	public void verOferta(@BindingParam("oferta") Oferta oferta){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta(), 0, -1));
-		parametros.put("oferta", oferta);
-		parametros.put("requerimiento", this.requerimiento);
 		
-		crearModal("/WEB-INF/views/sistema/funcionalidades/verDetalleOferta.zul", parametros);
 	}
 
 	@Command

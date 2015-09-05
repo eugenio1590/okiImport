@@ -474,10 +474,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		return oferta;
 	}
-	
-	public List<DetalleOferta> consultarDetallesOferta(Integer idOferta, int page, int limit){
-		return detalleOfertaDAO.consultarDetalleOferta(idOferta, page*limit, limit);
-	}
 
 	@Override
 	public Oferta actualizarOferta(Oferta oferta) {
@@ -520,8 +516,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 
 	@Override
 	public Compra registrarCompra(Compra compra) {
-		compra.setEstatus("cerrada");
-		return registrarOActualizarCompra(compra);
+		List<DetalleOferta> detalleCompra = compra.getDetalleOfertas();
+		compra.setDetalleOfertas(null);
+		compra.setEstatus("enviada");
+		compra = registrarOActualizarCompra(compra);
+		if(detalleCompra!=null && !detalleCompra.isEmpty()){
+			for(DetalleOferta detalle : detalleCompra){
+				detalle = detalleOfertaDAO.findByPrimaryKey(detalle.getIdDetalleOferta());
+				detalle.setCompra(compra);
+				detalleOfertaDAO.update(detalle);
+			}
+		}
+		compra.setDetalleOfertas(detalleCompra);
+		return compra;
 	}
 
 	//DetalleCompra

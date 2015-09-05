@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
@@ -44,17 +46,35 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 			@ExecutionArgParam("detallesOfertas") List<DetalleOferta> detallesOfertas)
 	{	
 		super.doAfterCompose(view);	
-		this.compra = new Compra(requerimiento);
+		this.compra = new Compra(requerimiento, this.calendar.getTime());
 		this.compra.setDetalleOfertas(detallesOfertas);
 		this.requerimiento = requerimiento;
 		llenarTiposFlete();
+		limpiar();
+	}
+	
+	/**COMMAND*/
+	@Command
+	@NotifyChange({"compra","tipoFlete"})
+	public void limpiar(){
+		this.compra.setObservacion(null);
+		this.tipoFlete = listaTipoFlete.get(0);
+	}
+	
+	@Command
+	public void registrar(){
+		if(this.checkIsFormValid()){
+			this.compra = this.sTransaccion.registrarCompra(compra);
+			this.compra.setTipoFlete(tipoFlete.getValor());
+			this.winCompras.onClose();
+		}
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
 	private void llenarTiposFlete(){
 		listaTipoFlete = new ArrayList<ModeloCombo<Boolean>>();
-		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
 		listaTipoFlete.add(new ModeloCombo<Boolean>("No", false));
+		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
 	}
 	
 	/**GETTERS Y SETTERS*/

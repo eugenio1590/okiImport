@@ -8,7 +8,6 @@ import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
-import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 
@@ -71,7 +70,6 @@ public interface STransaccion {
 	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit);
 	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento);
 	public Oferta actualizarOferta(Oferta oferta);
-	public List<DetalleOferta> consultarDetallesOferta(Integer idOferta, int page, int limit);
 	
 	//Compras
 	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,

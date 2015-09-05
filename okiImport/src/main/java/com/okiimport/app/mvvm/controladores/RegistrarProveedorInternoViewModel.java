@@ -34,8 +34,7 @@ public class RegistrarProveedorInternoViewModel extends RegistrarProveedorViewMo
 	@Override
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar,
-			@BindingParam("recordMode") String recordMode) {
+			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		if (checkIsFormValid()) {
 
 			if (proveedor.getMarcaVehiculos().size() > 0

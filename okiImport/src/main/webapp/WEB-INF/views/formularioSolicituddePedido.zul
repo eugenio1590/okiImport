@@ -9,13 +9,12 @@
 		        
 		          <rows>
 		           <row align="center">
-		           
-		 
+		           	 
 		           <label value="Fecha: " />
-			       <datebox  format="dd/MM/yyyy" 
-                      value="@bind(vm.compra.fechaCreacion)" instant="true" readonly="true" width="150px"/>
-                      <label width="200px" value="Desea Incluir el Precio del Flete:" />
+			       <label value="@bind(vm.getFormatoFecha(vm.compra.fechaCreacion))" width="150px"/>
+                   <label width="200px" value="Desea Incluir el Precio del Flete:" />
 					<combobox readonly="true" width="150px" 
+						selectedItem="@bind(vm.tipoFlete)"
 						value="@bind(vm.tipoFlete.nombre)"
 						model="@load(vm.listaTipoFlete)"><!-- selectedItem="@bind(vm.tipoFlete)" -->
 						<template name="model">
@@ -151,7 +150,7 @@
 						
 						<listfooter>
 							<label value="Total:"/>
-<!-- 							<label value="@bind(vm.oferta.calcularTotal())"/> -->
+							<label value="@bind(vm.compra.calcularTotal())"/>
 						</listfooter>
 						</listfoot>
 							
@@ -166,12 +165,12 @@
 		</groupbox>
 					<div sclass="panel-footer" align="right">
 
-<!-- 				<button id="btnLimpiar" label="Limpiar" type="submit" -->
-<!-- 					onClick="@command('limpiar')" sclass="btn-primary" /> -->
+				<button id="btnLimpiar" label="Limpiar" type="submit"
+					onClick="@command('limpiar')" sclass="btn-primary" />
 
-<!-- 				<button label="Enviar" type="submit" -->
-<!-- 					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)" -->
-<!-- 					sclass="btn-primary" /> -->
+				<button label="Enviar" type="submit"
+					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+					sclass="btn-primary" />
 			</div>
 		
 	</window>
