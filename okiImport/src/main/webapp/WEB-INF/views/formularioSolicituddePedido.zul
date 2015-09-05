@@ -1,37 +1,44 @@
-<window id="winCompras" border="none" width="80%" title="Compras"
+<window id="winCompras" border="none" width="80%" title="Solicitud de Pedido"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')">
 		<groupbox closable="false">
-		<div> 
-		    <space></space>
-		    <space></space>  
-		    <space></space> 
-		    <space></space> 
-		    <label value="N° Compra:" />
-		    <label value="@bind(vm.compra.idCompra)"/>
-		    <space></space>
-		    <space></space> 
-		    <space></space> 
-		    <space></space> 
-		    <space></space> 
-		    <space></space> 
-		    <space></space>
-		    <label value="Fecha: " />
-			<datebox id="fecha"  width="150px" format="dd/MM/yyyy" 
-             value="@bind(vm.compra.fechaCreacion)" instant="true" readonly="true"/>
-            <space></space>
-            <space></space> 
-		    <space></space>
-		    <space></space> 
-		    <space></space> 
-		    <label value="Observacion:" />
-		    <textbox value="@bind(vm.compra.observacion)" width="250px" rows="2"/>
-             <space></space> 
-             <space></space> 
-		 
-		    
-		</div>
 		
+			<caption sclass="custom_caption"/>
+		      <div>
+		       <grid>
+		        
+		          <rows>
+		           <row align="center">
+		           
+		 
+		           <label value="Fecha: " />
+			       <datebox  format="dd/MM/yyyy" 
+                      value="@bind(vm.compra.fechaCreacion)" instant="true" readonly="true" width="150px"/>
+                      <label width="200px" value="Desea Incluir el Precio del Flete:" />
+					<combobox readonly="true" width="150px" 
+						value="@bind(vm.tipoFlete.nombre)"
+						model="@load(vm.listaTipoFlete)"><!-- selectedItem="@bind(vm.tipoFlete)" -->
+						<template name="model">
+							<comboitem label="@bind(each.nombre)"/>
+						</template>
+					</combobox>
+		           </row>
+		    
+		          <row align="center">
+		          
+		          <label value="Observacion:" />
+		          <textbox  value="@bind(vm.compra.observacion)"  width="200px" rows="2" />
+		          
+		          
+		           
+		         </row>	
+            
+                </rows>	 
+		       </grid> 
+		     </div>
+		   
+		    
+		 
 		<groupbox closable="false">
 				<caption sclass="custom_caption" label="Datos Del Requerimiento" />
 				<div>
@@ -60,40 +67,7 @@
 						</rows>
 					</grid>
 				</div>
-			</groupbox>
-			
-			
-			<groupbox closable="false">
-				<caption sclass="custom_caption" label="Datos Del Cliente" />
-				<div>
-					<grid>
-						<columns>
-							<column width="35%" align="right" />
-							<column width="65%" />
-							<column width="35%" align="right" />
-							<column width="65%" />
-						</columns>
-
-						<rows>
-							<row>
-								<label value="Cedula: " />
-								<textbox value="@bind(vm.requerimiento.cliente.cedula)"
-									width="80%" readonly="true"/>
-								
-
-								<label value="Nombre: " />
-								<textbox  width="80%"
-									readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.nombre)"/>
-									
-							</row>
-
-						</rows>
-					</grid>
-				</div>
-			</groupbox>
-			
-		
+			</groupbox>	
 		
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Datos Del Vehiculo" />
@@ -114,7 +88,7 @@
 								
 
 								<label value="Modelo: " />
-								<textbox id="modelo" width="80%"
+								<textbox width="80%"
 									readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.modeloV)"/>
 									
@@ -130,13 +104,13 @@
 			
 			
 			<groupbox closable="false">
-				<caption sclass="custom_caption" label="Detalle Oferta" />
+				<caption sclass="custom_caption" label="Detalle de la Compra" />
 				<panel sclass="panel-primary">
 					<panelchildren>
 
 
-						<listbox id="listaOferta" mold="paging"
-							model="@load(vm.oferta.detalleOfertas)"
+						<listbox mold="paging"
+							model="@load(vm.compra.detalleOfertas)"
 							style="margin-top:10px" pageSize="5" >
 
 
@@ -177,7 +151,7 @@
 						
 						<listfooter>
 							<label value="Total:"/>
-							<label value="@bind(vm.oferta.calcularTotal())"/>
+<!-- 							<label value="@bind(vm.oferta.calcularTotal())"/> -->
 						</listfooter>
 						</listfoot>
 							
@@ -189,28 +163,15 @@
 					</panelchildren>
 				</panel>
 			</groupbox>
-			
-			
 		</groupbox>
-		
-		   <div  align="right">
+					<div sclass="panel-footer" align="right">
 
-				<label value= "Precio de Flete"></label>
+<!-- 				<button id="btnLimpiar" label="Limpiar" type="submit" -->
+<!-- 					onClick="@command('limpiar')" sclass="btn-primary" /> -->
 
-                <textbox value="@bind(vm.compra.precioFlete)" width="150px" />
-				
-			</div>
-		
-		
-	
-			<div sclass="panel-footer" align="right">
-
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
-
-				<button label="Enviar" type="submit"
-					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
+<!-- 				<button label="Enviar" type="submit" -->
+<!-- 					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)" -->
+<!-- 					sclass="btn-primary" /> -->
 			</div>
 		
 	</window>
