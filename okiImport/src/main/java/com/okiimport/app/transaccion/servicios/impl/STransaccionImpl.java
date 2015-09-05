@@ -474,6 +474,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		}
 		return oferta;
 	}
+	
+	public List<DetalleOferta> consultarDetallesOferta(Integer idOferta, int page, int limit){
+		return detalleOfertaDAO.consultarDetalleOferta(idOferta, page*limit, limit);
+	}
 
 	@Override
 	public Oferta actualizarOferta(Oferta oferta) {
