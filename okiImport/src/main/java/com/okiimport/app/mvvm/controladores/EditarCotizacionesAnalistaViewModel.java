@@ -43,7 +43,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static String titulo = "Cotizacion del Requerimiento N° ";
+	private static String titulo = "Cotizacion del Requerimiento Nro ";
 	
 	private String constraint_precio_flete;
 	
