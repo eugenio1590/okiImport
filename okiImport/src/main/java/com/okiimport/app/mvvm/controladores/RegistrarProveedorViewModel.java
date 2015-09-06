@@ -151,7 +151,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar) {
+			@BindingParam("btnLimpiar") Button btnLimpiar,
+			@BindingParam("recordMode") String recordMode) {
 		if (checkIsFormValid()) {
 
 			if (proveedor.getMarcaVehiculos().size() > 0
