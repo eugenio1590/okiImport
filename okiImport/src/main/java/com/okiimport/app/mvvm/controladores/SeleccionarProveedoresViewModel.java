@@ -78,7 +78,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 			@ExecutionArgParam("enviar") Boolean enviar,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
 		this.enviar = enviar;
-		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ");
+		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ", enviar);
 		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
