@@ -163,6 +163,9 @@ public class CotizacionDAOImpl extends AbstractJpaDao<Cotizacion, Integer> imple
 			if (cotizacionF.getFechaVencimiento() != null){
 				restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(this.entity.get("fechaVencimiento").as(String.class)), "%"+dateFormat.format(cotizacionF.getFechaVencimiento()).toLowerCase()+"%"));
 			}
+			if(cotizacionF.getTipo() != null){
+				restricciones.add(criteriaBuilder.equal(this.entity.get("tipo"), cotizacionF.getTipo()));
+			}
 			if(joins.get("proveedor") != null && cotizacionF.getProveedor() != null){
 				if(cotizacionF.getProveedor().getNombre() != null){
 					restricciones.add(criteriaBuilder.like(criteriaBuilder.lower(joins.get("proveedor").get("nombre").as(String.class)), "%"+String.valueOf(cotizacionF.getProveedor().getNombre()).toLowerCase()+"%"));

@@ -22,9 +22,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -59,7 +57,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion();
+		cotizacionFiltro = new Cotizacion(false);
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
@@ -198,6 +196,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		return titulo;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
