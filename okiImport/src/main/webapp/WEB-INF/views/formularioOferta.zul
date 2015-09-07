@@ -149,7 +149,7 @@
 								     <div class="btn-group btn-group-sm">
 
 									  <checkbox label="Aceptar" sclass="btn-primary"
-										iconSclass="fa fa-check-square blue bigger-160" tooltiptext="Aceptar Oferta"
+										 tooltiptext="Aceptar Oferta"
 										onCheck="@command('aprobarDetalleOferta', detalleOferta = each)"
 										 />
 
