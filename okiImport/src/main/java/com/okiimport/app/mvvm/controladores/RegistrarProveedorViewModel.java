@@ -90,6 +90,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("recordMode") String recordMode,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
+		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
 	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
