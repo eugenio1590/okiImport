@@ -470,9 +470,15 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		List<Oferta> ofertas = ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, 1);
 		if(ofertas!=null && !ofertas.isEmpty()){
 			oferta = ofertas.get(0);
-			oferta.setDetalleOfertas(detalleOfertaDAO.consultarDetalleOferta(oferta.getIdOferta(), 0, -1));
+			oferta.setDetalleOfertas(consultarDetallesOferta(oferta.getIdOferta(), 0, -1));
 		}
 		return oferta;
+	}
+	
+	@Override
+	public List<DetalleOferta> consultarDetallesOferta(Integer idOferta, int page, int limit){
+		// TODO Auto-generated method stub
+		return detalleOfertaDAO.consultarDetalleOferta(idOferta, page*limit, limit);
 	}
 
 	@Override
