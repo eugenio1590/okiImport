@@ -163,32 +163,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	}
 	
 	@Command
-	@NotifyChange("listaDetalleRequerimientoSeleccionados")
-	public void limpiar1(){
-		this.listaDetalleRequerimientoSeleccionados=null;
-	}
-	
-	
-	
-	@Command
-	@NotifyChange({"requerimiento"})
-	public void limpiar(){
-		
-		for(DetalleRequerimiento detalle:this.requerimiento.getDetalleRequerimientos()){
-			detalle.setCodigoOem("");
-			detalle.setCantidad(new Long(0));
-			detalle.setDescripcion("");
-			detalle.setClasificacionRepuesto(null);
-			detalle.setFoto(null);
-		}
-	}
-	
-	
-	
-	
-	
-	
-	@Command
 	public boolean validarListaClasificacion(){
 		
 		if (listaDetalleRequerimientoSeleccionados!= null)
