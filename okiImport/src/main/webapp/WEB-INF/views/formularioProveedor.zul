@@ -59,24 +59,21 @@
 								    
 										
 											<label value="RIF: *" />
-									<hbox>
+										<hbox>
 											<combobox width="30%"
 												readonly="true" selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)" constraint="no empty">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-
-													</comboitem>
+												model="@load(vm.listaTipoPersona)">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
 												</template>
 											</combobox>
-
-											<textbox id="cedulaRif"
-												width="108%" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.cedula)"
-												placeholder="Ej: 402405375" maxlength="12"
-												constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
+											<vbox>
+												<textbox id="cedulaRif"
+													readonly="" mold="rounded"
+													value="@bind(vm.proveedor.cedula)"
+													placeholder="Ej: 402405375" maxlength="12"
+													constraint="@bind(vm.getSoloNumeros())" />
+											</vbox>
 										</hbox>
 
 									</row>
@@ -96,38 +93,30 @@
 										
 										<label
 											value="Nombre/Razón Social:*" />
-
-										<textbox id="nombreRazonSocial"
-											width="80%" readonly="" mold="rounded"
-											value="@bind(vm.proveedor.nombre)"
-											placeholder="Ej: Empresa C.A"
-											constraint="no empty:El Campo No Debe Estar Vacio" />
+										<vbox width="80%">
+											<textbox id="nombreRazonSocial"
+												readonly="" mold="rounded"
+												value="@bind(vm.proveedor.nombre)"
+												placeholder="Ej: Empresa C.A"
+												constraint="@bind(vm.getNotEmptyValidator())" />
+										</vbox>
 											
 									</row>
 
 
+									
 									<row>
-										<label value="E-mail: *" />
-										<textbox id="email" width="80%"
-											readonly="" mold="rounded" value="@bind(vm.proveedor.correo)"
-											placeholder="Ej. fusa@gmail.com"
-											constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
-										</textbox>
-										
-										
+
 										<label value="Dirección: *" />
+										<vbox width="80%">
+											<textbox id="direccion"
+												rows="3" cols="35" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.direccion)"
+												placeholder="Ej: zona industrial 2 "
+												constraint="@bind(vm.getNotEmptyValidator())" />
+										</vbox>
 
-										<textbox id="direccion"
-											width="80%" rows="3" cols="35" readonly="" mold="rounded"
-											value="@bind(vm.proveedor.direccion)"
-											placeholder="Ej: zona industrial 2 "
-											constraint="no empty:El Campo No Debe Estar Vacio" />
-									</row>
-									
-									
-									<row>
-
-									<label value="Estado: *" />
+										<label value="Estado: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.estado)"

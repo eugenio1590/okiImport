@@ -163,12 +163,11 @@
 												maxlength="25" placeholder="Ej: xA245D25623" />
 
 											<label value="Año: *" />
-											<intbox placeholder="2008"
-												constraint="no negative,no empty, no zero" width="80%"
-												maxlength="4"
-												value="@save(vm.requerimiento.annoV) 
-													@validator(vm.validatorAnno, maxValue=vm.yearDay, intbAnno=self)" />
-
+											<vbox>
+												<intbox width="80%"
+													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
+													value="@bind(vm.requerimiento.annoV)" />
+											</vbox>
 										</row>
 									</rows>
 								</grid>

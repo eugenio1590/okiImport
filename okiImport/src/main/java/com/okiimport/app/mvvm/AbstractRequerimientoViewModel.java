@@ -7,18 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
-import org.zkoss.zul.Spinner;
 
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.maestros.servicios.SMaestros;
@@ -26,8 +22,17 @@ import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
+
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
+//Constraint
+import com.okiimport.app.mvvm.constraint.AnnoConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
@@ -227,66 +232,24 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 	
-	public AbstractValidator getValidatorCantidad(){
-		return new AbstractValidator(){
-
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				Integer cantidadOfrecida = (Integer) ctx.getProperty().getValue();
-				Spinner spnCantidad = (Spinner) ctx.getBindContext().getValidatorArg("spnCantidad");
-				Long cantidadRequerida = (Long) ctx.getBindContext().getValidatorArg("cantidad");
-				
-				if(spnCantidad==null)
-					System.out.println("***Error en la Validacion***");
-				else if(cantidadOfrecida!=null && cantidadRequerida!=null){
-					if(cantidadOfrecida > cantidadRequerida){
-						String mensaje = "La cantidad ofrecida no puede ser mayor que "+cantidadRequerida+" !";
-						mostrarNotification(mensaje, "error", 5000, true, spnCantidad);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-			}
-			
+	public CustomConstraint getNotEmptyValidator(){
+		return new GeneralConstraint(EConstraint.NO_EMPTY);
+	}
+	
+	public CustomConstraint getEmailValidator(){
+		RegExpression[] constrains = new RegExpression[]{
+				new RegExpression("/.+@.+\\.[a-z]+/", "Debe contener un correo valido Ej. fusa@gmail.com")
 		};
+		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.CUSTOM);
+	}
+	
+	public CustomConstraint getValidatorCantidad(@BindingParam("cantidadRequerida") Long cantidadRequerida){
+		return new MayorCantidadConstraint(cantidadRequerida);
 	}
 
-	public AbstractValidator getValidatorAnno(){
-		return new AbstractValidator() {
-			
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				Integer anno = (Integer) ctx.getProperty().getValue();
-				Integer minYear = (Integer) ctx.getBindContext().getValidatorArg("minValue");
-				Integer maxYear = (Integer) ctx.getBindContext().getValidatorArg("maxValue");
-				Intbox intbAnno = (Intbox) ctx.getBindContext().getValidatorArg("intbAnno");
-				
-				if(intbAnno==null)
-					System.out.println("***Error en la Validacion***");
-				else if(minYear!=null && maxYear!=null){
-					if(minYear > anno || anno > maxYear){
-						String mensaje = "El Año ingresado es Invalido !";
-						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-				else if(minYear!=null){
-					if(minYear > anno){
-						String mensaje = "El Año ingresado "+anno+" debe ser mayor que "+maxYear+"!";
-						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-				else if(maxYear!=null){
-					if(anno > maxYear){
-						String mensaje = "El Año ingresado "+anno+" debe ser menor que "+maxYear+"!";
-						mostrarNotification(mensaje, "error", 5000, true, intbAnno);
-						addInvalidMessage(ctx, mensaje);
-					}
-				}
-			}
-		};
+	public CustomConstraint getValidatorAnno(@BindingParam("minYear") Integer minYear, 
+			@BindingParam("maxYear") Integer maxYear){
+		return new AnnoConstraint(minYear, maxYear);
 	}
 
 	public SMaestros getsMaestros() {

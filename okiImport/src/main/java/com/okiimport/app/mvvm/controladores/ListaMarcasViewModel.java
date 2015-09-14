@@ -48,7 +48,6 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 	private Paging pagMarcas;
 
 	// Modelos
-	
 	private List<MarcaVehiculo> marcas;
 	private MarcaVehiculo marcaFiltro;
 
@@ -141,7 +140,6 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 			//parametros.put("editar", true);
 			llamarFormulario("formularioMarcas.zul", parametros);
 	}
-	
 
 	/** METODOS PROPIOS DE LA CLASE */
 	/*

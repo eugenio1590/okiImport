@@ -46,7 +46,6 @@
 							<a
 								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
 								onClick="@command('editarMarca', marca = each)" />
-						
 						</div>
 					</listcell>
 				</listitem>
