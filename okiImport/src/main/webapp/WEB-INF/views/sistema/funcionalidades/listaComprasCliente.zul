@@ -1,0 +1,80 @@
+<zk>
+	<window border="none" apply="org.zkoss.bind.BindComposer"
+		closable="true" sclass="btn-primary" width="70%" height="70%"
+		title="@bind(vm.titulo)" id="winListaCompras"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaComprasClienteViewModel')"
+		onClose="@command('cambiarRequerimientos')">
+		<borderlayout>
+			<north title="Requerimiento">
+				<columnlayout sclass="base_contenedor_campos">
+					<columnchildren sclass="base_division_campos">
+						<label value="Fecha de Creacion:"/>
+						<label value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaCreacion))"/>
+					</columnchildren>
+					<columnchildren sclass="base_division_campos">
+						<label value="Estado:"/>
+						<label value="@bind(vm.requerimiento.determinarEstatus())"/>
+					</columnchildren>
+					<columnchildren sclass="base_division_campos">
+						<label value="Cliente:"/>
+						<label value="@bind(vm.requerimiento.cliente.nombre)"/>
+					</columnchildren>
+					<!-- FALTAN DATOS -->
+				</columnlayout>
+			</north>
+			<center title="Solicitudes de Compra">
+				<div>
+					<listbox id="gridComprasCliente" mold="paging"
+						pageSize="10" pagingPosition="top" sclass="mylist"
+						model="@load(vm.listaCompras)">
+
+						<listhead>
+
+							<listheader value="idCompra" width="150px"
+								label="Nro." sort="auto(idCompra)"/>
+
+							<listheader value="fechaCreacion"
+								label="F. Creación" sort="auto(fechaCreacion)" width="200px"/>
+							
+							<listheader value="estatus"
+								label="Estado" sort="auto(estatus)">
+							
+							</listheader>
+							<listheader label="Operaciones" sort="none"/>
+
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="@bind(each.idCompra)" />
+								<listcell label="@bind(vm.getFormatoFecha(each.fechaCreacion))"/>
+								<listcell label="@bind(each.determinarEstatus())"/>
+								<listcell>
+									<hbox spacing="20px">
+										<div class="btn-group btn-group-sm">
+											<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitud de Compra"  
+								    			onClick="@command('verCompra', compra = each)"/>
+								    		<button  iconSclass="fa fa-credit-card green bigger-160" tooltiptext="Registrar Compra"  
+								    			onClick="@command('registrarCompra', compra = each)"/>
+										</div>
+									</hbox>
+								</listcell>
+							</listitem>
+						</template>
+
+					</listbox>
+					<paging id="pagComprasCliente"
+						onPaging="@command('paginarLista')" autohide="true" />
+					
+				</div>
+			</center>
+			<south border="none">
+<!-- 				<div width="100%" align="right"> -->
+<!-- 					<div sclass="btn btn-xs btn-primary"> -->
+<!-- 						<button label="Enviar a Cliente" type="submit" sclass="btn-primary" -->
+<!-- 							onClick="@command('enviarCliente')" disabled="@bind(!vm.enviarACliente())" /> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</south>
+		</borderlayout>
+	</window>
+</zk>

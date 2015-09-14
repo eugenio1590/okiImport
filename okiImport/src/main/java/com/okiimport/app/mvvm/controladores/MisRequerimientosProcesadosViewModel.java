@@ -65,7 +65,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
 		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
-		listaEstatus = llenarListaEstatus();
+		listaEstatus = llenarListaEstatusProcesados();
 		listaEstatus.add(estatusFiltro);
 	}
 	
@@ -152,7 +152,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void aprobarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void seleccionarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
@@ -169,6 +169,31 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("size", "90%");
 		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
+	}
+	
+	/*
+	 * Descripcion: permitira visualizar las Ofertas para luego enviar al cliente respectivo
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void enviarOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("size", "90%");
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaOfertasCliente.zul", parametros );
+	}
+	
+	/*
+	 * Descripcion: permitira visualizar la lista de cotizaciones a editar del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno ninguno
+	 */
+	@Command
+	public void editarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){//EC
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesAnalista.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -219,5 +244,4 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	public void setEstatusFiltro(ModeloCombo<String> estatusFiltro) {
 		this.estatusFiltro = estatusFiltro;
 	}
-
 }

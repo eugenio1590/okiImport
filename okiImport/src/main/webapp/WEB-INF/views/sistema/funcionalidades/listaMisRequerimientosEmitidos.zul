@@ -6,9 +6,8 @@
 
 			<listhead>
 
-				<listheader value="idRequerimiento"
-					label="N° Requerimiento" sort="auto(idRequerimiento)"
-					width="150px">
+				<listheader value="idRequerimiento" width="100px"
+					label="Nro." sort="auto(idRequerimiento)">
 					<spinner constraint="no negative, no zero" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
 						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
 						width="70px" />
@@ -47,7 +46,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
-				<listheader width="8%" label="Operaciones" />
+				<listheader width="10%" label="Operaciones" />
 
 			</listhead>
 			<template name="model">
@@ -69,6 +68,8 @@
 								    onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
 								<button iconSclass="z-icon-truck red bigger-160" tooltiptext="Enviar a Proveedores"
 									onClick="@command('enviarProveedores', requerimiento=each)" if="${ !each.cerrarSolicitud() }"/>
+								<button iconSclass="fa fa-users purple bigger-160" tooltiptext="Cotizar" if="${ each.cotizar() }"
+									onClick="@command('cotizar', requerimiento = each)"/>
 							</div>
 						</hbox>
 					</listcell>

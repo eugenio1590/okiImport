@@ -56,11 +56,10 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario, 
+			@ExecutionArgParam("persona") Persona persona, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
-		
-		this.persona = usuario.getPersona();
+		this.persona = persona;
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
 		cotizacionFiltro = new Cotizacion();
@@ -141,17 +140,19 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		parametros.put("persona", this.persona);
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
+		parametros.put("obligatorioTodosCampos", false);
 		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}
 	
 	/*
-	 * Descripcion: Permitira cargar nuevamente la lista de requerimientos del proveedor
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * @param: Ninguno
 	 * Retorno: Ninguno
 	 */
 	@Command
-	public void cargarRequerimientos(){
+	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
+		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

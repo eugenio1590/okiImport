@@ -89,6 +89,9 @@ public class AnalistaDAOImpl extends PersonaDAOImpl<Analista> implements Analist
 		//4. Creamos las Restricciones de la busqueda
 		List<Predicate> restricciones = new ArrayList<Predicate>();
 		restricciones.add(
+				this.criteriaBuilder.notEqual(this.entity.get("administrador"), true)
+		);
+		restricciones.add(
 				this.criteriaBuilder.or(
 						joins.get("requerimientos").get("estatus").in(estatus),
 						this.criteriaBuilder.isEmpty(this.entity.<List>get("requerimientos"))

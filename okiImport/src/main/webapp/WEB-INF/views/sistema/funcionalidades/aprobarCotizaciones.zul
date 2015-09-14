@@ -96,7 +96,7 @@
 							label="@bind(each.detalleRequerimiento.cantidad)" />
 						<listcell label="@bind(each.cantidad)" />
 						<listcell label="@bind(each.precioVenta)" />
-						<listcell label="@bind(each.precioFlete)" />
+						<listcell label="@bind(each.calcularFlete())" />
 						<listcell label="@bind(each.calcularTotal())" />
 					</listitem>
 				</template>
@@ -158,7 +158,7 @@
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
 					<listcell label="@bind(each.precioVenta)" />
-					<listcell label="@bind(each.precioFlete)" />
+					<listcell label="@bind(each.calcularFlete())" />
 					<listcell label="@bind(each.calcularTotal())" />
 				</listitem>
 			</template>
@@ -168,6 +168,8 @@
 			onPaging="@command('paginarLista')" autohide="true" />
 		<div width="100%" align="right">
 			<div sclass="btn btn-xs btn-info">
+			    <button label="Eliminar" type="submit"
+					onClick="@command('eliminarSeleccion', cotizacion=null)" />
 				<button label="Guardar" type="submit"
 					onClick="@command('guardar', cotizacion=null)" />
 			</div>

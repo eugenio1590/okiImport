@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
@@ -24,8 +25,10 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -59,8 +62,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private List<Proveedor> listaProveedoresSeleccionados2;
 	private List<DetalleRequerimiento> listaDetalleRequerimientos;
 	
-	private static Integer PAGE_SIZE = 3;
-	
 	//*******parte de fase 2
 	private List <Integer> idsClasificacionRepuesto;
 	
@@ -69,22 +70,28 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
-	
+	private Requerimiento requerimiento;
+	private Boolean enviar;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("enviar") Boolean enviar,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
-		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ");
+		this.enviar = enviar;
+		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ", enviar);
 		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
 		limpiar();
-		pagProveedores.setPageSize(pageSize);
+		pagProveedores.setPageSize(pageSize=9);
+		
 	
 		idsClasificacionRepuesto = new ArrayList<Integer>();
-		for(DetalleRequerimiento detalle:repuestosseleccionados)
+		for(DetalleRequerimiento detalle:repuestosseleccionados){
+			requerimiento = detalle.getRequerimiento();
 			idsClasificacionRepuesto.add(detalle.getClasificacionRepuesto().getIdClasificacionRepuesto());
-		    consultarProveedores(0);
+		}
+		consultarProveedores(0);
 	}
 	
 	/**Interface*/
@@ -95,6 +102,22 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		ejecutarGlobalCommand("removerSeleccionados", null);
 	}
 	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@NotifyChange({"listaProveedores"})
+	public void consultarProveedores(@Default("0") int page){
+		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(proveedor, null, null, requerimiento.getIdRequerimiento(), idsClasificacionRepuesto,page, pageSize);
+		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
+		Integer total = (Integer) Parametros.get("total");
+		gridProveedores.setMultiple(true);
+		gridProveedores.setCheckmark(true);
+		gridProveedoresSeleccionados.setMultiple(true);
+		gridProveedoresSeleccionados.setCheckmark(true);
+		pagProveedores.setActivePage(page);
+		pagProveedores.setTotalSize(total);
+	}
+	
+	/**COMMAND*/
 	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
@@ -119,27 +142,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	@NotifyChange({"*"})
 	@Command
-	public void paginarLista(@BindingParam("tipo")int tipo){
-		switch(tipo){
-		case 1: consultarProveedores(pagProveedores.getActivePage());
-		break;
-		}
+	public void paginarLista(){
+		consultarProveedores(pagProveedores.getActivePage());
 	}
 	
-	
-	@NotifyChange({"listaProveedores"})
-	private void consultarProveedores(int page){
-		Map<String, Object> Parametros= sMaestros.ConsultarProveedoresListaClasificacionRepuesto(null, null, null, idsClasificacionRepuesto,page, PAGE_SIZE);
-		listaProveedores = (List<Proveedor>) Parametros.get("proveedores");
-		Integer total = (Integer) Parametros.get("total");
-		gridProveedores.setMultiple(true);
-		gridProveedores.setCheckmark(true);
-		gridProveedoresSeleccionados.setMultiple(true);
-		gridProveedoresSeleccionados.setCheckmark(true);
-		pagProveedores.setActivePage(page);
-		pagProveedores.setTotalSize(total);
+	@NotifyChange({"*"})
+	@Command
+	public void aplicarFiltro(){
+		consultarProveedores(0);
 	}
-	
 	
 	@Command
 	@NotifyChange({"listaProveedoresSeleccionados1"})
@@ -147,38 +158,45 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		if(!listaProveedoresSeleccionados1.isEmpty()){
 			if(checkIsFormValid())
 			{
-				
-			
-			for(Proveedor proveedor:listaProveedoresSeleccionados1){
-				cotizacion.setProveedor(proveedor);
-				List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
+				for(Proveedor proveedor:listaProveedoresSeleccionados1){
 
-				for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
-					DetalleCotizacion detalleCotizacion = new DetalleCotizacion();
-					detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
-					detalleCotizacions.add(detalleCotizacion);
+					Cotizacion cotizacion2 =  cotizacion.clon();
+					cotizacion2.setProveedor(proveedor);
+					List<DetalleCotizacion> detalleCotizacions = new ArrayList<DetalleCotizacion>();
+
+					for(DetalleRequerimiento detalleRequerimiento:listaDetalleRequerimientos){
+						DetalleCotizacion detalleCotizacion = (proveedor.getTipoProveedor()) ? new DetalleCotizacion() : new DetalleCotizacionInternacional();
+						detalleCotizacion.setDetalleRequerimiento(detalleRequerimiento);
+						detalleCotizacions.add(detalleCotizacion);
+					}
+					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
+
+					if(enviar){
+						Map<String, Object> model = new HashMap<String, Object>();
+						model.put("nombreSolicitante", proveedor.getNombre());
+						model.put("cedula", proveedor.getCedula());
+						model.put("mensaje", cotizacion.getMensaje());
+						mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
+								"enviarRequisitoProveedor.html", model);
+					}
 				}
-				sTransaccion.registrarSolicitudCotizacion(cotizacion, detalleCotizacions);
-				
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nombreSolicitante", proveedor.getNombre());
-				model.put("cedula", proveedor.getCedula());
-				model.put("mensaje", cotizacion.getMensaje());
-				mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-						"enviarRequisitoProveedor.html", model);
+				btn_enviar.setDisabled(true);
 			}
-			    btn_enviar.setDisabled(true);
-			}
+			//			System.out.println(proveedor.getCorreo());
 
-
-//			System.out.println(proveedor.getCorreo());
-			
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 			winListProveedores.onClose();
 		}
 		else
 			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
-		    
+
+	}
+	
+	@Command
+	public void registrarProveedor(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("cerrar", false);
+		crearModal("/WEB-INF/views/formularioProveedor.zul", parametros);
 	}
 	
 	
@@ -293,5 +311,13 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	public void setDetalleRequerimiento(DetalleRequerimiento detalleRequerimiento) {
 		this.detalleRequerimiento = detalleRequerimiento;
+	}
+
+	public Boolean getEnviar() {
+		return enviar;
+	}
+
+	public void setEnviar(Boolean enviar) {
+		this.enviar = enviar;
 	}	
 }

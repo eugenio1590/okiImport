@@ -58,8 +58,11 @@ public class Requerimiento implements Serializable {
 	@Column(name="traccion_v")
 	private Boolean traccionV;
 	
-	@Column(name="tipoRepuesto")
+	@Column(name="tipo_repuesto")
 	private Boolean tipoRepuesto;
+	
+	@Transient
+	private Integer nroOfertas;
 	
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
@@ -84,6 +87,10 @@ public class Requerimiento implements Serializable {
 	//bi-directional one-to-many association to DetalleRequerimiento
 	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<DetalleRequerimiento> detalleRequerimientos;
+	
+	//bi-directional one-to-many association to Compra
+	@OneToMany(mappedBy="requerimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Compra> compras;
 
 	public Requerimiento() {
 		detalleRequerimientos = new ArrayList<DetalleRequerimiento>();
@@ -103,13 +110,14 @@ public class Requerimiento implements Serializable {
 	}
 
 	public Requerimiento(Integer idRequerimiento, String estatus, Date fechaCreacion, Date fechaVencimiento,
-			String modeloV, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo, Motor motor) {
+			String modeloV, Boolean tipoRepuesto, Analista analista, Cliente cliente, MarcaVehiculo marcaVehiculo, Motor motor) {
 		super();
 		this.idRequerimiento = idRequerimiento;
 		this.estatus = estatus;
 		this.fechaCreacion = new Timestamp(fechaCreacion.getTime());
 		this.fechaVencimiento = fechaVencimiento;
 		this.modeloV = modeloV;
+		this.tipoRepuesto = tipoRepuesto;
 		this.analista = analista;
 		this.cliente = cliente;
 		this.marcaVehiculo = marcaVehiculo;
@@ -267,6 +275,36 @@ public class Requerimiento implements Serializable {
 		return detalleRequerimiento;
 	}
 	
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
+	
+	public Compra addCompra(Compra compra){
+		getCompras().add(compra);
+		compra.setRequerimiento(this);
+		
+		return compra;
+	}
+	
+	public Compra removeCompra(Compra compra){
+		getCompras().remove(compra);
+		compra.setRequerimiento(null);
+		
+		return compra;
+	}
+
+	public Integer getNroOfertas() {
+		return nroOfertas;
+	}
+
+	public void setNroOfertas(Integer nroOfertas) {
+		this.nroOfertas = nroOfertas;
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	public String determinarTransmision(){
 		String texto = null;
@@ -293,17 +331,19 @@ public class Requerimiento implements Serializable {
 	
 	public String determinarEstatus(){
 		if(this.estatus.equalsIgnoreCase("CR"))
-			return "Requerimiento Emitido";
+			return "Emitido";
 		else if(this.estatus.equalsIgnoreCase("E"))
-			return "Requerimiento Recibido y Editado por el Analista asignado";
+			return "Recibido y Editado";
 		else if(this.estatus.equalsIgnoreCase("EP"))
-			return "Requerimiento Enviado a Proveedores";
+			return "Enviado a Proveedores";
 		else if(this.estatus.equalsIgnoreCase("CT"))
-			return "Requerimiento con Cotizaciones Asignadas";
+			return "Con Cotizaciones Asignadas";
+		else if(this.estatus.equalsIgnoreCase("EC"))
+			return "Con Cotizaciones Incompletas";
 		else if(this.estatus.equalsIgnoreCase("O"))
-			return "Requerimiento Ofertado";
+			return "Ofertado";
 		else if(this.estatus.equalsIgnoreCase("CC"))
-			return "Requerimiento Concretado";
+			return "Concretado";
 		return "";
 	}
 
@@ -323,8 +363,18 @@ public class Requerimiento implements Serializable {
 		return (this.estatus.equalsIgnoreCase("CR") || this.estatus.equalsIgnoreCase("E")) ? true : false;
 	}
 	
-	public boolean editarCotizacion(){
+	public boolean cotizar(){
 		return (this.estatus.equalsIgnoreCase("EC") || this.estatus.equalsIgnoreCase("EP") || this.estatus.equalsIgnoreCase("CT"));
+	}
+	
+	public boolean editarCotizacion(){
+		return this.estatus.equalsIgnoreCase("EC");
+	}
+	
+	public boolean seleccionarCotizacion(){
+		if(this.nroOfertas!=null && this.nroOfertas<3)
+			return true;
+		return false;
 	}
 	
 	public boolean cerrarSolicitud(){

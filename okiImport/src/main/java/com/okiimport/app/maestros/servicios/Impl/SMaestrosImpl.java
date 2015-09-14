@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.dao.AnalistaDAO;
+import com.okiimport.app.maestros.dao.BancoDAO;
 import com.okiimport.app.maestros.dao.CiudadDAO;
 import com.okiimport.app.maestros.dao.ClasificacionRepuestoDAO;
 import com.okiimport.app.maestros.dao.ClienteDAO;
@@ -19,10 +20,9 @@ import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.MarcaVehiculo;
+import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
 
@@ -59,6 +59,10 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	@Autowired
 	@BeanInjector("motorDAO")
 	private MotorDAO motorDAO;
+	
+	@Autowired
+	@BeanInjector("bancoDAO")
+	private BancoDAO bancoDAO;
 		
 	//Marcas
 	@Override
@@ -189,7 +193,12 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 			clasificacion.getProveedores().add(proveedor);
 		for(MarcaVehiculo marca : proveedor.getMarcaVehiculos())
 			marca.getProveedores().add(proveedor);
-	   return proveedorDAO.save(proveedor);
+
+		if(proveedor.getId()==null)
+			proveedor = proveedorDAO.save(proveedor);
+		else
+			proveedor = proveedorDAO.update(proveedor);
+		return proveedor;
 	}
 	
 	
@@ -203,24 +212,42 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 	
 	@Override
 	public Map<String, Object> ConsultarProveedoresListaClasificacionRepuesto(Persona persona, String fieldSort, Boolean sortDirection,
-			List<Integer> idsClasificacionRepuesto, int start, int limit){
+			Integer idRequerimiento, List<Integer> idsClasificacionRepuesto, int start, int limit){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection, idsClasificacionRepuesto, 0, -1).size());
-		parametros.put("proveedores", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection,idsClasificacionRepuesto, start*limit, limit));
+		parametros.put("total", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection, idRequerimiento, idsClasificacionRepuesto, 0, -1).size());
+		parametros.put("proveedores", proveedorDAO.consultarProveedoresListaClasificacionRepuesto(persona, fieldSort, sortDirection, idRequerimiento, idsClasificacionRepuesto, start*limit, limit));
 		return parametros;
 	}
 	
+	//DEBE CAMBIARSE
 	@Override
-	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page,
-			int limit) {
+	public Map<String, Object> consultarProveedores(Proveedor proveedor, int page, int limit) {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("total", Long.valueOf(proveedorDAO.countAll()).intValue());
 		parametros.put("proveedores", proveedorDAO.findAll(page*limit, limit));
 		return parametros;
 	}
 	
+	@Override
+	public Map<String, Object> consultarProveedoresConSolicitudCotizaciones(Proveedor proveedor, Integer idRequerimiento, 
+			String fieldSort, Boolean sortDirection, int page, int limit){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", proveedorDAO.consultarProveedoresConSolicitudCotizaciones(proveedor, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("proveedores", proveedorDAO.consultarProveedoresConSolicitudCotizaciones(proveedor, idRequerimiento, fieldSort, sortDirection, page*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarBancos(int page, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", bancoDAO.findAll(0, -1).size());
+		parametros.put("bancos", bancoDAO.findAll(page*limit, limit));
+		return parametros;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
-	@SuppressWarnings({ "rawtypes", "unused", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private <T extends PersonaDAO, Y extends Persona> T determinarPersonaDAO(Class<Y> clase){
 		T dao = null;
 		if(clase != null){
@@ -283,9 +310,27 @@ public class SMaestrosImpl extends AbstractServiceImpl implements SMaestros {
 		this.motorDAO = motorDAO;
 	}
 
-	
+	public EstadoDAO getEstadoDAO() {
+		return estadoDAO;
+	}
 
+	public void setEstadoDAO(EstadoDAO estadoDAO) {
+		this.estadoDAO = estadoDAO;
+	}
 
-	
-	
+	public CiudadDAO getCiudadDAO() {
+		return ciudadDAO;
+	}
+
+	public void setCiudadDAO(CiudadDAO ciudadDAO) {
+		this.ciudadDAO = ciudadDAO;
+	}
+
+	public BancoDAO getBancoDAO() {
+		return bancoDAO;
+	}
+
+	public void setBancoDAO(BancoDAO bancoDAO) {
+		this.bancoDAO = bancoDAO;
+	}
 }

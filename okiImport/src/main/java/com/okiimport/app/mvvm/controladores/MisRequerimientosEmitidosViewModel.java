@@ -65,7 +65,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
 		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
-		listaEstatus = llenarListaEstatus();
+		listaEstatus = llenarListaEstatusEmitidos();
 		listaEstatus.add(estatusFiltro);
 	}
 	
@@ -176,9 +176,18 @@ public class MisRequerimientosEmitidosViewModel extends AbstractRequerimientoVie
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
 	
-	//Aprobar Cotizacion
-//	else if(requerimiento.getEstatus().equalsIgnoreCase("CT"))
-//	crearModal("/WEB-INF/views/sistema/funcionalidades/cotizaciones.zul", parametros);
+	/*
+	 * Descripcion: permitira visualizar los proveedores para luego registrar la cotizacion respectiva
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void cotizar(@BindingParam("requerimiento") Requerimiento requerimiento){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("size", "90%");
+		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
+	}
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {

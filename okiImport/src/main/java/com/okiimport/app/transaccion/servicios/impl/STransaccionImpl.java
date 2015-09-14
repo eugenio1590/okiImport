@@ -12,17 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Analista;
+import com.okiimport.app.modelo.Compra;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
+import com.okiimport.app.modelo.DetalleOferta;
 import com.okiimport.app.modelo.DetalleRequerimiento;
+import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.servicios.impl.AbstractServiceImpl;
+import com.okiimport.app.transaccion.dao.CompraDAO;
 import com.okiimport.app.transaccion.dao.CotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionDAO;
 import com.okiimport.app.transaccion.dao.DetalleCotizacionInternacionalDAO;
+import com.okiimport.app.transaccion.dao.DetalleOfertaDAO;
 import com.okiimport.app.transaccion.dao.DetalleRequerimientoDAO;
+import com.okiimport.app.transaccion.dao.OfertaDAO;
 import com.okiimport.app.transaccion.dao.RequerimientoDAO;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
@@ -30,6 +36,7 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	
 	private static List<String> ESTATUS_EMITIDOS;
 	private static List<String> ESTATUS_PROCESADOS;
+	private static List<String> ESTATUS_OFERTADOS;
 	
 	@Autowired
 	@BeanInjector("cotizacionDAO")
@@ -50,6 +57,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	@Autowired
 	@BeanInjector("detalleCotizacionInternacionalDAO")
 	private DetalleCotizacionInternacionalDAO detalleCotizacionInternacionalDAO;
+	
+	@Autowired
+	@BeanInjector("ofertaDAO")
+	private OfertaDAO ofertaDAO;
+	
+	@Autowired
+	@BeanInjector("detalleOfertaDAO")
+	private DetalleOfertaDAO detalleOfertaDAO;
+	
+	@Autowired
+	@BeanInjector("compraDAO")
+	private CompraDAO compraDAO;
 
 	public STransaccionImpl() {
 		super();
@@ -62,8 +81,10 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		ESTATUS_PROCESADOS = new ArrayList<String>();
 		ESTATUS_PROCESADOS.add("CT");
 		ESTATUS_PROCESADOS.add("EC");
-		ESTATUS_PROCESADOS.add("O");
-		ESTATUS_PROCESADOS.add("CC");
+		
+		ESTATUS_OFERTADOS = new ArrayList<String>();
+		ESTATUS_OFERTADOS.add("O");
+		ESTATUS_OFERTADOS.add("Z");
 	}
 
 	public DetalleRequerimientoDAO getDetalleRequerimientoDAO() {
@@ -107,6 +128,30 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		this.detalleCotizacionInternacionalDAO = detalleCotizacionInternacionalDAO;
 	}
 
+	public OfertaDAO getOfertaDAO() {
+		return ofertaDAO;
+	}
+
+	public void setOfertaDAO(OfertaDAO ofertaDAO) {
+		this.ofertaDAO = ofertaDAO;
+	}
+
+	public DetalleOfertaDAO getDetalleOfertaDAO() {
+		return detalleOfertaDAO;
+	}
+
+	public void setDetalleOfertaDAO(DetalleOfertaDAO detalleOfertaDAO) {
+		this.detalleOfertaDAO = detalleOfertaDAO;
+	}
+
+	public CompraDAO getCompraDAO() {
+		return compraDAO;
+	}
+
+	public void setCompraDAO(CompraDAO compraDAO) {
+		this.compraDAO = compraDAO;
+	}
+
 	@Override
 	public Requerimiento registrarRequerimiento(Requerimiento requerimiento, SMaestros sMaestros) {
 		// TODO Auto-generated method stub
@@ -127,11 +172,18 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public void guardarSeleccionRequerimiento(
-			DetalleCotizacion detalleCotizacion) {
-		// TODO Auto-generated method stub
-		detalleCotizacion.setEstatus("seleccionado");
-		this.detalleCotizacionDAO.update(detalleCotizacion);
+	public void guardarSeleccionRequerimiento(List<DetalleCotizacion> detalleCotizaciones) {
+		Date fechaCreacion = calendar.getTime();
+		Oferta oferta = new Oferta();
+		oferta.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
+		oferta = actualizarOferta(oferta);
+		for (DetalleCotizacion detalleCotizacion: detalleCotizaciones){
+			DetalleOferta detalleOferta = new DetalleOferta();
+			detalleOferta.setDetalleCotizacion(detalleCotizacion);
+			detalleOferta.setOferta(oferta);
+			detalleOferta.setEstatus("seleccion");
+			detalleOfertaDAO.save(detalleOferta);
+		}
 	}
 
 	@Override
@@ -176,6 +228,23 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros= new HashMap<String, Object>();
 		parametros.put("total", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_PROCESADOS, 0,-1).size());
 		parametros.put("requerimientos", requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_PROCESADOS, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map <String, Object> consultarMisRequerimientosOfertados(Requerimiento regFiltro, String fieldSort, Boolean sortDirection, Integer idusuario,
+			int pagina, int limit){
+		// TODO Auto-generated method stub
+		Integer total = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection, idusuario, ESTATUS_OFERTADOS, 0,-1).size();
+		List<Requerimiento> requerimientos = requerimientoDAO.ConsultarRequerimientoUsuario(regFiltro,fieldSort, sortDirection,idusuario, ESTATUS_OFERTADOS, pagina*limit, limit);
+		int nroOfertas;
+		for(Requerimiento requerimiento : requerimientos){
+			nroOfertas = (Integer) this.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), null, null, 0, 1).get("total");
+			requerimiento.setNroOfertas(nroOfertas);
+		}
+		Map<String, Object> parametros= new HashMap<String, Object>();
+		parametros.put("total", total);
+		parametros.put("requerimientos", requerimientos);
 		return parametros;
 	}
 	
@@ -255,28 +324,6 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 	}
 	
 	@Override
-	public Cotizacion registrarCotizacion(Cotizacion cotizacion) {
-		// TODO Auto-generated method stub
-		if(cotizacion.getEstatus()==null)
-			cotizacion.setEstatus("C");
-		
-		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
-		cotizacion = cotizacionDAO.update(cotizacion);
-		for(DetalleCotizacion detalle : detalles){
-			this.detalleCotizacionDAO.update(detalle);
-			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
-			
-			detalleRequerimiento.setEstatus("CT");
-			this.detalleRequerimientoDAO.update(detalleRequerimiento);
-		
-			Requerimiento requerimiento = detalleRequerimiento.getRequerimiento();
-			requerimiento.setEstatus("CT");
-			this.requerimientoDAO.update(requerimiento);
-		}
-		return cotizacion;
-	}
-
-	@Override
 	public Cotizacion registrarSolicitudCotizacion(Cotizacion cotizacion, List<DetalleCotizacion> detalleCotizacions) {
 		// TODO Auto-generated method stub
 		cotizacion.setEstatus("SC");
@@ -303,6 +350,45 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		return cotizacion;
 	}
 	
+	@Override
+	public Cotizacion registrarCotizacion(Cotizacion cotizacion, Requerimiento requerimiento) {
+		// TODO Auto-generated method stub
+		String estatusRequerimiento = "CT";
+		List<Cotizacion> cotizaciones = (List<Cotizacion>) consultarCotizacionesParaEditar(null, null, null, requerimiento.getIdRequerimiento(), 0, 1).get("cotizaciones");
+		if(cotizacion.getEstatus()==null)
+			cotizacion.setEstatus("C");
+		
+		if(cotizacion.getEstatus().equalsIgnoreCase("EC")) //Incompleto
+			estatusRequerimiento = "EC";
+		else if(!cotizaciones.isEmpty()) //Completo
+			estatusRequerimiento = "EC";
+		
+		requerimiento.setEstatus(estatusRequerimiento);
+		this.requerimientoDAO.update(requerimiento);
+		
+		List<DetalleCotizacion> detalles = cotizacion.getDetalleCotizacions();
+		cotizacion = cotizacionDAO.update(cotizacion);
+		for(DetalleCotizacion detalle : detalles){
+			this.detalleCotizacionDAO.update(detalle);
+			DetalleRequerimiento detalleRequerimiento = detalle.getDetalleRequerimiento();
+			
+			detalleRequerimiento.setEstatus("CT");
+			this.detalleRequerimientoDAO.update(detalleRequerimiento);
+		}
+		return cotizacion;
+	}
+	
+	@Override
+	public Map<String, Object> consultarCotizacionesParaEditar(Cotizacion cotizacionF, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("EC");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, 0, -1).size());
+		parametros.put("cotizaciones", cotizacionDAO.consultarCotizacionesParaEditar(cotizacionF, fieldSort, sortDirection, idRequerimiento, estatus, pagina*limit, limit));
+		return parametros;
+	}
+	
 	//Detalles Cotizacion
 	@Override
 	public Map<String, Object> consultarDetallesCotizacion(DetalleCotizacion detalleF, int idCotizacion, 
@@ -325,9 +411,19 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 				detalleF.setCantidad(new Long(0));
 			}
 		}
+		Integer total = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size();
+		List<DetalleCotizacion> detallesCotizacion = detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit);
+		for(int i=0; i<detallesCotizacion.size(); i++){
+			DetalleCotizacion detalle = detallesCotizacion.get(i);
+			DetalleCotizacionInternacional detalleInter = this.detalleCotizacionInternacionalDAO.findByPrimaryKey(detalle.getIdDetalleCotizacion());
+			if(detalleInter != null){
+				detallesCotizacion.remove(i);
+				detallesCotizacion.add(i, detalleInter);
+			}
+		}
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("total", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, 0, -1).size());
-		parametros.put("detallesCotizacion", detalleCotizacionDAO.consultarDetallesCotizacion(detalleF, null, idRequerimiento, true, false, fieldSort, sortDirection, pagina*limit, limit));
+		parametros.put("total", total);
+		parametros.put("detallesCotizacion", detallesCotizacion);
 		if(nuloCantidad)
 			detalleF.setCantidad(null);
 		return parametros;
@@ -341,6 +437,114 @@ public class STransaccionImpl extends AbstractServiceImpl implements STransaccio
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("total", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, 0, -1).size());
 		parametros.put("detallesCotizacion", detalleCotizacionInternacionalDAO.consultarDetallesCotizacion(detalleF, idCotizacion, null, false, true, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+
+	//Ofertas
+	@Override
+	public Map<String, Object> consultarOfertasPorRequerimiento(int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limit) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, null, fieldSort, sortDirection, pagina*limit, limit));
+		return parametros;
+	}
+	
+	@Override
+	public Map<String, Object> consultarOfertasRecibidasPorRequerimiento(int idRequerimiento, int pagina, int limit){
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("recibida");
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, -1).size());
+		parametros.put("ofertas", ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, pagina*limit, limit));
+		return parametros;
+	}
+
+	@Override
+	public Oferta consultarOfertaEnviadaPorRequerimiento(int idRequerimiento) {
+		// TODO Auto-generated method stub
+		Oferta oferta = null;
+		List<String> estatus = new ArrayList<String>();
+		estatus.add("enviada");
+		List<Oferta> ofertas = ofertaDAO.consultarOfertasPorRequerimiento(idRequerimiento, estatus, "fechaCreacion", true, 0, 1);
+		if(ofertas!=null && !ofertas.isEmpty()){
+			oferta = ofertas.get(0);
+			oferta.setDetalleOfertas(consultarDetallesOferta(oferta.getIdOferta(), 0, -1));
+		}
+		return oferta;
+	}
+	
+	@Override
+	public List<DetalleOferta> consultarDetallesOferta(Integer idOferta, int page, int limit){
+		// TODO Auto-generated method stub
+		return detalleOfertaDAO.consultarDetalleOferta(idOferta, page*limit, limit);
+	}
+
+	@Override
+	public Oferta actualizarOferta(Oferta oferta) {
+		// TODO Auto-generated method stub
+		if(oferta.getIdOferta()==null){
+			oferta.setEstatus("solicitado");
+			oferta = ofertaDAO.save(oferta);
+		}
+		else
+			oferta = ofertaDAO.update(oferta);
+		return oferta;
+	}
+
+	//Compras
+	@Override
+	public Map<String, Object> consultarComprasPorRequerimiento(Compra compraF, int idRequerimiento, String fieldSort, Boolean sortDirection,
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("compras", compraDAO.consultarComprasPorRequerimiento(compraF, idRequerimiento, fieldSort, sortDirection, pagina*limite, limite));
+		return parametros;
+	}
+	
+	@Override
+	public Compra registrarOActualizarCompra(Compra compra){
+		if(compra.getIdCompra()==null){
+			compra.setFechaCreacion(new Timestamp(this.calendar.getTime().getTime()));
+			compra=this.compraDAO.save(compra);
+		}else
+			compra=this.compraDAO.update(compra);
+		return compra;
+	}
+	
+	@Override
+	public Compra registrarSolicitudCompra(Compra compra) {
+		compra.setEstatus("solicitada");
+		return registrarOActualizarCompra(compra);
+	}
+
+	@Override
+	public Compra registrarCompra(Compra compra) {
+		List<DetalleOferta> detalleCompra = compra.getDetalleOfertas();
+		compra.setDetalleOfertas(null);
+		compra.setEstatus("enviada");
+		compra = registrarOActualizarCompra(compra);
+		if(detalleCompra!=null && !detalleCompra.isEmpty()){
+			for(DetalleOferta detalle : detalleCompra){
+				detalle = detalleOfertaDAO.findByPrimaryKey(detalle.getIdDetalleOferta());
+				detalle.setCompra(compra);
+				detalleOfertaDAO.update(detalle);
+			}
+		}
+		compra.setDetalleOfertas(detalleCompra);
+		return compra;
+	}
+
+	//DetalleCompra
+	@Override
+	public Map<String, Object> consultarDetallesCompra(int idCompra, String fieldSort, Boolean sortDirection, 
+			int pagina, int limite) {
+		// TODO Auto-generated method stub
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("total", detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, 0, -1).size());
+		parametros.put("detallesCompra", this.detalleOfertaDAO.consultarDetalleCompra(idCompra, fieldSort, sortDirection, pagina*limite, limite));
 		return parametros;
 	}
 }

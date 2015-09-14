@@ -28,7 +28,7 @@
 	<!-- Data Source -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <beans:property name="driverClassName" value="org.postgresql.Driver" />
-        <beans:property name="url" value="jdbc:postgresql://localhost:5432/requerimientos" />
+        <beans:property name="url" value="jdbc:postgresql://localhost:5432/requerimientos_fase_final" />
         <beans:property name="username" value="postgres" />
         <beans:property name="password" value="postgres" />
         <beans:property name="maxActive" value="100" /> <!-- indica el nÃºmero mÃ¡ximo de conexiones que pueden usarse. -->
@@ -78,6 +78,11 @@
     <beans:bean id="estadoDAO" class="com.okiimport.app.maestros.dao.impl.EstadoDAOImpl"/>
     <beans:bean id="ciudadDAO" class="com.okiimport.app.maestros.dao.impl.CiudadDAOImpl"/>
     <beans:bean id="detalleCotizacionInternacionalDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleCotizacionInternacionalDAOImpl"/>
+    <beans:bean id="ofertaDAO" class="com.okiimport.app.transaccion.dao.impl.OfertaDAOImpl"/>
+    <beans:bean id="detalleOfertaDAO" class="com.okiimport.app.transaccion.dao.impl.DetalleOfertaDAOImpl"/>
+    <beans:bean id="compraDAO" class="com.okiimport.app.transaccion.dao.impl.CompraDAOImpl"/>
+    <beans:bean id="bancoDAO" class="com.okiimport.app.maestros.dao.impl.BancoDAOImpl"/>
+    <beans:bean id="configuracionDAO" class="com.okiimport.app.configuracion.dao.impl.ConfiguracionDAOImpl"/>
     
     <!-- Servicios -->
     <beans:bean id="sControlUsuario" class="com.okiimport.app.configuracion.servicios.impl.SControlUsuarioImpl"/>

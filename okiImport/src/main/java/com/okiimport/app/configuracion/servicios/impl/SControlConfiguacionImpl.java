@@ -7,9 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.okiimport.app.configuracion.dao.ConfiguracionDAO;
 import com.okiimport.app.configuracion.dao.HistoricoMonedaDAO;
 import com.okiimport.app.configuracion.dao.MonedaDAO;
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
+import com.okiimport.app.modelo.Configuracion;
 import com.okiimport.app.modelo.HistoricoMoneda;
 import com.okiimport.app.modelo.Moneda;
 import com.okiimport.app.mvvm.BeanInjector;
@@ -24,6 +26,10 @@ public class SControlConfiguacionImpl implements SControlConfiguracion {
 	@Autowired
 	@BeanInjector("historicoMonedaDAO")
 	private HistoricoMonedaDAO historicoMonedaDAO;
+	
+	@Autowired
+	@BeanInjector("configuracionDAO")
+	private ConfiguracionDAO configuracionDAO;
 	
 	public SControlConfiguacionImpl() {
 		// TODO Auto-generated constructor stub
@@ -45,6 +51,23 @@ public class SControlConfiguacionImpl implements SControlConfiguracion {
 		this.historicoMonedaDAO = historicoMonedaDAO;
 	}
 
+	public ConfiguracionDAO getConfiguracionDAO() {
+		return configuracionDAO;
+	}
+
+	public void setConfiguracionDAO(ConfiguracionDAO configuracionDAO) {
+		this.configuracionDAO = configuracionDAO;
+	}
+	
+	//Configuracion
+	@Override
+	public Configuracion consultarConfiguracionActual() {
+		// TODO Auto-generated method stub
+		List<Configuracion> configuraciones = configuracionDAO.findAll(0, 1);
+		return configuraciones.get(0);
+	}
+
+	//Historico de Moneda
 	@Override
 	public Map<String, Object> consultarMonedasConHistorico(int page, int limite) {
 		// TODO Auto-generated method stub
@@ -60,5 +83,4 @@ public class SControlConfiguacionImpl implements SControlConfiguracion {
 		Integer idMoneda = moneda.getIdMoneda();
 		return this.historicoMonedaDAO.consultarActualConversion(idMoneda);
 	}
-
 }

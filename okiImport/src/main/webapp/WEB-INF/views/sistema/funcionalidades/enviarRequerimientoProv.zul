@@ -197,8 +197,10 @@
 				<div>
 					<button label="Limpiar" type="submit"
 						onClick="@command('limpiar')" sclass="btn-primary" />
+					<button label="Registrar Solicitudes de Cotizacion" type="submit" sclass="btn-primary"
+						onClick="@command('enviarSolicitudProv', enviar = false, requerimiento = each)" />
 					<button label="Enviar a Proveedores" type="submit" sclass="btn-primary"
-						onClick="@command('enviarSolicitudProv', requerimiento = each)" />
+						onClick="@command('enviarSolicitudProv', enviar = true, requerimiento = each)" />
 				</div>
 			</div>
 		</groupbox>

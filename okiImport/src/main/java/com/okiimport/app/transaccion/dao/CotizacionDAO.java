@@ -11,5 +11,7 @@ public interface CotizacionDAO extends IGenericDao<Cotizacion, Integer> {
 			//Integer idRequerimiento, int start, int limit);
 	public List<Cotizacion> consultarSolicitudCotizaciones(Cotizacion cotizacion, String fieldSort, Boolean sortDirection,
 			Integer idRequerimiento, int idProveedor, List<String> estatus, int start, int limit);
+	public List<Cotizacion> consultarCotizacionesParaEditar(Cotizacion cotizacion, String fieldSort, Boolean sortDirection,
+			Integer idRequerimiento, List<String> estatus, int start, int limit);
 }
 

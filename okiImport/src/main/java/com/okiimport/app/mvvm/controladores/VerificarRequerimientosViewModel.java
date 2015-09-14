@@ -24,6 +24,8 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.modelo.DetalleOferta;
+import com.okiimport.app.modelo.Oferta;
 import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
@@ -49,7 +51,6 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	private Div misolicitudes;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
 
 	private Date fechaCreacion;
 
@@ -67,7 +68,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		super.doAfterCompose(view);
 		cliente = new Cliente();
 		requerimientoFiltro = new Requerimiento();
-		pagRequerimientosCliente.setPageSize(PAGE_SIZE);
+		pagRequerimientosCliente.setPageSize(pageSize);
 		agregarGridSort(gridRequerimientosCliente);
 		listaTipoPersona = llenarListaTipoPersona();
 	}
@@ -93,7 +94,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			@BindingParam("cedula") String cedula,
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, PAGE_SIZE);
+		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridRequerimientosCliente.setMultiple(true);
@@ -101,6 +102,19 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		pagRequerimientosCliente.setActivePage(page);
 		pagRequerimientosCliente.setTotalSize(total);
 	}
+	
+	@GlobalCommand
+	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
+			@BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
+
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("detallesOfertas", detallesOfertas);
+		llamarFormulario("formularioOferta.zul", parametros);
+
+	}
+	
+	
 
 	// Comand 
 
@@ -128,6 +142,10 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		llamarFormulario("verDetalleRequerimiento.zul", parametros);
 
 	}
+	
+	
+	
+	
 
 	@Command
 	@NotifyChange("*")

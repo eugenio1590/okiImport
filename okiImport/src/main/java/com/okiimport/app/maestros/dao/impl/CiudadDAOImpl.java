@@ -34,7 +34,5 @@ public class CiudadDAOImpl extends AbstractJpaDao<Ciudad, Integer> implements
 		Map<String, Boolean> orders=new HashMap<String, Boolean>();
 		return this.ejecutarCriteria(concatenaArrayPredicate(restrinciones), orders, start,limit);
 	}
-
 	
-
 }

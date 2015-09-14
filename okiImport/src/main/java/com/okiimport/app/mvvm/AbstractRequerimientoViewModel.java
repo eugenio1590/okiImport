@@ -2,6 +2,7 @@ package com.okiimport.app.mvvm;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,16 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
 
+import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
+
+import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
+//Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
@@ -38,6 +44,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	@BeanInjector("sMaestros")
 	protected SMaestros sMaestros;
+	
+	//Atributos
+	protected Calendar calendar = GregorianCalendar.getInstance();
 	
 	protected List<Ciudad> listaCiudades;
 
@@ -163,15 +172,27 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaTipoProveedor;
 	}
 	
-	protected static List<ModeloCombo<String>> llenarListaEstatus(){
+	private static List<ModeloCombo<String>> llenarListaEstatus(List<EEstatusRequerimiento> listEstatus){
 		List<ModeloCombo<String>> listaEstatus = new ArrayList<ModeloCombo<String>>();
-		listaEstatus.add(new ModeloCombo<String>("Emitido", "CR"));
-		listaEstatus.add(new ModeloCombo<String>("Recibido y Editado", "E"));
-		listaEstatus.add(new ModeloCombo<String>("Enviado a Proveedores", "EP"));
-		listaEstatus.add(new ModeloCombo<String>("Con Cotizaciones Asignadas", "CT"));
-		listaEstatus.add(new ModeloCombo<String>("Ofertado", "O"));
-		listaEstatus.add(new ModeloCombo<String>("Concretado", "CC"));
+		for(EEstatusRequerimiento estatus : listEstatus)
+			listaEstatus.add(new ModeloCombo<String>(estatus.getNombre(), estatus.getValue()));
 		return listaEstatus;
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusEmitidos(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusEmitidos());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusProcesados(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusProcesados());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusOfertados(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusOfertados());
+	}
+	
+	protected static List<ModeloCombo<String>> llenarListaEstatusGeneral(){
+		return llenarListaEstatus(EEstatusRequerimiento.getEstatusGeneral());
 	}
 	
 	protected static List<ModeloCombo<Boolean>> llenarTiposFleteNacional(){
@@ -193,6 +214,18 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
+	}
+	
+	protected String buscarUsername(Persona persona, SControlUsuario sControlUsuario){
+		boolean noValido = true;
+		String usuario = persona.getNombre().split(" ")[0].toLowerCase();
+		String username = usuario;
+		while(noValido){
+			noValido = sControlUsuario.verificarUsername(username);
+			if(noValido)
+				username = usuario + PasswordGenerator.getPassword(PasswordGenerator.NUMEROS+PasswordGenerator.MAYUSCULAS, 3);
+		}
+		return username;
 	}
 	
 	public int getYearDay(){

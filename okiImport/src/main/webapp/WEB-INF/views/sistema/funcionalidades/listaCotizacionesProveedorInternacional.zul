@@ -2,7 +2,7 @@
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="85%" height="85%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorInternacionalViewModel')"
-		onClose="@command('cargarRequerimientos')">
+		onClose="@command('onCloseWindow')">
 		
 		<borderlayout>
 		<west width="100%" title="Informacion del Vehiculo" collapsible="false">
@@ -14,12 +14,14 @@
 							<column label="Marca:"/>
 							<column label="Modelo:"/>
 							<column label="Motor:"/>
+							<column label="Tipo de Repuesto:"/>
 						</columns>
 						<rows>
 							<row>
-								<textbox value="@bind(vm.requerimiento.marcaVehiculo.nombre)" readonly="true"/>
-								<textbox value="@bind(vm.requerimiento.modeloV)" readonly="true"/>
-								<textbox value="@bind(vm.requerimiento.motor.nombre)" readonly="true"/>
+								<label value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
+								<label value="@bind(vm.requerimiento.modeloV)"/>
+								<label value="@bind(vm.requerimiento.motor.nombre)"/>
+								<label value="@bind(vm.requerimiento.determinarTipoRepuesto())"/>
 							</row>
 						</rows>
 					</grid>

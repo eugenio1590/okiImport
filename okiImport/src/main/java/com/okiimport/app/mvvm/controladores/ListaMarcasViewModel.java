@@ -84,12 +84,13 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
 		Map<String, Object> parametros = sMaestros.ConsultarMarca(page,
-				PAGE_SIZE);
+				PAGE_SIZE);//marcaFiltro,
 		Integer total = (Integer) parametros.get("total");
 		marcas = (List<MarcaVehiculo>) parametros.get("marcas");
 		pagMarcas.setActivePage(page);
 		pagMarcas.setTotalSize(total);
 	}
+	
 
 	/** COMMAND */
 	@Command
@@ -120,30 +121,25 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 		llamarFormulario("formularioMarcas.zul", null);
 	}
 
-	/*
-	 * @Command public void editarAnalista(@BindingParam("analista") Analista
-	 * analista){ Usuario userSession = consultarUsuarioSession();
-	 * if(userSession.getId()!=analista.getId()){ Map<String, Object> parametros
-	 * = new HashMap<String, Object>(); parametros.put("analista", analista);
-	 * llamarFormulario("editarAnalista.zul", parametros); } else
-	 * mostrarMensaje("Error", "No se puede Editar el Usuario de la Session",
-	 * Messagebox.ERROR, null, null, null); }
-	 */
 
-	/*
-	 * @Command
-	 * 
-	 * @NotifyChange("analistas") public void
-	 * actualizarEstado(@BindingParam("usuario") Usuario usuario,
-	 * @BindingParam("estado") Boolean estado){ Usuario userSession =
-	 * consultarUsuarioSession(); if(userSession.getId()!=usuario.getId()){
-	 * if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){ String mensaje
-	 * = (estado) ? "Activado" : "Desactivado"; mostrarMensaje("Informacion",
-	 * "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-	 * paginarLista(); } } else mostrarMensaje("Error",
-	 * "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR,
-	 * null, null, null); }
-	 */
+	@Command
+	public void verMarca(@BindingParam("marcas") MarcaVehiculo marcas){
+		
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("marcas", marcas);
+		//parametros.put("editar", false);
+		llamarFormulario("formularioMarcas.zul", parametros);
+	}
+	
+
+	@Command
+	public void editarMarca(@BindingParam("marcas") MarcaVehiculo marcas){
+		
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("marcas", marcas);
+			//parametros.put("editar", true);
+			llamarFormulario("formularioMarcas.zul", parametros);
+	}
 
 	/** METODOS PROPIOS DE LA CLASE */
 	/*

@@ -29,6 +29,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
+import com.okiimport.app.modelo.Configuracion;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.DetalleCotizacion;
 import com.okiimport.app.modelo.DetalleCotizacionInternacional;
@@ -70,9 +71,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
-	private String titulo;
 	
-	private String constraint_precio_flete;
 	
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
@@ -86,13 +85,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
+	
+	private String titulo;
+	private String constraintCampoObligatorio;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
-			@ExecutionArgParam("cotizacion") Cotizacion cotizacion){
+			@ExecutionArgParam("cotizacion") Cotizacion cotizacion,
+			@ExecutionArgParam("obligatorioTodosCampos") Boolean obligatorio){
 		super.doAfterCompose(view);
 		
+		this.constraintCampoObligatorio = (obligatorio) ? "no empty" : null;
+				
 		this.requerimiento = requerimiento;
 		this.cotizacionSelecionada = cotizacion;
 		titulo = TITULO_BASE + requerimiento.getIdRequerimiento();
@@ -102,6 +107,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
 				null, null, 0, -1);
 		listaDetalleCotizacion = (List<DetalleCotizacionInternacional>) parametros.get("detallesCotizacion");
+		prepararListaDetalleCotizacion();
 		limpiarCotizacionSeleccionada();
 		
 		formasEnvio = llenarFormasDeEnvio();
@@ -171,13 +177,15 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setTipoFlete(tipoFlete);
 				detallesCotizacion.add(detalle);
 				boolean cond = (detalle.verificarCondFlete() && detalle.verificarCondPeso());
-				if(cond)
-					incompleto = cond;
+				if(!cond)
+					incompleto = !cond;
 			}
 			if(tipoFlete!=null && !tipoFlete)
 				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");
+			else
+				cotizacionSelecionada.setEstatus("C");
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
-			sTransaccion.registrarCotizacion(cotizacionSelecionada);
+			sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 			this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, this, null);
 		}
 	}
@@ -221,7 +229,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	public void seleccionarTipoFlete(){
 		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
-			this.constraint_precio_flete = null;
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
 				detalle.setAlto(null);
@@ -233,7 +240,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 		else {
 			this.txtPrecioFlete.setConstraint("");
-			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
 			actualizarListaDetalleCotizacion();
 		}
 	}
@@ -276,9 +282,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			detalleCotizacion.setCotizacion(cotizacionSelecionada);
 			detalleCotizacion.setTipoFlete(tipoFlete.getValor());
 			detalleCotizacion.setFormaEnvio(formaEnvio.getValor());
-			detalleCotizacion.calcularTotal(true);
+			detalleCotizacion.calcularTotal();
 			calcularPrecio(3);
 		}
+	}
+	
+	/*
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void onCloseWindow(){
+		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -320,6 +336,18 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private void actualizarListaDetalleCotizacion(){
 		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion)
 			calcularTotalFlete(detalle);
+	}
+	
+	/*
+	 * Descripcion: Permitira asignar la configuracion actual de la libra a los detalles de cotizacion
+	 * @param: Ninguno
+	 * Retorno: Ninguno
+	 */
+	private void prepararListaDetalleCotizacion(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		Float valorLibra = configuracion.getValorLibra();
+		for(DetalleCotizacionInternacional detalle : listaDetalleCotizacion)
+			detalle.setValorLibra(valorLibra);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -380,22 +408,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.monedaSeleccionada = monedaSeleccionada;
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getConstraint_precio_flete() {
-		return constraint_precio_flete;
-	}
-
-	public void setConstraint_precio_flete(String constraint_precio_flete) {
-		this.constraint_precio_flete = constraint_precio_flete;
-	}
-
 	public List<ModeloCombo<Boolean>> getTiposFlete() {
 		return tiposFlete;
 	}
@@ -426,5 +438,21 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setFormaEnvio(ModeloCombo<Boolean> formaEnvio) {
 		this.formaEnvio = formaEnvio;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getConstraintCampoObligatorio() {
+		return constraintCampoObligatorio;
+	}
+
+	public void setConstraintCampoObligatorio(String constraintCampoObligatorio) {
+		this.constraintCampoObligatorio = constraintCampoObligatorio;
 	}
 }

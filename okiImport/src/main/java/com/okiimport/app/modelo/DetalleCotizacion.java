@@ -1,9 +1,14 @@
 package com.okiimport.app.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the detalle_cotizacion database table.
+ * 
+ */
 @Entity
 @Table(name="detalle_cotizacion")
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -21,12 +26,12 @@ public class DetalleCotizacion implements Serializable {
 	private String marcaRepuesto;
 	
 	@Column(name="precio_venta", scale=2)
-	private Float precioVenta;
+	private Float precioVenta = new Float(0);
 	
 	@Column(name="precio_flete", scale=2)
-	private Float precioFlete;
+	private Float precioFlete = new Float(0);
 	
-	private Long cantidad;
+	private Long cantidad = new Long(0);
 	
 	private String estatus;
 	
@@ -39,6 +44,10 @@ public class DetalleCotizacion implements Serializable {
 	@ManyToOne//(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REFRESH})
 	@JoinColumn(name="id_detalle_requerimiento")
 	private DetalleRequerimiento detalleRequerimiento;
+	
+	//bi-directional many-to-one association to DetalleOferta
+	@OneToMany(mappedBy="detalleCotizacion", fetch=FetchType.LAZY)
+	private List<DetalleOferta> detalleOfertas;
 
 	public DetalleCotizacion() {
 	}
@@ -125,11 +134,47 @@ public class DetalleCotizacion implements Serializable {
 		this.detalleRequerimiento = detalleRequerimiento;
 	}
 	
+	public List<DetalleOferta> getDetalleOfertas() {
+		return detalleOfertas;
+	}
+
+	public void setDetalleOfertas(List<DetalleOferta> detalleOfertas) {
+		this.detalleOfertas = detalleOfertas;
+	}
+	
+	public DetalleOferta addDetalleOferta(DetalleOferta detalleOferta){
+		getDetalleOfertas().add(detalleOferta);
+		detalleOferta.setDetalleCotizacion(this);
+		
+		return detalleOferta;
+	}
+	
+	public DetalleOferta removeDetalleOferta(DetalleOferta detalleOferta){
+		getDetalleOfertas().remove(detalleOferta);
+		detalleOferta.setDetalleCotizacion(null);
+		
+		return detalleOferta;
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	public Float calcularTotal(){
 		if(this.precioFlete!=null)
-			return this.precioVenta+this.precioFlete;
+			return calcularCosto()+calcularFlete();
 		else
-			return this.precioVenta;
+			return calcularCosto();
+	}
+	
+	public Float calcularCosto(){
+		return this.precioVenta*this.cantidad;
+	}
+	
+	public Float calcularFlete(){
+		return this.getPrecioFlete();
+	}
+	
+	public void eliminarPrecios(){
+		this.setCantidad(null);
+		this.setPrecioVenta(null);
+		this.setPrecioFlete(null);
 	}
 }

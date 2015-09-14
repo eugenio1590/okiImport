@@ -7,10 +7,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the cotizacion database table.
+ * 
+ */
 @Entity
 @Table(name="cotizacion")
 @NamedQuery(name="Cotizacion.findAll", query="SELECT c FROM Cotizacion c")
-public class Cotizacion implements Serializable{
+public class Cotizacion implements Serializable, Cloneable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,6 +34,9 @@ public class Cotizacion implements Serializable{
 	
 	private String mensaje;
 	
+	private Boolean tipo;
+	
+	@Column(name="precio_flete", scale=2)
 	private Float precioFlete;
 	
 	@Transient
@@ -63,16 +70,19 @@ public class Cotizacion implements Serializable{
 		this.historicoMoneda = new HistoricoMoneda();
 	}
 	
-	public Cotizacion(String mensaje){
-		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
-		this.historicoMoneda = new HistoricoMoneda();
+	public Cotizacion(String mensaje, Boolean tipo){
+		this(tipo);
 		this.mensaje = mensaje;
+	}
+	
+	public Cotizacion(Boolean tipo){
+		this();
+		this.tipo = tipo;
 	}
 
 	public Cotizacion(Integer idCotizacion,	Date fechaCreacion, Date fechaVencimiento, 
 			String estatus, String mensaje) {
-		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
-		this.historicoMoneda = new HistoricoMoneda();
+		this();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;
@@ -82,8 +92,7 @@ public class Cotizacion implements Serializable{
 
 	public Cotizacion(Integer idCotizacion, Date fechaCreacion, Date fechaVencimiento, 
 			String estatus, String mensaje, Proveedor proveedor, HistoricoMoneda historicoMoneda) {
-		this.detalleCotizacions = new ArrayList<DetalleCotizacion>();
-		this.historicoMoneda = new HistoricoMoneda();
+		this();
 		this.idCotizacion = idCotizacion;
 		this.fechaCreacion = fechaCreacion;
 		this.fechaVencimiento = fechaVencimiento;
@@ -143,6 +152,14 @@ public class Cotizacion implements Serializable{
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public Boolean getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Boolean tipo) {
+		this.tipo = tipo;
 	}
 
 	public Float getPrecioFlete() {
@@ -236,5 +253,13 @@ public class Cotizacion implements Serializable{
 		if(this.historicoMoneda!=null && this.historicoMoneda.getIdHistoria()==null)
 			this.historicoMoneda = null;
 	}
-	
+	 public Cotizacion clon(){
+		 try {
+			return (Cotizacion) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return null;
+	 }
 }

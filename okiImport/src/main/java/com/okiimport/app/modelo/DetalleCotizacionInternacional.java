@@ -6,11 +6,19 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+/**
+ * The persistent class for the detalle_cotizacion_internacional database table.
+ * 
+ */
 @Entity
+@Table(name="detalle_cotizacion_internacional")
 @NamedQuery(name="DetalleCotizacionInternacional.findAll", query="SELECT d FROM DetalleCotizacionInternacional d")
 @PrimaryKeyJoinColumn(name="id_detalle_cotizacion_internacional")
 public class DetalleCotizacionInternacional extends DetalleCotizacion implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Column(name="valor_libra", scale=2)
+	private Float valorLibra;
 
 	@Column(scale=2)
 	private Float largo;
@@ -24,8 +32,10 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 	@Column(scale=2)
 	private Float peso;
 	
+	@Column(name="tipo_flete")
 	private Boolean tipoFlete;
 	
+	@Column(name="forma_envio")
 	private Boolean formaEnvio;
 	
 	@Transient
@@ -33,6 +43,14 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 
 	public DetalleCotizacionInternacional() {
 		super();
+	}
+	
+	public Float getValorLibra() {
+		return valorLibra;
+	}
+
+	public void setValorLibra(Float valorLibra) {
+		this.valorLibra = valorLibra;
 	}
 
 	public Float getLargo() {
@@ -115,14 +133,24 @@ public class DetalleCotizacionInternacional extends DetalleCotizacion implements
 		return (this.peso!=null);
 	}
 	
-	public Float calcularTotal(boolean conversion){
+	@Override
+	public Float calcularTotal(){
+		return this.calcularCosto()+calcularFlete();
+	}
+	
+	@Override
+	public Float calcularFlete(){
+		return this.calcularFlete(true);
+	}
+	
+	public Float calcularFlete(boolean conversion){
 		precioTotal = new Float(0);
 		
 		if(this.tipoFlete!=null && this.tipoFlete) //CIF
 			precioTotal = this.getPrecioFlete();
-		else if(formaEnvio!=null && verificarCondFlete() && verificarCondPeso()){ //FOB
+		else if(formaEnvio!=null && valorLibra!=null && verificarCondFlete() && verificarCondPeso()){ //FOB
 			Float pesoTotal = (formaEnvio) ?  /*Aereo*/ calcularPesoVolumetrico() : /*Maritimo*/ calcularPesoDeCubicaje();
-			precioTotal = 5*pesoTotal; //Falta el Valor de la Libra = 5
+			precioTotal = valorLibra*pesoTotal; //Falta el Valor de la Libra = 5
 		}
 		
 		Cotizacion cotizacion = this.getCotizacion();

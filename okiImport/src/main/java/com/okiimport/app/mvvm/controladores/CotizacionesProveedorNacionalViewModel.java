@@ -110,11 +110,11 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario, 
+			@ExecutionArgParam("persona") Persona persona, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
 		
-		this.persona = usuario.getPersona();
+		this.persona = persona;
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
 		cotizacionFiltro = new Cotizacion();
@@ -236,8 +236,9 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(cotizacionSelecionada!=null){
 			if(checkIsFormValid()){
+				cotizacionSelecionada.setEstatus("C");
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
-				sTransaccion.registrarCotizacion(cotizacionSelecionada);
+				sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 				this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, null, null);
 				cotizacionSelecionada = null;
 				listaDetalleCotizacion = null;
@@ -279,13 +280,14 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	}
 	
 	/*
-	 * Descripcion: Permitira cargar nuevamente la lista de requerimientos del proveedor
+	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * @param: Ninguno
 	 * Retorno: Ninguno
 	 */
 	@Command
-	public void cargarRequerimientos(){
+	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
+		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
 	/*

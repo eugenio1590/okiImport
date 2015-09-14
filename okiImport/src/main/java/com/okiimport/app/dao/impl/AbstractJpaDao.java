@@ -23,6 +23,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Selection;
+import javax.persistence.criteria.Subquery;
 import javax.persistence.metamodel.EntityType;
 
 import org.hibernate.Criteria;
@@ -35,8 +36,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.okiimport.app.dao.IGenericDao;
-
-
 
 public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T, ID> {
 	
@@ -486,9 +485,32 @@ public class AbstractJpaDao<T, ID extends Serializable> implements IGenericDao<T
 			List<Expression<?>> groupBy, List<Order> orders){
 		return this.ejecutarCriteriaOrder(conditions, parameters, groupBy, orders, 0, -1);
 	}
+
+	/**CREACION DE SUBQUERY*/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected <Y> Map<String, Object> createSubquery(Class<Y> clazz, String field, Map<String, JoinType> entidades){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		Map<String, Join> joins = new HashMap();
+		Subquery<Y> subquery = this.criteriaBuilder.createQuery().subquery(clazz);
+		Root fromY = subquery.from(clazz);
+		subquery.select(fromY.get(field));
+		if(entidades != null){
+			for (String entidad : entidades.keySet()){
+				Join<Object, Object> join = fromY.join(entidad, entidades.get(entidad));
+				joins.put(entidad, join);
+			}
+		}
+		parametros.put("subquery", subquery);
+		parametros.put("joins", joins);
+		return parametros;
+	}
 	
+	protected <Y> Subquery<Y> addRestriccionesSubquery(Subquery<Y> subquery, Predicate[] conditions){
+		subquery=(conditions!=null) ? subquery.where(conditions) : subquery;
+		return subquery;
+	}
 	
-	
+	/**METODOS GENERALES*/
 	public static <X> Predicate[] concatenaArrayPredicate(List<X> array){
 		if(array.size()==0)
 			return null;

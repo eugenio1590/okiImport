@@ -34,7 +34,7 @@
 
 
 			<listbox id="gridRequerimientosCliente" mold="paging"
-				checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
+				checkmark="true" pagingPosition="top" multiple="true"
 				sclass="mylist" model="@load(vm.listaRequerimientos)">
 				
 				<auxhead>
@@ -45,7 +45,7 @@
 				<listhead>
 
 					<listheader value="idRequerimiento"
-						label="N° Solicitud" sort="auto(idRequerimiento)" width="150px">
+						label="N° Solicitud" sort="none" width="150px">
 						<spinner
 							value="@bind(vm.requerimientoFiltro.idRequerimiento)"
 							constraint="no negative, no zero" instant="true" placeholder=""
@@ -55,18 +55,19 @@
 
 
 					<listheader value="fechaCreacion"
-						label="Fecha Creación" sort="auto(fechaCreacion)" width="200px">
+						label="Fecha Creación" sort="none" width="200px">
 						<datebox
 
+
 							value="@bind(vm.fechaCreacion)"
-							format="dd/MM/yyyy - a hh:mm" instant="true"
+							format="dd/MM/yyyy" instant="true"
 							onChange="@command('aplicarFiltro')" width="100px" />
 
 						<div sclass="z-icon-filter bigger-200" />
 					</listheader>
 
 					<listheader value="modeloV" label="Modelo Carro"
-						sort="auto(modeloV)" width="150px">
+						sort="none" width="150px">
 						<textbox
 							value="@bind(vm.requerimientoFiltro.modeloV)" instant="true"
 							placeholder="" onChange="@command('aplicarFiltro')"
@@ -75,7 +76,7 @@
 					</listheader>
 
 					<listheader value="serialCarroceriaV"
-						label="N° Serial" sort="auto(serialCarroceriaV)" width="150px">
+						label="N° Serial" sort="none" width="150px">
 						<textbox id="serialCarroCerialVM"
 							value="@bind(vm.requerimientoFiltro.serialCarroceriaV)"
 							constraint="no negative, no zero" instant="true"
@@ -91,7 +92,7 @@
 					<listitem>
 						<listcell label="@bind(each.idRequerimiento)" />
 						<listcell>
-							<datebox format="dd/MM/yyyy - a hh:mm" width="200px"
+							<datebox format="dd/MM/yyyy" width="200px"
 
 								value=" @bind(each.fechaCreacion)" readonly="true"
 								buttonVisible="false" />
@@ -105,6 +106,10 @@
 									<button
 										iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver"
 										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
+									
+									<button
+										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta"
+										onClick="@global-command('verOferta',requerimiento = each)" />
 
 								</div>
 							</hbox>

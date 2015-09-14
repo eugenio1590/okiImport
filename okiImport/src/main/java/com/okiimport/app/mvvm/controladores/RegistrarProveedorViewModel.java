@@ -9,14 +9,17 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Ciudad;
@@ -33,13 +36,16 @@ import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
+
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
-	private Proveedor proveedor;
+	protected Proveedor proveedor;
 	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 
+	@Wire("#winProveedor")
+	private Window winProveedor;
 	@Wire("#gridMarcas")
 	private Listbox gridMarcas;
 	@Wire("#gridClasificacionRepuesto")
@@ -54,6 +60,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Paging pagTipoRepuestos;
 	@Wire("#btnLimpiar")
 	private Button btnLimpiar;
+	@Wire("#cmbEstado")
+	private Combobox cmbEstado;
+	@Wire("#cmbCiudad")
+	private Combobox cmbCiudad;
+	
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
@@ -62,20 +73,31 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
+	private ModeloCombo<Boolean> tipoPersonaCed;
 	private List<ModeloCombo<Boolean>> listaTipoProveedor;
 	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
+	private List<Ciudad> listaCiudad;
+	private Estado estadoSeleccionado;
 	
-	
+	private boolean makeAsReadOnly;
+	private Boolean cerrar;
+	private String recordMode;
 	
 	//private List<Pais> listaPais;
 	
 	
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("proveedor") Proveedor proveedor,
+			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
-		limpiar();
+		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
+	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
+		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
+		this.cerrar = (cerrar==null) ? true : cerrar;
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
@@ -86,6 +108,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);
 		listaTipoProveedor = llenarListaTipoProveedor();
+		tipoProveedor=consultarTipoProveedor(this.proveedor.getTipoProveedor(),listaTipoProveedor);
+		tipoPersona=consultarTipoPersona(this.proveedor.getCedula(),listaTipoPersona);
+		String cedula = this.proveedor.getCedula();
+		if(cedula!=null)
+			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 	}
 
 	@Command
@@ -103,11 +130,34 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 
 	
+	public ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
+		if(tipoProveedor!=null)
+			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
+				if (tipoProveedorl.getValor() == tipoProveedor)
+					return tipoProveedorl;
+			
+		return null;
+		
+	}
+	
+	public ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
+		if (cedula!=null){
+			String tipoPersona = cedula.substring(0, 1);
+			for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
+				if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
+					return tipoPersonal;
+		}
+		return this.tipoPersona;
+		
+	}
+	
+	
 	
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar) {
+			@BindingParam("btnLimpiar") Button btnLimpiar,
+			@BindingParam("recordMode") String recordMode) {
 		if (checkIsFormValid()) {
 
 			if (proveedor.getMarcaVehiculos().size() > 0
@@ -115,26 +165,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-				proveedor.setCedula(tipo + proveedor.getCedula());
-				proveedor.setEstatus("solicitante");
-				proveedor = sMaestros.registrarProveedor(proveedor);
-
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nombreSolicitante", proveedor.getNombre());
-				model.put("cedula", proveedor.getCedula());
 				
-				mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
-								"registrarProveedor.html", model);
-
-				String str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
-
-				mostrarMensaje("Informacion", str, null, null,
-						new EventListener() {
-							public void onEvent(Event event) throws Exception {
-									recargar();
-							}
-						}, null);
+				registrarProveedor(cerrar);
 			}
 
 			else
@@ -144,6 +176,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 
+	
+	
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarMarcas() {
@@ -194,17 +228,49 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			break;
 		}
 	}
-
-	//VALIDATOR
-	public CustomConstraint getSoloNumeros(){
-		RegExpression[] constrains = new RegExpression[]{
-				new RegExpression("/.[0-9]+/", "Solo n\u00fameros son permitidos")
-		};
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY);
-	}
 	
-	public void recargar() {
-		redireccionar("/");
+	protected Proveedor registrarProveedor(boolean enviarEmail){
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		proveedor.setCedula(tipo + proveedor.getCedula());
+		proveedor.setEstatus("solicitante");
+
+		if (tipoProveedor != null)
+
+		proveedor.setTipoProveedor(this.tipoProveedor.getValor());
+
+		proveedor = sMaestros.registrarProveedor(proveedor);
+		
+		String str = null;
+		if(recordMode.equalsIgnoreCase("EDIT"))
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+		else
+			str = "Proveedor Actualizado Exitosamente";
+
+		if(enviarEmail){
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("nombreSolicitante", proveedor.getNombre());
+			model.put("cedula", proveedor.getCedula());
+
+			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
+					"registrarProveedor.html", model);
+
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							redireccionar("/");
+						}
+					}, null);
+		}
+		else {
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							winProveedor.onClose();
+							ejecutarGlobalCommand("consultarProveedores", null);
+						}
+					}, null);
+		}
+		return proveedor;
 	}
 
 	public Proveedor getProveedor() {
@@ -345,6 +411,47 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
+	public Boolean getCerrar() {
+		return cerrar;
+	}
+
+	public void setCerrar(Boolean cerrar) {
+		this.cerrar = cerrar;
+	}
+
+	public List<Ciudad> getListaCiudad() {
+		return listaCiudad;
+	}
+
+	public void setListaCiudad(List<Ciudad> listaCiudad) {
+		this.listaCiudad = listaCiudad;
+	}
+
+	public Estado getEstadoSeleccionado() {
+		return estadoSeleccionado;
+	}
+
+	public void setEstadoSeleccionado(Estado estadoSeleccionado) {
+		this.estadoSeleccionado = estadoSeleccionado;
+	}
+
+	public ModeloCombo<Boolean> getTipoPersonaCed() {
+		return tipoPersonaCed;
+	}
+
+	public void setTipoPersonaCed(ModeloCombo<Boolean> tipoPersonaCed) {
+		this.tipoPersonaCed = tipoPersonaCed;
+	}
+	
 	
 	
 	

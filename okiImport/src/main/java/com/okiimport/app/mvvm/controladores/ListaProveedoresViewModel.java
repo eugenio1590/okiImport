@@ -10,20 +10,21 @@ import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 
@@ -31,32 +32,29 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	//Servicios
 	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
+	protected SMaestros sMaestros;
 	
 	//GUI
 	@Wire("#gridProveedores")
 	private Listbox gridProveedores;
 	
 	@Wire("#pagProveedores")
-	private Paging pagProveedores;
+	protected Paging pagProveedores;
+	
+	Window window = null;
+	int idcount = 0;
+	private boolean makeAsReadOnly;
 
 	
 	//Modelos
-	private List<Proveedor> proveedores;
-	private Proveedor proveedorFiltro;
-	
-	private Requerimiento requerimiento;
+	protected List<Proveedor> proveedores;
+	protected Proveedor proveedorFiltro;
 	
 	//Atributos
-	private String size;
 
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
-			@ExecutionArgParam("size") String size){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		this.requerimiento = requerimiento;
-		this.size = size;
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
@@ -72,7 +70,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort",  event.getTarget().getId().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarUsuarios", parametros );
+			ejecutarGlobalCommand("cambiarProveedores", parametros );
 		}
 		
 	}
@@ -98,15 +96,13 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		cambiarProveedores(page, null, null);
 	}
 	
-	/*@Command
-	@NotifyChange("analistas")
+	@Command
+	@NotifyChange("*")
 	public void aplicarFiltro(){
-		Radio selectedItem = radEstado.getSelectedItem();
-		this.analistaFiltro.setActivo((selectedItem!=null) ? Boolean.valueOf((String)selectedItem.getValue()) : null);
-		cambiarAnalistas(0, null, null);
+		cambiarProveedores(0, null, null);
 	}
 	
-	@Command
+	/*@Command
 	@NotifyChange("analistas")
 	public void limpiarRadios(){
 		this.analistaFiltro.setActivo(null);
@@ -116,7 +112,53 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	@Command
 	public void nuevoProveedor(){
-		llamarFormulario("formularioAnalistas.zul", null);
+		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+	}
+	
+	@Command
+	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("proveedor", proveedor);
+		map.put("recordMode", "EDIT");
+		map.put("cerrar", false);
+		Sessions.getCurrent().setAttribute("allmyvalues", map);
+		if (window != null) {
+			window.detach();
+			window.setId(null);
+		}
+		window = (Window) Executions.createComponents(
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window.setMaximizable(true);
+		window.doModal();
+		window.setId("doModal" + "" + idcount + "");
+		
+		
+	}
+	
+	@Command
+	public void verProveedor(
+			@BindingParam("proveedor") Proveedor proveedor) {
+		final HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("proveedor", proveedor);
+		map.put("recordMode", "READ");
+		map.put("cerrar", false);
+		Sessions.getCurrent().setAttribute("allmyvalues", map);
+		if (window != null) {
+			window.detach();
+			window.setId(null);
+		}
+		window = (Window) Executions.createComponents(
+				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window.setMaximizable(true);
+		window.doModal();
+		window.setId("doModal" + "" + idcount + "");
+	}
+	
+	@NotifyChange("proveedores")
+	@Command
+	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		proveedor.setEstatus("eliminado");
+		sMaestros.acutalizarPersona(proveedor);
 	}
 	
 	/*@Command
@@ -146,22 +188,6 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
 	}*/
 	
-	/*
-	 * Descripcion: permitira viszualizar la lista de proveedores para poder cotizar un requerimiento
-	 * @param proveedor: proveedor seleccionado
-	 * Retorno: Ninguno
-	 */
-	@Command
-	public void cotizar(@BindingParam("proveedor") Proveedor proveedor){
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", this.requerimiento);
-		parametros.put("usuario", proveedor.getUsuario());
-		if(proveedor.getTipoProveedor())
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
-		else
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
-	}
-	
 	/**METODOS PROPIOS DE LA CLASE*/
 	/*private Usuario consultarUsuarioSession(){
 		UserDetails user = this.getUser();
@@ -180,8 +206,13 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	public void setsControlUsuario(SControlUsuario sControlUsuario) {
 		this.sControlUsuario = sControlUsuario;
 	}*/
-
 	
+
+	@Command
+	public void registrarProveedor(){
+		window = crearModal("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		window.setMaximizable(true);
+	}
 
 	public SMaestros getsMaestros() {
 		return sMaestros;
@@ -207,11 +238,13 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		this.sMaestros = sMaestros;
 	}
 
-	public String getSize() {
-		return size;
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
 	}
 
-	public void setSize(String size) {
-		this.size = size;
-	}	
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
+	
 }
