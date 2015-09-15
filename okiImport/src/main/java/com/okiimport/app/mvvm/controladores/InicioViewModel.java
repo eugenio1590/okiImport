@@ -22,17 +22,17 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	
 	@Command
 	public void registrarProveedor(){
-		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/formularioProveedor.zul");
+		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/portal/formularioProveedor.zul");
 	}
 	
 	@Command
 	public void verificarRequerimiento(){
-		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/formularioVerificarRequerimiento.zul");
+		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/portal/formularioVerificarRequerimiento.zul");
 	}
 	
 	@Command
 	public void registrarRequerimiento(){
-		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/formularioRequerimiento.zul");
+		insertComponent(principal.getPage(), "#mainInclude", "/WEB-INF/views/portal/formularioRequerimiento.zul");
 	}
 
 }

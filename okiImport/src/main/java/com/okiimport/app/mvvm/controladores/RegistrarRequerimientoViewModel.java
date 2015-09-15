@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
@@ -32,6 +33,11 @@ import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
@@ -43,7 +49,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	
 	// GUI
 	@Wire("#cedulaRif")
-	public Textbox cedulaRif;
+	public Intbox cedulaRif;
 	@Wire("#annoV")
 	private Datebox annoV;
 	@Wire("#comboTipoPersona")
@@ -309,4 +315,28 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setListaEstados(List<Estado> listaEstados) {
 		this.listaEstados = listaEstados;
 	}
+	
+	public CustomConstraint getValidatorClienteCedulaRif(){
+		return new GeneralConstraint(EConstraint.NO_EMPTY,EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
+	}
+	
+	public CustomConstraint getTelefonoValidator(){
+		RegExpression[] constrains = new RegExpression[]{
+				 new RegExpression("/.[0-9]+/","Debe Contener Un Numero Telefonico Valido Ej. 025141785289")	
+		};
+		return new RegExpressionConstraint(constrains,EConstraint.NO_EMPTY, EConstraint.CUSTOM);
+		
+	}
+	
+	public CustomConstraint getCantValidator(){
+		RegExpression[] constrains = new RegExpression[]{
+				 new RegExpression("/.[0-9]+/","Debe Contener Un Numero Valido")	
+		};
+		return new RegExpressionConstraint(constrains,EConstraint.NO_EMPTY,EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO, EConstraint.CUSTOM);
+		
+	}
+	
+
+	
+	
 }
