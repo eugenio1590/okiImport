@@ -64,5 +64,6 @@
     <beans:bean id="sControlConfiguracion" class="com.okiimport.app.service.configuracion.impl.SControlConfiguacionImpl"/>
     <beans:bean id="sAcceso" class="com.okiimport.app.service.seguridad.impl.SAccesoImpl"/>
     <beans:bean id="mailCliente" class="com.okiimport.app.service.mail.impl.MailClienteImpl"/>
+    <beans:bean id="mailProveedor" class="com.okiimport.app.service.mail.impl.MailProveedorImpl"/>
     
 </beans:beans>

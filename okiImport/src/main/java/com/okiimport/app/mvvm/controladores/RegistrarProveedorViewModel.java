@@ -33,6 +33,7 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
@@ -66,6 +67,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("mailProveedor")
+	private MailProveedor mailProveedor;
 	
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
@@ -245,12 +249,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			str = "Proveedor Actualizado Exitosamente";
 
 		if(enviarEmail){
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("nombreSolicitante", proveedor.getNombre());
-			model.put("cedula", proveedor.getCedula());
-
-			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
-					"registrarProveedor.html", model);
+			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 
 			mostrarMensaje("Informacion", str, null, null,
 					new EventListener() {
@@ -440,6 +439,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setTipoPersonaCed(ModeloCombo<Boolean> tipoPersonaCed) {
 		this.tipoPersonaCed = tipoPersonaCed;
+	}
+
+	public MailProveedor getMailProveedor() {
+		return mailProveedor;
+	}
+
+	public void setMailProveedor(MailProveedor mailProveedor) {
+		this.mailProveedor = mailProveedor;
 	}
 	
 	

@@ -31,6 +31,7 @@ import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
@@ -39,7 +40,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private Cliente cliente;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
+	@BeanInjector("mailCliente")
+	private MailCliente mailCliente;
 	// GUI
 	@Wire("#cedulaRif")
 	public Textbox cedulaRif;
@@ -109,13 +111,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				// El Objecto que se envia debe declararse final, esto quiere
 				// decir que no puede instanciarse sino solo una vez
 
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-				model.put("cliente", cliente.getNombre());
-				model.put("cedula", cliente.getCedula());
-
-				mailService.send(cliente.getCorreo(), "Registro de Requerimiento",
-						"registrarRequerimiento.html", model);
+				mailCliente.registrarRequerimiento(requerimiento, mailService);
 
 				mostrarMensaje("Informacion", "El Requerimiento ha sido registrado existosamente ", null, null, 
 						new EventListener() {
@@ -299,5 +295,13 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 	public void setListaEstados(List<Estado> listaEstados) {
 		this.listaEstados = listaEstados;
+	}
+
+	public MailCliente getMailCliente() {
+		return mailCliente;
+	}
+
+	public void setMailCliente(MailCliente mailCliente) {
+		this.mailCliente = mailCliente;
 	}
 }

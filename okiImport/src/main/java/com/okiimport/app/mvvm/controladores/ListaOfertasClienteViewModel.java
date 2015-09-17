@@ -29,6 +29,7 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlConfiguracion;
 import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaOfertasClienteViewModel extends
@@ -43,6 +44,9 @@ public class ListaOfertasClienteViewModel extends
 	
 	@BeanInjector("sControlConfiguracion")
 	private SControlConfiguracion sControlConfiguracion;
+	
+	@BeanInjector("mailCliente")
+	private MailCliente mailCliente;
 
 	// GUI
 	@Wire("#gridOfertasCliente")
@@ -134,14 +138,10 @@ public class ListaOfertasClienteViewModel extends
 		}
 		requerimiento.setEstatus("O");
 		sTransaccion.actualizarRequerimiento(requerimiento);
-		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-		model.put("cliente", requerimiento.getCliente().getNombre());
-		model.put("cedula", requerimiento.getCliente().getCedula());
 
-		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
-				"registrarRequerimiento.html", model);
+		//No es el servicio que se usara
+		mailCliente.registrarRequerimiento(requerimiento, mailService);
+		
 		winListaOfertas.detach();
 		
 		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
@@ -186,6 +186,14 @@ public class ListaOfertasClienteViewModel extends
 
 	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
 		this.sControlConfiguracion = sControlConfiguracion;
+	}
+
+	public MailCliente getMailCliente() {
+		return mailCliente;
+	}
+
+	public void setMailCliente(MailCliente mailCliente) {
+		this.mailCliente = mailCliente;
 	}
 
 	public List<Oferta> getListaOfertas() {

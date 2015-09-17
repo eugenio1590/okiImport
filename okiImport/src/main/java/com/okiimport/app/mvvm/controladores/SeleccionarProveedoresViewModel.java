@@ -31,6 +31,7 @@ import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent> {
@@ -41,6 +42,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("mailProveedor")
+	private MailProveedor mailProveedor;
 	
 	//GUI
 	@Wire("#winListProveedores")
@@ -172,12 +176,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 
 					if(enviar){
-						Map<String, Object> model = new HashMap<String, Object>();
-						model.put("nombreSolicitante", proveedor.getNombre());
-						model.put("cedula", proveedor.getCedula());
-						model.put("mensaje", cotizacion.getMensaje());
-						mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-								"enviarRequisitoProveedor.html", model);
+						//No es el servicio que se usara
+						this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 					}
 				}
 				btn_enviar.setDisabled(true);
@@ -227,8 +227,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-
 	
+	public MailProveedor getMailProveedor() {
+		return mailProveedor;
+	}
+
+	public void setMailProveedor(MailProveedor mailProveedor) {
+		this.mailProveedor = mailProveedor;
+	}
+
 	public List<Proveedor> getListaProveedores() {
 		return listaProveedores;
 	}
