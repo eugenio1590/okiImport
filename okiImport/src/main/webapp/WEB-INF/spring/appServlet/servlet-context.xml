@@ -28,31 +28,6 @@
 	<context:component-scan base-package="com.okiimport.app" />
 	
 	<jpa:repositories base-package="com.okiimport.app.dao"/>
-	
-		<!-- DATA BASE ENCRIPTACION -->
-	<!-- Configura el encryptor, basado en variables de entorno. El password 
-		de encriptación es leido de la variable de entorno APP_ENCRYPTION_PASSWORD -->
-	<beans:bean id="environmentVariablesConfiguration"
-		class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
-		<beans:property name="algorithm" value="PBEWithMD5AndDES" />
-		<beans:property name="passwordEnvName" value="APP_ENCRYPTION_PASSWORD" />
-	</beans:bean>
-
-	<!-- Crea el encriptor -->
-	<beans:bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
-<!-- 		<beans:property name="config" ref="environmentVariablesConfiguration" /> -->
-		<beans:property name="password" value="euge17"/><!-- El Key Privado no debe estar en la app -->
-	</beans:bean>
-
-	<!-- Integración con Spring, esta clase reemplaza el PropertyPlaceholderConfigurer -->
-	<beans:bean id="propertyConfigurer" class="org.jasypt.spring3.properties.EncryptablePropertyPlaceholderConfigurer">
-		<beans:constructor-arg ref="configurationEncryptor" />
-		<beans:property name="locations">
-			<beans:list>
-				<beans:value>/WEB-INF/classes/jdbc.properties</beans:value>
-			</beans:list>
-		</beans:property>
-	</beans:bean>
     
     <context:annotation-config />
     

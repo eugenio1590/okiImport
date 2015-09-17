@@ -197,19 +197,7 @@
 			<groupId>org.zkoss.zk</groupId>
 			<artifactId>zkmax</artifactId>
 			<version>${zk.version}</version>
-		</dependency>     
-		
-		<!-- Encriptacion de la BD -->   
-		<dependency>
-			<groupId>org.jasypt</groupId>
-			<artifactId>jasypt-spring3</artifactId>
-			<version>1.9.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jasypt</groupId>
-			<artifactId>jasypt</artifactId>
-			<version>1.9.2</version>
-		</dependency>  
 		    
 		<!-- Proyect Dependence -->
 		<dependency>
