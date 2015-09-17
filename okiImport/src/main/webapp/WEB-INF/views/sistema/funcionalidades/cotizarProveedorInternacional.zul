@@ -118,11 +118,10 @@
 									constraint="no empty" tooltiptext="Marca del Repuesto"/>
 							</listcell>
 							<listcell>
-								<spinner value="@save(each.cantidad, before='enviar') 
-									@validator(vm.validatorCantidad, spnCantidad=self, 
-									cantidad=each.detalleRequerimiento.cantidad)"
+								<spinner value="@bind(each.cantidad)"
 									tooltiptext="Cantidad Cotizada del Repuesto"
-									width="100%" constraint="no empty, no negative, no zero"/>
+									width="100%" constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))">
+								</spinner>
 							</listcell>
 							<listcell>
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
