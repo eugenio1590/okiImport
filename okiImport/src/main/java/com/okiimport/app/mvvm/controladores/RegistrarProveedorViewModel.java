@@ -21,12 +21,11 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
@@ -34,8 +33,7 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
-import com.okiimport.app.transaccion.servicios.STransaccion;
-
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
@@ -281,14 +279,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.proveedor = proveedor;
 	}
 
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
-	}
-
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -299,7 +289,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
-		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
+		Map<String, Object> Parametros = sMaestros.consultarMarcas(page,
 				pageSize);
 		listaMarcaVehiculos = (List<MarcaVehiculo>) Parametros.get("marcas");
 		Integer total = (Integer) Parametros.get("total");

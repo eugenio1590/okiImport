@@ -1,12 +1,9 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -15,35 +12,19 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Image;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Radio;
-import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Analista;
-import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.Persona;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -57,8 +38,6 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	
 	@Wire("#pagAnalistas")
 	private Paging pagAnalistas;
-	
-	private Textbox txtUsername;
 	
 	
 	//Modelos

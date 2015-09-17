@@ -23,14 +23,14 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Persona;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Persona;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.mvvm.PasswordGenerator;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.maestros.SMaestros;
 
 public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel implements  EventListener<SortEvent>{
 	

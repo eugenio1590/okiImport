@@ -59,6 +59,8 @@ import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+import com.okiimport.app.resource.model.ModelNavbar;
+
 public abstract class AbstractViewModel {
 	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
 	public static final String BasePackageSistema = "/WEB-INF/views/SistemaOrion/Contenido/";

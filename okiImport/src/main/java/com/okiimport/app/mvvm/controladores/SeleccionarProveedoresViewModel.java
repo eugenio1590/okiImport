@@ -22,16 +22,16 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleCotizacion;
-import com.okiimport.app.modelo.DetalleCotizacionInternacional;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleCotizacionInternacional;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent> {
 	

@@ -19,12 +19,12 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.modelo.Compra;
-import com.okiimport.app.modelo.DetalleOferta;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Compra;
+import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	

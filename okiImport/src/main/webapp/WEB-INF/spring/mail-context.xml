@@ -26,10 +26,10 @@
 		</beans:property>
 	</beans:bean>
 	
-	<beans:bean id="mailService" class="com.okiimport.app.mail.MailServiceImpl">
-		<beans:property name="mailSender" ref="mailSender"/>
-		<beans:property name="velocityEngine" ref="velocityEngine"/>
-	</beans:bean>
+<!-- 	<beans:bean id="mailService" class="com.okiimport.app.mail.MailServiceImpl"> -->
+<!-- 		<beans:property name="mailSender" ref="mailSender"/> -->
+<!-- 		<beans:property name="velocityEngine" ref="velocityEngine"/> -->
+<!-- 	</beans:bean> -->
 
 	<beans:bean id="velocityEngine"
 		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">

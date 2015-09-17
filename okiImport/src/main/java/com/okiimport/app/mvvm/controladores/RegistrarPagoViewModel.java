@@ -3,25 +3,19 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.List;
 
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Messagebox.ClickEvent;
 
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Estado;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 

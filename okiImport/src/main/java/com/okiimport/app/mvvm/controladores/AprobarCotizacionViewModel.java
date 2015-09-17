@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -23,18 +22,17 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleCotizacion;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>  {
 

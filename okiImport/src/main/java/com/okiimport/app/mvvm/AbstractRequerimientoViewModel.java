@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Default;
@@ -16,14 +17,13 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.mail.MailService;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Estado;
 
-import com.okiimport.app.modelo.Persona;
+
+
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
@@ -33,6 +33,9 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.mail.MailService;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	

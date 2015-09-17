@@ -22,17 +22,17 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.Motor;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Motor;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent>  {
 	

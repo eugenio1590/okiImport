@@ -12,11 +12,11 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	

@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.okiimport.app.configuracion.dao.UsuarioDAO;
-import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.seguridad.servicios.SHistorial;
+import com.okiimport.app.model.Usuario;
+import com.okiimport.app.service.seguridad.SHistorial;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 
 
 @Component
@@ -24,14 +24,14 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 	private SHistorial sHistorial;
 	
 	@Autowired
-	private UsuarioDAO usuarioDAO;
+	private SControlUsuario sControlUsuario;
 	
 	/**METODOS OVERRIDE*/
 	@Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 		User user = (User) authentication.getPrincipal();
-		Usuario usuario = usuarioDAO.consultarUsuario(user.getUsername(), user.getPassword());
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		sHistorial.cerarHistorialSession(usuario);
 		setDefaultTargetUrl("/");
 		super.onLogoutSuccess(request, response, authentication);

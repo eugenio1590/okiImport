@@ -22,14 +22,14 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Configuracion;
-import com.okiimport.app.modelo.Oferta;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Configuracion;
+import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.service.configuracion.SControlConfiguracion;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaOfertasClienteViewModel extends
 		AbstractRequerimientoViewModel implements EventListener<SortEvent> {
@@ -114,7 +114,7 @@ public class ListaOfertasClienteViewModel extends
 	@NotifyChange("*")
 	public void verOferta(@BindingParam("oferta") Oferta oferta){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta(), 0, -1));
+		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta()));
 		parametros.put("oferta", oferta);
 		parametros.put("requerimiento", this.requerimiento);
 		

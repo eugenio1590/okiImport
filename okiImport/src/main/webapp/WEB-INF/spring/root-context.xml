@@ -40,7 +40,7 @@
         	token-validity-seconds="1209600"
 			remember-me-parameter="remember-me" 
 			data-source-ref="dataSource" 
-			user-service-ref="sControlUsuario"
+			user-service-ref="sAcceso"
 		/>
 		
 		<!-- 
@@ -72,7 +72,7 @@
 	
 	<security:authentication-manager id="authenticationManager">
 		<!-- Servicio que provee la interfaz para la validacion del usuario con la base de datos  -->
-		<security:authentication-provider user-service-ref="sControlUsuario">
+		<security:authentication-provider user-service-ref="sAcceso">
 			<!-- Encriptamos las Claves por medio de la referencia al Encriptador 
 			<security:password-encoder ref="bcryptEncoder"/> -->
 			<!-- Forma Manual

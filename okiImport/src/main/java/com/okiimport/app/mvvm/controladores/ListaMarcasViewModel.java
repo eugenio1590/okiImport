@@ -25,13 +25,12 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Analista;
-import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Analista;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaMarcasViewModel extends AbstractViewModel implements
 		EventListener<SortEvent> {
@@ -83,7 +82,7 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 	public void cambiarMarcas(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sMaestros.ConsultarMarca(page,
+		Map<String, Object> parametros = sMaestros.consultarMarcas(page,
 				PAGE_SIZE);//marcaFiltro,
 		Integer total = (Integer) parametros.get("total");
 		marcas = (List<MarcaVehiculo>) parametros.get("marcas");
