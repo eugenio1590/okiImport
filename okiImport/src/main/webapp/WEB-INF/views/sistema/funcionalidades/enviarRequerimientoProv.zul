@@ -195,7 +195,7 @@
 			</groupbox>
 			<div width="100%" align="right">
 				<div>
-					<button label="Registrar Solicitudes de Cotizacion" type="submit" sclass="btn-primary"
+					<button label="Registrar Cotizacion por Analista" type="submit" sclass="btn-primary"
 						onClick="@command('enviarSolicitudProv', enviar = false, requerimiento = each)" />
 					<button label="Enviar a Proveedores" type="submit" sclass="btn-primary"
 						onClick="@command('enviarSolicitudProv', enviar = true, requerimiento = each)" />
