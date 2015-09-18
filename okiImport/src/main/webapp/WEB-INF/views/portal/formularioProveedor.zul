@@ -112,6 +112,15 @@
 
 
 									<row>
+										<label value="E-mail: *" />
+										<vbox>
+											<textbox id="email"
+												width="95%" readonly="" mold="rounded"
+												value="@bind(vm.cliente.correo)"
+												placeholder="Ej. fusa@gmail.com"
+												constraint="@bind(vm.emailValidator)">
+											</textbox>
+										</vbox>
 
 										<label value="Dirección: *" />
 										<vbox width="80%">
@@ -121,35 +130,35 @@
 												placeholder="Ej: zona industrial 2 "
 												constraint="@bind(vm.getNotEmptyValidator())" />
 										</vbox>
+									</row>
+									<row>
+									<label value="Estado: *" />
+									<combobox
+										placeholder="Seleccione..." width="80%" readonly="true"
+										selectedItem="@bind(vm.estado)" model="@load(vm.listaEstados)"
+										onSelect="@command('buscarCiudades')">
+										<template name="model">
+											<comboitem
+												label="@bind(each.nombre)">
 
-										<label value="Estado: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.estado)"
-											model="@load(vm.listaEstados)"
-											onSelect="@command('buscarCiudades')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
+											</comboitem>
+										</template>
+									</combobox>
 
 
-										<label value="Ciudad: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.proveedor.ciudad)"
-											model="@load(vm.listaCiudades)">
+									<label value="Ciudad: *" />
+									<combobox
+										placeholder="Seleccione..." width="80%" readonly="true"
+										selectedItem="@bind(vm.proveedor.ciudad)"
+										model="@load(vm.listaCiudades)">
 
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
+										<template name="model">
+											<comboitem
+												label="@bind(each.nombre)">
 
-												</comboitem>
-											</template>
-										</combobox>
+											</comboitem>
+										</template>
+									</combobox>
 									</row>
 
 
