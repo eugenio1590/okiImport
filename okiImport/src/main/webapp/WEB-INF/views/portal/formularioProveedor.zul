@@ -3,7 +3,7 @@
 		title="Registrese Como Proveedor" border="normal" width="95%"
 		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
-					
+
 		<tabbox id="tabDatosProveedor" maximalHeight="true">
 			<tabs id="tabs">
 
@@ -25,7 +25,7 @@
 
 				</tab>
 			</tabs>
-			
+
 			<tabpanels>
 				<!-- DATOS GENERALES -->
 				<tabpanel>
@@ -33,18 +33,18 @@
 						<div>
 							<grid>
 								<columns>
-								    <column width="35%" align="right"/>
+									<column width="35%" align="right" />
 									<column width="65%" />
-									<column width="35%" align="right"/>
+									<column width="35%" align="right" />
 									<column width="65%" />
 									<column width="35%" align="right" />
 									<column width="65%" />
 								</columns>
 								<rows>
-								   
-								    <row>
-								    
-								        <label
+
+									<row>
+
+										<label
 											value="Tipo Proveedor: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
@@ -56,15 +56,18 @@
 												</comboitem>
 											</template>
 										</combobox>
-								    
-										
-											<label value="RIF: *" />
+
+
+										<label value="RIF: *" />
 										<hbox>
+
 											<combobox width="30%"
 												readonly="true" selectedItem="@bind(vm.tipoPersona)"
 												model="@load(vm.listaTipoPersona)">
-												<template name="model">
-													<comboitem label="@bind(each.nombre)"/>
+												<template
+													name="model">
+													<comboitem
+														label="@bind(each.nombre)" />
 												</template>
 											</combobox>
 											<vbox>
@@ -77,34 +80,37 @@
 										</hbox>
 
 									</row>
-								    
-					
-								
-								
-									<row>
-									  <label value="Teléfono: *" />
 
-										<textbox id="telefono"
-											width="80%" readonly="" mold="rounded"
-											value="@bind(vm.proveedor.telefono)" maxlength="11"
-											placeholder="Ej: 02512552233"
-											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
-											
-										
+
+
+
+									<row>
+										<label value="Teléfono: *" />
+
+
+
+										<vbox>
+											<textbox id="telefono"
+												width="80%" readonly="" mold="rounded"
+												value="@bind(vm.proveedor.telefono)" maxlength="11"
+												placeholder="Ej: 02512552233"
+												constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+										</vbox>
+
 										<label
 											value="Nombre/Razón Social:*" />
 										<vbox width="80%">
-											<textbox id="nombreRazonSocial"
-												readonly="" mold="rounded"
+											<textbox
+												id="nombreRazonSocial" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.nombre)"
 												placeholder="Ej: Empresa C.A"
 												constraint="@bind(vm.getNotEmptyValidator())" />
 										</vbox>
-											
+
 									</row>
 
 
-									
+
 									<row>
 
 										<label value="Dirección: *" />
@@ -121,7 +127,6 @@
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.estado)"
 											model="@load(vm.listaEstados)"
-											
 											onSelect="@command('buscarCiudades')">
 											<template name="model">
 												<comboitem
@@ -130,14 +135,14 @@
 												</comboitem>
 											</template>
 										</combobox>
-										
-										
-										   <label value="Ciudad: *" />
+
+
+										<label value="Ciudad: *" />
 										<combobox
 											placeholder="Seleccione..." width="80%" readonly="true"
 											selectedItem="@bind(vm.proveedor.ciudad)"
 											model="@load(vm.listaCiudades)">
-                                            
+
 											<template name="model">
 												<comboitem
 													label="@bind(each.nombre)">
@@ -145,27 +150,28 @@
 												</comboitem>
 											</template>
 										</combobox>
-                              </row>
-                              
+									</row>
 
-									
+
+
 								</rows>
 							</grid>
 						</div>
 					</groupbox>
 				</tabpanel>
-				
+
 				<!-- MARCAS DE VEHICULOS -->
 				<tabpanel>
 					<groupbox>
 						<div>
 							<borderlayout height="470px">
-								<west width="300px" title="Marcas" size="25%" flex="true" maxsize="250" 
-									collapsible="true" border="normal">
+								<west width="300px" title="Marcas"
+									size="25%" flex="true" maxsize="250" collapsible="true"
+									border="normal">
 									<vlayout height="100%" vflex="1">
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowRight32.png"
+												image="/resources/img/icons/ButtonArrowRight32.png"
 												tooltiptext="Agregar Marcas a Vender"
 												onClick="@command('agregarMarcas')" />
 										</toolbar>
@@ -174,7 +180,8 @@
 											selectedItems="@bind(vm.marcaSeleccionadas)" multiple="true"
 											model="@load(vm.listaMarcaVehiculos)">
 											<listhead>
-												<listheader label="Nombre" sort="none" />
+												<listheader
+													label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
@@ -194,7 +201,7 @@
 									<div>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowLeft32.png"
+												image="/resources/img/icons/ButtonArrowLeft32.png"
 												tooltiptext="Remover Marcas a Vender"
 												onClick="@command('eliminarMarcas')" />
 										</toolbar>
@@ -237,7 +244,7 @@
 									<vlayout>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowRight32.png"
+												image="/resources/img/icons/ButtonArrowRight32.png"
 												tooltiptext="Agregar Tipo Repuesto a Vender"
 												onClick="@command('agregarTipoRepuesto')" />
 										</toolbar>
@@ -248,7 +255,8 @@
 											selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
 											multiple="true">
 											<listhead>
-												<listheader label="Nombre" sort="none" />
+												<listheader
+													label="Nombre" sort="none" />
 											</listhead>
 											<template name="model">
 												<listitem>
@@ -268,7 +276,7 @@
 									<div>
 										<toolbar>
 											<toolbarbutton height="45px"
-												image="resources/img/icons/ButtonArrowLeft32.png"
+												image="/resources/img/icons/ButtonArrowLeft32.png"
 												tooltiptext="Remover Tipo de Repuesto a Vender"
 												onClick="@command('eliminarTipoRepuesto')" />
 										</toolbar>
