@@ -71,7 +71,7 @@
 												</template>
 											</combobox>
 											<vbox>
-												<textbox id="cedulaRif"
+												<textbox id="cedulaRif" width="116%"
 													readonly="" mold="rounded"
 													value="@bind(vm.proveedor.cedula)"
 													placeholder="Ej: 402405375" maxlength="12"
@@ -85,7 +85,7 @@
 										<label value="Teléfono: *" />
 										<vbox>
 											<textbox id="telefono"
-												width="80%" readonly="" mold="rounded"
+												width="131%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.telefono)" maxlength="11"
 												placeholder="Ej: 02512552233"
 												constraint="@bind(vm.telefonoValidator)" />
@@ -93,10 +93,10 @@
 
 										<label
 											value="Nombre/Razón Social:*" />
-										<vbox width="80%">
+										<vbox >
 											<textbox
 												id="nombreRazonSocial" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.nombre)"
+												value="@bind(vm.proveedor.nombre)" width="151%"
 												placeholder="Ej: Empresa C.A"
 												constraint="@bind(vm.getNotEmptyValidator())" />
 										</vbox>
@@ -109,7 +109,7 @@
 										<label value="E-mail: *" />
 										<vbox>
 											<textbox id="email"
-												width="95%" readonly="" mold="rounded"
+												width="131%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.correo)"
 												placeholder="Ej. fusa@gmail.com"
 												constraint="@bind(vm.emailValidator)">
@@ -143,7 +143,7 @@
 
 										<label value="Ciudad: *" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
+											placeholder="Seleccione..." width="92%" readonly="true"
 											selectedItem="@bind(vm.proveedor.ciudad)"
 											model="@load(vm.listaCiudades)">
 
