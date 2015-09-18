@@ -55,7 +55,7 @@
 								<label value="Fecha Creacion: " />
 								<textbox  width="80%"
 									readonly="true" mold="rounded"
-									value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaCreacion))"/>
+									value="@bind(vm.requerimiento.fechaCreacion)"/>
 									
 							</row>
 
