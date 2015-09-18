@@ -99,8 +99,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		listaEstados = llenarListaEstados();
-		pagMarcas.setPageSize(pageSize);
-		pagTipoRepuestos.setPageSize(pageSize);
+		pagMarcas.setPageSize(pageSize=9);
+		pagTipoRepuestos.setPageSize(pageSize=9);
 		gridMarcasVender.setPageSize(pageSize);
 		gridTipoRepuestosVender.setPageSize(pageSize);
 		consultarMarcas(0);
