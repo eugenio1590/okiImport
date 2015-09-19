@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
@@ -34,7 +35,8 @@ import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
+public class RegistrarRequerimientoViewModel extends
+		AbstractRequerimientoViewModel {
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;
@@ -42,9 +44,10 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private STransaccion sTransaccion;
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
+	
 	// GUI
 	@Wire("#cedulaRif")
-	public Textbox cedulaRif;
+	public Intbox cedulaRif;
 	@Wire("#annoV")
 	private Datebox annoV;
 	@Wire("#comboTipoPersona")
@@ -57,7 +60,6 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
-	
 
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
@@ -88,15 +90,15 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	}
 
 	@Command
-	@NotifyChange({"requerimiento","cliente"})
+	@NotifyChange({ "requerimiento", "cliente" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar){
-		if(checkIsFormValid()){
+			@BindingParam("btnLimpiar") Button btnLimpiar) {
+		if (checkIsFormValid()) {
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				cliente.setCedula(tipo+cliente.getCedula());
+				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				cliente.setCedula(tipo + cliente.getCedula());
 				cliente = sMaestros.registrarOActualizarCliente(cliente);
 				requerimiento.setCliente(cliente);
 				if (traccion != null)
@@ -110,19 +112,21 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 
 				// El Objecto que se envia debe declararse final, esto quiere
 				// decir que no puede instanciarse sino solo una vez
-
+				
 				mailCliente.registrarRequerimiento(requerimiento, mailService);
 
-				mostrarMensaje("Informacion", "El Requerimiento ha sido registrado existosamente ", null, null, 
-						new EventListener() {
-					public void onEvent(Event event) throws Exception {
-						recargar();
-					}
-				}, null);
-			}
-			else
-				mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
-		} 
+				mostrarMensaje("Informacion",
+						"El Requerimiento ha sido registrado existosamente ",
+						null, null, new EventListener() {
+							public void onEvent(Event event) throws Exception {
+								recargar();
+							}
+						}, null);
+			} else
+				mostrarMensaje("Información",
+						"Agregue al Menos un Requerimiento", null, null, null,
+						null);
+		}
 	}
 
 	@Command
@@ -149,17 +153,18 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		String cedula = cliente.getCedula();
 		String cedulaBuscar = tipo + cedula;
 		if (cedula != null && !cedula.equalsIgnoreCase("")) {
-			Cliente cliente = sMaestros.consultarCliente(new Cliente(cedulaBuscar));
+			Cliente cliente = sMaestros.consultarCliente(new Cliente(
+					cedulaBuscar));
 			if (cliente != null) {
 				this.cliente = cliente;
-				this.cliente.setCedula(cedulaBuscar.substring(1, cedulaBuscar.length()));
+				this.cliente.setCedula(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
 				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
-			}
-			else
-				this.cliente = new Cliente(cedulaBuscar.substring(1, cedulaBuscar.length()));
+			} else
+				this.cliente = new Cliente(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
 			this.requerimiento.setCliente(this.cliente);
-		}
-		else {
+		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
 		}
@@ -269,7 +274,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		return listaTipoRepuesto;
 	}
 
-	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+	public void setListaTipoRepuesto(
+			List<ModeloCombo<Boolean>> listaTipoRepuesto) {
 		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
 

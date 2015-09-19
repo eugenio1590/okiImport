@@ -1,6 +1,6 @@
 <window id="winOferta" border="none" width="60%" title="Oferta"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerDetalleOfertaViewModel')">
 		<groupbox closable="false">
 		<div> 
 		    <space></space>
@@ -130,9 +130,6 @@
 									
 								<listheader label="Precio Venta S/F" 
 								    sort="auto" />
-								    
-								<listheader label="Seleccion" 
-								    sort="auto" />
 									
 							</listhead>
 							
@@ -144,19 +141,6 @@
 									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)"/>
 									<listcell label="@bind(each.detalleCotizacion.cantidad)"/>
 									<listcell label="@bind(each.calcularPrecioVenta())"/>
-									<listcell>
-							         <hbox spacing="20px">
-								     <div class="btn-group btn-group-sm">
-
-									  <checkbox label="Aceptar" sclass="btn-primary"
-										 tooltiptext="Aceptar Oferta"
-										onCheck="@command('aprobarDetalleOferta', detalleOferta = each)"
-										 />
-
-								      </div>
-							          </hbox>
-						           </listcell>
-									
 								</listitem>
 							</template>
 							
@@ -185,13 +169,6 @@
 		</groupbox>
 	
 			<div sclass="panel-footer" align="right">
-
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
-
-				<button label="Enviar" type="submit"
-					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
 			</div>
 		
 	</window>

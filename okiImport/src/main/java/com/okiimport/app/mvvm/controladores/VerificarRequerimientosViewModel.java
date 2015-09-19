@@ -179,7 +179,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/"+ruta, parametros);
+		crearModal("/WEB-INF/views/portal/"+ruta, parametros);
 	}
 
 
