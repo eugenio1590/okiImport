@@ -9,19 +9,19 @@
 
 				<tab id="tabDatosFiscales"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Datos Fiscales" />
+					<label value="Tax Data / Datos Fiscales" />
 
 				</tab>
 
 				<tab id="tabMarcaVehiculo"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Marcas" />
+					<label value="Brands / Marcas" />
 
 				</tab>
 
 				<tab id="tabClasificacionRepuesto"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Clasificación Repuestos" />
+					<label value="Parts Clasification / Clasificación Repuestos" />
 
 				</tab>
 			</tabs>
@@ -173,18 +173,21 @@
 											</template>
 										</combobox>
 										
-										<label value="Country/Pais: *"
+										
+									</row>
+									<row>
+									
+									<label value="Country/Pais: *"
 											visible="@bind(!vm.tipoProveedor.valor)" />
 										<vbox>
 											<textbox id="Country" visible="@bind(!vm.tipoProveedor.valor)"
-												width="116%" readonly="" mold="rounded"
+												width="130%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.cedula)"
 												placeholder="Ej: Estados Unidos" maxlength="25"
 												constraint="@bind(vm.notEmptyValidator)" />
 										</vbox>
-									</row>
 
-
+                                    </row>
 
 								</rows>
 							</grid>
