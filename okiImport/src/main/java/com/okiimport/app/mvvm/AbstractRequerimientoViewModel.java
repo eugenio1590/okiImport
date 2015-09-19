@@ -178,9 +178,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarListaTipoProveedor() {
 		List<ModeloCombo<Boolean>> listaTipoProveedor = new ArrayList<ModeloCombo<Boolean>>();
-		listaTipoProveedor.add(new ModeloCombo<Boolean>("Nacional", true));
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Internacional", false));
 		listaTipoProveedor
-				.add(new ModeloCombo<Boolean>("Internacional", false));
+				.add(new ModeloCombo<Boolean>("Nacional", true ));
 		return listaTipoProveedor;
 	}
 

@@ -24,6 +24,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.maestros.servicios.SMaestros;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
+import com.okiimport.app.modelo.DetalleCotizacionInternacional;
 import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.MarcaVehiculo;
 import com.okiimport.app.modelo.Proveedor;
@@ -321,6 +322,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagTipoRepuestos.setActivePage(page);
 		pagTipoRepuestos.setTotalSize(total);
 	}
+	
+
 
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
