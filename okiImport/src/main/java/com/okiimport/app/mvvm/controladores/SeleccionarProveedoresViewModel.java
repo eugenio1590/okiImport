@@ -29,7 +29,7 @@ import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;

@@ -29,8 +29,8 @@ import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Motor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
 

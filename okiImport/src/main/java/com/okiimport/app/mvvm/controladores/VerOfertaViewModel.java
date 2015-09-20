@@ -22,7 +22,7 @@ import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel 

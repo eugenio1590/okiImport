@@ -1,4 +1,4 @@
-package com.okiimport.app.mvvm;
+package com.okiimport.app.mvvm.model;
 
 public class ModeloCombo<T> {
 

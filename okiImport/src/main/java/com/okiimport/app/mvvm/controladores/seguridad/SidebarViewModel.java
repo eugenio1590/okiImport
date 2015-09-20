@@ -21,8 +21,8 @@ import org.zkoss.zul.Span;
 import com.okiimport.app.model.Menu;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.model.ModelTree;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 

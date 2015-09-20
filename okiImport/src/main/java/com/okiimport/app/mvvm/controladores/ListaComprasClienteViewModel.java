@@ -25,7 +25,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 

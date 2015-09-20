@@ -7,7 +7,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -60,6 +59,7 @@ import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 
 public abstract class AbstractViewModel {

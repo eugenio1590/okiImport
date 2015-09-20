@@ -1,4 +1,4 @@
-package com.okiimport.app.mvvm;
+package com.okiimport.app.mvvm.resource;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

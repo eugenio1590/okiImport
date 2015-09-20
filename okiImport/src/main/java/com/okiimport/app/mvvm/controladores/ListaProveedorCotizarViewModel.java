@@ -15,7 +15,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {

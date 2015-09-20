@@ -25,7 +25,7 @@ import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class CotizacionesProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{

@@ -27,12 +27,12 @@ import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;
 

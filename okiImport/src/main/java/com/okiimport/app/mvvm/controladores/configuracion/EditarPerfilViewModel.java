@@ -17,7 +17,7 @@ import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 
 

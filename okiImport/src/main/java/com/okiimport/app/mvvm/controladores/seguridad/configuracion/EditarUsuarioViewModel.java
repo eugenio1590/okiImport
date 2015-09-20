@@ -21,7 +21,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class EditarUsuarioViewModel extends AbstractRequerimientoViewModel implements EventListener<UploadEvent> {

@@ -29,7 +29,7 @@ import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaMarcasViewModel extends AbstractViewModel implements

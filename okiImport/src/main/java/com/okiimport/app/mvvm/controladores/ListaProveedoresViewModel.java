@@ -25,7 +25,7 @@ import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{

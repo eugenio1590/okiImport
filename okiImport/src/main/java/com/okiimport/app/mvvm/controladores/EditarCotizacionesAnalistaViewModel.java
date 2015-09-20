@@ -24,7 +24,7 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{

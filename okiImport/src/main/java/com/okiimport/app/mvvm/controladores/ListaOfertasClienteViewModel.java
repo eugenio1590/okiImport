@@ -26,7 +26,7 @@ import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlConfiguracion;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.mail.MailCliente;

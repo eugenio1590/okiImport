@@ -1,4 +1,4 @@
-package com.okiimport.app.mvvm;
+package com.okiimport.app.mvvm.resource;
 
 public final class PasswordGenerator {
 	

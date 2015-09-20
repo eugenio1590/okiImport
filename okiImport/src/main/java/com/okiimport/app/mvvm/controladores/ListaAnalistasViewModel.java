@@ -23,7 +23,7 @@ import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{

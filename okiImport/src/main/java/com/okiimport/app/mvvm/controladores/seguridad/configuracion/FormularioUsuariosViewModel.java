@@ -26,9 +26,9 @@ import org.zkoss.zul.Textbox;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.mvvm.PasswordGenerator;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.mvvm.resource.PasswordGenerator;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.maestros.SMaestros;
 

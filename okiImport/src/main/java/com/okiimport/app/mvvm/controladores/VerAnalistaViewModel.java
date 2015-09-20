@@ -15,8 +15,8 @@ import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
