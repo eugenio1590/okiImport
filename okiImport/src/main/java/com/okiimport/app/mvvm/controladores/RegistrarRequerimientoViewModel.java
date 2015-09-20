@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
@@ -32,18 +33,24 @@ import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel {
+public class RegistrarRequerimientoViewModel extends
+		AbstractRequerimientoViewModel {
 
 	private Requerimiento requerimiento;
 	private Cliente cliente;
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
+
 	// GUI
 	@Wire("#cedulaRif")
-	public Textbox cedulaRif;
+	public Intbox cedulaRif;
 	@Wire("#annoV")
 	private Datebox annoV;
 	@Wire("#comboTipoPersona")
@@ -56,7 +63,6 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
-	
 
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
@@ -68,7 +74,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
-		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
+		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0,
+				-1).get("marcas");
 		listaEstados = llenarListaEstados();
 		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
@@ -87,15 +94,15 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	}
 
 	@Command
-	@NotifyChange({"requerimiento","cliente"})
+	@NotifyChange({ "requerimiento", "cliente" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar){
-		if(checkIsFormValid()){
+			@BindingParam("btnLimpiar") Button btnLimpiar) {
+		if (checkIsFormValid()) {
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor())?"J":"V";
-				cliente.setCedula(tipo+cliente.getCedula());
+				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+				cliente.setCedula(tipo + cliente.getCedula());
 				cliente = sMaestros.registrarOActualizarCliente(cliente);
 				requerimiento.setCliente(cliente);
 				if (traccion != null)
@@ -115,19 +122,22 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				model.put("cliente", cliente.getNombre());
 				model.put("cedula", cliente.getCedula());
 
-				mailService.send(cliente.getCorreo(), "Registro de Requerimiento",
+				mailService.send(cliente.getCorreo(),
+						"Registro de Requerimiento",
 						"registrarRequerimiento.html", model);
 
-				mostrarMensaje("Informacion", "El Requerimiento ha sido registrado existosamente ", null, null, 
-						new EventListener() {
-					public void onEvent(Event event) throws Exception {
-						recargar();
-					}
-				}, null);
-			}
-			else
-				mostrarMensaje("Información", "Agregue al Menos un Requerimiento", null, null, null, null);
-		} 
+				mostrarMensaje("Informacion",
+						"El Requerimiento ha sido registrado existosamente ",
+						null, null, new EventListener() {
+							public void onEvent(Event event) throws Exception {
+								recargar();
+							}
+						}, null);
+			} else
+				mostrarMensaje("Información",
+						"Agregue al Menos un Requerimiento", null, null, null,
+						null);
+		}
 	}
 
 	@Command
@@ -154,17 +164,18 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		String cedula = cliente.getCedula();
 		String cedulaBuscar = tipo + cedula;
 		if (cedula != null && !cedula.equalsIgnoreCase("")) {
-			Cliente cliente = sMaestros.consultarCliente(new Cliente(cedulaBuscar));
+			Cliente cliente = sMaestros.consultarCliente(new Cliente(
+					cedulaBuscar));
 			if (cliente != null) {
 				this.cliente = cliente;
-				this.cliente.setCedula(cedulaBuscar.substring(1, cedulaBuscar.length()));
+				this.cliente.setCedula(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
 				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
-			}
-			else
-				this.cliente = new Cliente(cedulaBuscar.substring(1, cedulaBuscar.length()));
+			} else
+				this.cliente = new Cliente(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
 			this.requerimiento.setCliente(this.cliente);
-		}
-		else {
+		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
 		}
@@ -282,7 +293,8 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		return listaTipoRepuesto;
 	}
 
-	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+	public void setListaTipoRepuesto(
+			List<ModeloCombo<Boolean>> listaTipoRepuesto) {
 		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
 
@@ -309,4 +321,5 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setListaEstados(List<Estado> listaEstados) {
 		this.listaEstados = listaEstados;
 	}
+
 }
