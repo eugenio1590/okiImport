@@ -45,7 +45,7 @@
 				<listhead>
 
 					<listheader value="idRequerimiento"
-						label="N° Solicitud" sort="none" width="150px">
+						label="N° Solicitud" sort="auto(idRequerimiento)" width="150px">
 						<spinner
 							value="@bind(vm.requerimientoFiltro.idRequerimiento)"
 							constraint="no negative, no zero" instant="true" placeholder=""
@@ -55,7 +55,7 @@
 
 
 					<listheader value="fechaCreacion"
-						label="Fecha Creación" sort="none" width="200px">
+						label="Fecha Creación" sort="auto(fechaCreacion)" width="200px">
 						<datebox
 
 
@@ -67,7 +67,7 @@
 					</listheader>
 
 					<listheader value="modeloV" label="Modelo Carro"
-						sort="none" width="150px">
+						sort="auto(modeloV)" width="150px">
 						<textbox
 							value="@bind(vm.requerimientoFiltro.modeloV)" instant="true"
 							placeholder="" onChange="@command('aplicarFiltro')"
@@ -76,7 +76,7 @@
 					</listheader>
 
 					<listheader value="serialCarroceriaV"
-						label="N° Serial" sort="none" width="150px">
+						label="N° Serial" sort="auto(serialCarroceriaV)" width="150px">
 						<textbox id="serialCarroCerialVM"
 							value="@bind(vm.requerimientoFiltro.serialCarroceriaV)"
 							constraint="no negative, no zero" instant="true"

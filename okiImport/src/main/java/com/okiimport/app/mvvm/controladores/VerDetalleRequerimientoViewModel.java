@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 
 import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -42,7 +43,10 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 		//Usuario usuario = cliente.getUsuario();
 		//this.cliente = cliente;
 		this.requerimiento = requerimiento;
-		
+		List<DetalleRequerimiento> detallesRequerimiento 
+			= (List<DetalleRequerimiento>) sTransaccion
+				.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
+		this.requerimiento.setDetalleRequerimientos(detallesRequerimiento);
 		
 		
 		

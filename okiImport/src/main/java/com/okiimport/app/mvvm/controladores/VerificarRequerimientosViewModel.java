@@ -78,10 +78,14 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarRequerimientos", parametros );
+			String cedula = obtenerCedulaConTipoPersona();
+			if(cedula!=null){
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+				parametros.put("sortDirection", event.isAscending());
+				parametros.put("cedula", cedula);
+				ejecutarGlobalCommand("cambiarRequerimientos", parametros );
+			}
 		}
 	}
 
@@ -93,7 +97,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			@BindingParam("cedula") String cedula,
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridRequerimientosCliente.setMultiple(true);
