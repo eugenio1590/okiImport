@@ -117,8 +117,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 	/**
 	 * Descripcion: Elimina la seleccion de listaDetalleSeleccion 
-	 * Parametros: @param
-	 * view: aprobarCotizaciones.zul Retorno: listaDetalleSeleccion vacia Nota:
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: listaDetalleSeleccion vacia Nota:
 	 * Ninguna
 	 * */
 	@Command
@@ -130,9 +130,10 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 	/**
 	 * Descripcion: Guarda la Seleccion realizada en listaDetalleSeleccionado
-	 * Parametros: @param view: aprobarCotizaciones.zul Retorno: seleccion
-	 * guardada, mensaje de notificacion de que la seleccion fue guardada
-	 * exitosamente. Nota: Ninguna
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: seleccion guardada, mensaje de notificacion de que la seleccion fue guardada
+	 * exitosamente. 
+	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
 	@Command
@@ -145,8 +146,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 	/**
 	 * Descripcion: Consulta el detalle Cotizacion 
-	 * Parametros: @param view:
-	 * aprobarCotizaciones.zul Retorno: detalle de la cotizacion consultada
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: detalle de la cotizacion consultada
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -176,8 +177,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
-	 * Parametros: @param view: aprobarCotizaciones.zul Retorno:
-	 * posicionamiento en otra pagina activa del paging Nota: Ninguna
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -204,8 +205,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 	/**
 	 * Descripcion: Asigna la ubicacion del proveedor 
-	 * Parametros: @param view:
-	 * aprobarCotizaciones.zul Retorno: ubicacion asignada al proveedor Nota:
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: ubicacion asignada al proveedor Nota:
 	 * Ninguna
 	 * */
 	private void agregarUbicacion() {
@@ -214,6 +215,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 		proveedor.setCiudad(new Ciudad(ubicacion, new Estado(ubicacion)));
 	}
 
+	/**METODOS PROPIOS DE LA CLASE*/
 	/** SETTERS Y GETTERS */
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
