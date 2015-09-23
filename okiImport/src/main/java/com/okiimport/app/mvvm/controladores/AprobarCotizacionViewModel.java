@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -31,26 +30,26 @@ import com.okiimport.app.modelo.DetalleRequerimiento;
 import com.okiimport.app.modelo.Estado;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
-public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>  {
+public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
+		implements EventListener<SortEvent> {
 
-	//Servicios
+	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
 
-	private List <DetalleCotizacion> listaDetalleCotizacion;
-	private List <DetalleCotizacion> listaDetalleSeleccion;
-	private List <DetalleCotizacion> listaDetalleSeleccionado;
-	private List <DetalleCotizacion> eliminarDetalle;
+	private List<DetalleCotizacion> listaDetalleCotizacion;
+	private List<DetalleCotizacion> listaDetalleSeleccion;
+	private List<DetalleCotizacion> listaDetalleSeleccionado;
+	private List<DetalleCotizacion> eliminarDetalle;
 
-	//GUI
+	// GUI
 	@Wire("#gridDetalleCotizacion")
 	private Listbox gridDetalleCotizacion;
 	@Wire("#gridDetalleSeleccion")
@@ -59,77 +58,112 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	@Wire("#pagDetalleCotizacion")
 	private Paging pagDetalleCotizacion;
 
-	//Atributos
+	// Atributos
 	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
-	
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
 	private DetalleCotizacion detalleCotizacion;
-	
 	private String ubicacion;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: Clase Inicializada Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
-		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(new Proveedor()), new DetalleRequerimiento());
+		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(
+				new Proveedor()), new DetalleRequerimiento());
 		detalleCotizacionFiltro.eliminarPrecios();
 		listaDetalleSeleccionado = new ArrayList<DetalleCotizacion>();
-		
+
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
 		pagDetalleCotizacion.setPageSize(pageSize);
 	}
-	
-	/**Interface: EventListener<SortEvent>*/
+
+	/** Interface: EventListener<SortEvent> */
 	@Override
 	@NotifyChange("listaRequerimientos")
 	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub		
-		if(event.getTarget() instanceof Listheader){
+		// TODO Auto-generated method stub
+		if (event.getTarget() instanceof Listheader) {
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+			parametros.put("fieldSort", ((Listheader) event.getTarget())
+					.getValue().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("consultarDetalleCotizacion", parametros );
+			ejecutarGlobalCommand("consultarDetalleCotizacion", parametros);
 		}
-		
+
 	}
-	
-	@NotifyChange({"*"})
+
+	/**
+	 * Descripcion: Mueve la seleccion realizada desde listaDetalleCotizacion a
+	 * ListaDetalleSeleccionado 
+	 * Parametros: @param view: aprobarCotizaciones.zul
+	 * Retorno: listaDetalleCotizacion llena Nota: Ninguna
+	 * */
+	@NotifyChange({ "*" })
 	@Command
-	public void agregarSeleccion(){
-		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
-		
+	public void agregarSeleccion() {
+		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado,
+				listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
+
 	}
-	
+
+	/**
+	 * Descripcion: Elimina la seleccion de listaDetalleSeleccion 
+	 * Parametros: @param
+	 * view: aprobarCotizaciones.zul Retorno: listaDetalleSeleccion vacia Nota:
+	 * Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "*" })
 	public void eliminarSeleccion() {
-	
+
 		listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 	}
-	
-	@NotifyChange({"*"})
+
+	/**
+	 * Descripcion: Guarda la Seleccion realizada en listaDetalleSeleccionado
+	 * Parametros: @param view: aprobarCotizaciones.zul Retorno: seleccion
+	 * guardada, mensaje de notificacion de que la seleccion fue guardada
+	 * exitosamente. Nota: Ninguna
+	 * */
+	@NotifyChange({ "*" })
 	@Command
-	public void guardar(){
+	public void guardar() {
 		sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
-		mostrarMensaje("Informacion", "Seleccion Guardada Exitosamente", null, null, null, null);
-		
+		mostrarMensaje("Informacion", "Seleccion Guardada Exitosamente", null,
+				null, null, null);
+
 	}
-	
+
+	/**
+	 * Descripcion: Consulta el detalle Cotizacion 
+	 * Parametros: @param view:
+	 * aprobarCotizaciones.zul Retorno: detalle de la cotizacion consultada
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange("*")
-	public void consultarDetalleCotizacion(@Default("0") @BindingParam("page") int page, 
-			@BindingParam("fieldSort") String fieldSort, 
+	public void consultarDetalleCotizacion(
+			@Default("0") @BindingParam("page") int page,
+			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		
-		/**FALTA FILTRAR POR ESTATUS DE DETALLE COTIZACION*/
-		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(detalleCotizacionFiltro, requerimiento.getIdRequerimiento(),
-				fieldSort, sortDirection, page, pageSize);
-		
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
+
+		/** FALTA FILTRAR POR ESTATUS DE DETALLE COTIZACION */
+		Map<String, Object> parametros = sTransaccion
+				.consultarDetallesCotizacion(detalleCotizacionFiltro,
+						requerimiento.getIdRequerimiento(), fieldSort,
+						sortDirection, page, pageSize);
+
+		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros
+				.get("detallesCotizacion");
 		Integer total = (Integer) parametros.get("total");
 		gridDetalleCotizacion.setMultiple(true);
 		gridDetalleCotizacion.setCheckmark(true);
@@ -137,43 +171,50 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		pagDetalleCotizacion.setTotalSize(total);
 	}
 
-	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/** COMMAND */
+
+	/**
+	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
+	 * de Paging 
+	 * Parametros: @param view: aprobarCotizaciones.zul Retorno:
+	 * posicionamiento en otra pagina activa del paging Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
-	public void paginarLista(){
-		int page=pagDetalleCotizacion.getActivePage();
+	public void paginarLista() {
+		int page = pagDetalleCotizacion.getActivePage();
 		consultarDetalleCotizacion(page, null, null);
 	}
-	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+
+	/**
+	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
+	 * establecido en el evento 
+	 * Parametros: @param view: aprobarCotizaciones.zul
+	 * Retorno: filtro de acuerdo al campo establecido en el evento Nota:
+	 * Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaDetalleCotizacion")
-	public void aplicarFiltro(){
+	public void aplicarFiltro() {
 		agregarUbicacion();
 		consultarDetalleCotizacion(0, null, null);
 	}
-	
-	/**METODOS PROPIOS DE LA CLASE*/
-	/*
-	 * Descripcion: permitira asignar la ubicacion del proveedor
-	 * @param Ninguno
-	 * Retorno: Ninguno 
-	 */
-	private void agregarUbicacion(){
-		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion().getProveedor();
+
+	/** METODOS PROPIOS DE LA CLASE */
+
+	/**
+	 * Descripcion: Asigna la ubicacion del proveedor 
+	 * Parametros: @param view:
+	 * aprobarCotizaciones.zul Retorno: ubicacion asignada al proveedor Nota:
+	 * Ninguna
+	 * */
+	private void agregarUbicacion() {
+		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion()
+				.getProveedor();
 		proveedor.setCiudad(new Ciudad(ubicacion, new Estado(ubicacion)));
 	}
 
-	/**SETTERS Y GETTERS*/
+	/** SETTERS Y GETTERS */
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -181,7 +222,6 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-
 
 	public SControlUsuario getsControlUsuario() {
 		return sControlUsuario;
@@ -195,7 +235,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 		return detalleCotizacionFiltro;
 	}
 
-	public void setDetalleCotizacionFiltro(DetalleCotizacion detalleCotizacionFiltro) {
+	public void setDetalleCotizacionFiltro(
+			DetalleCotizacion detalleCotizacionFiltro) {
 		this.detalleCotizacionFiltro = detalleCotizacionFiltro;
 	}
 
@@ -257,8 +298,5 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	public void setEliminarDetalle(List<DetalleCotizacion> eliminarDetalle) {
 		this.eliminarDetalle = eliminarDetalle;
 	}
-	
-	
-	
-	
+
 }

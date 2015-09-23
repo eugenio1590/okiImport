@@ -158,7 +158,8 @@
 											<vbox>
 												<textbox id="modelo"
 													width="95%" readonly="" mold="rounded"
-													value="@bind(vm.requerimiento.modeloV)" placeholder="Ej Hilux"
+													value="@bind(vm.requerimiento.modeloV)"
+													placeholder="Ej Hilux"
 													constraint="@bind(vm.notEmptyValidator)" />
 											</vbox>
 										</row>
@@ -175,7 +176,8 @@
 
 											<label value="Año: *" />
 											<vbox>
-												<intbox width="142%" placeholder="Ej: 2015"
+												<intbox width="142%"
+													placeholder="Ej: 2015"
 													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
 													value="@bind(vm.requerimiento.annoV)" />
 											</vbox>
@@ -205,6 +207,7 @@
 									<rows>
 										<row>
 											<label value="Motor: " />
+
 											<combobox
 												selectedItem="@bind(vm.requerimiento.motor)" readonly="true"
 												placeholder="Seleccione..." width="80%"
@@ -217,6 +220,7 @@
 													</comboitem>
 												</template>
 											</combobox>
+
 
 											<label
 												value="Transmision: " />
@@ -302,14 +306,16 @@
 								<template name="model">
 									<listitem>
 										<listcell>
-											<textbox width="110px"  placeholder="Ej: 43330-39225"
+											<textbox width="110px"
+												placeholder="Ej: 43330-39225"
 												value="@bind(each.codigoOem)">
 											</textbox>
 
 										</listcell>
 										<listcell>
 											<vbox>
-												<textbox width="275px" placeholder="Ej: Terminal Exterior Derecho"
+												<textbox width="275px"
+													placeholder="Ej: Terminal Exterior Derecho"
 													multiline="true" rows="2" sclass="no_rezise"
 													value="@bind(each.descripcion)"
 													constraint="@bind(vm.notEmptyValidator)">
@@ -318,8 +324,8 @@
 										</listcell>
 										<listcell>
 											<vbox>
-												<spinner width="70px" placeholder="Ej: 1"
-													onOK="@command('agregarRepuesto')"
+												<spinner width="70px"
+													placeholder="Ej: 1" onOK="@command('agregarRepuesto')"
 													constraint="@bind(vm.cantValidator)"
 													value="@bind(each.cantidad)">
 												</spinner>

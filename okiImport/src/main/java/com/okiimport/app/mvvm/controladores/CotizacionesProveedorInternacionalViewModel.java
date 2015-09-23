@@ -44,16 +44,18 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	
 	//Atributos
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
-	
 	private String constraint_precio_flete;
-	
 	private List<Cotizacion> listaCotizacion;
-	
 	private Persona persona;
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: Clase Inicializada Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("persona") Persona persona, 
