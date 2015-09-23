@@ -24,7 +24,6 @@ import org.zkoss.zul.Paging;
 import com.okiimport.app.modelo.Cotizacion;
 import com.okiimport.app.modelo.Persona;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.transaccion.servicios.STransaccion;
@@ -53,7 +52,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
-	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
 	 * Retorno: Clase Inicializada 
 	 * Nota: Ninguna
 	 * */
@@ -88,7 +87,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**GLOBAL COMMAND*/
 	 /**
 	 * Descripcion: permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
-	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
@@ -113,7 +112,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
-	 * Parametros: @param view: cotizarProveedorInternacional.zul  
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
 	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
 	 * */
 	@Command
@@ -126,7 +125,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**
 	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
 	 * establecido en el evento 
-	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
 	 * Retorno: filtro de acuerdo al campo establecido en el evento 
 	 * Nota:Ninguna
 	 * */
@@ -139,8 +138,8 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	
 	/**
 	 * Descripcion: permite cargar la lista de detalles de la cotizacion seleccionada
-	 * Parametros: requerimiento seleccionado @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Parametros: requerimiento seleccionado @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: listas de detalles de la cotizacion llenas
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -154,14 +153,9 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
 	}
 	
-	/*
-	 * Descripcion: 
-	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 */
 	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
-	 * Parametros: Ninguno @param view: cotizarProveedorInternacional.zul 
+	 * Parametros: Ninguno @param view: listaCotizacionesProveedorInternacional.zul 
 	 * Retorno: listas cargadas 
 	 * Nota: Ninguna
 	 * */
