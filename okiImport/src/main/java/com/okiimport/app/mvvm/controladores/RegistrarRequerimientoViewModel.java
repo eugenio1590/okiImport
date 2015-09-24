@@ -90,7 +90,6 @@ public class RegistrarRequerimientoViewModel extends
 	}
 
 	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		if (checkIsFormValid()) {
