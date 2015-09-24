@@ -8,38 +8,30 @@
 
 				<listheader value="idRequerimiento" width="75px"
 					label="Nro." sort="auto(idRequerimiento)">
-					<vbox>
-					<spinner constraint="@bind(vm.cantValidator)" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
-						instant="true" placeholder="" onChange="@command('aplicarFiltro') "
+					<spinner constraint="no negative, no zero" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
 						width="70px" />
-					</vbox>
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
 				<listheader value="nombre" label="Cliente"
 					sort="auto(idRequerimiento)" width="120px">
-					<vbox>
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
-						onChange="@command('aplicarFiltro')" width="100px"  constraint="@bind(vm.notEmptyValidator)"/>
-					</vbox>
+						onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
 				<listheader value="fechaCreacion" label="F. Creación"
 					sort="auto(fechaCreacion)" width="140px">
-					<vbox>
 					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaCreacion)"
-						instant="true" onChange="@command('aplicarFiltro')" width="100px" constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"/>
-					</vbox>
+						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 
 				<listheader value="modeloV" label="Modelo"
 					sort="auto(modeloV)" width="130px">
-					<vbox>
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.modeloV)"
-						onChange="@command('aplicarFiltro')" width="110px"  constraint="@bind(vm.notEmptyValidator)"/>
-					</vbox>
+						onChange="@command('aplicarFiltro')" width="110px" />
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 				

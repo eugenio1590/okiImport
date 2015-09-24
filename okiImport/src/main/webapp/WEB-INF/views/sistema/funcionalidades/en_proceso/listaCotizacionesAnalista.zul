@@ -34,22 +34,18 @@
 
 						<listheader value="idCotizacion"
 							label="N° Solicitud" sort="auto(idCotizacion)" width="90px">
-							<vbox>
-							<spinner constraint="@bind(vm.cantValidator)"
+							<spinner constraint="no negative, no zero"
 								value="@bind(vm.cotizacionFiltro.idCotizacion)" instant="true"
 								placeholder="" onChange="@command('aplicarFiltro')"
 								width="100px" />
-							</vbox>
 							<div sclass="z-icon-filter bigger-200" />
 						</listheader>
 
 						<listheader value="nombre" label="F. Creacion"
 							sort="auto(fechaCreacion)" width="90px">
-							<vbox>
 							<datebox format="dd/MM/yyyy"
 								value="@bind(vm.cotizacionFiltro.fechaCreacion)" instant="true"
-								onChange="@command('aplicarFiltro')" width="100px" constraint="@bind(vm.notEmptyValidator)" />
-							</vbox>
+								onChange="@command('aplicarFiltro')" width="100px" />
 							<div sclass="z-icon-filter bigger-200" />
 						</listheader>
 
@@ -60,11 +56,9 @@
 						<listitem>
 							<listcell label="@bind(each.idCotizacion)" />
 							<listcell>
-							   <vbox>
 								<datebox format="dd/MM/yyyy"
 									value="@bind(each.fechaCreacion)" readonly="true"
-									buttonVisible="false" constraint="@bind(vm.notEmptyValidator)"/>
-							   </vbox>
+									buttonVisible="false" />
 							</listcell>
 							<listcell>
 								<hbox spacing="20px">

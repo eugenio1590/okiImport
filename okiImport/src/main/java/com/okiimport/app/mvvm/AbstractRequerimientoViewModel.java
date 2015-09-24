@@ -252,10 +252,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 
-	/*public int getFecha() {
-		return Calendar.getInstance().getTime();
-	}
-	*/
 	public CustomConstraint getNotEmptyValidator() {
 		return new GeneralConstraint(EConstraint.NO_EMPTY);
 	}
@@ -300,31 +296,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
 
-	}
-	
-	
-	
-	public CustomConstraint getValidatorClienteCedulaRif2() {
-        
-        RegExpression[] constrains = new RegExpression[] { new RegExpression(
-		"/.[0-9]+/",
-		"Introduzca RIF o Cedula solo Números sin guiones Ej.: 402405374") };
-        return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
-     }
-	
-	public CustomConstraint getValidatorPrecio() {
-		
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Valores Numericos Validos") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO);
-	}
-	
-	
-    public CustomConstraint getValidatorFechaVencimiento() {
-		
-    	return new GeneralConstraint(EConstraint.NO_EMPTY,
-				EConstraint.NO_PAST );
 	}
 
 	public SMaestros getsMaestros() {

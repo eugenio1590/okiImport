@@ -15,14 +15,11 @@
 						</columns>
 						<rows>
 							<row>
-							    <vbox>
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" constraint="@bind(vm.validatorFechaVencimiento)" />
-								</vbox>
-								
-								<vbox>	
+									format="dd/MM/yyyy" readonly="true" constraint="no past" />
+									
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
-									constraint="@bind(vm.notEmptyValidator)" readonly="true"
+									constraint="no empty" readonly="true"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 									<bandpopup>
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
@@ -39,7 +36,6 @@
 										<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
 									</bandpopup>
 								</bandbox>
-								</vbox>
 								
 								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
 									width="100%" sclass="no_rezise" />
@@ -70,14 +66,11 @@
 							</combobox>
 							<space />
 							<label value="Precio de Flete:" />
-							<vbox>
 							<decimalbox id="txtPrecioFlete" format="###.##"
 								readonly="@bind(!vm.tipoFlete.valor)"
 								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
 							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."
-							  constraint="@bind(vm.validatorPrecio)"  />
-							</vbox>
+							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."/>
 						</div>
 					</groupbox>
 				</div>

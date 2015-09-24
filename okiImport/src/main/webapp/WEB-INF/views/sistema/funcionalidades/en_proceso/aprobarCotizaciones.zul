@@ -10,53 +10,41 @@
 			<auxhead sclass="nombre-center">
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<vbox>
 					<textbox instant="true" placeholder=""
 							value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
-							onChange="@command('aplicarFiltro')" width="120px" constraint="@bind(vm.notEmptyValidator)" />
-					</vbox>
+							onChange="@command('aplicarFiltro')" width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<vbox>
 					<textbox instant="true" placeholder=""
 							value="@bind(vm.ubicacion)" onChange="@command('aplicarFiltro')"
-							width="120px" constraint="@bind(vm.notEmptyValidator)"/>
-					</vbox>
+							width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<vbox>
 					<textbox instant="true" placeholder=""
 							value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.descripcion)"
-							onChange="@command('aplicarFiltro')" width="200px"  constraint="@bind(vm.notEmptyValidator)"/>
-					</vbox>
+							onChange="@command('aplicarFiltro')" width="200px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<vbox>
 					<textbox instant="true" placeholder=""
 							value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
-							onChange="@command('aplicarFiltro')" width="100px" constraint="@bind(vm.notEmptyValidator)"/>
-					</vbox>
+							onChange="@command('aplicarFiltro')" width="100px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					    <vbox>
-						<spinner constraint="@bind(vm.cantValidator)"
+						<spinner constraint="no negative, no zero"
 							value="@bind(vm.detalleCotizacionFiltro.cantidad)" instant="true"
 							placeholder="" onChange="@command('aplicarFiltro')" width="70px" />
-						</vbox>
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					   <vbox>
 						<decimalbox format="###.##"
 							value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
 							instant="true" placeholder=""
 							onChange="@command('aplicarFiltro')" width="70px"
 							constraint="no negative, no zero" />
-					</vbox>
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
@@ -64,7 +52,7 @@
 							value="@bind(vm.detalleCotizacionFiltro.precioFlete)"
 							instant="true" placeholder=""
 							onChange="@command('aplicarFiltro')" width="70px"
-							constraint="@bind(vm.validatorPrecio)" />
+							constraint="no negative, no zero" />
 				</auxheader>
 				</auxhead>
 				<listhead menupopup="auto">

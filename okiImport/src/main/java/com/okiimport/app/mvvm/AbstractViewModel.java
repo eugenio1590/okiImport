@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,14 +58,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
-
-import com.okiimport.app.mvvm.constraint.AnnoConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.GeneralConstraint;
-import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 
 public abstract class AbstractViewModel {
 	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
@@ -576,68 +567,4 @@ public abstract class AbstractViewModel {
 	 * Rosado: btn btn-sm btn-pink
 	 * Amarillo: btn btn-sm btn-yellow
 	 * */
-	
-	
-	/* METODOS CONSTRAINS*/
-	
-	public int getYearDay() {
-		return Calendar.getInstance().get(Calendar.YEAR);
-	}
-
-	public CustomConstraint getNotEmptyValidator() {
-		return new GeneralConstraint(EConstraint.NO_EMPTY);
-	}
-
-	public CustomConstraint getEmailValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.+@.+\\.[a-z]+/",
-				"Debe contener un correo valido Ej. fusa@gmail.com") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.CUSTOM);
-	}
-
-	public CustomConstraint getValidatorCantidad(
-			@BindingParam("cantidadRequerida") Long cantidadRequerida) {
-		return new MayorCantidadConstraint(cantidadRequerida);
-	}
-
-	public CustomConstraint getValidatorAnno(
-			@BindingParam("minYear") Integer minYear,
-			@BindingParam("maxYear") Integer maxYear) {
-		return new AnnoConstraint(minYear, maxYear);
-	}
-
-	public CustomConstraint getTelefonoValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/",
-				"Debe Contener Un Numero Telefonico Valido Ej. 025141785289") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.CUSTOM);
-
-	}
-
-	public CustomConstraint getValidatorClienteCedulaRif() {
-		return new GeneralConstraint(EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO);
-	}
-
-	public CustomConstraint getCantValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Un Numero Valido") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
-				EConstraint.CUSTOM);
-
-	}
-	
-	
-	
-	public CustomConstraint getValidatorClienteCedulaRif2() {
-        
-        RegExpression[] constrains = new RegExpression[] { new RegExpression(
-		"/.[0-9]+/",
-		"Introduzca RIF o Cedula solo Números sin guiones Ej.: 402405374") };
-        return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
-}
-	
 }
