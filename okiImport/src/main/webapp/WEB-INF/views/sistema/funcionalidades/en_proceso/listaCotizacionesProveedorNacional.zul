@@ -34,18 +34,23 @@
 
 						<listheader value="idCotizacion"
 							label="N° Solicitud" sort="auto(idCotizacion)" width="90px">
-							<spinner constraint="no negative, no zero"
+							<vbox>
+							<spinner constraint="@bind(vm.cantValidator)"
 								value="@bind(vm.cotizacionFiltro.idCotizacion)" instant="true"
 								placeholder="" onChange="@command('aplicarFiltro')"
-								width="100px" />
+								width="100px"  />
+							</vbox>
 							<div sclass="z-icon-filter bigger-200" />
 						</listheader>
 
 						<listheader value="nombre" label="F. Creacion"
 							sort="auto(fechaCreacion)" width="90px">
+							<vbox>
 							<datebox format="dd/MM/yyyy"
 								value="@bind(vm.cotizacionFiltro.fechaCreacion)" instant="true"
-								onChange="@command('aplicarFiltro')" width="100px" />
+								onChange="@command('aplicarFiltro')" width="100px" constraint="@bind(vm.notEmptyValidator)"/>
+							</vbox>
+							
 							<div sclass="z-icon-filter bigger-200" />
 						</listheader>
 
@@ -90,13 +95,18 @@
 						</columns>
 						<rows>
 							<row>
+							    <vbox>
 								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="no past" />
+									format="dd/MM/yyyy" readonly="true" buttonVisible="false" constraint="@bind(vm.validatorFechaVencimiento)" />
+								</vbox>
 									
+								<vbox>
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
-									readonly="true" buttonVisible="false" constraint="no empty"
+									readonly="true" buttonVisible="false" constraint="@bind(vm.notEmptyValidator)"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
+								</vbox>
 									<bandpopup>
+									    
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
 											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
 											<listhead>
@@ -159,8 +169,10 @@
 							<listcell
 								label="@bind(each.detalleRequerimiento.cantidad)" />
 							<listcell>
+							    <vbox>
 								<textbox value="@bind(each.marcaRepuesto)" width="100%"
-									constraint="no empty" tooltiptext="Marca del Repuesto"/>
+									constraint="@bind(vm.notEmptyValidator)" tooltiptext="Marca del Repuesto"/>
+								</vbox>
 							</listcell>
 							<listcell>
 							
@@ -170,10 +182,12 @@
 									/>
 							</listcell>
 							<listcell>
+							    <vbox>
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
-									constraint="no empty, no zero, no negative"
+									constraint="@bind(vm.validatorPrecio)"
 									onChange="@command('calcularPrecio', column=1)" />
+								</vbox>
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"

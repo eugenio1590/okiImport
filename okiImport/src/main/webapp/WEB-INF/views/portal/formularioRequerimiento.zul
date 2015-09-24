@@ -41,7 +41,7 @@
 													width="91%" readonly="" mold="rounded"
 													value="@bind(vm.cliente.cedula)"
 													placeholder="Ej: 402405375" maxlength="12"
-													constraint="@bind(vm.validatorClienteCedulaRif)"
+													constraint="@bind(vm.validatorClienteCedulaRif2)"
 													onBlur="@command('buscarCliente')"
 													onOK="@command('buscarCliente')" />
 											</vbox>

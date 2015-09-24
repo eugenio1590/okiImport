@@ -30,6 +30,9 @@ import com.okiimport.app.modelo.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.BeanInjector;
 import com.okiimport.app.mvvm.ModeloCombo;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
@@ -183,6 +186,11 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		crearModal("/WEB-INF/views/portal/"+ruta, parametros);
 	}
 
+	
+	public CustomConstraint getValidatorCedulaClienteRequerimiento()
+	{
+		return new GeneralConstraint(EConstraint.NO_EMPTY);
+	}
 
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {
