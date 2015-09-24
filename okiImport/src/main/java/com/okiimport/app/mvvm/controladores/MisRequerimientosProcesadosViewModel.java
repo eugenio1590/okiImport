@@ -143,7 +143,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", false);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/*
@@ -155,7 +155,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	public void seleccionarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/aprobarCotizaciones.zul", parametros);
 	}
 	
 	/*
@@ -168,7 +168,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("size", "90%");
-		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
+		crearModal(BasePackageSistemaFunc+"en_proceso/listaProveedoresCotizar.zul", parametros );
 	}
 	
 	/*
@@ -181,7 +181,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("size", "90%");
-		crearModal("/WEB-INF/views/sistema/funcionalidades/listaOfertasCliente.zul", parametros );
+		crearModal(BasePackageSistemaFunc+"ofertados/listaOfertasCliente.zul", parametros );
 	}
 	
 	/*
@@ -193,7 +193,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	public void editarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){//EC
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesAnalista.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesAnalista.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

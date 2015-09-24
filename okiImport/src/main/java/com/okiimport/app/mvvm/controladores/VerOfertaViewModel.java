@@ -88,7 +88,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			{
 				//antes cerrar formulario de oferta
 				this.winOferta.onClose();
-				llamarFormulario("formularioSolicituddePedido.zul", parametros);
+				this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
 			}
 		}
 	}
@@ -106,10 +106,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 				listaDetOferta.add(detalleOferta);
 			}
 		}
-	}
-	
-	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/"+ruta, parametros);
 	}
 	
 	/**GETTERS Y SETTERS*/

@@ -138,7 +138,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", true);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/*
@@ -152,7 +152,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		if(!requerimiento.cerrarSolicitud()){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
-			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"emitidos/enviarRequerimientoProv.zul", parametros);
 		}
 		else
 			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
@@ -168,7 +168,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", false);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

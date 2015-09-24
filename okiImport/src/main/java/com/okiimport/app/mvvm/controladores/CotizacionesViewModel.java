@@ -143,14 +143,14 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	@Command
 	public void verDetalleCotizacion(@BindingParam("cotizacion") Cotizacion cotizacion){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("cotizacion", cotizacion);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/detalleCotizacion.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"detalleCotizacion.zul", parametros);
 	}
 	
 	@NotifyChange("*")

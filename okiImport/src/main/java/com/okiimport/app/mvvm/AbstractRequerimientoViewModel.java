@@ -37,9 +37,14 @@ import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.mail.MailService;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
-
-	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
-
+	
+	protected static final String BasePackagePortal = BaseApp+"portal/";
+	protected static final String BasePackageSistema = BaseApp+"sistema/";
+	protected static final String BasePackageSistemaFunc = BasePackageSistema+"funcionalidades/";
+	protected static final String BasePackageSistemaMaest = BasePackageSistema+"maestros/";
+	
+	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
+	
 	// Servicios
 	@BeanInjector("mailService")
 	protected MailService mailService;
@@ -100,7 +105,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("title", titulo);
 		parametros.put("image", imagen);
-		crearModal("/WEB-INF/views/sistema/configuracion/ampliarImagen.zul",
+		crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
 				parametros);
 	}
 

@@ -146,7 +146,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 				parametros.put("enviar", enviar);
 				parametros.put("requerimiento", requerimiento);
 				parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
-				crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
+				crearModal(BasePackageSistemaFunc+"emitidos/seleccionarProveedores.zul", parametros);
 			}
 			else
 				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados", 

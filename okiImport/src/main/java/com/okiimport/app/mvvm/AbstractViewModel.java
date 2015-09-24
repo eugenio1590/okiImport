@@ -63,10 +63,10 @@ import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 
 public abstract class AbstractViewModel {
-	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
-	public static final String BasePackageSistema = "/WEB-INF/views/SistemaOrion/Contenido/";
 	
 	private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+	
+	protected static final String BaseApp = "/WEB-INF/views/";
 	
 	private Component form;
 	

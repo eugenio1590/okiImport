@@ -151,7 +151,7 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/seguridad/configuracion/usuarios/"+ruta, parametros);
+		crearModal(BasePackageSistema+"seguridad/configuracion/usuarios/"+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/

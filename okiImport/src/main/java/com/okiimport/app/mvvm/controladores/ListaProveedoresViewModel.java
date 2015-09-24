@@ -112,7 +112,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	@Command
 	public void nuevoProveedor(){
-		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		llamarFormulario(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 	}
 	
 	@Command
@@ -126,8 +126,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			window.detach();
 			window.setId(null);
 		}
-		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
@@ -147,8 +146,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			window.detach();
 			window.setId(null);
 		}
-		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window = this.crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
@@ -195,7 +193,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}*/
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
+		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/
@@ -210,7 +208,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 
 	@Command
 	public void registrarProveedor(){
-		window = crearModal("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 		window.setMaximizable(true);
 	}
 

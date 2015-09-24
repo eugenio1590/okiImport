@@ -196,7 +196,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void registrarProveedor(){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("cerrar", false);
-		crearModal("/WEB-INF/views/formularioProveedor.zul", parametros);
+		crearModal(BasePackagePortal+"formularioProveedor.zul", parametros);
 	}
 	
 	

@@ -65,9 +65,9 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("persona", proveedor);
 		if(proveedor.getTipoProveedor())
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorNacional.zul", parametros);
 		else
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
 	/**GETTERS Y SETTERS*/

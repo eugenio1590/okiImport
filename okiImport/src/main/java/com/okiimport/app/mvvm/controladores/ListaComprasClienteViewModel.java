@@ -116,7 +116,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("compra", compra);
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/formularioCompra.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"ofertados/formularioCompra.zul", parametros);
 	}
 	
 	@Command

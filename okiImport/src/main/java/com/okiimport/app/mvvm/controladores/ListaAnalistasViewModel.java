@@ -180,7 +180,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
+		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/

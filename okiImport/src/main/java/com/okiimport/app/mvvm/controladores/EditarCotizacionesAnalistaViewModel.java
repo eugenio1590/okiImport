@@ -136,7 +136,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
 		parametros.put("obligatorioTodosCampos", true);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 	}
 	
 	/*

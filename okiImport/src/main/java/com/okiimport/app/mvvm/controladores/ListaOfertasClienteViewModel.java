@@ -122,7 +122,7 @@ public class ListaOfertasClienteViewModel extends
 		parametros.put("oferta", oferta);
 		parametros.put("requerimiento", this.requerimiento);
 		
-		crearModal("/WEB-INF/views/sistema/funcionalidades/verDetalleOferta.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"ofertados/verDetalleOferta.zul", parametros);
 	}
 
 	@Command

@@ -144,9 +144,9 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("persona", usuario.getPersona());
 		if(proveedor.getTipoProveedor().equals(true)) //Nacional
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorNacional.zul", parametros);
 		else //Internacional
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/
