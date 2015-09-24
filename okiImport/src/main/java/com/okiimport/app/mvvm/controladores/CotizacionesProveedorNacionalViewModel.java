@@ -150,7 +150,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -172,7 +172,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
+	 * Retorno: posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
