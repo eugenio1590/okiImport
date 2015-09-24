@@ -71,24 +71,24 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
-	
-	
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
-	
-	
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionSelecionada=null;
 	private Moneda monedaSeleccionada;
-	
 	private List<ModeloCombo<Boolean>> tiposFlete;
 	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
-	
 	private String titulo;
 	private String constraintCampoObligatorio;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
