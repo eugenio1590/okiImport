@@ -14,7 +14,6 @@ public class JpaConfiguration extends AbstractJpaConfiguration {
 
 	public JpaConfiguration() {
 		super("requerimientos.urbicars@gmail.com", "R123456789");
-		System.out.println("NUEVA CONFIGURACION");
 	}
 
 //	@Bean(name="sMaestros")
