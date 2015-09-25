@@ -15,7 +15,6 @@ import org.zkoss.bind.annotation.NotifyChange;
 import com.okiimport.app.configuracion.servicios.SControlUsuario;
 import com.okiimport.app.modelo.Proveedor;
 import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
 import com.okiimport.app.mvvm.BeanInjector;
 
 public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
@@ -28,6 +27,12 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	private Requerimiento requerimiento;
 	private String size;
 	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaProveedoresCotizar.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose(superclass=true)
 	public void doAfterCompose(@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("size") String size){
@@ -54,11 +59,12 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira viszualizar la lista de proveedores para poder cotizar un requerimiento
-	 * @param proveedor: proveedor seleccionado
-	 * Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Permitira visualizar la lista de proveedores para poder cotizar un requerimiento
+	 * Parametros: @param view: listaProveedoresCotizar.zul 
+	 * Retorno: lista de proveedores para poder cotizar 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void cotizar(@BindingParam("proveedor") Proveedor proveedor){
 		Map<String, Object> parametros = new HashMap<String, Object>();
