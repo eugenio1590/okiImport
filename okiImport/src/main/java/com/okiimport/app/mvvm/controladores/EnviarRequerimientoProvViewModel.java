@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -24,7 +23,6 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.mail.MailService;
 import com.okiimport.app.modelo.Ciudad;
 import com.okiimport.app.modelo.ClasificacionRepuesto;
 import com.okiimport.app.modelo.DetalleRequerimiento;
@@ -63,7 +61,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
 	private List <Motor> listaMotor;
 	private List <DetalleRequerimiento> listaDetalleRequerimientoSeleccionados;
-	
 	private Requerimiento requerimiento;
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
@@ -72,7 +69,12 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	private ModeloCombo<Boolean> transmision;
 	private Ciudad ciudad;
 	
-
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: enviarRequerimientoProv.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
@@ -103,6 +105,12 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	}
 	
 	/**GLOBAL COMMAND*/
+	/**
+	 * Descripcion: Llama a remover los items seleccionados
+	 * Parametros: @param view: enviarRequerimientoProv.zul 
+	 * Retorno: Items seleccionados removidos 
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange("listaDetalleRequerimientoSeleccionados")
 	public void removerSeleccionados(){
@@ -111,7 +119,13 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	}
 	
 	/**COMMAND*/
-	
+	/**
+	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique 
+	 * Parametros: @param view: enviarRequerimientoProv.zul 
+	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
+	 * Retorno: seccion abierta o cerrada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void abrirDatosVehiculo(@Default("false") @BindingParam("justIcon") boolean justIcon){
 		boolean open = grpDatosVehiculo.isOpen();
@@ -123,7 +137,12 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
 	}
 	
-
+	/**
+	 * Descripcion: Permitira actualizar la informacion del requerimiento 
+	 * Parametros: @param view: enviarRequerimientoProv.zul
+	 * Retorno: informacion del requerimiento actualizada 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void actualizar(){
 		if(checkIsFormValid()){
@@ -137,6 +156,12 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		}
 	}
 
+	/**
+	 * Descripcion: Permitira enviar la solicitud de cotizacion al proveedor 
+	 * Parametros: requerimiento @param view: enviarRequerimientoProv.zul
+	 * Retorno: solicitud de cotizacion enviada al proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void enviarSolicitudProv(
 			@Default("false") @BindingParam("enviar") Boolean enviar,
@@ -157,11 +182,23 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
 	
+	/**
+	 * Descripcion: Llama a actualizar los requerimientos
+	 * Parametros: @param view: enviarRequerimientoProv.zul
+	 * Retorno: requerimientos actualizados
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void actualizarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
+	/**
+	 * Descripcion: Permite validar al proveedor segun la clasificacion del repuesto
+	 * Parametros: @param view: enviarRequerimientoProv.zul
+	 * Retorno: proveedores validados segun la clasificacion ddel repuesto
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public boolean validarListaClasificacion(){
 		
@@ -177,6 +214,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 			return true;
 	}
 	
+	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
@@ -277,8 +315,5 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
 
-	
-	
-	
 	
 }
