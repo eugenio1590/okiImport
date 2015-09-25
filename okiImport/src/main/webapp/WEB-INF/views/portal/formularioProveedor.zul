@@ -21,7 +21,8 @@
 
 				<tab id="tabClasificacionRepuesto"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Parts Clasification / Clasificación Repuestos" />
+					<label
+						value="Parts Clasification / Clasificación Repuestos" />
 
 				</tab>
 			</tabs>
@@ -33,9 +34,9 @@
 						<div>
 							<grid>
 								<columns>
-									<column width="35%" align="right" />
-									<column width="65%" />
-									<column width="35%" align="right" />
+									<column width="45%" align="right" />
+									<column width="45%" />
+									<column width="45%" align="right" />
 									<column width="65%" />
 									<column width="35%" align="right" />
 									<column width="65%" />
@@ -43,107 +44,97 @@
 								<rows>
 
 									<row>
-
-										<label
-											value="Supplier Type/Tipo Proveedor: *" />
+									
+										<label value="Supplier Type/Tipo Proveedor: *" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
+											placeholder="Seleccione..." width="85%" readonly="true"
+											value="@bind(vm.tipoProveedor.nombre)"
 											selectedItem="@bind(vm.tipoProveedor)"
-											model="@load(vm.listaTipoProveedor)">
+											model="@load(vm.listaTipoProveedor)"
+											onChange="@command('actualizarLocalidad')">
 											<template name="model">
 												<comboitem
 													label="@bind(each.nombre)">
 												</comboitem>
 											</template>
 										</combobox>
-
-
-										<label value="ID/RIF: *"
-											visible="@bind(vm.tipoProveedor.valor)" />
+										
+									</row>
+									<row>
+										
+										<label value="ID/RIF: *" />
 										<hbox>
-
-											<combobox width="30%" visible="@bind(vm.tipoProveedor.valor)"
-												readonly="true" selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)" />
-												</template>
-											</combobox>
 											<vbox>
-												<textbox id="cedulaRif"
-													width="116%" visible="@bind(vm.tipoProveedor.valor)"
-													readonly="" mold="rounded"
-													value="@bind(vm.proveedor.cedula)"
-													placeholder="Ej: 402405375" maxlength="12"
-													constraint="@bind(vm.validatorClienteCedulaRif)" />
+												<combobox 
+													width="30%" readonly="true"
+													selectedItem="@bind(vm.tipoPersona)"
+													model="@load(vm.listaTipoPersona)">
+													<template name="model">
+														<comboitem
+															label="@bind(each.nombre)" />
+													</template>
+												</combobox>
 											</vbox>
-											<label value="Identification/ID: *"
-											visible="false" />
 											<vbox>
-												<textbox
-													id="identification" width="116%" visible="false"
-													readonly="" mold="rounded"
+												<textbox width="100%" mold="rounded" maxlength="12"
+													placeholder="Ej: 402405375" 
 													value="@bind(vm.proveedor.cedula)"
-													placeholder="Ej: 402405375" maxlength="12"
 													constraint="@bind(vm.validatorClienteCedulaRif)" />
 											</vbox>
 										</hbox>
-
+										
+										<label value="Name/Nombre/Razón Social:*" />
+										<vbox>
+											<textbox mold="rounded" width="130%"
+												placeholder="Ej: Empresa C.A"
+												value="@bind(vm.proveedor.nombre)"
+												constraint="@bind(vm.getNotEmptyValidator())" />
+										</vbox>
+											
 									</row>
 
 									<row>
-										<label
-											value="Phone Number/Teléfono: *" />
-										<vbox>
-											<textbox id="telefono"
-												width="131%" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.telefono)" maxlength="11"
+										<label value="Phone Number/Teléfono: *" />
+										<vbox width="85%">
+											<textbox width="100%" mold="rounded" maxlength="11"
 												placeholder="Ej: 02512552233"
+												value="@bind(vm.proveedor.telefono)" 
 												constraint="@bind(vm.telefonoValidator)" />
 										</vbox>
 
-										<label
-											value="Name/Nombre/Razón Social:*" />
-										<vbox>
-											<textbox
-												id="nombreRazonSocial" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.nombre)" width="151%"
-												placeholder="Ej: Empresa C.A"
-												constraint="@bind(vm.getNotEmptyValidator())" />
-										</vbox>
-
-									</row>
-
-
-
-									<row>
 										<label value="E-mail/Correo: *" />
 										<vbox>
 											<textbox id="email"
-												width="131%" readonly="" mold="rounded"
+												width="130%" readonly="" mold="rounded"
 												value="@bind(vm.proveedor.correo)"
 												placeholder="Ej. fusa@gmail.com"
 												constraint="@bind(vm.emailValidator)">
 											</textbox>
 										</vbox>
+										
+									</row>
+									
+									<row>
+										<label value="Country/Pais: *" />
+										<vbox width="85%">
+											<combobox width="100%" readonly="true" placeholder="Seleccione..."
+												selectedItem="@bind(vm.proveedor.pais)"
+												model="@load(vm.listaPaises)"
+												constraint="@bind(vm.notEmptyValidator)">
+												<template name="model">
+													<comboitem
+														label="@bind(each.nombre)">
 
-										<label
-											value="Address/Dirección: *" />
-										<vbox width="80%">
-											<textbox id="direccion"
-												rows="3" cols="35" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.direccion)"
-												placeholder="Ej: zona industrial 2 "
-												constraint="@bind(vm.getNotEmptyValidator())" />
+													</comboitem>
+												</template>
+											</combobox>
 										</vbox>
 									</row>
+									
 									<row>
-										<label value="Estado: *"
-											visible="@bind(vm.tipoProveedor.valor)" />
+										<label value="Estado:" visible="@bind(vm.tipoProveedor.valor)" />
 										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
+											width="85%" readonly="true" placeholder="Seleccione..."
 											selectedItem="@bind(vm.estado)"
 											visible="@bind(vm.tipoProveedor.valor)"
 											model="@load(vm.listaEstados)"
@@ -155,10 +146,8 @@
 												</comboitem>
 											</template>
 										</combobox>
-
-
-										<label value="Ciudad: *"
-											visible="@bind(vm.tipoProveedor.valor)" />
+										
+										<label value="Ciudad:" visible="@bind(vm.tipoProveedor.valor)" />
 										<combobox
 											placeholder="Seleccione..." width="92%" readonly="true"
 											selectedItem="@bind(vm.proveedor.ciudad)"
@@ -173,21 +162,28 @@
 											</template>
 										</combobox>
 										
-										
 									</row>
-									<row>
 									
-									<label value="Country/Pais: *"
-											visible="@bind(!vm.tipoProveedor.valor)" />
-										<vbox>
-											<textbox id="Country" visible="@bind(!vm.tipoProveedor.valor)"
-												width="130%" readonly="" mold="rounded"
-												value="@bind(vm.proveedor.cedula)"
-												placeholder="Ej: Estados Unidos" maxlength="25"
-												constraint="@bind(vm.notEmptyValidator)" />
-										</vbox>
-
-                                    </row>
+									<row>
+										<n:tr colspan="4" class="z-row">
+											<n:td class="z-row-inner">
+												<div align="right" width="100%" class="z-row-content">
+													<label value="Address/Dirección: *" />
+												</div>
+											</n:td>
+											<n:td colspan="3" align="center" class="z-row-inner">
+												<div  width="100%" class="z-row-content" >
+													<vbox width="100%" align="left" >
+														<textbox width="100%" hflex="1"
+															rows="3"  mold="rounded"
+															value="@bind(vm.proveedor.direccion)"
+															placeholder="Ej: zona industrial 2 "
+															constraint="@bind(vm.getNotEmptyValidator())" />
+													</vbox>
+												</div>
+											</n:td>
+										</n:tr>
+									</row>
 
 								</rows>
 							</grid>

@@ -25,6 +25,7 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.ClasificacionRepuesto;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Pais;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
@@ -73,6 +74,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
+	private List<Pais> listaPaises;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoPersonaCed;
@@ -86,10 +88,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Boolean cerrar;
 	private String recordMode;
 	
-	//private List<Pais> listaPais;
-	
-	
-
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("proveedor") Proveedor proveedor,
@@ -100,6 +98,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
+		this.listaPaises = llenarListaPaises();
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize=9);
 		pagTipoRepuestos.setPageSize(pageSize=9);
@@ -138,7 +137,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				if (tipoProveedorl.getValor() == tipoProveedor)
 					return tipoProveedorl;
 			
-		return null;
+		return listaTipoProveedor.get(1);
 		
 	}
 	
@@ -311,6 +310,15 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagTipoRepuestos.setTotalSize(total);
 	}
 	
+	@Command
+	@NotifyChange({ "estado", "proveedor" })
+	public void actualizarLocalidad(){
+		this.proveedor.setPais(null);
+		if(this.tipoProveedor.getValor() == false){
+			this.estado = null;
+			this.proveedor.setCiudad(null);
+		}	
+	}
 
 
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
@@ -449,6 +457,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setMailProveedor(MailProveedor mailProveedor) {
 		this.mailProveedor = mailProveedor;
+	}
+
+	public List<Pais> getListaPaises() {
+		return listaPaises;
+	}
+
+	public void setListaPaises(List<Pais> listaPaises) {
+		this.listaPaises = listaPaises;
 	}
 	
 	

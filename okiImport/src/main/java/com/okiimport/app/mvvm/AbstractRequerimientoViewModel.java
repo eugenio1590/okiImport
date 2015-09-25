@@ -19,6 +19,7 @@ import org.zkoss.zul.Messagebox.Button;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Pais;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
@@ -81,6 +82,12 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
 					null, null);
 	}
+	
+	@Command
+	@SuppressWarnings("unchecked")
+	public List<Pais> llenarListaPaises(){
+		return (List<Pais>) sMaestros.consultarPaises(0, -1).get("paises");
+	}
 
 	@Command
 	@SuppressWarnings("unchecked")
@@ -120,7 +127,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
-
 	protected static List<ModeloCombo<String>> llenarListaBancoPago() {
 		List<ModeloCombo<String>> listaBancoPago = new ArrayList<ModeloCombo<String>>();
 		listaBancoPago
@@ -186,8 +192,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	protected static List<ModeloCombo<Boolean>> llenarListaTipoProveedor() {
 		List<ModeloCombo<Boolean>> listaTipoProveedor = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoProveedor.add(new ModeloCombo<Boolean>("Internacional", false));
-		listaTipoProveedor
-				.add(new ModeloCombo<Boolean>("Nacional", true ));
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Nacional", true ));
 		return listaTipoProveedor;
 	}
 
