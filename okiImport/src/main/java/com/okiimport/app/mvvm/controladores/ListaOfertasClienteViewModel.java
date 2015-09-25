@@ -59,6 +59,12 @@ public class ListaOfertasClienteViewModel extends
 	private Requerimiento requerimiento;
 	private String titulo = "Ofertas del Requerimiento N° ";
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
@@ -71,6 +77,7 @@ public class ListaOfertasClienteViewModel extends
 		cambiarOfertas(0, null, null);
 	}
 	
+	/**Interface: EventListener<SortEvent>*/
 	@Override
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub
@@ -83,6 +90,12 @@ public class ListaOfertasClienteViewModel extends
 	}
 
 	/**GLOBAL COMMAND*/
+	/**
+	 * Descripcion: Llama a consultar las ofertas por requerimiento  
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: ofertas por requerimiento consultados
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
 	@NotifyChange("listaOfertas")
@@ -97,12 +110,12 @@ public class ListaOfertasClienteViewModel extends
 	}
 
 	/** COMMAND */
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina
-	 * activa del Paging
-	 * 
-	 * @param Ninguno Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaOfertasCliente.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista() {
@@ -110,6 +123,12 @@ public class ListaOfertasClienteViewModel extends
 		cambiarOfertas(page, null, null);
 	}
 	
+	/**
+	 * Descripcion: Llama a un modal para ver los datos de la oferta
+	 * Parametros: Oferta @param view: listaOfertasCliente.zul 
+	 * Retorno: Modal cargado con los datos de la oferta
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void verOferta(@BindingParam("oferta") Oferta oferta){
@@ -121,6 +140,12 @@ public class ListaOfertasClienteViewModel extends
 		crearModal("/WEB-INF/views/sistema/funcionalidades/verDetalleOferta.zul", parametros);
 	}
 
+	/**
+	 * Descripcion: Llama a enviar las ofertas al cliente
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: ofertas actualizadas y enviadas al cliente
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void enviarCliente(){
 		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
@@ -148,12 +173,24 @@ public class ListaOfertasClienteViewModel extends
 
 	}
 	
+	/**
+	 * Descripcion: Llama a ejecutar globalCommand
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void cambiarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 
-	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**
+	 * Descripcion: Llama a enviar a Cliente
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	public boolean enviarACliente(){
 		boolean enviar = false;
 		for(Oferta oferta : listaOfertas)
@@ -163,6 +200,10 @@ public class ListaOfertasClienteViewModel extends
 			}
 		return enviar;
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**METODOS GETTERS AND SETTERS*/
 	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
