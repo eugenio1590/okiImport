@@ -46,12 +46,17 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	
 	//Atributos
 	private List <Requerimiento> listaRequerimientos;
-	
 	private Requerimiento requerimientoFiltro;
-	
 	private List<ModeloCombo<String>> listaEstatus;
 	private ModeloCombo<String> estatusFiltro;
 
+	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaRequerimientosGeneral.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -79,12 +84,14 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	/**
+	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro 
+	 * Parametros: @param view: listaRequerimientosGeneral.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -101,10 +108,11 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaRequerimientosGeneral.zul   
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -113,10 +121,11 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		cambiarRequerimientos(page, null, null);
 	}
 	
-	/*
+	/**
 	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
+	 * Parametros: @param view: listaRequerimientosGeneral.zul   
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
@@ -128,10 +137,11 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		cambiarRequerimientos(0, null, null);
 	}
 	
-	/*
+	/**
 	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	 * Parametros: requerimiento @param view: listaRequerimientosGeneral.zul   
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -141,11 +151,12 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion 
+	/**
+	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion
 	 * a los proveedores del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	 * Parametros: Requerimiento @param view: listaRequerimientosGeneral.zul   
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void enviarProveedores(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -158,10 +169,11 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: permitira crear el emergente (modal) necesario para ver los requerimientos
+	 * Parametros: Requerimiento @param view: listaRequerimientosGeneral.zul   
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void verRequerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){

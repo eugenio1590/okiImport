@@ -200,13 +200,18 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}
 	
 	
-	/**METODOS PROPIOS DE LA CLASE*/
-	
-	
+	/**
+	 * Descripcion: Metodo de la clase que permite llamar formularios 
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Formulario con los parametros dados
+	 * Nota: Ninguna
+	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
 		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
 	}
+	
 
+	/**METODOS PROPIOS DE LA CLASE*/
 	/**SETTERS Y GETTERS*/
 
 
