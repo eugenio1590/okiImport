@@ -41,17 +41,20 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Wire("#pagProveedores")
 	protected Paging pagProveedores;
 	
+	//Atributos
+	
 	Window window = null;
 	int idcount = 0;
 	private boolean makeAsReadOnly;
-
-	
-	//Modelos
 	protected List<Proveedor> proveedores;
 	protected Proveedor proveedorFiltro;
-	
-	//Atributos
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -76,6 +79,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}
 	
 	/**GLOBAL COMMAND*/
+	/**
+	 * Descripcion: Llama a consultar proveedores  
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: proveedores consultados
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange("proveedores")
 	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
@@ -89,6 +98,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}
 	
 	/**COMMAND*/
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaProveedores.zul   
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
@@ -96,25 +111,35 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		cambiarProveedores(page, null, null);
 	}
 	
+	/**
+	 * Descripcion: Permitira filtrar por los campos del proveedor
+	 * Parametros: @param view: listaProveedores.zul   
+	 * Retorno: Campos filtrados
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void aplicarFiltro(){
 		cambiarProveedores(0, null, null);
 	}
 	
-	/*@Command
-	@NotifyChange("analistas")
-	public void limpiarRadios(){
-		this.analistaFiltro.setActivo(null);
-		radEstado.setSelectedIndex(-1);
-		aplicarFiltro();
-	}*/
-	
+	/**
+	 * Descripcion: Llama a un modal para crear o registrar un proveedor
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Formulario Proveedor Cargado para registrar un nuevo proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void nuevoProveedor(){
 		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
 	}
 	
+	/**
+	 * Descripcion: Llama a un modal para editar los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -135,6 +160,13 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		
 	}
 	
+	
+	/**
+	 * Descripcion: Llama a un modal para ver los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void verProveedor(
 			@BindingParam("proveedor") Proveedor proveedor) {
@@ -154,6 +186,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		window.setId("doModal" + "" + idcount + "");
 	}
 	
+	/**
+	 * Descripcion: Llama a un modal para eliminar los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange("proveedores")
 	@Command
 	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
@@ -161,52 +199,16 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		sMaestros.acutalizarPersona(proveedor);
 	}
 	
-	/*@Command
-	public void editarAnalista(@BindingParam("analista") Analista analista){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=analista.getId()){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("analista", analista);
-			llamarFormulario("editarAnalista.zul", parametros);
-		}
-		else
-			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
-	
-	/*@Command
-	@NotifyChange("analistas")
-	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=usuario.getId()){
-			if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
-				String mensaje = (estado) ? "Activado" : "Desactivado";
-				mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-				paginarLista();
-			}
-		}
-		else
-			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	/*private Usuario consultarUsuarioSession(){
-		UserDetails user = this.getUser();
-		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	}*/
+	
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
 		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/
-	/*public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
 
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}*/
-	
 
 	@Command
 	public void registrarProveedor(){

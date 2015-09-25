@@ -162,7 +162,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
-	 * Parametros: @param view: listaAnalistas.zul 
+	 * Parametros: @param view: listaProveedores.zul 
 	 * Retorno: Formulario con los parametros dados
 	 * Nota: Ninguna
 	 * */
