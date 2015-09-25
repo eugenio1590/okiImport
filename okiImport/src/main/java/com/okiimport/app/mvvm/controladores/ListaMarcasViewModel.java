@@ -46,14 +46,19 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 
 	@Wire("#pagMarcas")
 	private Paging pagMarcas;
-
+	
+	// Atributos
 	// Modelos
 	private List<MarcaVehiculo> marcas;
 	private MarcaVehiculo marcaFiltro;
-
-	// Atributos
 	private static final int PAGE_SIZE = 10;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaMarcas.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
@@ -78,6 +83,12 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 	}
 
 	/** GLOBAL COMMAND */
+	/**
+	 * Descripcion: Llama a consultar la marca
+	 * Parametros: @param view: listaMarcas.zul 
+	 * Retorno: Marca consultada
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange("marcas")
 	public void cambiarMarcas(@Default("0") @BindingParam("page") int page,
@@ -93,6 +104,12 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 	
 
 	/** COMMAND */
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaMarcas.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista() {
@@ -100,28 +117,24 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 		cambiarMarcas(page, null, null);
 	}
 
-	/*
-	 * @Command
-	 * 
-	 * @NotifyChange("analistas") public void aplicarFiltro(){ Radio
-	 * selectedItem = radEstado.getSelectedItem();
-	 * this.analistaFiltro.setActivo((selectedItem!=null) ?
-	 * Boolean.valueOf((String)selectedItem.getValue()) : null);
-	 * cambiarAnalistas(0, null, null); }
-	 * 
-	 * @Command
-	 * 
-	 * @NotifyChange("analistas") public void limpiarRadios(){
-	 * this.analistaFiltro.setActivo(null); radEstado.setSelectedIndex(-1);
-	 * aplicarFiltro(); }
-	 */
 
+	/**
+	 * Descripcion: Llama a un modal para crear o registrar una Marca
+	 * Parametros: @param view: listaMarcas.zul 
+	 * Retorno: Formulario Marca Cargado para registrar una nueva marca
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void nuevaMarca() {
 		llamarFormulario("formularioMarcas.zul", null);
 	}
 
-
+	/**
+	 * Descripcion: Llama a un modal para ver los datos de la marca
+	 * Parametros: Marca @param view: listaMarcas.zul 
+	 * Retorno: Modal cargado con los datos de la marca
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void verMarca(@BindingParam("marcas") MarcaVehiculo marcas){
 		
@@ -131,7 +144,12 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 		llamarFormulario("formularioMarcas.zul", parametros);
 	}
 	
-
+	/**
+	 * Descripcion: Llama a un modal para editar los datos de la marca
+	 * Parametros: Marca @param view: listaMarcas.zul 
+	 * Retorno: Modal cargado con los datos de la marca
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void editarMarca(@BindingParam("marcas") MarcaVehiculo marcas){
 		
@@ -140,26 +158,19 @@ public class ListaMarcasViewModel extends AbstractViewModel implements
 			//parametros.put("editar", true);
 			llamarFormulario("formularioMarcas.zul", parametros);
 	}
-
-	/** METODOS PROPIOS DE LA CLASE */
-	/*
-	 * private Usuario consultarUsuarioSession(){ UserDetails user =
-	 * this.getUser(); return
-	 * sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	 * }
-	 */
-
+	
+	/**
+	 * Descripcion: Metodo de la clase que permite llamar formularios 
+	 * Parametros: @param view: listaMarcas.zul 
+	 * Retorno: Formulario con los parametros dados
+	 * Nota: Ninguna
+	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros) {
 		crearModal("/WEB-INF/views/sistema/maestros/" + ruta, parametros);
 	}
 
+	/** METODOS PROPIOS DE LA CLASE */
 	/** SETTERS Y GETTERS */
-	/*
-	 * public SControlUsuario getsControlUsuario() { return sControlUsuario; }
-	 * 
-	 * public void setsControlUsuario(SControlUsuario sControlUsuario) {
-	 * this.sControlUsuario = sControlUsuario; }
-	 */
 
 	public SMaestros getsMaestros() {
 		return sMaestros;
