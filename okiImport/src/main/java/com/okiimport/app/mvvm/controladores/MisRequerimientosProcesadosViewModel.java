@@ -48,13 +48,17 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	
 	//Atributos	
 	private List <Requerimiento> listaRequerimientos;
-	
 	private Usuario usuario;
 	private Requerimiento requerimientoFiltro;
-	
 	private List<ModeloCombo<String>> listaEstatus;
 	private ModeloCombo<String> estatusFiltro;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaMisRequerimientosProcesados.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -84,12 +88,14 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	/**
+	 * Descripcion: Permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: listaMisRequerimientosProcesados.zul
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -106,10 +112,11 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
+	 * Parametros: @param view: listaMisRequerimientosProcesados.zul  
+	 * Retorno: Cambia la pagina activa del paging 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -118,10 +125,11 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		cambiarRequerimientos(page, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
+	 * Parametros: @param view: listaMisRequerimientosProcesados.zul 
+	 * Retorno: datos filtrados segun campo establecido en el evento
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
@@ -133,10 +141,11 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		cambiarRequerimientos(0, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: Permitira crear el emergente (modal) necesario para ver los requerimientos
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosProcesados.zul      
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void verRequerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -146,10 +155,11 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: Permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosProcesados.zul     
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void seleccionarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -158,11 +168,12 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/aprobarCotizaciones.zul", parametros);
 	}
 	
-	/*
-	 * Descripcion: permitira visualizar los proveedores para luego registrar la cotizacion respectiva
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: Permitira visualizar los proveedores para luego registrar la cotizacion respectiva
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosProcesados.zul    
 	 * Retorno: Ninguno
-	 */
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void cotizar(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -171,11 +182,12 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/listaProveedoresCotizar.zul", parametros );
 	}
 	
-	/*
-	 * Descripcion: permitira visualizar las Ofertas para luego enviar al cliente respectivo
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: Permitira visualizar las Ofertas para luego enviar al cliente respectivo
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosProcesados.zul    
 	 * Retorno: Ninguno
-	 */
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void enviarOferta(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -184,11 +196,12 @@ public class MisRequerimientosProcesadosViewModel extends AbstractRequerimientoV
 		crearModal("/WEB-INF/views/sistema/funcionalidades/listaOfertasCliente.zul", parametros );
 	}
 	
-	/*
-	 * Descripcion: permitira visualizar la lista de cotizaciones a editar del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno ninguno
-	 */
+	/**
+	 * Descripcion: Permitira visualizar la lista de cotizaciones a editar del requerimiento seleccionado
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosProcesados.zul    
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void editarCotizaciones(@BindingParam("requerimiento") Requerimiento requerimiento){//EC
 		Map<String, Object> parametros = new HashMap<String, Object>();
