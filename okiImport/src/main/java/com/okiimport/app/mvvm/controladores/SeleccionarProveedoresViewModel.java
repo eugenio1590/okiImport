@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	
 	@Wire ("#btn_enviar")
 	private Button btn_enviar;
+	
+	private static final Comparator<Proveedor> COMPR_PROVEE = Proveedor.getComparator();
 	
 	private Proveedor proveedor;
 	private Cotizacion cotizacion;
@@ -132,7 +135,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({"*"})
 	@Command
 	public void agregarProveedores(){
-		super.moveSelection(listaProveedores,listaProveedoresSeleccionados1, proveedoresSeleccionados, "No se puede agregar Proveedor");
+		super.moveSelection(listaProveedores,listaProveedoresSeleccionados1, proveedoresSeleccionados, 
+				COMPR_PROVEE, false, "No se puede agregar Proveedor");
 		
 	}
 	
@@ -140,9 +144,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({"*"})
 	@Command
 	public void eliminarProveedores(){
-		this.moveSelection( listaProveedoresSeleccionados1, listaProveedores, listaProveedoresSeleccionados2, "No se puede eliminar el Proveedor");
+		if(listaProveedoresSeleccionados2!=null && !listaProveedoresSeleccionados2.isEmpty())
+			listaProveedoresSeleccionados1.removeAll(listaProveedoresSeleccionados2);
 	}
-	
 
 	@NotifyChange({"*"})
 	@Command

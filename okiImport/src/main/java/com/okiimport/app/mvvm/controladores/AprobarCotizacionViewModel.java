@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	private Paging pagDetalleCotizacion;
 
 	//Atributos
+	private static final Comparator<DetalleCotizacion> COMPR_DETALLE_COTIZACION = DetalleCotizacion.getComparator();
 	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
 	
 	private Requerimiento requerimiento;
@@ -98,15 +100,16 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	@NotifyChange({"*"})
 	@Command
 	public void agregarSeleccion(){
-		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
+		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, 
+				COMPR_DETALLE_COTIZACION, false, "No se puede agregar Detalle Cotizacion");
 		
 	}
 	
 	@Command
 	@NotifyChange({ "*" })
 	public void eliminarSeleccion() {
-	
-		listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty())
+			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 	}
 	
 	@NotifyChange({"*"})

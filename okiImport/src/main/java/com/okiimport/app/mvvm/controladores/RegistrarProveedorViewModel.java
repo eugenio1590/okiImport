@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@BeanInjector("mailProveedor")
 	private MailProveedor mailProveedor;
+	
+	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
+	private static final Comparator<ClasificacionRepuesto> COMPR_CLASIFICACION_REPUESTO = ClasificacionRepuesto.getComparator();
 	
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
@@ -182,32 +186,29 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarMarcas() {
-		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(),
-				marcaSeleccionadas, "No se puede agregar Marca");
+		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(), marcaSeleccionadas, 
+				COMPR_MARCA_VEHICULO, false, "No se puede agregar Marca");
 	}
 
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarMarcas() {
-		this.moveSelection(proveedor.getMarcaVehiculos(), listaMarcaVehiculos,
-				marcaSeleccionadas, "No se puede eliminar la Marca");
+		if(marcaSeleccionadas!=null && !marcaSeleccionadas.isEmpty())
+			proveedor.getMarcaVehiculos().removeAll(marcaSeleccionadas);
 	}
 
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarTipoRepuesto() {
-		this.moveSelection(listaClasificacionRepuestos,
-				proveedor.getClasificacionRepuestos(),
-				tipoRepuestoSeleccionados,
-				"No se puede agregar el Tipo de Repuesto");
+		this.moveSelection(listaClasificacionRepuestos, proveedor.getClasificacionRepuestos(), tipoRepuestoSeleccionados,
+				COMPR_CLASIFICACION_REPUESTO, false, "No se puede agregar el Tipo de Repuesto");
 	}
 
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarTipoRepuesto() {
-		this.moveSelection(proveedor.getClasificacionRepuestos(),
-				listaClasificacionRepuestos, tipoRepuestoSeleccionados,
-				"No se puede eliminar el Tipo de Repuesto");
+		if(tipoRepuestoSeleccionados!=null && !tipoRepuestoSeleccionados.isEmpty())
+			proveedor.getClasificacionRepuestos().removeAll(tipoRepuestoSeleccionados);
 	}
 
 	@NotifyChange({ "*" })
