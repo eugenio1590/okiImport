@@ -190,8 +190,9 @@
 		<div align="right">
 
 			<label value="Precio de Flete"></label>
-
-			<textbox value="@bind(vm.compra.precioFlete)" width="150px" />
+            <vbox>
+			<textbox value="@bind(vm.compra.precioFlete)" width="150px"  constraint="@bind(vm.validatorPrecio)"/>
+		    </vbox>
 
 		</div>
 

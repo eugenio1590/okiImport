@@ -17,8 +17,10 @@
 					</comboitem>
 				</template>
 			</combobox>
-			<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="401402375" maxlength="9"
-				constraint="no empty,/.[0-9]+/: introduzca RIF o Cedula solo Números sin guiones ejemplo 402405374" style="font-size: 12px" onOK="@command('buscarCliente')" />
+			<vbox>
+				<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="Ej: 402405375" maxlength="9"
+					constraint="@bind(vm.validatorClienteCedulaRif2)" onOK="@command('buscarCliente')" />
+			</vbox>
 			<space></space>
 			<button label="Buscar" onClick="@command('buscarCliente')"
 				sclass="btn-primary" />

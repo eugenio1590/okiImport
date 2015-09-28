@@ -68,11 +68,14 @@
 							</combobox>
 							<space />
 							<label value="Precio de Flete:" />
+							<vbox>
 							<decimalbox id="txtPrecioFlete" format="###.##"
 								readonly="@bind(!vm.tipoFlete.valor)"
 								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
 							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."/>
+							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."
+							  constraint="@bind(vm.validatorPrecio)"  />
+							</vbox>
 						</div>
 					</groupbox>
 				</div>

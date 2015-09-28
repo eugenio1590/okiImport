@@ -18,14 +18,20 @@
 							<row>
 								<label value="Cedula/RIF: " />
 
+                                <vbox>
 								<textbox id="cedulaRif" width="80%" readonly="true"
 									mold="rounded" tabbable="false" 
-									value="@bind(vm.requerimiento.cliente.cedula)"/>
+									value="@bind(vm.requerimiento.cliente.cedula)"
+									constraint="@bind(vm.validatorClienteCedulaRif2)"/>
+								</vbox>
 
 								<label value="Nombre/Razón Social: " />
 
+                                <vbox>
 								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.nombre)" />
+									value="@bind(vm.requerimiento.cliente.nombre)" 
+									constraint="@bind(vm.notEmptyValidator)"/>
+								</vbox>
 							</row>
 						
 
@@ -33,26 +39,37 @@
 
 								<label value="Teléfono: " />
 
+                                <vbox>
 								<textbox id="telefono" width="80%" readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.telefono)"/>
+									value="@bind(vm.requerimiento.cliente.telefono)" 
+									constraint="@bind(vm.telefonoValidator)"/>
+								</vbox>
 
 								<label value="E-mail:" />
 								
+								<vbox>
 								<textbox id="email" width="80%" readonly="true" mold="rounded" 
-									value="@bind(vm.requerimiento.cliente.correo)"/>
+									value="@bind(vm.requerimiento.cliente.correo)"
+									constraint="@bind(vm.emailValidator)"/>
+								</vbox>
 							</row>
 							
 								<row>
 							<label value="Estado: " />
-
+                                <vbox>
 								<textbox id="estado" width="80%" readonly="true"
 									mold="rounded" tabbable="false" 
-									value="@bind(vm.estado.nombre)"/>
+									value="@bind(vm.estado.nombre)"
+									constraint="@bind(vm.notEmptyValidator)"/>
+								</vbox>
 
 								<label value="Ciudad: " />
-
+                                
+                                <vbox>
 								<textbox id="ciudad" width="80%" readonly="true" mold="rounded"
-									value="@bind(vm.ciudad.nombre)" />
+									value="@bind(vm.ciudad.nombre)"
+									constraint="@bind(vm.notEmptyValidator)" />
+								</vbox>
 							</row>
 
 						</rows>
@@ -81,28 +98,34 @@
 							<rows>
 								<row>
 									<label value="Marca: " />
+									<vbox>
 									<textbox width="80%" readonly="true"
-										value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
-										
+										value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
+										constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>	
 									<label value="Modelo: " />
-
+                                    <vbox>
 									<textbox width="80%" readonly="true" mold="rounded"
-										value="@bind(vm.requerimiento.modeloV)"/>
+										value="@bind(vm.requerimiento.modeloV)"
+										constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>
 								</row>
 
 								<row>
 
 									<label value="Serial Carroceria: *" />
-
+                                    <vbox>
 									<textbox id="serialCarroceria" maxlength="25"
 										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"
-										constraint="no empty:El campo no puede estar vacio"/>
-
+										constraint="@bind(vm.notEmptyValidator)"/>
+                                    </vbox>
 									<label value="Año: " />
+									<vbox>
 									<intbox width="80%" readonly="true" 
-										value="@bind(vm.requerimiento.annoV)" />
-										
+										value="@bind(vm.requerimiento.annoV)"
+										constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))" />
+									</vbox>	
 								</row>
 
 							</rows>
@@ -126,6 +149,7 @@
 							<rows>
 								<row>
 									<label value="Motor: *" />
+<<<<<<< HEAD
 									<bandbox id="bdMotor" mold="rounded"
 										autodrop="true" readonly="true" placeholder="Seleccione..."
 										width="80%" value="@bind(vm.requerimiento.motor.nombre)">
@@ -152,31 +176,35 @@
 											<paging id="pagMotores" onPaging="@command('paginarListaMotores')" autohide="true" />
 										</bandpopup>
 									</bandbox>
-
-									<label value="Transmision: *" />
+									
+									<label value="Transmision: *"/>
+									<vbox>
 									<combobox id="cmbTransmision"
 										placeholder="Seleccione..." width="80%" 
 										readonly="true" buttonVisible="@bind(vm.editar)"
 										selectedItem="@bind(vm.transmision)"
-										model="@load(vm.listaTransmision)" constraint="no empty">
+										model="@load(vm.listaTransmision)" constraint="@bind(vm.notEmptyValidator)">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
 									</combobox>
+									</vbox>
 								</row>
 
 								<row>
 
 									<label value="Traccion: *" />
+									<vbox>
 									<combobox id="cmbTraccion"
 										placeholder="Seleccione..." width="80%"
 										readonly="true" buttonVisible="@bind(vm.editar)"
 										selectedItem="@bind(vm.traccion)"
-										model="@load(vm.listaTraccion)" constraint="no empty">
+										model="@load(vm.listaTraccion)" constraint="@bind(vm.notEmptyValidator)">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
 									</combobox>
+									</vbox>
 									
 									<label value="Tipo Repuesto:" />
 									<textbox id="txtTipoRepuesto" width="80%"
@@ -214,30 +242,38 @@
 							<template name="model">
 								<listitem>
 									<listcell>
+									<vbox>
 										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" 
-											constraint="no empty:El Campo No Debe Estar Vacio"/>
+											constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>
 									</listcell>
 									<listcell>
+									<vbox>
 										<textbox value="@bind(each.descripcion)" width="275px" rows="2" sclass="no_rezise"
 											readonly="@bind(!vm.editar)" 
-											constraint="no empty:El Campo No Debe Estar Vacio"/>
+											constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>
 									</listcell>
 									<listcell>
+									<vbox>
 										<spinner value="@bind(each.cantidad)" 
 											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"
-											constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba solo numeros"/>
+											constraint="@bind(vm.cantValidator)"/>
+									</vbox>
 									</listcell>
 									<listcell>
+									<vbox>
 										<combobox width="100%" readonly="true" buttonVisible="@bind(vm.editar)"
 											value="@bind(each.clasificacionRepuesto.descripcion)"
 											model="@bind(vm.listaClasificacionRepuesto)"
 											selectedItem="@bind(each.clasificacionRepuesto)"
-											constraint="no empty: El campo no puede estar vacio, escoga una clasificacion">
+											constraint="@bind(vm.notEmptyValidator)">
 											<template name="model">
 												<comboitem
 													label="@bind(each.descripcion)" />
 											</template>
 										</combobox>
+									</vbox>
 									</listcell>
 									<listcell>
 										<div>
