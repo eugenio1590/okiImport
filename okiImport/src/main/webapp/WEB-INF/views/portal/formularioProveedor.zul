@@ -199,8 +199,7 @@
 							onOpen="@command('openRegionWest', west=self, east=borderMarcasEast, baseW='70%')">
 							<vlayout height="100%" vflex="1">
 								<toolbar>
-									<toolbarbutton height="45px"
-										image="/resources/img/icons/ButtonArrowRight32.png"
+									<toolbarbutton iconSclass="bigger-185 blue z-icon-arrow-right"
 										tooltiptext="Agregar Marcas a Vender"
 										onClick="@command('agregarMarcas')" />
 								</toolbar>
@@ -224,8 +223,7 @@
 							width="70%">
 							<div>
 								<toolbar>
-									<toolbarbutton height="45px"
-										image="/resources/img/icons/ButtonArrowLeft32.png"
+									<toolbarbutton iconSclass="bigger-185 blue z-icon-arrow-left"
 										tooltiptext="Remover Marcas a Vender"
 										onClick="@command('eliminarMarcas')" />
 								</toolbar>
