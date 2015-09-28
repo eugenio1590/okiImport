@@ -95,7 +95,7 @@ public class RegistrarRequerimientoViewModel extends
 	/**COMMANDS*/
 	
 	/**
-	 * Descripcion: Permite limpiar los campos del formulario registrar Proveedor
+	 * Descripcion: Permite limpiar los campos del formulario registrar Requerimiento
 	 * Parametros: @param view: formularioRequerimiento.zul 
 	 * Retorno: Campos Vacios 
 	 * Nota: Ninguna
