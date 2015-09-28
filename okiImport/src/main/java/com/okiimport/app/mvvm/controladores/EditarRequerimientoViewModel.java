@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,14 +11,20 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -34,7 +41,7 @@ import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent>  {
+public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<Event>  {
 	
 	//Servicios
 	@BeanInjector("sMaestros")
@@ -62,12 +69,19 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	@Wire("#txtTipoRepuesto")
 	private Textbox txtTipoRepuesto;
 	
+	@Wire("#gridMotores")
+	private Listbox gridMotores;
+	
+	@Wire("#pagMotores")
+	private Paging pagMotores;
+	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
 	private List <Motor> listaMotor;
 	private Requerimiento requerimiento;
 	private Estado estado;
 	private Ciudad ciudad;
+	private Motor motor;
 	
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
@@ -88,13 +102,15 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		super.doAfterCompose(view);
 		this.editar = editar;
 		this.requerimiento = requerimiento;
-		
+		this.motor = requerimiento.getMotor();
 		this.estado = requerimiento.getCliente().getCiudad().getEstado();
 		this.ciudad = requerimiento.getCliente().getCiudad();
+		
+		agregarGridSort(gridMotores);
+		
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
-		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
-		
+				
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		listaTipoRepuesto = llenarListaTipoRepuesto();
@@ -110,14 +126,38 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		String tipoRepuesto = this.requerimiento.determinarTipoRepuesto();
 		if (tipoRepuesto!=null)
 			txtTipoRepuesto.setValue(tipoRepuesto);
+		
+		cambiarMotores(0, null, null);
 	}
 	
 	/**INTERFACE*/
-	//1.EventListener<ClickEvent>
+	//1.EventListener<Event>
 	@Override
-	public void onEvent(ClickEvent event) throws Exception {
-		winERequerimiento.detach();
-		ejecutarGlobalCommand("cambiarRequerimientos", null);
+	public void onEvent(Event event) throws Exception {
+		if(event instanceof ClickEvent){
+			winERequerimiento.detach();
+			ejecutarGlobalCommand("cambiarRequerimientos", null);
+		}
+		else if(event instanceof SortEvent){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+			parametros.put("sortDirection", ((SortEvent) event).isAscending());
+			ejecutarGlobalCommand("cambiarMotores", parametros );
+		}
+	}
+	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@SuppressWarnings("unchecked")
+	@NotifyChange("listaMotor")
+	public void cambiarMotores(@Default("0") @BindingParam("page") int page, 
+			@BindingParam("fieldSort") String fieldSort, 
+			@BindingParam("sortDirection") Boolean sortDirection){
+		Map<String, Object> parametros = sMaestros.consultarMotores(motor, fieldSort, sortDirection, page, pageSize);
+		Integer total = (Integer) parametros.get("total");
+		listaMotor = (List<Motor>) parametros.get("motores");
+		pagMotores.setActivePage(page);
+		pagMotores.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
@@ -176,6 +216,19 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			mostrarMensaje("Informacion", "Requerimiento Actualizado Exitosamente", null, null, this, null);
 		}
+	}
+	
+	@Command
+	@NotifyChange("listaMotor")
+	public void paginarListaMotores(){
+		int page=pagMotores.getActivePage();
+		cambiarMotores(page, null, null);
+	}
+
+	@Command
+	@NotifyChange("listaMotor")
+	public void aplicarFiltroMotor(){
+		cambiarMotores(0, null, null);
 	}
 	
 	/**SETTERS Y GETTERS*/
@@ -291,7 +344,13 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	public void setCiudad(Ciudad ciudad) {
 		this.ciudad = ciudad;
 	}
-	
-	
+
+	public Motor getMotor() {
+		return motor;
+	}
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
+	}
 	
 }

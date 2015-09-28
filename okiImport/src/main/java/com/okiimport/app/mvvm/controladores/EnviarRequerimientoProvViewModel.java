@@ -60,7 +60,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
-	private List <Motor> listaMotor;
 	private List <DetalleRequerimiento> listaDetalleRequerimientoSeleccionados;
 	
 	private Requerimiento requerimiento;
@@ -82,7 +81,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
-		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		listaTipoRepuesto = llenarListaTipoRepuesto();
@@ -241,14 +239,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 
 	public void setTransmision(ModeloCombo<Boolean> transmision) {
 		this.transmision = transmision;
-	}
-
-	public List<Motor> getListaMotor() {
-		return listaMotor;
-	}
-
-	public void setListaMotor(List<Motor> listaMotor) {
-		this.listaMotor = listaMotor;
 	}
 
 	public void setListaDetalleRequerimientoSeleccionados(
