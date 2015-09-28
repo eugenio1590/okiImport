@@ -149,18 +149,34 @@
 							<rows>
 								<row>
 									<label value="Motor: *" />
-									<vbox>
-									<combobox value="@bind(vm.requerimiento.motor.nombre)"
-										selectedItem="@bind(vm.requerimiento.motor)" 
-										readonly="true" buttonVisible="@bind(vm.editar)"
-										placeholder="Seleccione..." width="80%"
-										model="@load(vm.listaMotor)" constraint="@bind(vm.notEmptyValidator)">
-										<template name="model">
-											<comboitem label="@bind(each.nombre)"/>
-										</template>
-									</combobox>
-									</vbox>
-
+<<<<<<< HEAD
+									<bandbox id="bdMotor" mold="rounded"
+										autodrop="true" readonly="true" placeholder="Seleccione..."
+										width="80%" value="@bind(vm.requerimiento.motor.nombre)">
+										<bandpopup>
+											<listbox id="gridMotores" width="200px" mold="paging" 
+												model="@load(vm.listaMotor)"
+												selectedItem="@bind(vm.requerimiento.motor)"
+												onSelect="bdMotor.close();">
+												<listhead>
+													<listheader
+														value="nombre" label="Nombre" sort="auto(nombre)">
+														<textbox
+															instant="true" placeholder=""
+															value="@bind(vm.motor.nombre)"
+															onChange="@command('aplicarFiltroMotor')" width="100px" />
+														<div
+															sclass="z-icon-filter bigger-200" />
+													</listheader>
+												</listhead>
+												<template name="model">
+													<listitem label="@bind(each.nombre)" />
+												</template>
+											</listbox>
+											<paging id="pagMotores" onPaging="@command('paginarListaMotores')" autohide="true" />
+										</bandpopup>
+									</bandbox>
+									
 									<label value="Transmision: *"/>
 									<vbox>
 									<combobox id="cmbTransmision"

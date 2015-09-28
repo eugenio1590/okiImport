@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +23,17 @@ import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleCotizacion;
-import com.okiimport.app.modelo.DetalleCotizacionInternacional;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleCotizacionInternacional;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.mail.MailProveedor;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent> {
 	
@@ -42,6 +44,9 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	@BeanInjector("mailProveedor")
+	private MailProveedor mailProveedor;
+	
 	//GUI
 	@Wire("#winListProveedores")
 	private Window winListProveedores;
@@ -49,12 +54,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private Paging pagProveedores;
 	@Wire ("#btn_enviar")
 	private Button btn_enviar;
+	
 	@Wire("#gridProveedores")
 	private Listbox gridProveedores;
 	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
 	//Atributos
+	private static final Comparator<Proveedor> COMPR_PROVEE = Proveedor.getComparator();
+	
 	private Proveedor proveedor;
 	private Cotizacion cotizacion;
 	private DetalleRequerimiento detalleRequerimiento;
@@ -148,7 +156,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({"*"})
 	@Command
 	public void agregarProveedores(){
-		super.moveSelection(listaProveedores,listaProveedoresSeleccionados1, proveedoresSeleccionados, "No se puede agregar Proveedor");
+		super.moveSelection(listaProveedores,listaProveedoresSeleccionados1, proveedoresSeleccionados, 
+				COMPR_PROVEE, false, "No se puede agregar Proveedor");
 		
 	}
 	
@@ -161,7 +170,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@NotifyChange({"*"})
 	@Command
 	public void eliminarProveedores(){
-		this.moveSelection( listaProveedoresSeleccionados1, listaProveedores, listaProveedoresSeleccionados2, "No se puede eliminar el Proveedor");
+		if(listaProveedoresSeleccionados2!=null && !listaProveedoresSeleccionados2.isEmpty())
+			listaProveedoresSeleccionados1.removeAll(listaProveedoresSeleccionados2);
 	}
 	
 	/**
@@ -215,12 +225,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 
 					if(enviar){
-						Map<String, Object> model = new HashMap<String, Object>();
-						model.put("nombreSolicitante", proveedor.getNombre());
-						model.put("cedula", proveedor.getCedula());
-						model.put("mensaje", cotizacion.getMensaje());
-						mailService.send(proveedor.getCorreo(), "Solicitud Requerimiento",
-								"enviarRequisitoProveedor.html", model);
+						//No es el servicio que se usara
+						this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 					}
 				}
 				btn_enviar.setDisabled(true);
@@ -244,7 +250,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void registrarProveedor(){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("cerrar", false);
-		crearModal("/WEB-INF/views/formularioProveedor.zul", parametros);
+		crearModal(BasePackagePortal+"formularioProveedor.zul", parametros);
 	}
 	
 	/**
@@ -284,8 +290,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-
 	
+	public MailProveedor getMailProveedor() {
+		return mailProveedor;
+	}
+
+	public void setMailProveedor(MailProveedor mailProveedor) {
+		this.mailProveedor = mailProveedor;
+	}
+
 	public List<Proveedor> getListaProveedores() {
 		return listaProveedores;
 	}

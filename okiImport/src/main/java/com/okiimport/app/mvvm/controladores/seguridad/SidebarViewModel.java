@@ -18,12 +18,14 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Span;
 
-import com.okiimport.app.modelo.Menu;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Menu;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModelNavbar;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.mvvm.model.ModelTree;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.resource.model.ModelNavbar;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+
 
 public class SidebarViewModel extends AbstractViewModel implements SerializableEventListener{
 	
@@ -50,12 +52,12 @@ public class SidebarViewModel extends AbstractViewModel implements SerializableE
 		UserDetails user = this.getUser();
 		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword()); 
 		
-		List<ModelNavbar> modelo = new ArrayList<ModelNavbar>();
+		ModelTree<ModelNavbar> modelo = new ModelTree<ModelNavbar>();
 		
-		for(Menu menu : sControlUsuario.consultarPadresMenuUsuario(usuario.getPersona().getTipoMenu()))
-			modelo.add(menu);
+		for(Menu menu : sControlUsuario.consultarHijosMenuUsuario(usuario.getPersona().getTipoMenu()))
+			modelo.addNode(menu, true);
 		
-		constructMenu(modelo, this.navbar);
+		constructMenu(modelo.getRootParent(), this.navbar);
 	}
 
 	/**INTERFACES*/

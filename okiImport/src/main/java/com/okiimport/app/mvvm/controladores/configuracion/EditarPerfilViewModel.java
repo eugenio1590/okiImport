@@ -15,10 +15,11 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Textbox;
 
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+
 
 public class EditarPerfilViewModel extends AbstractViewModel implements EventListener<UploadEvent> {
 	

@@ -7,10 +7,10 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,23 +56,19 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.TreeNode;
 import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
-import com.okiimport.app.mvvm.constraint.AnnoConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.GeneralConstraint;
-import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.resource.model.ModelNavbar;
 
 public abstract class AbstractViewModel {
-	public static final String BasePackagePortal = "/WEB-INF/views/VPrincipal/Contenido/";
-	public static final String BasePackageSistema = "/WEB-INF/views/SistemaOrion/Contenido/";
 	
 	private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+	
+	protected static final String BaseApp = "/WEB-INF/views/";
 	
 	private Component form;
 	
@@ -216,20 +212,53 @@ public abstract class AbstractViewModel {
 	 * @param failMessage: mensaje si la seleccion esta vacia
 	 * Retorno: Ninguno
 	 * */
-	protected <T> void moveSelection(Collection<T> origen, Collection<T> destino, 
-			Collection<T> selection, String failMessage) {
+	protected <T> void moveSelection(final Collection<T> origen, final Collection<T> destino, final Collection<T> selection, 
+			final String failMessage) {
+		moveSelection(origen, destino, selection, null, true,  failMessage);
+    }
+	
+	/**
+	 * Descripcion: permitira mover datos seleccionados de una colleccion de origen a una destino por medio de un comparable
+	 * Parametros:
+	 * @param origen: datos de origen
+	 * @param destino: datos de destino
+	 * @param selection: datos seleccionados a mover del destino al origen
+	 * @param comparable: medio de comparacion para la busqueda binaria
+	 * @param remover: indicara si es requerido remover los datos del origen si es factible
+	 * @param failMessage: mensaje si la seleccion esta vacia
+	 * Retorno: Ninguno
+	 * */
+	protected <T> void moveSelection(final Collection<T> origen, final Collection<T> destino, final Collection<T> selection, 
+			final Comparator<T> comparable, final boolean remover, final String failMessage){
 		if(selection!=null && destino!=null && origen!=null)
 			if (selection.isEmpty())
-				Clients.showNotification((failMessage==null)?"No se Ha Seleccionado Nada": failMessage,
+				Clients.showNotification((failMessage==null)? "No se Ha Seleccionado Nada": failMessage,
 						"info", null, null, 2000, true);
 			else {
-				destino.addAll(selection);
-				origen.removeAll(selection);
+				if(destino.isEmpty())
+					destino.addAll(selection);
+				else if(comparable!=null)
+				{
+					int index;
+					for(T model : selection){
+						index = Collections.binarySearch((List<T>) destino, model, comparable);
+						if(index<0)
+							destino.add(model);
+					}
+				}
+				
 				selection.clear();
+				if(remover)
+					try {
+						origen.removeAll(selection);
+					}
+					catch(UnsupportedOperationException exception){
+						System.out.println("No se puede remover del origen");
+					}
 			}
 		else
 			System.out.println("Alguna coleccion esta vacia.");
-    }
+	}
 	
 	/**
 	 * Descripcion: Premitira buscar un componente en el html por su id respectivo.
@@ -343,16 +372,17 @@ public abstract class AbstractViewModel {
 	 * Retorno: Ninguno
 	 * */
 	@SuppressWarnings("unchecked")
-	protected void constructMenu(List<ModelNavbar> modelo, Component parent){
+	protected void constructMenu(List<TreeNode<ModelNavbar>> modelo, Component parent){
 		if(modelo!=null)
-			for(ModelNavbar item : modelo){
+			for(TreeNode<ModelNavbar> nodo : modelo){
 				Component child;
-				if(item.getChilds().size()>0){
+				ModelNavbar item = nodo.getData();
+				if(nodo.getChildren().size()>0){
 					child = new Nav();
 					((Nav) child).setLabel(item.getLabel());
 					((Nav) child).setIconSclass(item.getIcon());
 					((Nav) child).setSclass("sidebar-fn");
-					constructMenu(item.getChilds(), child);
+					constructMenu(nodo.getChildren(), child);
 				}
 				else{
 					String icon = (item.getIcon()!=null) ? item.getIcon() : "z-icon-angle-double-right";
@@ -576,68 +606,4 @@ public abstract class AbstractViewModel {
 	 * Rosado: btn btn-sm btn-pink
 	 * Amarillo: btn btn-sm btn-yellow
 	 * */
-	
-	
-	/* METODOS CONSTRAINS*/
-	
-	public int getYearDay() {
-		return Calendar.getInstance().get(Calendar.YEAR);
-	}
-
-	public CustomConstraint getNotEmptyValidator() {
-		return new GeneralConstraint(EConstraint.NO_EMPTY);
-	}
-
-	public CustomConstraint getEmailValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.+@.+\\.[a-z]+/",
-				"Debe contener un correo valido Ej. fusa@gmail.com") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.CUSTOM);
-	}
-
-	public CustomConstraint getValidatorCantidad(
-			@BindingParam("cantidadRequerida") Long cantidadRequerida) {
-		return new MayorCantidadConstraint(cantidadRequerida);
-	}
-
-	public CustomConstraint getValidatorAnno(
-			@BindingParam("minYear") Integer minYear,
-			@BindingParam("maxYear") Integer maxYear) {
-		return new AnnoConstraint(minYear, maxYear);
-	}
-
-	public CustomConstraint getTelefonoValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/",
-				"Debe Contener Un Numero Telefonico Valido Ej. 025141785289") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.CUSTOM);
-
-	}
-
-	public CustomConstraint getValidatorClienteCedulaRif() {
-		return new GeneralConstraint(EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO);
-	}
-
-	public CustomConstraint getCantValidator() {
-		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Un Numero Valido") };
-		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
-				EConstraint.CUSTOM);
-
-	}
-	
-	
-	
-	public CustomConstraint getValidatorClienteCedulaRif2() {
-        
-        RegExpression[] constrains = new RegExpression[] { new RegExpression(
-		"/.[0-9]+/",
-		"Introduzca RIF o Cedula solo Números sin guiones Ej.: 402405374") };
-        return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
-}
-	
 }

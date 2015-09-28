@@ -23,10 +23,10 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -131,7 +131,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * */
 	@Command
 	public void nuevoProveedor(){
-		llamarFormulario("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		llamarFormulario(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 	}
 	
 	/**
@@ -151,8 +151,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			window.detach();
 			window.setId(null);
 		}
-		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
@@ -179,8 +178,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 			window.detach();
 			window.setId(null);
 		}
-		window = (Window) Executions.createComponents(
-				"/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null, map);
+		window = this.crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", map);
 		window.setMaximizable(true);
 		window.doModal();
 		window.setId("doModal" + "" + idcount + "");
@@ -207,7 +205,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * Nota: Ninguna
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
+		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 	
 
@@ -217,7 +215,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 
 	@Command
 	public void registrarProveedor(){
-		window = crearModal("/WEB-INF/views/sistema/maestros/formularioProveedor.zul", null);
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 		window.setMaximizable(true);
 	}
 

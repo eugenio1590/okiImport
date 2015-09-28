@@ -22,14 +22,15 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Configuracion;
-import com.okiimport.app.modelo.Oferta;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Configuracion;
+import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlConfiguracion;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.mail.MailCliente;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaOfertasClienteViewModel extends
 		AbstractRequerimientoViewModel implements EventListener<SortEvent> {
@@ -43,6 +44,9 @@ public class ListaOfertasClienteViewModel extends
 	
 	@BeanInjector("sControlConfiguracion")
 	private SControlConfiguracion sControlConfiguracion;
+	
+	@BeanInjector("mailCliente")
+	private MailCliente mailCliente;
 
 	// GUI
 	@Wire("#gridOfertasCliente")
@@ -133,11 +137,11 @@ public class ListaOfertasClienteViewModel extends
 	@NotifyChange("*")
 	public void verOferta(@BindingParam("oferta") Oferta oferta){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta(), 0, -1));
+		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta()));
 		parametros.put("oferta", oferta);
 		parametros.put("requerimiento", this.requerimiento);
 		
-		crearModal("/WEB-INF/views/sistema/funcionalidades/verDetalleOferta.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"ofertados/verDetalleOferta.zul", parametros);
 	}
 
 	/**
@@ -159,14 +163,10 @@ public class ListaOfertasClienteViewModel extends
 		}
 		requerimiento.setEstatus("O");
 		sTransaccion.actualizarRequerimiento(requerimiento);
-		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("nroSolicitud", requerimiento.getIdRequerimiento());
-		model.put("cliente", requerimiento.getCliente().getNombre());
-		model.put("cedula", requerimiento.getCliente().getCedula());
 
-		mailService.send(requerimiento.getCliente().getCorreo(), "Registro de Requerimiento",
-				"registrarRequerimiento.html", model);
+		//No es el servicio que se usara
+		mailCliente.registrarRequerimiento(requerimiento, mailService);
+		
 		winListaOfertas.detach();
 		
 		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
@@ -227,6 +227,14 @@ public class ListaOfertasClienteViewModel extends
 
 	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
 		this.sControlConfiguracion = sControlConfiguracion;
+	}
+
+	public MailCliente getMailCliente() {
+		return mailCliente;
+	}
+
+	public void setMailCliente(MailCliente mailCliente) {
+		this.mailCliente = mailCliente;
 	}
 
 	public List<Oferta> getListaOfertas() {

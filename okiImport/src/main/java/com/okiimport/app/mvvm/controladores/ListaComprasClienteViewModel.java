@@ -22,12 +22,12 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Compra;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Compra;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
@@ -143,7 +143,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("compra", compra);
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/formularioCompra.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"ofertados/formularioCompra.zul", parametros);
 	}
 	
 	//LLAMA A CAMBIAR LOS REQUERIMIENTOS?

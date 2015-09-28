@@ -1,9 +1,9 @@
 package com.okiimport.app.mvvm.controladores;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -20,10 +20,11 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Analista;
+
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
 
 public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -167,7 +168,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	 * Nota: Ninguna
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/maestros/"+ruta, parametros);
+		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/

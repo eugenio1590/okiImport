@@ -20,13 +20,13 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -148,7 +148,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", true);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		if(!requerimiento.cerrarSolicitud()){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
-			crearModal("/WEB-INF/views/sistema/funcionalidades/enviarRequerimientoProv.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"emitidos/enviarRequerimientoProv.zul", parametros);
 		}
 		else
 			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
@@ -180,7 +180,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("editar", false);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/**SETTERS Y GETTERS*/

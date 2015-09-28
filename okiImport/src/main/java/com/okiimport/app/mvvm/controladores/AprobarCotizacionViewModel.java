@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +23,17 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleCotizacion;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 		implements EventListener<SortEvent> {
@@ -58,7 +59,9 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@Wire("#pagDetalleCotizacion")
 	private Paging pagDetalleCotizacion;
 
-	// Atributos
+	//Atributos
+	private static final Comparator<DetalleCotizacion> COMPR_DETALLE_COTIZACION = DetalleCotizacion.getComparator();
+	
 	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
@@ -109,10 +112,9 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * */
 	@NotifyChange({ "*" })
 	@Command
-	public void agregarSeleccion() {
-		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado,
-				listaDetalleSeleccion, "No se puede agregar Detalle Cotizacion");
-
+	public void agregarSeleccion(){
+		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, 
+				COMPR_DETALLE_COTIZACION, false, "No se puede agregar Detalle Cotizacion");
 	}
 
 	/**
@@ -124,8 +126,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@Command
 	@NotifyChange({ "*" })
 	public void eliminarSeleccion() {
-
-		listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty())
+			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 	}
 
 	/**

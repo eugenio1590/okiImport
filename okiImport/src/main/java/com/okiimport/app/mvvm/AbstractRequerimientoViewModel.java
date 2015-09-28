@@ -16,14 +16,11 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.mail.MailService;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Estado;
-
-import com.okiimport.app.modelo.Persona;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Pais;
+import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
@@ -33,11 +30,22 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.mvvm.resource.PasswordGenerator;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.mail.MailService;
 
 public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
-
-	private static final String RUTA_MESSAGEBOX = "/WEB-INF/views/sistema/configuracion/messagebox.zul";
-
+	
+	protected static final String BasePackagePortal = BaseApp+"portal/";
+	protected static final String BasePackageSistema = BaseApp+"sistema/";
+	protected static final String BasePackageSistemaFunc = BasePackageSistema+"funcionalidades/";
+	protected static final String BasePackageSistemaMaest = BasePackageSistema+"maestros/";
+	
+	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
+	
 	// Servicios
 	@BeanInjector("mailService")
 	protected MailService mailService;
@@ -74,6 +82,12 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
 					null, null);
 	}
+	
+	@Command
+	@SuppressWarnings("unchecked")
+	public List<Pais> llenarListaPaises(){
+		return (List<Pais>) sMaestros.consultarPaises(0, -1).get("paises");
+	}
 
 	@Command
 	@SuppressWarnings("unchecked")
@@ -98,7 +112,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("title", titulo);
 		parametros.put("image", imagen);
-		crearModal("/WEB-INF/views/sistema/configuracion/ampliarImagen.zul",
+		crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
 				parametros);
 	}
 
@@ -113,7 +127,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
-
 	protected static List<ModeloCombo<String>> llenarListaBancoPago() {
 		List<ModeloCombo<String>> listaBancoPago = new ArrayList<ModeloCombo<String>>();
 		listaBancoPago
@@ -179,8 +192,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	protected static List<ModeloCombo<Boolean>> llenarListaTipoProveedor() {
 		List<ModeloCombo<Boolean>> listaTipoProveedor = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoProveedor.add(new ModeloCombo<Boolean>("Internacional", false));
-		listaTipoProveedor
-				.add(new ModeloCombo<Boolean>("Nacional", true ));
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Nacional", true ));
 		return listaTipoProveedor;
 	}
 
@@ -252,12 +264,18 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
 
-	/*public int getFecha() {
-		return Calendar.getInstance().getTime();
-	}
-	*/
 	public CustomConstraint getNotEmptyValidator() {
 		return new GeneralConstraint(EConstraint.NO_EMPTY);
+	}
+	
+	public CustomConstraint getFechaValidator(@Default("-1") int tipo){
+		EConstraint constraint = null;
+		switch(tipo){
+		case 1: constraint = EConstraint.NO_FUTURE; break;
+		case 2: constraint = EConstraint.NO_PAST; break;
+		default: constraint = EConstraint.NO_TODAY; break;
+		}
+		return new GeneralConstraint(EConstraint.NO_EMPTY, constraint);
 	}
 
 	public CustomConstraint getEmailValidator() {
@@ -266,6 +284,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				"Debe contener un correo valido Ej. fusa@gmail.com") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
+	}
+	
+	public CustomConstraint getValidatorCantPositiva(){
+		return new GeneralConstraint(EConstraint.NO_EMPTY, EConstraint.NO_ZERO, EConstraint.NO_NEGATIVE);
 	}
 
 	public CustomConstraint getValidatorCantidad(
@@ -301,8 +323,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				EConstraint.CUSTOM);
 
 	}
-	
-	
 	
 	public CustomConstraint getValidatorClienteCedulaRif2() {
         

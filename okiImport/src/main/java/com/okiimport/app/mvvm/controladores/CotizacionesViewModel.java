@@ -23,14 +23,14 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class CotizacionesViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -156,7 +156,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/editarRequerimiento.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	public void verDetalleCotizacion(@BindingParam("cotizacion") Cotizacion cotizacion){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("cotizacion", cotizacion);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/detalleCotizacion.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"detalleCotizacion.zul", parametros);
 	}
 	
 	/**

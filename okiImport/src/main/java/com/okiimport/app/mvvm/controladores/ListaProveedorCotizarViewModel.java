@@ -3,7 +3,6 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -11,11 +10,10 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
-
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Proveedor;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	
@@ -71,9 +69,9 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("persona", proveedor);
 		if(proveedor.getTipoProveedor())
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorNacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorNacional.zul", parametros);
 		else
-			crearModal("/WEB-INF/views/sistema/funcionalidades/listaCotizacionesProveedorInternacional.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
 	/**GETTERS Y SETTERS*/

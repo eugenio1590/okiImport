@@ -1,4 +1,3 @@
-
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.HashMap;
@@ -10,23 +9,21 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Window;
-import com.okiimport.app.modelo.Analista;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
-import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.zk.ui.select.annotation.Wire;
+import com.okiimport.app.model.Analista;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.Estado;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-
-
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 

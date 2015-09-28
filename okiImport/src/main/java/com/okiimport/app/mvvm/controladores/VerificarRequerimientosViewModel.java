@@ -23,17 +23,13 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.DetalleOferta;
-import com.okiimport.app.modelo.Oferta;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.GeneralConstraint;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
@@ -82,10 +78,14 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarRequerimientos", parametros );
+			String cedula = obtenerCedulaConTipoPersona();
+			if(cedula!=null){
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+				parametros.put("sortDirection", event.isAscending());
+				parametros.put("cedula", cedula);
+				ejecutarGlobalCommand("cambiarRequerimientos", parametros );
+			}
 		}
 	}
 
@@ -97,7 +97,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			@BindingParam("cedula") String cedula,
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridRequerimientosCliente.setMultiple(true);
@@ -183,14 +183,9 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/portal/"+ruta, parametros);
+		crearModal(BasePackagePortal+ruta, parametros);
 	}
 
-	
-	public CustomConstraint getValidatorCedulaClienteRequerimiento()
-	{
-		return new GeneralConstraint(EConstraint.NO_EMPTY);
-	}
 
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {

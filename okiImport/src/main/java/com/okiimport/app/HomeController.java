@@ -19,9 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.mail.MailService;
-import com.okiimport.app.modelo.Cliente;
+import com.okiimport.app.service.seguridad.SAcceso;
 
 /**
  * Handles requests for the application home page.
@@ -32,10 +30,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private SControlUsuario sControlUsuario;
-	
-	@Autowired
-	private MailService mailService;
+	private SAcceso sAcceso;
 	
 	/**
 	 * Simply selects the home view to render by returning its name. web/login
@@ -88,8 +83,8 @@ public class HomeController {
 	private Boolean isRememberMeAuthenticated() {
 		Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (user instanceof User)
-			if(sControlUsuario.validarAutenticacion((User) user)){
-				SecurityContextHolder.getContext().setAuthentication(sControlUsuario.consultarAutenticacion((User) user));
+			if(sAcceso.validarAutenticacion((User) user)){
+				SecurityContextHolder.getContext().setAuthentication(sAcceso.consultarAutenticacion((User) user));
 				return true;
 			}
  

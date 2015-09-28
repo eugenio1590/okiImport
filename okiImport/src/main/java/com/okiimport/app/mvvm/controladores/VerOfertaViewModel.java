@@ -18,12 +18,12 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.modelo.DetalleOferta;
-import com.okiimport.app.modelo.Oferta;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
 {
@@ -88,7 +88,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			{
 				//antes cerrar formulario de oferta
 				this.winOferta.onClose();
-				llamarFormulario("formularioSolicituddePedido.zul", parametros);
+				this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
 			}
 		}
 	}
@@ -106,10 +106,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 				listaDetOferta.add(detalleOferta);
 			}
 		}
-	}
-	
-	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/"+ruta, parametros);
 	}
 	
 	/**GETTERS Y SETTERS*/

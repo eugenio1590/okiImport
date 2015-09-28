@@ -12,9 +12,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.okiimport.app.configuracion.dao.UsuarioDAO;
-import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.seguridad.servicios.SHistorial;
+import com.okiimport.app.model.Usuario;
+import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.service.seguridad.SHistorial;
 
 
 @Component
@@ -24,14 +24,14 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
 	private SHistorial sHistorial;
 	
 	@Autowired
-	private UsuarioDAO usuarioDAO;
+	private SControlUsuario sControlUsuario;
 
 	/**METODOS OVERRIDE*/
 	@Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
     		Authentication authentication) throws IOException, ServletException {
 		User user = (User) authentication.getPrincipal();
-		Usuario usuario = usuarioDAO.consultarUsuario(user.getUsername(), user.getPassword());
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
 		sHistorial.registrarHistorialSession(usuario);
 		setDefaultTargetUrl("/admin/home");
 		super.onAuthenticationSuccess(request, response, authentication);

@@ -21,11 +21,11 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -144,7 +144,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		parametros.put("requerimiento", this.requerimiento);
 		parametros.put("cotizacion", cotizacion);
 		parametros.put("obligatorioTodosCampos", true);
-		crearModal("/WEB-INF/views/sistema/funcionalidades/cotizarProveedorInternacional.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 	}
 	
 	/**

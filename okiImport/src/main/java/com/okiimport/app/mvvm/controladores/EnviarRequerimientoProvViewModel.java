@@ -22,16 +22,15 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.DetalleRequerimiento;
-import com.okiimport.app.modelo.Motor;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent>  {
 	
@@ -59,7 +58,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	
 	//Atributos
 	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
-	private List <Motor> listaMotor;
 	private List <DetalleRequerimiento> listaDetalleRequerimientoSeleccionados;
 	private Requerimiento requerimiento;
 	private List <ModeloCombo<Boolean>> listaTraccion;
@@ -85,7 +83,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
-		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		listaTipoRepuesto = llenarListaTipoRepuesto();
@@ -172,7 +169,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 				parametros.put("enviar", enviar);
 				parametros.put("requerimiento", requerimiento);
 				parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
-				crearModal("/WEB-INF/views/sistema/funcionalidades/seleccionarProveedores.zul", parametros);
+				crearModal(BasePackageSistemaFunc+"emitidos/seleccionarProveedores.zul", parametros);
 			}
 			else
 				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados", 
@@ -280,14 +277,6 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 
 	public void setTransmision(ModeloCombo<Boolean> transmision) {
 		this.transmision = transmision;
-	}
-
-	public List<Motor> getListaMotor() {
-		return listaMotor;
-	}
-
-	public void setListaMotor(List<Motor> listaMotor) {
-		this.listaMotor = listaMotor;
 	}
 
 	public void setListaDetalleRequerimientoSeleccionados(

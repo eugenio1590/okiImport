@@ -24,10 +24,10 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
 
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -151,7 +151,7 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal("/WEB-INF/views/sistema/seguridad/configuracion/usuarios/"+ruta, parametros);
+		crearModal(BasePackageSistema+"seguridad/configuracion/usuarios/"+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/

@@ -1,30 +1,21 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.zkoss.bind.ValidationContext;
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
-import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.validator.AbstractValidator;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zul.Textbox;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Cliente;
-import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Requerimiento;
-import com.okiimport.app.modelo.Usuario;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.DetalleRequerimiento;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.controladores.seguridad.configuracion.EditarUsuarioViewModel;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewModel  {
 
@@ -52,7 +43,10 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 		//Usuario usuario = cliente.getUsuario();
 		//this.cliente = cliente;
 		this.requerimiento = requerimiento;
-		
+		List<DetalleRequerimiento> detallesRequerimiento 
+			= (List<DetalleRequerimiento>) sTransaccion
+				.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
+		this.requerimiento.setDetalleRequerimientos(detallesRequerimiento);
 		
 		
 		

@@ -1,7 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
@@ -15,22 +14,13 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Analista;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	

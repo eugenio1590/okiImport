@@ -6,10 +6,8 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Oferta;
-import com.okiimport.app.modelo.Requerimiento;
-
+import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
 public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
@@ -45,14 +43,6 @@ public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
-	}
-
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
 	}
 
 }

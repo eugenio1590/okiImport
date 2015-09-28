@@ -23,7 +23,7 @@
 
 								<rows>
 									<row>
-										<label value="Cedula/RIF: *" />
+										<label value="ID/RIF: *" />
 										<hbox>
 											<combobox
 												id="comboTipoPersona" width="30%" readonly="true"
@@ -41,7 +41,7 @@
 													width="91%" readonly="" mold="rounded"
 													value="@bind(vm.cliente.cedula)"
 													placeholder="Ej: 402405375" maxlength="12"
-													constraint="@bind(vm.validatorClienteCedulaRif2)"
+													constraint="@bind(vm.validatorClienteCedulaRif)"
 													onBlur="@command('buscarCliente')"
 													onOK="@command('buscarCliente')" />
 											</vbox>
@@ -207,20 +207,27 @@
 									<rows>
 										<row>
 											<label value="Motor: " />
-
-											<combobox
-												selectedItem="@bind(vm.requerimiento.motor)" readonly="true"
+											<bandbox id="bdMotor" mold="rounded" autodrop="true" readonly="true"
 												placeholder="Seleccione..." width="80%"
-												model="@load(vm.listaMotor)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-
-													</comboitem>
-												</template>
-											</combobox>
-
+												value="@bind(vm.requerimiento.motor.nombre)">  
+        										<bandpopup>
+            										<listbox id="gridMotores" width="200px" mold="paging" model="@load(vm.listaMotor)"
+            											selectedItem="@bind(vm.requerimiento.motor)"
+                										onSelect="bdMotor.close();">
+                										<listhead>
+                    										<listheader value="nombre" label="Nombre" sort="auto(nombre)">
+                    											<textbox instant="true" placeholder="" value="@bind(vm.motor.nombre)"
+																	onChange="@command('aplicarFiltroMotor')" width="100px" />
+																<div sclass="z-icon-filter bigger-200" />
+                    										</listheader>
+                										</listhead>
+                										<template name="model">
+															<listitem label="@bind(each.nombre)"/>
+														</template>
+            										</listbox>
+            										<paging id="pagMotores" onPaging="@command('paginarListaMotores')" autohide="true" />
+        										</bandpopup>
+    										</bandbox>
 
 											<label
 												value="Transmision: " />

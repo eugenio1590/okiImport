@@ -1,6 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,22 +21,17 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.maestros.servicios.SMaestros;
-import com.okiimport.app.modelo.Ciudad;
-import com.okiimport.app.modelo.ClasificacionRepuesto;
-import com.okiimport.app.modelo.DetalleCotizacionInternacional;
-import com.okiimport.app.modelo.Estado;
-import com.okiimport.app.modelo.MarcaVehiculo;
-import com.okiimport.app.modelo.Proveedor;
+import com.okiimport.app.model.Ciudad;
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Pais;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
-import com.okiimport.app.transaccion.servicios.STransaccion;
-
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.mail.MailProveedor;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
@@ -67,12 +62,17 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Wire("#cmbCiudad")
 	private Combobox cmbCiudad;
 	
-	//Atributos
-	protected Proveedor proveedor;
+	@BeanInjector("mailProveedor")
+	private MailProveedor mailProveedor;
+	
+	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
+	private static final Comparator<ClasificacionRepuesto> COMPR_CLASIFICACION_REPUESTO = ClasificacionRepuesto.getComparator();
+	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
+	private List<Pais> listaPaises;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoPersonaCed;
@@ -84,7 +84,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private boolean makeAsReadOnly;
 	private Boolean cerrar;
 	private String recordMode;
-	
+	private Proveedor proveedor;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -102,9 +102,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
+		this.listaPaises = llenarListaPaises();
 		listaEstados = llenarListaEstados();
-		pagMarcas.setPageSize(pageSize=9);
-		pagTipoRepuestos.setPageSize(pageSize=9);
+		pagMarcas.setPageSize(pageSize);
+		pagTipoRepuestos.setPageSize(pageSize);
 		gridMarcasVender.setPageSize(pageSize);
 		gridTipoRepuestosVender.setPageSize(pageSize);
 		consultarMarcas(0);
@@ -157,7 +158,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				if (tipoProveedorl.getValor() == tipoProveedor)
 					return tipoProveedorl;
 			
-		return null;
+		return listaTipoProveedor.get(1);
 		
 	}
 	
@@ -217,8 +218,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarMarcas() {
-		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(),
-				marcaSeleccionadas, "No se puede agregar Marca");
+		this.moveSelection(listaMarcaVehiculos, proveedor.getMarcaVehiculos(), marcaSeleccionadas, 
+				COMPR_MARCA_VEHICULO, false, "No se puede agregar Marca");
 	}
 
 	/**
@@ -230,8 +231,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarMarcas() {
-		this.moveSelection(proveedor.getMarcaVehiculos(), listaMarcaVehiculos,
-				marcaSeleccionadas, "No se puede eliminar la Marca");
+		if(marcaSeleccionadas!=null && !marcaSeleccionadas.isEmpty())
+			proveedor.getMarcaVehiculos().removeAll(marcaSeleccionadas);
 	}
 
 	/**
@@ -243,10 +244,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarTipoRepuesto() {
-		this.moveSelection(listaClasificacionRepuestos,
-				proveedor.getClasificacionRepuestos(),
-				tipoRepuestoSeleccionados,
-				"No se puede agregar el Tipo de Repuesto");
+		this.moveSelection(listaClasificacionRepuestos, proveedor.getClasificacionRepuestos(), tipoRepuestoSeleccionados,
+				COMPR_CLASIFICACION_REPUESTO, false, "No se puede agregar el Tipo de Repuesto");
 	}
 
 	/**
@@ -258,9 +257,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarTipoRepuesto() {
-		this.moveSelection(proveedor.getClasificacionRepuestos(),
-				listaClasificacionRepuestos, tipoRepuestoSeleccionados,
-				"No se puede eliminar el Tipo de Repuesto");
+		if(tipoRepuestoSeleccionados!=null && !tipoRepuestoSeleccionados.isEmpty())
+			proveedor.getClasificacionRepuestos().removeAll(tipoRepuestoSeleccionados);
 	}
 
 	/**
@@ -321,12 +319,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			str = "Proveedor Actualizado Exitosamente";
 
 		if(enviarEmail){
-			Map<String, Object> model = new HashMap<String, Object>();
-			model.put("nombreSolicitante", proveedor.getNombre());
-			model.put("cedula", proveedor.getCedula());
-
-			mailService.send(proveedor.getCorreo(), "Solicitud Proveedor",
-					"registrarProveedor.html", model);
+			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 
 			mostrarMensaje("Informacion", str, null, null,
 					new EventListener() {
@@ -346,7 +339,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 		return proveedor;
 	}
-
+	
 	/**
 	 * Descripcion: Permite consultar las marcas
 	 * Parametros: @param view: formularioProveedor.zul 
@@ -355,7 +348,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * */
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
-		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
+		Map<String, Object> Parametros = sMaestros.consultarMarcas(page,
 				pageSize);
 		listaMarcaVehiculos = (List<MarcaVehiculo>) Parametros.get("marcas");
 		Integer total = (Integer) Parametros.get("total");
@@ -384,11 +377,19 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagTipoRepuestos.setTotalSize(total);
 	}
 	
-	
+	@Command
+	@NotifyChange({ "estado", "proveedor" })
+	public void actualizarLocalidad(){
+		this.proveedor.setPais(null);
+		if(this.tipoProveedor.getValor() == false){
+			this.estado = null;
+			this.proveedor.setCiudad(null);
+		}	
+	}
+
 	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
-
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
@@ -522,6 +523,22 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void setTipoPersonaCed(ModeloCombo<Boolean> tipoPersonaCed) {
 		this.tipoPersonaCed = tipoPersonaCed;
 	}
+
+	public MailProveedor getMailProveedor() {
+		return mailProveedor;
+	}
+
+	public void setMailProveedor(MailProveedor mailProveedor) {
+		this.mailProveedor = mailProveedor;
+	}
+
+	public List<Pais> getListaPaises() {
+		return listaPaises;
+	}
+
+	public void setListaPaises(List<Pais> listaPaises) {
+		this.listaPaises = listaPaises;
+	}
 	
 	public Proveedor getProveedor() {
 		return proveedor;
@@ -529,14 +546,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
-	}
-
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
 	}
 
 	public STransaccion getsTransaccion() {

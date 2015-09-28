@@ -106,7 +106,6 @@
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 								</vbox>
 									<bandpopup>
-									    
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
 											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
 											<listhead>

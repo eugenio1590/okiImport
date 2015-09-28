@@ -11,12 +11,13 @@ import org.zkoss.zul.Div;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Menuitem;
 
-import com.okiimport.app.modelo.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.configuracion.servicios.SControlUsuario;
+import com.okiimport.app.model.Usuario;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 
-public class PerfilViewModel extends AbstractViewModel {
+
+public class PerfilViewModel extends AbstractRequerimientoViewModel {
 
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
@@ -56,7 +57,7 @@ public class PerfilViewModel extends AbstractViewModel {
 		
 		hrefEnlacesMenu.appendChild(nuevoEnlace);
 		
-		insertComponent(menInfoUsuario.getPage(), "#mainInclude", "/WEB-INF/views/sistema/configuracion/editarPerfil.zul");
+		insertComponent(menInfoUsuario.getPage(), "#mainInclude", BasePackageSistema+"configuracion/editarPerfil.zul");
 	}
 	
 	@Command

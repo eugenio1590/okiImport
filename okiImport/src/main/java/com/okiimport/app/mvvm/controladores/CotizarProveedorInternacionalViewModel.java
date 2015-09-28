@@ -28,19 +28,19 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.configuracion.servicios.SControlConfiguracion;
-import com.okiimport.app.modelo.Configuracion;
-import com.okiimport.app.modelo.Cotizacion;
-import com.okiimport.app.modelo.DetalleCotizacion;
-import com.okiimport.app.modelo.DetalleCotizacionInternacional;
-import com.okiimport.app.modelo.HistoricoMoneda;
-import com.okiimport.app.modelo.Moneda;
-import com.okiimport.app.modelo.Requerimiento;
+import com.okiimport.app.model.Configuracion;
+import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleCotizacionInternacional;
+import com.okiimport.app.model.HistoricoMoneda;
+import com.okiimport.app.model.Moneda;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.BeanInjector;
-import com.okiimport.app.mvvm.ModeloCombo;
-import com.okiimport.app.servicios.impl.AbstractServiceImpl;
-import com.okiimport.app.transaccion.servicios.STransaccion;
+import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.resource.service.AbstractServiceImpl;
+import com.okiimport.app.service.configuracion.SControlConfiguracion;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class CotizarProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<Event>{
 	

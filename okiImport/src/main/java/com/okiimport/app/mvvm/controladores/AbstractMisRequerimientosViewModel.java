@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ContextParam;
-import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -22,8 +19,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Cliente;
-import com.okiimport.app.model.MarcaVehiculo;
-import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -32,72 +28,62 @@ import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
+public abstract class AbstractMisRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
-	private STransaccion sTransaccion;
-	
+	protected STransaccion sTransaccion;
+		
 	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
+	protected SControlUsuario sControlUsuario;
+		
 	//GUI
 	@Wire("#gridMisRequerimientos")
-	private Listbox gridMisRequerimientos;
-	
+	protected Listbox gridMisRequerimientos;
+		
 	@Wire("#pagMisRequerimientos")
-	private Paging pagMisRequerimientos;
+	protected Paging pagMisRequerimientos;
 	
-	//Atributos
-	private List <Requerimiento> listaRequerimientos;
-	private Usuario usuario;
-	private Proveedor proveedor;
-	private Requerimiento requerimientoFiltro;
-	private List<ModeloCombo<String>> listaEstatus;
-
-	/**
-	 * Descripcion: Llama a inicializar la clase 
-	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul 
-	 * Retorno: Clase Inicializada 
-	 * Nota: Ninguna
-	 * */
-	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
+	//Atributos	
+	protected List <Requerimiento> listaRequerimientos;
+		
+	protected Usuario usuario;
+	protected Requerimiento requerimientoFiltro;
+		
+	protected List<ModeloCombo<String>> listaEstatus;
+	protected ModeloCombo<String> estatusFiltro;
+	
+	@Override
+	public void doAfterCompose(Component view){
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
-		requerimientoFiltro = new Requerimiento(new Cliente(), new MarcaVehiculo());
+		requerimientoFiltro = new Requerimiento(new Cliente());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-		proveedor = (Proveedor) usuario.getPersona();
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
 		pagMisRequerimientos.setPageSize(pageSize);
-		listaEstatus = llenarListaEstatusGeneral();
+		estatusFiltro=new ModeloCombo<String>("No Filtrar", "");
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
 	@Override
 	@NotifyChange("listaRequerimientos")
-	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub		
+	public void onEvent(SortEvent event) throws Exception {	
 		if(event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
 			parametros.put("sortDirection", event.isAscending());
 			ejecutarGlobalCommand("cambiarRequerimientos", parametros );
 		}
-		
 	}
 	
 	/**GLOBAL COMMAND*/
-
-	/**
-	 * Descripcion: Permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
-	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul 
+	/*
+	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno 
-	 * Nota: Ninguna
+	 * Retorno: Ninguno
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -105,23 +91,20 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosConSolicitudesCotizacion(requerimientoFiltro, 
-				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
+		Map<String, Object> parametros = consultarMisRequerimientos(fieldSort, sortDirection, page);
+				//sTransaccion.consultarMisRequerimientosEmitidos(requerimientoFiltro, 
+				//fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		gridMisRequerimientos.setMultiple(true);
-		gridMisRequerimientos.setCheckmark(true);
 		pagMisRequerimientos.setActivePage(page);
 		pagMisRequerimientos.setTotalSize(total);
 	}
 	
 	/**COMMAND*/
-
-	/**
-	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
-	 * Nota: Ninguna
+	/*
+	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
+	 * @param Ninguno
+	 * Retorno: Ninguno
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -130,37 +113,57 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		cambiarRequerimientos(page, null, null);
 	}
 	
-	/**
-	 * Descripcion: Permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Filtro por cada campo segun lo establecido en el evento 
-	 * Nota: Ninguna
+	/*
+	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
+	 * @param Ninguno
+	 * Retorno: Ninguno
 	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
 	public void aplicarFiltro(){
 		requerimientoFiltro.setEstatus(null);
+		if(estatusFiltro!=null)
+			if(!estatusFiltro.getNombre().equalsIgnoreCase("No Filtrar"))
+				requerimientoFiltro.setEstatus(estatusFiltro.getValor());
 		cambiarRequerimientos(0, null, null);
 	}
 	
-	/**
-	 * Descripcion: Permitira crear el emergente (modal) necesario para ver las solicitudes del requerimiento seleccionado
-	 * Parametros: requerimiento: requerimiento seleccionado @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Emergente Creado 
-	 * Nota: Ninguna
+	/*
+	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
 	 * */
 	@Command
-	public void verSolicitudes(@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void verRequerimiento(@BindingParam("requerimiento") final Requerimiento requerimiento){
+		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		parametros.put("persona", usuario.getPersona());
-		if(proveedor.getTipoProveedor().equals(true)) //Nacional
-			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorNacional.zul", parametros);
-		else //Internacional
-			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
+		parametros.put("editar", false);
+		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
-	/**METODOS PROPIOS Y DE LA CLASE*/
+	/*
+	 * Descripcion: permitira visualizar los proveedores para luego registrar la cotizacion respectiva
+	 * @param requerimiento: requerimiento seleccionado
+	 * Retorno: Ninguno
+	 */
+	@Command
+	public void cotizar(@BindingParam("requerimiento") final Requerimiento requerimiento){
+		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("size", "90%");
+		crearModal(BasePackageSistemaFunc+"en_proceso/listaProveedoresCotizar.zul", parametros );
+	}
+	
+	/**METODOS ABSTRACTOS DE LA CLASE*/
+	protected abstract Map<String, Object> consultarMisRequerimientos(String fieldSort, Boolean sortDirection, int page);
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	@SuppressWarnings("unchecked")
+	protected List<DetalleRequerimiento> consultarDetallesRequerimiento(final Requerimiento requerimiento){
+		return (List<DetalleRequerimiento>) sTransaccion.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
+	}
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
@@ -203,4 +206,11 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		this.listaEstatus = listaEstatus;
 	}
 
+	public ModeloCombo<String> getEstatusFiltro() {
+		return estatusFiltro;
+	}
+
+	public void setEstatusFiltro(ModeloCombo<String> estatusFiltro) {
+		this.estatusFiltro = estatusFiltro;
+	}
 }
