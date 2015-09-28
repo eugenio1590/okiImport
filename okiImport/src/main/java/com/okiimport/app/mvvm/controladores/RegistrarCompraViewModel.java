@@ -88,11 +88,6 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: 
-	 * @param Ninguno
-	 * Retorno: Ninguno
-	 * */
 	
 	 /**
 	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
