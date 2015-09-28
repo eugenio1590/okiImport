@@ -35,20 +35,27 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel {
 	
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	//GUI
+	@Wire("#winFormularioAnalista")
+	private Window winFormularioAnalista;
+	
+	//Atributos
 	private Analista analista;
 	private Ciudad ciudad;
-	
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
 	
-	@Wire("#winFormularioAnalista")
-	private Window winFormularioAnalista;
-	
-	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioAnalistas.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view ) {
 		super.doAfterCompose(view);
@@ -61,6 +68,12 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		
 	}
 	
+	/**
+	 * Descripcion: Permite registrar un analista en el sistema
+	 * Parametros: @param view: formularioAnalistas.zul 
+	 * Retorno: Analista registrado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -92,17 +105,32 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 			}	
 	}
 	
+	/**
+	 * Descripcion: Permite recargar la pantalla al cerrar
+	 * Parametros: @param view: formularioAnalistas.zul 
+	 * Retorno: pantalla recargada
+	 * Nota: Ninguna
+	 * */
 	public void recargar() {
 		
 		winFormularioAnalista.onClose();
 	}
 	
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario Analistas
+	 * Parametros: @param view: formularioAnalistas.zul 
+	 * Retorno: campos vacios
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "analista" })
 	public void limpiar() {
 		analista = new Analista();
 	}
-
+	
+	
+    /*METODOS SETTERS AND GETTERS */
+	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -166,8 +194,5 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
-	
-
-	
 
 }
