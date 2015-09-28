@@ -267,6 +267,16 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getNotEmptyValidator() {
 		return new GeneralConstraint(EConstraint.NO_EMPTY);
 	}
+	
+	public CustomConstraint getFechaValidator(@Default("-1") int tipo){
+		EConstraint constraint = null;
+		switch(tipo){
+		case 1: constraint = EConstraint.NO_FUTURE; break;
+		case 2: constraint = EConstraint.NO_PAST; break;
+		default: constraint = EConstraint.NO_TODAY; break;
+		}
+		return new GeneralConstraint(EConstraint.NO_EMPTY, constraint);
+	}
 
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
@@ -274,6 +284,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				"Debe contener un correo valido Ej. fusa@gmail.com") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
+	}
+	
+	public CustomConstraint getValidatorCantPositiva(){
+		return new GeneralConstraint(EConstraint.NO_EMPTY, EConstraint.NO_ZERO, EConstraint.NO_NEGATIVE);
 	}
 
 	public CustomConstraint getValidatorCantidad(
