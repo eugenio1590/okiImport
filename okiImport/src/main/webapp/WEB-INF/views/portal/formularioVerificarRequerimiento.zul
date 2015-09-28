@@ -1,13 +1,11 @@
-<?page title="consultarSolicitud" contentType="text/html;charset=UTF-8"?>
-
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer"
+	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
 
 		<window id="ventanaCliente" border="normal" sclass="btn-primary"
 			width="40%">
 
-			<label value="RIF/Cédula: *"/>
+			<label value="ID/RIF:"/>
 			<space></space>
 			<combobox width="10%" readonly="true"
 				selectedItem="@bind(vm.tipoPersona)"
@@ -35,7 +33,7 @@
 
 			<listbox id="gridRequerimientosCliente" mold="paging"
 				checkmark="true" pagingPosition="top" multiple="true"
-				sclass="mylist" model="@load(vm.listaRequerimientos)">
+				sclass="grid" model="@load(vm.listaRequerimientos)">
 				
 				<auxhead>
 					<auxheader colspan="5" align="center">
@@ -108,7 +106,7 @@
 										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 									
 									<button
-										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta"
+										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta" if="${ each.verOfertas() }"
 										onClick="@global-command('verOferta',requerimiento = each)" />
 
 								</div>
@@ -117,13 +115,14 @@
 					</listitem>
 				</template>
 			</listbox>
-			<div width="100%" align="left">
+			<div width="100%" align="center">
 				<paging id="pagRequerimientosCliente"
 					onPaging="@command('paginarLista')" autohide="true" />
 			</div>
 		</div>
-		<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>
-	</window>
+<!-- 		<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/> -->
+		</div>
+<!-- 	</window> -->
 	
 </zk>
 

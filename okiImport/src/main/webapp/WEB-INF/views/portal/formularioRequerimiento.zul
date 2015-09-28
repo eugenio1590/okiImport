@@ -23,7 +23,7 @@
 
 								<rows>
 									<row>
-										<label value="Cedula/RIF: *" />
+										<label value="ID/RIF: *" />
 										<hbox>
 											<combobox
 												id="comboTipoPersona" width="30%" readonly="true"

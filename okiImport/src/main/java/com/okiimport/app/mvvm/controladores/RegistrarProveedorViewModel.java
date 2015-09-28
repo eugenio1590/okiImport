@@ -104,8 +104,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		this.listaPaises = llenarListaPaises();
 		listaEstados = llenarListaEstados();
-		pagMarcas.setPageSize(pageSize=9);
-		pagTipoRepuestos.setPageSize(pageSize=9);
+		pagMarcas.setPageSize(pageSize);
+		pagTipoRepuestos.setPageSize(pageSize);
 		gridMarcasVender.setPageSize(pageSize);
 		gridTipoRepuestosVender.setPageSize(pageSize);
 		consultarMarcas(0);

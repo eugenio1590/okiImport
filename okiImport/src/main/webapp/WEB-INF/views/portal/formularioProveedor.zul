@@ -193,89 +193,70 @@
 
 				<!-- MARCAS DE VEHICULOS -->
 				<tabpanel>
-					<groupbox>
-						<div>
-							<borderlayout height="470px">
-								<west width="300px" title="Marcas"
-									size="25%" flex="true" maxsize="250" collapsible="true"
-									border="normal">
-									<vlayout height="100%" vflex="1">
-										<toolbar>
-											<toolbarbutton height="45px"
-												image="/resources/img/icons/ButtonArrowRight32.png"
-												tooltiptext="Agregar Marcas a Vender"
-												onClick="@command('agregarMarcas')" />
-										</toolbar>
-										<listbox id="gridMarcas"
-											mold="paging" checkmark="true"
-											selectedItems="@bind(vm.marcaSeleccionadas)" multiple="true"
-											model="@load(vm.listaMarcaVehiculos)">
-											<listhead>
-												<listheader
-													label="Nombre" sort="none" />
-											</listhead>
-											<template name="model">
-												<listitem>
-													<listcell
-														label="@bind(each.nombre)" />
 
-												</listitem>
-											</template>
-
-										</listbox>
-										<paging id="pagMarcas"
-											autohide="true" onPaging="@command('paginarLista',tipo = 1)" />
-									</vlayout>
-								</west>
-								<east id="borderEast"
-									title="Marcas a Vender" width="62.5%">
-									<div>
-										<toolbar>
-											<toolbarbutton height="45px"
-												image="/resources/img/icons/ButtonArrowLeft32.png"
-												tooltiptext="Remover Marcas a Vender"
-												onClick="@command('eliminarMarcas')" />
-										</toolbar>
-										<listbox id="gridMarcasVender"
-											model="@load(vm.proveedor.marcaVehiculos)" mold="paging"
-											checkmark="true" multiple="true"
-											selectedItems="@bind(vm.marcaSeleccionadas)">
-											<!-- 
-												<frozen columns="1"/>
-											-->
-											<listhead>
-												<listheader
-													label="Nombre" sort="none" />
-											</listhead>
-											<template name="model">
-												<listitem>
-													<listcell
-														label="@bind(each.nombre)" />
-
-												</listitem>
-											</template>
-										</listbox>
-
-									</div>
-								</east>
-							</borderlayout>
-						</div>
-					</groupbox>
+					<borderlayout>
+						<west width="30%" title="Marcas" collapsible="true" border="normal"
+							onOpen="@command('openRegionWest', west=self, east=borderMarcasEast, baseW='70%')">
+							<vlayout height="100%" vflex="1">
+								<toolbar>
+									<toolbarbutton height="45px"
+										image="/resources/img/icons/ButtonArrowRight32.png"
+										tooltiptext="Agregar Marcas a Vender"
+										onClick="@command('agregarMarcas')" />
+								</toolbar>
+								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
+									selectedItems="@bind(vm.marcaSeleccionadas)"
+									model="@load(vm.listaMarcaVehiculos)">
+									<listhead>
+										<listheader label="Nombre" sort="none" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@bind(each.nombre)" />
+										</listitem>
+									</template>
+								</listbox>
+								<paging id="pagMarcas" autohide="true"
+									onPaging="@command('paginarLista',tipo = 1)" />
+							</vlayout>
+						</west>
+						<east id="borderMarcasEast" title="Marcas a Vender"
+							width="70%">
+							<div>
+								<toolbar>
+									<toolbarbutton height="45px"
+										image="/resources/img/icons/ButtonArrowLeft32.png"
+										tooltiptext="Remover Marcas a Vender"
+										onClick="@command('eliminarMarcas')" />
+								</toolbar>
+								<listbox id="gridMarcasVender" mold="paging" checkmark="true" multiple="true"
+									model="@load(vm.proveedor.marcaVehiculos)"
+									selectedItems="@bind(vm.marcaSeleccionadas)">
+									<!-- 
+										<frozen columns="1"/>
+									-->
+									<listhead>
+										<listheader label="Nombre" sort="none" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="@bind(each.nombre)" />
+										</listitem>
+									</template>
+								</listbox>
+							</div>
+						</east>
+					</borderlayout>
 				</tabpanel>
 				<!-- TIPOS DE REPUESTO -->
 				<tabpanel>
-
-					<groupbox>
-
-						<div>
-
+				
 							<borderlayout width="100%" height="470px">
-								<west width="300px"
-									title="Tipo de Repuestos" collapsible="true">
+								<west width="30%" title="Tipo de Repuestos" collapsible="true"
+								onOpen="@command('openRegionWest', west=self, east=borderRepuestosEast, baseW='70%')">
 									<vlayout>
 										<toolbar>
-											<toolbarbutton height="45px"
-												image="/resources/img/icons/ButtonArrowRight32.png"
+											<toolbarbutton iconSclass="bigger-185 blue z-icon-arrow-right"
 												tooltiptext="Agregar Tipo Repuesto a Vender"
 												onClick="@command('agregarTipoRepuesto')" />
 										</toolbar>
@@ -302,12 +283,11 @@
 											onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
 									</vlayout>
 								</west>
-								<east id="borderEast2"
-									title="Tipo de Repuestos a Vender" width="62.5%">
+								<east id="borderRepuestosEast"
+									title="Tipo de Repuestos a Vender" width="70%">
 									<div>
 										<toolbar>
-											<toolbarbutton height="45px"
-												image="/resources/img/icons/ButtonArrowLeft32.png"
+											<toolbarbutton iconSclass="bigger-185 blue z-icon-arrow-left"
 												tooltiptext="Remover Tipo de Repuesto a Vender"
 												onClick="@command('eliminarTipoRepuesto')" />
 										</toolbar>
@@ -331,9 +311,6 @@
 									</div>
 								</east>
 							</borderlayout>
-						</div>
-					</groupbox>
-
 				</tabpanel>
 			</tabpanels>
 		</tabbox>
