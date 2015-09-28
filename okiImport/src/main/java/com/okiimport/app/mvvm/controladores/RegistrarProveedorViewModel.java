@@ -40,11 +40,12 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
 
-	protected Proveedor proveedor;
 	
-	private List<MarcaVehiculo> listaMarcaVehiculos;
-	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
-
+	//Servicios
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
+	
+	//GUI
 	@Wire("#winProveedor")
 	private Window winProveedor;
 	@Wire("#gridMarcas")
@@ -66,10 +67,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Wire("#cmbCiudad")
 	private Combobox cmbCiudad;
 	
-	
-	@BeanInjector("sTransaccion")
-	private STransaccion sTransaccion;
-	
+	//Atributos
+	protected Proveedor proveedor;
+	private List<MarcaVehiculo> listaMarcaVehiculos;
+	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
 	private List<MarcaVehiculo> marcaSeleccionadas;
 	private List<ClasificacionRepuesto> tipoRepuestoSeleccionados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
@@ -80,15 +81,17 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<Estado> listaEstados;
 	private List<Ciudad> listaCiudad;
 	private Estado estadoSeleccionado;
-	
 	private boolean makeAsReadOnly;
 	private Boolean cerrar;
 	private String recordMode;
 	
-	//private List<Pais> listaPais;
 	
-	
-
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("proveedor") Proveedor proveedor,
@@ -116,6 +119,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 	}
 
+	/**
+	 * Descripcion: Permite Habilitar el boton limpiar segun el evento que se solicite
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Habilitacion del boton limpiar 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void habilitarBtnLimpiar(@BindingParam("id") String id) {
 		if (id.equalsIgnoreCase("tabDatosFiscales"))
@@ -124,13 +133,24 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			btnLimpiar.setVisible(false);
 	}
 
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario registrar Proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Campos Vacios 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void limpiar() {
 		proveedor = new Proveedor();
 	}
 
-	
+	/**
+	 * Descripcion: Permite Consultar el tipo de proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Tipo de Proveedor 
+	 * Nota: Ninguna
+	 * */
 	public ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
 		if(tipoProveedor!=null)
 			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
@@ -141,6 +161,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 	}
 	
+	/**
+	 * Descripcion: Permite Consultar el tipo de persona
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Tipo de Persona
+	 * Nota: Ninguna
+	 * */
 	public ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
 		if (cedula!=null){
 			String tipoPersona = cedula.substring(0, 1);
@@ -152,8 +178,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 	}
 	
-	
-	
+	 /**
+	 * Descripcion: Permite Registrar el proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: proveedor registrado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -178,7 +208,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 
 	
-	
+	/**
+	 * Descripcion: Permite Seleccionar una marca a vender por el proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: marca seleccionada
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarMarcas() {
@@ -186,6 +221,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				marcaSeleccionadas, "No se puede agregar Marca");
 	}
 
+	/**
+	 * Descripcion: Permite eliminar de la seleccion una marca a vender por el proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: marca eliminada
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarMarcas() {
@@ -193,6 +234,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				marcaSeleccionadas, "No se puede eliminar la Marca");
 	}
 
+	/**
+	 * Descripcion: Permite Seleccionar un tipo de repuesto a vender por el proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: tipo de repuesto seleccionada
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarTipoRepuesto() {
@@ -202,6 +249,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				"No se puede agregar el Tipo de Repuesto");
 	}
 
+	/**
+	 * Descripcion: Permite eliminar de la seleccion un tipo de repuesto a vender por el proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: tipo de repuesto eliminado
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void eliminarTipoRepuesto() {
@@ -210,6 +263,13 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				"No se puede eliminar el Tipo de Repuesto");
 	}
 
+	/**
+	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
+	 * de Paging pagMarcas
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void paginarLista(@BindingParam("tipo") int tipo) {
@@ -220,6 +280,13 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 
+	/**
+	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
+	 * de Paging pagTipoRepuestos
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void paginarListaTipoRepuesto(@BindingParam("tipo") int tipo) {
@@ -230,6 +297,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 	
+	/**
+	 * Descripcion: Permite registrar un proveedor en el sistema
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Proveedor registrado, correo enviado al proveedor 
+	 * Nota: Ninguna
+	 * */
 	protected Proveedor registrarProveedor(boolean enviarEmail){
 		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 		proveedor.setCedula(tipo + proveedor.getCedula());
@@ -274,30 +347,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		return proveedor;
 	}
 
-	public Proveedor getProveedor() {
-		return proveedor;
-	}
-
-	public void setProveedor(Proveedor proveedor) {
-		this.proveedor = proveedor;
-	}
-
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
-	}
-
-	public STransaccion getsTransaccion() {
-		return sTransaccion;
-	}
-
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
-	}
-
+	/**
+	 * Descripcion: Permite consultar las marcas
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Marcas consultadas y llenado de la lista de marcas a seleccionar
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.ConsultarMarca(page,
@@ -310,6 +365,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setTotalSize(total);
 	}
 
+	/**
+	 * Descripcion: Permite Consultar Tipo de Repuestos
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Tipo de repuestos consultados y llenado de la lista tipo de repuestos a seleccionar
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
 		Map<String, Object> Parametros = sMaestros
@@ -323,8 +384,15 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagTipoRepuestos.setTotalSize(total);
 	}
 	
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**GETTERS Y SETTERS*/
 
-
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
+	}
+	
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
 	}
@@ -455,8 +523,24 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.tipoPersonaCed = tipoPersonaCed;
 	}
 	
-	
-	
-	
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public SMaestros getsMaestros() {
+		return sMaestros;
+	}
+
+	public void setsMaestros(SMaestros sMaestros) {
+		this.sMaestros = sMaestros;
+	}
+
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
 	
 }

@@ -217,6 +217,4 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 		this.cliente = cliente;
 	}
 	
-	
-
 }

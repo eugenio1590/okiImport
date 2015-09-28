@@ -128,8 +128,9 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		analista = new Analista();
 	}
 	
+	/**METODOS PROPIOS DE LA CLASE*/
 	
-    /*METODOS SETTERS AND GETTERS */
+    /**METODOS SETTERS AND GETTERS */
 	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
