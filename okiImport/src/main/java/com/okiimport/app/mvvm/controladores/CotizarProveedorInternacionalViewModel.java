@@ -306,7 +306,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
-	/**METODOS PROPIOS DE LA CLASE*/
+	
 	/**
 	 * Descripcion: Carga la lista de monedas de acuerdo a la pagina dada como parametro
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
@@ -364,6 +364,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			detalle.setValorLibra(valorLibra);
 	}
 	
+	/**METODOS PROPIOS DE LA CLASE*/
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
