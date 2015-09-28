@@ -43,8 +43,7 @@ import com.okiimport.app.transaccion.servicios.STransaccion;
 public class RegistrarRequerimientoViewModel extends
 		AbstractRequerimientoViewModel {
 
-	private Requerimiento requerimiento;
-	private Cliente cliente;
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 
@@ -56,6 +55,7 @@ public class RegistrarRequerimientoViewModel extends
 	@Wire("#comboTipoPersona")
 	private Combobox comboTipoPersona;
 
+	//Atributos
 	private List<MarcaVehiculo> listaMarcasVehiculo;
 	private List<Motor> listaMotor;
 	private List<Estado> listaEstados;
@@ -63,13 +63,20 @@ public class RegistrarRequerimientoViewModel extends
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
-
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	private List<DetalleRequerimiento> eliminarDetalle;
 	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoRepuesto;
+	private Requerimiento requerimiento;
+	private Cliente cliente;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioRequerimiento.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
@@ -85,6 +92,14 @@ public class RegistrarRequerimientoViewModel extends
 		listaTipoRepuesto = llenarListaTipoRepuesto();
 	}
 
+	/**COMMANDS*/
+	
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario registrar Proveedor
+	 * Parametros: @param view: formularioRequerimiento.zul 
+	 * Retorno: Campos Vacios 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void limpiar() {
@@ -93,6 +108,12 @@ public class RegistrarRequerimientoViewModel extends
 		requerimiento.setCliente(cliente);
 	}
 
+	 /**
+		 * Descripcion: Permite Registrar el requerimiento
+		 * Parametros: @param view: formularioRequerimiento.zul  
+		 * Retorno: requerimiento registrado
+		 * Nota: Ninguna
+		 * */
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -139,7 +160,13 @@ public class RegistrarRequerimientoViewModel extends
 						null);
 		}
 	}
-
+	
+	 /**
+	 * Descripcion: Permite poder agregar un nuevo repuesto al requerimiento
+	 * Parametros: @param view: formularioRequerimiento.zul  
+	 * Retorno: linea vacia para annadir repuesto
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void agregarRepuesto() {
@@ -147,6 +174,12 @@ public class RegistrarRequerimientoViewModel extends
 			requerimiento.addDetalleRequerimiento(new DetalleRequerimiento());
 	}
 
+	 /**
+		 * Descripcion: Permite poder eliminar un repuesto del requerimiento
+		 * Parametros: @param view: formularioRequerimiento.zul  
+		 * Retorno: linea borrada del requerimiento
+		 * Nota: Ninguna
+		 * */
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void eliminarRepuesto() {
@@ -157,6 +190,12 @@ public class RegistrarRequerimientoViewModel extends
 
 	}
 
+	/**
+	 * Descripcion: Permite consultar si el cliente ya existe en la Base de datos
+	 * Parametros: @param view: formularioRequerimiento.zul  
+	 * Retorno: cliente consultado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void buscarCliente() {
@@ -181,6 +220,11 @@ public class RegistrarRequerimientoViewModel extends
 		}
 	}
 
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**GETTERS Y SETTERS*/
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
