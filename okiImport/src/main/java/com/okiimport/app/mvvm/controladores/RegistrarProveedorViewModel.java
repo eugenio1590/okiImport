@@ -286,6 +286,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.sTransaccion = sTransaccion;
 	}
 
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.consultarMarcas(page,
@@ -298,12 +299,11 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setTotalSize(total);
 	}
 
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
-		Map<String, Object> Parametros = sMaestros
-				.ConsultarClasificacionRepuesto(page, pageSize);
-		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
-				.get("clasificacionRepuesto");
+		Map<String, Object> Parametros = sMaestros.consultarClasificacionRepuesto(page, pageSize);
+		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
 		gridClasificacionRepuesto.setMultiple(true);
 		gridClasificacionRepuesto.setCheckmark(true);

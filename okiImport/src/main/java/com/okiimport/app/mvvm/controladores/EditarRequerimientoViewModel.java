@@ -108,7 +108,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		
 		agregarGridSort(gridMotores);
 		
-		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
+		Map<String, Object> parametros = sMaestros.consultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
 				
 		listaTraccion = llenarListaTraccion();

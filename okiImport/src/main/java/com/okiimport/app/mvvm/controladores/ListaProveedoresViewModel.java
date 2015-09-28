@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -117,6 +120,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	
 	@Command
 	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		cargarModelosLazy(proveedor);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "EDIT");
@@ -137,6 +141,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Command
 	public void verProveedor(
 			@BindingParam("proveedor") Proveedor proveedor) {
+		cargarModelosLazy(proveedor);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "READ");
@@ -159,59 +164,26 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		sMaestros.acutalizarPersona(proveedor);
 	}
 	
-	/*@Command
-	public void editarAnalista(@BindingParam("analista") Analista analista){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=analista.getId()){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("analista", analista);
-			llamarFormulario("editarAnalista.zul", parametros);
-		}
-		else
-			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
-	
-	/*@Command
-	@NotifyChange("analistas")
-	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=usuario.getId()){
-			if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
-				String mensaje = (estado) ? "Activado" : "Desactivado";
-				mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-				paginarLista();
-			}
-		}
-		else
-			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
+	@Command
+	public void registrarProveedor(){
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
+		window.setMaximizable(true);
+	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	/*private Usuario consultarUsuarioSession(){
-		UserDetails user = this.getUser();
-		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	}*/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void cargarModelosLazy(final Proveedor proveedor){
+		List<MarcaVehiculo> marcasVehiculo = new ArrayList((List<MarcaVehiculo>) sMaestros.consultarMarcasVehiculoProveedor(proveedor.getId(), 0, -1).get("marcas"));
+		List<ClasificacionRepuesto> clasifRepuesto = new ArrayList((List<ClasificacionRepuesto>) sMaestros.consultarClasificacionRepuestoProveedor(proveedor.getId(), 0, -1).get("clasificacionRepuesto"));
+		proveedor.setMarcaVehiculos(marcasVehiculo);
+		proveedor.setClasificacionRepuestos(clasifRepuesto);
+	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
 		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
 	/**SETTERS Y GETTERS*/
-	/*public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}*/
-	
-
-	@Command
-	public void registrarProveedor(){
-		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
-		window.setMaximizable(true);
-	}
-
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}
