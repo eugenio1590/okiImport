@@ -340,9 +340,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		return proveedor;
 	}
 
-
-
-
 	/**
 	 * Descripcion: Permite consultar las marcas
 	 * Parametros: @param view: formularioProveedor.zul 
@@ -362,14 +359,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setTotalSize(total);
 	}
 
-
 	/**
 	 * Descripcion: Permite Consultar Tipo de Repuestos
 	 * Parametros: @param view: formularioProveedor.zul 
 	 * Retorno: Tipo de repuestos consultados y llenado de la lista tipo de repuestos a seleccionar
 	 * Nota: Ninguna
 	 * */
-
 	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
@@ -394,11 +389,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	/**METODOS PROPIOS DE LA CLASE*/
 	
-	/**GETTERS Y SETTERS*/
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
-	}
-	
+	/**GETTERS Y SETTERS*/	
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
 	}

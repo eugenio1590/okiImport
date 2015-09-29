@@ -6,8 +6,8 @@
 			<hbox>
 				<label value="ID/RIF:"/>
 				<space></space>
-				<vbox>
-					<combobox width="20%" readonly="true"
+				<vbox width="20%">
+					<combobox width="30%" readonly="true"
 						selectedItem="@bind(vm.tipoPersona)"
 						model="@load(vm.listaTipoPersona)"
 						constraint="@bind(vm.notEmptyValidator)">

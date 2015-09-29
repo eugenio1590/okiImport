@@ -14,7 +14,6 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
@@ -202,7 +201,6 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		sMaestros.acutalizarPersona(proveedor);
 	}
 	
-
 	@Command
 	public void registrarProveedor(){
 		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
@@ -217,7 +215,6 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		proveedor.setClasificacionRepuestos(clasifRepuesto);
 	}
 	
-
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
 	 * Parametros: @param view: listaProveedores.zul 
