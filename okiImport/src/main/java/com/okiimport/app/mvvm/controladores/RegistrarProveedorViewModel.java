@@ -346,6 +346,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Retorno: Marcas consultadas y llenado de la lista de marcas a seleccionar
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.consultarMarcas(page,
@@ -357,19 +358,18 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setActivePage(page);
 		pagMarcas.setTotalSize(total);
 	}
-
+	
 	/**
 	 * Descripcion: Permite Consultar Tipo de Repuestos
 	 * Parametros: @param view: formularioProveedor.zul 
 	 * Retorno: Tipo de repuestos consultados y llenado de la lista tipo de repuestos a seleccionar
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
-		Map<String, Object> Parametros = sMaestros
-				.consultarClasificacionRepuesto(page, pageSize);
-		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
-				.get("clasificacionRepuesto");
+		Map<String, Object> Parametros = sMaestros.consultarClasificacionRepuesto(page, pageSize);
+		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
 		gridClasificacionRepuesto.setMultiple(true);
 		gridClasificacionRepuesto.setCheckmark(true);
@@ -389,11 +389,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	/**METODOS PROPIOS DE LA CLASE*/
 	
-	/**GETTERS Y SETTERS*/
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
-	}
-	
+	/**GETTERS Y SETTERS*/	
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
 	}

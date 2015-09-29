@@ -2,29 +2,29 @@
 	<div apply="org.zkoss.bind.BindComposer" width="100%"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerificarRequerimientosViewModel')">
 
-		<window id="ventanaCliente" border="normal" sclass="btn-primary"
-			width="40%">
-
-			<label value="ID/RIF:"/>
-			<space></space>
-			<combobox width="10%" readonly="true"
-				selectedItem="@bind(vm.tipoPersona)"
-				model="@load(vm.listaTipoPersona)"
-				constraint="no empty">
-				<template name="model">
-					<comboitem label="@bind(each.nombre)">
-
-					</comboitem>
-				</template>
-			</combobox>
-			<vbox>
-				<textbox id="cedulaclie" value="@bind(vm.cliente.cedula)" placeholder="Ej: 402405375" maxlength="9"
-					constraint="@bind(vm.validatorClienteCedulaRif2)" onOK="@command('buscarCliente')" />
-			</vbox>
-			<space></space>
-			<button label="Buscar" onClick="@command('buscarCliente')"
-				sclass="btn-primary" />
-
+		<window id="ventanaCliente" border="normal" sclass="btn-primary" width="40%">
+			<hbox>
+				<label value="ID/RIF:"/>
+				<space></space>
+				<vbox width="20%">
+					<combobox width="30%" readonly="true"
+						selectedItem="@bind(vm.tipoPersona)"
+						model="@load(vm.listaTipoPersona)"
+						constraint="@bind(vm.notEmptyValidator)">
+						<template name="model">
+							<comboitem label="@bind(each.nombre)"/>
+						</template>
+					</combobox>
+				</vbox>
+				<vbox>
+					<textbox placeholder="Ej: 402405375" maxlength="9"
+						value="@bind(vm.cliente.cedula)"
+						constraint="@bind(vm.validatorClienteCedulaRif2)" 
+						onOK="@command('buscarCliente')" />
+				</vbox>
+				<space></space>
+				<button label="Buscar" onClick="@command('buscarCliente')" sclass="btn-primary" />
+			</hbox>
 		</window>
 
 		<separator width="100%" orient="horizontal" bar="true"></separator>

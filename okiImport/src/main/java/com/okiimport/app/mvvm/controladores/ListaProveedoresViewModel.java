@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
@@ -23,6 +23,8 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -142,6 +144,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * */
 	@Command
 	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		cargarModelosLazy(proveedor);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "EDIT");
@@ -169,6 +172,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Command
 	public void verProveedor(
 			@BindingParam("proveedor") Proveedor proveedor) {
+		cargarModelosLazy(proveedor);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "READ");
@@ -197,6 +201,20 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		sMaestros.acutalizarPersona(proveedor);
 	}
 	
+	@Command
+	public void registrarProveedor(){
+		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
+		window.setMaximizable(true);
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void cargarModelosLazy(final Proveedor proveedor){
+		List<MarcaVehiculo> marcasVehiculo = new ArrayList((List<MarcaVehiculo>) sMaestros.consultarMarcasVehiculoProveedor(proveedor.getId(), 0, -1).get("marcas"));
+		List<ClasificacionRepuesto> clasifRepuesto = new ArrayList((List<ClasificacionRepuesto>) sMaestros.consultarClasificacionRepuestoProveedor(proveedor.getId(), 0, -1).get("clasificacionRepuesto"));
+		proveedor.setMarcaVehiculos(marcasVehiculo);
+		proveedor.setClasificacionRepuestos(clasifRepuesto);
+	}
 	
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
@@ -208,17 +226,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 	
-
-	/**METODOS PROPIOS DE LA CLASE*/
 	/**SETTERS Y GETTERS*/
-
-
-	@Command
-	public void registrarProveedor(){
-		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
-		window.setMaximizable(true);
-	}
-
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}
