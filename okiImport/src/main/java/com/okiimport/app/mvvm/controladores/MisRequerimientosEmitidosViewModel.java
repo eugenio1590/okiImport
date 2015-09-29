@@ -14,6 +14,12 @@ import com.okiimport.app.model.Requerimiento;
 
 public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimientosViewModel {
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaMisRequerimientosEmitidos.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -24,8 +30,9 @@ public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimiento
 	/**COMMAND*/
 	/*
 	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	 * Parametros: requerimiento @param view: listaMisRequerimientosEmitidos.zul  
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void editarReguerimiento(@BindingParam("requerimiento") final Requerimiento requerimiento){
@@ -36,11 +43,12 @@ public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimiento
 		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion 
+	/**
+	 * Descripcion: permitira crear el emergente (modal) necesario para enviar las solicitudes de cotizacion
 	 * a los proveedores del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosEmitidos.zul    
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void enviarProveedores(@BindingParam("requerimiento") final Requerimiento requerimiento){

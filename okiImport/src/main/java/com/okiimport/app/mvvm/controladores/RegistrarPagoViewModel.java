@@ -19,9 +19,11 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	//GUI
 	@Wire("#cmbBancoPago")
 	private Combobox cmbBancoPago;
 	@Wire("#cmbEmpresaEncomiendas")
@@ -29,6 +31,7 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 	@Wire("#cmbOficinaDireccion")
 	private Combobox cmbOficinaDireccion;
 	
+	//Atributos
 	private List <ModeloCombo<String>> listaBancoPago;
 	private ModeloCombo<String> bancoPago;
 	private List <ModeloCombo<String>> listaEmpresaEncomiendas;
@@ -38,11 +41,15 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 	private List<Estado> listaEstados;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
-	
-	
 	private Ciudad ciudad;
 	private Cliente cliente;
 	
+	 /**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioRegistrarPago.zul 
+     * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
@@ -58,11 +65,20 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 	
 	}
 	
-
+	 /**
+		 * Descripcion: ESTO NO HACE NADA
+		 * Parametros: @param view: formularioRegistrarPago.zul 
+		 * Retorno: Ninguno
+		 * Nota: Ninguna
+		 * */
 	public RegistrarPagoViewModel() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+     /**METODOS PROPIOS DE LA CLASE*/
+	 
+	 /**GETTERS Y SETTERS*/
 
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
@@ -195,6 +211,4 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 		this.cliente = cliente;
 	}
 	
-	
-
 }

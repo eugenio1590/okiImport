@@ -47,6 +47,12 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
     private Requerimiento requerimiento;
     private Compra compra;
     
+    /**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioCompra.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
@@ -61,12 +67,14 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	/**
+	 * Descripcion: Permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: formularioCompra.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -80,10 +88,12 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	
+	 /**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: formularioCompra.zul 
+	 * Retorno: setea la pagina activa segun el paging
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -92,6 +102,12 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 		cambiarDetallesCompra(page);
 	}
 	
+	 /**
+		 * Descripcion: Permite Registrar la compra 
+		 * Parametros: @param view: formularioCompra.zul 
+		 * Retorno: compra registrada
+		 * Nota: Ninguna
+		 * */
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
 		if(checkIsFormValid()){
@@ -100,10 +116,19 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 		}
 	}
 	
+	/**
+	 * Descripcion: Carga nuevamente las listas al cerrar la pantalla
+	 * Parametros: @param view: formularioCompra.zul 
+	 * Retorno: listas cargadas
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarCompras", null);
 	}
+	
+	
+	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {

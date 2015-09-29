@@ -84,31 +84,31 @@
 									</row>
 									<row>
 										<label value="Estado: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.estado)"
-											model="@load(vm.listaEstados)"
-											onSelect="@command('buscarCiudades')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
-
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="80%" readonly="true"
+												selectedItem="@bind(vm.estado)"
+												model="@load(vm.listaEstados)"
+												constraint="@bind(vm.notEmptyValidator)"
+												onSelect="@command('buscarCiudades')">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>								
+												</template>
+											</combobox>
+										</vbox>
+										
 										<label value="Ciudad: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.cliente.ciudad)"
-											model="@load(vm.listaCiudades)">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="80%" readonly="true"
+												selectedItem="@bind(vm.cliente.ciudad)"
+												constraint="@bind(vm.notEmptyValidator)"
+												model="@load(vm.listaCiudades)">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
 									</row>
 
 
@@ -141,24 +141,24 @@
 										<row>
 
 											<label value="Marca: *" />
-											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
-												selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
-												model="@load(vm.listaMarcasVehiculo)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-
-													</comboitem>
-												</template>
-											</combobox>
+											<vbox>
+												<combobox
+													placeholder="Seleccione..." width="80%" readonly="true"
+													selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
+													constraint="@bind(vm.notEmptyValidator)"
+													model="@load(vm.listaMarcasVehiculo)">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)"/>
+													</template>
+												</combobox>
+											</vbox>
 
 											<label value="Modelo: *" />
 											<vbox>
 												<textbox id="modelo"
 													width="95%" readonly="" mold="rounded"
-													value="@bind(vm.requerimiento.modeloV)" placeholder="Ej Hilux"
+													value="@bind(vm.requerimiento.modeloV)"
+													placeholder="Ej Hilux"
 													constraint="@bind(vm.notEmptyValidator)" />
 											</vbox>
 										</row>
@@ -175,7 +175,8 @@
 
 											<label value="Año: *" />
 											<vbox>
-												<intbox width="142%" placeholder="Ej: 2015"
+												<intbox width="142%"
+													placeholder="Ej: 2015"
 													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
 													value="@bind(vm.requerimiento.annoV)" />
 											</vbox>
@@ -311,14 +312,16 @@
 								<template name="model">
 									<listitem>
 										<listcell>
-											<textbox width="110px"  placeholder="Ej: 43330-39225"
+											<textbox width="110px"
+												placeholder="Ej: 43330-39225"
 												value="@bind(each.codigoOem)">
 											</textbox>
 
 										</listcell>
 										<listcell>
 											<vbox>
-												<textbox width="275px" placeholder="Ej: Terminal Exterior Derecho"
+												<textbox width="275px"
+													placeholder="Ej: Terminal Exterior Derecho"
 													multiline="true" rows="2" sclass="no_rezise"
 													value="@bind(each.descripcion)"
 													constraint="@bind(vm.notEmptyValidator)">
@@ -327,8 +330,8 @@
 										</listcell>
 										<listcell>
 											<vbox>
-												<spinner width="70px" placeholder="Ej: 1"
-													onOK="@command('agregarRepuesto')"
+												<spinner width="70px"
+													placeholder="Ej: 1" onOK="@command('agregarRepuesto')"
 													constraint="@bind(vm.cantValidator)"
 													value="@bind(each.cantidad)">
 												</spinner>

@@ -82,16 +82,22 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	private Estado estado;
 	private Ciudad ciudad;
 	private Motor motor;
-	
+
 	private List <ModeloCombo<Boolean>> listaTraccion;
 	private List <ModeloCombo<Boolean>> listaTransmision;
 	private List <ModeloCombo<Boolean>> listaTipoRepuesto;
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
 	private ModeloCombo<Boolean> tipoRepuesto;
-	
 	private Boolean editar;
 	
+	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: editarRequerimiento.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
@@ -108,7 +114,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		
 		agregarGridSort(gridMotores);
 		
-		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
+		Map<String, Object> parametros = sMaestros.consultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
 				
 		listaTraccion = llenarListaTraccion();
@@ -161,10 +167,12 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique
+	/**
+	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique 
+	 * Parametros: @param view: editarRequerimiento.zul 
 	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
-	 * Retorno: Ninguno
+	 * Retorno: seccion abierta o cerrada
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void abrirDatosVehiculo(@Default("false") @BindingParam("justIcon") boolean justIcon){
@@ -177,10 +185,11 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
 	}
 	
-	/*
-	 * Descripcion: Permitira limpiar los campos de la vista del formulario
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira limpiar los campos de la vista del formulario 
+	 * Parametros: @param view: editarRequerimiento.zul 
+	 * Retorno: Campos limpiados 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange({"requerimiento", "traccion", "transmision"})
@@ -195,10 +204,11 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira actualizar la informacion del requerimiento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira actualizar la informacion del requerimiento 
+	 * Parametros: @param view: editarRequerimiento.zul 
+	 * Retorno: informacion del requerimiento actualizada 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void actualizar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -230,6 +240,8 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	public void aplicarFiltroMotor(){
 		cambiarMotores(0, null, null);
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {

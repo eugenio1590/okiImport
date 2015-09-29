@@ -23,7 +23,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
@@ -57,6 +56,12 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	private Cotizacion cotizacionFiltro;
 	private Requerimiento requerimiento;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: cotizaciones.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento")Requerimiento requerimiento){
@@ -87,12 +92,14 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	/**
+	 * Descripcion: permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: cotizaciones.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -111,10 +118,12 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
+	 * de Paging 
+	 * Parametros: @param view: cotizaciones.zul 
+	 * Retorno: posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -123,10 +132,12 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 		cambiarCotizaciones(page, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
+	 * establecido en el evento 
+	 * Parametros: @param view: cotizaciones.zul 
+	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Nota:Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaCotizaciones")
@@ -134,10 +145,12 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 		cambiarCotizaciones(0, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: permite crear el emergente (modal) necesario para editar el requerimiento seleccionado
+	 * establecido en el evento 
+	 * Parametros: requerimiento seleccionado @param view: cotizaciones.zul 
+	 * Retorno: emergente (modal) creado.
+	 * Nota:Ninguna
 	 * */
 	@Command
 	public void editarReguerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -146,6 +159,13 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
+	/**
+	 * Descripcion: permite crear el emergente (modal) necesario para ver el requerimiento seleccionado
+	 * establecido en el evento 
+	 * Parametros: requerimiento seleccionado @param view: cotizaciones.zul 
+	 * Retorno: emergente (modal) creado.
+	 * Nota:Ninguna
+	 * */
 	@Command
 	public void verDetalleCotizacion(@BindingParam("cotizacion") Cotizacion cotizacion){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -153,19 +173,23 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 		crearModal(BasePackageSistemaFunc+"detalleCotizacion.zul", parametros);
 	}
 	
+	/**
+	 * Descripcion: permite guardar la cotizacion 
+	 * Parametros: cotizacion seleccionada @param view: cotizaciones.zul 
+	 * Retorno: cambio estatus a la cotizacion, mensaje emergente.
+	 * Nota:Ninguna
+	 * */
 	@NotifyChange("*")
 	@Command
 	public void aprobar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		
 		if (cotizacion != null){
-			System.out.println("Cotizacion");
 			cotizacion.setEstatus("A");
 			sTransaccion.ActualizarCotizacion(cotizacion);
 			cambiarCotizaciones(0, null, null);
 		}
 		
 		else if (listaCotizacionesSeleccionadas.size() > 0) { 
-			System.out.println("CotizacionSeleccionada");
 			for (Cotizacion cotizacionSeleccionada:listaCotizacionesSeleccionadas){
 				cotizacionSeleccionada.setEstatus("A");
 				sTransaccion.ActualizarCotizacion(cotizacionSeleccionada);

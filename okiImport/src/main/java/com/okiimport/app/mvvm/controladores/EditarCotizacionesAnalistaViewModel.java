@@ -42,15 +42,18 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	
 	//Atributos
 	private static String titulo = "Cotizacion del Requerimiento Nro ";
-	
 	private String constraint_precio_flete;
-	
 	private List<Cotizacion> listaCotizacion;
-	
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
@@ -78,12 +81,13 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
-	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
+	/**
+	 * Descripcion: Permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -100,10 +104,11 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -112,10 +117,11 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		cambiarCotizaciones(page, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
+	/**
+	 * Descripcion: Permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaCotizacion")
@@ -123,10 +129,12 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		cambiarCotizaciones(0, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira cargar la lista de detalles de la cotizacion seleccionada
+	/**
+	 * Descripcion: Permitira cargar la lista de detalles de la cotizacion seleccionada
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
@@ -139,11 +147,12 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 	}
 	
-	/*
+	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
-	 * @param: Ninguno
+	 * Parametros: @param view: listaCotizacionesAnalista.zul 
 	 * Retorno: Ninguno
-	 */
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);

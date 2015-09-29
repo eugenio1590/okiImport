@@ -17,7 +17,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Window;
-
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
@@ -28,22 +27,28 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 
-	
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	//GUI
+	@Wire("#winFormularioAnalista")
+	private Window winFormularioAnalista;
+	
+	//Atributos
+	private Boolean editar;
 	private Analista analista;
 	private Ciudad ciudad;
-	
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
 	
-	@Wire("#winFormularioAnalista")
-	private Window winFormularioAnalista;
-	
-	private Boolean editar;
-	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: editarAnalistas.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("analista") Analista analista ) {
 		super.doAfterCompose(view);
@@ -59,6 +64,12 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 		
 	}
 	
+	/**
+	 * Descripcion: Llama a registrar analista
+	 * Parametros: @param view: editarAnalistas.zul 
+	 * Retorno: analista registrado o actualizado, notificacion de registro exitoso 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnGuardar") Button btnGuardar,
@@ -91,19 +102,34 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				
 	}
 	
-	
+	/**
+	 * Descripcion: Llama a limpiar los campos
+	 * Parametros: @param view: editarAnalistas.zul 
+	 * Retorno: Campos vacios en el formulario
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "analista" })
 	public void limpiar() {
 		analista = new Analista();
 	}
 
+	
+	/**
+	 * Descripcion: Llama a Cerrar el Modal 
+	 * Parametros: @param view: editarAnalistas.zul 
+	 * Retorno: Modal Cerrado 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void CerrarVista()
 	{
 		ejecutarGlobalCommand("cambiarAnalistas", null);
 	}
 	
+	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

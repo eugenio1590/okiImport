@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,6 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
@@ -23,6 +23,8 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -41,17 +43,20 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Wire("#pagProveedores")
 	protected Paging pagProveedores;
 	
+	//Atributos
+	
 	Window window = null;
 	int idcount = 0;
 	private boolean makeAsReadOnly;
-
-	
-	//Modelos
 	protected List<Proveedor> proveedores;
 	protected Proveedor proveedorFiltro;
-	
-	//Atributos
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -76,6 +81,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}
 	
 	/**GLOBAL COMMAND*/
+	/**
+	 * Descripcion: Llama a consultar proveedores  
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: proveedores consultados
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange("proveedores")
 	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
@@ -89,6 +100,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	}
 	
 	/**COMMAND*/
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: listaProveedores.zul   
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
@@ -96,27 +113,38 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		cambiarProveedores(page, null, null);
 	}
 	
+	/**
+	 * Descripcion: Permitira filtrar por los campos del proveedor
+	 * Parametros: @param view: listaProveedores.zul   
+	 * Retorno: Campos filtrados
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void aplicarFiltro(){
 		cambiarProveedores(0, null, null);
 	}
 	
-	/*@Command
-	@NotifyChange("analistas")
-	public void limpiarRadios(){
-		this.analistaFiltro.setActivo(null);
-		radEstado.setSelectedIndex(-1);
-		aplicarFiltro();
-	}*/
-	
+	/**
+	 * Descripcion: Llama a un modal para crear o registrar un proveedor
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Formulario Proveedor Cargado para registrar un nuevo proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void nuevoProveedor(){
 		llamarFormulario(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 	}
 	
+	/**
+	 * Descripcion: Llama a un modal para editar los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void editarProveedor(@BindingParam("proveedor") Proveedor proveedor){
+		cargarModelosLazy(proveedor);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "EDIT");
@@ -134,9 +162,17 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		
 	}
 	
+	
+	/**
+	 * Descripcion: Llama a un modal para ver los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void verProveedor(
 			@BindingParam("proveedor") Proveedor proveedor) {
+		cargarModelosLazy(proveedor);
 		final HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "READ");
@@ -152,6 +188,12 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		window.setId("doModal" + "" + idcount + "");
 	}
 	
+	/**
+	 * Descripcion: Llama a un modal para eliminar los datos del proveedor
+	 * Parametros: Proveedor @param view: listaProveedores.zul 
+	 * Retorno: Modal cargado con los datos del proveedor
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange("proveedores")
 	@Command
 	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
@@ -159,58 +201,33 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		sMaestros.acutalizarPersona(proveedor);
 	}
 	
-	/*@Command
-	public void editarAnalista(@BindingParam("analista") Analista analista){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=analista.getId()){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("analista", analista);
-			llamarFormulario("editarAnalista.zul", parametros);
-		}
-		else
-			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
-	
-	/*@Command
-	@NotifyChange("analistas")
-	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=usuario.getId()){
-			if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
-				String mensaje = (estado) ? "Activado" : "Desactivado";
-				mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-				paginarLista();
-			}
-		}
-		else
-			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
-	}*/
-	
-	/**METODOS PROPIOS DE LA CLASE*/
-	/*private Usuario consultarUsuarioSession(){
-		UserDetails user = this.getUser();
-		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
-	}*/
-	
-	private void llamarFormulario(String ruta, Map<String, Object> parametros){
-		crearModal(BasePackageSistemaMaest+ruta, parametros);
-	}
-
-	/**SETTERS Y GETTERS*/
-	/*public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}*/
-	
-
 	@Command
 	public void registrarProveedor(){
 		window = crearModal(BasePackageSistemaMaest+"formularioProveedor.zul", null);
 		window.setMaximizable(true);
 	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void cargarModelosLazy(final Proveedor proveedor){
+		List<MarcaVehiculo> marcasVehiculo = new ArrayList((List<MarcaVehiculo>) sMaestros.consultarMarcasVehiculoProveedor(proveedor.getId(), 0, -1).get("marcas"));
+		List<ClasificacionRepuesto> clasifRepuesto = new ArrayList((List<ClasificacionRepuesto>) sMaestros.consultarClasificacionRepuestoProveedor(proveedor.getId(), 0, -1).get("clasificacionRepuesto"));
+		proveedor.setMarcaVehiculos(marcasVehiculo);
+		proveedor.setClasificacionRepuestos(clasifRepuesto);
+	}
+	
+	/**
+	 * Descripcion: Metodo de la clase que permite llamar formularios 
+	 * Parametros: @param view: listaProveedores.zul 
+	 * Retorno: Formulario con los parametros dados
+	 * Nota: Ninguna
+	 * */
+	private void llamarFormulario(String ruta, Map<String, Object> parametros){
+		crearModal(BasePackageSistemaMaest+ruta, parametros);
+	}
+
+	/**METODOS PROPIOS DE LA CLASE*/
+
+	/**SETTERS Y GETTERS*/
 
 	public SMaestros getsMaestros() {
 		return sMaestros;

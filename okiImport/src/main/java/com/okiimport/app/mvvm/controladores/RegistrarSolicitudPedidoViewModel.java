@@ -21,8 +21,9 @@ import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoViewModel 
-{
+public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoViewModel {
+	
+	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
@@ -33,13 +34,17 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	
 	//Atributos
 	private Requerimiento requerimiento;
-
     private Compra compra;
-    
     private List<ModeloCombo<Boolean>> listaTipoFlete;
-    
     private ModeloCombo<Boolean> tipoFlete;
     
+    
+    /**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioSolicituddePedido.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
@@ -54,6 +59,12 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	}
 	
 	/**COMMAND*/
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario registrar solicitud de pedido
+	 * Parametros: @param view: formularioSolicituddePedido.zul 
+	 * Retorno: Campos Vacios 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"compra","tipoFlete"})
 	public void limpiar(){
@@ -61,6 +72,12 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.tipoFlete = listaTipoFlete.get(0);
 	}
 	
+	/**
+	 * Descripcion: Permite Registrar la solicitud de pedido
+	 * Parametros: @param view: formularioSolicituddePedido.zul  
+	 * Retorno: solicitud de pedido registrada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void registrar(){
 		if(this.checkIsFormValid()){
@@ -70,12 +87,19 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		}
 	}
 
-	/**METODOS PROPIOS DE LA CLASE*/
+	/**
+	 * Descripcion: Permite llenar la lista con los tipo de flete
+	 * Parametros: @param view: formularioSolicituddePedido.zul  
+	 * Retorno: lista llenada
+	 * Nota: Ninguna
+	 * */
 	private void llenarTiposFlete(){
 		listaTipoFlete = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoFlete.add(new ModeloCombo<Boolean>("No", false));
 		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
 	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {

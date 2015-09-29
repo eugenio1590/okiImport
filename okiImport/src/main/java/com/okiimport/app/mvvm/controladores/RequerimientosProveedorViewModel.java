@@ -50,13 +50,17 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	
 	//Atributos
 	private List <Requerimiento> listaRequerimientos;
-	
 	private Usuario usuario;
 	private Proveedor proveedor;
 	private Requerimiento requerimientoFiltro;
-	
 	private List<ModeloCombo<String>> listaEstatus;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -85,12 +89,15 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+
+	/**
+	 * Descripcion: Permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -109,10 +116,12 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
+	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
+	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -121,10 +130,11 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		cambiarRequerimientos(page, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
+	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
+	 * Retorno: Filtro por cada campo segun lo establecido en el evento 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
@@ -133,10 +143,11 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		cambiarRequerimientos(0, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira crear el emergente (modal) necesario para ver las solicitudes del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Permitira crear el emergente (modal) necesario para ver las solicitudes del requerimiento seleccionado
+	 * Parametros: requerimiento: requerimiento seleccionado @param view: listaRequerimientosProveedorViewModel.zul  
+	 * Retorno: Emergente Creado 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void verSolicitudes(@BindingParam("requerimiento") Requerimiento requerimiento){
@@ -148,6 +159,8 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		else //Internacional
 			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
+	
+	/**METODOS PROPIOS Y DE LA CLASE*/
 	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {

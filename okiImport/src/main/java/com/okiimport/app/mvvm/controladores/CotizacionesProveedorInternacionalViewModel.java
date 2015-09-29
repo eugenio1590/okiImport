@@ -20,7 +20,6 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
-
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
@@ -43,16 +42,19 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	
 	//Atributos
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
-	
 	private String constraint_precio_flete;
-	
 	private List<Cotizacion> listaCotizacion;
-	
 	private Persona persona;
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("persona") Persona persona, 
@@ -82,12 +84,14 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
+	 /**
 	 * Descripcion: permitira cambiar las cotizaciones de la grid de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Ninguno
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
@@ -104,10 +108,11 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
+	 * de Paging 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -116,10 +121,12 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		cambiarCotizaciones(page, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
+	 * establecido en el evento 
+	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Nota:Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaCotizacion")
@@ -127,10 +134,12 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		cambiarCotizaciones(0, null, null);
 	}
 	
-	/*
-	 * Descripcion: permitira cargar la lista de detalles de la cotizacion seleccionada
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
+	
+	/**
+	 * Descripcion: permite cargar la lista de detalles de la cotizacion seleccionada
+	 * Parametros: requerimiento seleccionado @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: listas de detalles de la cotizacion llenas
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
@@ -143,11 +152,12 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 	}
 	
-	/*
+	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
-	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 */
+	 * Parametros: Ninguno @param view: listaCotizacionesProveedorInternacional.zul 
+	 * Retorno: listas cargadas 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
@@ -155,7 +165,6 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

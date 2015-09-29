@@ -14,6 +14,12 @@ import com.okiimport.app.model.Requerimiento;
 
 public class MisRequerimientosOfertadosViewModel extends AbstractMisRequerimientosViewModel {
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaMisRequerimientosOfertados.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
@@ -26,6 +32,7 @@ public class MisRequerimientosOfertadosViewModel extends AbstractMisRequerimient
 	 * Descripcion: permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@Command
 	public void seleccionarCotizaciones(@BindingParam("requerimiento") final Requerimiento requerimiento){
@@ -35,11 +42,12 @@ public class MisRequerimientosOfertadosViewModel extends AbstractMisRequerimient
 		crearModal(BasePackageSistemaFunc+"en_proceso/aprobarCotizaciones.zul", parametros);
 	}
 
-	/*
-	 * Descripcion: permitira visualizar las Ofertas para luego enviar al cliente respectivo
-	 * @param requerimiento: requerimiento seleccionado
+	/**
+	 * Descripcion: Permitira visualizar las Ofertas para luego enviar al cliente respectivo
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosOfertados.zul    
 	 * Retorno: Ninguno
-	 */
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void mostrarOfertas(@BindingParam("requerimiento") final Requerimiento requerimiento){
 		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
@@ -49,11 +57,12 @@ public class MisRequerimientosOfertadosViewModel extends AbstractMisRequerimient
 		crearModal(BasePackageSistemaFunc+"ofertados/listaOfertasCliente.zul", parametros );
 	}
 
-	/*
-	 * Descripcion: permitira visualizar la lista de compras del requerimiento seleccionado
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno ninguno
-	 */
+	/**
+	 * Descripcion: Permitira visualizar la lista de compras del requerimiento seleccionado
+	 * Parametros: Requerimiento: requerimiento seleccionado @param view: listaMisRequerimientosOfertados.zul    
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void verCompras(@BindingParam("requerimiento") final Requerimiento requerimiento){
 		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));

@@ -24,17 +24,25 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
-	private MarcaVehiculo marca;
 	
-	private Integer page_size = 10;
-	
+	//GUI
 	@Wire("#winFormularioMarca")
 	private Window winFormularioMarca;
 	
+	//Atributos
+	private MarcaVehiculo marca;
+	private Integer page_size = 10;
 	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioMarcas.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
@@ -42,6 +50,12 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 		
 	}
 	
+	/**
+	 * Descripcion: Permite registrar una marca en el sistema
+	 * Parametros: @param view: formularioMarcas.zul 
+	 * Retorno: Marca Registrada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "marca" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
@@ -69,12 +83,21 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 			}	
 	}
 	
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario Marca
+	 * Parametros: @param view: formularioMarcas.zul 
+	 * Retorno: campos vacios
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "marca" })
 	public void limpiar() {
 		marca = new MarcaVehiculo();
 	}
 
+	/**METODOS PROPIOS DE LA CLASE*/
+	
+	/**METODOS SETTERS AND GETTERS */
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

@@ -28,19 +28,26 @@ import com.okiimport.app.service.transaccion.STransaccion;
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
 {
 	
-	@Wire("#winOferta")
-	private Window winOferta;
 	
-	private Requerimiento requerimiento;
-
-    private Oferta oferta;
-    
+    //Servicios
     @BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
     
-    private List<DetalleOferta> listaDetOferta;
+    //GUI
+    @Wire("#winOferta")
+	private Window winOferta;
+	
+    //Atributos
+	private Requerimiento requerimiento;
+	private List<DetalleOferta> listaDetOferta;
+    private Oferta oferta;
     
-    
+    /**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento, 
@@ -53,6 +60,13 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	}
 	
 	/**GLOBAL COMMAND*/
+	
+	/**
+	 * Descripcion: Permite Cargar La Oferta
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno: Oferta Cargada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("oferta")
 	public void cargarOferta(){
@@ -60,6 +74,12 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	}
 	
 	/**COMMAND*/
+	/**
+	 * Descripcion: Permite Registrar Una Oferta
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno: Oferta Registrada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({ "oferta" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
@@ -68,9 +88,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			oferta.setEstatus("recibida");
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
-
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-
 			cargarOferta();
 			
 			Map<String, Object> parametros = new HashMap<String, Object>();
@@ -93,13 +111,25 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 		}
 	}
 	
+	/**
+	 * Descripcion: Permite Aprobar el detalle de la oferta
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno: Oferta aprobada
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) Checkbox checkbox,
 			@BindingParam("detalleOferta") DetalleOferta detalleOferta){
 		detalleOferta.setAprobado(checkbox.isChecked());
 	}
 	
-	/**METODOS PRIVADOS DE LA CLASE*/
+	
+	/**
+	 * Descripcion: Permite llenar la lista con las ofertas aprobadas
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno:lista llena
+	 * Nota: Ninguna
+	 * */
 	private void llenarListAprobados() {
 		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
 			if (detalleOferta.getAprobado() != null && detalleOferta.getAprobado()){
@@ -107,6 +137,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			}
 		}
 	}
+	
+	/**METODOS PRIVADOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
 	public Requerimiento getRequerimiento() {

@@ -19,73 +19,40 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewModel  {
 
-	private Requerimiento requerimiento;
-	private Cliente cliente;
-	
+	//Servicios
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
+	//Atributos
 	private List <Requerimiento> listaRequerimientos;
-	
 	private List <MarcaVehiculo> listaMarcasVehiculo;
+	private Requerimiento requerimiento;
+	private Cliente cliente;
 	
-	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view:  
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{
 		super.doAfterCompose(view);
-		//cliente = new Cliente();	
-		//listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
-		//requerimiento = (Requerimiento) cliente.getRequerimientos();
-		//Usuario usuario = cliente.getUsuario();
-		//this.cliente = cliente;
 		this.requerimiento = requerimiento;
 		List<DetalleRequerimiento> detallesRequerimiento 
 			= (List<DetalleRequerimiento>) sTransaccion
 				.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
 		this.requerimiento.setDetalleRequerimientos(detallesRequerimiento);
-		
-		
-		
 	}
 	
-	/*public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario)
-	{
-		super.doAfterCompose(view);
-		persona = usuario.getPersona();
-		this.usuario = usuario;
-		this.usuario.setPasword(null);
-		username = this.usuario.getUsername();
-		
-		btnCambFoto.addEventListener("onUpload", this);
-		
-		validadorUsername = new AbstractValidator() {
-			
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				String username = (String) ctx.getProperty().getValue();
-				txtUsername = (Textbox) ctx.getBindContext().getValidatorArg("txtUsername");
-				if(username!=null)
-					if(sControlUsuario.verificarUsername(username) && 
-							!username.equalsIgnoreCase(EditarUsuarioViewModel.this.username)){
-						String mensaje = "El Username "+username+" ya esta en uso!";
-						mostrarNotification(mensaje, "error", 5000, true, txtUsername);
-						addInvalidMessage(ctx, mensaje);
-					}
-			}
-		};
-	}*/
 	
-	
-	
-	
-	
-	
+	/** METODOS PROPIOS DE LA CLASE */
+
+	/** GETTERS Y SETTERS */
 	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;

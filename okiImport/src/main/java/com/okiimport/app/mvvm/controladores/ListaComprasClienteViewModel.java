@@ -54,6 +54,12 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	private Compra compra;
 	private String titulo = "Solicitudes de Compra del Requerimiento N° ";
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: listaComprasCliente.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
@@ -65,7 +71,8 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		pagComprasCliente.setPageSize(pageSize);
 		cambiarCompras(0, null, null);
 	}
-	
+
+	/**Interface: EventListener<SortEvent>*/
 	@Override
 	public void onEvent(SortEvent event) throws Exception {
 		// TODO Auto-generated method stub
@@ -78,6 +85,12 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	}
 
 	/**GLOBAL COMMAND*/
+	/**
+	 * Descripcion: Llama a consultar compras por requerimiento 
+	 * Parametros: @param view: listaComprasCliente.zul 
+	 * Retorno: compras por requerimiento cargadas 
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
 	@NotifyChange("listaCompras")
@@ -92,12 +105,13 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	}
 
 	/** COMMAND */
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina
-	 * activa del Paging
-	 * 
-	 * @param Ninguno Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina
+	 * activa del Paging 
+	 * Parametros: @param view: listaComprasCliente.zul 
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista() {
@@ -105,12 +119,25 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		cambiarCompras(page, null, null);
 	}
 	
+	//CREO QUE ESTE METODO NO SE UTILIZA EN NINGUNA PARTE
+	/**
+	 * Descripcion: Permitira ver la compra del cliente
+	 * Parametros: compra @param view: listaComprasCliente.zul 
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void verCompra(@BindingParam("compra") Compra compra){
 		
 	}
 	
+	/**
+	 * Descripcion: Llama a formulario para registrar la compra
+	 * Parametros: compra @param view: listaComprasCliente.zul 
+	 * Retorno: Modal para registrar la compra segun parametros 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void registrarCompra(@BindingParam("compra") Compra compra){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -119,6 +146,13 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		crearModal(BasePackageSistemaFunc+"ofertados/formularioCompra.zul", parametros);
 	}
 	
+	//LLAMA A CAMBIAR LOS REQUERIMIENTOS?
+	/**
+	 * Descripcion: Llama a cambiar los requerimientos
+	 * Parametros: compra @param view: listaComprasCliente.zul 
+	 * Retorno:  
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void cambiarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);

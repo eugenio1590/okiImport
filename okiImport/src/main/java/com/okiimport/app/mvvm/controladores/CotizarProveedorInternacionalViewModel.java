@@ -36,6 +36,7 @@ import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.AbstractServiceImpl;
@@ -69,26 +70,28 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
-	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
 	
+	private final CustomConstraint CONTRAINT_PRECIO_FLETE = getValidatorPrecio();
 	
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
-	
-	
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionSelecionada=null;
 	private Moneda monedaSeleccionada;
-	
 	private List<ModeloCombo<Boolean>> tiposFlete;
 	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
-	
 	private String titulo;
 	private String constraintCampoObligatorio;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
@@ -137,10 +140,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	}
 	
 	/**COMMAND*/
-	/*
-	 * Descripcion: permitira limpiar los campos editable de la grid de detalles de la cotizacion seleccionada
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Limpia los campos editable de la grid de detalles de la cotizacion seleccionada 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Campos Limpios
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
@@ -159,10 +163,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			}
 	}
 	
-	/*
-	 * Descripcion: Permitira enviar los datos de la cotizacion seleccionada para su registro
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Envia los datos de la cotizacion seleccionada para su registro 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: datos de la cotizacion enviada
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -190,11 +195,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira asginar el historial mas actual de la moneda seleccionada
-	 * @param: Ninguno
+	/**
+	 * Descripcion: Asigna el historial mas actual de la moneda seleccionada
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
 	 * Retorno: Ninguno
-	 */
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"cotizacionSelecionada", "listaDetalleCotizacion"})
 	public void seleccionMoneda(){
@@ -207,10 +213,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
-	 * @param Ninguno
-	 * Retorno: Ninguno
+	/**
+	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
+	 * de Paging 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -219,11 +227,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		cambiarMonedas(page);
 	}
 	
-	/*
-	 * Descripcion: Permitira especificar el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente
-	 * @param Ninguno
-	 * Retorno: Ninguno 
-	 */
+	/**
+	 * Descripcion: Especifica el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente 
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Tipo de flete especificado 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada", "constraint_precio_flete"})
 	public void seleccionarTipoFlete(){
@@ -244,11 +253,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira calcular el precio de la columna especificado como parametro
-	 * @param column: nro. de columna
-	 * Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Calcula el precio de la columna especificado como parametro
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Precio Calculado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void calcularPrecio(@BindingParam("tipo") int tipo){
@@ -270,11 +280,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira calcular el total del flete por medio de las dimensiones del producto
-	 * @param detalleCotizacion: objeto seleccionado
-	 * Retorno: Ninguno 
-	 */
+	/**
+	 * Descripcion: Calcula el total del flete por medio de las dimensiones del producto
+	 * Parametros: detalleCotizacion objeto seleccionado @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: total del flete Calculado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
 	public void calcularTotalFlete(@BindingParam("detalleCotizacion") DetalleCotizacionInternacional detalleCotizacion){
@@ -287,22 +298,25 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
-	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Carga nuevamente las listas al cerrar la pantalla
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: listas cargadas
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
 	}
 	
-	/**METODOS PROPIOS DE LA CLASE*/
-	/*
-	 * Descripcion permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
+	
+	/**
+	 * Descripcion: Carga la lista de monedas de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
-	 * Retorno: Ninguno
-	 */
+	 * Retorno: listas de monedas cargadas
+	 * Nota: Ninguna
+	 * */
 	@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	private void cambiarMonedas(@Default("0") @BindingParam("page") int page){
@@ -314,11 +328,12 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		pagMonedas.setPageSize(pageSize);
 	}
 	
-	/*
-	 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
-	 * @param: Ninguno
-	 * Retorno: Ninguno 
-	 */
+	/**
+	 * Descripcion: Limpia la informacion de la cotizacion seleccionada
+	 * Parametros: Cotizacion Seleccionada @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Campos Limpiados
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange("cotizacionSelecionada")
 	private void limpiarCotizacionSeleccionada(){
 		if(cotizacionSelecionada!=null){
@@ -327,22 +342,24 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: Permitira actualizar la lista de detalles de cotizacion calculando su precio de flete
-	 * @param: Ninguno
-	 * Retorno: Ninguno 
-	 */
+	/**
+	 * Descripcion: Actualiza la lista de detalles de cotizacion calculando su precio de flete
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Lista Actualizada
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
 	private void actualizarListaDetalleCotizacion(){
 		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion)
 			calcularTotalFlete(detalle);
 	}
 	
-	/*
-	 * Descripcion: Permitira asignar la configuracion actual de la libra a los detalles de cotizacion
-	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 */
+	/**
+	 * Descripcion: Asigna la configuracion actual de la libra a los detalles de cotizacion
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Configuracion asignada
+	 * Nota: Ninguna
+	 * */
 	private void prepararListaDetalleCotizacion(){
 		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
 		Float valorLibra = configuracion.getValorLibra();
@@ -350,6 +367,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			detalle.setValorLibra(valorLibra);
 	}
 	
+	/**METODOS PROPIOS DE LA CLASE*/
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

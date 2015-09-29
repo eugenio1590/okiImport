@@ -50,36 +50,37 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	//GUI
 	@Wire("#winListProveedores")
 	private Window winListProveedores;
-	
 	@Wire("#pagProveedores")
 	private Paging pagProveedores;
-	
 	@Wire ("#btn_enviar")
 	private Button btn_enviar;
-	
-	private static final Comparator<Proveedor> COMPR_PROVEE = Proveedor.getComparator();
-	
-	private Proveedor proveedor;
-	private Cotizacion cotizacion;
-	private DetalleRequerimiento detalleRequerimiento;
-	
-	private List<Proveedor> listaProveedores;
-	private List<Proveedor> proveedoresSeleccionados;
-	private List<Proveedor> listaProveedoresSeleccionados1;
-	private List<Proveedor> listaProveedoresSeleccionados2;
-	private List<DetalleRequerimiento> listaDetalleRequerimientos;
-	
-	//*******parte de fase 2
-	private List <Integer> idsClasificacionRepuesto;
 	
 	@Wire("#gridProveedores")
 	private Listbox gridProveedores;
 	@Wire("#gridProveedoresSeleccionados")
 	private Listbox gridProveedoresSeleccionados;
 	
+	//Atributos
+	private static final Comparator<Proveedor> COMPR_PROVEE = Proveedor.getComparator();
+	
+	private Proveedor proveedor;
+	private Cotizacion cotizacion;
+	private DetalleRequerimiento detalleRequerimiento;
+	private List<Proveedor> listaProveedores;
+	private List<Proveedor> proveedoresSeleccionados;
+	private List<Proveedor> listaProveedoresSeleccionados1;
+	private List<Proveedor> listaProveedoresSeleccionados2;
+	private List<DetalleRequerimiento> listaDetalleRequerimientos;
+	private List <Integer> idsClasificacionRepuesto;
 	private Requerimiento requerimiento;
 	private Boolean enviar;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: seleccionarProveedores.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("enviar") Boolean enviar,
@@ -109,7 +110,15 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		ejecutarGlobalCommand("removerSeleccionados", null);
 	}
 	
+	
 	/**GLOBAL COMMAND*/
+	
+	/**
+	 * Descripcion: Permite consultar los proveedores existentes en la base de datos
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: proveedores consultados y lista llena
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	@NotifyChange({"listaProveedores"})
 	public void consultarProveedores(@Default("0") int page){
@@ -125,13 +134,25 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	}
 	
 	/**COMMAND*/
+	
+	/**
+	 * Descripcion: Permite limpiar los campos del formulario Seleccionar Proveedores
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: Campos Vacios 
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
 		proveedor = new Proveedor();	
 	}
 
-
+	/**
+	 * Descripcion: Permite seleccionar un proveedor para realizar una cotizacion
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: Proveedor Seleccionado 
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({"*"})
 	@Command
 	public void agregarProveedores(){
@@ -140,26 +161,50 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		
 	}
 	
-
+	/**
+	 * Descripcion: Permite eliminar un proveedor para no cotizarle
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: Proveedor deseleccionado 
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({"*"})
 	@Command
 	public void eliminarProveedores(){
 		if(listaProveedoresSeleccionados2!=null && !listaProveedoresSeleccionados2.isEmpty())
 			listaProveedoresSeleccionados1.removeAll(listaProveedoresSeleccionados2);
 	}
-
+	
+	/**
+	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
+	 * de Paging pagProveedores
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({"*"})
 	@Command
 	public void paginarLista(){
 		consultarProveedores(pagProveedores.getActivePage());
 	}
 	
+	/**
+	 * Descripcion: Permite filtrar por los diferentes campos del formulario segun solicite el evento
+	 * Parametros: @param view: seleccionarProveedores.zul
+	 * Retorno: Campos filtrados segun sea el evento solicitado
+	 * Nota: Ninguna
+	 * */
 	@NotifyChange({"*"})
 	@Command
 	public void aplicarFiltro(){
 		consultarProveedores(0);
 	}
 	
+	/**
+	 * Descripcion: Permite enviar la solicitu de cotizacion a los proveedores
+	 * Parametros: @param view: seleccionarProveedores.zul 
+	 * Retorno: Solicitud de cotizacion enviada al proveedor para su posterior cotizacion
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange({"listaProveedoresSeleccionados1"})
 	public void enviar(){
@@ -186,7 +231,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				}
 				btn_enviar.setDisabled(true);
 			}
-			//			System.out.println(proveedor.getCorreo());
 
 			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
 			winListProveedores.onClose();
@@ -196,6 +240,12 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 
 	}
 	
+	/**
+	 * Descripcion: Permite registrar un proveedor llamando al modal formularioProveedor
+	 * Parametros: @param view: seleccionarProveedores.zul 
+	 * Retorno: Modal para registrar un nuevo proveedor
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void registrarProveedor(){
 		Map<String, Object> parametros = new HashMap<String, Object>();
@@ -203,10 +253,19 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		crearModal(BasePackagePortal+"formularioProveedor.zul", parametros);
 	}
 	
-	
+	/**
+	 * Descripcion: Permite recargar la pagina
+	 * Parametros: @param view: seleccionarProveedores.zul 
+	 * Retorno: pagina recargada
+	 * Nota: Ninguna
+	 * */
 	public void recargar() {
 		redireccionar("/");
 	}
+	
+    /**METODOS PROPIOS DE LA CLASE*/
+	
+	/**GETTERS Y SETTERS*/
 	
 	public Proveedor getProveedor() {
 		return proveedor;
