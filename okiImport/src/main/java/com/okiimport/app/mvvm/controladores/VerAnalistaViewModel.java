@@ -10,7 +10,6 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
-
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
@@ -20,37 +19,49 @@ import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
-	
+
+	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
+
+	// GUI
+	@Wire("winListaAnalistas")
+	private Window winListaAnalistas;
+
+	// Atributos
 	private Analista analista;
 	private Ciudad ciudad;
-	
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
-	
-	@Wire("winListaAnalistas")
-	private Window winListaAnalistas;
-	
-	//private Boolean editar;
-	
+
+	/**
+	 * Descripcion: Llama a inicializar la clase Parametros: @param view:
+	 * verAnalistas.zul Retorno: Clase Inicializada Nota: Ninguna
+	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("analista") Analista analista)
-	{
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("analista") Analista analista) {
 		super.doAfterCompose(view);
-		
+
 		this.analista = analista;
 		this.ciudad = analista.getCiudad();
 	}
-	
 
+	/**
+	 * Descripcion: Llama a ejecutarGlobalCommand 
+	 * Parametros:  @param view: verAnalistas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
-	public void CerrarVista()
-	{
+	public void CerrarVista() {
 		ejecutarGlobalCommand("cambiarAnalistas", null);
 	}
+	
+	/** METODOS PROPIOS DE LA CLASE */
+
+	/** GETTERS Y SETTERS */
 	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
@@ -107,7 +118,7 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
+
 	public List<Ciudad> getListaCiudades() {
 		return listaCiudades;
 	}
@@ -115,15 +126,5 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
-
-	/*public Boolean getEditar() {
-		return editar;
-	}
-
-	public void setEditar(Boolean editar) {
-		this.editar = editar;
-	}
-*/
-	
 
 }
