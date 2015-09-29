@@ -36,8 +36,10 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 	private List<Estado> listaEstados;
 
 	/**
-	 * Descripcion: Llama a inicializar la clase Parametros: @param view:
-	 * verAnalistas.zul Retorno: Clase Inicializada Nota: Ninguna
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: verAnalistas.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
