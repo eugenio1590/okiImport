@@ -846,7 +846,7 @@ tr.border td {
                     <tbody><tr>
                       <td class="column" style="padding: 0;vertical-align: top;text-align: left">
                         <div><div class="column-top" style="font-size: 32px;line-height: 32px">
-                          <p><img src="../../Desktop/URBICARS/template.jpg" width="600" height="35" alt=""/><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="logo-left" style="font-weight: 700;font-family: Avenir,sans-serif;color: #555;font-size: 0px !important;line-height: 0 !important"><img style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 364px" src="http://i1.createsend1.com/ei/i/A6/839/2A5/114323/csfinal/LogoSinSombreado2.png" alt="" width="220" height="84" /></span></span></span></span></p>
+                          <p><img src="http://i.imgbox.com/OXcD0rDt.jpg" width="600" height="35" alt=""/><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="column-top" style="font-size: 32px;line-height: 32px"><span class="logo-left" style="font-weight: 700;font-family: Avenir,sans-serif;color: #555;font-size: 0px !important;line-height: 0 !important"><img style="border: 0;-ms-interpolation-mode: bicubic;display: block;max-width: 364px" src="http://i1.createsend1.com/ei/i/A6/839/2A5/114323/csfinal/LogoSinSombreado2.png" alt="" width="220" height="84" /></span></span></span></span></p>
                         </div>
                         </div>
                           <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%">
@@ -864,26 +864,26 @@ tr.border td {
                               <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word">
                                 
               <h2 style='Margin-top: 0;font-style: normal;font-weight: 700;font-size: 24px;line-height: 32px;Margin-bottom: 16px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center'>Registro de Requerimiento</h2>
-              <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${nombreSolicitante} Hemos Recibido de Ud. un registro de requerimiento(s) que sera procesado en el menor tiempo posible, estaremos en contacto con ud.</p>
+              <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${cliente.nombre} Hemos Recibido de Ud. un registro de requerimiento(s) que sera procesado en el menor tiempo posible, estaremos en contacto con ud.</p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Estos Son Sus datos:<br />
                 
-                ${nroSolicitud}<br />
-                ${nombreSolicitante}<br />
-                ${cedula}<br />
-                ${telefono}<br />
-                ${email}<br />
+                ${requerimiento.id}<br />
+                ${cliente.nombre}<br />
+                ${cliente.cedula}<br />
+                ${cliente.telefono}<br />
+                ${cliente.correo}<br />
                 <br />
                 Estos Son los Datos del Vehiculo:<br />
-                ${marca}<br />
-                ${modelo}<br />
-                ${anno}<br />
-                ${motor}<br />
-                ${tipoRepuesto}<br />
+                ${requerimiento.marca.nombre}<br />
+                ${requerimiento.modelo_v}<br />
+                ${requerimiento.anno_v}<br />
+                ${requerimiento.motor.nombre}<br />
+                ${requerimiento.tipoRepuesto}<br />
                 <br />
                 Estos Son los Datos del Requerimiento:<br />
-                ${codigoOem}<br />
-                ${descripcion}<br />
-                ${cantidad}</p>
+                ${requerimiento.detalle_requerimiento.codigo_oem}<br />
+                ${requerimiento.descripcion}<br />
+                ${requerimiento.cantidad}</p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Su solicitud será respondida en la brevedad posible.<br />
       </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>
@@ -916,7 +916,7 @@ tr.border td {
                   <table class="one-col" style="border-collapse: collapse;border-spacing: 0;Margin-left: auto;Margin-right: auto;width: 600px;background-color: #ffffff;table-layout: fixed" emb-background-style>
                     <tbody><tr>
                       <td class="column" style="padding: 0;vertical-align: top;text-align: left">
-                        <div><div class="column-top" style="font-size: 32px;line-height: 32px"><img src="../../Desktop/URBICARS/template.jpg" width="600" height="35" alt=""/>&nbsp;</div></div>
+                        <div><div class="column-top" style="font-size: 32px;line-height: 32px"><img src="http://i.imgbox.com/OXcD0rDt.jpg" width="600" height="35" alt=""/>&nbsp;</div></div>
                           <table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%">
                             <tbody><tr>
                               <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word">
