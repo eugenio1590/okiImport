@@ -339,13 +339,17 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 		return proveedor;
 	}
-	
+
+
+
+
 	/**
 	 * Descripcion: Permite consultar las marcas
 	 * Parametros: @param view: formularioProveedor.zul 
 	 * Retorno: Marcas consultadas y llenado de la lista de marcas a seleccionar
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaMarcaVehiculos" })
 	private void consultarMarcas(int page) {
 		Map<String, Object> Parametros = sMaestros.consultarMarcas(page,
@@ -358,18 +362,19 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setTotalSize(total);
 	}
 
+
 	/**
 	 * Descripcion: Permite Consultar Tipo de Repuestos
 	 * Parametros: @param view: formularioProveedor.zul 
 	 * Retorno: Tipo de repuestos consultados y llenado de la lista tipo de repuestos a seleccionar
 	 * Nota: Ninguna
 	 * */
+
+	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
-		Map<String, Object> Parametros = sMaestros
-				.ConsultarClasificacionRepuesto(page, pageSize);
-		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
-				.get("clasificacionRepuesto");
+		Map<String, Object> Parametros = sMaestros.consultarClasificacionRepuesto(page, pageSize);
+		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
 		gridClasificacionRepuesto.setMultiple(true);
 		gridClasificacionRepuesto.setCheckmark(true);

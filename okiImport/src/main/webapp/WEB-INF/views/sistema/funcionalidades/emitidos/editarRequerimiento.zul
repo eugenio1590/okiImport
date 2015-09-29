@@ -149,7 +149,6 @@
 							<rows>
 								<row>
 									<label value="Motor: *" />
-<<<<<<< HEAD
 									<bandbox id="bdMotor" mold="rounded"
 										autodrop="true" readonly="true" placeholder="Seleccione..."
 										width="80%" value="@bind(vm.requerimiento.motor.nombre)">
