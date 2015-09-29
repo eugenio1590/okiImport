@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winCotizar" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizarProveedorInternacionalViewModel')"
@@ -48,9 +48,9 @@
 				<div width="100%" align="center">
 					<groupbox closable="false" width="99%">
 						<caption label="Flete" sclass="custom_caption_title" />
-						<div align="left">
-							<label value="Tipo de Flete:" />
-							<combobox id="cmbFlete" width="215px" readonly="true"
+						<hbox align="left" width="100%">
+							<label width="130%" value="Tipo de Flete:" />
+							<combobox id="cmbFlete" width="40%" readonly="true"
 								model="@load(vm.tiposFlete)" selectedItem="@bind(vm.tipoFlete)"
 								onSelect="@command('seleccionarTipoFlete')">
 								<template name="model">
@@ -59,7 +59,7 @@
 							</combobox>
 							<space />
 							<label value="Forma de Envio:"/>
-							<combobox id="cmbFormaFlete" width="215px" readonly="true"
+							<combobox id="cmbFormaFlete" width="70%" readonly="true"
 								model="@load(vm.formasEnvio)" selectedItem="@bind(vm.formaEnvio)"
 								onSelect="@command('seleccionarTipoFlete')">
 								<template name="model">
@@ -69,14 +69,15 @@
 							<space />
 							<label value="Precio de Flete:" />
 							<vbox>
-							<decimalbox id="txtPrecioFlete" format="###.##"
-								readonly="@bind(!vm.tipoFlete.valor)"
-								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
-							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."
-							  constraint="@bind(vm.validatorPrecio)"  />
+								<decimalbox id="txtPrecioFlete" format="###.##"
+									readonly="@bind(!vm.tipoFlete.valor)"
+									value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
 							</vbox>
-						</div>
+							<n:td width="50%">
+								<textbox rows="2" width="100%" sclass="no_rezise notas" readonly="true"
+									value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."/>
+							</n:td>
+						</hbox>
 					</groupbox>
 				</div>
 				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%"

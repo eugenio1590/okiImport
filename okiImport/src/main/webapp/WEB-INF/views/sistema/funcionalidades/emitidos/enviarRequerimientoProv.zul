@@ -26,6 +26,7 @@
 								</vbox>
 
 								<label value="Nombre/Razón Social: " />
+								<vbox>
 								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)"
 									constraint="@bind(vm.notEmptyValidator)" />
@@ -46,8 +47,8 @@
 								</vbox>
 							</row>
 							<row>
-							<label value="Estado: " />
-
+								<label value="Estado: " />
+								<vbox>
 								<textbox id="estado" width="80%" readonly="true"
 									mold="rounded" tabbable="false" 
 									value="@bind(vm.ciudad.estado.nombre)"

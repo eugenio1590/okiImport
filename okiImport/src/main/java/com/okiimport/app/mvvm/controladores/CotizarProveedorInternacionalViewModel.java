@@ -36,6 +36,7 @@ import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.AbstractServiceImpl;
@@ -69,10 +70,10 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
-	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
 	
-	
+	private final CustomConstraint CONTRAINT_PRECIO_FLETE = getValidatorPrecio();
+		
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	

@@ -31,6 +31,7 @@ span {
 .no_rezise.notas {
 	border: none;
 	background-color: white;
+	font-size: inherit;
 }
 
 /* FUENTE PARA LAS LETRAS DE LA VENTANA*/

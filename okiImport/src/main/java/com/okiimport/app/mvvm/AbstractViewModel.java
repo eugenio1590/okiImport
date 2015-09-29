@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -228,6 +229,7 @@ public abstract class AbstractViewModel {
 	 * @param failMessage: mensaje si la seleccion esta vacia
 	 * Retorno: Ninguno
 	 * */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected <T> void moveSelection(final Collection<T> origen, final Collection<T> destino, final Collection<T> selection, 
 			final Comparator<T> comparable, final boolean remover, final String failMessage){
 		if(selection!=null && destino!=null && origen!=null)
@@ -235,6 +237,11 @@ public abstract class AbstractViewModel {
 				Clients.showNotification((failMessage==null)? "No se Ha Seleccionado Nada": failMessage,
 						"info", null, null, 2000, true);
 			else {
+				//Eliminacion de registros repetidos
+				LinkedHashSet selecctionSet = new LinkedHashSet(selection);
+				selection.clear();
+				selection.addAll(selecctionSet);
+				
 				if(destino.isEmpty())
 					destino.addAll(selection);
 				else if(comparable!=null)

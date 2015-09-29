@@ -84,31 +84,31 @@
 									</row>
 									<row>
 										<label value="Estado: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.estado)"
-											model="@load(vm.listaEstados)"
-											onSelect="@command('buscarCiudades')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
-
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="80%" readonly="true"
+												selectedItem="@bind(vm.estado)"
+												model="@load(vm.listaEstados)"
+												constraint="@bind(vm.notEmptyValidator)"
+												onSelect="@command('buscarCiudades')">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>								
+												</template>
+											</combobox>
+										</vbox>
+										
 										<label value="Ciudad: *" />
-										<combobox
-											placeholder="Seleccione..." width="80%" readonly="true"
-											selectedItem="@bind(vm.cliente.ciudad)"
-											model="@load(vm.listaCiudades)">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="80%" readonly="true"
+												selectedItem="@bind(vm.cliente.ciudad)"
+												constraint="@bind(vm.notEmptyValidator)"
+												model="@load(vm.listaCiudades)">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
 									</row>
 
 
@@ -141,18 +141,17 @@
 										<row>
 
 											<label value="Marca: *" />
-											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
-												selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
-												model="@load(vm.listaMarcasVehiculo)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-
-													</comboitem>
-												</template>
-											</combobox>
+											<vbox>
+												<combobox
+													placeholder="Seleccione..." width="80%" readonly="true"
+													selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
+													constraint="@bind(vm.notEmptyValidator)"
+													model="@load(vm.listaMarcasVehiculo)">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)"/>
+													</template>
+												</combobox>
+											</vbox>
 
 											<label value="Modelo: *" />
 											<vbox>
