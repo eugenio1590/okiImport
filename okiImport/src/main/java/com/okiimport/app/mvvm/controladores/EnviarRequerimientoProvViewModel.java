@@ -81,7 +81,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.ciudad = requerimiento.getCliente().getCiudad();
-		Map<String, Object> parametros = sMaestros.ConsultarClasificacionRepuesto(0, -1);
+		Map<String, Object> parametros = sMaestros.consultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();

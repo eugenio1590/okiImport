@@ -367,7 +367,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "listaClasificacionRepuestos" })
 	private void consultarTipoRepuesto(int page) {
 		Map<String, Object> Parametros = sMaestros
-				.ConsultarClasificacionRepuesto(page, pageSize);
+				.consultarClasificacionRepuesto(page, pageSize);
 		listaClasificacionRepuestos = (List<ClasificacionRepuesto>) Parametros
 				.get("clasificacionRepuesto");
 		Integer total = (Integer) Parametros.get("total");
