@@ -19,6 +19,7 @@ import org.zkoss.zul.Messagebox.Button;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Pais;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
@@ -81,6 +82,12 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			mostrarMensaje("Error", "No es una imagen: " + media, null, null,
 					null, null);
 	}
+	
+	@Command
+	@SuppressWarnings("unchecked")
+	public List<Pais> llenarListaPaises(){
+		return (List<Pais>) sMaestros.consultarPaises(0, -1).get("paises");
+	}
 
 	@Command
 	@SuppressWarnings("unchecked")
@@ -120,7 +127,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
-
 	protected static List<ModeloCombo<String>> llenarListaBancoPago() {
 		List<ModeloCombo<String>> listaBancoPago = new ArrayList<ModeloCombo<String>>();
 		listaBancoPago
@@ -186,8 +192,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	protected static List<ModeloCombo<Boolean>> llenarListaTipoProveedor() {
 		List<ModeloCombo<Boolean>> listaTipoProveedor = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoProveedor.add(new ModeloCombo<Boolean>("Internacional", false));
-		listaTipoProveedor
-				.add(new ModeloCombo<Boolean>("Nacional", true ));
+		listaTipoProveedor.add(new ModeloCombo<Boolean>("Nacional", true ));
 		return listaTipoProveedor;
 	}
 
@@ -262,6 +267,16 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getNotEmptyValidator() {
 		return new GeneralConstraint(EConstraint.NO_EMPTY);
 	}
+	
+	public CustomConstraint getFechaValidator(@Default("-1") int tipo){
+		EConstraint constraint = null;
+		switch(tipo){
+		case 1: constraint = EConstraint.NO_FUTURE; break;
+		case 2: constraint = EConstraint.NO_PAST; break;
+		default: constraint = EConstraint.NO_TODAY; break;
+		}
+		return new GeneralConstraint(EConstraint.NO_EMPTY, constraint);
+	}
 
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
@@ -269,6 +284,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				"Debe contener un correo valido Ej. fusa@gmail.com") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
+	}
+	
+	public CustomConstraint getValidatorCantPositiva(){
+		return new GeneralConstraint(EConstraint.NO_EMPTY, EConstraint.NO_ZERO, EConstraint.NO_NEGATIVE);
 	}
 
 	public CustomConstraint getValidatorCantidad(
@@ -303,6 +322,29 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
 
+	}
+	
+	public CustomConstraint getValidatorClienteCedulaRif2() {
+        
+        RegExpression[] constrains = new RegExpression[] { new RegExpression(
+		"/.[0-9]+/",
+		"Introduzca RIF o Cedula solo Números sin guiones Ej.: 402405374") };
+        return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
+     }
+	
+	public CustomConstraint getValidatorPrecio() {
+		
+		RegExpression[] constrains = new RegExpression[] { new RegExpression(
+				"/.[0-9]+/", "Debe Contener Valores Numericos Validos") };
+		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
+				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO);
+	}
+	
+	
+    public CustomConstraint getValidatorFechaVencimiento() {
+		
+    	return new GeneralConstraint(EConstraint.NO_EMPTY,
+				EConstraint.NO_PAST );
 	}
 
 	public SMaestros getsMaestros() {

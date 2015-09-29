@@ -15,28 +15,30 @@
 						</columns>
 						<rows>
 							<row>
-								<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
-									format="dd/MM/yyyy" readonly="true" constraint="no past" />
-									
-								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
-									constraint="no empty" readonly="true"
-									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
-									<bandpopup>
-										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
-											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
-											<listhead>
-												<listheader label="Nombre" />
-											</listhead>
-											<template name="model">
-												<listitem >
-													<listcell iconSclass="@bind(each.simbolo)" label="@bind(each.nombre)"/>
-												</listitem>
-											</template>
-										</listbox>
-										<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
-									</bandpopup>
-								</bandbox>
-								
+								<vbox>
+									<datebox id="dtbFecha" value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
+										format="dd/MM/yyyy" readonly="true" constraint="@bind(vm.getFechaValidator(2))" />
+								</vbox>
+								<vbox>	
+									<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
+										constraint="@bind(vm.getNotEmptyValidator())" readonly="true"
+										value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
+										<bandpopup>
+											<listbox height="250px" width="200px" model="@load(vm.monedas)" 
+												selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
+												<listhead>
+													<listheader label="Nombre" />
+												</listhead>
+												<template name="model">
+													<listitem >
+														<listcell iconSclass="@bind(each.simbolo)" label="@bind(each.nombre)"/>
+													</listitem>
+												</template>
+											</listbox>
+											<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
+										</bandpopup>
+									</bandbox>
+								</vbox>
 								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
 									width="100%" sclass="no_rezise" />
 							</row>
@@ -66,11 +68,14 @@
 							</combobox>
 							<space />
 							<label value="Precio de Flete:" />
+							<vbox>
 							<decimalbox id="txtPrecioFlete" format="###.##"
 								readonly="@bind(!vm.tipoFlete.valor)"
 								value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
 							<textbox rows="2" width="40%" sclass="no_rezise notas" readonly="true"
-							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."/>
+							value="(**) El precio del flete tendra las mismas unidades de moneda que el precio de venta por producto."
+							  constraint="@bind(vm.validatorPrecio)"  />
+							</vbox>
 						</div>
 					</groupbox>
 				</div>
@@ -78,7 +83,7 @@
 					model="@load(vm.listaDetalleCotizacion)" mold="paging" pageSize="5"
 					emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
 					<auxhead>
-						<auxheader colspan="7" label="Repuestos a Cotizar" align="center"/>
+						<auxheader colspan="11" label="Repuestos a Cotizar" align="center"/>
 					</auxhead>
 					<listhead>
 						<listheader label="Codigo OEM" width="15%"/>
@@ -114,19 +119,21 @@
 							<listcell
 								label="@bind(each.detalleRequerimiento.cantidad)" />
 							<listcell>
-								<textbox value="@bind(each.marcaRepuesto)" width="100%"
-									constraint="no empty" tooltiptext="Marca del Repuesto"/>
+								<vbox>
+									<textbox value="@bind(each.marcaRepuesto)" width="100%"
+										constraint="@bind(vm.getNotEmptyValidator())" tooltiptext="Marca del Repuesto"/>
+								</vbox>
 							</listcell>
 							<listcell>
-								<spinner value="@bind(each.cantidad)"
+								<spinner value="@bind(each.cantidad)" width="100%"
 									tooltiptext="Cantidad Cotizada del Repuesto"
-									width="100%" constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))">
+									constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))">
 								</spinner>
 							</listcell>
 							<listcell>
 								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
-									constraint="no empty, no zero, no negative"
+									constraint="@bind(vm.getValidatorCantPositiva())"
 									onChange="@command('calcularPrecio', tipo=1)" />
 							</listcell>
 							
@@ -176,7 +183,7 @@
 						<listfooter/>
 						<listfooter/>
 						<listfooter>
-							<label value="Total de Flete:"/>
+							<label value="Total:"/>
 							<label value="@bind(vm.cotizacionSelecionada.totalFleteCalculado)"/>
 						</listfooter>
 					</listfoot>

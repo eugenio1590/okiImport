@@ -9,6 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -210,20 +212,53 @@ public abstract class AbstractViewModel {
 	 * @param failMessage: mensaje si la seleccion esta vacia
 	 * Retorno: Ninguno
 	 * */
-	protected <T> void moveSelection(Collection<T> origen, Collection<T> destino, 
-			Collection<T> selection, String failMessage) {
+	protected <T> void moveSelection(final Collection<T> origen, final Collection<T> destino, final Collection<T> selection, 
+			final String failMessage) {
+		moveSelection(origen, destino, selection, null, true,  failMessage);
+    }
+	
+	/**
+	 * Descripcion: permitira mover datos seleccionados de una colleccion de origen a una destino por medio de un comparable
+	 * Parametros:
+	 * @param origen: datos de origen
+	 * @param destino: datos de destino
+	 * @param selection: datos seleccionados a mover del destino al origen
+	 * @param comparable: medio de comparacion para la busqueda binaria
+	 * @param remover: indicara si es requerido remover los datos del origen si es factible
+	 * @param failMessage: mensaje si la seleccion esta vacia
+	 * Retorno: Ninguno
+	 * */
+	protected <T> void moveSelection(final Collection<T> origen, final Collection<T> destino, final Collection<T> selection, 
+			final Comparator<T> comparable, final boolean remover, final String failMessage){
 		if(selection!=null && destino!=null && origen!=null)
 			if (selection.isEmpty())
-				Clients.showNotification((failMessage==null)?"No se Ha Seleccionado Nada": failMessage,
+				Clients.showNotification((failMessage==null)? "No se Ha Seleccionado Nada": failMessage,
 						"info", null, null, 2000, true);
 			else {
-				destino.addAll(selection);
-				origen.removeAll(selection);
+				if(destino.isEmpty())
+					destino.addAll(selection);
+				else if(comparable!=null)
+				{
+					int index;
+					for(T model : selection){
+						index = Collections.binarySearch((List<T>) destino, model, comparable);
+						if(index<0)
+							destino.add(model);
+					}
+				}
+				
 				selection.clear();
+				if(remover)
+					try {
+						origen.removeAll(selection);
+					}
+					catch(UnsupportedOperationException exception){
+						System.out.println("No se puede remover del origen");
+					}
 			}
 		else
 			System.out.println("Alguna coleccion esta vacia.");
-    }
+	}
 	
 	/**
 	 * Descripcion: Premitira buscar un componente en el html por su id respectivo.

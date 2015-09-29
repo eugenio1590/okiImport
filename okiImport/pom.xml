@@ -201,9 +201,9 @@
 		    
 		<!-- Proyect Dependence -->
 		<dependency>
-			<groupId>org.springframework.samples.spring</groupId>
-			<artifactId>spring-jpa-utility</artifactId>
-			<version>1.0.0.CI-SNAPSHOT</version>
+			<groupId>com.okiimport</groupId>
+			<artifactId>persistencia</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
     <build>

@@ -9,20 +9,22 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
-import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
-import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Paging;
 
-import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
@@ -35,11 +37,9 @@ import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends
-		AbstractRequerimientoViewModel {
+public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
-	private Requerimiento requerimiento;
-	private Cliente cliente;
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	@BeanInjector("mailCliente")
@@ -48,14 +48,25 @@ public class RegistrarRequerimientoViewModel extends
 	// GUI
 	@Wire("#cedulaRif")
 	public Intbox cedulaRif;
+	
 	@Wire("#annoV")
 	private Datebox annoV;
+	
 	@Wire("#comboTipoPersona")
 	private Combobox comboTipoPersona;
+	
+	@Wire("#gridMotores")
+	private Listbox gridMotores;
+	
+	@Wire("#pagMotores")
+	private Paging pagMotores;
 
+	//Atributos
+	private List<DetalleRequerimiento> eliminarDetalle;
 	private List<MarcaVehiculo> listaMarcasVehiculo;
 	private List<Motor> listaMotor;
 	private List<Estado> listaEstados;
+	
 	private List<ModeloCombo<Boolean>> listaTraccion;
 	private List<ModeloCombo<Boolean>> listaTransmision;
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
@@ -63,27 +74,59 @@ public class RegistrarRequerimientoViewModel extends
 
 	private ModeloCombo<Boolean> traccion;
 	private ModeloCombo<Boolean> transmision;
-	private List<DetalleRequerimiento> eliminarDetalle;
 	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoRepuesto;
+	
+	private Requerimiento requerimiento;
+	private Cliente cliente;
+	private Motor motor;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
+		agregarGridSort(gridMotores);
+		pagMotores.setPageSize(pageSize=3);
 		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.consultarMarcas(0, -1).get("marcas");
 		listaEstados = llenarListaEstados();
-		listaMotor = (List<Motor>) sMaestros.ConsultarMotor(0, -1).get("motor");
 		listaTraccion = llenarListaTraccion();
 		listaTransmision = llenarListaTransmision();
 		listaTipoPersona = llenarListaTipoPersona();
-		this.tipoPersona = listaTipoPersona.get(1);
+		tipoPersona = listaTipoPersona.get(1);
 		listaTipoRepuesto = llenarListaTipoRepuesto();
+		cambiarMotores(0, null, null);
 	}
-
+	
+	/**Interface: EventListener<SortEvent>*/
+	@Override
+	public void onEvent(SortEvent event) throws Exception {
+		if(event.getTarget() instanceof Listheader){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+			parametros.put("sortDirection", event.isAscending());
+			ejecutarGlobalCommand("cambiarMotores", parametros );
+		}
+	}
+	
+	/**GLOBAL COMMAND*/
+	@GlobalCommand
+	@SuppressWarnings("unchecked")
+	@NotifyChange("listaMotor")
+	public void cambiarMotores(@Default("0") @BindingParam("page") int page, 
+			@BindingParam("fieldSort") String fieldSort, 
+			@BindingParam("sortDirection") Boolean sortDirection){
+		Map<String, Object> parametros = sMaestros.consultarMotores(motor, fieldSort, sortDirection, page, pageSize);
+		Integer total = (Integer) parametros.get("total");
+		listaMotor = (List<Motor>) parametros.get("motores");
+		pagMotores.setActivePage(page);
+		pagMotores.setTotalSize(total);
+	}
+	
+	/**COMMAND*/
 	@Command
 	@NotifyChange({ "requerimiento", "cliente" })
 	public void limpiar() {
+		motor = new Motor();
 		requerimiento = new Requerimiento();
 		cliente = new Cliente();
 		requerimiento.setCliente(cliente);
@@ -168,7 +211,20 @@ public class RegistrarRequerimientoViewModel extends
 			cedulaRif.getValue();
 		}
 	}
+	
+	@Command
+	@NotifyChange("listaMotor")
+	public void paginarListaMotores(){
+		int page=pagMotores.getActivePage();
+		cambiarMotores(page, null, null);
+	}
 
+	@Command
+	@NotifyChange("listaMotor")
+	public void aplicarFiltroMotor(){
+		cambiarMotores(0, null, null);
+	}
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
@@ -309,4 +365,14 @@ public class RegistrarRequerimientoViewModel extends
 	public void setMailCliente(MailCliente mailCliente) {
 		this.mailCliente = mailCliente;
 	}
+
+	public Motor getMotor() {
+		return motor;
+	}
+
+	public void setMotor(Motor motor) {
+		this.motor = motor;
+	}
+
+	
 }
