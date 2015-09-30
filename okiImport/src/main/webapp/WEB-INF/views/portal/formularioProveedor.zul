@@ -43,23 +43,23 @@
 								</columns>
 								<rows>
 
-									<row>
+<!-- 									<row> -->
 									
-										<label value="Supplier Type/Tipo Proveedor: *" />
-										<combobox
-											placeholder="Seleccione..." width="85%" readonly="true"
-											value="@bind(vm.tipoProveedor.nombre)"
-											selectedItem="@bind(vm.tipoProveedor)"
-											model="@load(vm.listaTipoProveedor)"
-											onChange="@command('actualizarLocalidad')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-												</comboitem>
-											</template>
-										</combobox>
+<!-- 										<label value="Supplier Type/Tipo Proveedor: *" /> -->
+<!-- 										<combobox -->
+<!-- 											placeholder="Seleccione..." width="85%" readonly="true" -->
+<!-- 											value="@bind(vm.tipoProveedor.nombre)" -->
+<!-- 											selectedItem="@bind(vm.tipoProveedor)" -->
+<!-- 											model="@load(vm.listaTipoProveedor)" -->
+<!-- 											onChange="@command('actualizarLocalidad')"> -->
+<!-- 											<template name="model"> -->
+<!-- 												<comboitem -->
+<!-- 													label="@bind(each.nombre)"> -->
+<!-- 												</comboitem> -->
+<!-- 											</template> -->
+<!-- 										</combobox> -->
 										
-									</row>
+<!-- 									</row> -->
 									<row>
 										
 										<label value="ID/RIF: *" />
@@ -117,10 +117,13 @@
 									<row>
 										<label value="Country/Pais: *" />
 										<vbox width="85%">
-											<combobox width="100%" readonly="true" placeholder="Seleccione..."
+											<combobox width="100%" readonly="true" 
+												placeholder="Seleccione..."
+												value="@bind(vm.proveedor.pais.nombre)"
 												selectedItem="@bind(vm.proveedor.pais)"
 												model="@load(vm.listaPaises)"
-												constraint="@bind(vm.notEmptyValidator)">
+												constraint="@bind(vm.notEmptyValidator)"
+												onChange="@command('actualizarLocalidad')">
 												<template name="model">
 													<comboitem
 														label="@bind(each.nombre)">
@@ -132,36 +135,36 @@
 									</row>
 									
 									<row>
-										<label value="Estado:" visible="@bind(vm.tipoProveedor.valor)" />
-										<combobox
-											width="85%" readonly="true" placeholder="Seleccione..."
-											selectedItem="@bind(vm.estado)"
-											visible="@bind(vm.tipoProveedor.valor)"
-											model="@load(vm.listaEstados)"
-											onSelect="@command('buscarCiudades')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
+										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
+										<vbox>
+											<combobox
+												width="85%" readonly="true" placeholder="Seleccione..."
+												selectedItem="@bind(vm.estado)"
+												visible="@bind(vm.proveedor.nacional)"
+												model="@load(vm.listaEstados)"
+												onSelect="@command('buscarCiudades')"
+												constraint="@bind(vm.constrEstado)">
+												<template name="model">
+													<comboitem
+														label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
 										
-										<label value="Ciudad:" visible="@bind(vm.tipoProveedor.valor)" />
-										<combobox
-											placeholder="Seleccione..." width="92%" readonly="true"
-											selectedItem="@bind(vm.proveedor.ciudad)"
-											visible="@bind(vm.tipoProveedor.valor)"
-											model="@load(vm.listaCiudades)">
-
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
-										
+										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="92%" readonly="true"
+												selectedItem="@bind(vm.proveedor.ciudad)"
+												visible="@bind(vm.proveedor.nacional)"
+												model="@load(vm.listaCiudades)"
+												constraint="@bind(vm.constrCiudad)">
+												<template name="model">
+													<comboitem
+														label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
 									</row>
 									
 									<row>
