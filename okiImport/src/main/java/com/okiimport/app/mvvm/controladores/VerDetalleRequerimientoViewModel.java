@@ -8,9 +8,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 
-import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
-import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -19,73 +17,37 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewModel  {
 
-	private Requerimiento requerimiento;
-	private Cliente cliente;
-	
+	//Servicios
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
 	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
-	private List <Requerimiento> listaRequerimientos;
+	//Atributos
+	private Requerimiento requerimiento;
 	
-	private List <MarcaVehiculo> listaMarcasVehiculo;
-	
-	
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view:  
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{
 		super.doAfterCompose(view);
-		//cliente = new Cliente();	
-		//listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.ConsultarMarca(0, -1).get("marcas");
-		//requerimiento = (Requerimiento) cliente.getRequerimientos();
-		//Usuario usuario = cliente.getUsuario();
-		//this.cliente = cliente;
 		this.requerimiento = requerimiento;
 		List<DetalleRequerimiento> detallesRequerimiento 
 			= (List<DetalleRequerimiento>) sTransaccion
 				.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
 		this.requerimiento.setDetalleRequerimientos(detallesRequerimiento);
-		
-		
-		
 	}
 	
-	/*public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("usuario") Usuario usuario)
-	{
-		super.doAfterCompose(view);
-		persona = usuario.getPersona();
-		this.usuario = usuario;
-		this.usuario.setPasword(null);
-		username = this.usuario.getUsername();
-		
-		btnCambFoto.addEventListener("onUpload", this);
-		
-		validadorUsername = new AbstractValidator() {
-			
-			@Override
-			public void validate(ValidationContext ctx) {
-				// TODO Auto-generated method stub
-				String username = (String) ctx.getProperty().getValue();
-				txtUsername = (Textbox) ctx.getBindContext().getValidatorArg("txtUsername");
-				if(username!=null)
-					if(sControlUsuario.verificarUsername(username) && 
-							!username.equalsIgnoreCase(EditarUsuarioViewModel.this.username)){
-						String mensaje = "El Username "+username+" ya esta en uso!";
-						mostrarNotification(mensaje, "error", 5000, true, txtUsername);
-						addInvalidMessage(ctx, mensaje);
-					}
-			}
-		};
-	}*/
 	
-	
-	
-	
-	
-	
+	/** METODOS PROPIOS DE LA CLASE */
+
+	/** GETTERS Y SETTERS */
 	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
@@ -93,14 +55,6 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 	
 	public SMaestros getsMaestros() {
@@ -111,13 +65,6 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 		this.sMaestros = sMaestros;
 	}
 	
-	public List<MarcaVehiculo> getListaMarcasVehiculo() {
-		return listaMarcasVehiculo;
-	}
-
-	public void setListaMarcasVehiculo(List<MarcaVehiculo> listaMarcasVehiculo) {
-		this.listaMarcasVehiculo = listaMarcasVehiculo;
-	}
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

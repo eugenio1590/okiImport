@@ -12,11 +12,16 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
 public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
+	//Atributos
 	private Requerimiento requerimiento;
 	private Oferta oferta;
 
-	// private List <Requerimiento> listaRequerimientos;
-
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: verDetalleOferta.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
@@ -29,6 +34,10 @@ public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	}
 
+	/** METODOS PROPIOS DE LA CLASE */
+
+	/** GETTERS Y SETTERS */
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}

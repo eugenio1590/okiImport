@@ -207,7 +207,6 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		window.setMaximizable(true);
 	}
 	
-	/**METODOS PROPIOS DE LA CLASE*/
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void cargarModelosLazy(final Proveedor proveedor){
 		List<MarcaVehiculo> marcasVehiculo = new ArrayList((List<MarcaVehiculo>) sMaestros.consultarMarcasVehiculoProveedor(proveedor.getId(), 0, -1).get("marcas"));
@@ -225,8 +224,11 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
 		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
-	
+
+	/**METODOS PROPIOS DE LA CLASE*/
+
 	/**SETTERS Y GETTERS*/
+
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}

@@ -33,34 +33,32 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
-
+	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	private List <Requerimiento> listaRequerimientos;
 
 	//GUI
 	@Wire("#gridRequerimientosCliente")
 	private Listbox gridRequerimientosCliente;
-
 	@Wire("#pagRequerimientosCliente")
 	private Paging pagRequerimientosCliente;
-
 	@Wire("#misolicitudes")
 	private Div misolicitudes;
 	
 	//Atributos
-
 	private Date fechaCreacion;
-
 	private Cliente cliente;
-
 	private Requerimiento requerimientoFiltro;
-
 	private List <ModeloCombo<Boolean>> listaTipoPersona;
-
 	private ModeloCombo<Boolean> tipoPersona;
+	private List <Requerimiento> listaRequerimientos;
 
+	/**
+	 * Descripcion: Llama a inicializar la clase 
+	 * Parametros: @param view: formularioVerificarRequerimiento.zul 
+	 * Retorno: Clase Inicializada 
+	 * Nota: Ninguna
+	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
 	{
@@ -106,6 +104,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		pagRequerimientosCliente.setTotalSize(total);
 	}
 	
+	/**
+	 * Descripcion: Permite Ver la Oferta al cliente
+	 * Parametros: Requerimiento: requerimiento @param view: formularioVerificarRequerimiento.zul 
+	 * Retorno: detalle de la oferta 
+	 * Nota: Ninguna
+	 * */
 	@GlobalCommand
 	public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
 			@BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
@@ -116,11 +120,13 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		llamarFormulario("formularioOferta.zul", parametros);
 
 	}
-	
-	
 
-	// Comand 
-
+	/**
+	 * Descripcion: Permite buscar al cliente en la base de datos para ver sus solicitudes
+	 * Parametros: @param view: formularioVerificarRequerimiento.zul 
+	 * Retorno: cliente encontrado o no encontrado
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("listaRequerimientos")
 	public void buscarCliente(){
@@ -137,6 +143,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		}
 	}
 
+	/**
+	 * Descripcion: Permite Ver el detalle del requerimiento
+	 * Parametros: Requerimiento: requerimiento @param view: formularioVerificarRequerimiento.zul 
+	 * Retorno: detalle del requerimiento
+	 * Nota: Ninguna
+	 * */
 	@Command
 	public void verDetalleRequerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
 
@@ -146,10 +158,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 
 	}
 	
-	
-	
-	
-
+	/**
+	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
+	 * Parametros: @param view: formularioVerificarRequerimiento.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void paginarLista(){
@@ -159,6 +173,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			cambiarRequerimientos(page, cedula, null, null);
 	} 
 
+	/**
+	 * Descripcion: Permitira filtrar por los campos del proveedor
+	 * Parametros: @param view: formularioVerificarRequerimiento.zul    
+	 * Retorno: Campos filtrados
+	 * Nota: Ninguna
+	 * */
 	@Command
 	@NotifyChange("*")
 	public void aplicarFiltro()
@@ -172,7 +192,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			cambiarRequerimientos(0, cedula, null, null);
 	}
 
-	/**METODOS PROPIOS DE LA CLASE*/
+	/**
+	 * Descripcion: Permitira obtener la cedula con tipo de persona
+	 * Parametros: @param view: formularioVerificarRequerimiento.zul    
+	 * Retorno: cedula
+	 * Nota: Ninguna
+	 * */
 	private String obtenerCedulaConTipoPersona(){
 		String cedula = null;
 		if(checkIsFormValid()){
@@ -187,6 +212,8 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	}
 
 
+	/**METODOS PROPIOS DE LA CLASE*/
+	
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

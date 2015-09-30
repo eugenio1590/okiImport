@@ -291,7 +291,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagMarcas.setActivePage(page);
 		pagMarcas.setTotalSize(total);
 	}
-	
+
 	/**
 	 * Descripcion: Permite Consultar Tipo de Repuestos
 	 * Parametros: @param view: formularioProveedor.zul 
