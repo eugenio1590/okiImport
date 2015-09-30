@@ -46,7 +46,7 @@ span {
 }
 
 .z-fondo-principal { 
-	background-image: url("/app/resources/img/fondo.jpg");
+	background-image: url("../../resources/img/fondo.jpg");
 	background-repeat: repeat;
 }	
 
