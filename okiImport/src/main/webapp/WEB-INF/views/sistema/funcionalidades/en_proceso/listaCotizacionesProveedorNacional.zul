@@ -104,7 +104,7 @@
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
 									readonly="true" buttonVisible="false" constraint="@bind(vm.notEmptyValidator)"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
-								</vbox>
+								
 									<bandpopup>
 										<listbox height="250px" width="200px" model="@load(vm.monedas)" 
 											selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
@@ -120,7 +120,7 @@
 										<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
 									</bandpopup>
 								</bandbox>
-								
+								</vbox>
 								<textbox id="txtCondicion" value="@bind(vm.cotizacionSelecionada.condiciones)" rows="3"
 									width="100%" readonly="true" sclass="no_rezise" />
 							</row>
