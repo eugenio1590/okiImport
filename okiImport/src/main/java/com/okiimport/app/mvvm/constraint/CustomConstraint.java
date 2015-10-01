@@ -95,8 +95,7 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 			if(constraint.equals(EConstraint.CUSTOM))
 				validateCustom(comp, value);
 			else {
-				if(parent!=null && componentError!=null)
-					parent.removeChild(componentError);
+				hideComponentError();
 				SimpleConstraint simpleCostraint = new SimpleConstraint(constraint.getValue());
 				simpleCostraint.validate(comp, value);
 			}
@@ -129,5 +128,12 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 	/**METODOS PROPIOS DE LA CLASE*/
 	protected EConstraint[] concatArrayConstraint(EConstraint[] array, EConstraint... eConstraints){
 		return (EConstraint[]) ArrayUtils.addAll(array, eConstraints);
+	}
+	
+	public void hideComponentError(){
+		if(parent!=null && componentError!=null){
+			System.out.println("REMOVIENDO EL CHILD");
+			parent.removeChild(componentError);
+		}
 	}
 }

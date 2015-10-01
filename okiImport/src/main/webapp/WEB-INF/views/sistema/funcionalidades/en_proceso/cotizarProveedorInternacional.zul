@@ -69,9 +69,9 @@
 							<space />
 							<label value="Precio de Flete:" />
 							<vbox>
-								<decimalbox id="txtPrecioFlete" format="###.##"
-									readonly="@bind(!vm.tipoFlete.valor)"
-									value="@bind(vm.cotizacionSelecionada.precioFlete)"/>
+								<decimalbox format="###.##" readonly="@bind(!vm.tipoFlete.valor)"
+									value="@bind(vm.cotizacionSelecionada.precioFlete)"
+									constraint="@bind(vm.constraintPrecioFlete)"/>
 							</vbox>
 							<n:td width="50%">
 								<textbox rows="2" width="100%" sclass="no_rezise notas" readonly="true"
@@ -139,28 +139,36 @@
 							</listcell>
 							
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
-									value="@bind(each.peso)" width="100%"
-									constraint="@bind(vm.constraintCampoObligatorio)"
-									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								<vbox>
+									<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
+										value="@bind(each.peso)" width="100%"
+										constraint="@bind(vm.constraintCampoObligatorio)"
+										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
-									value="@bind(each.largo)" width="100%"
-									constraint="@bind(vm.constraintCampoObligatorio)"
-									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								<vbox>
+									<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
+										value="@bind(each.largo)" width="100%"
+										constraint="@bind(vm.constraintCampoObligatorio)"
+										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
-									value="@bind(each.ancho)" width="100%"
-									constraint="@bind(vm.constraintCampoObligatorio)"
-									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								<vbox>
+									<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
+										value="@bind(each.ancho)" width="100%"
+										constraint="@bind(vm.constraintCampoObligatorio)"
+										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
-									value="@bind(each.alto)" width="100%"
-									constraint="@bind(vm.constraintCampoObligatorio)"
-									onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								<vbox>
+									<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
+										value="@bind(each.alto)" width="100%"
+										constraint="@bind(vm.constraintCampoObligatorio)"
+										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
+								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<decimalbox format="###.##" tooltiptext="Total del Flete" readonly="true"
