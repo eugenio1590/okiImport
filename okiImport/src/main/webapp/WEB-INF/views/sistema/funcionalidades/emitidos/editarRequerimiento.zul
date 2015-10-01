@@ -19,7 +19,7 @@
 								<label value="Cedula/RIF: " />
 
                                 <vbox>
-								<textbox id="cedulaRif" width="80%" readonly="true"
+								<textbox id="cedulaRif" width="120%" readonly="true"
 									mold="rounded" tabbable="false" 
 									value="@bind(vm.requerimiento.cliente.cedula)"
 									constraint="@bind(vm.validatorClienteCedulaRif2)"/>
@@ -28,7 +28,7 @@
 								<label value="Nombre/Razón Social: " />
 
                                 <vbox>
-								<textbox id="nombreRazonSocial" width="80%" readonly="true" mold="rounded"
+								<textbox id="nombreRazonSocial" width="120%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)" 
 									constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
@@ -40,7 +40,7 @@
 								<label value="Teléfono: " />
 
                                 <vbox>
-								<textbox id="telefono" width="80%" readonly="true" mold="rounded"
+								<textbox id="telefono" width="120%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.telefono)" 
 									constraint="@bind(vm.telefonoValidator)"/>
 								</vbox>
@@ -48,7 +48,7 @@
 								<label value="E-mail:" />
 								
 								<vbox>
-								<textbox id="email" width="80%" readonly="true" mold="rounded" 
+								<textbox id="email" width="120%" readonly="true" mold="rounded" 
 									value="@bind(vm.requerimiento.cliente.correo)"
 									constraint="@bind(vm.emailValidator)"/>
 								</vbox>
@@ -57,7 +57,7 @@
 								<row>
 							<label value="Estado: " />
                                 <vbox>
-								<textbox id="estado" width="80%" readonly="true"
+								<textbox id="estado" width="120%" readonly="true"
 									mold="rounded" tabbable="false" 
 									value="@bind(vm.estado.nombre)"
 									constraint="@bind(vm.notEmptyValidator)"/>
@@ -66,7 +66,7 @@
 								<label value="Ciudad: " />
                                 
                                 <vbox>
-								<textbox id="ciudad" width="80%" readonly="true" mold="rounded"
+								<textbox id="ciudad" width="120%" readonly="true" mold="rounded"
 									value="@bind(vm.ciudad.nombre)"
 									constraint="@bind(vm.notEmptyValidator)" />
 								</vbox>
@@ -99,7 +99,7 @@
 								<row>
 									<label value="Marca: " />
 									<vbox>
-									<textbox width="80%" readonly="true"
+									<textbox width="100%" readonly="true"
 										value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
 										constraint="@bind(vm.notEmptyValidator)"/>
 									</vbox>	
@@ -116,13 +116,13 @@
 									<label value="Serial Carroceria: *" />
                                     <vbox>
 									<textbox id="serialCarroceria" maxlength="25"
-										width="80%" readonly="@bind(!vm.editar)" mold="rounded"
+										width="100%" readonly="@bind(!vm.editar)" mold="rounded"
 										value="@bind(vm.requerimiento.serialCarroceriaV)"
 										constraint="@bind(vm.notEmptyValidator)"/>
                                     </vbox>
 									<label value="Año: " />
 									<vbox>
-									<intbox width="80%" readonly="true" 
+									<intbox width="117%" readonly="true" 
 										value="@bind(vm.requerimiento.annoV)"
 										constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))" />
 									</vbox>	
@@ -151,7 +151,7 @@
 									<label value="Motor: *" />
 									<bandbox id="bdMotor" mold="rounded"
 										autodrop="true" readonly="true" placeholder="Seleccione..."
-										width="80%" value="@bind(vm.requerimiento.motor.nombre)">
+										width="92%" value="@bind(vm.requerimiento.motor.nombre)">
 										<bandpopup>
 											<listbox id="gridMotores" width="200px" mold="paging" 
 												model="@load(vm.listaMotor)"
@@ -206,7 +206,7 @@
 									</vbox>
 									
 									<label value="Tipo Repuesto:" />
-									<textbox id="txtTipoRepuesto" width="80%"
+									<textbox id="txtTipoRepuesto" width="100%"
 										readonly="true">
 										
 									</textbox>
