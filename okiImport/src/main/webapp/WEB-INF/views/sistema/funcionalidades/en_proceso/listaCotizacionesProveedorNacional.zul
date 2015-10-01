@@ -90,7 +90,7 @@
 					<grid>
 						<columns>
 							<column label="Fecha de Vencimiento: *" width="20%"/>
-							<column label="Moneda: *" width="15%"/>
+							<column label="Moneda: *" width="20%"/>
 							<column label="Condiciones:"/>
 						</columns>
 						<rows>
@@ -101,7 +101,7 @@
 								</vbox>
 									
 								<vbox>
-								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
+								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="80%"
 									readonly="true" buttonVisible="false" constraint="@bind(vm.notEmptyValidator)"
 									value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
 								
