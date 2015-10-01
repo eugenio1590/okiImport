@@ -8,9 +8,7 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
 
-import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
-import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -27,10 +25,7 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	private STransaccion sTransaccion;
 	
 	//Atributos
-	private List <Requerimiento> listaRequerimientos;
-	private List <MarcaVehiculo> listaMarcasVehiculo;
 	private Requerimiento requerimiento;
-	private Cliente cliente;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -61,14 +56,6 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
 	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 	
 	public SMaestros getsMaestros() {
 		return sMaestros;
@@ -78,13 +65,6 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 		this.sMaestros = sMaestros;
 	}
 	
-	public List<MarcaVehiculo> getListaMarcasVehiculo() {
-		return listaMarcasVehiculo;
-	}
-
-	public void setListaMarcasVehiculo(List<MarcaVehiculo> listaMarcasVehiculo) {
-		this.listaMarcasVehiculo = listaMarcasVehiculo;
-	}
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
