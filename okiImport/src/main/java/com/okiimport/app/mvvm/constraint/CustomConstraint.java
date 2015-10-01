@@ -131,9 +131,7 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 	}
 	
 	public void hideComponentError(){
-		if(parent!=null && componentError!=null){
-			System.out.println("REMOVIENDO EL CHILD");
+		if(parent!=null && componentError!=null)
 			parent.removeChild(componentError);
-		}
 	}
 }
