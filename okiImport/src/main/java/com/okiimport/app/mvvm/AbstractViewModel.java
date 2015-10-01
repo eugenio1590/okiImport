@@ -62,6 +62,9 @@ import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 
@@ -613,4 +616,11 @@ public abstract class AbstractViewModel {
 	 * Rosado: btn btn-sm btn-pink
 	 * Amarillo: btn btn-sm btn-yellow
 	 * */
+	
+	
+	public CustomConstraint getNotEmptyValidator() {
+		return new GeneralConstraint(EConstraint.NO_EMPTY);
+	}
+	
+	
 }

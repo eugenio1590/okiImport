@@ -19,10 +19,12 @@
 						
 							<label value="Nombre Marca: *" />
 
+                            <vbox>
 							<textbox id="nombre" width="60%"
 								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
 								placeholder="Ej: Toyota"
-								constraint="no empty:El Campo No Debe Estar Vacio" />
+								constraint="@bind(vm.notEmptyValidator)" />
+							</vbox>
 						</row>
 					</rows>
 				</grid>

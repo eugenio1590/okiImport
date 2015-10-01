@@ -46,18 +46,20 @@
 									<row>
 									
 										<label value="Supplier Type/Tipo Proveedor: *" />
+										<vbox>
 										<combobox
 											placeholder="Seleccione..." width="85%" readonly="@bind(vm.makeAsReadOnly)"
 											value="@bind(vm.tipoProveedor.nombre)"
 											selectedItem="@bind(vm.tipoProveedor)"
 											model="@load(vm.listaTipoProveedor)"
-											onChange="@command('actualizarLocalidad')">
+											onChange="@command('actualizarLocalidad')" constraint="@bind(vm.notEmptyValidator)">
 											<template name="model">
 												<comboitem
 													label="@bind(each.nombre)">
 												</comboitem>
 											</template>
 										</combobox>
+										</vbox>
 										
 									</row>
 									<row>
@@ -68,7 +70,7 @@
 												<combobox buttonVisible="@bind(!vm.makeAsReadOnly)"
 													width="30%" readonly="@bind(vm.makeAsReadOnly)"
 													selectedItem="@bind(vm.tipoPersona)"
-													model="@load(vm.listaTipoPersona)">
+													model="@load(vm.listaTipoPersona)" constraint="@bind(vm.notEmptyValidator)">
 													<template name="model">
 														<comboitem
 															label="@bind(each.nombre)" />
@@ -90,7 +92,7 @@
 												placeholder="Ej: Empresa C.A"
 												value="@bind(vm.proveedor.nombre)"
 												readonly="@bind(vm.makeAsReadOnly)"
-												constraint="@bind(vm.getNotEmptyValidator())" />
+												constraint="@bind(vm.notEmptyValidator)" />
 										</vbox>
 											
 									</row>
@@ -162,7 +164,8 @@
 											buttonVisible="@bind(!vm.makeAsReadOnly)"
 											selectedItem="@bind(vm.proveedor.ciudad)"
 											visible="@bind(vm.tipoProveedor.valor)"
-											model="@load(vm.listaCiudades)">
+											model="@load(vm.listaCiudades)"
+											constraint="@bind(vm.notEmptyValidator)">
 
 											<template name="model">
 												<comboitem

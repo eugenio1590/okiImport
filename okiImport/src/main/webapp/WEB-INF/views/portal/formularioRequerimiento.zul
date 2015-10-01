@@ -41,7 +41,7 @@
 													width="91%" readonly="" mold="rounded"
 													value="@bind(vm.cliente.cedula)"
 													placeholder="Ej: 402405375" maxlength="12"
-													constraint="@bind(vm.validatorClienteCedulaRif)"
+													constraint="@bind(vm.validatorClienteCedulaRif2)"
 													onBlur="@command('buscarCliente')"
 													onOK="@command('buscarCliente')" />
 											</vbox>
@@ -167,11 +167,14 @@
 
 											<label
 												value="Serial Carroceria: " />
-
+                                            
+                                            <vbox>
 											<textbox
 												id="serialCarroceria" width="80%" readonly="" mold="rounded"
 												value="@bind(vm.requerimiento.serialCarroceriaV)"
-												maxlength="25" placeholder="Ej: xA245D25623" />
+												maxlength="25" placeholder="Ej: xA245D25623"
+												constraint="@bind(vm.notEmptyValidator)" />
+											</vbox>
 
 											<label value="Año: *" />
 											<vbox>
