@@ -254,8 +254,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 			if (noValido)
 				username = usuario
 						+ PasswordGenerator.getPassword(
-								PasswordGenerator.NUMEROS
-										+ PasswordGenerator.MAYUSCULAS, 3);
+								PasswordGenerator.NUMEROS + PasswordGenerator.MAYUSCULAS, 3);
 		}
 		return username;
 	}
@@ -346,7 +345,19 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
     	return new GeneralConstraint(EConstraint.NO_EMPTY,
 				EConstraint.NO_PAST );
 	}
+    
+    public void setButtonDisiabled(final org.zkoss.zul.Button button){
+    	String sclass = button.getSclass();
+    	if(sclass.contains("active"))
+    		sclass.replace("active", "disabled");
+    	else if(sclass.contains("disabled"))
+    		sclass.replace("disabled", "active");
+    	else
+    		sclass = sclass + "active";
+    	button.setSclass(sclass);
+    }
 
+    /**GETTERS Y SETTERS*/
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}
