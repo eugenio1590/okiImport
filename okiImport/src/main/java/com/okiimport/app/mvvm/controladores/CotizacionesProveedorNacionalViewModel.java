@@ -29,6 +29,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.DetalleCotizacion;
 import com.okiimport.app.model.HistoricoMoneda;
@@ -36,6 +37,7 @@ import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.AbstractServiceImpl;
@@ -88,9 +90,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
-	private static final String CONTRAINT_PRECIO_FLETE = "no empty, no zero, no negative";
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
-	private String constraint_precio_flete;
+	private CustomConstraint constraintPrecioFlete = null;
 	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<Moneda> monedas;
@@ -315,15 +316,15 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"listaDetalleCotizacion", "constraint_precio_flete"})
+	@NotifyChange({"listaDetalleCotizacion", "constraintPrecioFlete"})
 	public void seleccionarTipoFlete(){
 		if(!this.tipoFlete.getValor()){
-			this.constraint_precio_flete = null;
+			this.constraintPrecioFlete = null;
 			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
 				detalle.setPrecioFlete(null);
 		}
 		else
-			this.constraint_precio_flete = CONTRAINT_PRECIO_FLETE;
+			this.constraintPrecioFlete = super.getValidatorCantPositiva();
 	}
 	
 	/**
@@ -509,12 +510,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		this.titulo = titulo;
 	}
 
-	public String getConstraint_precio_flete() {
-		return constraint_precio_flete;
+	public CustomConstraint getConstraintPrecioFlete() {
+		return constraintPrecioFlete;
 	}
 
-	public void setConstraint_precio_flete(String constraint_precio_flete) {
-		this.constraint_precio_flete = constraint_precio_flete;
+	public void setConstraintPrecioFlete(CustomConstraint constraintPrecioFlete) {
+		this.constraintPrecioFlete = constraintPrecioFlete;
 	}
 
 	public List<ModeloCombo<Boolean>> getTiposFlete() {

@@ -21,7 +21,6 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Decimalbox;
 import org.zkoss.zul.East;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
@@ -65,26 +64,24 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Wire("#pagMonedas")
 	private Paging pagMonedas;
 	
-	@Wire("#txtPrecioFlete")
-	private Decimalbox txtPrecioFlete;
-	
 	//Atributos
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
 	
-	private final CustomConstraint CONTRAINT_PRECIO_FLETE = getValidatorPrecio();
+	private CustomConstraint constraintCampoObligatorio;
+	private CustomConstraint constraintPrecioFlete = null;
 	
 	private List<DetalleCotizacionInternacional> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	private Requerimiento requerimiento;
-	private Cotizacion cotizacionSelecionada=null;
+	private Cotizacion cotizacionSelecionada = null;
 	private Moneda monedaSeleccionada;
 	private List<ModeloCombo<Boolean>> tiposFlete;
 	private List<ModeloCombo<Boolean>> formasEnvio;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
 	private String titulo;
-	private String constraintCampoObligatorio;
+	
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -93,13 +90,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
+	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("cotizacion") Cotizacion cotizacion,
 			@ExecutionArgParam("obligatorioTodosCampos") Boolean obligatorio){
 		super.doAfterCompose(view);
 		
-		this.constraintCampoObligatorio = (obligatorio) ? "no empty" : null;
+		this.constraintCampoObligatorio = (obligatorio) ? super.getNotEmptyValidator() : null;
 				
 		this.requerimiento = requerimiento;
 		this.cotizacionSelecionada = cotizacion;
@@ -234,9 +232,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada", "constraint_precio_flete"})
+	@NotifyChange("*")
 	public void seleccionarTipoFlete(){
-		this.txtPrecioFlete.clearErrorMessage();
 		if(this.tipoFlete.getValor()){
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
@@ -245,10 +242,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 				detalle.setLargo(null);
 				detalle.setPeso(null);
 			}
-			this.txtPrecioFlete.setConstraint(CONTRAINT_PRECIO_FLETE);
+			constraintPrecioFlete = getValidatorPrecio();
 		}
 		else {
-			this.txtPrecioFlete.setConstraint("");
+			constraintPrecioFlete.hideComponentError();
+			constraintPrecioFlete = null;
 			actualizarListaDetalleCotizacion();
 		}
 	}
@@ -368,7 +366,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	/**SETTERS Y GETTERS*/
+	/**SETTERS Y GETTERS*/	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
@@ -466,11 +464,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		this.titulo = titulo;
 	}
 
-	public String getConstraintCampoObligatorio() {
+	public CustomConstraint getConstraintCampoObligatorio() {
 		return constraintCampoObligatorio;
 	}
 
-	public void setConstraintCampoObligatorio(String constraintCampoObligatorio) {
+	public void setConstraintCampoObligatorio(CustomConstraint constraintCampoObligatorio) {
 		this.constraintCampoObligatorio = constraintCampoObligatorio;
+	}
+	
+	public CustomConstraint getConstraintPrecioFlete() {
+		return constraintPrecioFlete;
+	}
+
+	public void setConstraintPrecioFlete(CustomConstraint constraintPrecioFlete) {
+		this.constraintPrecioFlete = constraintPrecioFlete;
 	}
 }

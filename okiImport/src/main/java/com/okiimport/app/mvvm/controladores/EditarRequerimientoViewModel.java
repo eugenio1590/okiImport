@@ -109,6 +109,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		this.editar = editar;
 		this.requerimiento = requerimiento;
 		this.motor = requerimiento.getMotor();
+		this.motor = (this.motor==null) ? new Motor() : this.motor;
 		this.estado = requerimiento.getCliente().getCiudad().getEstado();
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		

@@ -224,10 +224,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					}
 					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 
-					if(enviar){
-						//No es el servicio que se usara
-						this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
-					}
+					if(enviar)
+						this.mailProveedor.enviarRequerimientoProveedor(proveedor, detalleCotizacions, mailService);
 				}
 				btn_enviar.setDisabled(true);
 			}
