@@ -13,9 +13,12 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.DetalleOferta;
@@ -25,9 +28,7 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class VerOfertaViewModel extends AbstractRequerimientoViewModel 
-{
-	
+public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
     //Servicios
     @BeanInjector("sTransaccion")
@@ -76,7 +77,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 	/**COMMAND*/
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
-	 * Parametros: @param view: formularioOferta.zul 
+	 * Parametros: @param btnEnviar: boton presionado
 	 * Retorno: Oferta Registrada
 	 * Nota: Ninguna
 	 * */
@@ -91,30 +92,36 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
 			cargarOferta();
 			
-			Map<String, Object> parametros = new HashMap<String, Object>();
+			final Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
 			parametros.put("detallesOfertas", listaDetOferta);
 
 
 			if (oferta != null)
 			{
-				//redireccionar
-				ejecutarGlobalCommand("verOferta", parametros);
-				this.winOferta.onClose();
+				super.mostrarMensaje("Informacion", "¿Desea continuar viendo mas ofertas?", null, 
+						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener(){
+							@Override
+							public void onEvent(Event event) throws Exception {
+								if (((Messagebox.Button) event.getData()) == Messagebox.Button.YES) {
+									ejecutarGlobalCommand("verOferta", parametros);
+									winOferta.onClose();
+								}
+								else
+									redireccionarASolicitudDePedido(parametros);
+							}
+				}, null);
+				
 			}
 			else
-			{
-				//antes cerrar formulario de oferta
-				this.winOferta.onClose();
-				this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
-			}
+				redireccionarASolicitudDePedido(parametros);
 		}
 	}
 	
 	/**
 	 * Descripcion: Permite Aprobar el detalle de la oferta
-	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Oferta aprobada
+	 * Parametros: @param checkbox: componente de la vista checkbox que fue presionado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -123,11 +130,11 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 		detalleOferta.setAprobado(checkbox.isChecked());
 	}
 	
-	
+	/**METODOS PRIVADOS DE LA CLASE*/
 	/**
 	 * Descripcion: Permite llenar la lista con las ofertas aprobadas
-	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno:lista llena
+	 * Parametros: Ninguno.
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llenarListAprobados() {
@@ -138,7 +145,16 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel
 		}
 	}
 	
-	/**METODOS PRIVADOS DE LA CLASE*/
+	/**
+	 * Descripcion: Permitira redirigir a la pantalla de solicitud de pedido
+	 * Parametros: @param parametros: parametros a pasar al .zul
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 */
+	private void redireccionarASolicitudDePedido(Map<String, Object> parametros){
+		this.winOferta.onClose();
+		this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+	}
 	
 	/**GETTERS Y SETTERS*/
 	public Requerimiento getRequerimiento() {
