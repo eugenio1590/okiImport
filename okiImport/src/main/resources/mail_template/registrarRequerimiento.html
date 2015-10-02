@@ -801,7 +801,7 @@ tr.border td {
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400);
 </style>
 <![endif]--><meta name="robots" content="noindex,nofollow"></meta>
-<meta property="og:title" content="My First Campaign"></meta>
+<meta property="og:title" content="Registrar Requerimiento"></meta>
 <link href="http://css.createsend1.com/css/social.min.css?h=0ED47CE117sep" media="screen,projection" rel="stylesheet" type="text/css" />
 </head>
 <!--[if mso]>
@@ -867,23 +867,23 @@ tr.border td {
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${cliente.nombre} Hemos Recibido de Ud. un registro de requerimiento(s) que sera procesado en el menor tiempo posible, estaremos en contacto con ud.</p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Estos Son Sus datos:<br />
                 
-                ${requerimiento.id}<br />
+                ${requerimiento.idRequerimiento}<br />
                 ${cliente.nombre}<br />
                 ${cliente.cedula}<br />
                 ${cliente.telefono}<br />
                 ${cliente.correo}<br />
                 <br />
                 Estos Son los Datos del Vehiculo:<br />
-                ${requerimiento.marca.nombre}<br />
-                ${requerimiento.modelo_v}<br />
-                ${requerimiento.anno_v}<br />
-                ${requerimiento.motor.nombre}<br />
+                ${requerimiento.marcaVehiculo}<br />
+                ${requerimiento.modeloV}<br />
+                ${requerimiento.annoV}<br />
+                ${requerimiento.motor}<br />
                 ${requerimiento.tipoRepuesto}<br />
                 <br />
                 Estos Son los Datos del Requerimiento:<br />
-                ${requerimiento.detalle_requerimiento.codigo_oem}<br />
-                ${requerimiento.descripcion}<br />
-                ${requerimiento.cantidad}</p>
+                ${requerimiento.detalleRequerimiento.codigoOem}<br />
+                ${requerimiento.detalleRequerimiento.descripcion}<br />
+                ${requerimiento.detalleRequerimiento.cantidad}</p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Su solicitud será respondida en la brevedad posible.<br />
       </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>
