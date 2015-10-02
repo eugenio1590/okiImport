@@ -42,9 +42,15 @@
 									<column width="65%" />
 								</columns>
 								<rows>
-
-									<row>
 									
+									
+									
+									
+									
+									
+									
+									
+
 										<label value="Supplier Type/Tipo Proveedor: *" />
 										<vbox>
 										<combobox
@@ -62,6 +68,12 @@
 										</vbox>
 										
 									</row>
+
+
+
+
+
+
 									<row>
 										
 										<label value="ID/RIF: *" />
@@ -123,12 +135,14 @@
 									<row>
 										<label value="Country/Pais: *" />
 										<vbox width="85%">
-											<combobox width="100%" readonly="@bind(vm.makeAsReadOnly)"
+											<combobox width="100%" readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
 												placeholder="Seleccione..."
+												value="@bind(vm.proveedor.pais.nombre)"
 												selectedItem="@bind(vm.proveedor.pais)"
 												model="@load(vm.listaPaises)"
-												constraint="@bind(vm.notEmptyValidator)">
+												constraint="@bind(vm.notEmptyValidator)"
+												onChange="@command('actualizarLocalidad')">
 												<template name="model">
 													<comboitem
 														label="@bind(each.nombre)">
@@ -140,40 +154,62 @@
 									</row>
 									
 									<row>
-										<label value="Estado:" visible="@bind(vm.tipoProveedor.valor)" />
-										<combobox
-											width="85%" placeholder="Seleccione..."
-											readonly="@bind(vm.makeAsReadOnly)"
-											buttonVisible="@bind(!vm.makeAsReadOnly)"
-											selectedItem="@bind(vm.estado)"
-											visible="@bind(vm.tipoProveedor.valor)"
-											model="@load(vm.listaEstados)"
-											onSelect="@command('buscarCiudades')">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-
-												</comboitem>
-											</template>
-										</combobox>
+										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
+										<vbox>
+											<combobox
+												width="85%" placeholder="Seleccione..."
+												readonly="true"
+												buttonVisible="@bind(!vm.makeAsReadOnly)"
+												value="@bind(vm.proveedor.ciudad.estado.nombre)"
+												selectedItem="@bind(vm.estado)"
+												visible="@bind(vm.proveedor.nacional)"
+												model="@load(vm.listaEstados)"
+												onSelect="@command('buscarCiudades')"
+												constraint="@bind(vm.constrEstado)">
+												<template name="model">
+													<comboitem
+														label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
 										
-										<label value="Ciudad:" visible="@bind(vm.tipoProveedor.valor)" />
-										<combobox
-											placeholder="Seleccione..." width="92%" 
-											readonly="@bind(vm.makeAsReadOnly)"
-											buttonVisible="@bind(!vm.makeAsReadOnly)"
-											selectedItem="@bind(vm.proveedor.ciudad)"
-											visible="@bind(vm.tipoProveedor.valor)"
-											model="@load(vm.listaCiudades)"
-											constraint="@bind(vm.notEmptyValidator)">
 
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
 
-												</comboitem>
-											</template>
-										</combobox>
+
+
+
+
+
+
+
+
+
+
+
+										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
+										<vbox>
+											<combobox
+												placeholder="Seleccione..." width="92%" 
+												readonly="true"
+												buttonVisible="@bind(!vm.makeAsReadOnly)"
+												value="@bind(vm.proveedor.ciudad.nombre)"
+												selectedItem="@bind(vm.proveedor.ciudad)"
+												visible="@bind(vm.proveedor.nacional)"
+												model="@load(vm.listaCiudades)"
+												constraint="@bind(vm.constrCiudad)">
+												<template name="model">
+													<comboitem
+														label="@bind(each.nombre)"/>
+												</template>
+											</combobox>
+										</vbox>
+
+
+
+
+
+
+
 										
 									</row>
 									

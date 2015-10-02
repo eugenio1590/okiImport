@@ -28,45 +28,58 @@ import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Pais;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel {
-
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
-	//GUI
-	@Wire("#winProveedor")
-	private Window winProveedor;
-	@Wire("#gridMarcas")
-	private Listbox gridMarcas;
-	@Wire("#gridClasificacionRepuesto")
-	private Listbox gridClasificacionRepuesto;
-	@Wire("#gridMarcasVender")
-	private Listbox gridMarcasVender;
-	@Wire("#gridTipoRepuestosVender")
-	private Listbox gridTipoRepuestosVender;
-	@Wire("#pagMarcas")
-	private Paging pagMarcas;
-	@Wire("#pagTipoRepuestos")
-	private Paging pagTipoRepuestos;
-	@Wire("#btnLimpiar")
-	private Button btnLimpiar;
-	@Wire("#cmbEstado")
-	private Combobox cmbEstado;
-	@Wire("#cmbCiudad")
-	private Combobox cmbCiudad;
-	
 	@BeanInjector("mailProveedor")
 	private MailProveedor mailProveedor;
 	
+	//GUI
+	@Wire("#winProveedor")
+	private Window winProveedor;
+	
+	@Wire("#gridMarcas")
+	private Listbox gridMarcas;
+	
+	@Wire("#gridClasificacionRepuesto")
+	private Listbox gridClasificacionRepuesto;
+	
+	@Wire("#gridMarcasVender")
+	private Listbox gridMarcasVender;
+	
+	@Wire("#gridTipoRepuestosVender")
+	private Listbox gridTipoRepuestosVender;
+	
+	@Wire("#pagMarcas")
+	private Paging pagMarcas;
+	
+	@Wire("#pagTipoRepuestos")
+	private Paging pagTipoRepuestos;
+	
+	@Wire("#btnLimpiar")
+	private Button btnLimpiar;
+	
+	@Wire("#cmbEstado")
+	private Combobox cmbEstado;
+	
+	@Wire("#cmbCiudad")
+	private Combobox cmbCiudad;
+	
+	//Atributos
 	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
 	private static final Comparator<ClasificacionRepuesto> COMPR_CLASIFICACION_REPUESTO = ClasificacionRepuesto.getComparator();
+	
+	private CustomConstraint constrEstado = null;
+	private CustomConstraint constrCiudad = null;
 	
 	private List<MarcaVehiculo> listaMarcaVehiculos;
 	private List<ClasificacionRepuesto> listaClasificacionRepuestos;
@@ -76,8 +89,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoPersonaCed;
-	private List<ModeloCombo<Boolean>> listaTipoProveedor;
-	private ModeloCombo<Boolean> tipoProveedor;
 	private List<Estado> listaEstados;
 	private List<Ciudad> listaCiudad;
 	private Estado estadoSeleccionado;
@@ -99,10 +110,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
-	    this.makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		this.proveedor = (proveedor==null) ? new Proveedor() :  proveedor;
 		this.cerrar = (cerrar==null) ? true : cerrar;
-		this.listaPaises = llenarListaPaises();
+		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
+		listaPaises = llenarListaPaises();
 		listaEstados = llenarListaEstados();
 		pagMarcas.setPageSize(pageSize);
 		pagTipoRepuestos.setPageSize(pageSize);
@@ -111,15 +122,15 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		consultarMarcas(0);
 		consultarTipoRepuesto(0);
 		listaTipoPersona = llenarListaTipoPersona();
-		this.tipoPersona = listaTipoPersona.get(1);
-		listaTipoProveedor = llenarListaTipoProveedor();
-		tipoProveedor=consultarTipoProveedor(this.proveedor.getTipoProveedor(),listaTipoProveedor);
+		tipoPersona = listaTipoPersona.get(1);
 		tipoPersona=consultarTipoPersona(this.proveedor.getCedula(),listaTipoPersona);
 		String cedula = this.proveedor.getCedula();
 		if(cedula!=null)
 			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 	}
 
+	/**COMMAND*/
+	
 	/**
 	 * Descripcion: Permite Habilitar el boton limpiar segun el evento que se solicite
 	 * Parametros: @param view: formularioProveedor.zul 
@@ -144,39 +155,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "proveedor" })
 	public void limpiar() {
 		proveedor = new Proveedor();
-	}
-
-	/**
-	 * Descripcion: Permite Consultar el tipo de proveedor
-	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Tipo de Proveedor 
-	 * Nota: Ninguna
-	 * */
-	public ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
-		if(tipoProveedor!=null)
-			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
-				if (tipoProveedorl.getValor() == tipoProveedor)
-					return tipoProveedorl;
-			
-		return listaTipoProveedor.get(1);
-		
-	}
-	
-	/**
-	 * Descripcion: Permite Consultar el tipo de persona
-	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Tipo de Persona
-	 * Nota: Ninguna
-	 * */
-	public ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
-		if (cedula!=null){
-			String tipoPersona = cedula.substring(0, 1);
-			for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
-				if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
-					return tipoPersonal;
-		}
-		return this.tipoPersona;
-		
 	}
 	
 	 /**
@@ -296,51 +274,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	/**
-	 * Descripcion: Permite registrar un proveedor en el sistema
-	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Proveedor registrado, correo enviado al proveedor 
-	 * Nota: Ninguna
-	 * */
-	protected Proveedor registrarProveedor(boolean enviarEmail){
-		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-		proveedor.setCedula(tipo + proveedor.getCedula());
-		proveedor.setEstatus("solicitante");
-
-		if (tipoProveedor != null)
-
-		proveedor.setTipoProveedor(this.tipoProveedor.getValor());
-
-		proveedor = sMaestros.registrarProveedor(proveedor);
-		
-		String str = null;
-		if(recordMode.equalsIgnoreCase("EDIT"))
-			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
-		else
-			str = "Proveedor Actualizado Exitosamente";
-
-		if(enviarEmail){
-			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
-
-			mostrarMensaje("Informacion", str, null, null,
-					new EventListener() {
-						public void onEvent(Event event) throws Exception {
-							redireccionar("/");
-						}
-					}, null);
-		}
-		else {
-			mostrarMensaje("Informacion", str, null, null,
-					new EventListener() {
-						public void onEvent(Event event) throws Exception {
-							winProveedor.onClose();
-							ejecutarGlobalCommand("consultarProveedores", null);
-						}
-					}, null);
-		}
-		return proveedor;
-	}
-
-	/**
 	 * Descripcion: Permite consultar las marcas
 	 * Parametros: @param view: formularioProveedor.zul 
 	 * Retorno: Marcas consultadas y llenado de la lista de marcas a seleccionar
@@ -377,19 +310,125 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		pagTipoRepuestos.setTotalSize(total);
 	}
 	
+	/**
+	 * Descripcion: Permite eliminar la referencia de ciudad y estado en el caso de ser un proveedor internacional.
+	 * 		Ademas actualizara los constraint de los combos de ciudad y estado.
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	@Command
-	@NotifyChange({ "estado", "proveedor" })
+	@NotifyChange({ "estado", "proveedor", "constrEstado", "constrCiudad" })
 	public void actualizarLocalidad(){
-		this.proveedor.setPais(null);
-		if(this.tipoProveedor.getValor() == false){
-			this.estado = null;
-			this.proveedor.setCiudad(null);
+		if(!proveedor.isNacional()){
+			estado = null;
+			proveedor.setCiudad(null);
+			constrEstado = null;
+			constrCiudad = null;
 		}	
+		else {
+			constrEstado = super.getNotEmptyValidator();
+			constrCiudad = super.getNotEmptyValidator();
+		}
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
 	
+	/**
+	 * Descripcion: Permite Consultar el tipo de proveedor
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Tipo de Proveedor 
+	 * Nota: Ninguna
+	 * */
+	private ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
+		if(tipoProveedor!=null)
+			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
+				if (tipoProveedorl.getValor() == tipoProveedor)
+					return tipoProveedorl;
+			
+		return listaTipoProveedor.get(1);
+		
+	}
+	
+	/**
+	 * Descripcion: Permite Consultar el tipo de persona
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Tipo de Persona
+	 * Nota: Ninguna
+	 * */
+	private ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
+		if (cedula!=null){
+			String tipoPersona = cedula.substring(0, 1);
+			for(ModeloCombo<Boolean> tipoPersonal: listaTipoPersona )
+				if (tipoPersonal.getNombre().equalsIgnoreCase(tipoPersona))
+					return tipoPersonal;
+		}
+		return this.tipoPersona;
+	}
+	
+	/**
+	 * Descripcion: Permite registrar un proveedor en el sistema
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Proveedor registrado, correo enviado al proveedor 
+	 * Nota: Ninguna
+	 * */
+	private Proveedor registrarProveedor(boolean enviarEmail){
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		proveedor.setCedula(tipo + proveedor.getCedula());
+		proveedor.setEstatus("solicitante");
+
+		if (proveedor.isNacional())
+			proveedor.setTipoProveedor(true);
+		else
+			proveedor.setTipoProveedor(false);
+
+		proveedor = sMaestros.registrarProveedor(proveedor);
+		
+		String str = null;
+		if(recordMode.equalsIgnoreCase("EDIT"))
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+		else
+			str = "Proveedor Actualizado Exitosamente";
+
+		if(enviarEmail){
+			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
+
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							redireccionar("/");
+						}
+					}, null);
+		}
+		else {
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener() {
+						public void onEvent(Event event) throws Exception {
+							winProveedor.onClose();
+							ejecutarGlobalCommand("consultarProveedores", null);
+						}
+					}, null);
+		}
+		return proveedor;
+	}
+	
 	/**GETTERS Y SETTERS*/	
+	public CustomConstraint getConstrEstado() {
+		return constrEstado;
+	}
+
+	public void setConstrEstado(CustomConstraint constrEstado) {
+		this.constrEstado = constrEstado;
+	}
+
+	public CustomConstraint getConstrCiudad() {
+		return constrCiudad;
+	}
+
+	public void setConstrCiudad(CustomConstraint constrCiudad) {
+		this.constrCiudad = constrCiudad;
+	}
+	
 	public List<MarcaVehiculo> getListaMarcaVehiculos() {
 		return listaMarcaVehiculos;
 	}
@@ -438,22 +477,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTipoProveedor() {
-		return listaTipoProveedor;
-	}
-
-	public void setListaTipoProveedor(List<ModeloCombo<Boolean>> listaTipoProveedor) {
-		this.listaTipoProveedor = listaTipoProveedor;
-	}
-
-	public ModeloCombo<Boolean> getTipoProveedor() {
-		return tipoProveedor;
-	}
-
-	public void setTipoProveedor(ModeloCombo<Boolean> tipoProveedor) {
-		this.tipoProveedor = tipoProveedor;
 	}
 
 	public List<Estado> getListaEstados() {
