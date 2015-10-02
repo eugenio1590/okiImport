@@ -1,9 +1,9 @@
 <zk>
 	<div sclass="breadcrumbs">
 		<div class="btn-group btn-group-sm" hflex="1" align="right">
-			
+
 			<a image="/resources/img/botones/HomeCasaOscuro.png"
-				hoverImage="/resources/img/botones/HomeCasaClara.png" 
+				hoverImage="/resources/img/botones/HomeCasaClara.png"
 				href="javascript:void(0)" tooltiptext="Home"
 				onClick="@command('registrarRequerimiento')" />
 
@@ -16,7 +16,12 @@
 				hoverImage="/resources/img/botones/ConsultarClaro.png"
 				href="javascript:void(0)" tooltiptext="Consultar Requerimiento"
 				onClick="@command('verificarRequerimiento')" />
-			
+
+			<a image="/resources/img/botones/RegistrarPagoOscuro.png"
+				hoverImage="/resources/img/botones/RegistrarPagoClaro.png"
+				href="javascript:void(0)" tooltiptext="Registrar Pago"
+				onClick="@command('verificarRequerimiento')" />
+
 		</div>
 	</div>
 </zk>
