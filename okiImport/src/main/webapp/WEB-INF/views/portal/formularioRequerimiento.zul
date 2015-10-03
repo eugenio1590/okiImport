@@ -172,8 +172,7 @@
 											<textbox
 												id="serialCarroceria" width="80%" readonly="" mold="rounded"
 												value="@bind(vm.requerimiento.serialCarroceriaV)"
-												maxlength="25" placeholder="Ej: xA245D25623"
-												constraint="@bind(vm.notEmptyValidator)" />
+												maxlength="25" placeholder="Ej: xA245D25623" />
 											</vbox>
 
 											<label value="Año: *" />

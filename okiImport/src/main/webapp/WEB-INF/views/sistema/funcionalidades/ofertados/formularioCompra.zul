@@ -20,21 +20,18 @@
 				<space></space>
 				<space></space>
 				<label value="Fecha: " />
-				<vbox>
 				<datebox id="fecha" width="150px" format="dd/MM/yyyy"
 					value="@bind(vm.compra.fechaCreacion)" instant="true"
 					readonly="true" />
-				</vbox>
 				<space></space>
 				<space></space>
 				<space></space>
 				<space></space>
 				<space></space>
 				<label value="Observacion:" />
-				<vbox>
-				<textbox value="@bind(vm.compra.observacion)"
-					width="250px" rows="2" constraint="@bind(vm.notEmptyValidator)"/>
-				</vbox>
+				<textbox sclass="no_rezise notas" readonly="true"
+					value="@bind(vm.compra.observacion)" 
+					width="250px" rows="2"/>
 				<space></space>
 				<space></space>
 
@@ -203,12 +200,14 @@
 		</groupbox>
 
 		<div align="right">
-
-			<label value="Precio de Flete"></label>
-            <vbox>
-			<textbox value="@bind(vm.compra.precioFlete)" width="150px"  constraint="@bind(vm.validatorPrecio)"/>
-		    </vbox>
-
+			<hbox>
+				<label value="Precio de Flete"></label>
+            	<vbox>
+					<textbox width="150px"  
+						value="@bind(vm.compra.precioFlete)" 
+						constraint="@bind(vm.validatorPrecio)"/>
+		    	</vbox>
+			</hbox>
 		</div>
 
 

@@ -29,57 +29,41 @@
 						</row>
 						<row>
 							<label value="Usuario: " />
-							<vbox>
 							<textbox id="txtUsername" width="100%"
-								disabled="true" value="@bind(rs.username)" constraint="@bind(vm.notEmptyValidator)" />
-							</vbox>
+								disabled="true" value="@bind(rs.username)" />
 
 							<label value="Cédula: " />
-							<vbox>
 							<textbox id="txtcodCedula" width="100%"
-								disabled="true" value="@bind(rs.persona.cedula)" constraint="@bind(vm.notEmptyValidator)" />
-							</vbox>
+								disabled="true" value="@bind(rs.persona.cedula)" />
 						</row>
 						<row>
 							<label value="Nombre: " />
-							<vbox>
 							<textbox id="txtNombre" width="100%"
-								disabled="true" value="@bind(rs.persona.nombre)" constraint="@bind(vm.notEmptyValidator)" />
-							</vbox>
+								disabled="true" value="@bind(rs.persona.nombre)"/>
 
 							<label value="Apellido: " />
-							<vbox>
 							<textbox id="txtApellido" width="100%"
-								disabled="true" value="@bind(rs.persona.apellido)" constraint="@bind(vm.notEmptyValidator)" />
-							</vbox>
+								disabled="true" value="@bind(rs.persona.apellido)"/>
 						</row>
 
 						<row>
 							<label value="Dirección: " />
-							<vbox>
 							<textbox id="txtDireccion" width="100%"
 								disabled="true" maxlength="100" rows="2"
-								value="@bind(rs.persona.direccion)"  constraint="@bind(vm.notEmptyValidator)"/>
-							</vbox>
+								value="@bind(rs.persona.direccion)"/>
 
 							<label value="Correo: " />
-							<vbox>
 							<textbox id="txtCorreo" width="100%"
-								disabled="true" maxlength="50" value="@bind(rs.persona.correo)"  constraint="@bind(vm.notEmptyValidator)"/>
-							</vbox>
+								disabled="true" maxlength="50" value="@bind(rs.persona.correo)"/>
 						</row>
 						<row>
 							<label value="Nueva Contraseña: " />
-							<vbox>
 							<textbox id="txtClaveNueva" width="100%"
-								type="password" maxlength="50" constraint="@bind(vm.notEmptyValidator)" />
-								
+								type="password" maxlength="50"/>
 								
 							<label value="Confirmar Contraseña: " />
-						    <vbox>
 							<textbox id="txtClaveNuevaConf" width="100%"
-								type="password" maxlength="50"  constraint="@bind(vm.notEmptyValidator)"/>
-							</vbox>
+								type="password" maxlength="50"/>
 						</row>
 
 					</rows>
