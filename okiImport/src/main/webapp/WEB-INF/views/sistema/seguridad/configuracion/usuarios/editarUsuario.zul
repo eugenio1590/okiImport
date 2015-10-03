@@ -15,25 +15,38 @@
 					<rows>
 						<row>
 							<label value="Cedula" />
-							<textbox readonly="true" value="@bind(vm.persona.cedula)" />
+							<vbox>
+							<textbox readonly="true" value="@bind(vm.persona.cedula)"
+							constraint="@bind(vm.validatorClienteCedulaRif)" />
+							</vbox>
 						</row>
 						<row>
 							<label value="Nombre" />
-							<textbox readonly="true" value="@bind(vm.persona.nombre)" />
+							<vbox>
+							<textbox readonly="true" value="@bind(vm.persona.nombre)" 
+							constraint="@bind(vm.notEmptyValidator)"/>
+							</vbox>
 						</row>
 						<row>
 							<label value="Apellido" />
-							<textbox readonly="true" value="@bind(vm.persona.apellido)" />
+							<vbox>
+							<textbox readonly="true" value="@bind(vm.persona.apellido)" 
+							constraint="@bind(vm.notEmptyValidator)"/>
+							</vbox>
 						</row>
 						<row>
 							<label value="Username" />
+							<vbox>
 							<textbox value="@bind(fx.username) @validator(vm.validadorUsername, txtUsername=self)"
-								constraint="no empty" />
+								constraint="@bind(vm.notEmptyValidator)" />
+							</vbox>
 						</row>
 						<row>
 							<label value="Nuevo Password" />
+							<vbox>
 							<textbox type="password" value="@bind(fx.pasword)" 
-								constraint="no empty" />
+								constraint="@bind(vm.notEmptyValidator)" />
+							</vbox>
 						</row>
 					</rows>
 				</grid>

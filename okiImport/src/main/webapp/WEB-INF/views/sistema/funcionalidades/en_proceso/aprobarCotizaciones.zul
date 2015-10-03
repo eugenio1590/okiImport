@@ -55,7 +55,7 @@
 							value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
 							instant="true" placeholder=""
 							onChange="@command('aplicarFiltro')" width="70px"
-							constraint="no negative, no zero" />
+							constraint="@bind(vm.validatorPrecio)" />
 					</vbox>
 				</auxheader>
 				<auxheader>

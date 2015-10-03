@@ -69,20 +69,28 @@
 							<rows >
 								<row>
 									<label value="Cedula" />
-									<textbox readonly="true" value="@bind(fx.cedula)" />
+									<vbox>
+									<textbox readonly="true" value="@bind(fx.cedula)" constraint="@bind(vm.validatorClienteCedulaRif)"/>
+									</vbox>
 								</row>
 								<row>
 									<label value="Nombre"/>
-									<textbox readonly="true" value="@bind(fx.nombre)"/>
+									<vbox>
+									<textbox readonly="true" value="@bind(fx.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>
 								</row>
 								<row>
 									<label value="Usuario" />
-									<textbox readonly="true" value="@bind(vm.usuario.username)"/>
+									<vbox>
+									<textbox readonly="true" value="@bind(vm.usuario.username)" constraint="@bind(vm.notEmptyValidator)"/>
+									</vbox>
 								</row>
 								<row>
 									<label value="Clave"/>
+									<vbox>
 									<textbox id="txtPassword" readonly="true" type="password"
-										value="@bind(vm.usuario.pasword)" />
+										value="@bind(vm.usuario.pasword)" constraint="@bind(vm.notEmptyValidator)" />
+									</vbox>
 								</row>
 							</rows>
 						</grid>

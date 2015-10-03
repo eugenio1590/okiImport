@@ -134,29 +134,36 @@
 							<rows>
 								<row>
 									<label value="Motor: " />
+									<vbox>
 									<textbox value="@bind(vm.requerimiento.motor.nombre)"
-										readonly="true" width="80%">										
+										readonly="true" width="80%" constraint="@bind(vm.notEmptyValidator)">										
 									</textbox>
+									</vbox>
 										
 									<label value="Transmision: " />
+									<vbox>
 									<textbox
 										width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTransmision())" >
+										value="@bind(vm.requerimiento.determinarTransmision())" constraint="@bind(vm.notEmptyValidator)" >
 									</textbox>	
+									</vbox>
 								</row>
 
 								<row>
 									<label value="Traccion: " />
+									<vbox>
 									<textbox
 										width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTraccion())">
+										value="@bind(vm.requerimiento.determinarTraccion())" constraint="@bind(vm.notEmptyValidator)">
 									</textbox>
+									</vbox>
 									
 									<label value="Tipo Repuesto:" />
+									<vbox>
 									<textbox id="txtTipoRepuesto" width="80%"
-										readonly="true">
-										
+										readonly="true" constraint="@bind(vm.notEmptyValidator)">
 									</textbox>
+									</vbox>
 								</row>
 							</rows>
 						</grid>
