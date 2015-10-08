@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
+
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
@@ -41,6 +42,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	private Paging pagCotizaciones;
 	
 	//Atributos
+	public static final String TITULO_EMPTY_COTIZACIONES = CotizacionesProveedorNacionalViewModel.TITULO_EMPTY_COTIZACIONES;
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private String constraint_precio_flete;
 	private List<Cotizacion> listaCotizacion;
@@ -67,14 +69,14 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
+		gridCotizaciones.setEmptyMessage(TITULO_EMPTY_COTIZACIONES);
 		pagCotizaciones.setPageSize(pageSize);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
 	@Override
 	@NotifyChange("listaCotizacion")
-	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub		
+	public void onEvent(SortEvent event) throws Exception {	
 		if(event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
@@ -162,10 +164,12 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
+		ejecutarGlobalCommand("cambiarProveedores", null);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	/**SETTERS Y GETTERS*/
+	
+	/**SETTERS Y GETTERS*/	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

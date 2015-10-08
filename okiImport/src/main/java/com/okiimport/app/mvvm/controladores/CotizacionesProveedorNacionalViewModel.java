@@ -89,6 +89,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	private Combobox cmbFlete;
 	
 	//Atributos
+	public static final String TITULO_EMPTY_COTIZACIONES = "No existen mas solicituces de cotizacion";
 	private static final String TITULO_EAST = "Cotizacion ";
 	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private CustomConstraint constraintPrecioFlete = null;
@@ -123,6 +124,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		cambiarCotizaciones(0, null, null);
 		cambiarMonedas(0);
 		agregarGridSort(gridCotizaciones);
+		gridCotizaciones.setEmptyMessage(TITULO_EMPTY_COTIZACIONES);
 		pagCotizaciones.setPageSize(pageSize);
 		eastCotizacion.setTitle(TITULO_EAST);	
 		
@@ -420,7 +422,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	}
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/
-	/**SETTERS Y GETTERS*/
+	
+	/**SETTERS Y GETTERS*/	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}

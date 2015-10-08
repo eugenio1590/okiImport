@@ -132,8 +132,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			ejecutarGlobalCommand("cambiarCotizaciones", parametros );
 		}
 		else if(event instanceof Messagebox.ClickEvent){
-			winCotizar.onClose(); //Falta Mensaje
-			ejecutarGlobalCommand("cambiarCotizaciones", null);
+			onCloseWindow();
+			winCotizar.onClose();
 		}
 	}
 	
