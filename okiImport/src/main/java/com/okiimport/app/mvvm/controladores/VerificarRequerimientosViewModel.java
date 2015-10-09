@@ -138,7 +138,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			else
 			{
 				misolicitudes.setVisible(false);
-				mostrarMensaje("Informacion Importante","No posee Solicitudes", null, null, null, null);
+				mostrarMensaje("Informaci\u00F3n Importante","No posee Solicitudes", null, null, null, null);
 			}
 		}
 	}

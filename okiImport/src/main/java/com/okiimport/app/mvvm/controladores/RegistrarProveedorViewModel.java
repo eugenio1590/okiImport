@@ -180,7 +180,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			}
 
 			else
-				mostrarMensaje("Información", "Agregue al Menos una Marca y Una Clasificacion de Repuesto",
+				mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto",
 						null, null, null, null);
 
 		}
@@ -393,7 +393,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		if(enviarEmail){
 			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 
-			mostrarMensaje("Informacion", str, null, null,
+			mostrarMensaje("Informaci\u00F3n", str, null, null,
 					new EventListener() {
 						public void onEvent(Event event) throws Exception {
 							redireccionar("/");

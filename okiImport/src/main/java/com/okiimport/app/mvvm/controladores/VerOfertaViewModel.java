@@ -99,7 +99,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 
 			if (oferta != null)
 			{
-				super.mostrarMensaje("Informacion", "¿Desea continuar viendo mas ofertas?", null, 
+				super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar viendo mas ofertas?", null, 
 						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener(){
 							@Override
 							public void onEvent(Event event) throws Exception {

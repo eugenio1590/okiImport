@@ -197,7 +197,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 			cambiarCotizaciones(0, null, null);
 			listaCotizacionesSeleccionadas.clear();
 		}
-		else mostrarMensaje("Informacion","Seleccione al menos una Cotización",null,null,null,null);
+		else mostrarMensaje("Informaci\u00F3n","Seleccione al menos una Cotizaci\u00F3n",null,null,null,null);
 	}
 	
 	/**SETTERS Y GETTERS*/

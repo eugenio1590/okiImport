@@ -173,15 +173,15 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				
 				mailCliente.registrarRequerimiento(requerimiento, mailService);
 
-				mostrarMensaje("Informacion",
-						"El Requerimiento ha sido registrado existosamente ",
+				mostrarMensaje("Informaci\u00F3n",
+						"El Requerimiento ha sido registrado exitosamente ",
 						null, null, new EventListener() {
 							public void onEvent(Event event) throws Exception {
 								recargar();
 							}
 						}, null);
 			} else
-				mostrarMensaje("Información",
+				mostrarMensaje("Informaci\u00F3n",
 						"Agregue al Menos un Requerimiento", null, null, null,
 						null);
 		}

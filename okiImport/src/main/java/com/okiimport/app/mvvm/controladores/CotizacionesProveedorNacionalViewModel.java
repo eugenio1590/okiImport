@@ -249,7 +249,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 				cotizacionSelecionada.setEstatus("C");
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
 				sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
-				this.mostrarMensaje("Informacion", "Registro Exitoso de Cotizacion", null, null, null, null);
+				this.mostrarMensaje("Informaci\u00F3n", "Registro Exitoso de Cotizaci\u00F3n", null, null, null, null);
 				cotizacionSelecionada = null;
 				listaDetalleCotizacion = null;
 				mostrarBotones();
@@ -259,7 +259,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			}
 		}
 		else if(cotizacionSelecionada==null)
-			mostrarMensaje("Informacion", "Debe Seleccionar una Cotizacion", null, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "Debe Seleccionar una Cotizaci\u00F3n", null, null, null, null);
 	}
 	
 	/**

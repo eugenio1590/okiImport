@@ -172,11 +172,11 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 				crearModal(BasePackageSistemaFunc+"emitidos/seleccionarProveedores.zul", parametros);
 			}
 			else
-				mostrarMensaje("Información", "Seleccione una clasificacion para los repuestos seleccionados", 
+				mostrarMensaje("Informaci\u00F3n", "Seleccione una clasificaci\u00F3n para los repuestos seleccionados", 
 						null, null, null, null);
 		} 
 		else
-			mostrarMensaje("Información", "Seleccione al menos un Repuesto", null, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
 	
 	/**

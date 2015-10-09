@@ -90,7 +90,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 				
 				
 				
-				mostrarMensaje("Informacion", "El Analista ha sido registrado existosamente ", null, null, new EventListener()
+				mostrarMensaje("Informaci\u00F3n", "El Analista ha sido registrado existosamente ", null, null, new EventListener()
 				{
 							public void onEvent(Event event) throws Exception {
 								

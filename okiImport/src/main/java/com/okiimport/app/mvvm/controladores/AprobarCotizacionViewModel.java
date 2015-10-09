@@ -141,7 +141,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@Command
 	public void guardar() {
 		sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
-		mostrarMensaje("Informacion", "Seleccion Guardada Exitosamente", null,
+		mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n Guardada Exitosamente", null,
 				null, null, null);
 
 	}

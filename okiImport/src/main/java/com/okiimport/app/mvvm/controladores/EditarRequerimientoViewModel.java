@@ -225,7 +225,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 				requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
 			requerimiento.setEstatus("E");
 			sTransaccion.actualizarRequerimiento(requerimiento);
-			mostrarMensaje("Informacion", "Requerimiento Actualizado Exitosamente", null, null, this, null);
+			mostrarMensaje("Informaci\u00F3n", "Requerimiento Actualizado Exitosamente", null, null, this, null);
 		}
 	}
 	

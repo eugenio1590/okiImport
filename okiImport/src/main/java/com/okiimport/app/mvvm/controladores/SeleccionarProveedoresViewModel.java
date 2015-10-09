@@ -86,7 +86,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 			@ExecutionArgParam("enviar") Boolean enviar,
 			@ExecutionArgParam("repuestosseleccionados") List <DetalleRequerimiento> repuestosseleccionados){
 		this.enviar = enviar;
-		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ", enviar);
+		this.cotizacion = new Cotizacion("Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisi\u00F3n ", enviar);
 		this.listaDetalleRequerimientos = repuestosseleccionados;
 		listaProveedoresSeleccionados1 = new ArrayList<Proveedor>(); 
 		super.doAfterCompose(view);
@@ -230,11 +230,11 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 				btn_enviar.setDisabled(true);
 			}
 
-			mostrarMensaje("Informacion", "Cotizacion enviada Exitosamente ", null, null, this, null);
+			mostrarMensaje("Informaci\u00F3n", "Cotizaci\u00F3n enviada Exitosamente ", null, null, this, null);
 			winListProveedores.onClose();
 		}
 		else
-			mostrarMensaje("Informacion", "Seleccione al menos un Proveedor ", null, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un Proveedor ", null, null, null, null);
 
 	}
 	

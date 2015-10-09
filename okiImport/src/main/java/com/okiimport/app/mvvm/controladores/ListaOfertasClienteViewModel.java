@@ -169,7 +169,7 @@ public class ListaOfertasClienteViewModel extends
 		
 		winListaOfertas.detach();
 		
-		mostrarMensaje("Información", "Ofertas Enviadas al Cliente", null, null, null, null);
+		mostrarMensaje("Informaci\u00F3n", "Ofertas Enviadas al Cliente", null, null, null, null);
 
 	}
 	

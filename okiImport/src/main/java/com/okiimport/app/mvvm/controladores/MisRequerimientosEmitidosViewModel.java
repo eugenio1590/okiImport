@@ -59,7 +59,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimiento
 			crearModal(BasePackageSistemaFunc+"emitidos/enviarRequerimientoProv.zul", parametros);
 		}
 		else
-			mostrarMensaje("Informacion", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "Ha expirado el tiempo para Enviar a Proveedores", null, null, null, null);
 	}
 
 	/**METODOS OVERRIDE*/
