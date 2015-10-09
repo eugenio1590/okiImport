@@ -51,29 +51,23 @@
 									
 									
 
-										<label value="Supplier Type/Tipo Proveedor: *" />
-										<vbox>
-										<combobox
-											placeholder="Seleccione..." width="85%" readonly="@bind(vm.makeAsReadOnly)"
-											value="@bind(vm.tipoProveedor.nombre)"
-											selectedItem="@bind(vm.tipoProveedor)"
-											model="@load(vm.listaTipoProveedor)"
-											onChange="@command('actualizarLocalidad')" constraint="@bind(vm.notEmptyValidator)">
-											<template name="model">
-												<comboitem
-													label="@bind(each.nombre)">
-												</comboitem>
-											</template>
-										</combobox>
-										</vbox>
+<!-- 									<row> -->
+									
+<!-- 										<label value="Supplier Type/Tipo Proveedor: *" /> -->
+<!-- 										<combobox -->
+<!-- 											placeholder="Seleccione..." width="85%" readonly="true" -->
+<!-- 											value="@bind(vm.tipoProveedor.nombre)" -->
+<!-- 											selectedItem="@bind(vm.tipoProveedor)" -->
+<!-- 											model="@load(vm.listaTipoProveedor)" -->
+<!-- 											onChange="@command('actualizarLocalidad')"> -->
+<!-- 											<template name="model"> -->
+<!-- 												<comboitem -->
+<!-- 													label="@bind(each.nombre)"> -->
+<!-- 												</comboitem> -->
+<!-- 											</template> -->
+<!-- 										</combobox> -->
 										
-									</row>
-
-
-
-
-
-
+<!-- 									</row> -->
 									<row>
 										
 										<label value="ID/RIF: *" />
@@ -82,7 +76,7 @@
 												<combobox buttonVisible="@bind(!vm.makeAsReadOnly)"
 													width="30%" readonly="@bind(vm.makeAsReadOnly)"
 													selectedItem="@bind(vm.tipoPersona)"
-													model="@load(vm.listaTipoPersona)" constraint="@bind(vm.notEmptyValidator)">
+													model="@load(vm.listaTipoPersona)">
 													<template name="model">
 														<comboitem
 															label="@bind(each.nombre)" />
@@ -156,11 +150,11 @@
 									<row>
 										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
-											<combobox
+											<combobox id="cmbEstado"
 												width="85%" placeholder="Seleccione..."
 												readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
-												value="@bind(vm.proveedor.ciudad.estado.nombre)"
+												value="@bind(vm.estado.nombre)"
 												selectedItem="@bind(vm.estado)"
 												visible="@bind(vm.proveedor.nacional)"
 												model="@load(vm.listaEstados)"
@@ -173,27 +167,13 @@
 											</combobox>
 										</vbox>
 										
-
-
-
-
-
-
-
-
-
-
-
-
-
 										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
-											<combobox
-												placeholder="Seleccione..." width="92%" 
-												readonly="true"
+											<combobox id="cmbCiudad"
+												placeholder="Seleccione..." width="92%" readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
-												value="@bind(vm.proveedor.ciudad.nombre)"
 												selectedItem="@bind(vm.proveedor.ciudad)"
+												value="@bind(vm.proveedor.ciudad.nombre)"
 												visible="@bind(vm.proveedor.nacional)"
 												model="@load(vm.listaCiudades)"
 												constraint="@bind(vm.constrCiudad)">
@@ -203,14 +183,6 @@
 												</template>
 											</combobox>
 										</vbox>
-
-
-
-
-
-
-
-										
 									</row>
 									
 									<row>

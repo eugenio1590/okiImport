@@ -105,7 +105,7 @@
 										<label value="E-mail/Correo: *" />
 										<vbox>
 											<textbox id="email"
-												width="130%" readonly="" mold="rounded"
+												width="130%" mold="rounded"
 												value="@bind(vm.proveedor.correo)"
 												placeholder="Ej. fusa@gmail.com"
 												constraint="@bind(vm.emailValidator)">
@@ -137,9 +137,10 @@
 									<row>
 										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
-											<combobox
+											<combobox id="cmbEstado"
 												width="85%" readonly="true" placeholder="Seleccione..."
 												selectedItem="@bind(vm.estado)"
+												value="@bind(vm.estado.nombre)"
 												visible="@bind(vm.proveedor.nacional)"
 												model="@load(vm.listaEstados)"
 												onSelect="@command('buscarCiudades')"
@@ -153,9 +154,10 @@
 										
 										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
-											<combobox
+											<combobox id="cmbCiudad"
 												placeholder="Seleccione..." width="92%" readonly="true"
 												selectedItem="@bind(vm.proveedor.ciudad)"
+												value="@bind(vm.proveedor.ciudad.nombre)"
 												visible="@bind(vm.proveedor.nacional)"
 												model="@load(vm.listaCiudades)"
 												constraint="@bind(vm.constrCiudad)">

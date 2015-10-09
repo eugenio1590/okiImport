@@ -99,7 +99,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	@SuppressWarnings("unchecked")
 	@NotifyChange({ "listaCiudades" })
 	public void buscarCiudades() {
-		System.out.println("this.estado == null");
 		if (this.estado != null)
 			listaCiudades = (List<Ciudad>) sMaestros.ConsultarCiudad(
 					estado.getIdEstado(), 0, -1).get("ciudades");

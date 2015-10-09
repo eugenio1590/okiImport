@@ -65,14 +65,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Wire("#pagTipoRepuestos")
 	private Paging pagTipoRepuestos;
 	
-	@Wire("#btnLimpiar")
-	private Button btnLimpiar;
-	
 	@Wire("#cmbEstado")
 	private Combobox cmbEstado;
 	
 	@Wire("#cmbCiudad")
 	private Combobox cmbCiudad;
+	
+	@Wire("#btnLimpiar")
+	private Button btnLimpiar;
 	
 	//Atributos
 	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
@@ -152,9 +152,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "proveedor" })
+	@NotifyChange({ "proveedor",  "estado", "constrEstado", "constrCiudad" })
 	public void limpiar() {
 		proveedor = new Proveedor();
+		limpiarEstadoYCiudad();
 	}
 	
 	 /**
@@ -320,35 +321,24 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Command
 	@NotifyChange({ "estado", "proveedor", "constrEstado", "constrCiudad" })
 	public void actualizarLocalidad(){
-		if(!proveedor.isNacional()){
-			estado = null;
-			proveedor.setCiudad(null);
-			constrEstado = null;
-			constrCiudad = null;
-		}	
-		else {
+		limpiarEstadoYCiudad();
+		if(proveedor.isNacional()){
 			constrEstado = super.getNotEmptyValidator();
 			constrCiudad = super.getNotEmptyValidator();
 		}
 	}
+	
+	/**METODOS OVERRIDE*/
+	@Command
+	@Override
+	@NotifyChange({ "listaCiudades", "proveedor" })
+	public void buscarCiudades(){
+		super.buscarCiudades();
+		if(listaCiudades.size()>0)
+			proveedor.setCiudad(listaCiudades.get(0));
+	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
-	
-	/**
-	 * Descripcion: Permite Consultar el tipo de proveedor
-	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Tipo de Proveedor 
-	 * Nota: Ninguna
-	 * */
-	private ModeloCombo<Boolean> consultarTipoProveedor(Boolean tipoProveedor, List <ModeloCombo<Boolean>> listaTipoProveedor){
-		if(tipoProveedor!=null)
-			for(ModeloCombo<Boolean> tipoProveedorl: listaTipoProveedor )
-				if (tipoProveedorl.getValor() == tipoProveedor)
-					return tipoProveedorl;
-			
-		return listaTipoProveedor.get(1);
-		
-	}
 	
 	/**
 	 * Descripcion: Permite Consultar el tipo de persona
@@ -393,8 +383,10 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		if(enviarEmail){
 			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
 
-			mostrarMensaje("Informaci\u00F3n", str, null, null,
-					new EventListener() {
+
+			mostrarMensaje("Informacion", str, null, null,
+					new EventListener<Event>() {
+
 						public void onEvent(Event event) throws Exception {
 							redireccionar("/");
 						}
@@ -402,7 +394,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 		else {
 			mostrarMensaje("Informacion", str, null, null,
-					new EventListener() {
+					new EventListener<Event>() {
 						public void onEvent(Event event) throws Exception {
 							winProveedor.onClose();
 							ejecutarGlobalCommand("consultarProveedores", null);
@@ -410,6 +402,23 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 					}, null);
 		}
 		return proveedor;
+	}
+	
+	/**
+	 * Descripcion: Permite limpiar las variables que se encargan de las variables de ciudad y estado
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void limpiarEstadoYCiudad(){
+		if(constrEstado!=null)
+			constrEstado.hideComponentError();
+		if(constrCiudad!=null)
+			constrCiudad.hideComponentError();
+		constrEstado = null;
+		constrCiudad = null;
+		estado = null;
+		proveedor.setCiudad(null);
 	}
 	
 	/**GETTERS Y SETTERS*/	
