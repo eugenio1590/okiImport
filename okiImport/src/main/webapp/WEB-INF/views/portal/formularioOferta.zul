@@ -48,9 +48,10 @@
 						<rows>
 							<row>
 								<label value="Numero: " />
+								<vbox>
 								<textbox value="@bind(vm.requerimiento.idRequerimiento)"
-									width="80%" readonly="true"/>
-								
+									width="80%" readonly="true" constraint="@bind(vm.validatorCantPositiva)"/>
+								</vbox>
 
 								<label value="Fecha Creacion: " />
 								<datebox  width="80%"

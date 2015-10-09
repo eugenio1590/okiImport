@@ -17,10 +17,10 @@
 				href="javascript:void(0)" tooltiptext="Consultar Requerimiento"
 				onClick="@command('verificarRequerimiento')" />
 
-			<a image="/resources/img/botones/RegistrarPagoOscuro.png"
-				hoverImage="/resources/img/botones/RegistrarPagoClaro.png"
-				href="javascript:void(0)" tooltiptext="Registrar Pago"
-				onClick="@command('verificarRequerimiento')" />
+<!-- 			<a image="/resources/img/botones/RegistrarPagoOscuro.png" -->
+<!-- 				hoverImage="/resources/img/botones/RegistrarPagoClaro.png" -->
+<!-- 				href="javascript:void(0)" tooltiptext="Registrar Pago" -->
+<!-- 				onClick="@command('verificarRequerimiento')" /> -->
 
 		</div>
 	</div>

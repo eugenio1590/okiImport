@@ -149,9 +149,11 @@
 							<rows>
 								<row>
 									<label value="Motor: *" />
+									<vbox>
 									<bandbox id="bdMotor" mold="rounded"
 										autodrop="true" readonly="true" placeholder="Seleccione..."
-										width="92%" value="@bind(vm.requerimiento.motor.nombre)">
+										width="80%" value="@bind(vm.requerimiento.motor.nombre)" 
+										constraint="@bind(vm.notEmptyValidator)">
 										<bandpopup>
 											<listbox id="gridMotores" width="200px" mold="paging" 
 												model="@load(vm.listaMotor)"
@@ -175,6 +177,7 @@
 											<paging id="pagMotores" onPaging="@command('paginarListaMotores')" autohide="true" />
 										</bandpopup>
 									</bandbox>
+									</vbox>
 									
 									<label value="Transmision: *"/>
 									<vbox>
@@ -241,38 +244,35 @@
 							<template name="model">
 								<listitem>
 									<listcell>
-									<vbox>
+									
 										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" 
-											constraint="@bind(vm.notEmptyValidator)"/>
-									</vbox>
+											/>
+									
 									</listcell>
 									<listcell>
-									<vbox>
+									
 										<textbox value="@bind(each.descripcion)" width="275px" rows="2" sclass="no_rezise"
-											readonly="@bind(!vm.editar)" 
-											constraint="@bind(vm.notEmptyValidator)"/>
-									</vbox>
+											readonly="@bind(!vm.editar)" />
+									
 									</listcell>
 									<listcell>
-									<vbox>
+									
 										<spinner value="@bind(each.cantidad)" 
-											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"
-											constraint="@bind(vm.cantValidator)"/>
-									</vbox>
+											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"/>
+									
 									</listcell>
 									<listcell>
-									<vbox>
+									
 										<combobox width="100%" readonly="true" buttonVisible="@bind(vm.editar)"
 											value="@bind(each.clasificacionRepuesto.descripcion)"
 											model="@bind(vm.listaClasificacionRepuesto)"
-											selectedItem="@bind(each.clasificacionRepuesto)"
-											constraint="@bind(vm.notEmptyValidator)">
+											selectedItem="@bind(each.clasificacionRepuesto)">
 											<template name="model">
 												<comboitem
 													label="@bind(each.descripcion)" />
 											</template>
 										</combobox>
-									</vbox>
+									
 									</listcell>
 									<listcell>
 										<div>

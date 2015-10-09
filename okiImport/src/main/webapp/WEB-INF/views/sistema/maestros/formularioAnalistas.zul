@@ -21,9 +21,10 @@
 							<label value="Cedula/RIF: *" />
 
 							<hbox>
+							    <vbox>
 								<combobox width="30%" readonly="true"
 									selectedItem="@bind(vm.tipoPersona)"
-									model="@load(vm.listaTipoPersona)" constraint="no empty">
+									model="@load(vm.listaTipoPersona)" constraint="@bind(vm.notEmptyValidator)">
 									<template name="model">
 										<comboitem
 											label="@bind(each.nombre)">
@@ -31,37 +32,46 @@
 										</comboitem>
 									</template>
 								</combobox>
+								</vbox>
 
+                                <vbox>
 								<textbox id="cedula/Rif" width="108%"
 									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
 									placeholder="Ej: 402405375" maxlength="12"
-									constraint="no empty,/.[0-9]+/:El Campo No Debe Estar Vacio" />
+									constraint="@bind(vm.validatorClienteCedulaRif)" />
+								</vbox>
 							</hbox>
 
 							<label value="Nombre: *" />
 
+                            <vbox>
 							<textbox id="nombre" width="80%"
 								readonly="" mold="rounded" value="@bind(vm.analista.nombre)"
 								placeholder="Ej: Alejandro Urbina"
-								constraint="no empty:El Campo No Debe Estar Vacio" />
+								constraint="@bind(vm.notEmptyValidator)" />
+							</vbox>
 						</row>
 
 						<row>
 
 							<label value="Teléfono: *" />
 
+                            <vbox>
 							<textbox id="telefono" width="80%"
 								readonly="" mold="rounded" value="@bind(vm.analista.telefono)"
 								maxlength="11" placeholder="Ej: 02512552233"
-								constraint="no empty,/.[0-9]+/:El campo no puede estar vacio, escriba un numero de telefono valido, ejemplo 02515555555" />
+								constraint="@bind(vm.telefonoValidator)" />
+							</vbox>
 
 
 							<label value="E-mail: *" />
+							<vbox>
 							<textbox id="email" width="80%" readonly=""
 								mold="rounded" value="@bind(vm.analista.correo)"
 								placeholder="Ej. fusa@gmail.com"
-								constraint="no empty,/.+@.+\.[a-z]+/ :El campo no puede estar vacio, debe contener un correo valido Ej. fusa@gmail.com">
+								constraint="@bind(vm.emailValidator)">
 							</textbox>
+							</vbox>
 
 
 						</row>
@@ -69,18 +79,21 @@
 
 							<label value="Dirección: *" />
 
+                            <vbox>
 							<textbox id="direccion" width="80%" rows="3"
 								cols="35" readonly="" mold="rounded"
 								value="@bind(vm.analista.direccion)"
 								placeholder="Ej: zona industrial 2 "
-								constraint="no empty:El Campo No Debe Estar Vacio" />
+								constraint="@bind(vm.notEmptyValidator)" />
+							</vbox>
 
 
 							<label value="Estado: *" />
+							<vbox>
 							<combobox placeholder="Seleccione..."
 								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
 								model="@load(vm.listaEstados)"
-								onSelect="@command('buscarCiudades')">
+								onSelect="@command('buscarCiudades')" constraint="@bind(vm.notEmptyValidator))">
 								<template name="model">
 									<comboitem
 										label="@bind(each.nombre)">
@@ -88,13 +101,15 @@
 									</comboitem>
 								</template>
 							</combobox>
+							</vbox>
 						</row>
 
 						<row>
 							<label value="Ciudad: *" />
+							<vbox>
 							<combobox placeholder="Seleccione..."
 								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
-								model="@load(vm.listaCiudades)">
+								model="@load(vm.listaCiudades)" constraint="@bind(vm.notEmptyValidator)">
 
 								<template name="model">
 									<comboitem
@@ -103,6 +118,7 @@
 									</comboitem>
 								</template>
 							</combobox>
+							</vbox>
 
 						</row>
 

@@ -49,23 +49,30 @@
 					<groupbox closable="false" width="99%">
 						<caption label="Flete" sclass="custom_caption_title" />
 						<hbox align="left" width="100%">
+						
 							<label width="130%" value="Tipo de Flete:" />
+							<vbox>
 							<combobox id="cmbFlete" width="40%" readonly="true"
 								model="@load(vm.tiposFlete)" selectedItem="@bind(vm.tipoFlete)"
-								onSelect="@command('seleccionarTipoFlete')">
+								onSelect="@command('seleccionarTipoFlete')" constraint="@bind(vm.notEmptyValidator)">
 								<template name="model">
 									<comboitem label="@bind(each.nombre)"/>
 								</template>
 							</combobox>
+							</vbox>
+							
 							<space />
+							
 							<label value="Forma de Envio:"/>
+							<vbox>
 							<combobox id="cmbFormaFlete" width="70%" readonly="true"
 								model="@load(vm.formasEnvio)" selectedItem="@bind(vm.formaEnvio)"
-								onSelect="@command('seleccionarTipoFlete')">
+								onSelect="@command('seleccionarTipoFlete')" constraint="@bind(vm.notEmptyValidator)">
 								<template name="model">
 									<comboitem label="@bind(each.nombre)"/>
 								</template>
 							</combobox>
+							</vbox>
 							<space />
 							<label value="Precio de Flete:" />
 							<vbox>

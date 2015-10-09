@@ -22,38 +22,45 @@
 							<label value="Cedula/RIF:" />
 
 							<hbox>
-
+                                <vbox>
 								<textbox width="20%" readonly="true"
-								    value= "@bind(vm.tipoPersona.nombre)"/>
+								    value= "@bind(vm.tipoPersona.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
+                                </vbox>
 
-
+                                <vbox>
 								<textbox id="cedula_Rif" width="80%"
 
 									readonly="true" mold="rounded" value="@bind(vm.analista.cedula)"
-									maxlength="12" />
+									maxlength="12"  constraint="@bind(vm.validatorClienteCedulaRif)"/>
+								</vbox>
 							</hbox>
 
 							<label value="Nombre: " />
-
+                            <vbox>
 							<textbox id="nombre" width="80%"
 								readonly="" mold="rounded" value="@bind(vm.analista.nombre)"
-								/>
+								constraint="@bind(vm.notEmptyValidator)"/>
+							</vbox>
 						</row>
 
 						<row>
 
 							<label value="Teléfono: " />
 
+                            <vbox>
 							<textbox id="telefono" width="80%"
 								readonly="" mold="rounded" value="@bind(vm.analista.telefono)"
-								maxlength="11"  />
+								maxlength="11" constraint="@bind(vm.telefonoValidator)" />
+							</vbox>
 
 
 							<label value="E-mail: " />
+							<vbox>
 							<textbox id="email" width="80%" readonly=""
 								mold="rounded" value="@bind(vm.analista.correo)"
-								>
+								constraint="@bind(vm.emailValidator)">
 							</textbox>
+							</vbox>
 
 
 						</row>
@@ -61,18 +68,23 @@
 
 							<label value="Dirección: " />
 
+                            <vbox>
 							<textbox id="direccion" width="80%" rows="3"
 								cols="35" readonly="" mold="rounded"
-								value="@bind(vm.analista.direccion)"/>
+								value="@bind(vm.analista.direccion)"
+								constraint="@bind(vm.notEmptyValidator)"/>
+							</vbox>
 
 
 							<label value="Estado: " />
+							<vbox>
 							<combobox 
 							   
 								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
 								value="@bind(vm.estado.nombre)"
 								model="@load(vm.listaEstados)"
-								onSelect="@command('buscarCiudades')">
+								onSelect="@command('buscarCiudades')"
+								constraint="@bind(vm.notEmptyValidator)">
 								<template name="model">
 									<comboitem
 										label="@bind(each.nombre)">
@@ -80,14 +92,17 @@
 									</comboitem>
 								</template>
 							</combobox>
+							</vbox>
 						</row>
 
 						<row>
 							<label value="Ciudad: " />
+							<vbox>
 							<combobox 
 								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
 								value="@bind(vm.ciudad.nombre)"
-								model="@load(vm.listaCiudades)">
+								model="@load(vm.listaCiudades)"
+								constraint="@bind(vm.notEmptyValidator)">
 
 								<template name="model">
 									<comboitem
@@ -96,6 +111,7 @@
 									</comboitem>
 								</template>
 							</combobox>
+							</vbox>
 
 						</row>
 

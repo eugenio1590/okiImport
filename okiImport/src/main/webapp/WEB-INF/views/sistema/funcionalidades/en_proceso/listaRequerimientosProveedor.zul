@@ -29,7 +29,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
 				
-				<listheader value="marcaV" label="Marca"
+				<listheader value="marcaVehiculo.marcaV" label="Marca"
 					sort="auto(marcaV)" width="130px">
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.marcaVehiculo.nombre)"
 						onChange="@command('aplicarFiltro')" width="110px" />

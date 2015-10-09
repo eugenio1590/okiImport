@@ -39,30 +39,31 @@
 						<row>
 							<label value="Nombre: " />
 							<textbox id="txtNombre" width="100%"
-								disabled="true" value="@bind(rs.persona.nombre)" />
+								disabled="true" value="@bind(rs.persona.nombre)"/>
 
 							<label value="Apellido: " />
 							<textbox id="txtApellido" width="100%"
-								disabled="true" value="@bind(rs.persona.apellido)" />
+								disabled="true" value="@bind(rs.persona.apellido)"/>
 						</row>
 
 						<row>
 							<label value="Dirección: " />
 							<textbox id="txtDireccion" width="100%"
 								disabled="true" maxlength="100" rows="2"
-								value="@bind(rs.persona.direccion)" />
+								value="@bind(rs.persona.direccion)"/>
 
 							<label value="Correo: " />
 							<textbox id="txtCorreo" width="100%"
-								disabled="true" maxlength="50" value="@bind(rs.persona.correo)" />
+								disabled="true" maxlength="50" value="@bind(rs.persona.correo)"/>
 						</row>
 						<row>
 							<label value="Nueva Contraseña: " />
 							<textbox id="txtClaveNueva" width="100%"
-								type="password" maxlength="50" />
+								type="password" maxlength="50"/>
+								
 							<label value="Confirmar Contraseña: " />
 							<textbox id="txtClaveNuevaConf" width="100%"
-								type="password" maxlength="50" />
+								type="password" maxlength="50"/>
 						</row>
 
 					</rows>
