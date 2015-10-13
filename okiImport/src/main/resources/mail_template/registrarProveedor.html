@@ -864,16 +864,15 @@ tr.border td {
                               <td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word">
                                 
               <h2 style='Margin-top: 0;font-style: normal;font-weight: 700;font-size: 24px;line-height: 32px;Margin-bottom: 16px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center'>Solicitud Proveedor</h2>
-              <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${nombreSolicitante} Hemos Recibido de Ud. una solicitud para convertirse en uno de nuestros proveedores y disfrutar de las ventajas que da nuestro sistema.</p>
-              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Estos Son Sus datos:<br />
+              <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${proveedor.nombre} Hemos Recibido de Ud. una solicitud para convertirse en uno de nuestros proveedores y disfrutar de las ventajas que da nuestro sistema.</p>
+              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left"><b>Estos Son Sus datos:</b><br />
                 
-                Número Solicitud:   ${numeroSolicitud}<br />
-                Nombre:             ${nombreSolicitante}<br />
-                Cedula/Rif:         ${cedula}<br />
-                Teléfono:           ${telefono}<br />
-                Correo:             ${email}<br />
-                Dirección:          ${direccion}<br />
-                ${cedula}</p>
+                Nombre:             ${proveedor.nombre}<br />
+                Cedula/Rif:         ${proveedor.cedula}<br />
+                Teléfono:           ${proveedor.telefono}<br />
+                Correo:             ${proveedor.correo}<br />
+                Dirección:          ${proveedor.direccion}<br />
+                </p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Su solicitud será respondida en la brevedad posible.<br />
               </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>
