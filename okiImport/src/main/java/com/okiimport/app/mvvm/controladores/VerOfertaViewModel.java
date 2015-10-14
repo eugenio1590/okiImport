@@ -60,7 +60,19 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		cargarOferta();
 	}
 	
-	/**GLOBAL COMMAND*/
+	/**COMMAND
+	/* Descripcion: Permitira limpiar el campo aceptar de cada uno de los repuestos de la oferta
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange("oferta")
+	public void limpiar(){
+		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
+			detalleOferta.setAprobado(null);
+		}
+	}
 	
 	/**
 	 * Descripcion: Permite Cargar La Oferta
