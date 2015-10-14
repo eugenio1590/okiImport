@@ -865,25 +865,25 @@ tr.border td {
                                 
               <h2 style='Margin-top: 0;font-style: normal;font-weight: 700;font-size: 24px;line-height: 32px;Margin-bottom: 16px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center'>Registro de Requerimiento</h2>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${cliente.nombre} Hemos Recibido de Ud. un registro de requerimiento(s) que sera procesado en el menor tiempo posible, estaremos en contacto con ud.</p>
-              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Estos Son Sus datos:<br />
+              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left"><b>Estos Son Sus datos:</b><br />
                 
-                ${requerimiento.idRequerimiento}<br />
-                ${cliente.nombre}<br />
-                ${cliente.cedula}<br />
-                ${cliente.telefono}<br />
-                ${cliente.correo}<br />
+                Número Requerimiento: ${requerimiento.idRequerimiento}<br />
+                Nombre:               ${cliente.nombre}<br />
+                Cedula:               ${cliente.cedula}<br />
+                Teléfono:             ${cliente.telefono}<br />
+                Correo:               ${cliente.correo}<br />
                 <br />
-                Estos Son los Datos del Vehiculo:<br />
-                ${requerimiento.marcaVehiculo}<br />
-                ${requerimiento.modeloV}<br />
-                ${requerimiento.annoV}<br />
-                ${requerimiento.motor}<br />
-                ${requerimiento.tipoRepuesto}<br />
+                <b>Estos Son los Datos del Vehiculo:</b><br />
+                Marca del Vehiculo:   ${requerimiento.marcaVehiculo.nombre}<br />
+                Modelo del Vehiculo:  ${requerimiento.modeloV}<br />
+                Año del Vehiculo:     ${requerimiento.annoV}<br />
+                Motor del Vehiculo:   ${requerimiento.motor.nombre}<br />
+                Tipo de Repuesto:     ${requerimiento.determinarTipoRepuesto()}<br />
                 <br />
-                Estos Son los Datos del Requerimiento:<br />
-                ${requerimiento.detalleRequerimiento.codigoOem}<br />
-                ${requerimiento.detalleRequerimiento.descripcion}<br />
-                ${requerimiento.detalleRequerimiento.cantidad}</p>
+                <b>Estos Son los Datos del Requerimiento:</b><br />
+                Codigo OEM:           ${requerimiento.detalleRequerimientos.codigoOem}<br />
+                Descripcion:          ${requerimiento.detalleRequerimientos.descripcion}<br />
+                Cantidad:             ${requerimiento.detalleRequerimientos.cantidad}</p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Su solicitud será respondida en la brevedad posible.<br />
       </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>

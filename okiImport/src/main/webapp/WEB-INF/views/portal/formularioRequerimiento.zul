@@ -86,7 +86,7 @@
 										<label value="Estado: *" />
 										<vbox>
 											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
+												placeholder="Seleccione..." width="83%" readonly="true"
 												selectedItem="@bind(vm.estado)"
 												model="@load(vm.listaEstados)"
 												constraint="@bind(vm.notEmptyValidator)"
@@ -100,7 +100,7 @@
 										<label value="Ciudad: *" />
 										<vbox>
 											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
+												placeholder="Seleccione..." width="83%" readonly="true"
 												selectedItem="@bind(vm.cliente.ciudad)"
 												constraint="@bind(vm.notEmptyValidator)"
 												model="@load(vm.listaCiudades)">
@@ -170,14 +170,14 @@
                                             
                                             <vbox>
 											<textbox
-												id="serialCarroceria" width="80%" readonly="" mold="rounded"
+												id="serialCarroceria" width="91%" readonly="" mold="rounded"
 												value="@bind(vm.requerimiento.serialCarroceriaV)"
 												maxlength="25" placeholder="Ej: xA245D25623" />
 											</vbox>
 
 											<label value="Año: *" />
 											<vbox>
-												<intbox width="142%"
+												<intbox width="143%"
 													placeholder="Ej: 2015"
 													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
 													value="@bind(vm.requerimiento.annoV)" />

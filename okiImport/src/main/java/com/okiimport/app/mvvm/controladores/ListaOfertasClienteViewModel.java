@@ -165,6 +165,8 @@ public class ListaOfertasClienteViewModel extends
 		sTransaccion.actualizarRequerimiento(requerimiento);
 
 		//No es el servicio que se usara
+		//Aqui se colocara el servicio para enviar el correo enviarOfertas.html 
+		//Miguel
 		mailCliente.registrarRequerimiento(requerimiento, mailService);
 		
 		winListaOfertas.detach();
