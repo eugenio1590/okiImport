@@ -17,12 +17,15 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.ClasificacionRepuesto;
+import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Pais;
@@ -71,8 +74,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Wire("#cmbCiudad")
 	private Combobox cmbCiudad;
 	
+	@Wire("#comboTipoPersona")
+	private Combobox comboTipoPersona;
+	
 	@Wire("#btnLimpiar")
 	private Button btnLimpiar;
+	
+	@Wire("#idRif")
+	public Textbox idRif;
 	
 	//Atributos
 	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
@@ -403,6 +412,52 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 		return proveedor;
 	}
+	
+	
+	
+	/**
+	 * Descripcion: Permite consultar si el proveedor ya existe en la Base de datos
+	 * Parametros: @param view: formularioProveedor.zul  
+	 * Retorno: Proveedor consultado
+	 * Nota: Ninguna
+	 
+	@Command
+	@NotifyChange({ "proveedor"})
+	public void buscarProveedor() {
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		String cedula = proveedor.getCedula();
+		String cedulaBuscar = tipo + cedula;
+		if (cedula != null && !cedula.equalsIgnoreCase("")) {
+			Proveedor proveedor = sMaestros.consultarProveedor( new Proveedor(cedulaBuscar));
+			if (proveedor != null) {
+				this.proveedor = proveedor;
+				this.proveedor.setCedula(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
+				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
+			} else
+				this.proveedor = new Proveedor(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
+			//this.requerimiento.setCliente(this.cliente);
+			this.proveedor.setCedula(cedula);
+			
+			//this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
+			//proveedor.setCedula(tipo + proveedor.getCedula());
+			
+
+		} else {
+			this.proveedor.setCedula(null);
+			idRif.getValue();
+		}
+	}
+	**/
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Descripcion: Permite limpiar las variables que se encargan de las variables de ciudad y estado

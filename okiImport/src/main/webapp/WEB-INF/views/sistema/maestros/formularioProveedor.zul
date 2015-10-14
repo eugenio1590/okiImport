@@ -73,7 +73,7 @@
 										<label value="ID/RIF: *" />
 										<hbox>
 											<vbox>
-												<combobox buttonVisible="@bind(!vm.makeAsReadOnly)"
+												<combobox id="comboTipoPersona" buttonVisible="@bind(!vm.makeAsReadOnly)"
 													width="30%" readonly="@bind(vm.makeAsReadOnly)"
 													selectedItem="@bind(vm.tipoPersona)"
 													model="@load(vm.listaTipoPersona)">
@@ -84,11 +84,15 @@
 												</combobox>
 											</vbox>
 											<vbox>
-												<textbox width="100%" mold="rounded" maxlength="12"
+												<textbox  id="idRif" width="100%" mold="rounded" maxlength="12"
 													placeholder="Ej: 402405375" 
 													readonly="@bind(vm.makeAsReadOnly)"
 													value="@bind(vm.proveedor.cedula)"
 													constraint="@bind(vm.validatorClienteCedulaRif)" />
+													<!-- onBlur="@command('buscarProveedor')"-->
+													<!-- onOK="@command('buscarProveedor')" -->
+													
+													
 											</vbox>
 										</hbox>
 										
