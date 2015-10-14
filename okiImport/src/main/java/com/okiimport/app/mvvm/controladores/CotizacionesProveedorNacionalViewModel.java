@@ -280,12 +280,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		}
 	}
 	
-	/*
-	 * Descripcion: 
-	 * @param Ninguno
-	 * Retorno: Ninguno
-	 * */
-	
 	/**
 	 * Descripcion: Permitira cambiar la paginacion de la listaMonedas de acuerdo a la pagina activa del Paging
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
@@ -309,6 +303,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
+		ejecutarGlobalCommand("cambiarProveedores", null);
 	}
 	
 	/**

@@ -170,20 +170,23 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			@BindingParam("btnLimpiar") Button btnLimpiar,
 			@BindingParam("recordMode") String recordMode) {
 		if (checkIsFormValid()) {
+			if(!verificarExistencia()){
+				if (proveedor.getMarcaVehiculos().size() > 0
+						&& proveedor.getClasificacionRepuestos().size() > 0) {
 
-			if (proveedor.getMarcaVehiculos().size() > 0
-					&& proveedor.getClasificacionRepuestos().size() > 0) {
-				
-				btnEnviar.setDisabled(true);
-				btnLimpiar.setDisabled(true);
-				
-				registrarProveedor(cerrar);
+					btnEnviar.setDisabled(true);
+					btnLimpiar.setDisabled(true);
+
+					registrarProveedor(cerrar);
+				}
+
+				else
+					mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto",
+							null, null, null, null);
 			}
-
 			else
-				mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto",
+				mostrarMensaje("Informaci\u00F3n", "Ya se encuentra registrado en el sistema",
 						null, null, null, null);
-
 		}
 	}
 
@@ -363,8 +366,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	private Proveedor registrarProveedor(boolean enviarEmail){
-		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-		proveedor.setCedula(tipo + proveedor.getCedula());
+		proveedor.setCedula(getCedulaComleta());
 		proveedor.setEstatus("solicitante");
 
 		if (proveedor.isNacional())
@@ -419,6 +421,21 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		constrCiudad = null;
 		estado = null;
 		proveedor.setCiudad(null);
+	}
+	
+	/**
+	 * Descripcion: Permitira obtener la cedula completa del proveedor
+	 * Parametros: Ninguno
+	 * Retorno Ninguno
+	 * Nota: Ninguna
+	 * */
+	private String getCedulaComleta(){
+		//String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		return this.tipoPersona.getNombre() + proveedor.getCedula();
+	}
+	
+	private boolean verificarExistencia(){
+		return (sMaestros.consultarProveedor(new Proveedor(getCedulaComleta()))!=null);
 	}
 	
 	/**GETTERS Y SETTERS*/	
