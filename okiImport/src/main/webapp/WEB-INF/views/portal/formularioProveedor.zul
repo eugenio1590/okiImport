@@ -76,7 +76,7 @@
 												</combobox>
 											</vbox>
 											<vbox>
-												<textbox width="100%" mold="rounded" maxlength="12"
+												<textbox width="101%" mold="rounded" maxlength="12"
 													placeholder="Ej: 402405375" 
 													value="@bind(vm.proveedor.cedula)"
 													constraint="@bind(vm.validatorClienteCedulaRif)" />
@@ -96,7 +96,7 @@
 									<row>
 										<label value="Phone Number/Teléfono: *" />
 										<vbox width="85%">
-											<textbox width="100%" mold="rounded" maxlength="11"
+											<textbox width="120%" mold="rounded" maxlength="11"
 												placeholder="Ej: 02512552233"
 												value="@bind(vm.proveedor.telefono)" 
 												constraint="@bind(vm.telefonoValidator)" />

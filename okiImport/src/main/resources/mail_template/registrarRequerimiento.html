@@ -193,7 +193,9 @@ body {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+   
 }
+
 td {
   padding: 0;
   vertical-align: top;
@@ -876,14 +878,33 @@ tr.border td {
                 <b>Estos Son los Datos del Vehiculo:</b><br />
                 Marca del Vehiculo:   ${requerimiento.marcaVehiculo.nombre}<br />
                 Modelo del Vehiculo:  ${requerimiento.modeloV}<br />
+                #if( $requerimiento.serialCarroceriaV )
+                Serial Carroceria:    $requerimiento.serialCarroceriaV<br />
+                #else
+                Serial Carroceria:    No Especificado<br />
+                #end
                 Año del Vehiculo:     ${requerimiento.annoV}<br />
                 Motor del Vehiculo:   ${requerimiento.motor.nombre}<br />
                 Tipo de Repuesto:     ${requerimiento.determinarTipoRepuesto()}<br />
                 <br />
                 <b>Estos Son los Datos del Requerimiento:</b><br />
-                Codigo OEM:           ${requerimiento.detalleRequerimientos.codigoOem}<br />
-                Descripcion:          ${requerimiento.detalleRequerimientos.descripcion}<br />
-                Cantidad:             ${requerimiento.detalleRequerimientos.cantidad}</p>
+                <table style="border:1px solid blue  ;border-collapse: collapse;border-spacing: 1; width: 100%; text-align: center" >
+                <thead style="border:1px solid blue"> 
+                <tr><th>Codigo OEM</th><th>Descripcion</th><th>Cantidad</th></tr>
+                </thead>
+                #foreach( $detalleRequerimiento in ${requerimiento.detalleRequerimientos})
+                <tr >
+                <td>#if( $detalleRequerimiento.codigoOem )
+                <p>   $detalleRequerimiento.codigoOem</p>
+                #else
+                <p>No Especificado</p>
+                #end
+                </td>
+                <td>  $detalleRequerimiento.descripcion</td>
+                <td>  $detalleRequerimiento.cantidad</td>
+                </tr>
+                #end
+                </table></p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Su solicitud será respondida en la brevedad posible.<br />
       </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>
