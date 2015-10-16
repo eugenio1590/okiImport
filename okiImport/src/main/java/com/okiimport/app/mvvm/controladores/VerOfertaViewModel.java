@@ -94,7 +94,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "oferta" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
 		if ( checkIsFormValid() ) {
 			
