@@ -41,6 +41,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
     //Atributos
 	private Requerimiento requerimiento;
 	private List<DetalleOferta> listaDetOferta;
+	private List<Oferta> listaOferta;
     private Oferta oferta;
     
     /**
@@ -95,10 +96,13 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * */
 	@Command
 	@NotifyChange({ "oferta" })
-	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
-		if ( checkIsFormValid() ) {
+	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) 
+	{	
+		
+		if ( checkIsFormValid() ) 
+		{
 			
-			oferta.setEstatus("recibida");
+			//oferta.setEstatus("recibida");
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
@@ -108,14 +112,21 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			parametros.put("requerimiento", requerimiento);
 			parametros.put("detallesOfertas", listaDetOferta);
 
-
-			if (oferta != null)
-			{
+			
+	
+			if (oferta!= null  ){
+				if (listaOferta!= null && this.listaOferta.size()>0)
+				{
+				
+			
 				super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar viendo mas ofertas?", null, 
-						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener(){
+						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener()
+				{
 							@Override
-							public void onEvent(Event event) throws Exception {
-								if (((Messagebox.Button) event.getData()) == Messagebox.Button.YES) {
+							public void onEvent(Event event) throws Exception 
+							{
+								if (((Messagebox.Button) event.getData()) == Messagebox.Button.YES)
+								{
 									ejecutarGlobalCommand("verOferta", parametros);
 									winOferta.onClose();
 								}
@@ -123,11 +134,19 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 									redireccionarASolicitudDePedido(parametros);
 							}
 				}, null);
+			
+				}
+				else
+					mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un Registro", null, null, null, null);	
 				
 			}
 			else
 				redireccionarASolicitudDePedido(parametros);
-		}
+			    oferta.setEstatus("recibida");
+			
+
+			
+	  }
 	}
 	
 	/**
