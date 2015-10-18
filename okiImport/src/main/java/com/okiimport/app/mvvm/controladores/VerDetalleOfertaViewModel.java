@@ -5,6 +5,8 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
@@ -12,6 +14,10 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
 public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
+	 //GUI
+    @Wire("#winOferta")
+	private Window winOferta;
+    
 	//Atributos
 	private Requerimiento requerimiento;
 	private Oferta oferta;
