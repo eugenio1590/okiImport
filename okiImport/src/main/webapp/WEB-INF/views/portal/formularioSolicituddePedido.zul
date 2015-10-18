@@ -65,7 +65,7 @@
 							</vbox>
 
 							<label value="Fecha Creacion: " />
-							<datebox id="fecha" width="150px"
+							<datebox id="fecha" width="150px" disabled="true"
 								format="dd/MM/yyyy"
 								value="@bind(vm.requerimiento.fechaCreacion)" instant="true"
 								readonly="true" />
