@@ -20,7 +20,7 @@
 				<space></space>
 				<space></space>
 				<label value="Fecha: " />
-				<datebox id="fecha" width="150px" format="dd/MM/yyyy" disable="true"
+				<datebox id="fecha" width="150px" format="dd/MM/yyyy" disabled="true"
 					value="@bind(vm.compra.fechaCreacion)" instant="true"
 					readonly="true" />
 				<space></space>
@@ -55,13 +55,13 @@
 								<label value="Numero: " />
 								<vbox>
 								<textbox
-									value="@bind(vm.requerimiento.idRequerimiento)" width="80%"
+									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
 									readonly="true" constraint="@bind(vm.cantValidator)"/>
 								</vbox>
 
 
 								<label value="Fecha Creacion: " />
-								<datebox width="80%" readonly="true" mold="rounded" 
+								<datebox width="60%" readonly="true" mold="rounded" disabled="true"
 								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
 								/>
 
@@ -90,13 +90,13 @@
 								<label value="Cedula: " />
 								<vbox>
 								<textbox
-									value="@bind(vm.requerimiento.cliente.cedula)" width="80%"
+									value="@bind(vm.requerimiento.cliente.cedula)" width="100%"
 									readonly="true" constraint="@bind(vm.validatorClienteCedulaRif)" />
                                 </vbox>
 
 								<label value="Nombre: " />
 								<vbox>
-								<textbox width="80%" readonly="true"
+								<textbox width="100%" readonly="true"
 									mold="rounded" value="@bind(vm.requerimiento.cliente.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
 
@@ -127,13 +127,13 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
-									width="80%" readonly="true"  constraint="@bind(vm.notEmptyValidator)"/>
+									width="100%" readonly="true"  constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
 
 
 								<label value="Modelo: " />
 								<vbox>
-								<textbox id="modelo" width="80%"
+								<textbox id="modelo" width="100%"
 									readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.modeloV)" constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
