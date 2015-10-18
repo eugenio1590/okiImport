@@ -2,6 +2,7 @@ package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.resource.service.AbstractServiceImpl;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
@@ -71,7 +73,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: Clase Inicializada Nota: Ninguna
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -86,7 +89,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
-		pagDetalleCotizacion.setPageSize(pageSize);
+		pagDetalleCotizacion.setPageSize(pageSize=6);
 	}
 
 	/** Interface: EventListener<SortEvent> */
@@ -108,20 +111,26 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * Descripcion: Mueve la seleccion realizada desde listaDetalleCotizacion a
 	 * ListaDetalleSeleccionado 
 	 * Parametros: @param view: aprobarCotizaciones.zul
-	 * Retorno: listaDetalleCotizacion llena Nota: Ninguna
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void agregarSeleccion(){
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
 		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, 
 				COMPR_DETALLE_COTIZACION, false, "No se puede agregar Detalle Cotizacion");
+		}
+		else 
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
+
 	}
 
 	/**
 	 * Descripcion: Elimina la seleccion de listaDetalleSeleccion 
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: listaDetalleSeleccion vacia Nota:
-	 * Ninguna
+	 * Retorno: Ninguno
+	 * Nota:Ninguna
 	 * */
 	@Command
 	@NotifyChange({ "*" })
@@ -133,23 +142,41 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Guarda la Seleccion realizada en listaDetalleSeleccionado
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: seleccion guardada, mensaje de notificacion de que la seleccion fue guardada
-	 * exitosamente. 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
 	@Command
 	public void guardar() {
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
 		sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
+		limpiarDetalleSeleccionado();
 		mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n Guardada Exitosamente", null,
 				null, null, null);
+		}
+		else 
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
 
 	}
+	
+	/**
+	 * Descripcion: Permitira limpiar la informacion de la seleccion
+	 * Parametros: Ninguno @param view: aprobarCotizaciones.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@NotifyChange({ "*" })
+	private void limpiarDetalleSeleccionado(){
+		if(listaDetalleSeleccionado!=null){
+			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+		}
+	}
+	
 
 	/**
 	 * Descripcion: Consulta el detalle Cotizacion 
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: detalle de la cotizacion consultada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -180,7 +207,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -193,8 +221,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
 	 * establecido en el evento 
 	 * Parametros: @param view: aprobarCotizaciones.zul
-	 * Retorno: filtro de acuerdo al campo establecido en el evento Nota:
-	 * Ninguna
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("listaDetalleCotizacion")
@@ -208,8 +236,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Asigna la ubicacion del proveedor 
 	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: ubicacion asignada al proveedor Nota:
-	 * Ninguna
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
 	 * */
 	private void agregarUbicacion() {
 		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion()

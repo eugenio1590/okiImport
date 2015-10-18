@@ -335,7 +335,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.[0-9]+/", "Debe Contener Valores Numericos Validos") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
-				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO);
+				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO, EConstraint.CUSTOM);
 	}
 	
 	

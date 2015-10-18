@@ -61,7 +61,7 @@
 
 
 								<label value="Fecha Creacion: " />
-								<datebox width="60%" readonly="true" mold="rounded" disabled="true"
+								<datebox width="48%" readonly="true" mold="rounded" disabled="true"
 								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
 								/>
 
@@ -202,11 +202,11 @@
 
 		<div align="right">
 			<hbox>
-				<label value="Precio de Flete"></label>
+				<label value="Precio de Flete: "></label>
             	<vbox>
 					<textbox width="150px"  
 						value="@bind(vm.compra.precioFlete)" 
-						constraint="@bind(vm.validatorPrecio)"/>
+						constraint="@bind(vm.notEmptyValidator)"/>
 		    	</vbox>
 			</hbox>
 		</div>

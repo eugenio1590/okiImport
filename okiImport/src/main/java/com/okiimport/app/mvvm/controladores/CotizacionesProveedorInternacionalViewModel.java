@@ -40,10 +40,10 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	
 	@Wire("#pagCotizaciones")
 	private Paging pagCotizaciones;
-	
+	//Le quite el atributo static al String Titulo
 	//Atributos
 	public static final String TITULO_EMPTY_COTIZACIONES = CotizacionesProveedorNacionalViewModel.TITULO_EMPTY_COTIZACIONES;
-	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private String constraint_precio_flete;
 	private List<Cotizacion> listaCotizacion;
 	private Persona persona;

@@ -88,10 +88,11 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Wire("#cmbFlete")
 	private Combobox cmbFlete;
 	
+	//le quite el atributo static al titulo
 	//Atributos
 	public static final String TITULO_EMPTY_COTIZACIONES = "No existen mas solicituces de cotizacion";
 	private static final String TITULO_EAST = "Cotizacion ";
-	private static String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private CustomConstraint constraintPrecioFlete = null;
 	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
