@@ -232,8 +232,11 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange("*")
+	@NotifyChange({"constraintPrecioFlete", "listaDetalleCotizacion", "cotizacionSelecionada" })
 	public void seleccionarTipoFlete(){
+		if(constraintPrecioFlete!=null)
+			constraintPrecioFlete.hideComponentError();
+		
 		if(this.tipoFlete.getValor()){
 			for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion){
 				detalle.setPrecioFlete(null);
@@ -245,7 +248,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			constraintPrecioFlete = getValidatorPrecio();
 		}
 		else {
-			constraintPrecioFlete.hideComponentError();
 			constraintPrecioFlete = null;
 			actualizarListaDetalleCotizacion();
 		}

@@ -3,8 +3,7 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')">
 		<groupbox closable="false">
 		<div> 
-		    <space></space>
-		    <space></space> 
+		  
 		    <space></space> 
 		    <space></space> 
 		    <space></space>
@@ -23,9 +22,7 @@
 		    <space></space>
 		    <space></space> 
 		    <space></space> 
-		    <space></space> 
-		    <space></space> 
-		    <space></space> 
+		    
 		    <space></space> 
 		    <label value="Fecha: " />
 			<datebox id="fecha"  width="150px" format="dd/MM/yyyy" disabled="true"
@@ -132,7 +129,7 @@
 								<listheader label="Precio Venta S/F" 
 								    sort="auto" />
 								    
-								<listheader label="Seleccion" 
+								<listheader label="Aceptar" 
 								    sort="auto" />
 									
 							</listhead>
@@ -149,7 +146,7 @@
 							         <hbox spacing="20px">
 								     <div class="btn-group btn-group-sm">
 
-									  <checkbox label="Aceptar" sclass="btn-primary"
+									  <checkbox 
 										 tooltiptext="Aceptar Oferta"
 										onCheck="@command('aprobarDetalleOferta', detalleOferta = each)"
 										 />

@@ -108,7 +108,7 @@
 										onClick="@command('verDetalleRequerimiento',requerimiento = each)" />
 									
 									<button
-										iconSclass="z-icon-file blue bigger-160" tooltiptext="Oferta" if="${ each.verOfertas() }"
+										iconSclass="z-icon-file blue bigger-160" tooltiptext="Ver Oferta" if="${ each.verOfertas() }"
 										onClick="@global-command('verOferta',requerimiento = each)" />
 
 								</div>
