@@ -190,7 +190,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				}
 
 				else
-					mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto",
+					mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto. "
+							+ "Add at Least a Brand and a Classification of Parts.",
 							null, null, null, null);
 			}
 			else
