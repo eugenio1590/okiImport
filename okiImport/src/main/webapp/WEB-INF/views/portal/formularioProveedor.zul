@@ -145,7 +145,7 @@
 										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
 											<combobox id="cmbEstado"
-												width="85%" readonly="true" placeholder="Seleccione..."
+												width="100%" readonly="true" placeholder="Seleccione..."
 												selectedItem="@bind(vm.estado)"
 												value="@bind(vm.estado.nombre)"
 												visible="@bind(vm.proveedor.nacional)"
@@ -162,7 +162,7 @@
 										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
 											<combobox id="cmbCiudad"
-												placeholder="Seleccione..." width="92%" readonly="true"
+												placeholder="Seleccione..." width="115%" readonly="true"
 												selectedItem="@bind(vm.proveedor.ciudad)"
 												value="@bind(vm.proveedor.ciudad.nombre)"
 												visible="@bind(vm.proveedor.nacional)"
