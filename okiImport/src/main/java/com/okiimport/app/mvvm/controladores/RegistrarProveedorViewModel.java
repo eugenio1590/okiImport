@@ -389,7 +389,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 		String str = null;
 		if(recordMode.equalsIgnoreCase("EDIT"))
-			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas ";
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas"
+					+ "Your request has been registered Successfully it , will respond in 48 hours ";
 		else
 			str = "Proveedor Actualizado Exitosamente";
 
