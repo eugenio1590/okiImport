@@ -86,7 +86,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -141,7 +141,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Limpia los campos editable de la grid de detalles de la cotizacion seleccionada 
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Campos Limpios
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -164,7 +164,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Envia los datos de la cotizacion seleccionada para su registro 
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: datos de la cotizacion enviada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -215,7 +215,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -228,7 +228,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Especifica el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente 
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Tipo de flete especificado 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -256,7 +256,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Calcula el precio de la columna especificado como parametro
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Precio Calculado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -283,7 +283,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Calcula el total del flete por medio de las dimensiones del producto
 	 * Parametros: detalleCotizacion objeto seleccionado @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: total del flete Calculado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -301,7 +301,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Carga nuevamente las listas al cerrar la pantalla
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: listas cargadas
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -314,7 +314,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Descripcion: Carga la lista de monedas de acuerdo a la pagina dada como parametro
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
-	 * Retorno: listas de monedas cargadas
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@SuppressWarnings("unchecked")
@@ -331,7 +331,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Limpia la informacion de la cotizacion seleccionada
 	 * Parametros: Cotizacion Seleccionada @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Campos Limpiados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange("cotizacionSelecionada")
@@ -345,7 +345,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Actualiza la lista de detalles de cotizacion calculando su precio de flete
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Lista Actualizada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
@@ -357,7 +357,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Asigna la configuracion actual de la libra a los detalles de cotizacion
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
-	 * Retorno: Configuracion asignada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void prepararListaDetalleCotizacion(){
