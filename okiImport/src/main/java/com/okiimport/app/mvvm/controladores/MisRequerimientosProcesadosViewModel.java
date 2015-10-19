@@ -17,7 +17,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractMisRequerimien
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaMisRequerimientosProcesados.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
