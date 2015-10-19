@@ -70,7 +70,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: enviarRequerimientoProv.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -105,7 +105,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a remover los items seleccionados
 	 * Parametros: @param view: enviarRequerimientoProv.zul 
-	 * Retorno: Items seleccionados removidos 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -120,7 +120,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique 
 	 * Parametros: @param view: enviarRequerimientoProv.zul 
 	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
-	 * Retorno: seccion abierta o cerrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -137,7 +137,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira actualizar la informacion del requerimiento 
 	 * Parametros: @param view: enviarRequerimientoProv.zul
-	 * Retorno: informacion del requerimiento actualizada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -156,7 +156,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira enviar la solicitud de cotizacion al proveedor 
 	 * Parametros: requerimiento @param view: enviarRequerimientoProv.zul
-	 * Retorno: solicitud de cotizacion enviada al proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -182,7 +182,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a actualizar los requerimientos
 	 * Parametros: @param view: enviarRequerimientoProv.zul
-	 * Retorno: requerimientos actualizados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -193,7 +193,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permite validar al proveedor segun la clasificacion del repuesto
 	 * Parametros: @param view: enviarRequerimientoProv.zul
-	 * Retorno: proveedores validados segun la clasificacion ddel repuesto
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
