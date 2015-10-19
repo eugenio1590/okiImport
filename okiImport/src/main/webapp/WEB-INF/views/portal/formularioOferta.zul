@@ -146,7 +146,7 @@
 							         <hbox spacing="20px">
 								     <div class="btn-group btn-group-sm">
 
-									  <checkbox 
+									  <checkbox checked="@bind(each.aprobado)"
 										 tooltiptext="Aceptar Oferta"
 										onCheck="@command('aprobarDetalleOferta', detalleOferta = each)"
 										 />

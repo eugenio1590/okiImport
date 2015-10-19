@@ -42,11 +42,12 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private Requerimiento requerimiento;
 	private List<DetalleOferta> listaDetOferta;
     private Oferta oferta;
+    private DetalleOferta detalleOferta;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Ninguno
+	 * Retorno: Clase Inicializada 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -58,6 +59,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		this.requerimiento = requerimiento;
 		this.listaDetOferta = (listaDetOferta == null) ? new ArrayList<DetalleOferta>() : listaDetOferta;
 		cargarOferta();
+		
 	}
 	
 	/**COMMAND
@@ -77,20 +79,22 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Permite Cargar La Oferta
 	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Ninguno
+	 * Retorno: Oferta Cargada
 	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("oferta")
 	public void cargarOferta(){
+		
 		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+	
 	}
 	
 	/**COMMAND*/
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
 	 * Parametros: @param btnEnviar: boton presionado
-	 * Retorno: Ninguno
+	 * Retorno: Oferta Registrada
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -137,7 +141,9 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * */
 	@Command
 	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) Checkbox checkbox,
-			@BindingParam("detalleOferta") DetalleOferta detalleOferta){
+			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
+	{
+		
 		detalleOferta.setAprobado(checkbox.isChecked());
 	}
 	
