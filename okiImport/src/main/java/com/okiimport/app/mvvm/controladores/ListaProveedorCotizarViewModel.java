@@ -28,7 +28,7 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaProveedoresCotizar.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose(superclass=true)
@@ -60,7 +60,7 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	/**
 	 * Descripcion: Permitira visualizar la lista de proveedores para poder cotizar un requerimiento
 	 * Parametros: @param view: listaProveedoresCotizar.zul 
-	 * Retorno: lista de proveedores para poder cotizar 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
