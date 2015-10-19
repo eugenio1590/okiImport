@@ -19,7 +19,7 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: index.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -31,7 +31,7 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a formulario para registrar solicitud de proveedor 
 	 * Parametros: @param view: index.zul 
-	 * Retorno: Formulario Proveedor 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -42,7 +42,7 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a formulario para verificar solicitud de requerimiento
 	 * Parametros: @param view: index.zul 
-	 * Retorno: Formulario Verificar Requerimiento
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -53,7 +53,7 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a formulario registrar requerimiento
 	 * Parametros: @param view: index.zul 
-	 * Retorno: Formulario registrar requerimiento
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
