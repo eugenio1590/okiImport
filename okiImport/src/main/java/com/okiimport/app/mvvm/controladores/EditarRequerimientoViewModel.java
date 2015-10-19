@@ -95,7 +95,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: editarRequerimiento.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -172,7 +172,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique 
 	 * Parametros: @param view: editarRequerimiento.zul 
 	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
-	 * Retorno: seccion abierta o cerrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -189,7 +189,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Permitira limpiar los campos de la vista del formulario 
 	 * Parametros: @param view: editarRequerimiento.zul 
-	 * Retorno: Campos limpiados 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -208,7 +208,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Permitira actualizar la informacion del requerimiento 
 	 * Parametros: @param view: editarRequerimiento.zul 
-	 * Retorno: informacion del requerimiento actualizada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
