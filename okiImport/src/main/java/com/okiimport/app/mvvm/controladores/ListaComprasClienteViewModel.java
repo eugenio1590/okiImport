@@ -57,7 +57,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaComprasCliente.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -88,7 +88,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Llama a consultar compras por requerimiento 
 	 * Parametros: @param view: listaComprasCliente.zul 
-	 * Retorno: compras por requerimiento cargadas 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -135,7 +135,7 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	/**
 	 * Descripcion: Llama a formulario para registrar la compra
 	 * Parametros: compra @param view: listaComprasCliente.zul 
-	 * Retorno: Modal para registrar la compra segun parametros 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -146,11 +146,11 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 		crearModal(BasePackageSistemaFunc+"ofertados/formularioCompra.zul", parametros);
 	}
 	
-	//LLAMA A CAMBIAR LOS REQUERIMIENTOS?
+
 	/**
-	 * Descripcion: Llama a cambiar los requerimientos
+	 * Descripcion: 
 	 * Parametros: compra @param view: listaComprasCliente.zul 
-	 * Retorno:  
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
