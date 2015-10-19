@@ -56,7 +56,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioVerificarRequerimiento.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -107,7 +107,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permite Ver la Oferta al cliente
 	 * Parametros: Requerimiento: requerimiento @param view: formularioVerificarRequerimiento.zul 
-	 * Retorno: detalle de la oferta 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -124,7 +124,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permite buscar al cliente en la base de datos para ver sus solicitudes
 	 * Parametros: @param view: formularioVerificarRequerimiento.zul 
-	 * Retorno: cliente encontrado o no encontrado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -146,7 +146,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permite Ver el detalle del requerimiento
 	 * Parametros: Requerimiento: requerimiento @param view: formularioVerificarRequerimiento.zul 
-	 * Retorno: detalle del requerimiento
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -176,7 +176,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira filtrar por los campos del proveedor
 	 * Parametros: @param view: formularioVerificarRequerimiento.zul    
-	 * Retorno: Campos filtrados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -195,7 +195,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira obtener la cedula con tipo de persona
 	 * Parametros: @param view: formularioVerificarRequerimiento.zul    
-	 * Retorno: cedula
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private String obtenerCedulaConTipoPersona(){
