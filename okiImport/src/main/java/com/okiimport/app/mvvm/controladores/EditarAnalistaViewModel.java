@@ -46,7 +46,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: editarAnalistas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -67,7 +67,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	/**
 	 * Descripcion: Llama a registrar analista
 	 * Parametros: @param view: editarAnalistas.zul 
-	 * Retorno: analista registrado o actualizado, notificacion de registro exitoso 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -105,7 +105,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	/**
 	 * Descripcion: Llama a limpiar los campos
 	 * Parametros: @param view: editarAnalistas.zul 
-	 * Retorno: Campos vacios en el formulario
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -118,7 +118,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	/**
 	 * Descripcion: Llama a Cerrar el Modal 
 	 * Parametros: @param view: editarAnalistas.zul 
-	 * Retorno: Modal Cerrado 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
