@@ -54,7 +54,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -92,7 +92,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
 	 * @param sorDirection: valor boolean que indica el orden ascendente (true) o descendente (false) del ordenamiento
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -114,7 +114,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
-	 * Retorno: posicionamiento en otra pagina activa del paging Nota: Ninguna
+	 * Retorno: Ninguno
 	 * */
 	@Command
 	@NotifyChange("*")
@@ -127,7 +127,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
 	 * establecido en el evento 
 	 * Parametros: @param view: listaCotizacionesProveedorInternacional.zul 
-	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Retorno: Ninguno 
 	 * Nota:Ninguna
 	 * */
 	@Command
@@ -140,7 +140,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**
 	 * Descripcion: permite cargar la lista de detalles de la cotizacion seleccionada
 	 * Parametros: requerimiento seleccionado @param view: listaCotizacionesProveedorInternacional.zul 
-	 * Retorno: listas de detalles de la cotizacion llenas
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -157,7 +157,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorInternacional.zul 
-	 * Retorno: listas cargadas 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
