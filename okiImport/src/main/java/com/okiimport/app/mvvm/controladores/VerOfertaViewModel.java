@@ -46,7 +46,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
     /**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -77,7 +77,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Permite Cargar La Oferta
 	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Oferta Cargada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -90,7 +90,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
 	 * Parametros: @param btnEnviar: boton presionado
-	 * Retorno: Oferta Registrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
