@@ -30,7 +30,7 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view:  
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
