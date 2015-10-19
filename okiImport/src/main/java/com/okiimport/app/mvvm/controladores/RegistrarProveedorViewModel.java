@@ -109,7 +109,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -143,7 +143,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite Habilitar el boton limpiar segun el evento que se solicite
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Habilitacion del boton limpiar 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -157,7 +157,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar Proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Campos Vacios 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -170,7 +170,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 /**
 	 * Descripcion: Permite Registrar el proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: proveedor registrado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -205,7 +205,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite Seleccionar una marca a vender por el proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: marca seleccionada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -218,7 +218,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite eliminar de la seleccion una marca a vender por el proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: marca eliminada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -231,7 +231,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite Seleccionar un tipo de repuesto a vender por el proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: tipo de repuesto seleccionada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -244,7 +244,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite eliminar de la seleccion un tipo de repuesto a vender por el proveedor
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: tipo de repuesto eliminado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -258,7 +258,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
 	 * de Paging pagMarcas
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -275,7 +275,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
 	 * de Paging pagTipoRepuestos
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({ "*" })
@@ -291,7 +291,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite consultar las marcas
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Marcas consultadas y llenado de la lista de marcas a seleccionar
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@SuppressWarnings("unchecked")
@@ -310,7 +310,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite Consultar Tipo de Repuestos
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Tipo de repuestos consultados y llenado de la lista tipo de repuestos a seleccionar
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@SuppressWarnings("unchecked")
@@ -357,7 +357,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite Consultar el tipo de persona
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Tipo de Persona
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private ModeloCombo<Boolean> consultarTipoPersona(String cedula, List <ModeloCombo<Boolean>> listaTipoPersona){
@@ -373,7 +373,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite registrar un proveedor en el sistema
 	 * Parametros: @param view: formularioProveedor.zul 
-	 * Retorno: Proveedor registrado, correo enviado al proveedor 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private Proveedor registrarProveedor(boolean enviarEmail){
@@ -423,7 +423,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite consultar si el proveedor ya existe en la Base de datos
 	 * Parametros: @param view: formularioProveedor.zul  
-	 * Retorno: Proveedor consultado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 
 	@Command
