@@ -82,7 +82,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioRequerimiento.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -130,7 +130,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar Requerimiento
 	 * Parametros: @param view: formularioRequerimiento.zul 
-	 * Retorno: Campos Vacios 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -145,7 +145,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	 /**
 		 * Descripcion: Permite Registrar el requerimiento
 		 * Parametros: @param view: formularioRequerimiento.zul  
-		 * Retorno: requerimiento registrado
+		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
 	@Command
@@ -190,7 +190,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	 /**
 	 * Descripcion: Permite poder agregar un nuevo repuesto al requerimiento
 	 * Parametros: @param view: formularioRequerimiento.zul  
-	 * Retorno: linea vacia para annadir repuesto
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -203,7 +203,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	 /**
 		 * Descripcion: Permite poder eliminar un repuesto del requerimiento
 		 * Parametros: @param view: formularioRequerimiento.zul  
-		 * Retorno: linea borrada del requerimiento
+		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
 	@Command
@@ -219,7 +219,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite consultar si el cliente ya existe en la Base de datos
 	 * Parametros: @param view: formularioRequerimiento.zul  
-	 * Retorno: cliente consultado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
