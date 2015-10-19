@@ -25,7 +25,7 @@ public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: verDetalleOferta.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
