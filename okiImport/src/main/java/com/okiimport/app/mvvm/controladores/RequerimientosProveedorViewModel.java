@@ -58,7 +58,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -120,7 +120,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
 	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -133,7 +133,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
 	 * Parametros: @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Filtro por cada campo segun lo establecido en el evento 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -146,7 +146,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	/**
 	 * Descripcion: Permitira crear el emergente (modal) necesario para ver las solicitudes del requerimiento seleccionado
 	 * Parametros: requerimiento: requerimiento seleccionado @param view: listaRequerimientosProveedorViewModel.zul  
-	 * Retorno: Emergente Creado 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
