@@ -50,7 +50,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
     /**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioCompra.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -92,7 +92,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	 /**
 	 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
 	 * Parametros: @param view: formularioCompra.zul 
-	 * Retorno: setea la pagina activa segun el paging
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -105,7 +105,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	 /**
 		 * Descripcion: Permite Registrar la compra 
 		 * Parametros: @param view: formularioCompra.zul 
-		 * Retorno: compra registrada
+		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
 	@Command
@@ -119,7 +119,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Carga nuevamente las listas al cerrar la pantalla
 	 * Parametros: @param view: formularioCompra.zul 
-	 * Retorno: listas cargadas
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
