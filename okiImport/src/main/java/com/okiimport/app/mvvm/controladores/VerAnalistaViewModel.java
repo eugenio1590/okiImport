@@ -38,7 +38,7 @@ public class VerAnalistaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: verAnalistas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
