@@ -59,7 +59,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: cotizaciones.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -122,7 +122,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: cotizaciones.zul 
-	 * Retorno: posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -136,7 +136,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
 	 * establecido en el evento 
 	 * Parametros: @param view: cotizaciones.zul 
-	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Retorno: Ninguno 
 	 * Nota:Ninguna
 	 * */
 	@Command
@@ -149,7 +149,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	 * Descripcion: permite crear el emergente (modal) necesario para editar el requerimiento seleccionado
 	 * establecido en el evento 
 	 * Parametros: requerimiento seleccionado @param view: cotizaciones.zul 
-	 * Retorno: emergente (modal) creado.
+	 * Retorno: Ninguno
 	 * Nota:Ninguna
 	 * */
 	@Command
@@ -163,7 +163,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	 * Descripcion: permite crear el emergente (modal) necesario para ver el requerimiento seleccionado
 	 * establecido en el evento 
 	 * Parametros: requerimiento seleccionado @param view: cotizaciones.zul 
-	 * Retorno: emergente (modal) creado.
+	 * Retorno: Ninguno
 	 * Nota:Ninguna
 	 * */
 	@Command
@@ -176,7 +176,7 @@ public class CotizacionesViewModel extends AbstractRequerimientoViewModel implem
 	/**
 	 * Descripcion: permite guardar la cotizacion 
 	 * Parametros: cotizacion seleccionada @param view: cotizaciones.zul 
-	 * Retorno: cambio estatus a la cotizacion, mensaje emergente.
+	 * Retorno: Ninguno
 	 * Nota:Ninguna
 	 * */
 	@NotifyChange("*")
