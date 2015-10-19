@@ -42,7 +42,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
     /**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioSolicituddePedido.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -62,7 +62,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar solicitud de pedido
 	 * Parametros: @param view: formularioSolicituddePedido.zul 
-	 * Retorno: Campos Vacios 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -75,7 +75,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	/**
 	 * Descripcion: Permite Registrar la solicitud de pedido
 	 * Parametros: @param view: formularioSolicituddePedido.zul  
-	 * Retorno: solicitud de pedido registrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -90,7 +90,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	/**
 	 * Descripcion: Permite llenar la lista con los tipo de flete
 	 * Parametros: @param view: formularioSolicituddePedido.zul  
-	 * Retorno: lista llenada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llenarTiposFlete(){
