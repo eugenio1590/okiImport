@@ -46,7 +46,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioAnalistas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -64,7 +64,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite registrar un analista en el sistema
 	 * Parametros: @param view: formularioAnalistas.zul 
-	 * Retorno: Analista registrado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -101,7 +101,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite recargar la pantalla al cerrar
 	 * Parametros: @param view: formularioAnalistas.zul 
-	 * Retorno: pantalla recargada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	public void recargar() {
@@ -112,7 +112,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario Analistas
 	 * Parametros: @param view: formularioAnalistas.zul 
-	 * Retorno: campos vacios
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
