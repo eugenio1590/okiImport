@@ -48,7 +48,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaMarcas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -78,7 +78,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Llama a consultar la marca
 	 * Parametros: @param view: listaMarcas.zul 
-	 * Retorno: Marca consultada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -113,7 +113,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Llama a un modal para crear o registrar una Marca
 	 * Parametros: @param view: listaMarcas.zul 
-	 * Retorno: Formulario Marca Cargado para registrar una nueva marca
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -124,7 +124,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Llama a un modal para ver los datos de la marca
 	 * Parametros: Marca @param view: listaMarcas.zul 
-	 * Retorno: Modal cargado con los datos de la marca
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -139,7 +139,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Llama a un modal para editar los datos de la marca
 	 * Parametros: Marca @param view: listaMarcas.zul 
-	 * Retorno: Modal cargado con los datos de la marca
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -154,7 +154,7 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
 	 * Parametros: @param view: listaMarcas.zul 
-	 * Retorno: Formulario con los parametros dados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros) {
