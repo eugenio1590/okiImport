@@ -108,7 +108,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -175,7 +175,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
 	 * de Paging 
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -189,7 +189,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
 	 * establecido en el evento 
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Retorno: Ninguno
 	 * Nota:Ninguna
 	 * */
 	@Command
@@ -201,7 +201,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: permite cargar la lista de detalles de la cotizacion seleccionada
 	 * Parametros: requerimiento seleccionado @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: lista de detalles de la cotizacion llena 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -221,7 +221,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: permitira limpiar los campos editable de la grid de detalles de la cotizacion seleccionada
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: campos vacios 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -240,7 +240,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira enviar los datos de la cotizacion seleccionada para su registro
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: filtro de acuerdo al campo establecido en el evento 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -268,7 +268,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira asginar el historial mas actual de la moneda seleccionada
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: historial asignado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -284,7 +284,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira cambiar la paginacion de la listaMonedas de acuerdo a la pagina activa del Paging
 	 * Parametros: @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: Cambio en la pagina activa del paging
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -297,7 +297,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: listas cargadas 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -310,7 +310,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira especificar el tipo de flete que se se ha seleccionado y agregar el constraint correspondiente
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: tipo de flete especificado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -329,7 +329,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Descripcion: Permitira calcular el precio de la columna especificado como parametro
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
 	 * @param column: nro. de columna
-	 * Retorno: precio calculado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -355,7 +355,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Descripcion: Permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
-	 * Retorno: lista de monedas cargadas
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@SuppressWarnings("unchecked")
@@ -369,15 +369,10 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		pagMonedas.setPageSize(pageSize);
 	}
 	
-	/*
-	 * Descripcion: 
-	 * @param: Ninguno
-	 * Retorno: Ninguno
-	 * */
 	/**
 	 * Descripcion: Permitira mostrar los botones limpiar y enviar si la lista de detalles contiene datos
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: botones Mostrados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void mostrarBotones(){
@@ -392,7 +387,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	/**
 	 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
-	 * Retorno: campos vacios
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void limpiarCotizacionSeleccionada(){
@@ -407,7 +402,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * de acuerdo al atributo pasado como parametro
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
 	 * @param readOnly: indicara si el campo es de solo lectura o no
-	 * Retorno: atributos Configurados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void configurarAtributosCotizacion(boolean readOnly){
