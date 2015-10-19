@@ -51,7 +51,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaCotizacionesAnalista.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
