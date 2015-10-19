@@ -54,7 +54,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaProveedores.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -84,7 +84,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a consultar proveedores  
 	 * Parametros: @param view: listaProveedores.zul 
-	 * Retorno: proveedores consultados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -116,7 +116,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Permitira filtrar por los campos del proveedor
 	 * Parametros: @param view: listaProveedores.zul   
-	 * Retorno: Campos filtrados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -128,7 +128,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a un modal para crear o registrar un proveedor
 	 * Parametros: @param view: listaProveedores.zul 
-	 * Retorno: Formulario Proveedor Cargado para registrar un nuevo proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -139,7 +139,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a un modal para editar los datos del proveedor
 	 * Parametros: Proveedor @param view: listaProveedores.zul 
-	 * Retorno: Modal cargado con los datos del proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -166,7 +166,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a un modal para ver los datos del proveedor
 	 * Parametros: Proveedor @param view: listaProveedores.zul 
-	 * Retorno: Modal cargado con los datos del proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -191,7 +191,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Llama a un modal para eliminar los datos del proveedor
 	 * Parametros: Proveedor @param view: listaProveedores.zul 
-	 * Retorno: Modal cargado con los datos del proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange("proveedores")
@@ -218,7 +218,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
 	 * Parametros: @param view: listaProveedores.zul 
-	 * Retorno: Formulario con los parametros dados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
