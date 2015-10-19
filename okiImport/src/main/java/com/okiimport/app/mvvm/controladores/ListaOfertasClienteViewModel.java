@@ -66,7 +66,7 @@ public class ListaOfertasClienteViewModel extends
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaOfertasCliente.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -97,7 +97,7 @@ public class ListaOfertasClienteViewModel extends
 	/**
 	 * Descripcion: Llama a consultar las ofertas por requerimiento  
 	 * Parametros: @param view: listaOfertasCliente.zul 
-	 * Retorno: ofertas por requerimiento consultados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -130,7 +130,7 @@ public class ListaOfertasClienteViewModel extends
 	/**
 	 * Descripcion: Llama a un modal para ver los datos de la oferta
 	 * Parametros: Oferta @param view: listaOfertasCliente.zul 
-	 * Retorno: Modal cargado con los datos de la oferta
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -147,7 +147,7 @@ public class ListaOfertasClienteViewModel extends
 	/**
 	 * Descripcion: Llama a enviar las ofertas al cliente
 	 * Parametros: @param view: listaOfertasCliente.zul 
-	 * Retorno: ofertas actualizadas y enviadas al cliente
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
