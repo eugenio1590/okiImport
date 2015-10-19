@@ -40,7 +40,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioMarcas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -53,7 +53,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Permite registrar una marca en el sistema
 	 * Parametros: @param view: formularioMarcas.zul 
-	 * Retorno: Marca Registrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -86,7 +86,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario Marca
 	 * Parametros: @param view: formularioMarcas.zul 
-	 * Retorno: campos vacios
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
