@@ -48,7 +48,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaAnalistas.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -80,7 +80,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a consultar analistas  
 	 * Parametros: @param view: listaAnalistas.zul 
-	 * Retorno: analistas consultados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -99,7 +99,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a cerrar a vista
 	 * Parametros: @param view: listaAnalistas.zul 
-	 * Retorno: Vista Cerrada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -126,7 +126,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a un modal para ver los datos del analista
 	 * Parametros: Analista @param view: listaAnalistas.zul 
-	 * Retorno: Modal cargado con los datos del analista
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -139,7 +139,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a un modal para editar los datos del analista
 	 * Parametros: Analista @param view: listaAnalistas.zul 
-	 * Retorno: Modal cargado con los datos del analista
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -153,7 +153,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Llama a un modal para crear o registrar un analista
 	 * Parametros: @param view: listaAnalistas.zul 
-	 * Retorno: Formulario Analista Cargado para registrar un nuevo analista
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -164,7 +164,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	/**
 	 * Descripcion: Metodo de la clase que permite llamar formularios 
 	 * Parametros: @param view: listaProveedores.zul 
-	 * Retorno: Formulario con los parametros dados
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
