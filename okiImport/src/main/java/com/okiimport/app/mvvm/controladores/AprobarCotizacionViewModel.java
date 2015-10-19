@@ -69,6 +69,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	private DetalleCotizacion detalleCotizacionFiltro;
 	private DetalleCotizacion detalleCotizacion;
 	private String ubicacion;
+	private int cantOfertas;
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -90,6 +91,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
 		pagDetalleCotizacion.setPageSize(pageSize=6);
+		cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
 	}
 
 	/** Interface: EventListener<SortEvent> */
@@ -148,15 +150,21 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange({ "*" })
 	@Command
 	public void guardar() {
-		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
-		sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
-		limpiarDetalleSeleccionado();
-		mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n Guardada Exitosamente", null,
-				null, null, null);
+		if (cantOfertas == 3){
+			
+			mostrarMensaje("Informaci\u00F3n", "Ya se alcanz\u00F3 el n\u00FAmero m\u00E1ximo de ofertas", null, null, null, null);
 		}
-		else 
-			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
-
+		else {
+			if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
+				sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
+				cantOfertas++;
+				limpiarDetalleSeleccionado();
+				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n Guardada Exitosamente", null,
+						null, null, null);
+			}
+			else 
+				mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
+		}
 	}
 	
 	/**

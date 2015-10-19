@@ -225,7 +225,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 					sTransaccion.registrarSolicitudCotizacion(cotizacion2, detalleCotizacions);
 
 					if(enviar)
-						this.mailProveedor.enviarRequerimientoProveedor(proveedor, detalleCotizacions, mailService);
+						this.mailProveedor.enviarRequerimientoProveedor(proveedor, requerimiento, detalleCotizacions, mailService);
 				}
 				btn_enviar.setDisabled(true);
 			}
