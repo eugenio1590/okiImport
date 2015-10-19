@@ -78,7 +78,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: seleccionarProveedores.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
@@ -116,7 +116,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite consultar los proveedores existentes en la base de datos
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: proveedores consultados y lista llena
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@GlobalCommand
@@ -138,7 +138,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario Seleccionar Proveedores
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: Campos Vacios 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -150,7 +150,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite seleccionar un proveedor para realizar una cotizacion
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: Proveedor Seleccionado 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({"*"})
@@ -164,7 +164,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite eliminar un proveedor para no cotizarle
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: Proveedor deseleccionado 
+	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({"*"})
@@ -178,7 +178,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
 	 * de Paging pagProveedores
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: Posicionamiento en otra pagina activa del paging 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({"*"})
@@ -190,7 +190,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite filtrar por los diferentes campos del formulario segun solicite el evento
 	 * Parametros: @param view: seleccionarProveedores.zul
-	 * Retorno: Campos filtrados segun sea el evento solicitado
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@NotifyChange({"*"})
@@ -202,7 +202,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite enviar la solicitu de cotizacion a los proveedores
 	 * Parametros: @param view: seleccionarProveedores.zul 
-	 * Retorno: Solicitud de cotizacion enviada al proveedor para su posterior cotizacion
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -241,7 +241,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite registrar un proveedor llamando al modal formularioProveedor
 	 * Parametros: @param view: seleccionarProveedores.zul 
-	 * Retorno: Modal para registrar un nuevo proveedor
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
@@ -254,7 +254,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	/**
 	 * Descripcion: Permite recargar la pagina
 	 * Parametros: @param view: seleccionarProveedores.zul 
-	 * Retorno: pagina recargada
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	public void recargar() {
