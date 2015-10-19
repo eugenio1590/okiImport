@@ -54,7 +54,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaRequerimientosGeneral.zul 
-	 * Retorno: Clase Inicializada 
+	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
