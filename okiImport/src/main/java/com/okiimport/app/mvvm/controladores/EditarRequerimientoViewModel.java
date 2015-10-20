@@ -114,6 +114,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		
 		agregarGridSort(gridMotores);
+		pagMotores.setPageSize(pageSize=3);
 		
 		Map<String, Object> parametros = sMaestros.consultarClasificacionRepuesto(0, -1);
 		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
