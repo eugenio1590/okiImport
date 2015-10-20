@@ -8,13 +8,19 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlConfiguracion;
 
 public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
-	 //GUI
+	@BeanInjector("sControlConfiguracion")
+	private SControlConfiguracion sControlConfiguracion;
+	
+	//GUI
     @Wire("#winOferta")
 	private Window winOferta;
     
@@ -32,17 +38,34 @@ public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("oferta") Oferta oferta)
-	// Lo que obtenemos de la lista es un requerimiento no una oferta
 	{
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.oferta = oferta;
-
+		prepararOferta();
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
+	/**
+	 * Descripcion: permitira agregar el porcenaje de iva y el porcentaje de ganancia a la oferta seleccionada
+	 * @param Ninguno.
+	 * Retorno: Ninguno
+	 * Nota: Ninguna.
+	 * */
+	private void prepararOferta(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		oferta.setPorctIva(configuracion.getPorctIva());
+		oferta.setPorctGanancia(configuracion.getPorctGanancia());
+	}
 
 	/** GETTERS Y SETTERS */
+	public SControlConfiguracion getsControlConfiguracion() {
+		return sControlConfiguracion;
+	}
+
+	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
+		this.sControlConfiguracion = sControlConfiguracion;
+	}
 	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
