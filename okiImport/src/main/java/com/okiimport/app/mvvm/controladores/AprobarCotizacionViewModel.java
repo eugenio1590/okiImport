@@ -159,7 +159,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 				sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
 				cantOfertas++;
 				limpiarDetalleSeleccionado();
-				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n Guardada Exitosamente", null,
+				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n"+cantOfertas+"Guardada Exitosamente", null,
 						null, null, null);
 			}
 			else 
