@@ -5,7 +5,7 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
 		<listbox id="gridDetalleCotizacion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
-			pageSize="10" pagingPosition="top" multiple="true" sclass="mylist"
+			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleCotizacion)">
 
 			<auxhead sclass="nombre-center">
@@ -113,7 +113,7 @@
 
 		<listbox id="gridDetalleSeleccion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
-			pageSize="10" pagingPosition="top" multiple="true" sclass="mylist"
+			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleSeleccionado)">
 
 			<listhead>
