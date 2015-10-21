@@ -56,7 +56,7 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
-									readonly="true" constraint="@bind(vm.cantValidator)"/>
+									readonly="true"/>
 								</vbox>
 
 
@@ -91,13 +91,13 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.cliente.cedula)" width="100%"
-									readonly="true" constraint="@bind(vm.validatorClienteCedulaRif)" />
+									readonly="true" />
                                 </vbox>
 
 								<label value="Nombre: " />
 								<vbox>
 								<textbox width="100%" readonly="true"
-									mold="rounded" value="@bind(vm.requerimiento.cliente.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
+									mold="rounded" value="@bind(vm.requerimiento.cliente.nombre)"/>
 								</vbox>
 
 							</row>
@@ -127,7 +127,7 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
-									width="100%" readonly="true"  constraint="@bind(vm.notEmptyValidator)"/>
+									width="100%" readonly="true"/>
 								</vbox>
 
 
@@ -135,14 +135,14 @@
 								<vbox>
 								<textbox id="modelo" width="100%"
 									readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.modeloV)" constraint="@bind(vm.notEmptyValidator)"/>
+									value="@bind(vm.requerimiento.modeloV)"/>
 								</vbox>
 
 								<label value="Tipo Repuesto: " />
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.determinarTipoRepuesto())"
-									width="80%" readonly="true" constraint="@bind(vm.notEmptyValidator)" />
+									width="80%" readonly="true" />
 								</vbox>
 							</row>
 
@@ -210,8 +210,6 @@
 		    	</vbox>
 			</hbox>
 		</div>
-
-
 
 		<div sclass="panel-footer" align="right">
 

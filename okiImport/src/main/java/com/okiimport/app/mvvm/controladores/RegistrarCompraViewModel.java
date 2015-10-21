@@ -111,7 +111,12 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
 		if(checkIsFormValid()){
-			this.sTransaccion.registrarCompra(compra, requerimiento, true);
+
+			requerimiento.setEstatus("CP");
+			compra.setDetalleOfertas(listaDetallesCompra);
+			sTransaccion.registrarCompra(compra, requerimiento, false);
+			ejecutarGlobalCommand("cambiarCompras", null);
+
 			winCompras.onClose();
 		}
 	}

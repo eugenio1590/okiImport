@@ -90,7 +90,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
-		pagDetalleCotizacion.setPageSize(pageSize=6);
+		pagDetalleCotizacion.setPageSize(pageSize=5);
 		cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
 	}
 
