@@ -131,14 +131,13 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange("*")
 	public void verCompra(@BindingParam("compra") Compra compra){
 		
-		//public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
-				//@BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
+		
 
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("compra", compra);
-			//parametros.put("detallesOfertas", detallesOfertas);
+			
 			parametros.put("requerimiento", requerimiento);
-			//llamarFormulario("formularioOferta.zul", parametros);
+			
 			crearModal(BasePackageSistemaFunc+"ofertados/formularioVerCompra.zul", parametros);
 			
 	}
