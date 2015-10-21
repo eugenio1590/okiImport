@@ -42,7 +42,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private Requerimiento requerimiento;
 	private List<DetalleOferta> listaDetOferta;
     private Oferta oferta;
-    private DetalleOferta detalleOferta;
+    
+    private boolean cerrar = false;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -90,7 +91,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
 	}
 	
-	/**COMMAND*/
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
 	 * Parametros: @param btnEnviar: boton presionado
@@ -115,21 +115,30 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			if (oferta != null)
 			{
 				super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar viendo mas ofertas?", null, 
-						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener(){
+						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
 							@Override
 							public void onEvent(Event event) throws Exception {
-								if (((Messagebox.Button) event.getData()) == Messagebox.Button.YES) {
+								Messagebox.Button button = (Messagebox.Button) event.getData();
+								if (button == Messagebox.Button.YES) {
+									cerrar = true;
 									ejecutarGlobalCommand("verOferta", parametros);
 									winOferta.onClose();
 								}
-								else
-									redireccionarASolicitudDePedido(parametros);
+								else if(button == Messagebox.Button.NO )
+									if(listaDetOferta.size()>0)
+										redireccionarASolicitudDePedido(parametros);
+									else 
+										reactivarRequerimiento();
 							}
 				}, null);
 				
 			}
-			else
-				redireccionarASolicitudDePedido(parametros);
+			else {
+				if(listaDetOferta.size()>0)
+					redireccionarASolicitudDePedido(parametros);
+				else
+					reactivarRequerimiento();
+			}
 		}
 	}
 	
@@ -145,6 +154,31 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	{
 		
 		detalleOferta.setAprobado(checkbox.isChecked());
+	}
+	
+	/**
+	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void onCloseWindow(@ContextParam(ContextType.TRIGGER_EVENT) Event onClose){
+		if(!cerrar){
+			onClose.stopPropagation();
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+				@Override
+				public void onEvent(Event event) throws Exception {
+					Messagebox.Button button = (Messagebox.Button) event.getData();
+					if (button == Messagebox.Button.YES) {
+						cerrar = true;
+						ejecutarGlobalCommand("cambiarRequerimientos", null);
+						winOferta.onClose();
+					}
+				}
+			}, null);
+		}
 	}
 	
 	/**METODOS PRIVADOS DE LA CLASE*/
@@ -169,8 +203,33 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 */
 	private void redireccionarASolicitudDePedido(Map<String, Object> parametros){
-		this.winOferta.onClose();
-		this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+		cerrar = true;
+		winOferta.onClose();
+		crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+	}
+	
+	/**
+	 * Descripcion: Permitira reactivar el requerimiento con otro analista
+	 * Parametros: Ninguno.
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void reactivarRequerimiento(){
+		super.mostrarMensaje("Informaci\u00F3n", "¿Desea que volvamos a reactivar su requerimiento?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							cerrar = true;
+							ejecutarGlobalCommand("cambiarRequerimientos", null);
+							sTransaccion.reactivarRequerimiento(requerimiento, sMaestros);
+							winOferta.onClose();
+						}
+						else if(button == Messagebox.Button.NO )
+							mostrarMensaje("Informaci\u00F3n", "", null, null, null, null);
+					}
+		}, null);
 	}
 	
 	/**GETTERS Y SETTERS*/

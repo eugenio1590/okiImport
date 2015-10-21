@@ -54,7 +54,7 @@
 											<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitud de Compra"  
 								    			onClick="@command('verCompra', compra = each)"/>
 								    		<button  iconSclass="fa fa-credit-card green bigger-160" tooltiptext="Registrar Compra"  
-								    			onClick="@command('registrarCompra', compra = each)"/>
+								    			onClick="@command('registrarCompra', compra = each)" if="${ each.registrar() }"/>
 										</div>
 									</hbox>
 								</listcell>

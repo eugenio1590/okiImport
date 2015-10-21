@@ -388,7 +388,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		proveedor = sMaestros.registrarProveedor(proveedor);
 		
 		String str = null;
-		if(recordMode.equalsIgnoreCase("EDIT"))
+		if(recordMode.equalsIgnoreCase("EDIT") && enviarEmail)
 			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas"
 					+ "Your request has been registered Successfully it , will respond in 48 hours ";
 		else

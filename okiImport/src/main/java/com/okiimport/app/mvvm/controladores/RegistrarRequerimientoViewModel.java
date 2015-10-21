@@ -166,7 +166,7 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 				if (tipoRepuesto != null)
 					requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
 
-				sTransaccion.registrarRequerimiento(requerimiento, sMaestros);
+				sTransaccion.registrarRequerimiento(requerimiento, true, sMaestros);
 
 				// El Objecto que se envia debe declararse final, esto quiere
 				// decir que no puede instanciarse sino solo una vez

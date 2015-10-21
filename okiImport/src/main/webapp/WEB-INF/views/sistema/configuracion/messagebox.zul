@@ -18,10 +18,6 @@
 			<button identity="${arg.OK}" autodisable="self"
 				sclass="btn btn-primary btn-md z-messagebox-btn"
 				use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.OK}" />
-			<button identity="${arg.CANCEL}" autodisable="self"
-				sclass="btn btn-success btn-md z-messagebox-btn"
-				use="org.zkoss.zul.impl.MessageboxDlg$Button"
-				if="${!empty arg.CANCEL}" />
 			<button identity="${arg.YES}"
 				sclass="btn btn-info btn-md z-messagebox-btn" autodisable="self"
 				use="org.zkoss.zul.impl.MessageboxDlg$Button"
@@ -29,6 +25,10 @@
 			<button identity="${arg.NO}" autodisable="self"
 				sclass="btn btn-danger btn-md z-messagebox-btn"
 				use="org.zkoss.zul.impl.MessageboxDlg$Button" if="${!empty arg.NO}" />
+			<button identity="${arg.CANCEL}" autodisable="self"
+				sclass="btn btn-success btn-md z-messagebox-btn"
+				use="org.zkoss.zul.impl.MessageboxDlg$Button"
+				if="${!empty arg.CANCEL}" />
 			<button identity="${arg.RETRY}" autodisable="self"
 				sclass="btn btn-info btn-md z-messagebox-btn"
 				use="org.zkoss.zul.impl.MessageboxDlg$Button"

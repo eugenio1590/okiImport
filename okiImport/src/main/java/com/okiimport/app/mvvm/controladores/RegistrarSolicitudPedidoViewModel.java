@@ -81,9 +81,9 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Command
 	public void registrar(){
 		if(this.checkIsFormValid()){
-			this.compra = this.sTransaccion.registrarCompra(compra,requerimiento);
-			this.compra.setTipoFlete(tipoFlete.getValor());
-			this.winCompras.onClose();
+			compra.setTipoFlete(tipoFlete.getValor());
+			compra = sTransaccion.registrarCompra(compra, requerimiento, true);
+			winCompras.onClose();
 		}
 	}
 

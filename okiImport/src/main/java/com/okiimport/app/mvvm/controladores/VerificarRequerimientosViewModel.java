@@ -73,17 +73,12 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**Interface: EventListener<SortEvent>*/
 	@Override
 	@NotifyChange("listaRequerimientos")
-	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub		
+	public void onEvent(SortEvent event) throws Exception {	
 		if(event.getTarget() instanceof Listheader){
-			String cedula = obtenerCedulaConTipoPersona();
-			if(cedula!=null){
-				Map<String, Object> parametros = new HashMap<String, Object>();
-				parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-				parametros.put("sortDirection", event.isAscending());
-				parametros.put("cedula", cedula);
-				ejecutarGlobalCommand("cambiarRequerimientos", parametros );
-			}
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
+			parametros.put("sortDirection", event.isAscending());
+			ejecutarGlobalCommand("cambiarRequerimientos", parametros );
 		}
 	}
 
@@ -91,10 +86,10 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	/**GLOBAL COMMAND*/
 	@GlobalCommand
 	@NotifyChange("listaRequerimientos")
-	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
-			@BindingParam("cedula") String cedula,
+	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
+		String cedula = obtenerCedulaConTipoPersona();
 		Map<String, Object> parametros = sTransaccion.consultarRequerimientosCliente(requerimientoFiltro,fieldSort, sortDirection, cedula, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
@@ -130,16 +125,13 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	@Command
 	@NotifyChange("listaRequerimientos")
 	public void buscarCliente(){
-		String cedula = obtenerCedulaConTipoPersona();
-		if(cedula!=null){
-			cambiarRequerimientos(0, cedula, null, null);
-			if (listaRequerimientos.size() > 0 )
-				misolicitudes.setVisible(true);
-			else
-			{
-				misolicitudes.setVisible(false);
-				mostrarMensaje("Informaci\u00F3n Importante","No posee Solicitudes", null, null, null, null);
-			}
+		cambiarRequerimientos(0, null, null);
+		if (listaRequerimientos.size() > 0 )
+			misolicitudes.setVisible(true);
+		else
+		{
+			misolicitudes.setVisible(false);
+			mostrarMensaje("Informaci\u00F3n Importante","No posee Solicitudes", null, null, null, null);
 		}
 	}
 
@@ -151,7 +143,6 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	 * */
 	@Command
 	public void verDetalleRequerimiento(@BindingParam("requerimiento") Requerimiento requerimiento){
-
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		llamarFormulario("verDetalleRequerimiento.zul", parametros);
@@ -168,9 +159,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	@NotifyChange("*")
 	public void paginarLista(){
 		int page=pagRequerimientosCliente.getActivePage();
-		String cedula = obtenerCedulaConTipoPersona();
-		if(cedula!=null)
-			cambiarRequerimientos(page, cedula, null, null);
+		cambiarRequerimientos(page, null, null);
 	} 
 
 	/**
@@ -187,9 +176,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 			this.requerimientoFiltro.setFechaCreacion(new Timestamp(fechaCreacion.getTime()));
 		else
 			this.requerimientoFiltro.setFechaCreacion(null);
-		String cedula = obtenerCedulaConTipoPersona();
-		if(cedula!=null)
-			cambiarRequerimientos(0, cedula, null, null);
+		cambiarRequerimientos(0, null, null);
 	}
 
 	/**
