@@ -23,6 +23,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
+import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -130,6 +131,16 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange("*")
 	public void verCompra(@BindingParam("compra") Compra compra){
 		
+		//public void verOferta(@BindingParam("requerimiento") Requerimiento requerimiento,
+				//@BindingParam("detallesOfertas") List<DetalleOferta> detallesOfertas){
+
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("compra", compra);
+			//parametros.put("detallesOfertas", detallesOfertas);
+			parametros.put("requerimiento", requerimiento);
+			//llamarFormulario("formularioOferta.zul", parametros);
+			crearModal(BasePackageSistemaFunc+"ofertados/formularioVerCompra.zul", parametros);
+			
 	}
 	
 	/**
