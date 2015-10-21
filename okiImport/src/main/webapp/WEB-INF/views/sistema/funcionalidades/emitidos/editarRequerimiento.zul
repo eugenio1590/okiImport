@@ -232,11 +232,11 @@
 
 							<listhead>
 								<listheader label="Codigo OEM *"
-									sort="auto" />
+									sort="none" />
 								<listheader label="Descripcion *"
-									sort="auto" width="300px"/>
+									sort="none" width="300px"/>
 								<listheader label="Cantidad *"
-									sort="auto" />
+									sort="none" />
 								<listheader label="Clasificacion *"
 									sort="none" />
 								<listheader label="Foto" sort="auto" />
