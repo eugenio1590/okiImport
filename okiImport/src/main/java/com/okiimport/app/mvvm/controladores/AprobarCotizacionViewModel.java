@@ -137,8 +137,12 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@Command
 	@NotifyChange({ "*" })
 	public void eliminarSeleccion() {
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
 		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty())
 			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
+		}
+		else 
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
 	}
 
 	/**
@@ -159,7 +163,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 				sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
 				cantOfertas++;
 				limpiarDetalleSeleccionado();
-				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n"+cantOfertas+"Guardada Exitosamente", null,
+				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n "+cantOfertas+" Guardada Exitosamente", null,
 						null, null, null);
 			}
 			else 
@@ -175,13 +179,11 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * */
 	@NotifyChange({ "*" })
 	private void limpiarDetalleSeleccionado(){
-		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
+		
 		if(listaDetalleSeleccionado!=null){
 			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 		}
-		}
-		else 
-			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
+		
 	}
 	
 
