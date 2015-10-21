@@ -43,6 +43,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private List<DetalleOferta> listaDetOferta;
     private Oferta oferta;
     
+    private boolean cerrar = false;
+    
     /**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: formularioOferta.zul 
@@ -89,7 +91,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
 	}
 	
-	/**COMMAND*/
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
 	 * Parametros: @param btnEnviar: boton presionado
@@ -119,6 +120,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 							public void onEvent(Event event) throws Exception {
 								Messagebox.Button button = (Messagebox.Button) event.getData();
 								if (button == Messagebox.Button.YES) {
+									cerrar = true;
 									ejecutarGlobalCommand("verOferta", parametros);
 									winOferta.onClose();
 								}
@@ -154,6 +156,31 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		detalleOferta.setAprobado(checkbox.isChecked());
 	}
 	
+	/**
+	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void onCloseWindow(@ContextParam(ContextType.TRIGGER_EVENT) Event onClose){
+		if(!cerrar){
+			onClose.stopPropagation();
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+				@Override
+				public void onEvent(Event event) throws Exception {
+					Messagebox.Button button = (Messagebox.Button) event.getData();
+					if (button == Messagebox.Button.YES) {
+						cerrar = true;
+						ejecutarGlobalCommand("cambiarRequerimientos", null);
+						winOferta.onClose();
+					}
+				}
+			}, null);
+		}
+	}
+	
 	/**METODOS PRIVADOS DE LA CLASE*/
 	/**
 	 * Descripcion: Permite llenar la lista con las ofertas aprobadas
@@ -176,8 +203,9 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 */
 	private void redireccionarASolicitudDePedido(Map<String, Object> parametros){
-		this.winOferta.onClose();
-		this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+		cerrar = true;
+		winOferta.onClose();
+		crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
 	}
 	
 	/**
@@ -193,6 +221,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					public void onEvent(Event event) throws Exception {
 						Messagebox.Button button = (Messagebox.Button) event.getData();
 						if (button == Messagebox.Button.YES) {
+							cerrar = true;
 							ejecutarGlobalCommand("cambiarRequerimientos", null);
 							sTransaccion.reactivarRequerimiento(requerimiento, sMaestros);
 							winOferta.onClose();
