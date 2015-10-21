@@ -42,7 +42,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private Requerimiento requerimiento;
 	private List<DetalleOferta> listaDetOferta;
     private Oferta oferta;
-    private DetalleOferta detalleOferta;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -115,21 +114,29 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			if (oferta != null)
 			{
 				super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar viendo mas ofertas?", null, 
-						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener(){
+						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
 							@Override
 							public void onEvent(Event event) throws Exception {
-								if (((Messagebox.Button) event.getData()) == Messagebox.Button.YES) {
+								Messagebox.Button button = (Messagebox.Button) event.getData();
+								if (button == Messagebox.Button.YES) {
 									ejecutarGlobalCommand("verOferta", parametros);
 									winOferta.onClose();
 								}
-								else
-									redireccionarASolicitudDePedido(parametros);
+								else if(button == Messagebox.Button.NO )
+									if(listaDetOferta.size()>0)
+										redireccionarASolicitudDePedido(parametros);
+									else 
+										reactivarRequerimiento();
 							}
 				}, null);
 				
 			}
-			else
-				redireccionarASolicitudDePedido(parametros);
+			else {
+				if(listaDetOferta.size()>0)
+					redireccionarASolicitudDePedido(parametros);
+				else
+					reactivarRequerimiento();
+			}
 		}
 	}
 	
@@ -171,6 +178,29 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private void redireccionarASolicitudDePedido(Map<String, Object> parametros){
 		this.winOferta.onClose();
 		this.crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+	}
+	
+	/**
+	 * Descripcion: Permitira reactivar el requerimiento con otro analista
+	 * Parametros: Ninguno.
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void reactivarRequerimiento(){
+		super.mostrarMensaje("Informaci\u00F3n", "¿Desea que volvamos a reactivar su requerimiento?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							ejecutarGlobalCommand("cambiarRequerimientos", null);
+							sTransaccion.reactivarRequerimiento(requerimiento, sMaestros);
+							winOferta.onClose();
+						}
+						else if(button == Messagebox.Button.NO )
+							mostrarMensaje("Informaci\u00F3n", "", null, null, null, null);
+					}
+		}, null);
 	}
 	
 	/**GETTERS Y SETTERS*/
