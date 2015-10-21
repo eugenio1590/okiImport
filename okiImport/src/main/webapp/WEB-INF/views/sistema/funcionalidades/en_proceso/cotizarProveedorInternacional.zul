@@ -116,7 +116,7 @@
 							<label value="Alto"/>
 							<label value="*" visible="@bind(vm.constraintCampoObligatorio ne null)"/>
 						</listheader>
-						<listheader label="Flete Calculado (**)" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
+						<listheader label="Flete" visible="@bind(!vm.tipoFlete.valor)" width="10%"/>
 					</listhead>
 					<template name="model">
 						<listitem>
