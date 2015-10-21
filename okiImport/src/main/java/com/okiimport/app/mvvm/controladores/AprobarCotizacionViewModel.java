@@ -138,7 +138,6 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@NotifyChange({ "*" })
 	public void eliminarSeleccion() {
 		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
-		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty())
 			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 		}
 		else 
