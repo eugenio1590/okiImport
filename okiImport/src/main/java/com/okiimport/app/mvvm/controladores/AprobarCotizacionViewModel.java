@@ -175,9 +175,13 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * */
 	@NotifyChange({ "*" })
 	private void limpiarDetalleSeleccionado(){
+		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
 		if(listaDetalleSeleccionado!=null){
 			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 		}
+		}
+		else 
+			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
 	}
 	
 
