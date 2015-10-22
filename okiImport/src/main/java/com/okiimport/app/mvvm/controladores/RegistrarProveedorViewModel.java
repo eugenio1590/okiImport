@@ -191,12 +191,12 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 				else
 					mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto. "
-							+ "Add at Least a Brand and a Classification of Parts.",
+							+ "(Add at Least a Brand and a Classification of Parts)",
 							null, null, null, null);
 			}
 			else
 				mostrarMensaje("Informaci\u00F3n", "Ya se encuentra registrado en el sistema"
-						+ "already registered in the system",
+						+ "(already registered in the system)",
 						null, null, null, null);
 		}
 	}
@@ -389,8 +389,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		
 		String str = null;
 		if(recordMode.equalsIgnoreCase("EDIT") && enviarEmail)
-			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas"
-					+ "Your request has been registered Successfully it , will respond in 48 hours ";
+			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas (Your request has been registered Successfully it , will respond in 48 hours)";
 		else
 			str = "Proveedor Actualizado Exitosamente";
 
