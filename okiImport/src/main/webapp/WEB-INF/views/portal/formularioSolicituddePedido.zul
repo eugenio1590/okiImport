@@ -1,7 +1,8 @@
 <window id="winCompras" border="none" width="80%"
 	title="Solicitud de Pedido" apply="org.zkoss.bind.BindComposer"
 	closable="true" sclass="btn-primary"
-	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')">
+	viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')"
+	onClose="@command('onCloseWindow')">
 	<groupbox closable="false">
 
 		<caption sclass="custom_caption" />

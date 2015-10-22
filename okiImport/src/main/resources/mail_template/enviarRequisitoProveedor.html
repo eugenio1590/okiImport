@@ -865,27 +865,13 @@ tr.border td {
                                 
               <h2 style='Margin-top: 0;font-style: normal;font-weight: 700;font-size: 24px;line-height: 32px;Margin-bottom: 16px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center'>Solicitud Autopartes</h2>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: left">Estimado ${proveedor.nombre} Hemos realizado una solicitud de autopartes, lo invitamos a ingresar a nuestro sistema para que pueda realizar su cotización</p>
-              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left"><b>Estos Son Sus datos:</b><br />
+              <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left"><br />
                 
-                Número Solicitud: ${requerimiento.idRequerimiento}<br />
-                Nombre Proveedor: ${proveedor.nombre}<br />
-                Rif/Cedula:       ${proveedor.cedula}<br />
-                Teléfono:         ${proveedor.telefono}<br />
-                Correo:           ${proveedor.correo}<br />
+                Número Solicitud:  ${requerimiento.idRequerimiento}<br />
+                Fecha Creación:    ${fechaCreacion}<br />
+                Fecha Vencimiento: ${fechaVencimiento}<br />
                 <br />
-                <b>Estos Son los Datos del Requerimiento:</b><br />
-                <table style="border:1px solid blue  ;border-collapse: collapse;border-spacing: 1; width: 100%; text-align: center" >
-                <thead style="border:1px solid blue"> 
-                <tr><th>Código OEM</th><th>Descripción</th><th>Cantidad</th></tr>
-                </thead>
-                #foreach( $detalleRequerimiento in ${requerimiento.detalleRequerimientos})
-                <tr >
-                <td>$detalleRequerimiento.codigoOem</td>
-                <td>$detalleRequerimiento.descripcion</td>
-                <td>$detalleRequerimiento.cantidad</td>
-                </tr>
-                #end
-                </table></p>
+                </p>
               <p style="font-style: normal; font-weight: 400; font-size: 15px; line-height: 24px; Margin-bottom: 24px; font-family: &quot;Open Sans&quot;,sans-serif; color: #60666d; text-align: left">Esperamos su cotizacion en la brevedad posible.<br />
             </p>
               <p style="Margin-top: 0;font-style: normal;font-weight: 400;font-size: 15px;line-height: 24px;Margin-bottom: 24px;font-family: &quot;Open Sans&quot;,sans-serif;color: #60666d;text-align: center">  </p>

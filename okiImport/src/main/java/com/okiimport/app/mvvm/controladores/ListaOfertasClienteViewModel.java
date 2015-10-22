@@ -167,7 +167,7 @@ public class ListaOfertasClienteViewModel extends
 		//No es el servicio que se usara
 		//Aqui se colocara el servicio para enviar el correo enviarOfertas.html 
 		//Miguel
-		mailCliente.registrarRequerimiento(requerimiento, mailService);
+		mailCliente.enviarOfertas(requerimiento, mailService);
 		
 		winListaOfertas.detach();
 		

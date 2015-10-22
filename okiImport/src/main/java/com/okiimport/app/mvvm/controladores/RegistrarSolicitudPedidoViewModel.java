@@ -10,7 +10,10 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
@@ -37,6 +40,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
     private Compra compra;
     private List<ModeloCombo<Boolean>> listaTipoFlete;
     private ModeloCombo<Boolean> tipoFlete;
+    private boolean cerrar = false;
     
     
     /**
@@ -97,6 +101,31 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaTipoFlete = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoFlete.add(new ModeloCombo<Boolean>("No", false));
 		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
+	}
+	
+	/**
+	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void onCloseWindow(@ContextParam(ContextType.TRIGGER_EVENT) Event onClose){
+		if(!cerrar){
+			onClose.stopPropagation();
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+				@Override
+				public void onEvent(Event event) throws Exception {
+					Messagebox.Button button = (Messagebox.Button) event.getData();
+					if (button == Messagebox.Button.YES) {
+						cerrar = true;
+						ejecutarGlobalCommand("cambiarRequerimientos", null);
+						winCompras.onClose();
+					}
+				}
+			}, null);
+		}
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
