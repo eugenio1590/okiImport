@@ -108,8 +108,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		super.doAfterCompose(view);
 		this.editar = editar;
 		this.requerimiento = requerimiento;
-		this.motor = requerimiento.getMotor();
-		this.motor = (this.motor==null) ? new Motor() : this.motor;
+		this.motor = new Motor();
 		this.estado = requerimiento.getCliente().getCiudad().getEstado();
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		
@@ -157,7 +156,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	/**GLOBAL COMMAND*/
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
-	@NotifyChange("listaMotor")
+	@NotifyChange({"listaMotor", "pagMotores"})
 	public void cambiarMotores(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
