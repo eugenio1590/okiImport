@@ -2,7 +2,6 @@ package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,6 @@ import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.resource.service.AbstractServiceImpl;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
@@ -98,7 +96,6 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	@Override
 	@NotifyChange("listaRequerimientos")
 	public void onEvent(SortEvent event) throws Exception {
-		// TODO Auto-generated method stub
 		if (event.getTarget() instanceof Listheader) {
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget())
@@ -116,8 +113,8 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@NotifyChange({ "*" })
 	@Command
+	@NotifyChange({ "*" })
 	public void agregarSeleccion(){
 		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
 		super.moveSelection(listaDetalleCotizacion, listaDetalleSeleccionado, listaDetalleSeleccion, 
@@ -150,15 +147,15 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
-	@NotifyChange({ "*" })
 	@Command
+	@NotifyChange({ "*" })
 	public void guardar() {
 		if (cantOfertas == 3){
 			
 			mostrarMensaje("Informaci\u00F3n", "Ya se alcanz\u00F3 el n\u00FAmero m\u00E1ximo de ofertas", null, null, null, null);
 		}
 		else {
-			if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
+			if(listaDetalleSeleccionado!=null && !listaDetalleSeleccionado.isEmpty()){
 				sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
 				cantOfertas++;
 				limpiarDetalleSeleccionado();
@@ -169,22 +166,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 				mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
 		}
 	}
-	
-	/**
-	 * Descripcion: Permitira limpiar la informacion de la seleccion
-	 * Parametros: Ninguno @param view: aprobarCotizaciones.zul  
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@NotifyChange({ "*" })
-	private void limpiarDetalleSeleccionado(){
-		
-		if(listaDetalleSeleccionado!=null){
-			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
-		}
-		
-	}
-	
+
 
 	/**
 	 * Descripcion: Consulta el detalle Cotizacion 
@@ -194,6 +176,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	 * */
 	@GlobalCommand
 	@NotifyChange("*")
+	@SuppressWarnings("unchecked")
 	public void consultarDetalleCotizacion(
 			@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
@@ -256,6 +239,17 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion()
 				.getProveedor();
 		proveedor.setCiudad(new Ciudad(ubicacion, new Estado(ubicacion)));
+	}
+	
+	/**
+	 * Descripcion: Permitira limpiar la informacion de la seleccion
+	 * Parametros: Ninguno @param view: aprobarCotizaciones.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@NotifyChange({ "listaDetalleSeleccionado" })
+	private void limpiarDetalleSeleccionado(){
+		listaDetalleSeleccionado.clear();
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
