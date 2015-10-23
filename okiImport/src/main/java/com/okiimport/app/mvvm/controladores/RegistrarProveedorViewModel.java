@@ -196,7 +196,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 			}
 			else
 				mostrarMensaje("Informaci\u00F3n", "Ya se encuentra registrado en el sistema"
-						+ "(already registered in the system)",
+						+ " (Already registered in the system)",
 						null, null, null, null);
 		}
 	}
