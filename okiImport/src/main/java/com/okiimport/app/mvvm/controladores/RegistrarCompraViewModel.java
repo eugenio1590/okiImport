@@ -46,6 +46,8 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
   	private List<DetalleOferta> listaDetallesCompra;
     private Requerimiento requerimiento;
     private Compra compra;
+    private Float totalCompra;
+    private Float totalCompraNeto;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -64,6 +66,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 		pagDetallesCompra.setPageSize(pageSize);
 		agregarGridSort(gridDetallesCompra);
 		cambiarDetallesCompra(0);
+		totalCompra = totalCompraNeto = compra.calcularTotal();
 	}
 	
 	/**GLOBAL COMMAND*/
@@ -85,6 +88,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 		listaDetallesCompra = (List<DetalleOferta>) parametros.get("detallesCompra");
 		pagDetallesCompra.setActivePage(page);
 		pagDetallesCompra.setTotalSize(total);
+		compra.setDetalleOfertas(listaDetallesCompra);
 	}
 	
 	/**COMMAND*/
@@ -100,6 +104,18 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	public void paginarLista(){
 		int page=pagDetallesCompra.getActivePage();
 		cambiarDetallesCompra(page);
+	}
+	
+	/**
+	 * Descripcion: Permitira calcular el precio neto de la compra
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 */
+	@Command
+	@NotifyChange("totalCompraNeto")
+	public void calcularTotal(){
+		this.totalCompraNeto = this.totalCompra + this.compra.getPrecioFlete();
 	}
 	
 	 /**
@@ -164,5 +180,21 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 
 	public void setCompra(Compra compra) {
 		this.compra = compra;
+	}
+
+	public Float getTotalCompra() {
+		return totalCompra;
+	}
+
+	public void setTotalCompra(Float totalCompra) {
+		this.totalCompra = totalCompra;
+	}
+
+	public Float getTotalCompraNeto() {
+		return totalCompraNeto;
+	}
+
+	public void setTotalCompraNeto(Float totalCompraNeto) {
+		this.totalCompraNeto = totalCompraNeto;
 	}
 }

@@ -41,6 +41,7 @@ span {
 	font-weight: bolder;
 	font-family: serif;
 }
+
 .z-window-header .z-window-header-move {
 	color: white;
 }
@@ -51,7 +52,6 @@ span {
 }	
 
 .z-letra-grande {
-	
 	font-size: 17px;
 	color: #428bca;
 	font-weight: bold;
