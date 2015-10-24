@@ -206,7 +206,7 @@
             	<vbox>
 					<textbox width="150px"  
 						value="@bind(vm.compra.precioFlete)" 
-						constraint="@bind(vm.notEmptyValidator)"/>
+						constraint="@bind(vm.validatorPrecio)"/>
 		    	</vbox>
 			</hbox>
 		</div>
