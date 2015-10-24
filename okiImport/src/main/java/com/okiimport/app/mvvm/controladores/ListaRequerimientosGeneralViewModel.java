@@ -160,7 +160,7 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	 * */
 	@Command
 	public void enviarProveedores(@BindingParam("requerimiento") Requerimiento requerimiento){
-		if(!requerimiento.cerrarSolicitud()){
+		if(!requerimiento.isCerrarSolicitud()){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
 			crearModal(BasePackageSistemaFunc+"emitidos/enviarRequerimientoProv.zul", parametros);

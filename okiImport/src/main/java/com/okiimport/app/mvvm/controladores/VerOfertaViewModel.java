@@ -152,7 +152,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) Checkbox checkbox,
 			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
 	{
-		
 		detalleOferta.setAprobado(checkbox.isChecked());
 	}
 	
@@ -173,6 +172,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					Messagebox.Button button = (Messagebox.Button) event.getData();
 					if (button == Messagebox.Button.YES) {
 						cerrar = true;
+						requerimiento.cerrarSolicitud();
+						sTransaccion.actualizarRequerimiento(requerimiento);
 						ejecutarGlobalCommand("cambiarRequerimientos", null);
 						winOferta.onClose();
 					}

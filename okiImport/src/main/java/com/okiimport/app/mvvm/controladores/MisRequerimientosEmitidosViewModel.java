@@ -52,7 +52,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimiento
 	 * */
 	@Command
 	public void enviarProveedores(@BindingParam("requerimiento") final Requerimiento requerimiento){
-		if(!requerimiento.cerrarSolicitud()){
+		if(!requerimiento.isCerrarSolicitud()){
 			requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
