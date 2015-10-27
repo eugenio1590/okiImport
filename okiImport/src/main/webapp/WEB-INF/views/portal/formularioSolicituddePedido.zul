@@ -171,10 +171,10 @@
 							<listfooter />
 							<listfooter />
 
-							<listfooter>
-								<label value="Total:" />
+							<listfooter label="Total:">
 								<label
-									value="@bind(vm.compra.calcularTotal())" />
+									value="@bind(vm.compra.calcularTotal())
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
 							</listfooter>
 						</listfoot>
 

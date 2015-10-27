@@ -184,12 +184,13 @@
 									<hbox>
 										<label value="Total Compra" />
 										<label
-											value="@bind(vm.totalCompra)" />
+											value="@bind(vm.totalCompra)
+												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
 									</hbox>
 									<hbox>
 										<label value="Flete: "></label>
 										<vbox>
-											<textbox 
+											<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)" 
 												value="@bind(vm.compra.precioFlete)" 
 												constraint="@bind(vm.validatorPrecio)"
 												onChange="@command('calcularTotal')"/>
@@ -198,7 +199,8 @@
 									<hbox>
 										<label value="Total Neto:" />
 										<label
-											value="@bind(vm.totalCompraNeto)" />
+											value="@bind(vm.totalCompraNeto)
+												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
 									</hbox>
 									</vbox>
 								</listfooter>

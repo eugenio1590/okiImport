@@ -54,7 +54,7 @@ public class FormatedNumberConverter implements Converter,Serializable {
 	}
 	
 	private static DecimalFormat getLocalizedDecimalFormat(String pattern, String locale){
-		if(locale==null) locale = Locale.getDefault().getLanguage();
+		if(locale==null || locale.trim().equals("")) locale = Locale.getDefault().getLanguage();
 		final DecimalFormat df = 
 			(DecimalFormat)NumberFormat.getInstance(Locales.getLocale(locale));
 		df.applyPattern(pattern);

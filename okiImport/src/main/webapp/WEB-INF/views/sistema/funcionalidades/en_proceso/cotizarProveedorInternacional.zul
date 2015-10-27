@@ -65,18 +65,20 @@
 							
 							<label value="Forma de Envio:"/>
 							<vbox>
-							<combobox id="cmbFormaFlete" width="70%" readonly="true"
-								model="@load(vm.formasEnvio)" selectedItem="@bind(vm.formaEnvio)"
-								onSelect="@command('seleccionarTipoFlete')" constraint="@bind(vm.notEmptyValidator)">
-								<template name="model">
-									<comboitem label="@bind(each.nombre)"/>
-								</template>
-							</combobox>
+								<combobox id="cmbFormaFlete" width="70%" readonly="true"
+									model="@load(vm.formasEnvio)" selectedItem="@bind(vm.formaEnvio)"
+									onSelect="@command('seleccionarTipoFlete')" constraint="@bind(vm.notEmptyValidator)">
+									<template name="model">
+										<comboitem label="@bind(each.nombre)"/>
+									</template>
+								</combobox>
 							</vbox>
+							
 							<space />
 							<label value="Precio de Flete:" />
 							<vbox>
-								<decimalbox format="###.##" readonly="@bind(!vm.tipoFlete.valor)"
+								<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)" 
+									readonly="@bind(!vm.tipoFlete.valor)"
 									value="@bind(vm.cotizacionSelecionada.precioFlete)"
 									constraint="@bind(vm.constraintPrecioFlete)"/>
 							</vbox>
@@ -139,7 +141,8 @@
 								</spinner>
 							</listcell>
 							<listcell>
-								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
+								<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+									tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
 									constraint="@bind(vm.getValidatorCantPositiva())"
 									onChange="@command('calcularPrecio', tipo=1)" />
@@ -147,38 +150,43 @@
 							
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<vbox>
-									<decimalbox format="###.##" tooltiptext="Peso del Repuesto"
-										value="@bind(each.peso)" width="100%"
+									<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+										 width="100%" tooltiptext="Peso del Repuesto"
+										value="@bind(each.peso)"
 										constraint="@bind(vm.constraintCampoObligatorio)"
 										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<vbox>
-									<decimalbox format="###.##" tooltiptext="Largo del Repuesto"
-										value="@bind(each.largo)" width="100%"
+									<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+										width="100%" tooltiptext="Largo del Repuesto"
+										value="@bind(each.largo)" 
 										constraint="@bind(vm.constraintCampoObligatorio)"
 										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<vbox>
-									<decimalbox format="###.##" tooltiptext="Ancho del Repuesto"
-										value="@bind(each.ancho)" width="100%"
+									<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+										width="100%" tooltiptext="Ancho del Repuesto"
+										value="@bind(each.ancho)" 
 										constraint="@bind(vm.constraintCampoObligatorio)"
 										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
 								<vbox>
-									<decimalbox format="###.##" tooltiptext="Alto del Repuesto"
-										value="@bind(each.alto)" width="100%"
+									<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+										width="100%" tooltiptext="Alto del Repuesto"
+										value="@bind(each.alto)"
 										constraint="@bind(vm.constraintCampoObligatorio)"
 										onChange="@command('calcularTotalFlete', detalleCotizacion=each)"/>
 								</vbox>
 							</listcell>
 							<listcell visible="@bind(!vm.tipoFlete.valor)">
-								<decimalbox format="###.##" tooltiptext="Total del Flete" readonly="true"
+								<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+									tooltiptext="Total del Flete" readonly="true"
 									value="@bind(each.calcularFlete())" width="100%"/>
 							</listcell>
 						</listitem>
@@ -189,18 +197,18 @@
 						<listfooter/>
 						<listfooter/>
 						<listfooter/>
-						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)"/>
+						<listfooter label="Total:">
+							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 						</listfooter>
 						
 						<listfooter/>
 						<listfooter/>
 						<listfooter/>
 						<listfooter/>
-						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.cotizacionSelecionada.totalFleteCalculado)"/>
+						<listfooter label="Total:">
+							<label value="@bind(vm.cotizacionSelecionada.totalFleteCalculado)
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 						</listfooter>
 					</listfoot>
 				</listbox>

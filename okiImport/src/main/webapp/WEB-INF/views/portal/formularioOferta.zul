@@ -165,9 +165,9 @@
 						<listfooter/>
 						<listfooter/>
 						
-						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.oferta.calcularTotal())"/>
+						<listfooter label="Total:">
+							<label value="@bind(vm.oferta.calcularTotal())
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 						</listfooter>
 						</listfoot>
 							

@@ -56,7 +56,7 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
-									readonly="true" constraint="@bind(vm.cantValidator)"/>
+									readonly="true"/>
 								</vbox>
 
 
@@ -91,13 +91,13 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.cliente.cedula)" width="100%"
-									readonly="true" constraint="@bind(vm.validatorClienteCedulaRif)" />
+									readonly="true" />
                                 </vbox>
 
 								<label value="Nombre: " />
 								<vbox>
 								<textbox width="100%" readonly="true"
-									mold="rounded" value="@bind(vm.requerimiento.cliente.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
+									mold="rounded" value="@bind(vm.requerimiento.cliente.nombre)"/>
 								</vbox>
 
 							</row>
@@ -127,7 +127,7 @@
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
-									width="100%" readonly="true"  constraint="@bind(vm.notEmptyValidator)"/>
+									width="100%" readonly="true"/>
 								</vbox>
 
 
@@ -135,14 +135,14 @@
 								<vbox>
 								<textbox id="modelo" width="100%"
 									readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.modeloV)" constraint="@bind(vm.notEmptyValidator)"/>
+									value="@bind(vm.requerimiento.modeloV)"/>
 								</vbox>
 
 								<label value="Tipo Repuesto: " />
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.determinarTipoRepuesto())"
-									width="80%" readonly="true" constraint="@bind(vm.notEmptyValidator)" />
+									width="80%" readonly="true" />
 								</vbox>
 							</row>
 
@@ -175,18 +175,35 @@
 								</listitem>
 							</template>
 
-							<listfoot>
+							<listfoot sclass="footerTotal">
 								<listfooter />
 								<listfooter />
 								<listfooter />
-								<listfooter />
-
-<!-- 								<listfooter> -->
-<!-- 									<label value="Total:" /> -->
-<!-- 									<label -->
-<!-- 										value="@bind(vm.oferta.calcularTotal())" /> -->
-<!-- 								</listfooter> -->
-
+								<listfooter>
+									<vbox>
+									<hbox>
+										<label value="Total Compra" />
+										<label
+											value="@bind(vm.totalCompra)
+												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+									</hbox>
+									<hbox>
+										<label value="Flete: "></label>
+										<vbox>
+											<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)" 
+												value="@bind(vm.compra.precioFlete)" 
+												constraint="@bind(vm.validatorPrecio)"
+												onChange="@command('calcularTotal')"/>
+										</vbox>
+									</hbox>
+									<hbox>
+										<label value="Total Neto:" />
+										<label
+											value="@bind(vm.totalCompraNeto)
+												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+									</hbox>
+									</vbox>
+								</listfooter>
 							</listfoot>
 							
 						</listbox>
@@ -199,19 +216,6 @@
 
 
 		</groupbox>
-
-		<div align="right">
-			<hbox>
-				<label value="Precio de Flete: "></label>
-            	<vbox>
-					<textbox width="150px"  
-						value="@bind(vm.compra.precioFlete)" 
-						constraint="@bind(vm.notEmptyValidator)" readonly="true"/>
-		    	</vbox>
-			</hbox>
-		</div>
-
-
-
+		
 	</window>
 </zk>

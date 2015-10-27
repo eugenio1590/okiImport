@@ -48,7 +48,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
 	
 	protected static final String formatNumber = "#,###.00";
-	protected static final String localeNumber = "zh_TW";
+	protected static final String localeNumber = null;
 	
 	//Converter
 	@BeanInjector("formatedNumber")
