@@ -30,6 +30,7 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
+import com.okiimport.app.mvvm.model.FormatedNumberConverter;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.mvvm.resource.PasswordGenerator;
@@ -46,6 +47,13 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
 	
+	protected static final String formatNumber = "#,###.00";
+	protected static final String localeNumber = "zh_TW";
+	
+	//Converter
+	@BeanInjector("formatedNumber")
+	protected FormatedNumberConverter formatedNumber;
+	
 	// Servicios
 	@BeanInjector("mailService")
 	protected MailService mailService;
@@ -59,7 +67,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	protected List<Ciudad> listaCiudades;
 
 	protected Estado estado;
-
+	
 	protected int pageSize = 10;
 
 	/** SETTERS Y GETTERS */
@@ -355,8 +363,24 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
     		sclass = sclass + "active";
     	button.setSclass(sclass);
     }
+    
+	/**GETTERS Y SETTERS*/
+    public String getFormatNumber() {
+		return formatNumber;
+	}
 
-    /**GETTERS Y SETTERS*/
+	public String getLocaleNumber() {
+		return localeNumber;
+	}
+	
+    public FormatedNumberConverter getFormatedNumber() {
+		return formatedNumber;
+	}
+
+	public void setFormatedNumber(FormatedNumberConverter formatedNumber) {
+		this.formatedNumber = formatedNumber;
+	}
+	
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}
