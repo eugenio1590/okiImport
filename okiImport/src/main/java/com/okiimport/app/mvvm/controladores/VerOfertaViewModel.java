@@ -222,15 +222,28 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					public void onEvent(Event event) throws Exception {
 						Messagebox.Button button = (Messagebox.Button) event.getData();
 						if (button == Messagebox.Button.YES) {
-							cerrar = true;
 							ejecutarGlobalCommand("cambiarRequerimientos", null);
 							sTransaccion.reactivarRequerimiento(requerimiento, sMaestros);
-							winOferta.onClose();
+							cerrarVentana();
 						}
-						else if(button == Messagebox.Button.NO )
-							mostrarMensaje("Informaci\u00F3n", "", null, null, null, null);
+						else if(button == Messagebox.Button.NO ){
+							requerimiento.cerrarSolicitud();
+							sTransaccion.actualizarRequerimiento(requerimiento);
+							mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
+								@Override
+								public void onEvent(Event event) throws Exception {
+									cerrarVentana();
+								}
+								
+							}, null);
+						}
 					}
 		}, null);
+	}
+	
+	private void cerrarVentana(){
+		cerrar = true;
+		winOferta.onClose();
 	}
 	
 	/**GETTERS Y SETTERS*/
