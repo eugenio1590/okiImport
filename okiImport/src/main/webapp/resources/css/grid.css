@@ -28,5 +28,9 @@
 
 .actionColumn {
 	margin: 70px 34px;
-	background-color:  
+	/*background-color:*/  
+}
+
+.footerTotal {
+	background-color:  white;
 }
