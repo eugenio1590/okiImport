@@ -11,6 +11,15 @@ span {
 	background-color:#2196f3;
 }
 
+.boxed-grey {
+	background: #f9f9f9;
+}
+
+/**IMAGENES*/
+.imagen-default {
+	background: #DDD9D9;
+}
+
 /**CAPTION*/
 .custom_caption {
 	font-size:12px;
