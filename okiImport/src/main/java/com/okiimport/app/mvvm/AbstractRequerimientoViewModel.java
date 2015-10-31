@@ -287,7 +287,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.+@.+\\.[a-z]+/",
-				"Debe contener un correo valido Ej. fusa@gmail.com") };
+				"Debe contener un correo valido.") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 	}

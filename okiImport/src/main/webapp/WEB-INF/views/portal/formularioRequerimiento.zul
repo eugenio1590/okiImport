@@ -1,7 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<style>
-		
-	</style>
 	<include src="/WEB-INF/views/template/title.zul" titulo="Ingrese Su Requerimiento" />
 	<vlayout sclass="card-inner" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
@@ -258,7 +255,7 @@
 					</div>
 				</div>
 			</div>
-			<div hflex="1">
+			<div hflex="1" vflex="1">
 				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos de los Repuestos" />
 				<div align="right">
 					<button label="Agregar Repuesto" type="submit"
@@ -269,7 +266,7 @@
 				<!-- REPUESTOS -->
 				<panel sclass="boxed-grey" >
 					<panelchildren>
-						<listbox mold="paging" multiple="true" sclass="boxed-grey" hflex="1"
+						<listbox mold="paging" multiple="true" sclass="boxed-grey" hflex="1" vflex="1"
 							checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							style="margin-top:10px" pageSize="5">
@@ -277,10 +274,12 @@
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto"  width="20%"/>
-								<listheader label="Descripcion *"
-									width="35%" sort="auto" />
-								<listheader label="Cantidad *"
-									width="15%" sort="auto" />
+								<listheader width="35%" sort="auto">
+									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripcion" />
+								</listheader>
+								<listheader width="15%" sort="auto">
+									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
+								</listheader>
 								<listheader label="Foto" sort="auto"
 									width="30%" />
 							</listhead>
@@ -334,7 +333,7 @@
 				</panel>
 			</div>
 		</hlayout>
-		<hbox width="100%">
+		<hbox width="100%" sclass="panel-footer">
 			<div hflex="1" align="left">
 				<label value="* Campos Obligatorios" hflex="1"
 					sclass="requerido" />

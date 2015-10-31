@@ -1,5 +1,5 @@
 <?page title="Inicio de Sesion" contentType="text/html;charset=UTF-8" session="false" ?>
-<?link href="/resources/css/bootstrap-3.3.4-dist/css/bootstrap.css" rel="stylesheet" type="text/css"?>
+<?link href="/resources/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
 <?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
@@ -7,27 +7,44 @@
 <?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
 
 <!-- MATERIAL DESIGN -->
+<!-- <?link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"?> -->
 <?link href="/resources/css/material-design/css/base.min.css" rel="stylesheet"?>
+<?link href="/resources/css/checkbox_material.css" rel="stylesheet"?>
 
-<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
-	
-	<div align="center" sclass="z-fondo-principal" height="100%">
-		<div class="card-wrap" width="30%">
-			<div class="card">
-				<div class="card-main">
-					<div class="btn-primary card-header">
-						<div class="card-inner">
-							<h:h1 class="card-heading titulo_blanco">
-								Inicio de Sesión
-							</h:h1>
+<zk xmlns:w="client" xmlns:n="native">
+	<borderlayout id="principal" hflex="1" vflex="1"
+		sclass="avoid-fout page-blue">
+
+		<north height="10%">
+			<div>
+				<include src="/WEB-INF/views/portal/head.zul" />
+			</div>
+		</north>
+
+		<center autoscroll="true" style="border-style: solid;">
+			<vlayout width="100%" sclass="z-fondo-principal">
+				<space/>
+				<div align="center" height="100%">
+					<div width="30%"><!-- class="card-wrap" -->
+						<div class="card">
+							<div class="card-main">
+								<div class="btn-primary card-header">
+									<div class="card-inner">
+										<n:h1
+											class="card-heading titulo_blanco">
+											Inicio de Sesión
+										</n:h1>
+									</div>
+								</div>
+								<div class="card-inner"
+									align="center">
+									<include src="login.zul" />
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="card-inner" align="center">
-						<include src="login.zul" />
-					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	
+			</vlayout>
+		</center>
+	</borderlayout>
 </zk>

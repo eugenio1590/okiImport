@@ -15,6 +15,20 @@ span {
 	background: #f9f9f9;
 }
 
+.card-inner {
+	padding-bottom: 1%;
+}
+
+.panel-footer.z-hbox table tbody tr td {
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+
+input.form-control {
+	font-size: 14px;
+	padding: 10px;
+}
+
 /**IMAGENES*/
 .imagen-default {
 	background: #DDD9D9;
@@ -89,4 +103,15 @@ span {
 
 .base_division_campos.z-columnchildren div.z-columnchildren-content span {
 	margin-left:10px;
+}
+
+/*LOGIN*/
+div.alert.alert-danger {
+	background-color: #d64242;
+    border-color: #d64242;
+    margin-bottom: 0px;
+}
+
+div.alert.alert-danger span {
+	color: #FFF;
 }
