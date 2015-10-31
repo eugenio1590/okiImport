@@ -1,186 +1,191 @@
-<window width="95%" height="95%">
-<borderlayout hflex="1" vflex="1">
-    <north>
-      <vbox>
-      	<listbox id="gridDetalleCotizacion" mold="paging"
-			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
-			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
-			model="@load(vm.listaDetalleCotizacion)">
+<zk>
+	<window width="95%" height="95%" title="@bind(vm.titulo)"
+		border="none" closable="true" sclass="btn-info"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
 
-			<auxhead sclass="nombre-center">
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<textbox instant="true" placeholder=""
-						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
-						onChange="@command('aplicarFiltro')" width="120px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<textbox instant="true" placeholder=""
-						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.ubicacion)"
-						onChange="@command('aplicarFiltro')" width="120px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<textbox instant="true" placeholder=""
-						value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.descripcion)"
-						onChange="@command('aplicarFiltro')" width="200px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<textbox instant="true" placeholder=""
-						value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
-						onChange="@command('aplicarFiltro')" width="100px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<spinner
-						value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.cantidad)"
-						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
-						width="70px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<spinner
-						value="@bind(vm.detalleCotizacionFiltro.cantidad)" instant="true"
-						placeholder="" onChange="@command('aplicarFiltro')" width="70px" />
-				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<decimalbox format="###.##"
-						value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
-						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
-						width="70px" />
-				</auxheader>
-			</auxhead>
-			<listhead menupopup="auto">
-				<listheader label="Proveedor" sort="none"
-					width="170px">
-				</listheader>
-				<listheader label="Ubicacion" sort="none" width="170px"
-					tooltiptext="Estado-Ciudad">
-				</listheader>
-				<listheader label="Repuesto" sort="none"
-					width="250px">
-				</listheader>
-				<listheader value="marcaRepuesto" label="Marca"
-					sort="auto(marcaRepuesto)" width="150px">
-				</listheader>
-				<listheader label="C. Solicitada" sort="none"
-					width="110px">
-				</listheader>
-				<listheader value="cantidad" label="C. Ofrecida"
-					sort="auto(cantidad)" width="110px">
-				</listheader>
-				<listheader value="precioVenta" label="Prec. Venta"
-					sort="auto(precioVenta)" width="110px">
-				</listheader>
-				<listheader value="precioFlete" label="Prec. Flete"
-					sort="auto(precioFlete)" width="110px">
-				</listheader>
-				<listheader value="total" label="Total" sort="none"
-					width="80px">
-				</listheader>
-			</listhead>
-			<template name="model">
-				<listitem>
-					<listcell
-						label="@bind(each.cotizacion.proveedor.nombre)" />
-					<listcell
-						label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
-					<listcell
-						label="@bind(each.detalleRequerimiento.descripcion)" />
-					<listcell label="@bind(each.marcaRepuesto)" />
-					<listcell
-						label="@bind(each.detalleRequerimiento.cantidad)" />
-					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta)" />
-					<listcell label="@bind(each.calcularFlete())" />
-					<listcell label="@bind(each.calcularTotal())" />
-				</listitem>
-			</template>
+		<vlayout hflex="1" vflex="1">
+			<vlayout  vflex="1">
+				<listbox id="gridDetalleCotizacion" mold="paging"
+					selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
+					pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
+					model="@load(vm.listaDetalleCotizacion)">
 
-		</listbox>
-		<paging id="pagDetalleCotizacion"
-			onPaging="@command('paginarLista')" autohide="true" />
-		<div width="100%" align="right">
-			<div sclass="btn btn-xs btn-info">
-				<button label="Seleccionar" type="submit"
-					onClick="@command('agregarSeleccion', cotizacion=null)" />
-			</div>
-		</div>
-      </vbox>  
-    </north>
-    <center hflex="0" vflex="0">
-       
-    </center>
-    <south>
-       <vbox>
-       <listbox id="gridDetalleSeleccion" mold="paging"
-			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
-			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
-			model="@load(vm.listaDetalleSeleccionado)">
+					<auxhead sclass="nombre-center">
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<textbox instant="true" placeholder=""
+								value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
+								onChange="@command('aplicarFiltro')" width="120px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<textbox instant="true" placeholder=""
+								value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.ubicacion)"
+								onChange="@command('aplicarFiltro')" width="120px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<textbox instant="true" placeholder=""
+								value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.descripcion)"
+								onChange="@command('aplicarFiltro')" width="200px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<textbox instant="true" placeholder=""
+								value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
+								onChange="@command('aplicarFiltro')" width="100px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<spinner
+								value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.cantidad)"
+								instant="true" placeholder=""
+								onChange="@command('aplicarFiltro')" width="70px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<spinner
+								value="@bind(vm.detalleCotizacionFiltro.cantidad)"
+								instant="true" placeholder=""
+								onChange="@command('aplicarFiltro')" width="70px" />
+						</auxheader>
+						<auxheader>
+							<div sclass="z-icon-filter bigger-200" />
+							<decimalbox format="###.##"
+								value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
+								instant="true" placeholder=""
+								onChange="@command('aplicarFiltro')" width="70px" />
+						</auxheader>
+					</auxhead>
+					<listhead menupopup="auto">
+						<listheader label="Proveedor" sort="none"
+							width="170px">
+						</listheader>
+						<listheader label="Ubicacion" sort="none"
+							width="170px" tooltiptext="Estado-Ciudad">
+						</listheader>
+						<listheader label="Repuesto" sort="none"
+							width="250px">
+						</listheader>
+						<listheader value="marcaRepuesto" label="Marca"
+							sort="auto(marcaRepuesto)" width="150px">
+						</listheader>
+						<listheader label="C. Solicitada" sort="none"
+							width="110px">
+						</listheader>
+						<listheader value="cantidad" label="C. Ofrecida"
+							sort="auto(cantidad)" width="110px">
+						</listheader>
+						<listheader value="precioVenta"
+							label="Prec. Venta" sort="auto(precioVenta)" width="110px">
+						</listheader>
+						<listheader value="precioFlete"
+							label="Prec. Flete" sort="auto(precioFlete)" width="110px">
+						</listheader>
+						<listheader value="total" label="Total"
+							sort="none" width="80px">
+						</listheader>
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="@bind(each.cotizacion.proveedor.nombre)" />
+							<listcell
+								label="" /><!-- @bind(each.cotizacion.proveedor.ubicacion(' - ')) -->
+							<listcell
+								label="@bind(each.detalleRequerimiento.descripcion)" />
+							<listcell label="@bind(each.marcaRepuesto)" />
+							<listcell
+								label="@bind(each.detalleRequerimiento.cantidad)" />
+							<listcell label="@bind(each.cantidad)" />
+							<listcell label="@bind(each.precioVenta)" />
+							<listcell
+								label="@bind(each.calcularFlete())" />
+							<listcell
+								label="@bind(each.calcularTotal())" />
+						</listitem>
+					</template>
 
-			<listhead>
-				<listheader label="Proveedor" sort="none"
-					width="170px">
-				</listheader>
-				<listheader label="Ubicacion" sort="none" width="170px"
-					tooltiptext="Estado-Ciudad">
-				</listheader>
-				<listheader label="Repuesto" sort="none"
-					width="250px">
-				</listheader>
-				<listheader value="marcaRepuesto" label="Marca"
-					sort="auto(marcaRepuesto)" width="150px">
-				</listheader>
-				<listheader label="C. Solicitada" sort="none"
-					width="110px">
-				</listheader>
-				<listheader value="cantidad" label="C. Ofrecida"
-					sort="auto(cantidad)" width="110px">
-				</listheader>
-				<listheader value="precioVenta" label="Prec. Venta"
-					sort="auto(precioVenta)" width="110px">
-				</listheader>
-				<listheader value="precioFlete" label="Prec. Flete"
-					sort="auto(precioFlete)" width="110px">
-				</listheader>
-				<listheader value="total" label="Total" sort="none"
-					width="80px">
-				</listheader>
+				</listbox>
+				<paging id="pagDetalleCotizacion"
+					onPaging="@command('paginarLista')" autohide="true" />
+				<div width="100%" align="right">
+					<div sclass="btn btn-xs btn-info">
+						<button label="Seleccionar" type="submit"
+							onClick="@command('agregarSeleccion', cotizacion=null)" />
+					</div>
+				</div>
+			</vlayout>
 
-			</listhead>
-			<template name="model">
-				<listitem>
-					<listcell
-						label="@bind(each.cotizacion.proveedor.nombre)" />
-					<listcell
-						label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
-					<listcell
-						label="@bind(each.detalleRequerimiento.descripcion)" />
-					<listcell label="@bind(each.marcaRepuesto)" />
-					<listcell
-						label="@bind(each.detalleRequerimiento.cantidad)" />
-					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta)" />
-					<listcell label="@bind(each.calcularFlete())" />
-					<listcell label="@bind(each.calcularTotal())" />
-				</listitem>
-			</template>
+			<vlayout vflex="1">
+				<listbox id="gridDetalleSeleccion" mold="paging"
+					selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
+					pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
+					model="@load(vm.listaDetalleSeleccionado)">
 
-		</listbox>
-		<paging id="pagDetalleCotizacion2"
-			onPaging="@command('paginarLista')" autohide="true" />
-		<div width="100%" align="right">
-			<div sclass="btn btn-xs btn-info">
-				<button label="Eliminar" type="submit"
-					onClick="@command('eliminarSeleccion', cotizacion=null)" />
-				<button label="Guardar" type="submit"
-					onClick="@command('guardar', cotizacion=null)" />
-			</div>
-		</div>
-       </vbox> 
-    </south>
-</borderlayout>
-</window>
+					<listhead>
+						<listheader label="Proveedor" sort="none"
+							width="170px">
+						</listheader>
+						<listheader label="Ubicacion" sort="none"
+							width="170px" tooltiptext="Estado-Ciudad">
+						</listheader>
+						<listheader label="Repuesto" sort="none"
+							width="250px">
+						</listheader>
+						<listheader value="marcaRepuesto" label="Marca"
+							sort="auto(marcaRepuesto)" width="150px">
+						</listheader>
+						<listheader label="C. Solicitada" sort="none"
+							width="110px">
+						</listheader>
+						<listheader value="cantidad" label="C. Ofrecida"
+							sort="auto(cantidad)" width="110px">
+						</listheader>
+						<listheader value="precioVenta"
+							label="Prec. Venta" sort="auto(precioVenta)" width="110px">
+						</listheader>
+						<listheader value="precioFlete"
+							label="Prec. Flete" sort="auto(precioFlete)" width="110px">
+						</listheader>
+						<listheader value="total" label="Total"
+							sort="none" width="80px">
+						</listheader>
+
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell
+								label="@bind(each.cotizacion.proveedor.nombre)" />
+							<listcell
+								label="" /><!-- @bind(each.cotizacion.proveedor.ubicacion(' - ')) -->
+							<listcell
+								label="@bind(each.detalleRequerimiento.descripcion)" />
+							<listcell label="@bind(each.marcaRepuesto)" />
+							<listcell
+								label="@bind(each.detalleRequerimiento.cantidad)" />
+							<listcell label="@bind(each.cantidad)" />
+							<listcell label="@bind(each.precioVenta)" />
+							<listcell
+								label="@bind(each.calcularFlete())" />
+							<listcell
+								label="@bind(each.calcularTotal())" />
+						</listitem>
+					</template>
+
+				</listbox>
+				<paging id="pagDetalleCotizacion2"
+					onPaging="@command('paginarLista')" autohide="true" />
+				<div width="100%" align="right">
+					<div sclass="btn btn-xs btn-info">
+						<button label="Eliminar" type="submit"
+							onClick="@command('eliminarSeleccion', cotizacion=null)" />
+						<button label="Guardar" type="submit"
+							onClick="@command('guardar', cotizacion=null)" />
+					</div>
+				</div>
+			</vlayout>
+		</vlayout>
+	</window>
+</zk>
