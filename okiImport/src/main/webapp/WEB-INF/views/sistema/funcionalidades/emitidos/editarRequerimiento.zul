@@ -258,8 +258,8 @@
 									<listcell>
 									
 										<spinner value="@bind(each.cantidad)" 
-											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)"/>
-									
+											readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)" 
+											constraint="@bind(vm.cantValidator)"/>
 									</listcell>
 									<listcell>
 									

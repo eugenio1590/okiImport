@@ -64,6 +64,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
+		gridCotizaciones.setEmptyMessage(CotizacionesProveedorInternacionalViewModel.TITULO_EMPTY_COTIZACIONES);
 		pagCotizaciones.setPageSize(pageSize);
 	}
 	

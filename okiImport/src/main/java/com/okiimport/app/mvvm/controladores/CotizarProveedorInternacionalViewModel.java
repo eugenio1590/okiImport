@@ -124,7 +124,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Override
 	@NotifyChange("listaCotizacion")
 	public void onEvent(Event event) throws Exception {
-		// TODO Auto-generated method stub	
 		if(event instanceof SortEvent && event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
@@ -249,6 +248,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		}
 		else {
 			constraintPrecioFlete = null;
+			cotizacionSelecionada.setPrecioFlete(null);
 			actualizarListaDetalleCotizacion();
 		}
 	}
@@ -368,6 +368,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
+	
 	/**SETTERS Y GETTERS*/	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;

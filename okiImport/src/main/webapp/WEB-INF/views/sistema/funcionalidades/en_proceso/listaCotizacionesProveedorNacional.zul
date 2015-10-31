@@ -169,15 +169,14 @@
 								</vbox>
 							</listcell>
 							<listcell>
-							
 								<spinner value="@bind(each.cantidad)"
-									tooltiptext="Cantidad Cotizada del Repuesto"
-									width="100%" constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))"
-									/>
+									width="100%" tooltiptext="Cantidad Cotizada del Repuesto"
+									constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))"/>
 							</listcell>
 							<listcell>
 							    <vbox>
-								<decimalbox format="###.##" tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
+								<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+									tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
 									value="@bind(each.precioVenta)" width="100%"
 									constraint="@bind(vm.validatorPrecio)"
 									onChange="@command('calcularPrecio', column=1)" />
@@ -185,7 +184,8 @@
 							</listcell>
 							<listcell visible="@bind(vm.tipoFlete.valor)">
 								<vbox>
-								<decimalbox format="###.##" tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
+								<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+									tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
 									value="@bind(each.precioFlete)" width="100%"
 									constraint="@bind(vm.constraintPrecioFlete)" 
 									onChange="@command('calcularPrecio', column=2)"/>
@@ -199,13 +199,13 @@
 						<listfooter/>
 						<listfooter/>
 						<listfooter/>
-						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)"/>
+						<listfooter label="Total:">
+							<label value="@bind(vm.cotizacionSelecionada.totalPrecioVenta)
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 						</listfooter>
-						<listfooter>
-							<label value="Total:"/>
-							<label value="@bind(vm.cotizacionSelecionada.totalFlete)"/>
+						<listfooter label="Total:">
+							<label value="@bind(vm.cotizacionSelecionada.totalFlete)
+											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 						</listfooter>
 					</listfoot>
 				</listbox>
