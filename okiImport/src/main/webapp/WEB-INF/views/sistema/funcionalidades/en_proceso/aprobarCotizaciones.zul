@@ -1,9 +1,8 @@
-<zk>
-	<window title="@bind(vm.titulo)" border="none" width="95%"
-		height="95%" closable="true" sclass="btn-info"
-		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
-		<listbox id="gridDetalleCotizacion" mold="paging"
+<window width="95%" height="95%">
+<borderlayout hflex="1" vflex="1">
+    <north>
+      <vbox>
+      	<listbox id="gridDetalleCotizacion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleCotizacion)">
@@ -110,8 +109,14 @@
 					onClick="@command('agregarSeleccion', cotizacion=null)" />
 			</div>
 		</div>
-
-		<listbox id="gridDetalleSeleccion" mold="paging"
+      </vbox>  
+    </north>
+    <center hflex="0" vflex="0">
+       
+    </center>
+    <south>
+       <vbox>
+       <listbox id="gridDetalleSeleccion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleSeleccionado)">
@@ -175,5 +180,7 @@
 					onClick="@command('guardar', cotizacion=null)" />
 			</div>
 		</div>
-	</window>
-</zk>
+       </vbox> 
+    </south>
+</borderlayout>
+</window>
