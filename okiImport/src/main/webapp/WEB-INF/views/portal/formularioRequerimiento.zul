@@ -10,9 +10,9 @@
 					<grid>
 						<columns>
 							<column align="right" width="8%" />
-							<column width="20%"/><!--   -->
-							<column align="right" width="15%"/><!--  -->
-							<column /><!-- width="65%"  -->
+							<column width="20%"/>
+							<column align="right" width="15%"/>
+							<column width="57%"/>
 						</columns>
 						<rows>
 							<row>
@@ -86,7 +86,7 @@
 								<!-- CIUDAD -->
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Ciudad:" />
 								<vbox hflex="1">
-									<combobox placeholder="Seleccione..." readonly="true"
+									<combobox placeholder="Seleccione..." readonly="true" 
 										selectedItem="@bind(vm.cliente.ciudad)"
 										constraint="@bind(vm.notEmptyValidator)"
 										model="@load(vm.listaCiudades)">
@@ -112,7 +112,7 @@
 								<grid>
 									<columns>
 										<column width="5%" align="right" />
-										<column width="20%" />
+										<column width="15%" />
 										<column width="10%" align="right" />
 										<column width="15%" />
 									</columns>
@@ -121,8 +121,8 @@
 										<row>
 											<!-- MARCA -->
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Marca:" />
-											<vbox>
-												<combobox placeholder="Seleccione..." readonly="true"
+											<vbox hflex="1">
+												<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 													selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
 													constraint="@bind(vm.notEmptyValidator)"
 													model="@load(vm.listaMarcasVehiculo)">
@@ -144,7 +144,7 @@
 										<row>
 											<!-- AÑO -->
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Año:" />
-											<vbox>
+											<vbox hflex="1">
 												<intbox placeholder="Ej: 2015" sclass="form-control"
 													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
 													value="@bind(vm.requerimiento.annoV)" />
@@ -152,7 +152,7 @@
 											
 											<!-- SERIAL DE CARROCERIA -->
 											<hbox>
-												<label value="Serial Carroceria: " />
+												<label value="Serial Carroceria: " sclass="form-label"/>
                                         	</hbox>
                                             <vbox>
 												<textbox id="serialCarroceria" sclass="form-control" mold="rounded"
@@ -186,7 +186,7 @@
 										<row>
 											<!-- MOTOR -->
 											<hbox>
-												<label value="Motor: " />
+												<label value="Motor: " sclass="form-label"/>
 											</hbox>
 											<bandbox id="bdMotor" mold="rounded" autodrop="true" readonly="true"
 												placeholder="Seleccione..." hflex="1"
@@ -212,7 +212,7 @@
     										
     										<!-- TRANSMISION -->
     										<hbox>
-    											<label value="Transmision: " />
+    											<label value="Transmision: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.transmision)"
@@ -226,7 +226,7 @@
 										<row>
 											<!-- TRACCION -->
 											<hbox>
-												<label value="Traccion: " />
+												<label value="Traccion: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.traccion)"
@@ -238,7 +238,7 @@
 											
 											<!-- TIPO REPUESTO -->
 											<hbox>
-												<label value="Tipo Repuesto: " />
+												<label value="Tipo Repuesto: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.tipoRepuesto)"
@@ -264,9 +264,9 @@
 						sclass="btn-primary" onClick="@command('eliminarRepuesto')" />
 				</div>
 				<!-- REPUESTOS -->
-				<panel sclass="boxed-grey" >
+				<panel sclass="boxed-grey">
 					<panelchildren>
-						<listbox mold="paging" multiple="true" sclass="boxed-grey" hflex="1" vflex="1"
+						<listbox mold="paging" multiple="true" sclass="boxed-grey"
 							checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							style="margin-top:10px" pageSize="5">
@@ -333,18 +333,13 @@
 				</panel>
 			</div>
 		</hlayout>
-		<hbox width="100%" sclass="panel-footer">
-			<div hflex="1" align="left">
-				<label value="* Campos Obligatorios" hflex="1"
-					sclass="requerido" />
-			</div>
+		<hbox hflex="1" sclass="panel-footer">
+			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 			<div align="right">
-
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn btn-info" />
 				<button label="Enviar" type="submit" sclass="btn btn-primary"
-					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"
-					 />
+					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>
 	</vlayout>

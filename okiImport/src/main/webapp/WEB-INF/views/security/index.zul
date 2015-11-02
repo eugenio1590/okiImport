@@ -15,7 +15,7 @@
 	<borderlayout id="principal" hflex="1" vflex="1"
 		sclass="avoid-fout page-blue">
 
-		<north height="10%">
+		<north  height="48px">
 			<div>
 				<include src="/WEB-INF/views/portal/head.zul" />
 			</div>
@@ -28,14 +28,7 @@
 					<div width="30%"><!-- class="card-wrap" -->
 						<div class="card">
 							<div class="card-main">
-								<div class="btn-primary card-header">
-									<div class="card-inner">
-										<n:h1
-											class="card-heading titulo_blanco">
-											Inicio de Sesión
-										</n:h1>
-									</div>
-								</div>
+								<include src="/WEB-INF/views/template/title.zul" titulo="Inicio de Sesión" />
 								<div class="card-inner"
 									align="center">
 									<include src="login.zul" />

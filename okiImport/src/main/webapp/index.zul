@@ -16,10 +16,9 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.InicioViewModel')"
 		sclass="avoid-fout page-blue">
 	
-		<north class="avoid-fout page-blue" height="10%">
-			<!-- EN EL INCLUDE SE EJECUTARAN LOS COMMAND DEL VIEWMODEL (vm) -->
+		<north height="48px">
 			<div>
-				<include src="/WEB-INF/views/portal/head.zul" />
+				<include src="/WEB-INF/views/portal/head.zul" /><!-- menu="/WEB-INF/views/portal/botones.zul" -->
 			</div>
 		</north>
 		
@@ -43,7 +42,7 @@
 		</center>
 		
 <!-- 		<south height="30px" style="border-style: solid;"  sclass="btn-primary"> -->
-<!-- 			<include src="/WEB-INF/views/SistemaOrion/VPrincipal/footer.zul" /> -->
+<!-- 			<include src="/WEB-INF/views/portal/footer.zul" /> -->
 <!-- 		</south> -->
 		
 	</borderlayout>

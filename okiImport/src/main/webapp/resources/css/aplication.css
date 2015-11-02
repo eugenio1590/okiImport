@@ -87,6 +87,10 @@ input.form-control {
 	font-weight: bold;
 }
 
+.requerido.margen {
+	margin-left: 20px;
+}
+
 .titulo_blanco span{
 	color: white;
 }
