@@ -9,10 +9,11 @@
 				<div sclass="container" style="text-align:left;">
 					<grid>
 						<columns>
-							<column align="right" width="8%" />
-							<column width="20%"/>
-							<column align="right" width="15%"/>
-							<column width="57%"/>
+							<column width="8%" />
+							<column width="22%"/>
+							<column width="12%"/>
+							<column width="22%"/>
+							<column/>
 						</columns>
 						<rows>
 							<row>
@@ -34,7 +35,7 @@
 										<intbox id="cedulaRif" sclass="form-control" mold="rounded"
 											placeholder="Ej: 4025375" maxlength="12"
 											value="@bind(vm.cliente.cedula)"
-											constraint="@bind(vm.validatorClienteCedulaRif2)"
+											constraint="@bind(vm.validatorClienteCedulaRif)"
 											onBlur="@command('buscarCliente')"
 											onOK="@command('buscarCliente')" />
 									</vbox>
@@ -52,15 +53,15 @@
 							<row>
 								<!-- TELEFONO -->
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Teléfono:" />
-								<vbox>
+								<vbox  hflex="1">
 									<textbox id="telefono" sclass="form-control" mold="rounded"
-										placeholder="Ej: 02512552233"
+										placeholder="Ej: 02512552233"  hflex="1"
 										value="@bind(vm.cliente.telefono)" maxlength="11"
 										constraint="@bind(vm.telefonoValidator)" />
 								</vbox>
 								
 								<!-- CORREO -->
-								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="E-mail:" />
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Correo:" />
 								<vbox>
 									<textbox id="email" sclass="form-control"  mold="rounded"
 										placeholder="Ej. xxx@gmail.com"
@@ -86,7 +87,7 @@
 								<!-- CIUDAD -->
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Ciudad:" />
 								<vbox hflex="1">
-									<combobox placeholder="Seleccione..." readonly="true" 
+									<combobox placeholder="Seleccione..." readonly="true"  hflex="1"
 										selectedItem="@bind(vm.cliente.ciudad)"
 										constraint="@bind(vm.notEmptyValidator)"
 										model="@load(vm.listaCiudades)">
@@ -274,14 +275,14 @@
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto"  width="20%"/>
-								<listheader width="35%" sort="auto">
+								<listheader width="40%" sort="auto">
 									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripcion" />
 								</listheader>
 								<listheader width="15%" sort="auto">
 									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
 								</listheader>
 								<listheader label="Foto" sort="auto"
-									width="30%" />
+									width="20%" />
 							</listhead>
 							<template name="model">
 								<listitem>
@@ -333,6 +334,8 @@
 				</panel>
 			</div>
 		</hlayout>
+		
+		<!-- BOTONES -->
 		<hbox hflex="1" sclass="panel-footer">
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 			<div align="right">

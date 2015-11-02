@@ -29,6 +29,10 @@ input.form-control {
 	padding: 10px;
 }
 
+a.z-tab-content:hover {
+	text-decoration: none;
+}
+
 /**IMAGENES*/
 .imagen-default {
 	background: #DDD9D9;
