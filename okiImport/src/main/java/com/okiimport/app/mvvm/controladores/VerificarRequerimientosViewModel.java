@@ -68,6 +68,7 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		pagRequerimientosCliente.setPageSize(pageSize);
 		agregarGridSort(gridRequerimientosCliente);
 		listaTipoPersona = llenarListaTipoPersona();
+		tipoPersona = listaTipoPersona.get(1);
 	}
 
 	/**Interface: EventListener<SortEvent>*/

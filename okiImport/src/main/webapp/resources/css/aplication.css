@@ -11,6 +11,11 @@ span {
 	background-color:#2196f3;
 }
 
+.content-sub-heading {
+	margin-top: 28px;
+    margin-bottom: 14px;
+}
+
 .boxed-grey {
 	background: #f9f9f9;
 }

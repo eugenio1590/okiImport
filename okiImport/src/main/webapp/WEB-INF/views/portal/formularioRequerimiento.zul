@@ -23,8 +23,7 @@
 									<vbox>
 										<combobox id="comboTipoPersona" width="30%" readonly="true"
 											selectedItem="@bind(vm.tipoPersona)"
-											model="@load(vm.listaTipoPersona)" 
-											constraint="no empty">
+											model="@load(vm.listaTipoPersona)">
 											<template name="model">
 												<comboitem label="@bind(each.nombre)" />
 											</template>

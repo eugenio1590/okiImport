@@ -1,0 +1,3 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<n:h2 class="modal-title">${requestScope.titulo}</n:h2>
+</zk>

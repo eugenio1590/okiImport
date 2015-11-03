@@ -301,7 +301,7 @@ public abstract class AbstractViewModel {
 	 * Retorno: T-componente que se requiere crear
 	 * */
 	@SuppressWarnings("unchecked")
-	protected <T> T crearComponente(String ruta, Map<?, ?> parametros){
+	protected <T> T crearComponente(String ruta, Map<String, Object> parametros){
 		return (T) Executions.createComponents(ruta, null, parametros);
 	}
 	
@@ -311,7 +311,7 @@ public abstract class AbstractViewModel {
 	 * @param parametros: parametros que se le pasaran al viewmodel del emergente
 	 * Retorno: Emergente que se requiere crear
 	 * */
-	protected Window crearModal(String ruta, Map<?, ?> parametros){
+	protected Window crearModal(String ruta, Map<String, Object> parametros){
 		Window window = (Window) crearComponente(ruta, parametros);
         window.doModal(); 
         return window;

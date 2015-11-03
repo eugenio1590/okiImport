@@ -34,3 +34,12 @@
 .footerTotal {
 	background-color:  white;
 }
+
+/**CAMPO DE BUSQUEDA*/
+.search {
+	border-radius: .4em;
+	border: 1px solid rgba(225, 225, 225, 1);
+	margin: .8em auto 0 auto;
+	padding: .5em;
+	width: 30em;
+}
