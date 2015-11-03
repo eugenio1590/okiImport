@@ -112,15 +112,17 @@
 										model="@load(vm.requerimiento.detalleRequerimientos)"
 										style="margin-top:10px" pageSize="5" >
 										<listhead>
+											<listheader width="3%"/>
 											<listheader label="CodigoOEM" sort="none" width="20%" />
 											<listheader label="Descripcion" sort="none" width="40%" />
-											<listheader label="Cantidad" sort="none" width="15%" />
-											<listheader label="Foto" sort="none" width="15%"/>
+											<listheader label="Cantidad" sort="none" width="10%" />
+											<listheader label="Foto" sort="none" width="10%"/>
 											<listheader label="Estado" sort="none" />	
 										</listhead>
 							
 										<template name="model">
 											<listitem>
+												<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 												<listcell label="@bind(each.codigoOem)"/>
 												<listcell label="@bind(each.descripcion)"/>
 												<listcell label="@bind(each.cantidad)"/>

@@ -16,7 +16,7 @@ span {
     margin-bottom: 14px;
 }
 
-.boxed-grey {
+.boxed-grey, .boxed-grey.z-listcell div {
 	background: #f9f9f9;
 }
 
