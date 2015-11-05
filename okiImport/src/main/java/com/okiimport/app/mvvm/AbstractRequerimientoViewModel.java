@@ -47,6 +47,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
 	
+	protected static final String formatDate = "dd/MM/yyyy";
 	protected static final String formatNumber = "#,###.00";
 	protected static final String localeNumber = null;
 	
@@ -365,6 +366,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
     }
     
 	/**GETTERS Y SETTERS*/
+    public String getFormatDate() {
+		return formatDate;
+	}
+    
     public String getFormatNumber() {
 		return formatNumber;
 	}

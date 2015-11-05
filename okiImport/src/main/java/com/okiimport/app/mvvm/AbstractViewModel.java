@@ -52,11 +52,13 @@ import org.zkoss.zkmax.zul.Nav;
 import org.zkoss.zkmax.zul.Navitem;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Include;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.LayoutRegion;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listhead;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.TreeNode;
 import org.zkoss.zul.Messagebox.Button;
 import org.zkoss.zul.Window;
@@ -217,6 +219,22 @@ public abstract class AbstractViewModel {
 		System.out.println("CERRAR MODAL");
 		if(form instanceof Window)
 			((Window) form).onClose();
+	}
+	
+	@Command
+	public void updatePaging(@BindingParam("paging") Paging paging, @BindingParam("label") Label label){
+		int total = paging.getTotalSize();
+		if(total!=0){
+			int page = paging.getActivePage();
+			int pageSize = paging.getPageSize();
+			int fistElement = 0, lastElement = 0;
+			fistElement = page*pageSize;
+			lastElement = fistElement+pageSize;
+			label.setVisible(true);
+			label.setValue("[ "+String.valueOf(fistElement+1)+" - "+String.valueOf((total<lastElement) ? total : lastElement)+" / "+total+" ]");
+		}
+		else
+			label.setVisible(false);
 	}
 	
 	/**
