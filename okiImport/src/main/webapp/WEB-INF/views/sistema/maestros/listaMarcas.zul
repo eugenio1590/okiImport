@@ -15,7 +15,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox value="@bind(vm.marcaFiltro.nombre)"
 						instant="true" placeholder="Buscar por Nombre"
-						onChange="@command('aplicarFiltro')" />
+						onChange="@command('aplicarFiltro')" hflex="1" />
 				</auxheader>
 				
 				
