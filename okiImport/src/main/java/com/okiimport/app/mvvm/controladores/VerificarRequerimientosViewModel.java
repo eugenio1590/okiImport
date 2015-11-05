@@ -18,7 +18,6 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
@@ -42,8 +41,6 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 	private Listbox gridRequerimientosCliente;
 	@Wire("#pagRequerimientosCliente")
 	private Paging pagRequerimientosCliente;
-	@Wire("#misolicitudes")
-	private Div misolicitudes;
 	
 	//Atributos
 	private Date fechaCreacion;
@@ -114,25 +111,6 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		parametros.put("detallesOfertas", detallesOfertas);
 		llamarFormulario("formularioOferta.zul", parametros);
 
-	}
-
-	/**
-	 * Descripcion: Permite buscar al cliente en la base de datos para ver sus solicitudes
-	 * Parametros: @param view: formularioVerificarRequerimiento.zul 
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("listaRequerimientos")
-	public void buscarCliente(){
-		cambiarRequerimientos(0, null, null);
-		if (listaRequerimientos.size() > 0 )
-			misolicitudes.setVisible(true);
-		else
-		{
-			misolicitudes.setVisible(false);
-			mostrarMensaje("Informaci\u00F3n Importante","No posee Solicitudes", null, null, null, null);
-		}
 	}
 
 	/**
