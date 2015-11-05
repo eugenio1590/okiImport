@@ -1,7 +1,7 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaProveedoresViewModel')">
-		<listbox id="gridProveedores" mold="paging"
+		<listbox id="gridProveedores" mold="paging" pagingPosition="top"
 			model="@load(vm.proveedores)">
 			<auxhead sclass="nombre-center">
 				<auxheader>
