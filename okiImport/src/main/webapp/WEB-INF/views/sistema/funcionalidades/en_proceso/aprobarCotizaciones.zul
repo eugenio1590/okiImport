@@ -1,4 +1,7 @@
-<window width="95%" height="95%">
+<window title="@bind(vm.titulo)" border="none" width="95%"
+		height="95%" closable="true" sclass="btn-info"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
 <borderlayout hflex="1" vflex="1">
     <north>
       <vbox>
@@ -111,9 +114,6 @@
 		</div>
       </vbox>  
     </north>
-    <center hflex="0" vflex="0">
-       
-    </center>
     <south>
        <vbox>
        <listbox id="gridDetalleSeleccion" mold="paging"
