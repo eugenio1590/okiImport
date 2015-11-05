@@ -29,7 +29,7 @@
 
 								<listheader label="Nombre" sort="auto(nombre)">
 									<div sclass="z-icon-filter bigger-200" />
-									<textbox value="@bind(vm.proveedor.nombre)"
+									<textbox value="@bind(vm.proveedor.nombre)" hflex="1" 
 										instant="true" placeholder="Buscar por Nombre"
 										onChange="@command('aplicarFiltro')" />
 								</listheader>
