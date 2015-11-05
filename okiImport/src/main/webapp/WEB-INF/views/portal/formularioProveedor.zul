@@ -176,6 +176,8 @@
 										tooltiptext="Agregar Marcas a Vender"
 										onClick="@command('agregarMarcas')" />
 								</toolbar>
+								<paging id="pagMarcas" autohide="true" sclass="custom-paging"
+									onPaging="@command('paginarLista',tipo = 1)" />
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
 									model="@load(vm.listaMarcaVehiculos)">
@@ -188,8 +190,7 @@
 										</listitem>
 									</template>
 								</listbox>
-								<paging id="pagMarcas" autohide="true"
-									onPaging="@command('paginarLista',tipo = 1)" />
+								
 							</vlayout>
 						</west>
 						<east id="borderMarcasEast" title="Marcas a Vender"
@@ -200,7 +201,8 @@
 										tooltiptext="Remover Marcas a Vender"
 										onClick="@command('eliminarMarcas')" />
 								</toolbar>
-								<listbox id="gridMarcasVender" mold="paging" checkmark="true" multiple="true"
+								<listbox id="gridMarcasVender" mold="paging" 
+									checkmark="true" multiple="true" pagingPosition="top"
 									model="@load(vm.proveedor.marcaVehiculos)"
 									selectedItems="@bind(vm.marcaSeleccionadas)">
 									<!-- 
@@ -233,11 +235,15 @@
 										tooltiptext="Agregar Tipo Repuesto a Vender"
 										onClick="@command('agregarTipoRepuesto')" />
 								</toolbar>
-								<listbox id="gridClasificacionRepuesto"
-									model="@load(vm.listaClasificacionRepuesto)" mold="paging"
-									checkmark="true"
+								<paging id="pagTipoRepuestos"
+									autohide="true" sclass="custom-paging"
+									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+								<listbox id="gridClasificacionRepuesto" mold="paging"
+									checkmark="true" multiple="true" 
+									model="@load(vm.listaClasificacionRepuesto)" 
+									
 									selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
-									multiple="true">
+									>
 									<listhead>
 										<listheader label="Nombre"
 											sort="none" />
@@ -250,9 +256,7 @@
 									</template>
 
 								</listbox>
-								<paging id="pagTipoRepuestos"
-									autohide="true"
-									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+								
 							</vlayout>
 						</west>
 						<east id="borderRepuestosEast"
@@ -264,9 +268,10 @@
 										tooltiptext="Remover Tipo de Repuesto a Vender"
 										onClick="@command('eliminarTipoRepuesto')" />
 								</toolbar>
-								<listbox id="gridTipoRepuestosVender"
+								<listbox id="gridTipoRepuestosVender" mold="paging"
+									checkmark="true" multiple="true" pagingPosition="top"
 									model="@load(vm.proveedor.clasificacionRepuestos)"
-									mold="paging" checkmark="true" multiple="true"
+									
 									selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
 									<listhead>
 										<listheader label="Nombre"
@@ -289,7 +294,7 @@
 		<!-- BOTONES -->
 		<hbox hflex="1" sclass="panel-footer">
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
-			<div align="right">
+			<div align="right" hflex="1">
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn btn-info" />
 				<button label="Enviar" type="submit" sclass="btn btn-primary"

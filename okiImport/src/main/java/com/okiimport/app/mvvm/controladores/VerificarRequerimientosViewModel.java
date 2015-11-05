@@ -95,7 +95,6 @@ public class VerificarRequerimientosViewModel extends AbstractRequerimientoViewM
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
 		gridRequerimientosCliente.setMultiple(true);
-		gridRequerimientosCliente.setCheckmark(true);
 		pagRequerimientosCliente.setActivePage(page);
 		pagRequerimientosCliente.setTotalSize(total);
 	}

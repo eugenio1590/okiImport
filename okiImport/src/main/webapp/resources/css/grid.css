@@ -35,6 +35,12 @@
 	background-color:  white;
 }
 
+/**Borde de la grid*/
+.borderGrid {
+	border: 1px solid #C3C3C3;
+	margin-top: 10px;
+}
+
 /**CAMPO DE BUSQUEDA*/
 .search {
 	border-radius: .4em;
@@ -42,4 +48,14 @@
 	margin: .8em auto 0 auto;
 	padding: .5em;
 	width: 30em;
+}
+
+/**NUEVA PAGINACION*/
+.z-paging {
+	text-align: left;
+}
+
+.custom-paging {
+	padding-top: 0px;
+    height: auto;
 }

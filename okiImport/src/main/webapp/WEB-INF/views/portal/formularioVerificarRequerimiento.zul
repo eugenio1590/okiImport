@@ -27,12 +27,15 @@
 		</vlayout>
 		
 		<!-- LISTA DE REQUERIMIENTOS -->
-		<div id="misolicitudes" visible="false" width="95%" >
+		<div id="misolicitudes" visible="false" width="95%">
 			<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Mis Solicitudes" />
-			<panel>
+			<panel sclass="borderGrid">
 				<panelchildren>
-					<listbox id="gridRequerimientosCliente" mold="paging"
-						checkmark="true" pagingPosition="top" multiple="true"
+					<div width="100%" align="center">
+						<paging id="pagRequerimientosCliente"
+							onPaging="@command('paginarLista')" autohide="true" />
+					</div>
+					<listbox id="gridRequerimientosCliente"
 						model="@load(vm.listaRequerimientos)">
 						<listhead>
 
@@ -104,10 +107,7 @@
 							</listitem>
 						</template>
 					</listbox>
-					<div width="100%" align="center">
-						<paging id="pagRequerimientosCliente"
-							onPaging="@command('paginarLista')" autohide="true" />
-					</div>
+					
 				</panelchildren>
 			</panel>
 		</div>

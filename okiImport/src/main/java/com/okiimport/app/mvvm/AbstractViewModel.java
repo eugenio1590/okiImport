@@ -208,6 +208,18 @@ public abstract class AbstractViewModel {
 	}
 	
 	/**
+	 * Descripcion: Permitira cerrar el modal creado
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * */
+	@Command
+	public void closeModal(){
+		System.out.println("CERRAR MODAL");
+		if(form instanceof Window)
+			((Window) form).onClose();
+	}
+	
+	/**
 	 * Descripcion: permitira mover datos seleccionados de una colleccion de origen a una destino
 	 * Parametros:
 	 * @param origen: datos de origen

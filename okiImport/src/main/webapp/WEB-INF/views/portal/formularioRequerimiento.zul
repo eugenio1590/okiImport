@@ -264,13 +264,13 @@
 						sclass="btn-primary" onClick="@command('eliminarRepuesto')" />
 				</div>
 				<!-- REPUESTOS -->
-				<panel sclass="boxed-grey">
+				<panel sclass="boxed-grey borderGrid">
 					<panelchildren>
-						<listbox mold="paging" multiple="true" sclass="boxed-grey"
+						<listbox mold="paging" multiple="true" pagingPosition="top" 
+							pageSize="5" sclass="boxed-grey"
 							checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
-							model="@load(vm.requerimiento.detalleRequerimientos)"
-							style="margin-top:10px" pageSize="5">
-
+							model="@load(vm.requerimiento.detalleRequerimientos)">
+							
 							<listhead>
 								<listheader label="CodigoOEM"
 									sort="auto"  width="20%"/>
@@ -337,7 +337,7 @@
 		<!-- BOTONES -->
 		<hbox hflex="1" sclass="panel-footer">
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
-			<div align="right">
+			<div align="right" hflex="1">
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn btn-info" />
 				<button label="Enviar" type="submit" sclass="btn btn-primary"
