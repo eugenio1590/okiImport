@@ -3,7 +3,7 @@
 		width="@bind(vm.size)" height="@bind(vm.size)" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaProveedorCotizarViewModel')">
 		<listbox id="gridProveedores" mold="paging"
-			model="@load(vm.proveedores)">
+			model="@load(vm.proveedores)" pagingPosition="top">
 			<auxhead sclass="nombre-center">
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
