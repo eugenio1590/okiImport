@@ -15,25 +15,25 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
-						onChange="@command('aplicarFiltro')" width="120px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.ubicacion)"
-						onChange="@command('aplicarFiltro')" width="120px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.descripcion)"
-						onChange="@command('aplicarFiltro')" width="200px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="200px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
-						onChange="@command('aplicarFiltro')" width="100px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="100px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
