@@ -226,7 +226,7 @@
 				<panel sclass="panel-primary">
 					<panelchildren>
 
-						<listbox mold="paging"
+						<listbox mold="paging" pagingPosition="top"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							style="margin-top:10px" pageSize="5">
 

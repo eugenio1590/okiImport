@@ -217,7 +217,7 @@
 								</toolbar>
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
-									model="@load(vm.listaMarcaVehiculos)">
+									model="@load(vm.listaMarcaVehiculos)" pagingPosition="top">
 									<listhead>
 										<listheader label="Nombre" sort="none" />
 									</listhead>
@@ -240,8 +240,8 @@
 										onClick="@command('eliminarMarcas')" />
 								</toolbar>
 								<listbox id="gridMarcasVender" mold="paging" checkmark="true" multiple="true"
-									model="@load(vm.proveedor.marcaVehiculos)"
-									selectedItems="@bind(vm.marcaSeleccionadas)">
+									model="@load(vm.proveedor.marcaVehiculos)" sclass="custom-paging"
+									selectedItems="@bind(vm.marcaSeleccionadas)" pagingPosition="top">
 									<!-- 
 										<frozen columns="1"/>
 									-->
@@ -275,7 +275,7 @@
 											model="@load(vm.listaClasificacionRepuesto)" mold="paging"
 											checkmark="true"
 											selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
-											multiple="true">
+											multiple="true" pagingPosition="top">
 											<listhead>
 												<listheader
 													label="Nombre" sort="none" />
@@ -304,8 +304,8 @@
 										<listbox
 											id="gridTipoRepuestosVender"
 											model="@load(vm.proveedor.clasificacionRepuestos)"
-											mold="paging" checkmark="true" multiple="true"
-											selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
+											mold="paging" checkmark="true" multiple="true" sclass="custom-paging"
+											selectedItems="@bind(vm.tipoRepuestoSeleccionados)" pagingPosition="top">
 											<listhead>
 												<listheader
 													label="Nombre" sort="none" />

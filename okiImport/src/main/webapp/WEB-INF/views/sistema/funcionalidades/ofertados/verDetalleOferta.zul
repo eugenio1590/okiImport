@@ -109,7 +109,7 @@
 					<panelchildren>
 
 
-						<listbox id="listaOferta" mold="paging"
+						<listbox id="listaOferta" mold="paging" pagingPosition="top"
 							model="@load(vm.oferta.detalleOfertas)"
 							style="margin-top:10px" pageSize="5" >
 

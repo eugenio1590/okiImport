@@ -120,7 +120,7 @@
 
 						<listbox mold="paging"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
-							style="margin-top:10px" pageSize="5" >
+							style="margin-top:10px" pageSize="5" pagingPosition="top" >
 
 
 							<listhead>
