@@ -21,7 +21,7 @@
 								onClick="@command('agregarProveedores')" />
 						</toolbar>
 						<listbox id="gridProveedoresSeleccionados"
-							mold="paging" checkmark="true"
+							mold="paging" checkmark="true" pagingPosition="top"
 							selectedItems="@bind(vm.proveedoresSeleccionados)"
 							multiple="true" model="@load(vm.listaProveedores)">
 
@@ -61,9 +61,9 @@
 
 
 
-						<listbox id="gridProveedores"
+						<listbox id="gridProveedores" pagingPosition="top"
 							model="@load(vm.listaProveedoresSeleccionados1)" mold="paging"
-							checkmark="true" multiple="true"
+							checkmark="true" multiple="true" sclass="custom-paging"
 							selectedItems="@bind(vm.listaProveedoresSeleccionados2)">
 
 							<listhead menupopup="auto">
