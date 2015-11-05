@@ -157,7 +157,7 @@
 					<panelchildren>
 					
 						<listbox id="gridDetallesCompra" style="margin-top:10px"
-							model="@load(vm.listaDetallesCompra)">
+							model="@load(vm.listaDetallesCompra)" pagingPosition="top">
 							
 							<listhead>
 								<listheader label="Descripcion" sort="none" />
