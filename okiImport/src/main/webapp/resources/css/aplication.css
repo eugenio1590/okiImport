@@ -38,6 +38,16 @@ a.z-tab-content:hover {
 	text-decoration: none;
 }
 
+/*.card-header .card-inner, .card-inner-side, .tile-side {*/
+div .card-header .card-inner {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.z-fondo-principal .card-wrap {
+    margin-top: 10px;
+}
+
 /**IMAGENES*/
 .imagen-default {
 	background: #DDD9D9;
@@ -116,6 +126,14 @@ a.z-tab-content:hover {
 
 .base_division_campos.z-columnchildren div.z-columnchildren-content span {
 	margin-left:10px;
+}
+
+/**FUENTES PARA TITULOS*/
+.z-groupbox-content legend {
+    font-size: 18px;
+    line-height: 20px;
+    margin: 0 20px 14px;
+    color: #2196f3;
 }
 
 /*LOGIN*/

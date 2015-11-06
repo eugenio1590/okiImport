@@ -6,7 +6,7 @@
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full"  height="100%"><!-- modal-xs -->
 				<div sclass="modal-content">
-					<include src="/WEB-INF/views/template/titleModal.zul" titulo="Requerimiento" />
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Requerimiento" />
 					<n:div class="modal-inner">
 						<groupbox closable="false">
 							<div> 
@@ -42,7 +42,7 @@
 											<rows>
 												<row>
 													<!-- CEDULA -->
-													<label value="Cedula/RIF: " />
+													<label value="Cedula/RIF: "/>
 													<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 													<!-- NOMBRE O RAZON SOCIAL -->
@@ -97,8 +97,9 @@
 									</tabpanel>
 								</tabpanels>
 							</tabbox>
-				
-							<label value="Repuestos"/>
+							
+							<!-- REPUESTOS -->
+							<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos"/>
 							<panel sclass="borderGrid">
 								<panelchildren>
 
