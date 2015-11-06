@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="95%" height="95%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"

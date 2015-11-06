@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosEmitidosViewModel')">
 		<listbox id="gridMisRequerimientos" mold="paging" pageSize="10" pagingPosition="top"

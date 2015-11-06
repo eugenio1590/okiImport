@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window id="winERequerimiento" title="Requerimiento" border="none" width="80%" closable="true"
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer" 
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarRequerimientoViewModel')">

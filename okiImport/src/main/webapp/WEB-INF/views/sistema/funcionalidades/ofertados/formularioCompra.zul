@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window id="winCompras" border="none" width="80%" title="Compra"
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		sclass="btn-primary"

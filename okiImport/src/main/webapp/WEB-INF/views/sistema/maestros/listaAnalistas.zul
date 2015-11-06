@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer" id="winListaAnalistas"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaAnalistasViewModel')">
 		<listbox id="gridAnalistas" mold="paging" pagingPosition="top"

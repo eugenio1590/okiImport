@@ -1,5 +1,4 @@
 <zk xmlns:w="client" xmlns:n="native">
-<zk>
 	<window id="winEnviarReqProv" title="Solicitar Repuesto" border="none" width="80%" closable="true"
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"  
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')"
@@ -176,7 +175,10 @@
 				<caption label="Datos Repuestos" sclass="custom_caption" />
 				<panel sclass="panel-primary">
 					<panelchildren>
-
+						<!-- LISTA DE DETALLE REQUERIMIENTOS A ENVIAR A PROVEEDOR -->
+						<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Mis Solicitudes" />
+						<panel sclass="borderGrid">
+						<panelchildren>
 						<listbox id="listRepuestos" mold="paging"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)"
