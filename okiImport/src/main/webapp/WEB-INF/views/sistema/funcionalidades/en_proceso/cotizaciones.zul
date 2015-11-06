@@ -42,7 +42,7 @@
 					sort="auto(proveedor)" width="150px">
 					
 					<textbox instant="true" placeholder="" value="@bind(vm.cotizacionFiltro.proveedor.nombre)"
-						onChange="@command('aplicarFiltro')" width="110px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="110px" />
 					
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>

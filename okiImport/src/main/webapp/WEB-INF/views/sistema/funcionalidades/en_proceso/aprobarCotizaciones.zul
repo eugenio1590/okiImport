@@ -1,9 +1,11 @@
-<zk>
-	<window title="@bind(vm.titulo)" border="none" width="95%"
+<window title="@bind(vm.titulo)" border="none" width="95%"
 		height="95%" closable="true" sclass="btn-info"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
-		<listbox id="gridDetalleCotizacion" mold="paging"
+<borderlayout hflex="1" vflex="1">
+    <north>
+      <vbox>
+      	<listbox id="gridDetalleCotizacion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleCotizacion)">
@@ -13,25 +15,25 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
-						onChange="@command('aplicarFiltro')" width="120px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.ubicacion)"
-						onChange="@command('aplicarFiltro')" width="120px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.detalleRequerimiento.descripcion)"
-						onChange="@command('aplicarFiltro')" width="200px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="200px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
 						value="@bind(vm.detalleCotizacionFiltro.marcaRepuesto)"
-						onChange="@command('aplicarFiltro')" width="100px" />
+						onChange="@command('aplicarFiltro')" hflex="1"  width="100px" />
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
@@ -48,10 +50,10 @@
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<decimalbox width="70px" instant="true" 
-						format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+					<decimalbox format="###.##"
 						value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
-						onChange="@command('aplicarFiltro')"/>
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" />
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
@@ -95,12 +97,9 @@
 					<listcell
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta) 
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
-					<listcell label="@bind(each.calcularFlete())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
-					<listcell label="@bind(each.calcularTotal())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+					<listcell label="@bind(each.precioVenta)" />
+					<listcell label="@bind(each.calcularFlete())" />
+					<listcell label="@bind(each.calcularTotal())" />
 				</listitem>
 			</template>
 
@@ -113,8 +112,11 @@
 					onClick="@command('agregarSeleccion', cotizacion=null)" />
 			</div>
 		</div>
-
-		<listbox id="gridDetalleSeleccion" mold="paging"
+      </vbox>  
+    </north>
+    <south>
+       <vbox>
+       <listbox id="gridDetalleSeleccion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleSeleccionado)">
@@ -161,12 +163,9 @@
 					<listcell
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta) 
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
-					<listcell label="@bind(each.calcularFlete())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
-					<listcell label="@bind(each.calcularTotal())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+					<listcell label="@bind(each.precioVenta)" />
+					<listcell label="@bind(each.calcularFlete())" />
+					<listcell label="@bind(each.calcularTotal())" />
 				</listitem>
 			</template>
 
@@ -181,5 +180,7 @@
 					onClick="@command('guardar', cotizacion=null)" />
 			</div>
 		</div>
-	</window>
-</zk>
+       </vbox> 
+    </south>
+</borderlayout>
+</window>

@@ -21,7 +21,7 @@
 					sort="auto(idRequerimiento)" width="120px">
 					
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
-						onChange="@command('aplicarFiltro')" width="100px"/>
+						onChange="@command('aplicarFiltro')" width="100px" hflex="1" />
 					
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>
@@ -39,7 +39,7 @@
 					sort="auto(modeloV)" width="130px">
 					
 					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.modeloV)"
-						onChange="@command('aplicarFiltro')" width="110px" />
+						onChange="@command('aplicarFiltro')" width="110px" hflex="1" />
 					
 					<div sclass="z-icon-filter bigger-200" />
 				</listheader>

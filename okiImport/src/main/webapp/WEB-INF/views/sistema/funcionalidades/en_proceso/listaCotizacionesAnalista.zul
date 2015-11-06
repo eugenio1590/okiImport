@@ -26,7 +26,9 @@
 						</rows>
 					</grid>
 				</groupbox>
-				<listbox id="gridCotizaciones" sclass="mylist" model="@load(vm.listaCotizacion)">
+				<listbox id="gridCotizaciones" sclass="mylist" model="@load(vm.listaCotizacion)"
+				pagingPosition="top"
+				>
 					<auxhead>
 						<auxheader colspan="3" label="Cotizaciones"/>
 					</auxhead>

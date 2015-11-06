@@ -1,7 +1,7 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer" id="winListaAnalistas"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaAnalistasViewModel')">
-		<listbox id="gridAnalistas" mold="paging"
+		<listbox id="gridAnalistas" mold="paging" pagingPosition="top"
 			model="@load(vm.analistas)">
 			<auxhead sclass="nombre-center">
 				<auxheader>
@@ -15,7 +15,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox value="@bind(vm.analistaFiltro.nombre)"
 						instant="true" placeholder="Buscar por Nombre"
-						onChange="@command('aplicarFiltro')" />
+						onChange="@command('aplicarFiltro')" hflex="1"  />
 				</auxheader>
 				<auxheader colspan="1">
 					

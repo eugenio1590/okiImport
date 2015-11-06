@@ -89,7 +89,7 @@
 						</hbox>
 					</groupbox>
 				</div>
-				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%"
+				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%" pagingPosition="top"
 					model="@load(vm.listaDetalleCotizacion)" mold="paging" pageSize="5"
 					emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
 					<auxhead>
