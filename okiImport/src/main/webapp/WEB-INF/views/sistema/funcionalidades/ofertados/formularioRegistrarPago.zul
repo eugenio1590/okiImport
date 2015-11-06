@@ -1,3 +1,4 @@
+<zk xmlns:w="client" xmlns:n="native">
 <zk>
 	<window id="winFormRegistrarPago" border="none"  
 		apply="org.zkoss.bind.BindComposer"
