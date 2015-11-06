@@ -1,3 +1,4 @@
+<zk xmlns:w="client" xmlns:n="native">
 <zk>
 	<window title="Cotizaciones" border="none" width="80%" closable="true" 
 	 sclass="btn-info" apply="org.zkoss.bind.BindComposer" 
