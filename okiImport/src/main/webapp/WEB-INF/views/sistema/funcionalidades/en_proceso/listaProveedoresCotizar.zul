@@ -1,3 +1,4 @@
+<zk xmlns:w="client" xmlns:n="native">
 <zk>
 	<window border="none" title="Lista de Proveedores" apply="org.zkoss.bind.BindComposer" 
 		width="@bind(vm.size)" height="@bind(vm.size)" closable="true" sclass="btn-primary"
