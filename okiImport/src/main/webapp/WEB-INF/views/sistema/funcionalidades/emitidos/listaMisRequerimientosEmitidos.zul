@@ -3,7 +3,6 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisRequerimientosEmitidosViewModel')">
 		
 	    <!-- LISTA DE MIS REQUERIMIENTOS EMITIDOS-->
-	    <include src="/WEB-INF/views/template/subTitle.zul" subtitulo="" />
 			<panel sclass="borderGrid">
 				<panelchildren>
 					<hbox width="100%" align="center">
