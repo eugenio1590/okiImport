@@ -1,7 +1,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 
 	<n:header class="header header-transparent header-waterfall">
-		<image src="/resources/img/LogoSinSombreado.png" sclass="header-logo margin-left-no" />
+		<image src="/resources/img/LogoSinSombreado.png" sclass="header-logo margin-left-no" height="55px"/>
 		<include src="${requestScope.menu}" if="${ not empty requestScope.menu }"/>
 
 <!-- 		<div class="card-wrap"> -->
