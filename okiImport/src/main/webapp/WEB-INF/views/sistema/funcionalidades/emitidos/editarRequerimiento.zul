@@ -223,14 +223,16 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption label="Datos Repuestos" sclass="custom_caption" />
-				<panel sclass="panel-primary">
-					<panelchildren>
-
-						<listbox mold="paging" pagingPosition="top"
+				
+                        <!-- LISTA DETALLE REQUERIMIENTO-->
+                        <panel sclass="borderGrid">
+				<panelchildren>
+						<listbox mold="paging" pagingPosition="top" emptyMessage="No hay solicitudes"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							style="margin-top:10px" pageSize="5">
 
 							<listhead>
+							    <listheader width="3%"/>
 								<listheader label="Codigo OEM *"
 									sort="none" />
 								<listheader label="Descripcion *"
@@ -243,6 +245,7 @@
 							</listhead>
 							<template name="model">
 								<listitem>
+								    <listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 									<listcell>
 									
 										<textbox value="@bind(each.codigoOem)" readonly="@bind(!vm.editar)" 

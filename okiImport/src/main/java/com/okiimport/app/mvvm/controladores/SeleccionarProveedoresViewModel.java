@@ -52,6 +52,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	private Window winListProveedores;
 	@Wire("#pagProveedores")
 	private Paging pagProveedores;
+	@Wire("#pagProveedoresSeleccionados")
+	private Paging pagProveedoresSeleccionados;
 	@Wire ("#btn_enviar")
 	private Button btn_enviar;
 	
@@ -131,6 +133,7 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		gridProveedoresSeleccionados.setCheckmark(true);
 		pagProveedores.setActivePage(page);
 		pagProveedores.setTotalSize(total);
+		
 	}
 	
 	/**COMMAND*/
@@ -185,6 +188,12 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Command
 	public void paginarLista(){
 		consultarProveedores(pagProveedores.getActivePage());
+	}
+	
+	@NotifyChange({"*"})
+	@Command
+	public void paginarListaSeleccionados(){
+		consultarProveedores(pagProveedoresSeleccionados.getActivePage());
 	}
 	
 	/**

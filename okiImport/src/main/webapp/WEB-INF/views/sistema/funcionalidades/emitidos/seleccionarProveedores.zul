@@ -20,7 +20,18 @@
 								tooltiptext="Agregar Proveedores a Consultar"
 								onClick="@command('agregarProveedores')" />
 						</toolbar>
-						<listbox id="gridProveedoresSeleccionados"
+						<panel sclass="borderGrid">
+						<panelchildren>
+						<hbox width="100%" align="center">
+						<paging id="pagProveedores" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblProveedores" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+					<!-- LISTA PROVEEDORES A SELECCIONAR-->
+						<listbox id="gridProveedoresSeleccionados" emptyMessage="No hay solicitudes"
+						onAfterRender="@command('updatePaging', paging = pagProveedores, label=lblProveedores)"
 							mold="paging" checkmark="true" pagingPosition="top"
 							selectedItems="@bind(vm.proveedoresSeleccionados)"
 							multiple="true" model="@load(vm.listaProveedores)">
@@ -44,8 +55,8 @@
 							</template>
 
 						</listbox>
-						<paging id="pagProveedores" autohide="true"
-							onPaging="@command('paginarLista')" />
+				</panelchildren>
+			</panel>
 					</vlayout>
 				</west>
 
@@ -59,9 +70,18 @@
 								onClick="@command('eliminarProveedores')" />
 						</toolbar>
 
-
-
-						<listbox id="gridProveedores" pagingPosition="top"
+					  <!-- LISTA PROVEEDORES SELECCIONADOS-->
+					  <panel sclass="borderGrid">
+						<panelchildren>
+					    <hbox width="100%" align="center">
+						<paging id="pagProveedoresSeleccionados" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblProveedoresSeleccionados" sclass="rRmWwb-info"/>
+						</div>
+					   </hbox>
+						<listbox id="gridProveedores" pagingPosition="top" emptyMessage="No hay solicitudes"
+						onAfterRender="@command('updatePaging', paging = pagProveedoresSeleccionados, label=lblProveedoresSeleccionados)"
 							model="@load(vm.listaProveedoresSeleccionados1)" mold="paging"
 							checkmark="true" multiple="true" sclass="custom-paging"
 							selectedItems="@bind(vm.listaProveedoresSeleccionados2)">
@@ -77,6 +97,8 @@
 								</listitem>
 							</template>
 						</listbox>
+							</panelchildren>
+			</panel>
 					</div>
 				</east>
 			</borderlayout>
