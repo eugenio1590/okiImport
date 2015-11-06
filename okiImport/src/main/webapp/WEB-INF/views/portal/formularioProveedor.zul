@@ -180,7 +180,7 @@
 									onPaging="@command('paginarLista',tipo = 1)" />
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
-									model="@load(vm.listaMarcaVehiculos)" pagingPosition="top">
+									model="@load(vm.listaMarcaVehiculos)">
 									<listhead>
 										<listheader label="Nombre" sort="none" />
 									</listhead>

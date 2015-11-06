@@ -38,6 +38,9 @@
 /**Borde de la grid*/
 .borderGrid {
 	border: 1px solid #C3C3C3;
+}
+
+.borderGrid.margin {
 	margin-top: 10px;
 }
 
