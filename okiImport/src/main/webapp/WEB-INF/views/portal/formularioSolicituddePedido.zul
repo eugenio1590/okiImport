@@ -1,3 +1,4 @@
+<zk xmlns:w="client" xmlns:n="native">
 <window id="winCompras" border="none" width="80%"
 	title="Solicitud de Pedido" apply="org.zkoss.bind.BindComposer"
 	closable="true" sclass="btn-primary"
