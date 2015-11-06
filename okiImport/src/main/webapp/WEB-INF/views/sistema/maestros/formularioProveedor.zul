@@ -7,19 +7,19 @@
 		<tabbox id="tabDatosProveedor" maximalHeight="true">
 			<tabs id="tabs">
 
-				<tab id="tabDatosFiscales"
+				<tab id="tabDatosFiscales" sclass="waves-color-blue waves-effect"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
 					<label value="Tax Data / Datos Fiscales" />
 
 				</tab>
 
-				<tab id="tabMarcaVehiculo"
+				<tab id="tabMarcaVehiculo" sclass="waves-color-blue waves-effect"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
 					<label value="Brands / Marcas" />
 
 				</tab>
 
-				<tab id="tabClasificacionRepuesto"
+				<tab id="tabClasificacionRepuesto" sclass="waves-color-blue waves-effect"
 					onClick="@command('habilitarBtnLimpiar', id=self.id)">
 					<label
 						value="Parts Clasification / Clasificación Repuestos" />
