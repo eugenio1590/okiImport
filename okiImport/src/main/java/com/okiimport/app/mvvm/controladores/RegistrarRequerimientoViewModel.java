@@ -264,7 +264,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@Command
 	@NotifyChange("requerimiento")
 	public void cargarArchivoRepuesto(@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event){
-		super.onUpload(new PDDetalleRequerimientoEstrategy(), event);
+		super.onUpload(new PDDetalleRequerimientoEstrategy(), event, "requerimiento");
 	}
 	
 	/**METODOS OVERRIDE*/

@@ -2,6 +2,8 @@ package com.okiimport.app.mvvm.controladores;
 
 import java.util.List;
 
+import org.zkoss.bind.BindUtils;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -20,18 +22,19 @@ public abstract class AbstractCargaMasivaViewModel extends AbstractRequerimiento
 	protected String ultimoArchivo="";
 	
 	/**METODOS PRIVADOS DE LA CLASE*/
-	protected void onUpload(final ProcesarDatosEstrategy<?> estrategia, final UploadEvent event){
+	protected void onUpload(final ProcesarDatosEstrategy<?> estrategia, final UploadEvent event, final String... notifyChange){
 		Component compt = event.getTarget();
 		try {
 			Media media = event.getMedia();
 			TypeDocument type = null;
 			if(ultimoArchivo!=null && ultimoArchivo.trim().toLowerCase().equalsIgnoreCase(media.getName()))
 				this.mostrarMensajeCargaMasiva("Información", 
-						"Ya se ha cargado el archivo "+media.getName()+". \n¿Desea cargarlo de nuevo?", estrategia, event);
+						"Ya se ha cargado el archivo "+media.getName()+". \n¿Desea cargarlo de nuevo?", estrategia, event, notifyChange);
 			else if(!ultimoArchivo.trim().equalsIgnoreCase("") 
 					&& !ultimoArchivo.trim().toLowerCase().equalsIgnoreCase(media.getName()))
 				this.mostrarMensajeCargaMasiva("Información", "Ya se ha cargado un archivo "+ultimoArchivo+
-						". \n¿Desea cargar el archivo "+media.getName()+"? \nSe perderan los datos cargados con anterioridad.", estrategia, event);
+						". \n¿Desea cargar el archivo "+media.getName()+"? \nSe perderan los datos cargados con anterioridad.", 
+						estrategia, event, notifyChange);
 			else if((type = TypeDocument.switchName(media.getFormat())) != null){
 				byte[] binario = media.getByteData();
 	 			//if (binario.length <= (servicioConfiguracionGeneral.buscarTamanoMaximo() * 1048576)) {
@@ -72,7 +75,7 @@ public abstract class AbstractCargaMasivaViewModel extends AbstractRequerimiento
 	
 	/**METODOS PRIVADOS DE LA CLASE*/
 	private void mostrarMensajeCargaMasiva(String titulo, String mensaje, 
-			final ProcesarDatosEstrategy<?> estrategia, final UploadEvent event){
+			final ProcesarDatosEstrategy<?> estrategia, final UploadEvent event, final String... notifyChange){
 		mostrarMensaje(titulo, mensaje, 
 				Messagebox.INFORMATION, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, 
@@ -80,10 +83,11 @@ public abstract class AbstractCargaMasivaViewModel extends AbstractRequerimiento
 
 					@Override
 					public void onEvent(Event evt) throws Exception {
-						// TODO Auto-generated method stub
 						if((Messagebox.Button) evt.getData()==Messagebox.Button.YES){
 							AbstractCargaMasivaViewModel.this.ultimoArchivo="";
-							AbstractCargaMasivaViewModel.this.onUpload(estrategia, event);
+							AbstractCargaMasivaViewModel.this.onUpload(estrategia, event, notifyChange);
+							for(String field : notifyChange)
+								BindUtils.postNotifyChange(null,null,AbstractCargaMasivaViewModel.this, field);
 						}
 					}
 		            
