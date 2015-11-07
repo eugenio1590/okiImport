@@ -89,6 +89,8 @@
 						</hbox>
 					</groupbox>
 				</div>
+				<panel sclass="borderGrid">
+								<panelchildren>
 				<listbox id="gridDetalleCotizacion" sclass="mylist" height="80%" pagingPosition="top"
 					model="@load(vm.listaDetalleCotizacion)" mold="paging" pageSize="5"
 					emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
@@ -212,6 +214,8 @@
 						</listfooter>
 					</listfoot>
 				</listbox>
+				</panelchildren>
+							</panel>
 				<hbox id="btnBotones" width="100%" >
 					<div hflex="1" align="center">
 						<label value="* Campos Obligatorios" hflex="1" sclass="requerido"/>

@@ -1,9 +1,21 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RequerimientosProveedorViewModel')">
-		<listbox id="gridMisRequerimientos" mold="paging"
+		
+		<!-- LISTA DE REQUERIMIENTOS POR PROVEEDOR-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagMisRequerimientos" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblMisRequerimientos" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridMisRequerimientos" mold="paging" emptyMessage="No hay solicitudes"
 			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
-			sclass="mylist" model="@load(vm.listaRequerimientos)">
+			sclass="mylist" model="@load(vm.listaRequerimientos)"
+			onAfterRender="@command('updatePaging', paging = pagMisRequerimientos, label=lblMisRequerimientos)">
 
 			<listhead>
 
@@ -71,7 +83,7 @@
 			</template>
 
 		</listbox>
-		<paging id="pagMisRequerimientos"
-			onPaging="@command('paginarLista')" autohide="true" />
+		</panelchildren>
+			</panel>
 	</window>
 </zk>
