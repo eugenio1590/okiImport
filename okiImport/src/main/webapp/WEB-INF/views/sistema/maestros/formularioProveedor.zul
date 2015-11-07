@@ -42,15 +42,6 @@
 									<column width="65%" />
 								</columns>
 								<rows>
-									
-									
-									
-									
-									
-									
-									
-									
-
 <!-- 									<row> -->
 									
 <!-- 										<label value="Supplier Type/Tipo Proveedor: *" /> -->
@@ -229,9 +220,12 @@
 										tooltiptext="Agregar Marcas a Vender"
 										onClick="@command('agregarMarcas')" />
 								</toolbar>
+								<paging id="pagMarcas" autohide="true" sclass="custom-paging"
+									onPaging="@command('paginarLista',tipo = 1)" />
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
-									model="@load(vm.listaMarcaVehiculos)">
+									model="@load(vm.listaMarcaVehiculos)"
+									onAfterRender="@command('updatePaging', paging = pagMarcas, label=lblMarcas)">
 									<listhead>
 										<listheader label="Nombre" sort="none" />
 									</listhead>
@@ -241,8 +235,6 @@
 										</listitem>
 									</template>
 								</listbox>
-								<paging id="pagMarcas" autohide="true"
-									onPaging="@command('paginarLista',tipo = 1)" />
 							</vlayout>
 						</west>
 						<east id="borderMarcasEast" title="Marcas a Vender"
@@ -287,11 +279,15 @@
 										tooltiptext="Agregar Tipo Repuesto a Vender"
 										onClick="@command('agregarTipoRepuesto')" />
 								</toolbar>
+								<paging id="pagTipoRepuestos"
+									autohide="true" sclass="custom-paging"
+									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
 								<listbox id="gridClasificacionRepuesto"
 									model="@load(vm.listaClasificacionRepuesto)" mold="paging"
 									checkmark="true"
 									selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
-									multiple="true">
+									multiple="true"
+									onAfterRender="@command('updatePaging', paging = pagTipoRepuestos, label=lblTipoRepuestos)">
 									<listhead>
 										<listheader label="Nombre"
 											sort="none" />
@@ -304,9 +300,6 @@
 									</template>
 
 								</listbox>
-								<paging id="pagTipoRepuestos"
-									autohide="true"
-									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
 							</vlayout>
 						</west>
 						<east id="borderRepuestosEast"
