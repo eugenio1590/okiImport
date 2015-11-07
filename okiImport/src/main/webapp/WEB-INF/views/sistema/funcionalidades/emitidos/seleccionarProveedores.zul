@@ -20,9 +20,15 @@
 								tooltiptext="Agregar Proveedores a Consultar"
 								onClick="@command('agregarProveedores')" />
 						</toolbar>
-						<paging id="pagProveedores" hflex="1"
-							onPaging="@command('paginarLista')" autohide="true" />
 					<!-- LISTA PROVEEDORES A SELECCIONAR-->
+					<hbox width="100%" align="center">
+									<paging id="pagProveedores" hflex="1"
+									autohide="true" sclass="custom-paging"
+									onPaging="@command('paginarLista')" />
+									<div sclass="z-paging z-paging-info" height="25px">
+									<label id="lblProveedores" sclass="rRmWwb-info"/>
+									</div>
+										</hbox>
 						<listbox id="gridProveedoresSeleccionados" emptyMessage="No hay solicitudes"
 						onAfterRender="@command('updatePaging', paging = pagProveedores, label=lblProveedores)"
 							mold="paging" checkmark="true" pagingPosition="top"
@@ -63,9 +69,9 @@
 						</toolbar>
 
 					  <!-- LISTA PROVEEDORES SELECCIONADOS-->
-						<paging id="pagProveedoresSeleccionados" hflex="1"
+					      <paging id="pagProveedoresSeleccionados" hflex="1"
 							onPaging="@command('paginarLista')" autohide="true" />
-					   </hbox>
+					
 						<listbox id="gridProveedores" pagingPosition="top" emptyMessage="No hay solicitudes"
 						onAfterRender="@command('updatePaging', paging = pagProveedoresSeleccionados, label=lblProveedoresSeleccionados)"
 							model="@load(vm.listaProveedoresSeleccionados1)" mold="paging"

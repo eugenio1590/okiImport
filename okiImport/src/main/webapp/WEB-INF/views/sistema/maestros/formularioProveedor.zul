@@ -220,8 +220,13 @@
 										tooltiptext="Agregar Marcas a Vender"
 										onClick="@command('agregarMarcas')" />
 								</toolbar>
-								<paging id="pagMarcas" autohide="true" sclass="custom-paging"
+								<hbox width="100%" align="center">
+									<paging id="pagMarcas" autohide="true" sclass="custom-paging" hflex="1"
 									onPaging="@command('paginarLista',tipo = 1)" />
+									<div sclass="z-paging z-paging-info" height="25px">
+									<label id="lblMarcas" sclass="rRmWwb-info"/>
+									</div>
+										</hbox>
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
 									model="@load(vm.listaMarcaVehiculos)"
@@ -247,7 +252,7 @@
 										onClick="@command('eliminarMarcas')" />
 								</toolbar>
 								<listbox id="gridMarcasVender" mold="paging" checkmark="true" multiple="true"
-									model="@load(vm.proveedor.marcaVehiculos)"
+									model="@load(vm.proveedor.marcaVehiculos)" pagingPosition="top"
 									selectedItems="@bind(vm.marcaSeleccionadas)">
 									<!-- 
 										<frozen columns="1"/>
@@ -279,9 +284,14 @@
 										tooltiptext="Agregar Tipo Repuesto a Vender"
 										onClick="@command('agregarTipoRepuesto')" />
 								</toolbar>
-								<paging id="pagTipoRepuestos"
+								<hbox width="100%" align="center">
+									<paging id="pagTipoRepuestos" hflex="1"
 									autohide="true" sclass="custom-paging"
 									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+									<div sclass="z-paging z-paging-info" height="25px">
+									<label id="lblTipoRepuestos" sclass="rRmWwb-info"/>
+									</div>
+										</hbox>
 								<listbox id="gridClasificacionRepuesto"
 									model="@load(vm.listaClasificacionRepuesto)" mold="paging"
 									checkmark="true"
@@ -313,7 +323,7 @@
 								</toolbar>
 								<listbox id="gridTipoRepuestosVender"
 									model="@load(vm.proveedor.clasificacionRepuestos)"
-									mold="paging" checkmark="true" multiple="true"
+									mold="paging" checkmark="true" multiple="true" pagingPosition="top"
 									selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
 									<listhead>
 										<listheader label="Nombre"
