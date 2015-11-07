@@ -24,9 +24,20 @@
 			</north>
 			<center title="Solicitudes de Compra">
 				<div>
-					<listbox id="gridComprasCliente" mold="paging"
+			<!-- LISTA DE COMPRAS-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagComprasCliente" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblComprasCliente" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+					<listbox id="gridComprasCliente" mold="paging" emptyMessage="No hay solicitudes"
 						pageSize="10" pagingPosition="top" sclass="mylist"
-						model="@load(vm.listaCompras)">
+						model="@load(vm.listaCompras)"
+						onAfterRender="@command('updatePaging', paging = pagComprasCliente, label=lblComprasCliente)">
 
 						<listhead>
 
@@ -60,11 +71,9 @@
 								</listcell>
 							</listitem>
 						</template>
-
 					</listbox>
-					<paging id="pagComprasCliente"
-						onPaging="@command('paginarLista')" autohide="true" />
-					
+					</panelchildren>
+				</panel>
 				</div>
 			</center>
 			<south border="none">

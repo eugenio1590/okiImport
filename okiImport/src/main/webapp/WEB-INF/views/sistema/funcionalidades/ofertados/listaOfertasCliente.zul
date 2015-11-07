@@ -23,9 +23,21 @@
 			</north>
 			<center title="Ofertas">
 				<div>
-					<listbox id="gridOfertasCliente" mold="paging"
+					
+		<!-- LISTA DE OFERTAS-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagOfertasCliente" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblOfertasCliente" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+					<listbox id="gridOfertasCliente" mold="paging" emptyMessage="No hay solicitudes"
 						pageSize="10" pagingPosition="top" sclass="mylist"
-						model="@load(vm.listaOfertas)">
+						model="@load(vm.listaOfertas)"
+						onAfterRender="@command('updatePaging', paging = pagOfertasCliente, label=lblOfertasCliente)">
 
 						<listhead>
 
@@ -57,11 +69,9 @@
 								</listcell>
 							</listitem>
 						</template>
-
 					</listbox>
-					<paging id="pagOfertasCliente"
-						onPaging="@command('paginarLista')" autohide="true" />
-					
+					</panelchildren>
+				</panel>
 				</div>
 			</center>
 			<south border="none">
