@@ -258,6 +258,7 @@
 			<div hflex="1" vflex="1">
 				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos de los Repuestos" />
 				<div align="right">
+					<fileupload label="Agregar desde Archivo" sclass="btn-info" onUpload="@command('cargarArchivoRepuesto')"/>
 					<button label="Agregar Repuesto" type="submit"
 						onClick="@command('agregarRepuesto')" sclass="btn-primary" />
 					<button label="Eliminar Repuesto" type="submit"

@@ -12,10 +12,12 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
+import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
@@ -31,13 +33,13 @@ import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Motor;
 import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.carga_masiva.PDDetalleRequerimientoEstrategy;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
+public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
 
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -259,6 +261,40 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 		cambiarMotores(0, null, null);
 	}
 	
+	@Command
+	@NotifyChange("requerimiento")
+	public void cargarArchivoRepuesto(@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event){
+		super.onUpload(new PDDetalleRequerimientoEstrategy(), event);
+	}
+	
+	/**METODOS OVERRIDE*/
+	/**CARGA MASIVA*/
+	@Override
+	protected void prepararCarga() {
+		requerimiento.removeAllDetalleRequerimiento();
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void archivosProcesados(List<?> registros, Media media, Component component) {
+		List<DetalleRequerimiento> detalles = (List<DetalleRequerimiento>) registros;
+		for(DetalleRequerimiento detalle : detalles){
+			requerimiento.addDetalleRequerimiento(detalle);
+		}
+	}
+
+	@Override
+	protected void archivoVacio(Component component) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void archivoNoValido(Component component) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
@@ -410,6 +446,5 @@ public class RegistrarRequerimientoViewModel extends AbstractRequerimientoViewMo
 	public void setMotor(Motor motor) {
 		this.motor = motor;
 	}
-
 	
 }
