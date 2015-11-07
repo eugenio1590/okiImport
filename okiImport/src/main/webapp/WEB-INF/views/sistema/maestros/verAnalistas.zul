@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormularioAnalista" title="Analista"
 		border="normal" width="70%" apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary" closable="true"

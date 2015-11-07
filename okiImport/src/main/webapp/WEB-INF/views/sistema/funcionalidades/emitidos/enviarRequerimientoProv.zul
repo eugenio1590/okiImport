@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winEnviarReqProv" title="Solicitar Repuesto" border="none" width="80%" closable="true"
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"  
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')"
@@ -173,16 +173,19 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption label="Datos Repuestos" sclass="custom_caption" />
-				<panel sclass="panel-primary">
-					<panelchildren>
-
-						<listbox id="listRepuestos" mold="paging"
+				
+						<!-- LISTA DE DETALLE REQUERIMIENTOS A ENVIAR A PROVEEDOR -->
+						
+						<panel sclass="borderGrid">
+						<panelchildren>
+						<listbox id="listRepuestos" mold="paging" emptyMessage="No hay solicitudes"
 							model="@load(vm.requerimiento.detalleRequerimientos)"
 							selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)"
 							style="margin-top:10px" pageSize="5" checkmark="true" 
 							pagingPosition="top" multiple="true"  sclass="mylist">
 							 
 							<listhead>
+							<listheader width="3%"/>
 								<listheader label="CodigoOEM"
 									sort="auto"  width="130px" />
 								
@@ -197,6 +200,7 @@
 							</listhead>
 							<template name="model">
 								<listitem>
+								    <listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 									<listcell label="@bind(each.codigoOem)" >
 										
 									</listcell>

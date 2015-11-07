@@ -102,8 +102,8 @@
 							<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos"/>
 							<panel sclass="borderGrid">
 								<panelchildren>
-
-									<listbox mold="paging" pageSize="5" pagingPosition="top"
+                                   <!-- LISTA DETALLE REQUERIMIENTO-->
+									<listbox mold="paging" pageSize="5" pagingPosition="top" emptyMessage="No hay solicitudes"
 										model="@load(vm.requerimiento.detalleRequerimientos)" >
 										<listhead>
 											<listheader width="3%"/>

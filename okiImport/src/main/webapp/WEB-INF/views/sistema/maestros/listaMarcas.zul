@@ -1,8 +1,20 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window border="none" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaMarcasViewModel')">
-		<listbox id="gridMarcas" mold="paging" pagingPosition="top"
-			model="@load(vm.marcas)">
+		
+		<!-- LISTA DE MARCAS-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagMarcas" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblMarcas" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridMarcas" mold="paging" pagingPosition="top" emptyMessage="No hay marcas"
+			model="@load(vm.marcas)"
+			onAfterRender="@command('updatePaging', paging = pagMarcas, label=lblMarcas)">
 			<auxhead sclass="nombre-center">
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
@@ -51,7 +63,7 @@
 				</listitem>
 			</template>
 		</listbox>
-		<paging id="pagMarcas" onPaging="@command('paginarLista')"
-			autohide="true" />
+		</panelchildren>
+				</panel>
 	</window>
 </zk>

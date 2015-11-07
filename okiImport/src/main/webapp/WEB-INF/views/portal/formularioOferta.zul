@@ -1,3 +1,4 @@
+<zk xmlns:w="client" xmlns:n="native">
 <window id="winOferta" border="none" width="60%" title="Oferta"
 		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')"
