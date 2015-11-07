@@ -126,7 +126,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	/** METODOS SOBREESCRITOS */
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected void mostrarMensaje(String titulo, String mensaje, String icon,
+	public void mostrarMensaje(String titulo, String mensaje, String icon,
 			Button[] botones, EventListener clickEvent,
 			Map<String, String> params) {
 		Messagebox.setTemplate(RUTA_MESSAGEBOX);
