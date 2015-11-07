@@ -176,9 +176,15 @@
 										tooltiptext="Agregar Marcas a Vender"
 										onClick="@command('agregarMarcas')" />
 								</toolbar>
-								<paging id="pagMarcas" autohide="true" sclass="custom-paging"
-									onPaging="@command('paginarLista',tipo = 1)" />
+								<hbox width="100%" align="center">
+									<paging id="pagMarcas" autohide="true" hflex="1" sclass="custom-paging"
+										onPaging="@command('paginarLista',tipo = 1)" />
+									<div sclass="z-paging z-paging-info" height="25px">
+										<label id="lblMarcas" sclass="rRmWwb-info"/>
+									</div>
+								</hbox>
 								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
+									onAfterRender="@command('updatePaging', paging=pagMarcas, label=lblMarcas)"
 									selectedItems="@bind(vm.marcaSeleccionadas)"
 									model="@load(vm.listaMarcaVehiculos)">
 									<listhead>
@@ -235,13 +241,17 @@
 										tooltiptext="Agregar Tipo Repuesto a Vender"
 										onClick="@command('agregarTipoRepuesto')" />
 								</toolbar>
-								<paging id="pagTipoRepuestos"
-									autohide="true" sclass="custom-paging"
-									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+								<hbox width="100%" align="center">
+									<paging id="pagTipoRepuestos" autohide="true" hflex="1" sclass="custom-paging"
+										onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+									<div sclass="z-paging z-paging-info" height="25px">
+										<label id="lblTipoRepuestos" sclass="rRmWwb-info"/>
+									</div>
+								</hbox>
 								<listbox id="gridClasificacionRepuesto" mold="paging"
+									onAfterRender="@command('updatePaging', paging=pagTipoRepuestos, label=lblTipoRepuestos)"
 									checkmark="true" multiple="true" 
 									model="@load(vm.listaClasificacionRepuesto)" 
-									
 									selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
 									>
 									<listhead>

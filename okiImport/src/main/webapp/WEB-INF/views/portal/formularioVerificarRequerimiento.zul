@@ -33,14 +33,14 @@
 			<panel sclass="borderGrid">
 				<panelchildren>
 					<hbox width="100%" align="center">
-						<paging id="pagRequerimientosCliente" hflex="1"
-							onPaging="@command('paginarLista')" autohide="true" />
+						<paging id="pagRequerimientosCliente" autohide="true" hflex="1"
+							onPaging="@command('paginarLista')" />
 						<div sclass="z-paging z-paging-info" height="28px">
 							<label id="lblRequerimientosCliente" sclass="rRmWwb-info"/>
 						</div>
 					</hbox>
 					<listbox id="gridRequerimientosCliente" emptyMessage="No hay solicitudes"
-						onAfterRender="@command('updatePaging', paging = pagRequerimientosCliente, label=lblRequerimientosCliente)"
+						onAfterRender="@command('updatePaging', paging=pagRequerimientosCliente, label=lblRequerimientosCliente)"
 						model="@load(vm.listaRequerimientos)">
 						
 						<auxhead>

@@ -11,13 +11,31 @@ span {
 	background-color:#2196f3;
 }
 
+.header-button {
+	//background-color:#2196f3;
+}
+
+/*.header-button table tr  {
+	padding: 5px;
+}*/
+
 .content-sub-heading {
-	margin-top: 28px;
+	margin-top: 20px;
     margin-bottom: 14px;
+}
+
+.z-include .content-sub-heading {
+	font-size: 18px;
 }
 
 .boxed-grey, .boxed-grey.z-listcell div {
 	background: #f9f9f9;
+}
+
+p.card-heading {
+	margin-top: 14px;
+	margin-bottom: 14px;
+	font-size: 17px;
 }
 
 .card-inner {
@@ -29,7 +47,7 @@ span {
 	padding-bottom: 1%;
 }
 
-input.form-control {
+input.form-control, textarea.form-control {
 	font-size: 14px;
 	padding: 10px;
 }
@@ -104,6 +122,7 @@ div .card-header .card-inner {
 .requerido {
 	color: red;
 	font-weight: bold;
+	font-size: 15px;
 }
 
 .requerido.margen {
@@ -145,4 +164,12 @@ div.alert.alert-danger {
 
 div.alert.alert-danger span {
 	color: #FFF;
+}
+
+button.btn-primary.z-button, button.btn-info.z-button {
+	font-size: 14px;
+}
+
+div.z-vlayout-inner {
+	padding-bottom: 0px;
 }
