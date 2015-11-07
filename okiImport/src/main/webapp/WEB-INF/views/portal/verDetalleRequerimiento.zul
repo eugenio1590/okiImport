@@ -12,11 +12,11 @@
 							<div> 
 		    					<space/>
 		    					<space/> 
-		    					<label value="N° Solicitud:" />
+		    					<label value="N° Solicitud:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 		    					<space/>
 		    					<space/> 
-		   						<label value="Estado:" />
+		   						<label value="Estado:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.determinarEstatus())" sclass="z-letra-grande" /> 
 		    
 							</div>
@@ -42,21 +42,21 @@
 											<rows>
 												<row>
 													<!-- CEDULA -->
-													<label value="Cedula/RIF: "/>
+													<label value="Cedula/RIF: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 													<!-- NOMBRE O RAZON SOCIAL -->
-													<label value="Nombre / Razón Social: " />
+													<label value="Nombre / Razón Social: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.cliente.nombre)" />
 												</row>
 							
 												<row>
 													<!-- ESTADO -->
-							    					<label value="Estado: " />
+							    					<label value="Estado: " sclass="label-not-mandatory"/>
 							    					<label value="@bind(vm.requerimiento.cliente.ciudad.estado.nombre)"/>
 									
 													<!-- CIUDAD -->
-													<label value="Ciudad: " />
+													<label value="Ciudad: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.cliente.ciudad.nombre)" />
 												</row>
 											</rows>
@@ -75,21 +75,21 @@
 											<rows>
 												<row>
 													<!-- MARCA -->
-													<label value="Marca: " />
+													<label value="Marca: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
 													
 													<!-- MODELO -->
-													<label value="Modelo: " />
+													<label value="Modelo: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.modeloV)"/>
 												</row>
 
 												<row>
 													<!-- AÑO -->								
-													<label value="Año:" />
+													<label value="Año:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.annoV)"/>
 													
 													<!-- SERIAL DE CARROCERIA -->
-													<label value="Serial Carroceria: " />
+													<label value="Serial Carroceria: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 												</row>
 											</rows>

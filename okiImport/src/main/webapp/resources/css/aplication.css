@@ -173,3 +173,7 @@ button.btn-primary.z-button, button.btn-info.z-button {
 div.z-vlayout-inner {
 	padding-bottom: 0px;
 }
+
+.label-not-mandatory {
+	font-style: oblique;
+}
