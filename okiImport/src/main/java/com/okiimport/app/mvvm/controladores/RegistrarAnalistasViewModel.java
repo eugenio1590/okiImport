@@ -84,17 +84,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
 				
-				String str = "Analista Registrado con Exito ";
-
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
-									recargar();
-								}
-							}
-						});
+				mostrarMensaje("Informaci\u00F3n", "Analista Registrado con Exito", null, null, null, null);
+				
 			}	
 	}
 	
