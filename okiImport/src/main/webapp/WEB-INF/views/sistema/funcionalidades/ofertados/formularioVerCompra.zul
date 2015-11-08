@@ -20,7 +20,7 @@
 				<space></space>
 				<space></space>
 				<label value="Fecha: " />
-				<datebox id="fecha" width="150px" format="dd/MM/yyyy" disabled="true"
+				<datebox id="fecha" width="150px" format="dd/MM/yyyy" 
 					value="@bind(vm.compra.fechaCreacion)" instant="true"
 					readonly="true" />
 				<space></space>
@@ -61,7 +61,7 @@
 
 
 								<label value="Fecha Creacion: " />
-								<datebox width="48%" readonly="true" mold="rounded" disabled="true"
+								<datebox width="48%" readonly="true" mold="rounded" 
 								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
 								/>
 
