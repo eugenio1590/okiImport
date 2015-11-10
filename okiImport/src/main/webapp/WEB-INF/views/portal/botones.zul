@@ -1,7 +1,7 @@
 <zk>
-	<div sclass="breadcrumbs">
-		<div class="btn-group btn-group-sm" hflex="1" align="right">
-
+<!-- 	<div sclass="breadcrumbs"> -->
+<!-- 		<div class="btn-group btn-group-sm" hflex="1" align="right"> -->
+		<div hflex="1" vflex="1" align="right">
 			<a image="/resources/img/botones/HomeCasaOscuro.png"
 				hoverImage="/resources/img/botones/HomeCasaClara.png"
 				href="javascript:void(0)" tooltiptext="Home"
@@ -23,5 +23,5 @@
 <!-- 				onClick="@command('verificarRequerimiento')" /> -->
 
 		</div>
-	</div>
+<!-- 	</div> -->
 </zk>

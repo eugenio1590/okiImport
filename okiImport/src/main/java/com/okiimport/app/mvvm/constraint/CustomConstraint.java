@@ -1,6 +1,8 @@
 package com.okiimport.app.mvvm.constraint;
 
-import org.apache.commons.lang.ArrayUtils;
+import java.util.Arrays;
+import java.util.List;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zul.Constraint;
@@ -127,7 +129,8 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	protected EConstraint[] concatArrayConstraint(EConstraint[] array, EConstraint... eConstraints){
-		return (EConstraint[]) ArrayUtils.addAll(array, eConstraints);
+		List<EConstraint> lista = Arrays.asList(array);
+		return lista.toArray(eConstraints);
 	}
 	
 	public void hideComponentError(){

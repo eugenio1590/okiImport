@@ -173,7 +173,7 @@
 						</n:aside>
 						<div sclass="card-main">
 							<div sclass="card-inner">
-								<n:p sclass="card-heading">Datos Adicionales</n:p>
+								<n:p class="card-heading">Datos Adicionales</n:p>
 								<grid>
 									<columns>
 										<column width="5%" align="right" />
@@ -257,14 +257,17 @@
 			</div>
 			<div hflex="1" vflex="1">
 				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos de los Repuestos" />
-				<div align="right">
-					<button label="Agregar Repuesto" type="submit"
-						onClick="@command('agregarRepuesto')" sclass="btn-primary" />
-					<button label="Eliminar Repuesto" type="submit"
-						sclass="btn-primary" onClick="@command('eliminarRepuesto')" />
-				</div>
+				<hbox width="100%" sclass="header-button">
+					<fileupload iconSclass="fa fa-upload" tooltiptext="Agregar desde Archivo" sclass="btn-info" onUpload="@command('cargarArchivoRepuesto')"/>
+					<div align="right" hflex="1">
+						<button iconSclass="fa fa-plus" label="Repuesto" type="submit"
+							onClick="@command('agregarRepuesto')" sclass="btn-primary" />
+						<button iconSclass="fa fa-minus" label="Repuesto" type="submit"
+							sclass="btn-primary" onClick="@command('eliminarRepuesto')" />
+					</div>
+				</hbox>
 				<!-- REPUESTOS -->
-				<panel sclass="boxed-grey borderGrid">
+				<panel sclass="boxed-grey borderGrid margin">
 					<panelchildren>
 						<listbox mold="paging" multiple="true" pagingPosition="top" 
 							pageSize="5" sclass="boxed-grey"
