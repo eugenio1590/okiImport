@@ -3,10 +3,7 @@
 		height="95%" closable="true" sclass="btn-info"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
-<borderlayout hflex="1" vflex="1">
-    <north>
-      <vbox>
-      	<listbox id="gridDetalleCotizacion" mold="paging"
+		<listbox id="gridDetalleCotizacion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleCotizacion)">
@@ -51,10 +48,10 @@
 				</auxheader>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
-					<decimalbox format="###.##"
+					<decimalbox width="70px" instant="true" 
+						format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
 						value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
-						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
-						width="70px" />
+						onChange="@command('aplicarFiltro')"/>
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
@@ -98,9 +95,12 @@
 					<listcell
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta)" />
-					<listcell label="@bind(each.calcularFlete())" />
-					<listcell label="@bind(each.calcularTotal())" />
+					<listcell label="@bind(each.precioVenta) 
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+					<listcell label="@bind(each.calcularFlete())
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+					<listcell label="@bind(each.calcularTotal())
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
 				</listitem>
 			</template>
 
@@ -113,11 +113,8 @@
 					onClick="@command('agregarSeleccion', cotizacion=null)" />
 			</div>
 		</div>
-      </vbox>  
-    </north>
-    <south>
-       <vbox>
-       <listbox id="gridDetalleSeleccion" mold="paging"
+
+		<listbox id="gridDetalleSeleccion" mold="paging"
 			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
 			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
 			model="@load(vm.listaDetalleSeleccionado)">
@@ -164,9 +161,12 @@
 					<listcell
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
-					<listcell label="@bind(each.precioVenta)" />
-					<listcell label="@bind(each.calcularFlete())" />
-					<listcell label="@bind(each.calcularTotal())" />
+					<listcell label="@bind(each.precioVenta) 
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
+					<listcell label="@bind(each.calcularFlete())
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+					<listcell label="@bind(each.calcularTotal())
+										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
 				</listitem>
 			</template>
 
