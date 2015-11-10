@@ -28,7 +28,7 @@ import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.mvvm.resource.PasswordGenerator;
+import com.okiimport.app.resource.service.PasswordGenerator;
 import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.maestros.SMaestros;
 
@@ -143,7 +143,7 @@ public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({"personaSeleccionada", "usuario"})
 	public void verInfoPersona(@BindingParam("persona") Persona persona){
 		personaSeleccionada = persona;
-		this.usuario.setUsername(buscarUsername(personaSeleccionada, sControlUsuario));
+		this.usuario.setUsername(sControlUsuario.buscarUsername(personaSeleccionada));
 		this.usuario.setPasword(PasswordGenerator.getPassword(PasswordGenerator.MINUSCULAS+PasswordGenerator.MAYUSCULAS
 				+PasswordGenerator.NUMEROS,10));
 	}
