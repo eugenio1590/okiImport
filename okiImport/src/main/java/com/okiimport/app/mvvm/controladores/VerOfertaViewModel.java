@@ -22,6 +22,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -86,8 +87,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	@NotifyChange("oferta")
 	public void cargarOferta(){
-		
-		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+		List<DetalleRequerimiento> detallesRequerimiento = obtenerDetallesRequerimientos();
+		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento(), detallesRequerimiento);
 	
 	}
 	
@@ -105,7 +106,21 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-			cargarOferta();
+			boolean seguir = true;
+			while(seguir){
+				cargarOferta();
+				
+				if(oferta==null) {
+					seguir = false;
+				}
+				else if(oferta.getDetalleOfertas().size()==0){
+					seguir = true;
+					oferta = null;
+				}
+				else {
+					seguir = false;
+				}
+			}
 			
 			final Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
@@ -207,6 +222,25 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		cerrar = true;
 		winOferta.onClose();
 		crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+	}
+	
+	/**
+	 * Descripcion: Obtendra todos los objetos detalles requerimiento de los objetos detalle oferta seleccionados
+	 * Parametros: Ninguno
+	 * Retorno: @return detallesRequerimiento: lista de los detalles requerimientos asociados 
+	 * a los objetos detalle oferta seleccionados
+	 * Nota: Ninguna
+	 * */
+	private List<DetalleRequerimiento> obtenerDetallesRequerimientos(){
+		List<DetalleRequerimiento> detallesRequerimiento = null;
+		if(listaDetOferta!=null && !listaDetOferta.isEmpty()){
+			detallesRequerimiento = new ArrayList<DetalleRequerimiento>();
+			for(DetalleOferta detalleO : listaDetOferta){
+				detallesRequerimiento.add(detalleO.getDetalleCotizacion().getDetalleRequerimiento());
+			}
+			 
+		}
+		return detallesRequerimiento;
 	}
 	
 	/**

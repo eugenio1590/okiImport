@@ -33,7 +33,7 @@
 
 
 
-			<listbox id="gridRequerimientosCliente" mold="paging" pagingPosition="top"
+			<listbox id="gridRequerimientosCliente" mold="paging"
 				checkmark="true" pagingPosition="top" multiple="true"
 				sclass="grid" model="@load(vm.listaRequerimientos)">
 				
