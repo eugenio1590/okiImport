@@ -27,11 +27,15 @@ import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
     //Servicios
+	@BeanInjector("sControlUsuario")
+	private SControlUsuario sControlUsuario;
+	
     @BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
     
@@ -261,8 +265,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 							cerrarVentana();
 						}
 						else if(button == Messagebox.Button.NO ){
-							requerimiento.cerrarSolicitud();
-							sTransaccion.actualizarRequerimiento(requerimiento);
+							sTransaccion.cerrarRequerimiento(requerimiento, sMaestros, sControlUsuario, false);
 							mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
 								@Override
 								public void onEvent(Event event) throws Exception {
@@ -281,6 +284,22 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**GETTERS Y SETTERS*/
+	public SControlUsuario getsControlUsuario() {
+		return sControlUsuario;
+	}
+
+	public void setsControlUsuario(SControlUsuario sControlUsuario) {
+		this.sControlUsuario = sControlUsuario;
+	}
+	
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
+
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
+	}
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
@@ -295,14 +314,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
-	}
-
-	public STransaccion getsTransaccion() {
-		return sTransaccion;
-	}
-
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
 	}
 	
 }

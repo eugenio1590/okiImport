@@ -20,21 +20,18 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Pais;
-import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.model.FormatedNumberConverter;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.mvvm.resource.PasswordGenerator;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.mail.MailService;
 
@@ -249,21 +246,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
-	}
-
-	protected String buscarUsername(Persona persona,
-			SControlUsuario sControlUsuario) {
-		boolean noValido = true;
-		String usuario = persona.getNombre().split(" ")[0].toLowerCase();
-		String username = usuario;
-		while (noValido) {
-			noValido = sControlUsuario.verificarUsername(username);
-			if (noValido)
-				username = usuario
-						+ PasswordGenerator.getPassword(
-								PasswordGenerator.NUMEROS + PasswordGenerator.MAYUSCULAS, 3);
-		}
-		return username;
 	}
 
 	public int getYearDay() {
