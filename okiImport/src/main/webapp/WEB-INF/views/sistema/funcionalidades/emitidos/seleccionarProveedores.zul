@@ -29,7 +29,7 @@
 									<label id="lblProveedores" sclass="rRmWwb-info"/>
 									</div>
 										</hbox>
-						<listbox id="gridProveedoresSeleccionados" emptyMessage="No hay solicitudes"
+						<listbox id="gridProveedoresSeleccionados" emptyMessage="No hay proveedores"
 						onAfterRender="@command('updatePaging', paging = pagProveedores, label=lblProveedores)"
 							mold="paging" checkmark="true" pagingPosition="top"
 							selectedItems="@bind(vm.proveedoresSeleccionados)"
@@ -72,8 +72,7 @@
 					      <paging id="pagProveedoresSeleccionados" hflex="1"
 							onPaging="@command('paginarLista')" autohide="true" />
 					
-						<listbox id="gridProveedores" pagingPosition="top" emptyMessage="No hay solicitudes"
-						onAfterRender="@command('updatePaging', paging = pagProveedoresSeleccionados, label=lblProveedoresSeleccionados)"
+						<listbox id="gridProveedores" pagingPosition="top" emptyMessage="No hay Proveedores Seleccionados"
 							model="@load(vm.listaProveedoresSeleccionados1)" mold="paging"
 							checkmark="true" multiple="true" sclass="custom-paging"
 							selectedItems="@bind(vm.listaProveedoresSeleccionados2)">
