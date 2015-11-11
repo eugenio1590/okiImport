@@ -51,6 +51,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zkmax.zul.Nav;
 import org.zkoss.zkmax.zul.Navitem;
 import org.zkoss.zkplus.spring.SpringUtil;
+import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.LayoutRegion;
 import org.zkoss.zul.Listbox;
@@ -115,11 +116,10 @@ public abstract class AbstractViewModel {
 	 * */
 	private boolean check(Component component) {
 		boolean exito = true;
-			if (component instanceof InputElement) {
-				if (!((InputElement) component).isValid()) {
-					exito = false;
-					((InputElement) component).getText(); // Force show errorMessage
-				}
+		if (component instanceof InputElement)
+			if (!((InputElement) component).isValid()) {
+				exito = false;
+				((InputElement) component).getText(); // Force show errorMessage
 			}
 		return exito;
 	}
@@ -150,6 +150,50 @@ public abstract class AbstractViewModel {
 		if(form!=null)
 			return checkIsValid(form);
 		return true;
+	}
+	
+	/**
+	 * Descripcion: permitira limpiar los constraint de algun elemento de la vista
+	 * Parametros: @param component: componente de la vista
+	 * Retorno: variable boolean que define si se ha ejecutado el limpiar de la vista
+	 * */
+	protected boolean cleanConstraint(Component component){
+		if (component instanceof InputElement) {
+			Constraint constraint = ((InputElement) component).getConstraint();
+			if(constraint instanceof CustomConstraint){
+				((CustomConstraint)constraint).hideComponentError();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Descripcion: permitira limpiar los constraint del componente de la vista pasado como parametro
+	 * y los hijos asociados a este
+	 * Parametros: @param component: componente de la vista
+	 * Retorno: Ninguno
+	 * */
+	protected void cleanConstraintComponent(Component component){	
+		cleanConstraint(component);
+		
+		List<Component> children = component.getChildren();
+		if(!children.isEmpty())
+			for(int i=0; i<children.size(); i++){
+				Component each = children.get(i);
+				cleanConstraintComponent(each);
+			}
+	}
+	
+	/**
+	 * Descripcion: permitira limpiar los constraint del formulario
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * */
+	protected void cleanConstraintForm(){
+		if(form!=null){
+			cleanConstraintComponent(form);
+		}
 	}
 	
 	/**
@@ -221,6 +265,17 @@ public abstract class AbstractViewModel {
 		moveSelection(origen, destino, selection, null, true,  failMessage);
     }
 	
+	/**
+	 * Descripcion: permitira mover datos seleccionados de una colleccion de origen a una destino por medio de un comparable
+	 * Parametros:
+	 * @param origen: datos de origen
+	 * @param destino: datos de destino
+	 * @param selection: datos seleccionados a mover del destino al origen
+	 * @param comparable: medio de comparacion para la busqueda binaria
+	 * @param remover: indicara si es requerido remover los datos del origen si es factible
+	 * @param failMessage: mensaje si la seleccion esta vacia
+	 * Retorno: Ninguno
+	 * */
 	/**
 	 * Descripcion: permitira mover datos seleccionados de una colleccion de origen a una destino por medio de un comparable
 	 * Parametros:
@@ -317,6 +372,16 @@ public abstract class AbstractViewModel {
         return window;
 	}
 	
+	/**
+	 * Descripcion: Mostrara un mensaje en pantalla sobre algun tipo de mensaje que se requiera
+	 * Parametros: 
+	 * @param titulo: titulo del mensaje
+	 * @param mensaje: texto a mostrar
+	 * @param icon: tipo del icono a mostrar en el mensaje (Messagebox. )
+	 * @param botones: array con los botones del mensaje
+	 * @param clickEvent: evento al presionar algun evento de los botones
+	 * Retorno: Ninguno
+	 * */
 	/**
 	 * Descripcion: Mostrara un mensaje en pantalla sobre algun tipo de mensaje que se requiera
 	 * Parametros: 
