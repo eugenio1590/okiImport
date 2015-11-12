@@ -16,7 +16,7 @@
 				</combobox>
 				
 				<vbox>
-					<textbox placeholder="Ej: 402405375" mold="rounded" 
+					<intbox placeholder="Ej: 402405375" mold="rounded" 
 						maxlength="9" hflex="1"
 						value="@bind(vm.cliente.cedula)"
 						constraint="@bind(vm.validatorClienteCedulaRif2)" 
