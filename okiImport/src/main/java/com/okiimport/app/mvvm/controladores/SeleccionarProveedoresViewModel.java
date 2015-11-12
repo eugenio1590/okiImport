@@ -147,7 +147,8 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 	@Command
 	@NotifyChange({"proveedor"})
 	public void limpiar(){
-		proveedor = new Proveedor();	
+		proveedor = new Proveedor();
+		super.cleanConstraintForm();
 	}
 
 	/**

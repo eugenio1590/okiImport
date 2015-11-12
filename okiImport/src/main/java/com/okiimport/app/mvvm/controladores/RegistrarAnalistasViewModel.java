@@ -110,6 +110,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "analista" })
 	public void limpiar() {
 		analista = new Analista();
+		super.cleanConstraintForm();
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
