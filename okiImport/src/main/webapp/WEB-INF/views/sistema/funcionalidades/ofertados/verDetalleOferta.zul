@@ -100,8 +100,6 @@
 			</groupbox>
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Detalle Oferta" />
-				<panel sclass="panel-primary">
-					<panelchildren>
 
 <!-- LISTA DETALLES OFERTAS-->
 			<panel sclass="borderGrid">
@@ -171,3 +169,4 @@
 			<div sclass="panel-footer" align="right">
 			</div>
 	</window>
+</zk>

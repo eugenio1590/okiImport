@@ -15,12 +15,7 @@
 						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.nombre)"
 						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
 				</auxheader>
-				<auxheader>
-					<div sclass="z-icon-filter bigger-200" />
-					<textbox instant="true" placeholder=""
-						value="@bind(vm.detalleCotizacionFiltro.cotizacion.proveedor.ubicacion)"
-						onChange="@command('aplicarFiltro')" hflex="1"  width="120px" />
-				</auxheader>
+				
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox instant="true" placeholder=""
@@ -58,9 +53,7 @@
 				<listheader label="Proveedor" sort="none"
 					width="170px">
 				</listheader>
-				<listheader label="Ubicacion" sort="none" width="170px"
-					tooltiptext="Estado-Ciudad">
-				</listheader>
+				
 				<listheader label="Repuesto" sort="none"
 					width="250px">
 				</listheader>
@@ -87,8 +80,7 @@
 				<listitem>
 					<listcell
 						label="@bind(each.cotizacion.proveedor.nombre)" />
-					<listcell
-						label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
+				
 					<listcell
 						label="@bind(each.detalleRequerimiento.descripcion)" />
 					<listcell label="@bind(each.marcaRepuesto)" />
@@ -153,8 +145,7 @@
 				<listitem>
 					<listcell
 						label="@bind(each.cotizacion.proveedor.nombre)" />
-					<listcell
-						label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
+					
 					<listcell
 						label="@bind(each.detalleRequerimiento.descripcion)" />
 					<listcell label="@bind(each.marcaRepuesto)" />
