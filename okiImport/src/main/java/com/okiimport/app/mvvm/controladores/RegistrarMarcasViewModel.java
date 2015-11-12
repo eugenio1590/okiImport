@@ -85,6 +85,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	@NotifyChange({ "marca" })
 	public void limpiar() {
 		marca = new MarcaVehiculo();
+		super.cleanConstraintForm();
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
