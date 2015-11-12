@@ -152,7 +152,7 @@
 											
 											<!-- SERIAL DE CARROCERIA -->
 											<hbox>
-												<label value="Serial Carroceria: " sclass="form-label"/>
+												<label value="Serial de Carroceria: " sclass="form-label"/>
                                         	</hbox>
                                             <vbox>
 												<textbox id="serialCarroceria" sclass="form-control" mold="rounded"

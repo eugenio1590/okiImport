@@ -5,7 +5,7 @@
 		onClose="@command('onCloseWindow')"><!-- ON CLOSE YA NO IRIA ACA -->
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">
-			<div class="modal-dialog modal-full" height="100%"><!-- modal-xs -->
+			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Oferta" />
 					<n:div class="modal-inner">
@@ -17,7 +17,7 @@
 								<label value="@bind(vm.oferta.idOferta)" />
 								<space />
 								<space />
-								<label value="Fecha: " sclass="label-not-mandatory" />
+								<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
 								<label value="@bind(vm.oferta.fechaCreacion)
 												@converter('formatedDate', format=vm.formatDate)" />
 							</div>
@@ -35,17 +35,22 @@
 									<tabpanel>
 										<grid>
 											<columns>
-												<column width="35%" />
-												<column width="65%" />
-												<column width="35%" />
-												<column width="65%" />
+												<column width="10%" />
+												<column width="20%" />
+												<column width="20%" />
+												<column width="22%" />
 											</columns>
 											<rows>
 												<row>
-													<label value="Numero: " sclass="label-not-mandatory"/>
+													<label value="Numero:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.idRequerimiento)"/>
-													<label value="Fecha Creacion: " sclass="label-not-mandatory"/>
+												</row>
+												<row>
+													<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.fechaCreacion)
+																	@converter('formatedDate', format=vm.formatDate)" />
+													<label value="Fecha de Vencimiento: " sclass="label-not-mandatory"/>
+													<label value="@bind(vm.requerimiento.fechaVencimiento)
 																	@converter('formatedDate', format=vm.formatDate)" />
 												</row>
 											</rows>
@@ -56,20 +61,26 @@
 									<tabpanel>
 										<grid>
 											<columns>
-												<column width="35%" />
-												<column width="65%" />
-												<column width="35%" />
-												<column width="65%" />
+												<column width="10%" />
+												<column width="20%" />
+												<column width="20%" />
+												<column width="22%" />
 											</columns>
 											<rows>
 												<row>
-													<label value="Marca: " sclass="label-not-mandatory"/>
+													<label value="Marca:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
-													<label value="Modelo: " sclass="label-not-mandatory"/>
+													<label value="Modelo:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.modeloV)" />
 												</row>
 												<row>
-													<label value="Tipo Repuesto: " sclass="label-not-mandatory"/>
+													<label value="Año:" sclass="label-not-mandatory"/>
+													<label value="@bind(vm.requerimiento.annoV)"/>
+													<label value="Serial de Carroceria:" sclass="label-not-mandatory"/>
+													<label value="@bind(vm.requerimiento.serialCarroceriaV)" />
+												</row>
+												<row>
+													<label value="Tipo de Repuesto:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.determinarTipoRepuesto())"/>
 												</row>
 											</rows>
@@ -88,12 +99,12 @@
                                    	
                                    	<listhead>
                                    		<listheader width="3%"/>
-                                   		<listheader label="Descripcion" sort="none" />
+                                   		<listheader label="Descripcion" sort="none" width="40%"/>
                                    		<listheader label="Marca" sort="none" />
-                                   		<listheader label="Cantidad Solicitada" sort="none" />
-                                   		<listheader label="Cant. Encontrada" sort="none" />
-                                   		<listheader label="Precio Venta S/F" sort="none" />
-                                   		<listheader label="Aceptar" sort="none" />
+                                   		<listheader label="Cant. Solicitada" sort="none"  width="15%" />
+                                   		<listheader label="Cant. Ofertada" sort="none" width="15%"/>
+                                   		<listheader label="Precio Venta S/F" sort="none" width="20%"/>
+                                   		<listheader label="Aceptar" sort="none" align="center" width="10%"/>
                                    	</listhead>
 
                                    	<template name="model">
@@ -105,19 +116,16 @@
                                    			<listcell label="@bind(each.detalleCotizacion.cantidad)" />
                                    			<listcell label="@bind(each.calcularPrecioVenta())" />
                                    			<listcell>
-                                   				<hbox spacing="20px">
-                                   					<div class="btn-group btn-group-sm">
-                                   						<checkbox
-                                   							checked="@bind(each.aprobado)"
-                                   							tooltiptext="Aceptar Oferta"
-                                   							onCheck="@command('aprobarDetalleOferta', detalleOferta = each)" />
-                                   					</div>
-                                   				</hbox>
+                                   				<checkbox name="remember${forEachStatus.index+1}"
+                                   					checked="@bind(each.aprobado)"
+                                   					tooltiptext="Aceptar Repuesto"
+                                   					onCheck="@command('aprobarDetalleOferta', detalleOferta = each)" />	
                                    			</listcell>
                                    		</listitem>
                                    	</template>
 
                                    	<listfoot>
+                                   		<listfooter />
                                    		<listfooter />
                                    		<listfooter />
                                    		<listfooter />

@@ -177,3 +177,9 @@ div.z-vlayout-inner {
 .label-not-mandatory {
 	font-style: oblique;
 }
+
+div.modal-footer {
+	padding: 15px 20px 10px;
+	padding-right: 32px;
+    padding-left: 32px;
+}
