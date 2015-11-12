@@ -142,6 +142,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		requerimiento = new Requerimiento();
 		cliente = new Cliente();
 		requerimiento.setCliente(cliente);
+		super.cleanConstraintForm();
 	}
 
 	 /**
