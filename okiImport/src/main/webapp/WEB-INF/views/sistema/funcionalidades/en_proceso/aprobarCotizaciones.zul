@@ -181,8 +181,5 @@
 					onClick="@command('guardar', cotizacion=null)" />
 			</div>
 		</div>
-       </vbox> 
-    </south>
-</borderlayout>
 </window>
 </zk>
