@@ -103,7 +103,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
+	public void registrar() {		
 		if ( checkIsFormValid() ) {
 			
 			oferta.setEstatus("recibida");
@@ -118,6 +118,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					seguir = false;
 				}
 				else if(oferta.getDetalleOfertas().size()==0){
+					oferta.setEstatus("invalida");
+					sTransaccion.actualizarOferta(oferta);
 					seguir = true;
 					oferta = null;
 				}

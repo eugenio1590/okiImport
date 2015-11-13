@@ -3,13 +3,13 @@
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerOfertaViewModel')"
 		onClose="@command('onCloseWindow')"><!-- ON CLOSE YA NO IRIA ACA -->
-		<n:div aria-hidden="false" class="modal fade in" role="dialog"
-			tabindex="-1" style="display: block;">
+		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Oferta" />
 					<n:div class="modal-inner">
 						<groupbox closable="false">
+							<!--DATOS DE LA OFERTA-->
 							<div>
 								<space />
 								<space />
@@ -103,7 +103,7 @@
                                    		<listheader label="Marca" sort="none" />
                                    		<listheader label="Cant. Solicitada" sort="none"  width="15%" />
                                    		<listheader label="Cant. Ofertada" sort="none" width="15%"/>
-                                   		<listheader label="Precio Venta S/F" sort="none" width="20%"/>
+                                   		<listheader label="Precio de Venta S/F" sort="none" width="20%"/>
                                    		<listheader label="Aceptar" sort="none" align="center" width="10%"/>
                                    	</listhead>
 
@@ -143,7 +143,7 @@
 					</n:div>
 					<n:div class="modal-footer">
 						<button label="Enviar" sclass="btn btn-primary"
-							onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+							onClick="@command('registrar')"/>
 					</n:div>
 				</div>
 			</div>

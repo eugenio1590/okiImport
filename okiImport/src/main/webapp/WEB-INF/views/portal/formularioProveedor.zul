@@ -151,7 +151,7 @@
 									<n:td class="z-row-inner" colspan="3" align="center">
 										<n:div class="z-row-content" hflex="1">
 											<vbox align="left" hflex="1">
-												<textbox mold="rounded" hflex="1" sclass="form-control" rows="3" 
+												<textbox mold="rounded" hflex="1" sclass="form-control no_rezise" rows="2" 
 													value="@bind(vm.proveedor.direccion)"
 													placeholder="Ej: zona industrial 2 "
 													constraint="@bind(vm.getNotEmptyValidator())" />
