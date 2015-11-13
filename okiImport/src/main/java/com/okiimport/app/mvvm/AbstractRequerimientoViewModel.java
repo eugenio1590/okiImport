@@ -114,11 +114,15 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void ampliarImagen(
 			@Default("Titulo") @BindingParam("titulo") String titulo,
 			@BindingParam("imagen") String imagen) {
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("title", titulo);
-		parametros.put("image", imagen);
-		crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
-				parametros);
+		if(imagen!=null){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("title", titulo);
+			parametros.put("image", imagen);
+			crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
+					parametros);
+		}
+		else
+			mostrarMensaje("Error", "No es una imagen valida para mostrar", Messagebox.ERROR, null, null, null);
 	}
 
 	/** METODOS SOBREESCRITOS */
