@@ -157,9 +157,15 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.7</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		
 		
 		<!-- Apache -->
 		<dependency>
@@ -172,11 +178,11 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>commons-lang</groupId> -->
-<!-- 			<artifactId>commons-lang</artifactId> -->
-<!-- 			<version>2.4</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
 		
 		
 		<!-- POI -->
@@ -224,7 +230,7 @@
 			<artifactId>zkmax</artifactId>
 			<version>${zk.version}</version>
 		</dependency>
-		    
+				    
 		<!-- Proyect Dependence -->
 		<dependency>
 			<groupId>com.okiimport</groupId>
