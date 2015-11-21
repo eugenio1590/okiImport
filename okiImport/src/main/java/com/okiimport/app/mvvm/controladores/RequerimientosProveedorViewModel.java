@@ -22,6 +22,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
@@ -158,6 +159,27 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorNacional.zul", parametros);
 		else //Internacional
 			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
+	}
+	
+	/**
+	 * Descripcion: Permitira ver la compra del cliente
+	 * Parametros: compra @param view: listaComprasCliente.zul 
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange("*")
+	public void verCompra(@BindingParam("compra") Compra compra, @BindingParam("requerimiento") Requerimiento requerimiento){
+		
+		
+
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("compra", compra);
+			
+			parametros.put("requerimiento", requerimiento);
+			
+			crearModal(BasePackageSistemaFunc+"ofertados/verCompraProveedor.zul", parametros);
+			
 	}
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/

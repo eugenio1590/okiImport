@@ -64,7 +64,7 @@
 							<div class="btn-group btn-group-sm">
 								<button iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Ver Solicitudes"
 									onClick="@command('verSolicitudes', requerimiento = each)"/>
-									<button iconSclass="fa fa-credit-card green bigger-160" tooltiptext="Ver Compra"
+									<button iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Ver Compra"
 									onClick="@command('verCompra', requerimiento = each)"/>
 							</div>
 						</hbox>

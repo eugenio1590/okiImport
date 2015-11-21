@@ -1,23 +1,21 @@
 <zk>
 	<window border="none" apply="org.zkoss.bind.BindComposer"
-		closable="true" sclass="btn-primary" width="70%" height="70%"
+		closable="true" sclass="btn-primary" width="95%" height="95%"
 		title="@bind(vm.titulo)" id="winVerCompraProveedor"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaComprasClienteViewModel')"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerCompraProveedorViewModel')"
 		onClose="@command('cambiarRequerimientos')">
 		<borderlayout>
 			<north title="Requerimiento">
 				<columnlayout sclass="base_contenedor_campos">
 					<columnchildren sclass="base_division_campos">
-						<label value="Fecha de Creacion:"/>
+						<label value="Fecha de Creación:"/>
 						<label value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaCreacion))"/>
 					</columnchildren>
 					<columnchildren sclass="base_division_campos">
-						<label value="Estado:"/>
-						<label value="@bind(vm.requerimiento.determinarEstatus())"/>
+						<label value="Fecha de Vencimiento:"/>
+						<label value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaVencimiento))"/>
 					</columnchildren>
 					<columnchildren sclass="base_division_campos">
-						<label value="Cliente:"/>
-						<label value="@bind(vm.requerimiento.cliente.nombre)"/>
 					</columnchildren>
 				</columnlayout>
 			</north>
@@ -48,6 +46,7 @@
 							</listheader>
 							<listheader value="Precio Flete"
 								label="Precio Flete" sort="auto(precioF)">
+								</listheader>
 							<listheader label="Operaciones" sort="none"/>
 
 						</listhead>
@@ -70,7 +69,7 @@
 						</template>
 
 					</listbox>
-					<paging id="pagComprasCliente"
+					<paging id="pagComprasProveedor"
 						onPaging="@command('paginarLista')" autohide="true" />
 					
 				</div>
