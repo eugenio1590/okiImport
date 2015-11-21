@@ -106,7 +106,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	public void cambiarRequerimientos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.ConsultarRequerimientosConSolicitudesCotizacion(requerimientoFiltro, 
+		Map<String, Object> parametros = sTransaccion.consultarRequerimientosConSolicitudesCotizacion(requerimientoFiltro, 
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");

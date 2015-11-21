@@ -27,44 +27,37 @@
 
 						<listhead>
 
-							<listheader value="idCompra" width="150px"
-								label="Nro." sort="auto(idCompra)"/>
+							<listheader value="idRequerimiento" width="150px"
+								label="Nro."/>
 
 							<listheader value="Descripción"
-								label="Descripcion" sort="auto(descripcion)" width="200px"/>
+								label="Descripcion"  width="200px"/>
 							
 							<listheader value="Clasificación"
-								label="Clasificacion" sort="auto(clasificacion)" width="200px"/>
+								label="Clasificacion" width="200px"/>
 								
 							<listheader value="Cant Solicitada"
-								label="Cant Solicitada" sort="auto(cantidadS)">
+								label="Cant Solicitada" >
 							
 							</listheader>
 							<listheader value="Precio Venta"
-								label="Precio Venta" sort="auto(precioV)">
+								label="Precio Venta" >
 								
 							</listheader>
 							<listheader value="Precio Flete"
 								label="Precio Flete" sort="auto(precioF)">
-								</listheader>
+							</listheader>
 							<listheader label="Operaciones" sort="none"/>
 
 						</listhead>
 						<template name="model">
 							<listitem>
-								<listcell label="@bind(each.idCompra)" />
-								<listcell label="@bind(vm.getFormatoFecha(each.fechaCreacion))"/>
-								<listcell label="@bind(each.determinarEstatus())"/>
-								<listcell>
-									<hbox spacing="20px">
-										<div class="btn-group btn-group-sm">
-											<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Solicitud de Compra"  
-								    			onClick="@command('verCompra', compra = each)"/>
-								    		<button  iconSclass="fa fa-credit-card green bigger-160" tooltiptext="Registrar Compra"  
-								    			onClick="@command('registrarCompra', compra = each)" if="${ each.registrar() }"/>
-										</div>
-									</hbox>
-								</listcell>
+								<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.requerimiento.idRequerimiento)" />
+								<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
+								<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.clasificacionRepuesto.descripcion)" />
+								<listcell label="@bind(each.detalleCotizacion.cantidad)" />
+								<listcell label="@bind(each.detalleCotizacion.precioVenta)" />
+								<listcell label="@bind(each.detalleCotizacion.precioFlete)" />
 							</listitem>
 						</template>
 

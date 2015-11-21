@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -23,7 +24,10 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
+import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
@@ -49,9 +53,9 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 	private Window winVerCompraProveedor;
 
 	// Atributos
-	private List<Compra> listaCompras;
+	private List<DetalleOferta> listaCompras;
 	private Requerimiento requerimiento;
-	private Compra compra;
+	private Proveedor proveedor;
 	private String titulo = "Solicitudes de Compra del Requerimiento N° ";
 
 	/**
@@ -64,12 +68,17 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
+		UserDetails user = this.getUser();
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword()); 
+		proveedor=new Proveedor(usuario.getPersona());
 		this.requerimiento = requerimiento;
-		this.compra = new Compra();
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		agregarGridSort(gridComprasProveedor);
 		pagComprasProveedor.setPageSize(pageSize);
+		
 		cambiarCompras(0, null, null);
+		System.out.println("numero de requerimiento: "+requerimiento.getIdRequerimiento());
+		System.out.println("id Proveedor: "+proveedor.getId());
 	}
 
 	/**Interface: EventListener<SortEvent>*/
@@ -97,9 +106,9 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void cambiarCompras(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sTransaccion.consultarComprasPorRequerimiento(compra, requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
+		Map<String, Object> parametros = sTransaccion.consultarSolicitudesCompraProveedor(requerimiento, proveedor, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
-		listaCompras = (List<Compra>) parametros.get("compras");
+		listaCompras = (List<DetalleOferta>) parametros.get("detallesOferta");
 		pagComprasProveedor.setActivePage(page);
 		pagComprasProveedor.setTotalSize(total);
 	}
@@ -139,11 +148,11 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 		this.sTransaccion = sTransaccion;
 	}
 
-	public List<Compra> getListaCompras() {
+	public List<DetalleOferta> getListaCompras() {
 		return listaCompras;
 	}
 
-	public void setListaCompras(List<Compra> listaCompras) {
+	public void setListaCompras(List<DetalleOferta> listaCompras) {
 		this.listaCompras = listaCompras;
 	}
 
