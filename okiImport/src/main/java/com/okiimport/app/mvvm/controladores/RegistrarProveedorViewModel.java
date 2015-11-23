@@ -30,6 +30,7 @@ import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Pais;
 import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -377,8 +378,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	private Proveedor registrarProveedor(boolean enviarEmail){
+		
 		proveedor.setCedula(getCedulaComleta());
-		proveedor.setEstatus("solicitante");
+		proveedor.setEstatus(EstatusProveedorFactory.getEstatusSolicitante().getValue());
 
 		if (proveedor.isNacional())
 			proveedor.setTipoProveedor(true);
