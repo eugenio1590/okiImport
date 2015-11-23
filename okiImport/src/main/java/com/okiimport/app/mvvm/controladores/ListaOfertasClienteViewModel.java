@@ -25,6 +25,8 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusOferta;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlConfiguracion;
@@ -157,11 +159,11 @@ public class ListaOfertasClienteViewModel extends
 			if(oferta.getEstatus().equalsIgnoreCase("solicitado")){
 				oferta.setPorctIva(configuracion.getPorctIva());
 				oferta.setPorctGanancia(configuracion.getPorctGanancia());
-				oferta.setEstatus("enviada");
+				oferta.setEstatus(EEstatusOferta.ENVIADA);
 				sTransaccion.actualizarOferta(oferta);
 			}
 		}
-		requerimiento.setEstatus("O");
+		requerimiento.setEstatus(EEstatusRequerimiento.OFERTADO);
 		sTransaccion.actualizarRequerimiento(requerimiento);
 
 		//No es el servicio que se usara
