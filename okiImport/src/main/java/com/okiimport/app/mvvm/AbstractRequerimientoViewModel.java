@@ -20,7 +20,8 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Pais;
-import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
+
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
