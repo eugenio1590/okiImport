@@ -1,13 +1,13 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winConfVariables" border="none" width="80%" title="Configuracion de Variables"
-		apply="org.zkoss.bind.BindComposer" closable="true"
+	<window id="winConfVariables" border="none" width="80%"
+		apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ConfVariablesViewModel')"
 		onClose="@command('onCloseWindow')">
 		<groupbox closable="false">
 			<groupbox closable="false">
 				<caption sclass="custom_caption"
-					label="Variables" />
+					label="Variables Globales" />
 				<div>
 					<grid>
 						<columns>
@@ -21,33 +21,29 @@
 							<row>
 								<label value="Valor Libra: " />
 								<vbox>
-								<textbox></textbox>
-								<textbox
-									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
-									/>
+								<textbox id="txtValorLibra" placeholder="EJ: 28$"
+								constraint="@bind(vm.notEmptyValidator)"></textbox>
 								</vbox>
 
 
 								<label value="Porcentaje Ganancia: " />
-								<datebox width="48%" readonly="true" mold="rounded" disabled="true"
-								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
-								/>
+								<vbox>
+								<textbox id="txtPorcentajeGanancia" placeholder="EJ: 30%"
+								constraint="@bind(vm.notEmptyValidator)"></textbox>
+								</vbox>
 
 							</row>
 							<row>
 								<label value="Porcentaje IVA: " />
 								<vbox>
-								<textbox></textbox>
-								<textbox
-									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
-									/>
+								<textbox id="txtPorcentajeIVA" placeholder="EJ: 12%"
+								constraint="@bind(vm.notEmptyValidator)"></textbox>
 								</vbox>
 
-
 								<label value="Porcentaje Ganancia: " />
-								<datebox width="48%" readonly="true" mold="rounded" disabled="true"
-								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
-								/>
+							    <vbox>
+								<textbox></textbox>
+								</vbox>
 
 							</row>
 
