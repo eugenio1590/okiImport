@@ -4,7 +4,7 @@
 
 -- Dumped from database version 8.4.12
 -- Dumped by pg_dump version 9.4.0
--- Started on 2015-08-22 20:47:06
+-- Started on 2015-11-28 18:12:47
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,7 +15,7 @@ SET client_min_messages = warning;
 SET escape_string_warning = off;
 
 --
--- TOC entry 603 (class 2612 OID 16386)
+-- TOC entry 610 (class 2612 OID 16386)
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
 --
 
@@ -31,7 +31,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 140 (class 1259 OID 108446)
+-- TOC entry 140 (class 1259 OID 110111)
 -- Name: analista; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -44,13 +44,13 @@ CREATE TABLE analista (
 ALTER TABLE analista OWNER TO postgres;
 
 --
--- TOC entry 141 (class 1259 OID 108451)
+-- TOC entry 141 (class 1259 OID 110116)
 -- Name: banco; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE banco (
     id_banco integer NOT NULL,
-    estatus character varying(255),
+    estatus integer,
     nombre character varying(255)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE banco (
 ALTER TABLE banco OWNER TO postgres;
 
 --
--- TOC entry 169 (class 1259 OID 108783)
+-- TOC entry 170 (class 1259 OID 110480)
 -- Name: banco_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -73,7 +73,7 @@ CREATE SEQUENCE banco_id_seq
 ALTER TABLE banco_id_seq OWNER TO postgres;
 
 --
--- TOC entry 142 (class 1259 OID 108459)
+-- TOC entry 142 (class 1259 OID 110121)
 -- Name: ciudad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -87,7 +87,7 @@ CREATE TABLE ciudad (
 ALTER TABLE ciudad OWNER TO postgres;
 
 --
--- TOC entry 143 (class 1259 OID 108464)
+-- TOC entry 143 (class 1259 OID 110126)
 -- Name: clasificacion_repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -101,7 +101,7 @@ CREATE TABLE clasificacion_repuesto (
 ALTER TABLE clasificacion_repuesto OWNER TO postgres;
 
 --
--- TOC entry 170 (class 1259 OID 108785)
+-- TOC entry 171 (class 1259 OID 110482)
 -- Name: clasificacion_repuesto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -116,12 +116,11 @@ CREATE SEQUENCE clasificacion_repuesto_id_seq
 ALTER TABLE clasificacion_repuesto_id_seq OWNER TO postgres;
 
 --
--- TOC entry 144 (class 1259 OID 108472)
+-- TOC entry 144 (class 1259 OID 110134)
 -- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE cliente (
-    juridico boolean,
     id_cliente integer NOT NULL
 );
 
@@ -129,16 +128,18 @@ CREATE TABLE cliente (
 ALTER TABLE cliente OWNER TO postgres;
 
 --
--- TOC entry 145 (class 1259 OID 108477)
+-- TOC entry 145 (class 1259 OID 110139)
 -- Name: compra; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE compra (
     id_compra integer NOT NULL,
+    estatus character varying(255),
     fecha_creacion timestamp without time zone,
     observacion character varying(255),
     precio_flete real,
     precio_venta real,
+    tipo_flete boolean,
     id_historico_moneda integer,
     id_requerimiento integer
 );
@@ -147,7 +148,7 @@ CREATE TABLE compra (
 ALTER TABLE compra OWNER TO postgres;
 
 --
--- TOC entry 171 (class 1259 OID 108787)
+-- TOC entry 172 (class 1259 OID 110484)
 -- Name: compra_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -162,7 +163,7 @@ CREATE SEQUENCE compra_id_seq
 ALTER TABLE compra_id_seq OWNER TO postgres;
 
 --
--- TOC entry 146 (class 1259 OID 108482)
+-- TOC entry 146 (class 1259 OID 110147)
 -- Name: configuracion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -177,7 +178,7 @@ CREATE TABLE configuracion (
 ALTER TABLE configuracion OWNER TO postgres;
 
 --
--- TOC entry 147 (class 1259 OID 108487)
+-- TOC entry 147 (class 1259 OID 110152)
 -- Name: cotizacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -189,6 +190,7 @@ CREATE TABLE cotizacion (
     fecha_vencimiento timestamp without time zone,
     mensaje character varying(255),
     precio_flete real,
+    tipo boolean,
     id_historico_moneda integer,
     id_proveedor integer
 );
@@ -197,7 +199,7 @@ CREATE TABLE cotizacion (
 ALTER TABLE cotizacion OWNER TO postgres;
 
 --
--- TOC entry 172 (class 1259 OID 108789)
+-- TOC entry 173 (class 1259 OID 110486)
 -- Name: cotizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -212,7 +214,7 @@ CREATE SEQUENCE cotizacion_id_seq
 ALTER TABLE cotizacion_id_seq OWNER TO postgres;
 
 --
--- TOC entry 148 (class 1259 OID 108495)
+-- TOC entry 148 (class 1259 OID 110160)
 -- Name: detalle_cotizacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -231,7 +233,7 @@ CREATE TABLE detalle_cotizacion (
 ALTER TABLE detalle_cotizacion OWNER TO postgres;
 
 --
--- TOC entry 173 (class 1259 OID 108791)
+-- TOC entry 174 (class 1259 OID 110488)
 -- Name: detalle_cotizacion_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -246,7 +248,7 @@ CREATE SEQUENCE detalle_cotizacion_id_seq
 ALTER TABLE detalle_cotizacion_id_seq OWNER TO postgres;
 
 --
--- TOC entry 149 (class 1259 OID 108503)
+-- TOC entry 149 (class 1259 OID 110168)
 -- Name: detalle_cotizacion_internacional; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -265,7 +267,7 @@ CREATE TABLE detalle_cotizacion_internacional (
 ALTER TABLE detalle_cotizacion_internacional OWNER TO postgres;
 
 --
--- TOC entry 150 (class 1259 OID 108508)
+-- TOC entry 150 (class 1259 OID 110173)
 -- Name: detalle_oferta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -281,7 +283,7 @@ CREATE TABLE detalle_oferta (
 ALTER TABLE detalle_oferta OWNER TO postgres;
 
 --
--- TOC entry 174 (class 1259 OID 108793)
+-- TOC entry 175 (class 1259 OID 110490)
 -- Name: detalle_oferta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -296,7 +298,7 @@ CREATE SEQUENCE detalle_oferta_id_seq
 ALTER TABLE detalle_oferta_id_seq OWNER TO postgres;
 
 --
--- TOC entry 151 (class 1259 OID 108513)
+-- TOC entry 151 (class 1259 OID 110178)
 -- Name: detalle_requerimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -305,7 +307,7 @@ CREATE TABLE detalle_requerimiento (
     cantidad bigint,
     codigo_oem character varying(255),
     descripcion character varying(255),
-    estatus character varying(255),
+    estatus integer,
     foto bytea,
     id_clasificacion_repuesto integer,
     id_requerimiento integer
@@ -315,7 +317,7 @@ CREATE TABLE detalle_requerimiento (
 ALTER TABLE detalle_requerimiento OWNER TO postgres;
 
 --
--- TOC entry 175 (class 1259 OID 108795)
+-- TOC entry 176 (class 1259 OID 110492)
 -- Name: detalle_requerimiento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -330,7 +332,7 @@ CREATE SEQUENCE detalle_requerimiento_id_seq
 ALTER TABLE detalle_requerimiento_id_seq OWNER TO postgres;
 
 --
--- TOC entry 152 (class 1259 OID 108521)
+-- TOC entry 152 (class 1259 OID 110186)
 -- Name: estado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -343,12 +345,13 @@ CREATE TABLE estado (
 ALTER TABLE estado OWNER TO postgres;
 
 --
--- TOC entry 153 (class 1259 OID 108526)
+-- TOC entry 153 (class 1259 OID 110191)
 -- Name: forma_pago; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE forma_pago (
     id_forma_pago integer NOT NULL,
+    estatus character varying(255),
     nombre character varying(255)
 );
 
@@ -356,7 +359,7 @@ CREATE TABLE forma_pago (
 ALTER TABLE forma_pago OWNER TO postgres;
 
 --
--- TOC entry 176 (class 1259 OID 108797)
+-- TOC entry 177 (class 1259 OID 110494)
 -- Name: forma_pago_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -371,7 +374,7 @@ CREATE SEQUENCE forma_pago_id_seq
 ALTER TABLE forma_pago_id_seq OWNER TO postgres;
 
 --
--- TOC entry 177 (class 1259 OID 108799)
+-- TOC entry 178 (class 1259 OID 110496)
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -386,7 +389,7 @@ CREATE SEQUENCE hibernate_sequence
 ALTER TABLE hibernate_sequence OWNER TO postgres;
 
 --
--- TOC entry 154 (class 1259 OID 108531)
+-- TOC entry 154 (class 1259 OID 110199)
 -- Name: historico_moneda; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -401,7 +404,7 @@ CREATE TABLE historico_moneda (
 ALTER TABLE historico_moneda OWNER TO postgres;
 
 --
--- TOC entry 178 (class 1259 OID 108801)
+-- TOC entry 179 (class 1259 OID 110498)
 -- Name: historico_moneda_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -416,7 +419,7 @@ CREATE SEQUENCE historico_moneda_id_seq
 ALTER TABLE historico_moneda_id_seq OWNER TO postgres;
 
 --
--- TOC entry 155 (class 1259 OID 108536)
+-- TOC entry 155 (class 1259 OID 110204)
 -- Name: history_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -431,7 +434,7 @@ CREATE TABLE history_logins (
 ALTER TABLE history_logins OWNER TO postgres;
 
 --
--- TOC entry 179 (class 1259 OID 108803)
+-- TOC entry 180 (class 1259 OID 110500)
 -- Name: history_logins_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -446,7 +449,7 @@ CREATE SEQUENCE history_logins_id_seq
 ALTER TABLE history_logins_id_seq OWNER TO postgres;
 
 --
--- TOC entry 156 (class 1259 OID 108541)
+-- TOC entry 156 (class 1259 OID 110209)
 -- Name: marca_vehiculo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -460,7 +463,7 @@ CREATE TABLE marca_vehiculo (
 ALTER TABLE marca_vehiculo OWNER TO postgres;
 
 --
--- TOC entry 180 (class 1259 OID 108805)
+-- TOC entry 181 (class 1259 OID 110502)
 -- Name: marca_vehiculo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -475,7 +478,7 @@ CREATE SEQUENCE marca_vehiculo_id_seq
 ALTER TABLE marca_vehiculo_id_seq OWNER TO postgres;
 
 --
--- TOC entry 157 (class 1259 OID 108549)
+-- TOC entry 157 (class 1259 OID 110217)
 -- Name: menu; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -493,7 +496,7 @@ CREATE TABLE menu (
 ALTER TABLE menu OWNER TO postgres;
 
 --
--- TOC entry 181 (class 1259 OID 108807)
+-- TOC entry 182 (class 1259 OID 110504)
 -- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -508,7 +511,7 @@ CREATE SEQUENCE menu_id_seq
 ALTER TABLE menu_id_seq OWNER TO postgres;
 
 --
--- TOC entry 158 (class 1259 OID 108557)
+-- TOC entry 158 (class 1259 OID 110225)
 -- Name: moneda; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -516,15 +519,15 @@ CREATE TABLE moneda (
     id_moneda integer NOT NULL,
     estatus character varying(255),
     nombre character varying(255),
-    pais boolean,
-    simbolo character varying(255)
+    simbolo character varying(255),
+    pais boolean
 );
 
 
 ALTER TABLE moneda OWNER TO postgres;
 
 --
--- TOC entry 182 (class 1259 OID 108809)
+-- TOC entry 183 (class 1259 OID 110506)
 -- Name: moneda_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -539,7 +542,7 @@ CREATE SEQUENCE moneda_id_seq
 ALTER TABLE moneda_id_seq OWNER TO postgres;
 
 --
--- TOC entry 159 (class 1259 OID 108565)
+-- TOC entry 159 (class 1259 OID 110233)
 -- Name: motor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -552,7 +555,7 @@ CREATE TABLE motor (
 ALTER TABLE motor OWNER TO postgres;
 
 --
--- TOC entry 183 (class 1259 OID 108811)
+-- TOC entry 184 (class 1259 OID 110508)
 -- Name: motor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -567,7 +570,7 @@ CREATE SEQUENCE motor_id_seq
 ALTER TABLE motor_id_seq OWNER TO postgres;
 
 --
--- TOC entry 160 (class 1259 OID 108570)
+-- TOC entry 160 (class 1259 OID 110238)
 -- Name: oferta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -583,7 +586,7 @@ CREATE TABLE oferta (
 ALTER TABLE oferta OWNER TO postgres;
 
 --
--- TOC entry 184 (class 1259 OID 108813)
+-- TOC entry 185 (class 1259 OID 110510)
 -- Name: oferta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -598,7 +601,7 @@ CREATE SEQUENCE oferta_id_seq
 ALTER TABLE oferta_id_seq OWNER TO postgres;
 
 --
--- TOC entry 161 (class 1259 OID 108575)
+-- TOC entry 161 (class 1259 OID 110243)
 -- Name: pago_compra; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -619,7 +622,7 @@ CREATE TABLE pago_compra (
 ALTER TABLE pago_compra OWNER TO postgres;
 
 --
--- TOC entry 185 (class 1259 OID 108815)
+-- TOC entry 186 (class 1259 OID 110512)
 -- Name: pago_compra_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -634,7 +637,36 @@ CREATE SEQUENCE pago_compra_id_seq
 ALTER TABLE pago_compra_id_seq OWNER TO postgres;
 
 --
--- TOC entry 162 (class 1259 OID 108583)
+-- TOC entry 162 (class 1259 OID 110251)
+-- Name: pais; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pais (
+    id_pais integer NOT NULL,
+    nombre character varying(255),
+    id_moneda integer
+);
+
+
+ALTER TABLE pais OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 110514)
+-- Name: pais_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pais_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pais_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 163 (class 1259 OID 110256)
 -- Name: persistent_logins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -649,7 +681,7 @@ CREATE TABLE persistent_logins (
 ALTER TABLE persistent_logins OWNER TO postgres;
 
 --
--- TOC entry 163 (class 1259 OID 108588)
+-- TOC entry 164 (class 1259 OID 110261)
 -- Name: persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -670,7 +702,7 @@ CREATE TABLE persona (
 ALTER TABLE persona OWNER TO postgres;
 
 --
--- TOC entry 186 (class 1259 OID 108817)
+-- TOC entry 188 (class 1259 OID 110516)
 -- Name: persona_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -685,20 +717,21 @@ CREATE SEQUENCE persona_id_seq
 ALTER TABLE persona_id_seq OWNER TO postgres;
 
 --
--- TOC entry 164 (class 1259 OID 108596)
+-- TOC entry 165 (class 1259 OID 110271)
 -- Name: proveedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE proveedor (
     tipo_proveedor boolean,
-    id_proveedor integer NOT NULL
+    id_proveedor integer NOT NULL,
+    id_pais integer
 );
 
 
 ALTER TABLE proveedor OWNER TO postgres;
 
 --
--- TOC entry 165 (class 1259 OID 108601)
+-- TOC entry 166 (class 1259 OID 110276)
 -- Name: proveedor_clasificacion_repuesto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -711,7 +744,7 @@ CREATE TABLE proveedor_clasificacion_repuesto (
 ALTER TABLE proveedor_clasificacion_repuesto OWNER TO postgres;
 
 --
--- TOC entry 166 (class 1259 OID 108604)
+-- TOC entry 167 (class 1259 OID 110279)
 -- Name: proveedor_marca_vehiculo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -724,7 +757,7 @@ CREATE TABLE proveedor_marca_vehiculo (
 ALTER TABLE proveedor_marca_vehiculo OWNER TO postgres;
 
 --
--- TOC entry 167 (class 1259 OID 108607)
+-- TOC entry 168 (class 1259 OID 110282)
 -- Name: requerimiento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -751,7 +784,7 @@ CREATE TABLE requerimiento (
 ALTER TABLE requerimiento OWNER TO postgres;
 
 --
--- TOC entry 187 (class 1259 OID 108819)
+-- TOC entry 189 (class 1259 OID 110518)
 -- Name: requerimiento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -766,7 +799,7 @@ CREATE SEQUENCE requerimiento_id_seq
 ALTER TABLE requerimiento_id_seq OWNER TO postgres;
 
 --
--- TOC entry 168 (class 1259 OID 108615)
+-- TOC entry 169 (class 1259 OID 110290)
 -- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -783,7 +816,7 @@ CREATE TABLE usuario (
 ALTER TABLE usuario OWNER TO postgres;
 
 --
--- TOC entry 188 (class 1259 OID 108821)
+-- TOC entry 190 (class 1259 OID 110520)
 -- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -798,7 +831,7 @@ CREATE SEQUENCE usuario_id_seq
 ALTER TABLE usuario_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2024 (class 0 OID 108446)
+-- TOC entry 2037 (class 0 OID 110111)
 -- Dependencies: 140
 -- Data for Name: analista; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -808,7 +841,7 @@ INSERT INTO analista (administrador, id_analista) VALUES (false, 2);
 
 
 --
--- TOC entry 2025 (class 0 OID 108451)
+-- TOC entry 2038 (class 0 OID 110116)
 -- Dependencies: 141
 -- Data for Name: banco; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -816,8 +849,8 @@ INSERT INTO analista (administrador, id_analista) VALUES (false, 2);
 
 
 --
--- TOC entry 2080 (class 0 OID 0)
--- Dependencies: 169
+-- TOC entry 2095 (class 0 OID 0)
+-- Dependencies: 170
 -- Name: banco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -825,7 +858,7 @@ SELECT pg_catalog.setval('banco_id_seq', 1, false);
 
 
 --
--- TOC entry 2026 (class 0 OID 108459)
+-- TOC entry 2039 (class 0 OID 110121)
 -- Dependencies: 142
 -- Data for Name: ciudad; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1332,29 +1365,29 @@ INSERT INTO ciudad (id_ciudad, nombre, id_estado) VALUES (522, 'Islas Los Herman
 
 
 --
--- TOC entry 2027 (class 0 OID 108464)
+-- TOC entry 2040 (class 0 OID 110126)
 -- Dependencies: 143
 -- Data for Name: clasificacion_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (1, 'Motor', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (4, 'Sistema de Dirección', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (3, 'Suspensión y Chasis', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (2, 'Caja y Tracción', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (5, 'Sistema de Rodamiento', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (6, 'Sistema de Frenos', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (7, 'Sistema de Refrigeración', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (8, 'Sistema A/A', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (9, 'Carroceria Iny y Ext', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (10, 'Lubricantes,Grasas y Silicones', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (11, 'Accesorios y Boutique', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (12, 'Sistema Electrico', 'activo');
-INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (13, 'Sistema de Combustible', 'activo');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (1, 'Motor', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (4, 'Sistema de Dirección', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (3, 'Suspensión y Chasis', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (2, 'Caja y Tracción', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (5, 'Sistema de Rodamiento', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (6, 'Sistema de Frenos', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (7, 'Sistema de Refrigeración', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (8, 'Sistema A/A', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (9, 'Carroceria Iny y Ext', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (10, 'Lubricantes,Grasas y Silicones', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (11, 'Accesorios y Boutique', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (12, 'Sistema Electrico', 'ACTIVO');
+INSERT INTO clasificacion_repuesto (id_clasificacion_repuesto, descripcion, estatus) VALUES (13, 'Sistema de Combustible', 'ACTIVO');
 
 
 --
--- TOC entry 2081 (class 0 OID 0)
--- Dependencies: 170
+-- TOC entry 2096 (class 0 OID 0)
+-- Dependencies: 171
 -- Name: clasificacion_repuesto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1362,16 +1395,16 @@ SELECT pg_catalog.setval('clasificacion_repuesto_id_seq', 13, true);
 
 
 --
--- TOC entry 2028 (class 0 OID 108472)
+-- TOC entry 2041 (class 0 OID 110134)
 -- Dependencies: 144
 -- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO cliente (juridico, id_cliente) VALUES (NULL, 3);
+INSERT INTO cliente (id_cliente) VALUES (3);
 
 
 --
--- TOC entry 2029 (class 0 OID 108477)
+-- TOC entry 2042 (class 0 OID 110139)
 -- Dependencies: 145
 -- Data for Name: compra; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1379,8 +1412,8 @@ INSERT INTO cliente (juridico, id_cliente) VALUES (NULL, 3);
 
 
 --
--- TOC entry 2082 (class 0 OID 0)
--- Dependencies: 171
+-- TOC entry 2097 (class 0 OID 0)
+-- Dependencies: 172
 -- Name: compra_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1388,7 +1421,7 @@ SELECT pg_catalog.setval('compra_id_seq', 1, false);
 
 
 --
--- TOC entry 2030 (class 0 OID 108482)
+-- TOC entry 2043 (class 0 OID 110147)
 -- Dependencies: 146
 -- Data for Name: configuracion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1397,52 +1430,49 @@ INSERT INTO configuracion (id_configuracion, porct_ganancia, porct_iva, valor_li
 
 
 --
--- TOC entry 2031 (class 0 OID 108487)
+-- TOC entry 2044 (class 0 OID 110152)
 -- Dependencies: 147
 -- Data for Name: cotizacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO cotizacion (id_cotizacion, condiciones, estatus, fecha_creacion, fecha_vencimiento, mensaje, precio_flete, id_historico_moneda, id_proveedor) VALUES (1, NULL, 'C', '2015-08-22 19:56:40.746', '2015-08-23 20:24:00.292', 'Estimado Proveedor le hacemos el envio de un nuevo requerimiento para su posterior revisión ', NULL, 1, 4);
 
 
 --
--- TOC entry 2083 (class 0 OID 0)
--- Dependencies: 172
+-- TOC entry 2098 (class 0 OID 0)
+-- Dependencies: 173
 -- Name: cotizacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('cotizacion_id_seq', 1, true);
+SELECT pg_catalog.setval('cotizacion_id_seq', 1, false);
 
 
 --
--- TOC entry 2032 (class 0 OID 108495)
+-- TOC entry 2045 (class 0 OID 110160)
 -- Dependencies: 148
 -- Data for Name: detalle_cotizacion; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO detalle_cotizacion (id_detalle_cotizacion, cantidad, estatus, marca_repuesto, precio_flete, precio_venta, id_cotizacion, id_detalle_requerimiento) VALUES (1, 1, NULL, 'Ford', NULL, 100, 1, 1);
 
 
 --
--- TOC entry 2084 (class 0 OID 0)
--- Dependencies: 173
+-- TOC entry 2099 (class 0 OID 0)
+-- Dependencies: 174
 -- Name: detalle_cotizacion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('detalle_cotizacion_id_seq', 1, true);
+SELECT pg_catalog.setval('detalle_cotizacion_id_seq', 1, false);
 
 
 --
--- TOC entry 2033 (class 0 OID 108503)
+-- TOC entry 2046 (class 0 OID 110168)
 -- Dependencies: 149
 -- Data for Name: detalle_cotizacion_internacional; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO detalle_cotizacion_internacional (alto, ancho, forma_envio, largo, peso, tipo_flete, valor_libra, id_detalle_cotizacion_internacional) VALUES (3, 1, false, 7, 8, false, 5, 1);
 
 
 --
--- TOC entry 2034 (class 0 OID 108508)
+-- TOC entry 2047 (class 0 OID 110173)
 -- Dependencies: 150
 -- Data for Name: detalle_oferta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1450,8 +1480,8 @@ INSERT INTO detalle_cotizacion_internacional (alto, ancho, forma_envio, largo, p
 
 
 --
--- TOC entry 2085 (class 0 OID 0)
--- Dependencies: 174
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 175
 -- Name: detalle_oferta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1459,25 +1489,26 @@ SELECT pg_catalog.setval('detalle_oferta_id_seq', 1, false);
 
 
 --
--- TOC entry 2035 (class 0 OID 108513)
+-- TOC entry 2048 (class 0 OID 110178)
 -- Dependencies: 151
 -- Data for Name: detalle_requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, id_clasificacion_repuesto, id_requerimiento) VALUES (1, 2, '784512963', 'Motor', 'CT', NULL, 1, 1);
+INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, id_clasificacion_repuesto, id_requerimiento) VALUES (1, 6, '784512', 'Motor', 0, NULL, NULL, 1);
+INSERT INTO detalle_requerimiento (id_detalle_requerimiento, cantidad, codigo_oem, descripcion, estatus, foto, id_clasificacion_repuesto, id_requerimiento) VALUES (2, 5, '478515', 'Frendos', 0, NULL, NULL, 1);
 
 
 --
--- TOC entry 2086 (class 0 OID 0)
--- Dependencies: 175
+-- TOC entry 2101 (class 0 OID 0)
+-- Dependencies: 176
 -- Name: detalle_requerimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('detalle_requerimiento_id_seq', 1, true);
+SELECT pg_catalog.setval('detalle_requerimiento_id_seq', 2, true);
 
 
 --
--- TOC entry 2036 (class 0 OID 108521)
+-- TOC entry 2049 (class 0 OID 110186)
 -- Dependencies: 152
 -- Data for Name: estado; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1510,7 +1541,7 @@ INSERT INTO estado (id_estado, nombre) VALUES (25, 'Dependencias Federales');
 
 
 --
--- TOC entry 2037 (class 0 OID 108526)
+-- TOC entry 2050 (class 0 OID 110191)
 -- Dependencies: 153
 -- Data for Name: forma_pago; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1518,8 +1549,8 @@ INSERT INTO estado (id_estado, nombre) VALUES (25, 'Dependencias Federales');
 
 
 --
--- TOC entry 2087 (class 0 OID 0)
--- Dependencies: 176
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 177
 -- Name: forma_pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1527,8 +1558,8 @@ SELECT pg_catalog.setval('forma_pago_id_seq', 1, false);
 
 
 --
--- TOC entry 2088 (class 0 OID 0)
--- Dependencies: 177
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 178
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1536,7 +1567,7 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 
 
 --
--- TOC entry 2038 (class 0 OID 108531)
+-- TOC entry 2051 (class 0 OID 110199)
 -- Dependencies: 154
 -- Data for Name: historico_moneda; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1546,8 +1577,8 @@ INSERT INTO historico_moneda (id_historia, fecha_creacion, monto_conversion, id_
 
 
 --
--- TOC entry 2089 (class 0 OID 0)
--- Dependencies: 178
+-- TOC entry 2104 (class 0 OID 0)
+-- Dependencies: 179
 -- Name: historico_moneda_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1555,17 +1586,17 @@ SELECT pg_catalog.setval('historico_moneda_id_seq', 2, true);
 
 
 --
--- TOC entry 2039 (class 0 OID 108536)
+-- TOC entry 2052 (class 0 OID 110204)
 -- Dependencies: 155
 -- Data for Name: history_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (1, '2015-08-22 19:49:16.274', NULL, 'maria');
+INSERT INTO history_logins (id, date_login, date_logout, username) VALUES (1, '2015-11-28 18:06:36.6', NULL, 'maria');
 
 
 --
--- TOC entry 2090 (class 0 OID 0)
--- Dependencies: 179
+-- TOC entry 2105 (class 0 OID 0)
+-- Dependencies: 180
 -- Name: history_logins_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1573,32 +1604,32 @@ SELECT pg_catalog.setval('history_logins_id_seq', 1, true);
 
 
 --
--- TOC entry 2040 (class 0 OID 108541)
+-- TOC entry 2053 (class 0 OID 110209)
 -- Dependencies: 156
 -- Data for Name: marca_vehiculo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (1, 'activo', 'Chana');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (2, 'activo', 'Chery');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (3, 'activo', 'Chevrolet');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (4, 'activo', 'Daewoo');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (5, 'activo', 'Fiat');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (6, 'activo', 'Ford');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (7, 'activo', 'Honda');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (8, 'activo', 'Hyundai');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (9, 'activo', 'Kia');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (10, 'activo', 'Mazda');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (11, 'activo', 'Mitsubishi');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (12, 'activo', 'Peugeot');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (13, 'activo', 'Renault');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (14, 'activo', 'Tata');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (15, 'activo', 'Toyota');
-INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (16, 'activo', 'Volkswagen');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (1, 'ACTIVO', 'Chana');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (2, 'ACTIVO', 'Chery');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (3, 'ACTIVO', 'Chevrolet');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (4, 'ACTIVO', 'Daewoo');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (5, 'ACTIVO', 'Fiat');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (6, 'ACTIVO', 'Ford');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (7, 'ACTIVO', 'Honda');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (8, 'ACTIVO', 'Hyundai');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (9, 'ACTIVO', 'Kia');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (10, 'ACTIVO', 'Mazda');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (11, 'ACTIVO', 'Mitsubishi');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (12, 'ACTIVO', 'Peugeot');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (13, 'ACTIVO', 'Renault');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (14, 'ACTIVO', 'Tata');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (15, 'ACTIVO', 'Toyota');
+INSERT INTO marca_vehiculo (id_marca_vehiculo, estatus, nombre) VALUES (16, 'ACTIVO', 'Volkswagen');
 
 
 --
--- TOC entry 2091 (class 0 OID 0)
--- Dependencies: 180
+-- TOC entry 2106 (class 0 OID 0)
+-- Dependencies: 181
 -- Name: marca_vehiculo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1606,17 +1637,13 @@ SELECT pg_catalog.setval('marca_vehiculo_id_seq', 16, true);
 
 
 --
--- TOC entry 2041 (class 0 OID 108549)
+-- TOC entry 2054 (class 0 OID 110217)
 -- Dependencies: 157
 -- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (1, NULL, 'z-icon-shopping-cart', 'Cotizar', '/WEB-INF/views/sistema/funcionalidades/listaRequerimientosProveedor.zul', 3, NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (2, NULL, 'z-icon-user', 'Perfil', '/WEB-INF/views/sistema/configuracion/editarPerfil.zul', 3, NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (10, NULL, 'z-icon-book', 'Mis Requerimientos', NULL, 1, NULL);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (11, NULL, NULL, 'En Emision', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientosEmitidos.zul', 1, 10);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (12, NULL, NULL, 'En Proceso', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientosProcesados.zul', 1, 10);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (13, NULL, NULL, 'Todos', '/WEB-INF/views/sistema/funcionalidades/listaRequerimientosGeneral.zul', 1, 10);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (14, NULL, 'z-icon-bold', 'Datos Básicos', NULL, 1, NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (15, NULL, NULL, 'Proveedor', '/WEB-INF/views/sistema/maestros/listaProveedores.zul', 1, 14);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (16, NULL, NULL, 'Analista', '/WEB-INF/views/sistema/maestros/listaAnalistas.zul', 1, 14);
@@ -1626,18 +1653,22 @@ INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUE
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (20, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 1, 19);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (21, NULL, 'z-icon-user', 'Perfil', '/WEB-INF/views/sistema/configuracion/editarPerfil.zul', 1, NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (100, NULL, 'z-icon-book', 'Mis Requerimientos', NULL, 2, NULL);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (101, NULL, NULL, 'En Emision', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientosEmitidos.zul', 2, 100);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (102, NULL, NULL, 'En Proceso', '/WEB-INF/views/sistema/funcionalidades/listaMisRequerimientosProcesados.zul', 2, 100);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (103, NULL, 'z-icon-cog', 'Configuracion', NULL, 2, NULL);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (104, NULL, 'z-icon-lock', 'Seguridad', NULL, 2, 103);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (105, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 2, 104);
 INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (106, NULL, 'z-icon-user', 'Perfil', '/WEB-INF/views/sistema/configuracion/editarPerfil.zul', 2, NULL);
-INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (107, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (1, NULL, 'z-icon-shopping-cart', 'Cotizar', '/WEB-INF/views/sistema/funcionalidades/en_proceso/listaRequerimientosProveedor.zul', 3, NULL);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (11, NULL, NULL, 'En Emision', '/WEB-INF/views/sistema/funcionalidades/emitidos/listaMisRequerimientosEmitidos.zul', 1, 10);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (12, NULL, NULL, 'En Proceso', '/WEB-INF/views/sistema/funcionalidades/en_proceso/listaMisRequerimientosProcesados.zul', 1, 10);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (13, NULL, NULL, 'Todos', '/WEB-INF/views/sistema/funcionalidades/emitidos/listaRequerimientosGeneral.zul', 1, 10);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (101, NULL, NULL, 'En Emision', '/WEB-INF/views/sistema/funcionalidades/emitidos/listaMisRequerimientosEmitidos.zul', 2, 100);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (102, NULL, NULL, 'En Proceso', '/WEB-INF/views/sistema/funcionalidades/en_proceso/listaMisRequerimientosProcesados.zul', 2, 100);
+INSERT INTO menu (id_menu, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (107, NULL, NULL, 'Ofertados', '/WEB-INF/views/sistema/funcionalidades/ofertados/listaMisRequerimientosOfertados.zul', 2, 100);
 
 
 --
--- TOC entry 2092 (class 0 OID 0)
--- Dependencies: 181
+-- TOC entry 2107 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1645,19 +1676,19 @@ SELECT pg_catalog.setval('menu_id_seq', 1, false);
 
 
 --
--- TOC entry 2042 (class 0 OID 108557)
+-- TOC entry 2055 (class 0 OID 110225)
 -- Dependencies: 158
 -- Data for Name: moneda; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO moneda (id_moneda, estatus, nombre, pais, simbolo) VALUES (1, 'activo', 'Bolivar', true, 'BsF');
-INSERT INTO moneda (id_moneda, estatus, nombre, pais, simbolo) VALUES (2, 'activo', 'Dolar', false, 'fa fa-usd');
-INSERT INTO moneda (id_moneda, estatus, nombre, pais, simbolo) VALUES (3, 'activo', 'Euro', false, 'fa fa-eur');
+INSERT INTO moneda (id_moneda, estatus, nombre, simbolo, pais) VALUES (1, 'ACTIVO', 'Bolivar', 'BsF', true);
+INSERT INTO moneda (id_moneda, estatus, nombre, simbolo, pais) VALUES (2, 'ACTIVO', 'Dolar', 'fa fa-usd', false);
+INSERT INTO moneda (id_moneda, estatus, nombre, simbolo, pais) VALUES (3, 'ACTIVO', 'Euro', 'fa fa-eur', false);
 
 
 --
--- TOC entry 2093 (class 0 OID 0)
--- Dependencies: 182
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 183
 -- Name: moneda_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1665,7 +1696,7 @@ SELECT pg_catalog.setval('moneda_id_seq', 3, true);
 
 
 --
--- TOC entry 2043 (class 0 OID 108565)
+-- TOC entry 2056 (class 0 OID 110233)
 -- Dependencies: 159
 -- Data for Name: motor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1687,8 +1718,8 @@ INSERT INTO motor (id_motor, nombre) VALUES (14, '4.5');
 
 
 --
--- TOC entry 2094 (class 0 OID 0)
--- Dependencies: 183
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 184
 -- Name: motor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1696,7 +1727,7 @@ SELECT pg_catalog.setval('motor_id_seq', 14, true);
 
 
 --
--- TOC entry 2044 (class 0 OID 108570)
+-- TOC entry 2057 (class 0 OID 110238)
 -- Dependencies: 160
 -- Data for Name: oferta; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1704,8 +1735,8 @@ SELECT pg_catalog.setval('motor_id_seq', 14, true);
 
 
 --
--- TOC entry 2095 (class 0 OID 0)
--- Dependencies: 184
+-- TOC entry 2110 (class 0 OID 0)
+-- Dependencies: 185
 -- Name: oferta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1713,7 +1744,7 @@ SELECT pg_catalog.setval('oferta_id_seq', 1, false);
 
 
 --
--- TOC entry 2045 (class 0 OID 108575)
+-- TOC entry 2058 (class 0 OID 110243)
 -- Dependencies: 161
 -- Data for Name: pago_compra; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1721,8 +1752,8 @@ SELECT pg_catalog.setval('oferta_id_seq', 1, false);
 
 
 --
--- TOC entry 2096 (class 0 OID 0)
--- Dependencies: 185
+-- TOC entry 2111 (class 0 OID 0)
+-- Dependencies: 186
 -- Name: pago_compra_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1730,100 +1761,88 @@ SELECT pg_catalog.setval('pago_compra_id_seq', 1, false);
 
 
 --
--- TOC entry 2046 (class 0 OID 108583)
+-- TOC entry 2059 (class 0 OID 110251)
 -- Dependencies: 162
+-- Data for Name: pais; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pais (id_pais, nombre, id_moneda) VALUES (1, 'Venezuela', NULL);
+INSERT INTO pais (id_pais, nombre, id_moneda) VALUES (2, 'EEUU', NULL);
+
+
+--
+-- TOC entry 2112 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: pais_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pais_id_seq', 2, true);
+
+
+--
+-- TOC entry 2060 (class 0 OID 110256)
+-- Dependencies: 163
 -- Data for Name: persistent_logins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 2047 (class 0 OID 108588)
--- Dependencies: 163
+-- TOC entry 2061 (class 0 OID 110261)
+-- Dependencies: 164
 -- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 INSERT INTO persona (id, apellido, cedula, correo, direccion, estatus, nombre, telefono, tipo_menu, id_ciudad) VALUES (1, NULL, '11111111', NULL, NULL, 'activo', 'Administrador', NULL, 1, NULL);
 INSERT INTO persona (id, apellido, cedula, correo, direccion, estatus, nombre, telefono, tipo_menu, id_ciudad) VALUES (2, NULL, '5254874', 'maria@gmail.com', NULL, 'activo', 'Maria', '258963147', 2, 12);
-INSERT INTO persona (id, apellido, cedula, correo, direccion, estatus, nombre, telefono, tipo_menu, id_ciudad) VALUES (3, NULL, 'V20186243', 'eugeniohernandez17@gmail.com', NULL, NULL, 'Eugenio', '45798961', NULL, 212);
-INSERT INTO persona (id, apellido, cedula, correo, direccion, estatus, nombre, telefono, tipo_menu, id_ciudad) VALUES (4, NULL, 'V20348677', 'jose@gmail.com', 'Zona 2', 'solicitante', 'Jose', '22222222', NULL, 58);
+INSERT INTO persona (id, apellido, cedula, correo, direccion, estatus, nombre, telefono, tipo_menu, id_ciudad) VALUES (3, NULL, 'V20186243', 'eugeniohernandez17@gmail.com', NULL, NULL, 'Eugenio Hernandez', '0251252829', NULL, 212);
 
 
 --
--- TOC entry 2097 (class 0 OID 0)
--- Dependencies: 186
+-- TOC entry 2113 (class 0 OID 0)
+-- Dependencies: 188
 -- Name: persona_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('persona_id_seq', 4, true);
+SELECT pg_catalog.setval('persona_id_seq', 3, true);
 
 
 --
--- TOC entry 2048 (class 0 OID 108596)
--- Dependencies: 164
+-- TOC entry 2062 (class 0 OID 110271)
+-- Dependencies: 165
 -- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO proveedor (tipo_proveedor, id_proveedor) VALUES (false, 4);
 
 
 --
--- TOC entry 2049 (class 0 OID 108601)
--- Dependencies: 165
+-- TOC entry 2063 (class 0 OID 110276)
+-- Dependencies: 166
 -- Data for Name: proveedor_clasificacion_repuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 10);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 9);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 8);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 7);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 6);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 5);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 2);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 3);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 4);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 1);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 13);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 12);
-INSERT INTO proveedor_clasificacion_repuesto (id_proveedor, id_clasificacion_repuesto) VALUES (4, 11);
 
 
 --
--- TOC entry 2050 (class 0 OID 108604)
--- Dependencies: 166
+-- TOC entry 2064 (class 0 OID 110279)
+-- Dependencies: 167
 -- Data for Name: proveedor_marca_vehiculo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 10);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 9);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 8);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 7);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 6);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 5);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 4);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 3);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 2);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 1);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 16);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 15);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 14);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 13);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 12);
-INSERT INTO proveedor_marca_vehiculo (id_proveedor, id_marca_vehiculo) VALUES (4, 11);
 
 
 --
--- TOC entry 2051 (class 0 OID 108607)
--- Dependencies: 167
+-- TOC entry 2065 (class 0 OID 110282)
+-- Dependencies: 168
 -- Data for Name: requerimiento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_solicitud, fecha_vencimiento, modelo_v, serial_carroceria_v, tipo_repuesto, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (1, 2000, 'CT', NULL, '2015-08-22', '2015-08-22 19:57:30.014', '2015-09-06', 'Hilux', '784596324', NULL, true, true, 2, 3, 4, 5);
+INSERT INTO requerimiento (id_requerimiento, anno_v, estatus, fecha_cierre, fecha_creacion, fecha_solicitud, fecha_vencimiento, modelo_v, serial_carroceria_v, tipo_repuesto, traccion_v, transmision_v, id_analista, id_cliente, id_marca_v, id_motor_v) VALUES (1, 2006, 'EMITIDO', NULL, '2015-11-28', NULL, '2015-12-13', 'Ford', '4578218521885', true, true, true, 2, 3, 6, 2);
 
 
 --
--- TOC entry 2098 (class 0 OID 0)
--- Dependencies: 187
+-- TOC entry 2114 (class 0 OID 0)
+-- Dependencies: 189
 -- Name: requerimiento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1831,8 +1850,8 @@ SELECT pg_catalog.setval('requerimiento_id_seq', 1, true);
 
 
 --
--- TOC entry 2052 (class 0 OID 108615)
--- Dependencies: 168
+-- TOC entry 2066 (class 0 OID 110290)
+-- Dependencies: 169
 -- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1841,8 +1860,8 @@ INSERT INTO usuario (id, activo, foto, pasword, username, persona_id) VALUES (2,
 
 
 --
--- TOC entry 2099 (class 0 OID 0)
--- Dependencies: 188
+-- TOC entry 2115 (class 0 OID 0)
+-- Dependencies: 190
 -- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -1850,7 +1869,7 @@ SELECT pg_catalog.setval('usuario_id_seq', 1, false);
 
 
 --
--- TOC entry 1849 (class 2606 OID 108450)
+-- TOC entry 1856 (class 2606 OID 110115)
 -- Name: analista_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1859,7 +1878,7 @@ ALTER TABLE ONLY analista
 
 
 --
--- TOC entry 1851 (class 2606 OID 108458)
+-- TOC entry 1858 (class 2606 OID 110120)
 -- Name: banco_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1868,7 +1887,7 @@ ALTER TABLE ONLY banco
 
 
 --
--- TOC entry 1853 (class 2606 OID 108463)
+-- TOC entry 1860 (class 2606 OID 110125)
 -- Name: ciudad_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1877,7 +1896,7 @@ ALTER TABLE ONLY ciudad
 
 
 --
--- TOC entry 1855 (class 2606 OID 108471)
+-- TOC entry 1862 (class 2606 OID 110133)
 -- Name: clasificacion_repuesto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1886,7 +1905,7 @@ ALTER TABLE ONLY clasificacion_repuesto
 
 
 --
--- TOC entry 1857 (class 2606 OID 108476)
+-- TOC entry 1864 (class 2606 OID 110138)
 -- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1895,7 +1914,7 @@ ALTER TABLE ONLY cliente
 
 
 --
--- TOC entry 1859 (class 2606 OID 108481)
+-- TOC entry 1866 (class 2606 OID 110146)
 -- Name: compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1904,7 +1923,7 @@ ALTER TABLE ONLY compra
 
 
 --
--- TOC entry 1861 (class 2606 OID 108486)
+-- TOC entry 1868 (class 2606 OID 110151)
 -- Name: configuracion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1913,7 +1932,7 @@ ALTER TABLE ONLY configuracion
 
 
 --
--- TOC entry 1863 (class 2606 OID 108494)
+-- TOC entry 1870 (class 2606 OID 110159)
 -- Name: cotizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1922,7 +1941,7 @@ ALTER TABLE ONLY cotizacion
 
 
 --
--- TOC entry 1867 (class 2606 OID 108507)
+-- TOC entry 1874 (class 2606 OID 110172)
 -- Name: detalle_cotizacion_internacional_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1931,7 +1950,7 @@ ALTER TABLE ONLY detalle_cotizacion_internacional
 
 
 --
--- TOC entry 1865 (class 2606 OID 108502)
+-- TOC entry 1872 (class 2606 OID 110167)
 -- Name: detalle_cotizacion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1940,7 +1959,7 @@ ALTER TABLE ONLY detalle_cotizacion
 
 
 --
--- TOC entry 1869 (class 2606 OID 108512)
+-- TOC entry 1876 (class 2606 OID 110177)
 -- Name: detalle_oferta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1949,7 +1968,7 @@ ALTER TABLE ONLY detalle_oferta
 
 
 --
--- TOC entry 1871 (class 2606 OID 108520)
+-- TOC entry 1878 (class 2606 OID 110185)
 -- Name: detalle_requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1958,7 +1977,7 @@ ALTER TABLE ONLY detalle_requerimiento
 
 
 --
--- TOC entry 1873 (class 2606 OID 108525)
+-- TOC entry 1880 (class 2606 OID 110190)
 -- Name: estado_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1967,7 +1986,7 @@ ALTER TABLE ONLY estado
 
 
 --
--- TOC entry 1875 (class 2606 OID 108530)
+-- TOC entry 1882 (class 2606 OID 110198)
 -- Name: forma_pago_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1976,7 +1995,7 @@ ALTER TABLE ONLY forma_pago
 
 
 --
--- TOC entry 1877 (class 2606 OID 108535)
+-- TOC entry 1884 (class 2606 OID 110203)
 -- Name: historico_moneda_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1985,7 +2004,7 @@ ALTER TABLE ONLY historico_moneda
 
 
 --
--- TOC entry 1879 (class 2606 OID 108540)
+-- TOC entry 1886 (class 2606 OID 110208)
 -- Name: history_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1994,7 +2013,7 @@ ALTER TABLE ONLY history_logins
 
 
 --
--- TOC entry 1881 (class 2606 OID 108548)
+-- TOC entry 1888 (class 2606 OID 110216)
 -- Name: marca_vehiculo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2003,7 +2022,7 @@ ALTER TABLE ONLY marca_vehiculo
 
 
 --
--- TOC entry 1883 (class 2606 OID 108556)
+-- TOC entry 1890 (class 2606 OID 110224)
 -- Name: menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2012,7 +2031,7 @@ ALTER TABLE ONLY menu
 
 
 --
--- TOC entry 1885 (class 2606 OID 108564)
+-- TOC entry 1892 (class 2606 OID 110232)
 -- Name: moneda_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2021,7 +2040,7 @@ ALTER TABLE ONLY moneda
 
 
 --
--- TOC entry 1887 (class 2606 OID 108569)
+-- TOC entry 1894 (class 2606 OID 110237)
 -- Name: motor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2030,7 +2049,7 @@ ALTER TABLE ONLY motor
 
 
 --
--- TOC entry 1889 (class 2606 OID 108574)
+-- TOC entry 1896 (class 2606 OID 110242)
 -- Name: oferta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2039,7 +2058,7 @@ ALTER TABLE ONLY oferta
 
 
 --
--- TOC entry 1891 (class 2606 OID 108582)
+-- TOC entry 1898 (class 2606 OID 110250)
 -- Name: pago_compra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2048,7 +2067,16 @@ ALTER TABLE ONLY pago_compra
 
 
 --
--- TOC entry 1893 (class 2606 OID 108587)
+-- TOC entry 1900 (class 2606 OID 110255)
+-- Name: pais_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pais
+    ADD CONSTRAINT pais_pkey PRIMARY KEY (id_pais);
+
+
+--
+-- TOC entry 1902 (class 2606 OID 110260)
 -- Name: persistent_logins_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2057,7 +2085,16 @@ ALTER TABLE ONLY persistent_logins
 
 
 --
--- TOC entry 1895 (class 2606 OID 108595)
+-- TOC entry 1904 (class 2606 OID 110270)
+-- Name: persona_cedula_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_cedula_key UNIQUE (cedula);
+
+
+--
+-- TOC entry 1906 (class 2606 OID 110268)
 -- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2066,7 +2103,7 @@ ALTER TABLE ONLY persona
 
 
 --
--- TOC entry 1897 (class 2606 OID 108600)
+-- TOC entry 1908 (class 2606 OID 110275)
 -- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2075,7 +2112,7 @@ ALTER TABLE ONLY proveedor
 
 
 --
--- TOC entry 1899 (class 2606 OID 108614)
+-- TOC entry 1910 (class 2606 OID 110289)
 -- Name: requerimiento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2084,7 +2121,7 @@ ALTER TABLE ONLY requerimiento
 
 
 --
--- TOC entry 1901 (class 2606 OID 108622)
+-- TOC entry 1912 (class 2606 OID 110297)
 -- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2093,7 +2130,7 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1903 (class 2606 OID 108825)
+-- TOC entry 1914 (class 2606 OID 110299)
 -- Name: usuario_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -2102,313 +2139,331 @@ ALTER TABLE ONLY usuario
 
 
 --
--- TOC entry 1932 (class 2606 OID 108753)
--- Name: fk1c4167896338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1945 (class 2606 OID 110450)
+-- Name: fk1c4167898d35b97d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proveedor_marca_vehiculo
-    ADD CONSTRAINT fk1c4167896338eca6 FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
+    ADD CONSTRAINT fk1c4167898d35b97d FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
 
 
 --
--- TOC entry 1931 (class 2606 OID 108748)
--- Name: fk1c416789fb88f57b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1944 (class 2606 OID 110445)
+-- Name: fk1c416789e157ed2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proveedor_marca_vehiculo
-    ADD CONSTRAINT fk1c416789fb88f57b FOREIGN KEY (id_marca_vehiculo) REFERENCES marca_vehiculo(id_marca_vehiculo);
+    ADD CONSTRAINT fk1c416789e157ed2 FOREIGN KEY (id_marca_vehiculo) REFERENCES marca_vehiculo(id_marca_vehiculo);
 
 
 --
--- TOC entry 1921 (class 2606 OID 108703)
--- Name: fk33155fb000c573; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1932 (class 2606 OID 110385)
+-- Name: fk33155fb6af0e3c; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY menu
-    ADD CONSTRAINT fk33155fb000c573 FOREIGN KEY (id_padre) REFERENCES menu(id_menu);
+    ADD CONSTRAINT fk33155fb6af0e3c FOREIGN KEY (id_padre) REFERENCES menu(id_menu);
 
 
 --
--- TOC entry 1906 (class 2606 OID 108633)
--- Name: fk334b85fa72a75f10; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1917 (class 2606 OID 110310)
+-- Name: fk334b85fae64f75a7; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY cliente
-    ADD CONSTRAINT fk334b85fa72a75f10 FOREIGN KEY (id_cliente) REFERENCES persona(id);
+    ADD CONSTRAINT fk334b85fae64f75a7 FOREIGN KEY (id_cliente) REFERENCES persona(id);
 
 
 --
--- TOC entry 1915 (class 2606 OID 108678)
--- Name: fk37d329f9220ac46b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1937 (class 2606 OID 110410)
+-- Name: fk3462db1417460b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY detalle_oferta
-    ADD CONSTRAINT fk37d329f9220ac46b FOREIGN KEY (id_detalle_cotizacion) REFERENCES detalle_cotizacion(id_detalle_cotizacion);
-
-
---
--- TOC entry 1916 (class 2606 OID 108683)
--- Name: fk37d329f95a5fdb8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY detalle_oferta
-    ADD CONSTRAINT fk37d329f95a5fdb8 FOREIGN KEY (id_oferta) REFERENCES oferta(id_oferta);
+ALTER TABLE ONLY pais
+    ADD CONSTRAINT fk3462db1417460b FOREIGN KEY (id_moneda) REFERENCES moneda(id_moneda);
 
 
 --
--- TOC entry 1914 (class 2606 OID 108673)
--- Name: fk37d329f9ddb68c52; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1926 (class 2606 OID 110355)
+-- Name: fk37d329f919e53841; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_oferta
-    ADD CONSTRAINT fk37d329f9ddb68c52 FOREIGN KEY (id_compra) REFERENCES compra(id_compra);
+    ADD CONSTRAINT fk37d329f919e53841 FOREIGN KEY (id_oferta) REFERENCES oferta(id_oferta);
 
 
 --
--- TOC entry 1918 (class 2606 OID 108693)
--- Name: fk42c4ba5d1726034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1925 (class 2606 OID 110350)
+-- Name: fk37d329f99df4ca42; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_oferta
+    ADD CONSTRAINT fk37d329f99df4ca42 FOREIGN KEY (id_detalle_cotizacion) REFERENCES detalle_cotizacion(id_detalle_cotizacion);
+
+
+--
+-- TOC entry 1927 (class 2606 OID 110360)
+-- Name: fk37d329f9f1f5c6db; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_oferta
+    ADD CONSTRAINT fk37d329f9f1f5c6db FOREIGN KEY (id_compra) REFERENCES compra(id_compra);
+
+
+--
+-- TOC entry 1928 (class 2606 OID 110365)
+-- Name: fk42c4ba5d13fee98b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_requerimiento
-    ADD CONSTRAINT fk42c4ba5d1726034 FOREIGN KEY (id_requerimiento) REFERENCES requerimiento(id_requerimiento);
+    ADD CONSTRAINT fk42c4ba5d13fee98b FOREIGN KEY (id_requerimiento) REFERENCES requerimiento(id_requerimiento);
 
 
 --
--- TOC entry 1917 (class 2606 OID 108688)
--- Name: fk42c4ba5d9195f9f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1929 (class 2606 OID 110370)
+-- Name: fk42c4ba5d5acb3c4a; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_requerimiento
-    ADD CONSTRAINT fk42c4ba5d9195f9f3 FOREIGN KEY (id_clasificacion_repuesto) REFERENCES clasificacion_repuesto(id_clasificacion_repuesto);
+    ADD CONSTRAINT fk42c4ba5d5acb3c4a FOREIGN KEY (id_clasificacion_repuesto) REFERENCES clasificacion_repuesto(id_clasificacion_repuesto);
 
 
 --
--- TOC entry 1909 (class 2606 OID 108648)
--- Name: fk5c3e3f8d18b9529d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY cotizacion
-    ADD CONSTRAINT fk5c3e3f8d18b9529d FOREIGN KEY (id_historico_moneda) REFERENCES historico_moneda(id_historia);
-
-
---
--- TOC entry 1910 (class 2606 OID 108653)
--- Name: fk5c3e3f8d6338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1920 (class 2606 OID 110325)
+-- Name: fk5c3e3f8d8d35b97d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY cotizacion
-    ADD CONSTRAINT fk5c3e3f8d6338eca6 FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
+    ADD CONSTRAINT fk5c3e3f8d8d35b97d FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
 
 
 --
--- TOC entry 1912 (class 2606 OID 108663)
--- Name: fk6d4757554670fb59; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1921 (class 2606 OID 110330)
+-- Name: fk5c3e3f8dba48e234; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cotizacion
+    ADD CONSTRAINT fk5c3e3f8dba48e234 FOREIGN KEY (id_historico_moneda) REFERENCES historico_moneda(id_historia);
+
+
+--
+-- TOC entry 1922 (class 2606 OID 110335)
+-- Name: fk6d4757554cee9222; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_cotizacion
-    ADD CONSTRAINT fk6d4757554670fb59 FOREIGN KEY (id_detalle_requerimiento) REFERENCES detalle_requerimiento(id_detalle_requerimiento);
+    ADD CONSTRAINT fk6d4757554cee9222 FOREIGN KEY (id_detalle_requerimiento) REFERENCES detalle_requerimiento(id_detalle_requerimiento);
 
 
 --
--- TOC entry 1911 (class 2606 OID 108658)
--- Name: fk6d475755b1780570; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1923 (class 2606 OID 110340)
+-- Name: fk6d475755c714d379; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_cotizacion
-    ADD CONSTRAINT fk6d475755b1780570 FOREIGN KEY (id_cotizacion) REFERENCES cotizacion(id_cotizacion);
+    ADD CONSTRAINT fk6d475755c714d379 FOREIGN KEY (id_cotizacion) REFERENCES cotizacion(id_cotizacion);
 
 
 --
--- TOC entry 1930 (class 2606 OID 108743)
--- Name: fk97b0796d6338eca6; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY proveedor_clasificacion_repuesto
-    ADD CONSTRAINT fk97b0796d6338eca6 FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
-
-
---
--- TOC entry 1929 (class 2606 OID 108738)
--- Name: fk97b0796d9195f9f3; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1943 (class 2606 OID 110440)
+-- Name: fk97b0796d5acb3c4a; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proveedor_clasificacion_repuesto
-    ADD CONSTRAINT fk97b0796d9195f9f3 FOREIGN KEY (id_clasificacion_repuesto) REFERENCES clasificacion_repuesto(id_clasificacion_repuesto);
+    ADD CONSTRAINT fk97b0796d5acb3c4a FOREIGN KEY (id_clasificacion_repuesto) REFERENCES clasificacion_repuesto(id_clasificacion_repuesto);
 
 
 --
--- TOC entry 1919 (class 2606 OID 108698)
--- Name: fka1184445ffd80b82; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1942 (class 2606 OID 110435)
+-- Name: fk97b0796d8d35b97d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY proveedor_clasificacion_repuesto
+    ADD CONSTRAINT fk97b0796d8d35b97d FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor);
+
+
+--
+-- TOC entry 1930 (class 2606 OID 110375)
+-- Name: fka11844451417460b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY historico_moneda
-    ADD CONSTRAINT fka1184445ffd80b82 FOREIGN KEY (id_moneda) REFERENCES moneda(id_moneda);
+    ADD CONSTRAINT fka11844451417460b FOREIGN KEY (id_moneda) REFERENCES moneda(id_moneda);
 
 
 --
--- TOC entry 1905 (class 2606 OID 108628)
--- Name: fkaeee1c58e5009422; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1916 (class 2606 OID 110305)
+-- Name: fkaeee1c58f93fceab; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY ciudad
-    ADD CONSTRAINT fkaeee1c58e5009422 FOREIGN KEY (id_estado) REFERENCES estado(id_estado);
+    ADD CONSTRAINT fkaeee1c58f93fceab FOREIGN KEY (id_estado) REFERENCES estado(id_estado);
 
 
 --
--- TOC entry 1908 (class 2606 OID 108643)
--- Name: fkaf3f357e1726034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY compra
-    ADD CONSTRAINT fkaf3f357e1726034 FOREIGN KEY (id_requerimiento) REFERENCES requerimiento(id_requerimiento);
-
-
---
--- TOC entry 1907 (class 2606 OID 108638)
--- Name: fkaf3f357e18b9529d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1918 (class 2606 OID 110315)
+-- Name: fkaf3f357e13fee98b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY compra
-    ADD CONSTRAINT fkaf3f357e18b9529d FOREIGN KEY (id_historico_moneda) REFERENCES historico_moneda(id_historia);
+    ADD CONSTRAINT fkaf3f357e13fee98b FOREIGN KEY (id_requerimiento) REFERENCES requerimiento(id_requerimiento);
 
 
 --
--- TOC entry 1925 (class 2606 OID 108723)
--- Name: fkb6bc61e416eba8c2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1919 (class 2606 OID 110320)
+-- Name: fkaf3f357eba48e234; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY pago_compra
-    ADD CONSTRAINT fkb6bc61e416eba8c2 FOREIGN KEY (id_persona) REFERENCES persona(id);
-
-
---
--- TOC entry 1924 (class 2606 OID 108718)
--- Name: fkb6bc61e44097f483; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pago_compra
-    ADD CONSTRAINT fkb6bc61e44097f483 FOREIGN KEY (id_forma_pago) REFERENCES forma_pago(id_forma_pago);
+ALTER TABLE ONLY compra
+    ADD CONSTRAINT fkaf3f357eba48e234 FOREIGN KEY (id_historico_moneda) REFERENCES historico_moneda(id_historia);
 
 
 --
--- TOC entry 1922 (class 2606 OID 108708)
--- Name: fkb6bc61e47258dd60; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1936 (class 2606 OID 110405)
+-- Name: fkb6bc61e44173adb7; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY pago_compra
-    ADD CONSTRAINT fkb6bc61e47258dd60 FOREIGN KEY (id_banco) REFERENCES banco(id_banco);
+    ADD CONSTRAINT fkb6bc61e44173adb7 FOREIGN KEY (id_banco) REFERENCES banco(id_banco);
 
 
 --
--- TOC entry 1923 (class 2606 OID 108713)
--- Name: fkb6bc61e4ddb68c52; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1933 (class 2606 OID 110390)
+-- Name: fkb6bc61e46a94c15a; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY pago_compra
-    ADD CONSTRAINT fkb6bc61e4ddb68c52 FOREIGN KEY (id_compra) REFERENCES compra(id_compra);
+    ADD CONSTRAINT fkb6bc61e46a94c15a FOREIGN KEY (id_forma_pago) REFERENCES forma_pago(id_forma_pago);
 
 
 --
--- TOC entry 1913 (class 2606 OID 108668)
--- Name: fkbb5b3c953a4dfaab; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1935 (class 2606 OID 110400)
+-- Name: fkb6bc61e48a93bf59; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pago_compra
+    ADD CONSTRAINT fkb6bc61e48a93bf59 FOREIGN KEY (id_persona) REFERENCES persona(id);
+
+
+--
+-- TOC entry 1934 (class 2606 OID 110395)
+-- Name: fkb6bc61e4f1f5c6db; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pago_compra
+    ADD CONSTRAINT fkb6bc61e4f1f5c6db FOREIGN KEY (id_compra) REFERENCES compra(id_compra);
+
+
+--
+-- TOC entry 1924 (class 2606 OID 110345)
+-- Name: fkbb5b3c95b6380082; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY detalle_cotizacion_internacional
-    ADD CONSTRAINT fkbb5b3c953a4dfaab FOREIGN KEY (id_detalle_cotizacion_internacional) REFERENCES detalle_cotizacion(id_detalle_cotizacion);
+    ADD CONSTRAINT fkbb5b3c95b6380082 FOREIGN KEY (id_detalle_cotizacion_internacional) REFERENCES detalle_cotizacion(id_detalle_cotizacion);
 
 
 --
--- TOC entry 1926 (class 2606 OID 108831)
--- Name: fkbd224d2a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1938 (class 2606 OID 110415)
+-- Name: fkbd224d21a483329; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY persistent_logins
-    ADD CONSTRAINT fkbd224d2a6a01c92 FOREIGN KEY (username) REFERENCES usuario(username);
+    ADD CONSTRAINT fkbd224d21a483329 FOREIGN KEY (username) REFERENCES usuario(username);
 
 
 --
--- TOC entry 1904 (class 2606 OID 108623)
--- Name: fkc2e8ee2fdcbd110d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1915 (class 2606 OID 110300)
+-- Name: fkc6c3524f506527a4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY analista
-    ADD CONSTRAINT fkc2e8ee2fdcbd110d FOREIGN KEY (id_analista) REFERENCES persona(id);
+    ADD CONSTRAINT fkc6c3524f506527a4 FOREIGN KEY (id_analista) REFERENCES persona(id);
 
 
 --
--- TOC entry 1933 (class 2606 OID 108758)
--- Name: fkd19e472517870034; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY requerimiento
-    ADD CONSTRAINT fkd19e472517870034 FOREIGN KEY (id_analista) REFERENCES analista(id_analista);
-
-
---
--- TOC entry 1936 (class 2606 OID 108773)
--- Name: fkd19e47257973088b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1949 (class 2606 OID 110470)
+-- Name: fkd19e472518e1bc7d; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY requerimiento
-    ADD CONSTRAINT fkd19e47257973088b FOREIGN KEY (id_motor_v) REFERENCES motor(id_motor);
+    ADD CONSTRAINT fkd19e472518e1bc7d FOREIGN KEY (id_analista) REFERENCES analista(id_analista);
 
 
 --
--- TOC entry 1935 (class 2606 OID 108768)
--- Name: fkd19e4725b1f9d9de; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY requerimiento
-    ADD CONSTRAINT fkd19e4725b1f9d9de FOREIGN KEY (id_marca_v) REFERENCES marca_vehiculo(id_marca_vehiculo);
-
-
---
--- TOC entry 1934 (class 2606 OID 108763)
--- Name: fkd19e4725ce63155e; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1948 (class 2606 OID 110465)
+-- Name: fkd19e4725420b2bf5; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY requerimiento
-    ADD CONSTRAINT fkd19e4725ce63155e FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente);
+    ADD CONSTRAINT fkd19e4725420b2bf5 FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente);
 
 
 --
--- TOC entry 1927 (class 2606 OID 108728)
--- Name: fkd78fcfacdd145a06; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1947 (class 2606 OID 110460)
+-- Name: fkd19e4725488dd8e2; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requerimiento
+    ADD CONSTRAINT fkd19e4725488dd8e2 FOREIGN KEY (id_motor_v) REFERENCES motor(id_motor);
+
+
+--
+-- TOC entry 1946 (class 2606 OID 110455)
+-- Name: fkd19e4725c4866335; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requerimiento
+    ADD CONSTRAINT fkd19e4725c4866335 FOREIGN KEY (id_marca_v) REFERENCES marca_vehiculo(id_marca_vehiculo);
+
+
+--
+-- TOC entry 1939 (class 2606 OID 110420)
+-- Name: fkd78fcfacf153948f; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY persona
-    ADD CONSTRAINT fkd78fcfacdd145a06 FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad);
+    ADD CONSTRAINT fkd78fcfacf153948f FOREIGN KEY (id_ciudad) REFERENCES ciudad(id_ciudad);
 
 
 --
--- TOC entry 1928 (class 2606 OID 108733)
--- Name: fkdf24cade6d89dcf4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1941 (class 2606 OID 110430)
+-- Name: fkdf24cade2b738d55; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY proveedor
-    ADD CONSTRAINT fkdf24cade6d89dcf4 FOREIGN KEY (id_proveedor) REFERENCES persona(id);
+    ADD CONSTRAINT fkdf24cade2b738d55 FOREIGN KEY (id_pais) REFERENCES pais(id_pais);
 
 
 --
--- TOC entry 1920 (class 2606 OID 108826)
--- Name: fkee0d8835a6a01c92; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1940 (class 2606 OID 110425)
+-- Name: fkdf24cadee131f38b; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY proveedor
+    ADD CONSTRAINT fkdf24cadee131f38b FOREIGN KEY (id_proveedor) REFERENCES persona(id);
+
+
+--
+-- TOC entry 1931 (class 2606 OID 110380)
+-- Name: fkee0d88351a483329; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY history_logins
-    ADD CONSTRAINT fkee0d8835a6a01c92 FOREIGN KEY (username) REFERENCES usuario(username);
+    ADD CONSTRAINT fkee0d88351a483329 FOREIGN KEY (username) REFERENCES usuario(username);
 
 
 --
--- TOC entry 1937 (class 2606 OID 108778)
--- Name: fkf814f32ebe6ae2c8; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 1950 (class 2606 OID 110475)
+-- Name: fkf814f32e3212f95f; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY usuario
-    ADD CONSTRAINT fkf814f32ebe6ae2c8 FOREIGN KEY (persona_id) REFERENCES persona(id);
+    ADD CONSTRAINT fkf814f32e3212f95f FOREIGN KEY (persona_id) REFERENCES persona(id);
 
 
 --
--- TOC entry 2079 (class 0 OID 0)
+-- TOC entry 2094 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -2419,7 +2474,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2015-08-22 20:47:06
+-- Completed on 2015-11-28 18:12:48
 
 --
 -- PostgreSQL database dump complete
