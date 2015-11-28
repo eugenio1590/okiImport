@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"  width="85%" height="85%" closable="true" 
 		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorInternacionalViewModel')"
@@ -26,8 +26,20 @@
 						</rows>
 					</grid>
 				</groupbox>
+				
+				<!-- LISTA DE COTIZACIONES-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagCotizaciones" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblCotizaciones" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
 				<listbox id="gridCotizaciones" sclass="mylist" model="@load(vm.listaCotizacion)"
-				pagingPosition="top">
+				pagingPosition="top" emptyMessage="No hay solicitudes"
+				onAfterRender="@command('updatePaging', paging = pagCotizaciones, label=lblCotizaciones)">
 					<auxhead>
 						<auxheader colspan="3" label="Solicitudes de Cotizacion"/>
 					</auxhead>
@@ -78,8 +90,8 @@
 					</template>
 
 				</listbox>
-				<paging id="pagCotizaciones"
-					onPaging="@command('paginarLista')" autohide="true" />
+				</panelchildren>
+			</panel>
 			</div>
 		</west>
 		</borderlayout>

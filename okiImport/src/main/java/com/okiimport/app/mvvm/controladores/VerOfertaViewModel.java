@@ -22,15 +22,20 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
     //Servicios
+	@BeanInjector("sControlUsuario")
+	private SControlUsuario sControlUsuario;
+	
     @BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
     
@@ -86,8 +91,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	@NotifyChange("oferta")
 	public void cargarOferta(){
-		
-		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+		List<DetalleRequerimiento> detallesRequerimiento = obtenerDetallesRequerimientos();
+		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento(), detallesRequerimiento);
 	
 	}
 	
@@ -98,14 +103,30 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {		
+	public void registrar() {		
 		if ( checkIsFormValid() ) {
 			
 			oferta.setEstatus("recibida");
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-			cargarOferta();
+			boolean seguir = true;
+			while(seguir){
+				cargarOferta();
+				
+				if(oferta==null) {
+					seguir = false;
+				}
+				else if(oferta.getDetalleOfertas().size()==0){
+					oferta.setEstatus("invalida");
+					sTransaccion.actualizarOferta(oferta);
+					seguir = true;
+					oferta = null;
+				}
+				else {
+					seguir = false;
+				}
+			}
 			
 			final Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("requerimiento", requerimiento);
@@ -210,6 +231,25 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**
+	 * Descripcion: Obtendra todos los objetos detalles requerimiento de los objetos detalle oferta seleccionados
+	 * Parametros: Ninguno
+	 * Retorno: @return detallesRequerimiento: lista de los detalles requerimientos asociados 
+	 * a los objetos detalle oferta seleccionados
+	 * Nota: Ninguna
+	 * */
+	private List<DetalleRequerimiento> obtenerDetallesRequerimientos(){
+		List<DetalleRequerimiento> detallesRequerimiento = null;
+		if(listaDetOferta!=null && !listaDetOferta.isEmpty()){
+			detallesRequerimiento = new ArrayList<DetalleRequerimiento>();
+			for(DetalleOferta detalleO : listaDetOferta){
+				detallesRequerimiento.add(detalleO.getDetalleCotizacion().getDetalleRequerimiento());
+			}
+			 
+		}
+		return detallesRequerimiento;
+	}
+	
+	/**
 	 * Descripcion: Permitira reactivar el requerimiento con otro analista
 	 * Parametros: Ninguno.
 	 * Retorno: Ninguno
@@ -227,8 +267,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 							cerrarVentana();
 						}
 						else if(button == Messagebox.Button.NO ){
-							requerimiento.cerrarSolicitud();
-							sTransaccion.actualizarRequerimiento(requerimiento);
+							sTransaccion.cerrarRequerimiento(requerimiento, sMaestros, sControlUsuario, false);
 							mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
 								@Override
 								public void onEvent(Event event) throws Exception {
@@ -247,6 +286,22 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**GETTERS Y SETTERS*/
+	public SControlUsuario getsControlUsuario() {
+		return sControlUsuario;
+	}
+
+	public void setsControlUsuario(SControlUsuario sControlUsuario) {
+		this.sControlUsuario = sControlUsuario;
+	}
+	
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
+
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
+	}
+	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
@@ -261,14 +316,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
-	}
-
-	public STransaccion getsTransaccion() {
-		return sTransaccion;
-	}
-
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
 	}
 	
 }

@@ -1,9 +1,21 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window border="none" title="Lista de Proveedores" apply="org.zkoss.bind.BindComposer" 
 		width="@bind(vm.size)" height="@bind(vm.size)" closable="true" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaProveedorCotizarViewModel')">
-		<listbox id="gridProveedores" mold="paging"
-			model="@load(vm.proveedores)" pagingPosition="top">
+		
+		<!-- LISTA DE PROVEEDORES-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagProveedores" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblProveedores" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridProveedores" mold="paging" emptyMessage="No hay solicitudes"
+			model="@load(vm.proveedores)" pagingPosition="top"
+			onAfterRender="@command('updatePaging', paging = pagProveedores, label=lblProveedores)">
 			<auxhead sclass="nombre-center">
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
@@ -50,7 +62,8 @@
 				</listitem>
 			</template>
 		</listbox>
-		<paging id="pagProveedores" onPaging="@command('paginarLista')"
-			autohide="true" />
+		</panelchildren>
+			</panel>
+		
 	</window>
 </zk>

@@ -1,8 +1,20 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window title="Cotizaciones" border="none" width="80%" closable="true" 
 	 sclass="btn-info" apply="org.zkoss.bind.BindComposer" 
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesViewModel')">
-		<listbox id="gridCotizaciones" mold="paging"
+		
+		<!-- LISTA DE COTIZACIONES SELECCIONADAS-->
+		<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagCotizaciones" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblCotizaciones" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridCotizaciones" mold="paging" emptyMessage="No hay solicitudes"
+		onAfterRender="@command('updatePaging', paging = pagCotizaciones, label=lblCotizaciones)"
 			checkmark="true" pageSize="10" pagingPosition="top" multiple="true"
 			sclass="mylist" model="@load(vm.listaCotizaciones)" 
 			selectedItems="@bind(vm.listaCotizacionesSeleccionadas)">
@@ -77,8 +89,8 @@
 			</template>
 
 		</listbox>
-		<paging id="pagCotizaciones"
-			onPaging="@command('paginarLista')" autohide="true" />
+		</panelchildren>
+							</panel>
 				<div width="100%" align="right">
 				<div sclass="btn btn-xs btn-info">
 					<button label="Aprobar" type="submit"

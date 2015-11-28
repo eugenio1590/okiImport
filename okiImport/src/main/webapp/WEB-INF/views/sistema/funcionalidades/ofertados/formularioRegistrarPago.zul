@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormRegistrarPago" border="none"  
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarPagoViewModel')">

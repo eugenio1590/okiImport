@@ -20,21 +20,18 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Pais;
-import com.okiimport.app.model.Persona;
 import com.okiimport.app.modelo.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
 import com.okiimport.app.mvvm.model.FormatedNumberConverter;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.mvvm.resource.PasswordGenerator;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.mail.MailService;
 
@@ -47,6 +44,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	private static final String RUTA_MESSAGEBOX = BasePackageSistema+"configuracion/messagebox.zul";
 	
+	protected static final String formatDate = "dd/MM/yyyy";
 	protected static final String formatNumber = "#,###.00";
 	protected static final String localeNumber = null;
 	
@@ -116,17 +114,21 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void ampliarImagen(
 			@Default("Titulo") @BindingParam("titulo") String titulo,
 			@BindingParam("imagen") String imagen) {
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("title", titulo);
-		parametros.put("image", imagen);
-		crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
-				parametros);
+		if(imagen!=null){
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("title", titulo);
+			parametros.put("image", imagen);
+			crearModal(BasePackageSistema+"configuracion/ampliarImagen.zul",
+					parametros);
+		}
+		else
+			mostrarMensaje("Error", "No es una imagen valida para mostrar", Messagebox.ERROR, null, null, null);
 	}
 
 	/** METODOS SOBREESCRITOS */
 	@Override
 	@SuppressWarnings("rawtypes")
-	protected void mostrarMensaje(String titulo, String mensaje, String icon,
+	public void mostrarMensaje(String titulo, String mensaje, String icon,
 			Button[] botones, EventListener clickEvent,
 			Map<String, String> params) {
 		Messagebox.setTemplate(RUTA_MESSAGEBOX);
@@ -251,21 +253,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		return listaFormasEnvio;
 	}
 
-	protected String buscarUsername(Persona persona,
-			SControlUsuario sControlUsuario) {
-		boolean noValido = true;
-		String usuario = persona.getNombre().split(" ")[0].toLowerCase();
-		String username = usuario;
-		while (noValido) {
-			noValido = sControlUsuario.verificarUsername(username);
-			if (noValido)
-				username = usuario
-						+ PasswordGenerator.getPassword(
-								PasswordGenerator.NUMEROS + PasswordGenerator.MAYUSCULAS, 3);
-		}
-		return username;
-	}
-
 	public int getYearDay() {
 		return Calendar.getInstance().get(Calendar.YEAR);
 	}
@@ -287,7 +274,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.+@.+\\.[a-z]+/",
-				"Debe contener un correo valido Ej. fusa@gmail.com") };
+				"Debe contener un correo valido.") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 	}
@@ -365,6 +352,10 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
     }
     
 	/**GETTERS Y SETTERS*/
+    public String getFormatDate() {
+		return formatDate;
+	}
+    
     public String getFormatNumber() {
 		return formatNumber;
 	}

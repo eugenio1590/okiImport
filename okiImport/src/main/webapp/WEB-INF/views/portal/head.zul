@@ -1,34 +1,36 @@
-<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+<zk xmlns:w="client" xmlns:n="native">
 
-	<hbox sclass="header" width="100%"><!-- sclass="navbar" sclass="header" -->
-		<space />
-		<image src="/resources/img/LogoSinSombreado.png" width="200px" />
-		<space hflex="1" />
-<!-- 		<space hflex="1" /> -->
+	<n:header class="header header-transparent header-waterfall">
+		<image src="/resources/img/LogoSinSombreado.png" sclass="header-logo margin-left-no" height="55px"/>
+		<include src="${requestScope.menu}" if="${ not empty requestScope.menu }"/>
+
 <!-- 		<div class="card-wrap"> -->
 <!-- 			<div class="card-inner"> -->
-<!-- 				<h:ul class="nav nav-list"> -->
-<!-- 					<h:li> -->
-<!-- 						<h:a class="tile" href="javascript:void(0)" -->
+<!-- 				<n:ul class="nav nav-list"> -->
+<!-- 					<n:li> -->
+						
+<!-- 						<n:a class="tile" href="javascript:void(0)" -->
 <!-- 							onClick="@command('registrarRequerimiento')"> -->
+<!-- 							<n:i class="fa fa-car"/> -->
 <!-- 							Home -->
-<!-- 						</h:a> -->
+<!-- 						</n:a> -->
 <!-- 				<space /> -->
-<!-- 					</h:li> -->
-<!-- 					<h:li> -->
-<!-- 						<h:a class="tile" href="javascript:void(0)" -->
+<!-- 					</n:li> -->
+<!-- 					<n:li> -->
+<!-- 						<n:a class="tile" href="javascript:void(0)" -->
 <!-- 							onClick="@command('registrarProveedor')"> -->
 <!-- 							Solicitar Ser Proveedor -->
-<!-- 						</h:a> -->
-<!-- 					</h:li> -->
-<!-- 					<h:li> -->
-<!-- 						<h:a class="tile" href="javascript:void(0)" -->
+<!-- 						</n:a> -->
+<!-- 					</n:li> -->
+<!-- 					<n:li> -->
+<!-- 						<n:a class="tile" href="javascript:void(0)" -->
 <!-- 							onClick="@command('verificarRequerimiento')"> -->
 <!-- 							Verificar Requerimiento -->
-<!-- 						</h:a> -->
-<!-- 					</h:li> -->
-<!-- 				</h:ul> -->
+<!-- 						</n:a> -->
+<!-- 					</n:li> -->
+<!-- 				</n:ul> -->
 <!-- 			</div> -->
 <!-- 		</div> -->
-	</hbox>
+
+		</n:header>
 </zk>

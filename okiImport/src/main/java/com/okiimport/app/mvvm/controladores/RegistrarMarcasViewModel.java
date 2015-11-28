@@ -70,16 +70,8 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombre", marca.getNombre());
 				
-				String str = "Marca Registrada con Exito ";
-
-				Messagebox.show(str, "Informacion", Messagebox.OK,
-						Messagebox.INFORMATION, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-									winFormularioMarca.onClose();
-								}
-							}
-						});
+				mostrarMensaje("Informaci\u00F3n", "Marca Registrada con Exito", null, null, null, null);
+				
 			}	
 	}
 	
@@ -93,6 +85,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	@NotifyChange({ "marca" })
 	public void limpiar() {
 		marca = new MarcaVehiculo();
+		super.cleanConstraintForm();
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/

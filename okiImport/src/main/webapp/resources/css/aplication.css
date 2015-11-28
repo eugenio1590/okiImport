@@ -11,6 +11,66 @@ span {
 	background-color:#2196f3;
 }
 
+.header-button {
+	//background-color:#2196f3;
+}
+
+/*.header-button table tr  {
+	padding: 5px;
+}*/
+
+.content-sub-heading {
+	margin-top: 20px;
+    margin-bottom: 14px;
+}
+
+.z-include .content-sub-heading {
+	font-size: 18px;
+}
+
+.boxed-grey, .boxed-grey.z-listcell div {
+	background: #f9f9f9;
+}
+
+p.card-heading {
+	margin-top: 14px;
+	margin-bottom: 14px;
+	font-size: 17px;
+}
+
+.card-inner {
+	padding-bottom: 1%;
+}
+
+.panel-footer.z-hbox table tbody tr td {
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+
+input.form-control, textarea.form-control {
+	font-size: 14px;
+	padding: 10px;
+}
+
+a.z-tab-content:hover {
+	text-decoration: none;
+}
+
+/*.card-header .card-inner, .card-inner-side, .tile-side {*/
+div .card-header .card-inner {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.z-fondo-principal .card-wrap {
+    margin-top: 10px;
+}
+
+/**IMAGENES*/
+.imagen-default {
+	background: #DDD9D9;
+}
+
 /**CAPTION*/
 .custom_caption {
 	font-size:12px;
@@ -62,6 +122,11 @@ span {
 .requerido {
 	color: red;
 	font-weight: bold;
+	font-size: 15px;
+}
+
+.requerido.margen {
+	margin-left: 20px;
 }
 
 .titulo_blanco span{
@@ -80,4 +145,41 @@ span {
 
 .base_division_campos.z-columnchildren div.z-columnchildren-content span {
 	margin-left:10px;
+}
+
+/**FUENTES PARA TITULOS*/
+.z-groupbox-content legend {
+    font-size: 18px;
+    line-height: 20px;
+    margin: 0 20px 14px;
+    color: #2196f3;
+}
+
+/*LOGIN*/
+div.alert.alert-danger {
+	background-color: #d64242;
+    border-color: #d64242;
+    margin-bottom: 0px;
+}
+
+div.alert.alert-danger span {
+	color: #FFF;
+}
+
+button.btn-primary.z-button, button.btn-info.z-button {
+	font-size: 14px;
+}
+
+div.z-vlayout-inner {
+	padding-bottom: 0px;
+}
+
+.label-not-mandatory {
+	font-style: oblique;
+}
+
+div.modal-footer {
+	padding: 15px 20px 10px;
+	padding-right: 32px;
+    padding-left: 32px;
 }

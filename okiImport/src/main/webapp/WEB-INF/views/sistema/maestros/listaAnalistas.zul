@@ -1,8 +1,20 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window border="none" apply="org.zkoss.bind.BindComposer" id="winListaAnalistas"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaAnalistasViewModel')">
-		<listbox id="gridAnalistas" mold="paging" pagingPosition="top"
-			model="@load(vm.analistas)">
+		
+		<!-- LISTA DE ANALISTAS-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagAnalistas" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblAnalistas" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridAnalistas" mold="paging" pagingPosition="top" emptyMessage="No hay analistas"
+			model="@load(vm.analistas)" 
+			onAfterRender="@command('updatePaging', paging = pagAnalistas, label=lblAnalistas)">
 			<auxhead sclass="nombre-center">
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
@@ -61,7 +73,7 @@
 				</listitem>
 			</template>
 		</listbox>
-		<paging id="pagAnalistas" onPaging="@command('paginarLista')"
-			autohide="true" />
+		</panelchildren>
+				</panel>
 	</window>
 </zk>

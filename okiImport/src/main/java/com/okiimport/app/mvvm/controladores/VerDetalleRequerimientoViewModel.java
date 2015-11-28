@@ -27,6 +27,8 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	//Atributos
 	private Requerimiento requerimiento;
 	
+	private String titulo;
+	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view:  
@@ -34,10 +36,13 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, @ExecutionArgParam("requerimiento") Requerimiento requerimiento)
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{
 		super.doAfterCompose(view);
+		System.out.println(view.getId());
 		this.requerimiento = requerimiento;
+		this.titulo = "Requerimiento Nro. "+this.requerimiento.getIdRequerimiento();
 		List<DetalleRequerimiento> detallesRequerimiento 
 			= (List<DetalleRequerimiento>) sTransaccion
 				.consultarDetallesRequerimiento(requerimiento.getIdRequerimiento(), 0, -1).get("detallesRequerimiento");
@@ -48,6 +53,13 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 	/** METODOS PROPIOS DE LA CLASE */
 
 	/** GETTERS Y SETTERS */
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
+
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
+	}
 	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
@@ -57,20 +69,11 @@ public class VerDetalleRequerimientoViewModel extends AbstractRequerimientoViewM
 		this.requerimiento = requerimiento;
 	}
 	
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
+	public String getTitulo() {
+		return titulo;
 	}
 	
-	public STransaccion getsTransaccion() {
-		return sTransaccion;
-	}
-
-	public void setsTransaccion(STransaccion sTransaccion) {
-		this.sTransaccion = sTransaccion;
-	}
-	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}	
 }

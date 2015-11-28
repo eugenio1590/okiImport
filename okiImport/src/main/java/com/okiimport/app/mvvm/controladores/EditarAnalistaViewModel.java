@@ -112,6 +112,7 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 	@NotifyChange({ "analista" })
 	public void limpiar() {
 		analista = new Analista();
+		super.cleanConstraintForm();
 	}
 
 	

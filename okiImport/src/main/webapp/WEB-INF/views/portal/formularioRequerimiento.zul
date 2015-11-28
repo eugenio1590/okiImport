@@ -1,149 +1,128 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<!-- 	<script src="/resources/js/scriptParaFechas.js" /> -->
-	<window id="winFormularioRequerimiento"
-		title="Ingrese Su Requerimiento" border="normal" width="95%"
-		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"
+	<include src="/WEB-INF/views/template/title.zul" titulo="Ingrese Su Requerimiento" />
+	<vlayout sclass="card-inner" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
-
-
-		<groupbox>
-			<hbox>
-				<vbox>
-					<groupbox closable="false">
-						<caption sclass="custom_caption"
-							label="Datos Personales" />
-						<div>
-							<grid>
-								<columns>
-									<column width="35%" align="right" />
-									<column width="65%" />
-									<column width="35%" align="right" />
-									<column width="65%" />
-								</columns>
-
-								<rows>
-									<row>
-										<label value="ID/RIF: *" />
-										<hbox>
-											<combobox
-												id="comboTipoPersona" width="30%" readonly="true"
-												selectedItem="@bind(vm.tipoPersona)"
-												model="@load(vm.listaTipoPersona)" constraint="no empty">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-													</comboitem>
-												</template>
-											</combobox>
-											<vbox>
-												<intbox id="cedulaRif"
-													width="91%" readonly="" mold="rounded"
-													value="@bind(vm.cliente.cedula)"
-													placeholder="Ej: 402405375" maxlength="12"
-													constraint="@bind(vm.validatorClienteCedulaRif2)"
-													onBlur="@command('buscarCliente')"
-													onOK="@command('buscarCliente')" />
-											</vbox>
-
-										</hbox>
-
-										<label
-											value="Nombre/Razón Social: *" />
-										<vbox>
-											<textbox
-												id="nombreRazonSocial" width="95%" readonly=""
-												mold="rounded" value="@bind(vm.cliente.nombre)"
-												placeholder="Ej: Empresa C.A"
-												constraint="@bind(vm.notEmptyValidator)" />
-										</vbox>
-									</row>
-
-									<row>
-
-
-										<label value="Teléfono: *" />
-										<vbox>
-											<textbox id="telefono"
-												width="95%" readonly="" mold="rounded"
-												value="@bind(vm.cliente.telefono)" maxlength="11"
-												placeholder="Ej: 02512552233"
-												constraint="@bind(vm.telefonoValidator)" />
-										</vbox>
-
-
-										<label value="E-mail: *" />
-										<vbox>
-											<textbox id="email"
-												width="95%" readonly="" mold="rounded"
-												value="@bind(vm.cliente.correo)"
-												placeholder="Ej. fusa@gmail.com"
-												constraint="@bind(vm.emailValidator)">
-											</textbox>
-										</vbox>
-									</row>
-									<row>
-										<label value="Estado: *" />
-										<vbox>
-											<combobox
-												placeholder="Seleccione..." width="83%" readonly="true"
-												selectedItem="@bind(vm.estado)"
-												model="@load(vm.listaEstados)"
-												constraint="@bind(vm.notEmptyValidator)"
-												onSelect="@command('buscarCiudades')">
-												<template name="model">
-													<comboitem label="@bind(each.nombre)"/>								
-												</template>
-											</combobox>
-										</vbox>
-										
-										<label value="Ciudad: *" />
-										<vbox>
-											<combobox
-												placeholder="Seleccione..." width="83%" readonly="true"
-												selectedItem="@bind(vm.cliente.ciudad)"
-												constraint="@bind(vm.notEmptyValidator)"
-												model="@load(vm.listaCiudades)">
-												<template name="model">
-													<comboitem label="@bind(each.nombre)"/>
-												</template>
-											</combobox>
-										</vbox>
-									</row>
-
-
-								</rows>
-							</grid>
-						</div>
-					</groupbox>
-					<groupbox closable="false">
-						<caption sclass="custom_caption"
-							label="Datos Vehiculo" />
-
-						<groupbox id="tabDatosVehiculo"
-							closable="false">
-							<caption sclass="custom_caption"
-								label="Datos Basicos" />
-
-							<div>
-
+		<hlayout>
+			<div hflex="1">
+				<!-- DATOS DEL CLIENTE -->
+				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos Personales del Cliente" />
+				<div sclass="container" style="text-align:left;">
+					<grid>
+						<columns>
+							<column width="8%" />
+							<column width="22%"/>
+							<column width="12%"/>
+							<column width="22%"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<!-- CEDULA -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="ID / RIF:" />
+								<hbox>
+									<vbox>
+										<combobox id="comboTipoPersona" width="30%" readonly="true"
+											selectedItem="@bind(vm.tipoPersona)"
+											model="@load(vm.listaTipoPersona)">
+											<template name="model">
+												<comboitem label="@bind(each.nombre)" />
+											</template>
+										</combobox>
+									</vbox>
+									<space/>
+									<vbox>
+										<intbox id="cedulaRif" sclass="form-control" mold="rounded"
+											placeholder="Ej: 4025375" maxlength="12"
+											value="@bind(vm.cliente.cedula)"
+											constraint="@bind(vm.validatorClienteCedulaRif)"
+											onBlur="@command('buscarCliente')"
+											onOK="@command('buscarCliente')" />
+									</vbox>
+								</hbox>
+								
+								<!-- NOMBRE O RAZON SOCIAL -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Nombre / Razón Social:" />
+								<vbox>
+									<textbox id="nombreRazonSocial" sclass="form-control" mold="rounded"
+										value="@bind(vm.cliente.nombre)"
+										placeholder="Ej: Empresa C.A"
+										constraint="@bind(vm.notEmptyValidator)" />
+								</vbox>
+							</row>
+							<row>
+								<!-- TELEFONO -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Teléfono:" />
+								<vbox  hflex="1">
+									<textbox id="telefono" sclass="form-control" mold="rounded"
+										placeholder="Ej: 02512552233"  hflex="1"
+										value="@bind(vm.cliente.telefono)" maxlength="11"
+										constraint="@bind(vm.telefonoValidator)" />
+								</vbox>
+								
+								<!-- CORREO -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Correo:" />
+								<vbox>
+									<textbox id="email" sclass="form-control"  mold="rounded"
+										placeholder="Ej. xxx@gmail.com"
+										value="@bind(vm.cliente.correo)"
+										constraint="@bind(vm.emailValidator)"/>
+								</vbox>
+							</row>
+							<row>
+								<!-- ESTADO -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Estado:" />
+								<vbox hflex="1">
+									<combobox readonly="true" placeholder="Seleccione..." hflex="1"
+										selectedItem="@bind(vm.estado)"
+										model="@load(vm.listaEstados)"
+										constraint="@bind(vm.notEmptyValidator)"
+										onSelect="@command('buscarCiudades')">
+										<template name="model">
+											<comboitem label="@bind(each.nombre)"/>								
+										</template>
+									</combobox>
+								</vbox>
+								
+								<!-- CIUDAD -->
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Ciudad:" />
+								<vbox hflex="1">
+									<combobox placeholder="Seleccione..." readonly="true"  hflex="1"
+										selectedItem="@bind(vm.cliente.ciudad)"
+										constraint="@bind(vm.notEmptyValidator)"
+										model="@load(vm.listaCiudades)">
+										<template name="model">
+											<comboitem label="@bind(each.nombre)"/>
+										</template>
+									</combobox>
+								</vbox>
+							</row>
+						</rows>
+					</grid>
+				</div>
+				
+				<!-- DATOS DEL VEHICULO -->
+				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos del Vehiculo" />
+				<div sclass="col-lg-12 col-sm-0">
+					<div sclass="card">
+						<n:aside class="card-side pull-left">
+							<n:span class="card-heading"><n:i class="fa fa-car"/></n:span>
+						</n:aside>
+						<div sclass="card-main">
+							<div sclass="card-inner">
 								<grid>
 									<columns>
-										<column width="35%"
-											align="right" />
-										<column width="65%" />
-										<column width="35%"
-											align="right" />
-										<column width="65%" />
+										<column width="5%" align="right" />
+										<column width="15%" />
+										<column width="10%" align="right" />
+										<column width="15%" />
 									</columns>
 
 									<rows>
 										<row>
-
-											<label value="Marca: *" />
-											<vbox>
-												<combobox
-													placeholder="Seleccione..." width="80%" readonly="true"
+											<!-- MARCA -->
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Marca:" />
+											<vbox hflex="1">
+												<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 													selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
 													constraint="@bind(vm.notEmptyValidator)"
 													model="@load(vm.listaMarcasVehiculo)">
@@ -152,64 +131,65 @@
 													</template>
 												</combobox>
 											</vbox>
-
-											<label value="Modelo: *" />
+											
+											<!-- MODELO -->
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Modelo:" />
 											<vbox>
-												<textbox id="modelo"
-													width="95%" readonly="" mold="rounded"
-													value="@bind(vm.requerimiento.modeloV)"
+												<textbox id="modelo" sclass="form-control" mold="rounded"
 													placeholder="Ej Hilux"
+													value="@bind(vm.requerimiento.modeloV)"
 													constraint="@bind(vm.notEmptyValidator)" />
 											</vbox>
 										</row>
-
 										<row>
-
-											<label
-												value="Serial Carroceria: " />
-                                            
-                                            <vbox>
-											<textbox
-												id="serialCarroceria" width="91%" readonly="" mold="rounded"
-												value="@bind(vm.requerimiento.serialCarroceriaV)"
-												maxlength="25" placeholder="Ej: xA245D25623" />
-											</vbox>
-
-											<label value="Año: *" />
-											<vbox>
-												<intbox width="143%"
-													placeholder="Ej: 2015"
+											<!-- AÑO -->
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Año:" />
+											<vbox hflex="1">
+												<intbox placeholder="Ej: 2015" sclass="form-control"
 													constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
 													value="@bind(vm.requerimiento.annoV)" />
+											</vbox>
+											
+											<!-- SERIAL DE CARROCERIA -->
+											<hbox>
+												<label value="Serial de Carroceria: " sclass="form-label"/>
+                                        	</hbox>
+                                            <vbox>
+												<textbox id="serialCarroceria" sclass="form-control" mold="rounded"
+													maxlength="25" placeholder="Ej: xA245D25623"
+													value="@bind(vm.requerimiento.serialCarroceriaV)" />
 											</vbox>
 										</row>
 									</rows>
 								</grid>
 							</div>
-						</groupbox>
-
-						<groupbox closable="false"
-							id="tabMasDatosVehiculo">
-							<caption sclass="custom_caption"
-								label="Datos Adicionales" />
-
-							<div>
-
+						</div>
+					</div>
+				</div>
+				<div sclass="col-lg-12 col-sm-0">
+					<div sclass="card">
+						<n:aside class="card-side pull-left">
+							<n:span class="card-heading"><n:i class="fa fa-indent"/></n:span>
+						</n:aside>
+						<div sclass="card-main">
+							<div sclass="card-inner">
+								<n:p class="card-heading">Datos Adicionales</n:p>
 								<grid>
 									<columns>
-										<column width="35%"
-											align="right" />
-										<column width="65%" />
-										<column width="35%"
-											align="right" />
-										<column width="65%" />
+										<column width="5%" align="right" />
+										<column width="15%" />
+										<column width="10%" align="right" />
+										<column width="15%" />
 									</columns>
 
 									<rows>
 										<row>
-											<label value="Motor: " />
+											<!-- MOTOR -->
+											<hbox>
+												<label value="Motor: " sclass="form-label"/>
+											</hbox>
 											<bandbox id="bdMotor" mold="rounded" autodrop="true" readonly="true"
-												placeholder="Seleccione..." width="80%"
+												placeholder="Seleccione..." hflex="1"
 												value="@bind(vm.requerimiento.motor.nombre)">  
         										<bandpopup>
             										<listbox id="gridMotores" width="200px" mold="paging" model="@load(vm.listaMotor)"
@@ -229,154 +209,143 @@
             										<paging id="pagMotores" onPaging="@command('paginarListaMotores')" autohide="true" />
         										</bandpopup>
     										</bandbox>
-
-											<label
-												value="Transmision: " />
-											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
+    										
+    										<!-- TRANSMISION -->
+    										<hbox>
+    											<label value="Transmision: " sclass="form-label"/>
+											</hbox>
+											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.transmision)"
 												model="@load(vm.listaTransmision)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-
-													</comboitem>
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
 												</template>
 											</combobox>
 										</row>
-
+										
 										<row>
-
-											<label value="Traccion: " />
-											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
+											<!-- TRACCION -->
+											<hbox>
+												<label value="Traccion: " sclass="form-label"/>
+											</hbox>
+											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.traccion)"
 												model="@load(vm.listaTraccion)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-													</comboitem>
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
 												</template>
 											</combobox>
-
-											<label
-												value="Tipo Repuesto: " />
-											<combobox
-												placeholder="Seleccione..." width="80%" readonly="true"
+											
+											<!-- TIPO REPUESTO -->
+											<hbox>
+												<label value="Tipo Repuesto: " sclass="form-label"/>
+											</hbox>
+											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
 												selectedItem="@bind(vm.tipoRepuesto)"
 												model="@load(vm.listaTipoRepuesto)">
-												<template
-													name="model">
-													<comboitem
-														label="@bind(each.nombre)">
-													</comboitem>
+												<template name="model">
+													<comboitem label="@bind(each.nombre)"/>
 												</template>
 											</combobox>
-
 										</row>
-
 									</rows>
 								</grid>
 							</div>
-						</groupbox>
-					</groupbox>
-				</vbox>
-				<groupbox closable="false">
-					<div align="right">
-						<button label="Agregar Repuesto" type="submit"
+						</div>
+					</div>
+				</div>
+			</div>
+			<div hflex="1" vflex="1">
+				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos de los Repuestos" />
+				<hbox width="100%" sclass="header-button">
+					<fileupload iconSclass="fa fa-upload" tooltiptext="Agregar desde Archivo" sclass="btn-info" onUpload="@command('cargarArchivoRepuesto')"/>
+					<div align="right" hflex="1">
+						<button iconSclass="fa fa-plus" label="Repuesto" type="submit"
 							onClick="@command('agregarRepuesto')" sclass="btn-primary" />
-						<button label="Eliminar Repuesto" type="submit"
+						<button iconSclass="fa fa-minus" label="Repuesto" type="submit"
 							sclass="btn-primary" onClick="@command('eliminarRepuesto')" />
 					</div>
-					<caption sclass="custom_caption"
-						label="Datos Repuestos" />
-					<panel sclass="panel-primary">
-						<panelchildren>
+				</hbox>
+				<!-- REPUESTOS -->
+				<panel sclass="boxed-grey borderGrid margin">
+					<panelchildren>
+						<listbox mold="paging" multiple="true" pagingPosition="top" 
+							pageSize="5" sclass="boxed-grey"
+							checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
+							model="@load(vm.requerimiento.detalleRequerimientos)">
+							
+							<listhead>
+								<listheader label="CodigoOEM"
+									sort="auto"  width="20%"/>
+								<listheader width="40%" sort="auto">
+									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripcion" />
+								</listheader>
+								<listheader width="15%" sort="auto">
+									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
+								</listheader>
+								<listheader label="Foto" sort="auto"
+									width="20%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell>
+										
+										<textbox width="100px" hflex="max"
+											placeholder="Ej: 4330-39225"
+											value="@bind(each.codigoOem)">
+										</textbox>
 
-							<listbox mold="paging" multiple="true"
-								checkmark="true" selectedItems="@bind(vm.eliminarDetalle)"
-								model="@load(vm.requerimiento.detalleRequerimientos)"
-								style="margin-top:10px" pageSize="5">
-
-								<listhead>
-									<listheader label="CodigoOEM"
-										sort="auto" width="140px" />
-
-									<listheader label="Descripcion *"
-										width="300px" sort="auto" />
-									<listheader label="Cantidad *"
-										width="80px" sort="auto" />
-									<listheader label="Foto" sort="auto"
-										width="100px" />
-								</listhead>
-								<template name="model">
-									<listitem>
-										<listcell>
-											<textbox width="110px"
-												placeholder="Ej: 43330-39225"
-												value="@bind(each.codigoOem)">
+									</listcell>
+									<listcell>
+										<vbox hflex="1">
+											<textbox sclass="no_rezise" hflex="1"
+												placeholder="Ej: Terminal Exterior Derecho"
+												multiline="true" rows="2"
+												value="@bind(each.descripcion)"
+												constraint="@bind(vm.notEmptyValidator)">
 											</textbox>
-
-										</listcell>
-										<listcell>
-											<vbox>
-												<textbox width="275px"
-													placeholder="Ej: Terminal Exterior Derecho"
-													multiline="true" rows="2" sclass="no_rezise"
-													value="@bind(each.descripcion)"
-													constraint="@bind(vm.notEmptyValidator)">
-												</textbox>
-											</vbox>
-										</listcell>
-										<listcell>
-											<vbox>
-												<spinner width="70px"
-													placeholder="Ej: 1" onOK="@command('agregarRepuesto')"
-													constraint="@bind(vm.cantValidator)"
-													value="@bind(each.cantidad)">
-												</spinner>
-											</vbox>
-										</listcell>
-										<listcell>
-											<div>
-												<image width="50px"
-													height="50px" src="@bind(each.getFoto64())"
-													hover="/resources/img/icons/ampliar.png"
-													tooltiptext="Ampliar"
-													onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
-
-												<button label="..."
-													sclass="btn-primary" style="margin-bottom:0px"
-													upload="true"
-													onUpload="@command('cambiarFoto', media=event.media, detalle = each)" />
-											</div>
-										</listcell>
-									</listitem>
-								</template>
-							</listbox>
-
-						</panelchildren>
-					</panel>
-
-				</groupbox>
-			</hbox>
-		</groupbox>
-		<hbox width="100%">
-			<div hflex="1" align="center">
-				<label value="* Campos Obligatorios" hflex="1"
-					sclass="requerido" />
+										</vbox>
+									</listcell>
+									<listcell>
+										<vbox hflex="1">
+											<spinner hflex="1"
+												placeholder="Ej: 1" onOK="@command('agregarRepuesto')"
+												constraint="@bind(vm.cantValidator)"
+												value="@bind(each.cantidad)">
+											</spinner>
+										</vbox>
+									</listcell>
+									<listcell>
+										<div>
+											<image width="50px" sclass="imagen-default"
+												height="50px" src="@bind(each.getFoto64())"
+												hover="/resources/img/icons/ampliar.png"
+												tooltiptext="Ampliar"
+												onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
+											<space/>
+											<button label="..."
+												sclass="btn-info" style="margin-bottom:0px"
+												upload="true"
+												onUpload="@command('cambiarFoto', media=event.media, detalle = each)" />
+										</div>
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</panelchildren>
+				</panel>
 			</div>
-			<div sclass="panel-footer" align="right">
-
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
-				<button label="Enviar" type="submit"
-					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
+		</hlayout>
+		
+		<!-- BOTONES -->
+		<hbox hflex="1" sclass="panel-footer">
+			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
+			<div align="right" hflex="1">
+				<button id="btnLimpiar" label="Limpiar" sclass="btn btn-info"
+					onClick="@command('limpiar')" />
+				<button label="Enviar" type="submit" sclass="btn btn-primary"
+					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>
-	</window>
-
+	</vlayout>
 </zk>

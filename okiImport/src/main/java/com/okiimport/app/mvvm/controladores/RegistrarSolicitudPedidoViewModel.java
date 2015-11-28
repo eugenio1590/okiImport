@@ -74,6 +74,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	public void limpiar(){
 		this.compra.setObservacion(null);
 		this.tipoFlete = listaTipoFlete.get(0);
+		super.cleanConstraintForm();
 	}
 	
 	/**

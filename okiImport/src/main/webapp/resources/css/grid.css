@@ -34,3 +34,31 @@
 .footerTotal {
 	background-color:  white;
 }
+
+/**Borde de la grid*/
+.borderGrid {
+	border: 1px solid #C3C3C3;
+}
+
+.borderGrid.margin {
+	margin-top: 5px;
+}
+
+/**CAMPO DE BUSQUEDA*/
+.search {
+	border-radius: .4em;
+	border: 1px solid rgba(225, 225, 225, 1);
+	margin: .8em auto 0 auto;
+	padding: .5em;
+	width: 30em;
+}
+
+/**NUEVA PAGINACION*/
+.z-paging {
+	text-align: left;
+}
+
+.custom-paging {
+	padding-top: 0px;
+    height: auto;
+}

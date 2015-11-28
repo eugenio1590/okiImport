@@ -1,4 +1,4 @@
-<zk>
+<zk xmlns:w="client" xmlns:n="native">
 	<window id="winCompras" border="none" width="80%" title="Solicitud de Compra"
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		sclass="btn-primary"
@@ -153,11 +153,20 @@
 
 			<groupbox closable="false">
 				<caption sclass="custom_caption" label="Repuestos" />
-				<panel sclass="panel-primary">
-					<panelchildren>
-					
-						<listbox id="gridDetallesCompra" style="margin-top:10px"
-							model="@load(vm.listaDetallesCompra)" pagingPosition="top">
+				
+			<!-- LISTA DE DETALLES COMPRA-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagDetallesCompra" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblDetallesCompra" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+						<listbox id="gridDetallesCompra" style="margin-top:10px" emptyMessage="No hay solicitudes"
+							model="@load(vm.listaDetallesCompra)" pagingPosition="top"
+							onAfterRender="@command('updatePaging', paging = pagDetallesCompra, label=lblDetallesCompra)">
 							
 							<listhead>
 								<listheader label="Descripcion" sort="none" />
@@ -205,17 +214,10 @@
 									</vbox>
 								</listfooter>
 							</listfoot>
-							
 						</listbox>
-
-						<paging id="pagDetallesCompra" onPaging="@command('paginarLista')" autohide="true" />
-
 					</panelchildren>
 				</panel>
 			</groupbox>
-
-
 		</groupbox>
-		
 	</window>
 </zk>
