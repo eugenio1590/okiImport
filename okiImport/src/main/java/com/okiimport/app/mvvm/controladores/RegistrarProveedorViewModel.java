@@ -17,7 +17,6 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
@@ -25,7 +24,6 @@ import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.ClasificacionRepuesto;
-import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Pais;
@@ -175,7 +173,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "proveedor" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar,
 			@BindingParam("recordMode") String recordMode) {
