@@ -22,6 +22,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
@@ -127,7 +128,7 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar) {
 		if(checkIsFormValid()){
-			requerimiento.setEstatus("CP");
+			requerimiento.setEstatus(EEstatusRequerimiento.COMPRADO);
 			compra.setDetalleOfertas(listaDetallesCompra);
 			sTransaccion.registrarCompra(compra, requerimiento, false);
 			ejecutarGlobalCommand("cambiarCompras", null);

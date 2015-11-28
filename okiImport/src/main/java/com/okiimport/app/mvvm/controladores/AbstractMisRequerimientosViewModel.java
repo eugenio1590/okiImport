@@ -22,6 +22,7 @@ import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -124,7 +125,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 		requerimientoFiltro.setEstatus(null);
 		if(estatusFiltro!=null)
 			if(!estatusFiltro.getNombre().equalsIgnoreCase("No Filtrar"))
-				requerimientoFiltro.setEstatus(estatusFiltro.getValor());
+				requerimientoFiltro.setEstatus(EEstatusRequerimiento.findEEstatusRequerimiento(estatusFiltro.getValor()));
 		cambiarRequerimientos(0, null, null);
 	}
 	

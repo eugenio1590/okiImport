@@ -34,6 +34,7 @@ import com.okiimport.app.model.DetalleCotizacionInternacional;
 import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusCotizacion;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -183,9 +184,9 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 					incompleto = !cond;
 			}
 			if(tipoFlete!=null && !tipoFlete)
-				cotizacionSelecionada.setEstatus((incompleto) ? "EC" : "C");
+				cotizacionSelecionada.setEstatus((incompleto) ? EEstatusCotizacion.INCOMPLETA : EEstatusCotizacion.EMITIDA);
 			else
-				cotizacionSelecionada.setEstatus("C");
+				cotizacionSelecionada.setEstatus(EEstatusCotizacion.EMITIDA);
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 			this.mostrarMensaje("Informaci\u00F3n", "Registro Exitoso de Cotizaci\u00F3n", null, null, this, null);

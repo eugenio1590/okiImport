@@ -35,6 +35,7 @@ import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Motor;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -223,7 +224,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 				requerimiento.setTransmisionV(transmision.getValor());
 			if(tipoRepuesto!=null)
 				requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
-			requerimiento.setEstatus("E");
+			requerimiento.setEstatus(EEstatusRequerimiento.RECIBIDO_EDITADO);
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			mostrarMensaje("Informaci\u00F3n", "Requerimiento Actualizado Exitosamente", null, null, this, null);
 		}

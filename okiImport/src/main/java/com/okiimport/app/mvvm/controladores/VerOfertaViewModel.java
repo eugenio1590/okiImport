@@ -25,6 +25,8 @@ import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusOferta;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
@@ -106,7 +108,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void registrar() {		
 		if ( checkIsFormValid() ) {
 			
-			oferta.setEstatus("recibida");
+			oferta.setEstatus(EEstatusOferta.RECIBIDA);
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
@@ -118,7 +120,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					seguir = false;
 				}
 				else if(oferta.getDetalleOfertas().size()==0){
-					oferta.setEstatus("invalida");
+					oferta.setEstatus(EEstatusOferta.INVALIDA);
 					sTransaccion.actualizarOferta(oferta);
 					seguir = true;
 					oferta = null;
