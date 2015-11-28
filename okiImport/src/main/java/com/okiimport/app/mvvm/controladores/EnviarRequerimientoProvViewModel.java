@@ -26,6 +26,7 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.ClasificacionRepuesto;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -147,7 +148,7 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 				requerimiento.setTraccionV(traccion.getValor());
 			if(transmision!=null)
 				requerimiento.setTransmisionV(transmision.getValor());
-			requerimiento.setEstatus("E");
+			requerimiento.setEstatus(EEstatusRequerimiento.RECIBIDO_EDITADO);
 			sTransaccion.actualizarRequerimiento(requerimiento);
 			
 		}

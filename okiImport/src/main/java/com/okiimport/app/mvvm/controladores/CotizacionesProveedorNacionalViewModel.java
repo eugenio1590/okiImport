@@ -36,6 +36,7 @@ import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusCotizacion;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -249,7 +250,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(cotizacionSelecionada!=null){
 			if(checkIsFormValid()){
-				cotizacionSelecionada.setEstatus("C");
+				cotizacionSelecionada.setEstatus(EEstatusCotizacion.EMITIDA);
 				cotizacionSelecionada.setDetalleCotizacions(listaDetalleCotizacion);
 				sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 				this.mostrarMensaje("Informaci\u00F3n", "Registro Exitoso de Cotizaci\u00F3n", null, null, null, null);
