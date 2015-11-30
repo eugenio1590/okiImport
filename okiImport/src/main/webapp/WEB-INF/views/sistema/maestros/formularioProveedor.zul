@@ -353,7 +353,7 @@
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn-primary" />
 
-				<button label="Enviar" type="submit"
+				<button label="Registrar" type="submit"
 					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
 					sclass="btn-primary" />
 			</div>
