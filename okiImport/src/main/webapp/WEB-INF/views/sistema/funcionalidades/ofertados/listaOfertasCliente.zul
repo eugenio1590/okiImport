@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary" width="70%" height="70%"
+	<window border="none" apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary" width="55%" height="70%"
 		title="@bind(vm.titulo)" id="winListaOfertas"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaOfertasClienteViewModel')"
 		onClose="@command('cambiarRequerimientos')">
