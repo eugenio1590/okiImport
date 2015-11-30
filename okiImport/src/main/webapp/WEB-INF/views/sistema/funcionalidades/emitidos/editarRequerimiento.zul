@@ -28,7 +28,7 @@
 								<label value="Nombre/Razón Social: " />
 
                                 <vbox>
-								<textbox id="nombreRazonSocial" width="120%" readonly="true" mold="rounded"
+								<textbox id="nombreRazonSocial" width="130%" readonly="true" mold="rounded"
 									value="@bind(vm.requerimiento.cliente.nombre)" 
 									constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
@@ -48,7 +48,7 @@
 								<label value="E-mail:" />
 								
 								<vbox>
-								<textbox id="email" width="120%" readonly="true" mold="rounded" 
+								<textbox id="email" width="130%" readonly="true" mold="rounded" 
 									value="@bind(vm.requerimiento.cliente.correo)"
 									constraint="@bind(vm.emailValidator)"/>
 								</vbox>
@@ -66,7 +66,7 @@
 								<label value="Ciudad: " />
                                 
                                 <vbox>
-								<textbox id="ciudad" width="120%" readonly="true" mold="rounded"
+								<textbox id="ciudad" width="130%" readonly="true" mold="rounded"
 									value="@bind(vm.ciudad.nombre)"
 									constraint="@bind(vm.notEmptyValidator)" />
 								</vbox>
