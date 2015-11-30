@@ -75,7 +75,7 @@
 												</combobox>
 											</vbox>
 											<vbox>
-												<textbox  id="idRif" width="100%" mold="rounded" maxlength="12"
+												<textbox  id="idRif" width="80%" mold="rounded" maxlength="12"
 													placeholder="Ej: 402405375" 
 													readonly="@bind(vm.makeAsReadOnly)"
 													value="@bind(vm.proveedor.cedula)"
@@ -101,7 +101,7 @@
 									<row>
 										<label value="Phone Number/Teléfono: *" />
 										<vbox width="85%">
-											<textbox width="100%" mold="rounded" maxlength="11"
+											<textbox width="102%" mold="rounded" maxlength="11"
 												placeholder="Ej: 02512552233"
 												readonly="@bind(vm.makeAsReadOnly)"
 												value="@bind(vm.proveedor.telefono)" 
@@ -124,7 +124,7 @@
 									<row>
 										<label value="Country/Pais: *" />
 										<vbox width="85%">
-											<combobox width="100%" readonly="true"
+											<combobox width="95%" readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
 												placeholder="Seleccione..."
 												value="@bind(vm.proveedor.pais.nombre)"
@@ -146,7 +146,7 @@
 										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
 											<combobox id="cmbEstado"
-												width="85%" placeholder="Seleccione..."
+												width="95%" placeholder="Seleccione..."
 												readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
 												value="@bind(vm.estado.nombre)"
@@ -165,7 +165,7 @@
 										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
 										<vbox>
 											<combobox id="cmbCiudad"
-												placeholder="Seleccione..." width="92%" readonly="true"
+												placeholder="Seleccione..." width="115%" readonly="true"
 												buttonVisible="@bind(!vm.makeAsReadOnly)"
 												selectedItem="@bind(vm.proveedor.ciudad)"
 												value="@bind(vm.proveedor.ciudad.nombre)"
