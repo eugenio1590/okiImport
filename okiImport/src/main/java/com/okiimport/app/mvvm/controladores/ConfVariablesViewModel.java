@@ -37,9 +37,6 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	@NotifyChange({ "*" })
 	public void limpiar() {
-		txtValorLibra.setValue("");
-		txtPorcentajeGanancia.setValue("");
-		txtPorcentajeIVA.setValue("");
 		super.cleanConstraintForm();
 	}
 

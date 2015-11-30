@@ -133,7 +133,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	public void verAnalista(@BindingParam("analista") Analista analista){
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("analista", analista);
-		llamarFormulario("ver Analistas.zul", parametros);
+		llamarFormulario("verAnalistas.zul", parametros);
 	}
 	
 	/**
