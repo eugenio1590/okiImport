@@ -1,36 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
-
 	<n:header class="header header-transparent header-waterfall">
-		<image src="/resources/img/LogoSinSombreado.png" sclass="header-logo margin-left-no" height="55px"/>
+		<image src="/resources/img/logo.png" sclass="header-logo margin-left-no" height="65px"/>
 		<include src="${requestScope.menu}" if="${ not empty requestScope.menu }"/>
-
-<!-- 		<div class="card-wrap"> -->
-<!-- 			<div class="card-inner"> -->
-<!-- 				<n:ul class="nav nav-list"> -->
-<!-- 					<n:li> -->
-						
-<!-- 						<n:a class="tile" href="javascript:void(0)" -->
-<!-- 							onClick="@command('registrarRequerimiento')"> -->
-<!-- 							<n:i class="fa fa-car"/> -->
-<!-- 							Home -->
-<!-- 						</n:a> -->
-<!-- 				<space /> -->
-<!-- 					</n:li> -->
-<!-- 					<n:li> -->
-<!-- 						<n:a class="tile" href="javascript:void(0)" -->
-<!-- 							onClick="@command('registrarProveedor')"> -->
-<!-- 							Solicitar Ser Proveedor -->
-<!-- 						</n:a> -->
-<!-- 					</n:li> -->
-<!-- 					<n:li> -->
-<!-- 						<n:a class="tile" href="javascript:void(0)" -->
-<!-- 							onClick="@command('verificarRequerimiento')"> -->
-<!-- 							Verificar Requerimiento -->
-<!-- 						</n:a> -->
-<!-- 					</n:li> -->
-<!-- 				</n:ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-
-		</n:header>
+	</n:header>
 </zk>
