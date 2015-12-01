@@ -70,9 +70,9 @@
 										<grid>
 											<columns>
 												<column width="10%" />
-												<column width="20%" />
-												<column width="20%" />
-												<column width="22%" />
+												<column  width="20%"/>
+												<column  width="20%"/>
+												<column  />
 											</columns>
 											<rows>
 												<row>
@@ -96,9 +96,9 @@
 										<grid>
 											<columns>
 												<column width="10%" />
-												<column width="20%" />
-												<column width="20%" />
-												<column width="22%" />
+												<column  width="20%"/>
+												<column  width="20%"/>
+												<column  />
 											</columns>
 											<rows>
 												<row>
