@@ -16,7 +16,7 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.InicioViewModel')"
 		sclass="avoid-fout page-blue">
 	
-		<north height="48px">
+		<north height="68px">
 			<div>
 				<include src="/WEB-INF/views/portal/head.zul" menu="/WEB-INF/views/portal/botones.zul"/><!-- menu="/WEB-INF/views/portal/botones.zul" -->
 			</div>
