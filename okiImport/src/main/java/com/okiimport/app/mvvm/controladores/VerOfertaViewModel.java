@@ -16,8 +16,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
-import org.zkoss.zul.Checkbox;
+import org.zkoss.zul.A;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -26,7 +25,6 @@ import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
-import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlUsuario;
@@ -34,7 +32,7 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
-    //Servicios
+	//Servicios
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
 	
@@ -44,6 +42,10 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
     //GUI
     @Wire("#winOferta")
 	private Window winOferta;
+    
+    //Variables Estaticas
+    public static final String AGREGAR_CARRITO = "fa fa-cart-arrow-down bigger-200 black";
+    public static final String QUITAR_CARRITO = "fa fa-share bigger-200 black";
 	
     //Atributos
 	private Requerimiento requerimiento;
@@ -51,6 +53,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
     private Oferta oferta;
     
     private boolean cerrar = false;
+    private int cantArticulos = 0;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -167,15 +170,21 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
 	/**
 	 * Descripcion: Permite Aprobar el detalle de la oferta
-	 * Parametros: @param checkbox: componente de la vista checkbox que fue presionado
+	 * Parametros: @param a: componente de la vista A que fue presionado
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) Checkbox checkbox,
+	@NotifyChange({"oferta", "cantArticulos"})
+	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) A a,
 			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
 	{
-		detalleOferta.setAprobado(checkbox.isChecked());
+		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO)) ? true : false;
+		detalleOferta.setAprobado(aprobado);
+		if(aprobado)
+			cantArticulos++;
+		else
+			cantArticulos--;
 	}
 	
 	/**
@@ -288,6 +297,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**GETTERS Y SETTERS*/
+	public String getAgregarCarrito() {
+		return AGREGAR_CARRITO;
+	}
+
+	public String getQuitarCarrito() {
+		return QUITAR_CARRITO;
+	}
+	
 	public SControlUsuario getsControlUsuario() {
 		return sControlUsuario;
 	}
@@ -318,6 +335,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
+	}
+
+	public int getCantArticulos() {
+		return cantArticulos;
+	}
+
+	public void setCantArticulos(int cantArticulos) {
+		this.cantArticulos = cantArticulos;
 	}
 	
 }
