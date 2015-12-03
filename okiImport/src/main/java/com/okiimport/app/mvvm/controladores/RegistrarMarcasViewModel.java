@@ -18,6 +18,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.enumerados.EEstatusGeneral;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
@@ -65,10 +66,13 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
 				
+				marca.setEstatus(EEstatusGeneral.ACTIVO);
 				marca = sMaestros.registrarMarca(marca);
+				
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombre", marca.getNombre());
+				
 				
 				mostrarMensaje("Informaci\u00F3n", "Marca Registrada con Exito", null, null, null, null);
 				

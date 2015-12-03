@@ -357,9 +357,9 @@
 		<hbox hflex="1" sclass="panel-footer">
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 			<div align="right" hflex="1">
-				<button id="btnLimpiar" label="Limpiar" sclass="btn btn-info"
+				<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
 					onClick="@command('limpiar')" />
-				<button label="Enviar" type="submit" sclass="btn btn-primary"
+				<button label="Enviar" type="submit" sclass="btn-sm btn-primary"
 					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>
