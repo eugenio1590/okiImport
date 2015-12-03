@@ -36,13 +36,13 @@
 										<grid>
 											<columns>
 												<column width="10%" />
-												<column width="20%" />
-												<column width="20%" />
-												<column width="22%" />
+												<column  width="20%"/>
+												<column  width="20%"/>
+												<column  />
 											</columns>
 											<rows>
 												<row>
-													<label value="Numero:" sclass="label-not-mandatory"/>
+													<label value="Número:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 												</row>
 												<row>
@@ -62,9 +62,9 @@
 										<grid>
 											<columns>
 												<column width="10%" />
-												<column width="20%" />
-												<column width="20%" />
-												<column width="22%" />
+												<column  width="20%"/>
+												<column  width="20%"/>
+												<column  />
 											</columns>
 											<rows>
 												<row>

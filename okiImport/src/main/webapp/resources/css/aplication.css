@@ -3,6 +3,11 @@ span {
 	color: black;
 }
 
+a .z-hbox th, a .z-vbox th, a .z-hbox td, a .z-vbox td  {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
 .no_rezise {
 	resize: none;
 }
@@ -22,6 +27,7 @@ span {
 .content-sub-heading {
 	margin-top: 20px;
     margin-bottom: 14px;
+    font-weight: 700;
 }
 
 .z-include .content-sub-heading {
@@ -36,6 +42,8 @@ p.card-heading {
 	margin-top: 14px;
 	margin-bottom: 14px;
 	font-size: 17px;
+	font-weight: 600;
+	color: #03376b;
 }
 
 .card-inner {
@@ -60,6 +68,10 @@ a.z-tab-content:hover {
 div .card-header .card-inner {
     padding-top: 3px;
     padding-bottom: 3px;
+}
+
+div .card-header .card-inner .card-heading {
+	font-size: 16px;
 }
 
 .z-fondo-principal .card-wrap {
