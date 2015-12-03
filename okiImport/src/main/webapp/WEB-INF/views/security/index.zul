@@ -15,7 +15,7 @@
 	<borderlayout id="principal" hflex="1" vflex="1"
 		sclass="avoid-fout page-blue">
 
-		<north  height="48px">
+		<north  height="68px">
 			<div>
 				<include src="/WEB-INF/views/portal/head.zul" />
 			</div>

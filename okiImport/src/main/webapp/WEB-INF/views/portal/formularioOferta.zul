@@ -32,11 +32,11 @@
 										</row>
 									</rows>
 								</grid>	
-								<div sclass="counter-div" hflex="1">
-									<div sclass="avatar avatar-green avatar-sm">
+								<div sclass="counter-div" hflex="1" tooltiptext="Carrito">
+									<div sclass="avatar avatar-yellow avatar-sm">
 										<span sclass="icon icon-shopping-basket bigger-130 black"/>
 									</div>
-									<label value="@bind(vm.cantArticulos)" />
+									<label value="@bind(vm.cantArticulos)"/>
 								</div>					
 							</hbox>
 							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
@@ -117,14 +117,12 @@
                                    	
                                    	<listhead>
                                    		<listheader width="3%"/>
-                                   		<listheader label="Descripcion" sort="none" width="40%"/>
+                                   		<listheader label="Descripcion" sort="none" width="30%"/>
                                    		<listheader label="Marca" sort="none" />
                                    		<listheader label="Cant. Solicitada" sort="none"  width="15%" />
                                    		<listheader label="Cant. Ofertada" sort="none" width="15%"/>
                                    		<listheader label="Precio de Venta S/F" sort="none" width="15%"/>
-                                   		<listheader sort="none" align="center" width="15%">
-                                   			Agregar Repuesto
-                                   		</listheader>
+                                   		<listheader sort="none" align="center" width="10%"/>
                                    	</listhead>
 
                                    	<template name="model">
@@ -141,7 +139,8 @@
 <!--                                    					tooltiptext="Aceptar Repuesto" -->
 <!--                                    					onCheck="@command('aprobarDetalleOferta', detalleOferta = each)" />	 -->
 												<a onClick="@command('aprobarDetalleOferta', detalleOferta = each)"
-													sclass="@bind((each.aprobado) ? vm.quitarCarrito : vm.agregarCarrito)"/>
+													sclass="@bind((each.aprobado) ? vm.quitarCarrito.css : vm.agregarCarrito.css)"
+													tooltiptext="@bind((each.aprobado) ? vm.quitarCarrito.tool : vm.agregarCarrito.tool)"/>
                                    			</listcell>
                                    		</listitem>
                                    	</template>
@@ -164,10 +163,14 @@
 						</groupbox>
 					</n:div>
 					<n:div class="modal-footer">
-						<button label="Ver Mas Ofertas" sclass="btn btn-primary"
-							onClick="@command('registrar')"/>
-						<button label="Cancelar" sclass="btn btn-info"
-							onClick="@command('registrar')"/>
+						<button label="Enviar" sclass="btn-sm btn-primary"
+							onClick="@command('enviar')"/>
+						<button label="Vaciar Carrito" sclass="btn-sm btn-info"
+							onClick="@command('vaciarCarrito')"/>
+						<button label="Ver Mas Ofertas" sclass="btn-sm btn-success"
+							onClick="@command('verMasOfertas')"/>
+						<button label="Cancelar" sclass="btn-sm btn-danger"
+							onClick="@command('onCloseWindow')"/>
 					</n:div>
 				</div>
 			</div>

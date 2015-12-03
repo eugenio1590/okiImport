@@ -32,6 +32,28 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
+	//Enum de la clase que contiene los enumerados del carrito de compra
+	public enum Carrito {
+		AGREGAR_CARRITO("fa fa-cart-arrow-down bigger-200 cyan", "Agregar respuesto al carrito"),
+		QUITAR_CARRITO("fa fa-share bigger-200 cyan", "Quitar repuesto del carrito");
+		
+		private String css;
+		private String tool;
+		
+		Carrito(String css, String tool){
+			this.css=css;
+			this.tool=tool;
+		}
+
+		public String getCss() {
+			return css;
+		}
+
+		public String getTool() {
+			return tool;
+		}
+	}
+	
 	//Servicios
 	@BeanInjector("sControlUsuario")
 	private SControlUsuario sControlUsuario;
@@ -44,16 +66,17 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private Window winOferta;
     
     //Variables Estaticas
-    public static final String AGREGAR_CARRITO = "fa fa-cart-arrow-down bigger-200 black";
-    public static final String QUITAR_CARRITO = "fa fa-share bigger-200 black";
+    public static final Carrito AGREGAR_CARRITO = Carrito.AGREGAR_CARRITO;
+    public static final Carrito QUITAR_CARRITO = Carrito.QUITAR_CARRITO;
 	
     //Atributos
 	private Requerimiento requerimiento;
 	private List<DetalleOferta> listaDetOferta;
     private Oferta oferta;
     
+    private Map<String, Object> parametros;
     private boolean cerrar = false;
-    private int cantArticulos = 0;
+    private int cantArticulos;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -67,8 +90,10 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			@ExecutionArgParam("detallesOfertas") List<DetalleOferta> listaDetOferta )
 	{	
 		super.doAfterCompose(view);	
+		this.parametros = new HashMap<String, Object>();
 		this.requerimiento = requerimiento;
 		this.listaDetOferta = (listaDetOferta == null) ? new ArrayList<DetalleOferta>() : listaDetOferta;
+		this.cantArticulos = this.listaDetOferta.size();
 		cargarOferta();
 		
 	}
@@ -108,7 +133,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void registrar() {		
+	public void enviar() {		
 		if ( checkIsFormValid() ) {
 			
 			oferta.setEstatus(EEstatusOferta.RECIBIDA);
@@ -133,37 +158,61 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 				}
 			}
 			
-			final Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.clear();
 			parametros.put("requerimiento", requerimiento);
 			parametros.put("detallesOfertas", listaDetOferta);
 
-
 			if (oferta != null)
-			{
-				super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar viendo mas ofertas?", null, 
-						new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
-							@Override
-							public void onEvent(Event event) throws Exception {
-								Messagebox.Button button = (Messagebox.Button) event.getData();
-								if (button == Messagebox.Button.YES) {
-									cerrar = true;
-									ejecutarGlobalCommand("verOferta", parametros);
-									winOferta.onClose();
-								}
-								else if(button == Messagebox.Button.NO )
-									if(listaDetOferta.size()>0)
-										redireccionarASolicitudDePedido(parametros);
-									else 
-										reactivarRequerimiento();
-							}
-				}, null);
-				
-			}
+				verMasOfertas();
 			else {
 				if(listaDetOferta.size()>0)
 					redireccionarASolicitudDePedido(parametros);
 				else
 					reactivarRequerimiento();
+			}
+		}
+	}
+	
+	/**
+	 * Descripcion: Permitira mostrar mas ofertas en caso de que existan.
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void verMasOfertas(){
+		super.mostrarMensaje("Informaci\u00F3n", "¿Realmente desea continuar viendo mas ofertas?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							cerrar = true;
+							ejecutarGlobalCommand("verOferta", parametros);
+							winOferta.onClose();
+						}
+						else if(button == Messagebox.Button.NO )
+							if(listaDetOferta.size()>0)
+								redireccionarASolicitudDePedido(parametros);
+							else 
+								reactivarRequerimiento();
+					}
+		}, null);
+	}
+	
+	/**
+	 * Descripcion: permitira quitar los articulos seleccionados del carrito de compra.
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange({"oferta", "cantArticulos"})
+	public void vaciarCarrito(){
+		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
+			if (detalleOferta.getAprobado() != null && detalleOferta.getAprobado()){
+				detalleOferta.setAprobado(false);
+				cantArticulos--;
 			}
 		}
 	}
@@ -179,7 +228,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) A a,
 			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
 	{
-		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO)) ? true : false;
+		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO.getCss())) ? true : false;
 		detalleOferta.setAprobado(aprobado);
 		if(aprobado)
 			cantArticulos++;
@@ -235,10 +284,30 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 */
-	private void redireccionarASolicitudDePedido(Map<String, Object> parametros){
-		cerrar = true;
-		winOferta.onClose();
-		crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+	private void redireccionarASolicitudDePedido(final Map<String, Object> parametros){
+		super.mostrarMensaje("Informaci\u00F3n", "No existen mas ofertas para mostrar, ¿Desea continuar con la solicitud de pedido?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+			@Override
+			public void onEvent(Event event) throws Exception {
+				Messagebox.Button button = (Messagebox.Button) event.getData();
+				if (button == Messagebox.Button.YES) {
+					cerrar = true;
+					winOferta.onClose();
+					crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
+				}
+				else
+					mostrarMensaje("Informaci\u00F3n", "El proceso realizado se perdera, ¿Desea continuar?", null, 
+							new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+
+								@Override
+								public void onEvent(Event event) throws Exception {
+									Messagebox.Button button = (Messagebox.Button) event.getData();
+									if (button == Messagebox.Button.YES)
+										cerrarRequerimiento();
+								}
+					}, null);
+			}
+		}, null);
 	}
 	
 	/**
@@ -277,31 +346,45 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 							sTransaccion.reactivarRequerimiento(requerimiento, sMaestros);
 							cerrarVentana();
 						}
-						else if(button == Messagebox.Button.NO ){
-							sTransaccion.cerrarRequerimiento(requerimiento, sMaestros, sControlUsuario, false);
-							mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
-								@Override
-								public void onEvent(Event event) throws Exception {
-									cerrarVentana();
-								}
-								
-							}, null);
-						}
+						else if(button == Messagebox.Button.NO )
+							cerrarRequerimiento();
 					}
 		}, null);
 	}
 	
+	/**
+	 * Descripcion: permitira cerrar el requerimiento asociado a la oferta.
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void cerrarRequerimiento(){
+		sTransaccion.cerrarRequerimiento(requerimiento, sMaestros, sControlUsuario, false);
+		mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
+			@Override
+			public void onEvent(Event event) throws Exception {
+				cerrarVentana();
+			}	
+		}, null);
+	}
+	
+	/**
+	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
 	private void cerrarVentana(){
 		cerrar = true;
 		winOferta.onClose();
 	}
 	
 	/**GETTERS Y SETTERS*/
-	public String getAgregarCarrito() {
+	public Carrito getAgregarCarrito() {
 		return AGREGAR_CARRITO;
 	}
 
-	public String getQuitarCarrito() {
+	public Carrito getQuitarCarrito() {
 		return QUITAR_CARRITO;
 	}
 	

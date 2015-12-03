@@ -2,21 +2,17 @@
 	background-color: white;
 }
 
-.bigger-200 {
-	font-size: 200%
-}
-
-.bigger-200.black {
-	color: black;
-	font-size: 200%;
-}
-
 .bigger-130 {
 	font-size: 130%
 }
 
 .bigger-130.black {
 	color: black;
+	font-size: 130%;
+}
+
+.bigger-130.cyan {
+	color: rgb(36, 168, 183);
 	font-size: 130%;
 }
 
@@ -29,12 +25,22 @@
 	font-size: 160%;
 }
 
+.bigger-160.cyan {
+	color: rgb(36, 168, 183);
+	font-size: 160%;
+}
+
 .bigger-180 {
 	font-size: 180%
 }
 
 .bigger-180.black {
 	color: black;
+	font-size: 180%;
+}
+
+.bigger-180.cyan {
+	color: rgb(36, 168, 183);
 	font-size: 180%;
 }
 
@@ -47,6 +53,11 @@
 	font-size: 185%;
 }
 
+.bigger-185.cyan {
+	color: rgb(36, 168, 183);
+	font-size: 185%;
+}
+
 .bigger-190 {
 	font-size: 190%
 }
@@ -54,6 +65,25 @@
 .bigger-190.black {
 	color: black;
 	font-size: 190%;
+}
+
+.bigger-190.cyan {
+	color: rgb(36, 168, 183);
+	font-size: 190%;
+}
+
+.bigger-200 {
+	font-size: 200%
+}
+
+.bigger-200.black {
+	color: black;
+	font-size: 200%;
+}
+
+.bigger-200.cyan {
+	color: rgb(36, 168, 183);
+	font-size: 200%;
 }
 
 .pointer {
