@@ -20,7 +20,7 @@
 							<label value="Nombre Marca: *" />
 
                             <vbox>
-							<textbox id="nombre" width="60%"
+							<textbox id="nombre" width="110%"
 								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
 								placeholder="Ej: Toyota"
 								constraint="@bind(vm.notEmptyValidator)" />
@@ -39,7 +39,7 @@
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn-primary" />
 
-				<button id="btnEnviar" label="Enviar" type="submit"
+				<button id="btnEnviar" label="Registrar" type="submit"
 					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
 					sclass="btn-primary" />
 			</div>

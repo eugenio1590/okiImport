@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormularioAnalista" title="Registrar Analista"
-		border="normal" width="70%" apply="org.zkoss.bind.BindComposer"
+		border="normal" width="60%" apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarAnalistasViewModel')"
 		form="@id('fx') @load(vm.analista) @save(vm.analista, before='registrar')">
@@ -35,7 +35,7 @@
 								</vbox>
 
                                 <vbox>
-								<textbox id="cedula/Rif" width="108%"
+								<textbox id="cedula/Rif" width="83%"
 									readonly="" mold="rounded" value="@bind(vm.analista.cedula)"
 									placeholder="Ej: 402405375" maxlength="12"
 									constraint="@bind(vm.validatorClienteCedulaRif)" />
@@ -45,7 +45,7 @@
 							<label value="Nombre: *" />
 
                             <vbox>
-							<textbox id="nombre" width="80%"
+							<textbox id="nombre" width="125%"
 								readonly="" mold="rounded" value="@bind(vm.analista.nombre)"
 								placeholder="Ej: Alejandro Urbina"
 								constraint="@bind(vm.notEmptyValidator)" />
@@ -57,7 +57,7 @@
 							<label value="Teléfono: *" />
 
                             <vbox>
-							<textbox id="telefono" width="80%"
+							<textbox id="telefono" width="120%"
 								readonly="" mold="rounded" value="@bind(vm.analista.telefono)"
 								maxlength="11" placeholder="Ej: 02512552233"
 								constraint="@bind(vm.telefonoValidator)" />
@@ -66,7 +66,7 @@
 
 							<label value="E-mail: *" />
 							<vbox>
-							<textbox id="email" width="80%" readonly=""
+							<textbox id="email" width="125%" readonly=""
 								mold="rounded" value="@bind(vm.analista.correo)"
 								placeholder="Ej. fusa@gmail.com"
 								constraint="@bind(vm.emailValidator)">
@@ -91,7 +91,7 @@
 							<label value="Estado: *" />
 							<vbox>
 							<combobox placeholder="Seleccione..."
-								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+								width="110%" readonly="true" selectedItem="@bind(vm.estado)"
 								model="@load(vm.listaEstados)"
 								onSelect="@command('buscarCiudades')" constraint="@bind(vm.notEmptyValidator))">
 								<template name="model">
@@ -108,7 +108,7 @@
 							<label value="Ciudad: *" />
 							<vbox>
 							<combobox placeholder="Seleccione..."
-								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
+								width="108%" readonly="true" selectedItem= "@bind(vm.ciudad)"
 								model="@load(vm.listaCiudades)" constraint="@bind(vm.notEmptyValidator)">
 
 								<template name="model">

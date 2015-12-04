@@ -307,8 +307,8 @@
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 			<div align="right" hflex="1">
 				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn btn-info" />
-				<button label="Enviar" type="submit" sclass="btn btn-primary"
+					onClick="@command('limpiar')" sclass="btn-sm btn-info" />
+				<button label="Enviar" type="submit" sclass="btn-sm btn-primary"
 					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>

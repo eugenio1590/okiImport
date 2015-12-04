@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winFormularioAnalista" title="Editar Analista"
-		border="normal" width="70%" apply="org.zkoss.bind.BindComposer"
+		border="normal" width="55%" apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarAnalistaViewModel')"
 		form="@id('fx') @load(vm.analista) @save(vm.analista, before='registrar')"
@@ -23,12 +23,12 @@
 
 							<hbox>
                                 <vbox>
-								<textbox width="20%" readonly="true"
+								<textbox width="20px" readonly="true"
 								    value= "@bind(vm.tipoPersona.nombre)" constraint="@bind(vm.notEmptyValidator)"/>
                                 </vbox>
 
                                 <vbox>
-								<textbox id="cedula_Rif" width="80%"
+								<textbox id="cedula_Rif" width="110%"
 
 									readonly="true" mold="rounded" value="@bind(vm.analista.cedula)"
 									maxlength="12"  constraint="@bind(vm.validatorClienteCedulaRif)"/>
@@ -37,7 +37,7 @@
 
 							<label value="Nombre: " />
                             <vbox>
-							<textbox id="nombre" width="80%"
+							<textbox id="nombre" width="120%"
 								readonly="" mold="rounded" value="@bind(vm.analista.nombre)"
 								constraint="@bind(vm.notEmptyValidator)"/>
 							</vbox>
@@ -48,7 +48,7 @@
 							<label value="Teléfono: " />
 
                             <vbox>
-							<textbox id="telefono" width="80%"
+							<textbox id="telefono" width="125%"
 								readonly="" mold="rounded" value="@bind(vm.analista.telefono)"
 								maxlength="11" constraint="@bind(vm.telefonoValidator)" />
 							</vbox>
@@ -56,7 +56,7 @@
 
 							<label value="E-mail: " />
 							<vbox>
-							<textbox id="email" width="80%" readonly=""
+							<textbox id="email" width="120%" readonly=""
 								mold="rounded" value="@bind(vm.analista.correo)"
 								constraint="@bind(vm.emailValidator)">
 							</textbox>
@@ -69,7 +69,7 @@
 							<label value="Dirección: " />
 
                             <vbox>
-							<textbox id="direccion" width="80%" rows="3"
+							<textbox id="direccion" width="89%" rows="3"
 								cols="35" readonly="" mold="rounded"
 								value="@bind(vm.analista.direccion)"
 								constraint="@bind(vm.notEmptyValidator)"/>
@@ -80,7 +80,7 @@
 							<vbox>
 							<combobox 
 							   
-								width="80%" readonly="true" selectedItem="@bind(vm.estado)"
+								width="105%" readonly="true" selectedItem="@bind(vm.estado)"
 								value="@bind(vm.estado.nombre)"
 								model="@load(vm.listaEstados)"
 								onSelect="@command('buscarCiudades')"
@@ -99,7 +99,7 @@
 							<label value="Ciudad: " />
 							<vbox>
 							<combobox 
-								width="80%" readonly="true" selectedItem= "@bind(vm.ciudad)"
+								width="110%" readonly="true" selectedItem= "@bind(vm.ciudad)"
 								value="@bind(vm.ciudad.nombre)"
 								model="@load(vm.listaCiudades)"
 								constraint="@bind(vm.notEmptyValidator)">
