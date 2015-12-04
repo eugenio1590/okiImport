@@ -2,8 +2,10 @@ package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -140,27 +142,9 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-			boolean seguir = true;
-			while(seguir){
-				cargarOferta();
-				
-				if(oferta==null) {
-					seguir = false;
-				}
-				else if(oferta.getDetalleOfertas().size()==0){
-					oferta.setEstatus(EEstatusOferta.INVALIDA);
-					sTransaccion.actualizarOferta(oferta);
-					seguir = true;
-					oferta = null;
-				}
-				else {
-					seguir = false;
-				}
-			}
 			
-			parametros.clear();
-			parametros.put("requerimiento", requerimiento);
-			parametros.put("detallesOfertas", listaDetOferta);
+			verificarMasOfertas();
+			cargarParametros();
 
 			if (oferta != null)
 				verMasOfertas();
@@ -185,13 +169,22 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
 					@Override
 					public void onEvent(Event event) throws Exception {
+						cargarParametros();
 						Messagebox.Button button = (Messagebox.Button) event.getData();
 						if (button == Messagebox.Button.YES) {
-							cerrar = true;
-							ejecutarGlobalCommand("verOferta", parametros);
-							winOferta.onClose();
+							llenarListAprobados();
+							oferta = sTransaccion.actualizarOferta(oferta);
+							if(verificarMasOfertas()){
+								cerrar = true;
+								ejecutarGlobalCommand("verOferta", parametros);
+								winOferta.onClose();
+								return;
+							}
+							
+							button = Messagebox.Button.NO;
 						}
-						else if(button == Messagebox.Button.NO )
+						
+						if(button == Messagebox.Button.NO)
 							if(listaDetOferta.size()>0)
 								redireccionarASolicitudDePedido(parametros);
 							else 
@@ -271,11 +264,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	private void llenarListAprobados() {
+		Set<DetalleOferta> listaDetOferta = new LinkedHashSet<DetalleOferta>(this.listaDetOferta);
 		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
 			if (detalleOferta.getAprobado() != null && detalleOferta.getAprobado()){
 				listaDetOferta.add(detalleOferta);
 			}
 		}
+		this.listaDetOferta.clear();
+		this.listaDetOferta.addAll(listaDetOferta);
 	}
 	
 	/**
@@ -377,6 +373,45 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	private void cerrarVentana(){
 		cerrar = true;
 		winOferta.onClose();
+	}
+	
+	/**
+	 * Descripcion: metodo que permitira cargar los parametros a enviar para la siguiente interfaz
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void cargarParametros(){
+		parametros.clear();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("detallesOfertas", listaDetOferta);
+	}
+	
+	/**
+	 * Descripcion: metodo que permitira verificar si se encuentran mas ofertas o no para mostrar.
+	 * Parametros: Ninguno
+	 * Retorno: @return seguir: valor booleano que indicara si es true si hay mas ofertas y false en caso contrario
+	 * Nota: Ninguno
+	 * */
+	private boolean verificarMasOfertas(){
+		boolean seguir = (oferta!=null);
+		while(seguir){
+			cargarOferta();
+			
+			if(oferta==null) {
+				seguir = false;
+			}
+			else if(oferta.getDetalleOfertas().size()==0){
+				oferta.setEstatus(EEstatusOferta.INVALIDA);
+				sTransaccion.actualizarOferta(oferta);
+				seguir = true;
+				oferta = null;
+			}
+			else {
+				seguir = false;
+			}
+		}
+		return seguir;
 	}
 	
 	/**GETTERS Y SETTERS*/
