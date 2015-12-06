@@ -13,7 +13,7 @@ import org.zkoss.util.Locales;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.UiException;
 
-public class FormatedNumberConverter implements Converter,Serializable {
+public class FormatedNumberConverter implements Converter<String, Object, Component>, Serializable {
 	private static final long serialVersionUID = -1490575563956819115L;
 
 	/**
@@ -24,7 +24,7 @@ public class FormatedNumberConverter implements Converter,Serializable {
 	 * @return the converted String
 	 */
 	@Override
-	public Object coerceToUi(Object val, Component comp, BindContext ctx) {
+	public String coerceToUi(Object val, Component comp, BindContext ctx) {
 		//user sets format in annotation of binding or args when calling binder.addPropertyBinding()  
 		final String formatPtn = (String) ctx.getConverterArg("format");
 		String locale = (String) ctx.getConverterArg("locale");
@@ -41,13 +41,13 @@ public class FormatedNumberConverter implements Converter,Serializable {
 	 * @return the converted Number
 	 */
 	@Override
-	public Object coerceToBean(Object val, Component comp, BindContext ctx) {
+	public Object coerceToBean(String val, Component comp, BindContext ctx) {
 		final String format = (String) ctx.getConverterArg("format");
 		String locale = (String) ctx.getConverterArg("locale");
 		if(format==null) throw new NullPointerException("format attribute not found");
 		try {
 			return val == null ? null : 
-				getLocalizedDecimalFormat(format, locale).parse((String) val);
+				getLocalizedDecimalFormat(format, locale).parse(val);
 		} catch (ParseException e) {
 			throw UiException.Aide.wrap(e);
 		}

@@ -20,7 +20,6 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Pais;
-
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
@@ -30,6 +29,7 @@ import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.model.FormatedMonedaConverter;
 import com.okiimport.app.mvvm.model.FormatedNumberConverter;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -52,6 +52,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	//Converter
 	@BeanInjector("formatedNumber")
 	protected FormatedNumberConverter formatedNumber;
+	
+	@BeanInjector("formatedMoneda")
+	protected FormatedMonedaConverter formatedMoneda;
 	
 	// Servicios
 	@BeanInjector("mailService")
@@ -373,6 +376,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		this.formatedNumber = formatedNumber;
 	}
 	
+	public FormatedMonedaConverter getFormatedMoneda() {
+		return formatedMoneda;
+	}
+
+	public void setFormatedMoneda(FormatedMonedaConverter formatedMoneda) {
+		this.formatedMoneda = formatedMoneda;
+	}
+
 	public SMaestros getsMaestros() {
 		return sMaestros;
 	}

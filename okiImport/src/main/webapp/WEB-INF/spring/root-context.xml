@@ -10,6 +10,7 @@
     <!-- ZK -->
     
     <bean id="formatedNumber" class="com.okiimport.app.mvvm.model.FormatedNumberConverter"/>
+    <bean id="formatedMoneda" class="com.okiimport.app.mvvm.model.FormatedMonedaConverter"/>
     
     <!-- SPRING SECURITY -->
 
