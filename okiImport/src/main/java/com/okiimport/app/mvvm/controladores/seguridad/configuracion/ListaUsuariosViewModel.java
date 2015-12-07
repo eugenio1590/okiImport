@@ -26,14 +26,10 @@ import org.zkoss.zul.Radiogroup;
 
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 	
 	//GUI
 	@Wire("#gridUsuarios")
@@ -147,7 +143,7 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 	/**METODOS PROPIOS DE LA CLASE*/
 	private Usuario consultarUsuarioSession(){
 		UserDetails user = this.getUser();
-		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		return sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 	}
 	
 	private void llamarFormulario(String ruta, Map<String, Object> parametros){
@@ -155,14 +151,6 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 	}
 
 	/**SETTERS Y GETTERS*/
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}

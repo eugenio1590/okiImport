@@ -20,14 +20,12 @@ public class FormatedMonedaConverter extends FormatedNumberConverter implements 
 	 */
 	@Override
 	public String coerceToUi(Object val, Component comp, BindContext ctx) {
+		final ICoverterMoneda monedaBase = (ICoverterMoneda) ctx.getConverterArg("monedaBase");
 		final ICoverterMoneda converterMoneda = (ICoverterMoneda) ctx.getConverterArg("converterMoneda");
-		final Number montoPorUnidadBase = converterMoneda.getMontoPorUnidadBase();
-		if(!montoPorUnidadBase.toString().equalsIgnoreCase("0")){
-			final Object valorFlotante = (Object) super.coerceToUi(((Number) val).floatValue()/montoPorUnidadBase.floatValue(), comp, ctx);
-			if(valorFlotante!=null)
-				return new StringBuilder((String) valorFlotante).append(" ").append(converterMoneda.getSimboloMoneda()).toString();
-		}
-		return null;
+		if(converterMoneda==null) throw new NullPointerException("converter attribute not found");
+		if(monedaBase==null) throw new NullPointerException("moneda attribute not found");
+		final Object valorFlotante = (Object) super.coerceToUi(converterMoneda.convert((Number) val), comp, ctx);
+		return monedaBase.withSimbolo((String) valorFlotante);
 	}
 
 	/**
@@ -39,9 +37,12 @@ public class FormatedMonedaConverter extends FormatedNumberConverter implements 
 	 */
 	@Override
 	public Object coerceToBean(String val, Component comp, BindContext ctx) {
+		final ICoverterMoneda monedaBase = (ICoverterMoneda) ctx.getConverterArg("monedaBase");
 		final ICoverterMoneda converterMoneda = (ICoverterMoneda) ctx.getConverterArg("converterMoneda");
+		if(converterMoneda==null) throw new NullPointerException("converter attribute not found");
+		if(monedaBase==null) throw new NullPointerException("moneda attribute not found");
 		final Number montoPorUnidadBase = converterMoneda.getMontoPorUnidadBase();
-		String valorFlotante = val.split(converterMoneda.getSimboloMoneda())[0];
+		String valorFlotante = val.split(monedaBase.getSimboloMoneda())[0];
 		if(valorFlotante!=null){
 			valorFlotante = String.valueOf(Float.valueOf(valorFlotante.trim())*montoPorUnidadBase.floatValue());
 			return super.coerceToBean(valorFlotante, comp, ctx);

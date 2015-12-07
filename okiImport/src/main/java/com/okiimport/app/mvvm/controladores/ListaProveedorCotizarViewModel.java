@@ -3,6 +3,7 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -10,16 +11,13 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
+
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 
 public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 	
 	//Atributos
 	private Requerimiento requerimiento;
@@ -75,14 +73,6 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	}
 	
 	/**GETTERS Y SETTERS*/
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-
 	public String getSize() {
 		return size;
 	}

@@ -42,8 +42,6 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.AbstractServiceImpl;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
@@ -51,12 +49,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
-	@BeanInjector("sControlConfiguracion")
-	private SControlConfiguracion sControlConfiguracion;
 	
 	//GUI
 	@Wire("#winCotizaciones")
@@ -422,22 +414,6 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-	
-	public SControlConfiguracion getsControlConfiguracion() {
-		return sControlConfiguracion;
-	}
-
-	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
-		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
 	public List<Cotizacion> getListaCotizacion() {

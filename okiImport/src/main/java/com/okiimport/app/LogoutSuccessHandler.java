@@ -31,7 +31,7 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 		User user = (User) authentication.getPrincipal();
-		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 		sHistorial.cerarHistorialSession(usuario);
 		setDefaultTargetUrl("/");
 		super.onLogoutSuccess(request, response, authentication);

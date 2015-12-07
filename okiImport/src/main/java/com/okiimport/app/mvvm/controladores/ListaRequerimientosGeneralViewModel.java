@@ -26,7 +26,6 @@ import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
@@ -34,9 +33,6 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 	
 	//GUI
 	@Wire("#gridMisRequerimientos")
@@ -199,14 +195,6 @@ public class ListaRequerimientosGeneralViewModel extends AbstractRequerimientoVi
 
 	public void setListaRequerimientos(List<Requerimiento> listaRequerimientos) {
 		this.listaRequerimientos = listaRequerimientos;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
 	}
 
 	public Requerimiento getRequerimientoFiltro() {

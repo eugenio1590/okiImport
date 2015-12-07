@@ -13,14 +13,11 @@ import org.zkoss.zul.Menuitem;
 
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 
 
 public class PerfilViewModel extends AbstractRequerimientoViewModel {
-
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
+	
+	//Servicios
 	
 	//GUI
 	@Wire("#menInfoUsuario")
@@ -34,7 +31,7 @@ public class PerfilViewModel extends AbstractRequerimientoViewModel {
 		
 		UserDetails user = super.getUser();
 		if(user!=null){
-			Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+			Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 			menInfoUsuario.setTooltiptext(usuario.getUsername()+" Avatar");
 			menInfoUsuario.setLabel(usuario.getUsername().toUpperCase());
 		}
@@ -65,13 +62,5 @@ public class PerfilViewModel extends AbstractRequerimientoViewModel {
 		redireccionar("/logout");
 	}
 
-	//GETTERS Y SETTERS
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-	
+	//GETTERS Y SETTERS	
 }

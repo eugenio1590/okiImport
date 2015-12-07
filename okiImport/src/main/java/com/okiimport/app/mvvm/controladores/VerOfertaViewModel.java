@@ -29,7 +29,6 @@ import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
@@ -57,9 +56,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
     @BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
     
@@ -421,14 +417,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 
 	public Carrito getQuitarCarrito() {
 		return QUITAR_CARRITO;
-	}
-	
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
 	}
 	
 	public STransaccion getsTransaccion() {

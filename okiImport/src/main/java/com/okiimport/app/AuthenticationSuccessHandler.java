@@ -31,7 +31,7 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
     		Authentication authentication) throws IOException, ServletException {
 		User user = (User) authentication.getPrincipal();
-		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 		sHistorial.registrarHistorialSession(usuario);
 		setDefaultTargetUrl("/admin/home");
 		super.onAuthenticationSuccess(request, response, authentication);

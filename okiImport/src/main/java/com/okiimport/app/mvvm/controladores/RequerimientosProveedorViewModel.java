@@ -30,7 +30,6 @@ import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
@@ -38,9 +37,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 	
 	//GUI
 	@Wire("#gridMisRequerimientos")
@@ -67,7 +63,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
 		requerimientoFiltro = new Requerimiento(new Cliente(), new MarcaVehiculo());
-		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 		proveedor = (Proveedor) usuario.getPersona();
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);
@@ -199,14 +195,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 
 	public void setListaRequerimientos(List<Requerimiento> listaRequerimientos) {
 		this.listaRequerimientos = listaRequerimientos;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
 	}
 
 	public Requerimiento getRequerimientoFiltro() {

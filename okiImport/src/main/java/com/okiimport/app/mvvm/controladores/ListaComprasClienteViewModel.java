@@ -23,11 +23,9 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
-import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
@@ -35,9 +33,6 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 
 	// GUI
 	@Wire("#gridComprasCliente")
@@ -183,14 +178,6 @@ public class ListaComprasClienteViewModel extends AbstractRequerimientoViewModel
 
 	public void setListaCompras(List<Compra> listaCompras) {
 		this.listaCompras = listaCompras;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
 	}
 
 	public Requerimiento getRequerimiento() {

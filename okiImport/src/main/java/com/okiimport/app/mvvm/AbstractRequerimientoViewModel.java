@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Messagebox.Button;
@@ -20,6 +22,7 @@ import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Pais;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 //Constraint
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
@@ -33,6 +36,9 @@ import com.okiimport.app.mvvm.model.FormatedMonedaConverter;
 import com.okiimport.app.mvvm.model.FormatedNumberConverter;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.resource.model.ICoverterMoneda;
+import com.okiimport.app.service.configuracion.SControlConfiguracion;
+import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.mail.MailService;
 
@@ -62,6 +68,12 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	@BeanInjector("sMaestros")
 	protected SMaestros sMaestros;
+	
+	@BeanInjector("sControlConfiguracion")
+	protected SControlConfiguracion sControlConfiguracion;
+	
+	@BeanInjector("sControlUsuario")
+	protected SControlUsuario sControlUsuario;
 
 	// Atributos
 	protected Calendar calendar = GregorianCalendar.getInstance();
@@ -70,16 +82,9 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected Estado estado;
 	
+	protected ICoverterMoneda monedaBase;
+	
 	protected int pageSize = 10;
-
-	/** SETTERS Y GETTERS */
-	public MailService getMailService() {
-		return mailService;
-	}
-
-	public void setMailService(MailService mailService) {
-		this.mailService = mailService;
-	}
 
 	/** COMMADN */
 	@Command
@@ -131,6 +136,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	/** METODOS SOBREESCRITOS */
 	@Override
+	public void doAfterCompose(Component view){
+		super.doAfterCompose(view);
+		Usuario usuario = getUsuario();
+		if(usuario!=null)
+			monedaBase = sControlConfiguracion.consultarActualConversion(usuario.getPersona());
+	}
+	
+	@Override
 	@SuppressWarnings("rawtypes")
 	public void mostrarMensaje(String titulo, String mensaje, String icon,
 			Button[] botones, EventListener clickEvent,
@@ -140,6 +153,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
+	protected Usuario getUsuario(){
+		UserDetails user = this.getUser();
+		if(user!=null)
+			return this.sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
+		else
+			return null;
+	}
+	
 	protected static List<ModeloCombo<String>> llenarListaBancoPago() {
 		List<ModeloCombo<String>> listaBancoPago = new ArrayList<ModeloCombo<String>>();
 		listaBancoPago
@@ -383,6 +404,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void setFormatedMoneda(FormatedMonedaConverter formatedMoneda) {
 		this.formatedMoneda = formatedMoneda;
 	}
+	
+	public MailService getMailService() {
+		return mailService;
+	}
+
+	public void setMailService(MailService mailService) {
+		this.mailService = mailService;
+	}
 
 	public SMaestros getsMaestros() {
 		return sMaestros;
@@ -390,6 +419,22 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public void setsMaestros(SMaestros sMaestros) {
 		this.sMaestros = sMaestros;
+	}
+	
+	public SControlConfiguracion getsControlConfiguracion() {
+		return sControlConfiguracion;
+	}
+	
+	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
+		this.sControlConfiguracion = sControlConfiguracion;
+	}
+	
+	public SControlUsuario getsControlUsuario() {
+		return sControlUsuario;
+	}
+
+	public void setsControlUsuario(SControlUsuario sControlUsuario) {
+		this.sControlUsuario = sControlUsuario;
 	}
 
 	public List<Ciudad> getListaCiudades() {
@@ -406,5 +451,13 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public ICoverterMoneda getMonedaBase() {
+		return monedaBase;
+	}
+
+	public void setMonedaBase(ICoverterMoneda monedaBase) {
+		this.monedaBase = monedaBase;
 	}
 }

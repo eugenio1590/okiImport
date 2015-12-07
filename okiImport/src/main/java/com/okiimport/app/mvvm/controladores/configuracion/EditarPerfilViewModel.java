@@ -1,6 +1,5 @@
 package com.okiimport.app.mvvm.controladores.configuracion;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -16,16 +15,12 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.model.Usuario;
-import com.okiimport.app.mvvm.AbstractViewModel;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
+import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
 
-public class EditarPerfilViewModel extends AbstractViewModel implements EventListener<UploadEvent> {
+public class EditarPerfilViewModel extends AbstractRequerimientoViewModel implements EventListener<UploadEvent> {
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 	
 	//GUI
 	@Wire("#imgFoto")
@@ -51,9 +46,7 @@ public class EditarPerfilViewModel extends AbstractViewModel implements EventLis
 		
 		btnCambFoto.addEventListener("onUpload", this);
 		
-		UserDetails user = this.getUser();
-		if(user!=null)
-			usuario = this.sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword());
+		usuario = super.getUsuario();
 	}
 
 	/**INTERFACES*/
@@ -95,15 +88,7 @@ public class EditarPerfilViewModel extends AbstractViewModel implements EventLis
 		txtClaveNuevaConf.setValue("");
 	}
 	
-	/**SETTERS Y GETTERS*/
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-	
+	/**SETTERS Y GETTERS*/	
 	public Usuario getUsuario() {
 		return usuario;
 	}

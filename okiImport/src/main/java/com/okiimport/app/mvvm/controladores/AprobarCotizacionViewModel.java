@@ -32,18 +32,13 @@ import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
-		implements EventListener<SortEvent> {
+public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
 	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 
 	private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<DetalleCotizacion> listaDetalleSeleccion;
@@ -262,14 +257,6 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 		this.sTransaccion = sTransaccion;
 	}
 
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-
 	public DetalleCotizacion getDetalleCotizacionFiltro() {
 		return detalleCotizacionFiltro;
 	}
@@ -337,5 +324,4 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel
 	public void setEliminarDetalle(List<DetalleCotizacion> eliminarDetalle) {
 		this.eliminarDetalle = eliminarDetalle;
 	}
-
 }

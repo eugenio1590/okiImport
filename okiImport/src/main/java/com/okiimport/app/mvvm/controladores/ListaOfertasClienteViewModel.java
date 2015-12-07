@@ -29,8 +29,6 @@ import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 
@@ -40,12 +38,6 @@ public class ListaOfertasClienteViewModel extends
 	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
-	@BeanInjector("sControlConfiguracion")
-	private SControlConfiguracion sControlConfiguracion;
 	
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
@@ -215,22 +207,6 @@ public class ListaOfertasClienteViewModel extends
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-	
-	public SControlConfiguracion getsControlConfiguracion() {
-		return sControlConfiguracion;
-	}
-
-	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
-		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
 	public MailCliente getMailCliente() {

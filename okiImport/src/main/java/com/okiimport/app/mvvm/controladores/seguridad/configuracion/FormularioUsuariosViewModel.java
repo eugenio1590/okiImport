@@ -27,19 +27,11 @@ import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
-import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.PasswordGenerator;
-import com.okiimport.app.service.configuracion.SControlUsuario;
-import com.okiimport.app.service.maestros.SMaestros;
 
 public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel implements  EventListener<SortEvent>{
 	
 	//Servicios
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
-	
-	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
 	
 	//GUI
 	@Wire("#gridPersonas")
@@ -173,22 +165,6 @@ public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel 
 	}
 
 	/**SETTERS Y GETTERS*/
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
-	}
-	
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
-	}
-
 	public List<Persona> getPersonasSinUsuario() {
 		return personasSinUsuario;
 	}

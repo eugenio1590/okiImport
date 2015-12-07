@@ -3,7 +3,6 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.List;
 
 import org.zkoss.bind.BindUtils;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;

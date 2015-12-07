@@ -120,7 +120,7 @@
 											</listhead>
 											<template name="model">
 												<listitem >
-													<listcell iconSclass="@bind(each.simbolo)" label="@bind(each.nombre)"/>
+													<listcell label="@bind(each.withSimbolo(each.nombre))"/>
 												</listitem>
 											</template>
 										</listbox>

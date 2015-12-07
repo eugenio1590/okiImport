@@ -50,7 +50,7 @@ public class SidebarViewModel extends AbstractViewModel implements SerializableE
 		super.doAfterCompose(view);
 		
 		UserDetails user = this.getUser();
-		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword()); 
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null); 
 		
 		ModelTree<ModelNavbar> modelo = new ModelTree<ModelNavbar>();
 		

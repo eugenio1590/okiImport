@@ -23,14 +23,12 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlUsuario;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
@@ -38,9 +36,6 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	@BeanInjector("sControlUsuario")
-	private SControlUsuario sControlUsuario;
 
 	// GUI
 	@Wire("#gridComprasProveedor")
@@ -69,7 +64,7 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
-		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword()); 
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null); 
 		proveedor=new Proveedor(usuario.getPersona());
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
@@ -154,14 +149,6 @@ public class VerCompraProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setListaCompras(List<DetalleOferta> listaCompras) {
 		this.listaCompras = listaCompras;
-	}
-
-	public SControlUsuario getsControlUsuario() {
-		return sControlUsuario;
-	}
-
-	public void setsControlUsuario(SControlUsuario sControlUsuario) {
-		this.sControlUsuario = sControlUsuario;
 	}
 
 	public Requerimiento getRequerimiento() {
