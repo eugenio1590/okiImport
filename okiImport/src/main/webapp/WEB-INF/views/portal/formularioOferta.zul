@@ -113,7 +113,7 @@
 								<panelchildren>
                                    <!-- LISTA DETALLE OFERTA-->
                                    <listbox id="listaOferta" mold="paging" pagingPosition="top" pageSize="5"
-                                   	model="@load(vm.oferta.detalleOfertas)">
+                                   		model="@load(vm.oferta.detalleOfertas)">
                                    	
                                    	<listhead>
                                    		<listheader width="3%"/>
@@ -166,9 +166,7 @@
 						<button label="Enviar" sclass="btn-sm btn-primary"
 							onClick="@command('enviar')"/>
 						<button label="Vaciar Carrito" sclass="btn-sm btn-info"
-							onClick="@command('vaciarCarrito')"/>
-						<button label="Ver Mas Ofertas" sclass="btn-sm btn-success"
-							onClick="@command('verMasOfertas')"/>
+							onClick="@command('limpiar')"/>
 						<button label="Cancelar" sclass="btn-sm btn-danger"
 							onClick="@command('onCloseWindow')"/>
 					</n:div>

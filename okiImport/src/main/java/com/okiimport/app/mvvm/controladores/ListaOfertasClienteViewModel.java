@@ -131,7 +131,7 @@ public class ListaOfertasClienteViewModel extends
 	@NotifyChange("*")
 	public void verOferta(@BindingParam("oferta") Oferta oferta){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta.getIdOferta()));
+		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta));
 		parametros.put("oferta", oferta);
 		parametros.put("requerimiento", this.requerimiento);
 		
