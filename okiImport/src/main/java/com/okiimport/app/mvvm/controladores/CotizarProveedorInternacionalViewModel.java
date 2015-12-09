@@ -40,7 +40,6 @@ import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.AbstractServiceImpl;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class CotizarProveedorInternacionalViewModel extends AbstractRequerimientoViewModel implements EventListener<Event>{
@@ -48,9 +47,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-	
-	@BeanInjector("sControlConfiguracion")
-	private SControlConfiguracion sControlConfiguracion;
 	
 	//GUI
 	@Wire("#winCotizar")
@@ -377,14 +373,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
-	}
-	
-	public SControlConfiguracion getsControlConfiguracion() {
-		return sControlConfiguracion;
-	}
-
-	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
-		this.sControlConfiguracion = sControlConfiguracion;
 	}
 
 	public List<DetalleCotizacionInternacional> getListaDetalleCotizacion() {
