@@ -23,17 +23,12 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
 
 
 public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 
 	
 	//Servicios
-	
-	    @BeanInjector("sControlConfiguracion")
-	    private SControlConfiguracion sControlConfiguracion;
 	
 	//GUI
 	    
@@ -154,17 +149,6 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	public void setBandbMoneda(Bandbox bandbMoneda) {
 		this.bandbMoneda = bandbMoneda;
 	}
-
-
-	public SControlConfiguracion getsControlConfiguracion() {
-		return sControlConfiguracion;
-	}
-
-
-	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
-		this.sControlConfiguracion = sControlConfiguracion;
-	}
-
 
 	public Paging getPagMonedas() {
 		return pagMonedas;
