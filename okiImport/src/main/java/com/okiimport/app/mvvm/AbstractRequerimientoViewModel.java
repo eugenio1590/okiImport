@@ -141,6 +141,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		Usuario usuario = getUsuario();
 		if(usuario!=null)
 			monedaBase = sControlConfiguracion.consultarActualConversion(usuario.getPersona());
+		else
+			monedaBase = sControlConfiguracion.consultarActualConversionMonedaBase();
 	}
 	
 	@Override

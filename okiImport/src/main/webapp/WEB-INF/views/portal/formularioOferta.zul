@@ -39,6 +39,12 @@
 									<label value="@bind(vm.cantArticulos)"/>
 								</div>					
 							</hbox>
+							<div align="right">
+								<label value="Total a Pagar:" sclass="label-not-mandatory"/>
+								<label value="@bind(vm.totalArticulos)
+												@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
+							</div>
 							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
 								<tabs>
 									<tab sclass="waves-color-blue waves-effect">
@@ -83,6 +89,8 @@
 												<column  width="20%"/>
 												<column  width="20%"/>
 												<column  />
+												<column width="15%" />
+												<column  />
 											</columns>
 											<rows>
 												<row>
@@ -90,16 +98,14 @@
 													<label value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
 													<label value="Modelo:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.modeloV)" />
+													<label value="Tipo de Repuesto:" sclass="label-not-mandatory"/>
+													<label value="@bind(vm.requerimiento.determinarTipoRepuesto())"/>
 												</row>
 												<row>
 													<label value="Año:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.annoV)"/>
 													<label value="Serial de Carroceria:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.serialCarroceriaV)" />
-												</row>
-												<row>
-													<label value="Tipo de Repuesto:" sclass="label-not-mandatory"/>
-													<label value="@bind(vm.requerimiento.determinarTipoRepuesto())"/>
 												</row>
 											</rows>
 										</grid>
@@ -113,16 +119,18 @@
 								<panelchildren>
                                    <!-- LISTA DETALLE OFERTA-->
                                    <listbox id="listaOferta" mold="paging" pagingPosition="top" pageSize="5"
-                                   		model="@load(vm.oferta.detalleOfertas)">
+                                   		model="@load(vm.oferta.detalleOfertas)"
+                                   		emptyMessage="No Existen Repuestos Validos para Seleccionar">
                                    	
                                    	<listhead>
                                    		<listheader width="3%"/>
                                    		<listheader label="Descripcion" sort="none" width="30%"/>
                                    		<listheader label="Marca" sort="none" />
-                                   		<listheader label="Cant. Solicitada" sort="none"  width="15%" />
-                                   		<listheader label="Cant. Ofertada" sort="none" width="15%"/>
-                                   		<listheader label="Precio de Venta S/F" sort="none" width="15%"/>
-                                   		<listheader sort="none" align="center" width="10%"/>
+                                   		<listheader label="Cant. Solict." sort="none"  width="10%" />
+                                   		<listheader label="Cant. Ofert." sort="none" width="10%"/>
+                                   		<listheader label="Pcio. Unit." sort="none" width="10%"/>
+                                   		<listheader label="Pcio. Venta s/flete" sort="none" width="15%"/>
+                                   		<listheader sort="none" align="center" width="5%"/>
                                    	</listhead>
 
                                    	<template name="model">
@@ -132,7 +140,12 @@
                                    			<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
                                    			<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)" />
                                    			<listcell label="@bind(each.detalleCotizacion.cantidad)" />
-                                   			<listcell label="@bind(each.calcularPrecioVenta())" />
+                                   			<listcell label="@bind(each.calcularPrecioVentaUnit())
+                                   								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																	converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+                                   			<listcell label="@bind(each.calcularPrecioVenta())
+                                   								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																	converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
                                    			<listcell>
 <!--                                    				<checkbox name="remember${forEachStatus.index+1}" -->
 <!--                                    					checked="@bind(each.aprobado)" -->
@@ -151,10 +164,12 @@
                                    		<listfooter />
                                    		<listfooter />
                                    		<listfooter />
+                                   		<listfooter />
                                    		<listfooter label="Total:">
                                    			<label
                                    				value="@bind(vm.oferta.calcularTotal())
-                                   						@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+                                   						@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+															converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
                                    		</listfooter>
                                    	</listfoot>
                                    </listbox>
@@ -163,6 +178,14 @@
 						</groupbox>
 					</n:div>
 					<n:div class="modal-footer">
+						<n:div>
+							<button label="Oferta Anterior" sclass="btn-sm btn-inverse" 
+								visible="@bind(vm.visbOfertaAnterior)"
+								onClick="@command('mostrarOferta', tipo=1)"/>
+							<button label="Siguiente Oferta" sclass="btn-sm btn-warning" 
+								visible="@bind(vm.visbOfertaSiguiente)"
+								onClick="@command('mostrarOferta', tipo=2)"/>
+						</n:div>
 						<button label="Enviar" sclass="btn-sm btn-primary"
 							onClick="@command('enviar')"/>
 						<button label="Vaciar Carrito" sclass="btn-sm btn-info"

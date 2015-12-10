@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -72,10 +73,9 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
     private Oferta oferta; //Oferta a Mostrar
     
     private boolean cerrar = false;
-    
-    //En Evaluacion
-    private Map<String, Object> parametros;
-    private int cantArticulos;
+    private boolean visbOfertaAnterior = false, visbOfertaSiguiente = false;
+    private int page, cantArticulos;
+    private float totalArticulos;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -104,11 +104,12 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"oferta", "cantArticulos"})
+	@NotifyChange({"oferta", "cantArticulos", "totalArticulos"})
 	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) A a,
 			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
 	{
 		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO.getCss())) ? true : false;
+		totalArticulos += (aprobado) ? detalleOferta.calcularPrecioVentaConverter() : -detalleOferta.calcularPrecioVentaConverter();
 		detalleOferta.setAprobado(aprobado);
 		if(aprobado)
 			listaDetOferta.add(detalleOferta);
@@ -134,6 +135,13 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		cantArticulos = listaDetOferta.size();
 	}
 	
+	@Command
+	@NotifyChange({"oferta", "visbOfertaAnterior", "visbOfertaSiguiente"})
+	public void mostrarOferta(@BindingParam("tipo") int tipo){
+		page += (tipo == 2) ? 1 : -1; 
+		this.cargarOferta(page);
+	}
+	
 	/**
 	 * Descripcion: Permite Registrar Una Oferta
 	 * Parametros: @param btnEnviar: boton presionado
@@ -150,7 +158,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
 						
 			if(listaDetOferta.size()>0){
-				cargarParametros();
+				Map<String, Object> parametros  = cargarParametros();
 				redireccionarASolicitudDePedido(parametros);
 			}
 			else
@@ -194,6 +202,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * */
 	@NotifyChange("oferta")
 	private void cargarOferta(int page){
+		this.page = page;
 		List<DetalleOferta> detallesOfertasEliminar = new ArrayList<DetalleOferta>();
 		oferta = ofertas.get(page);
 		oferta.recoveryCopyDetallesOfertas();
@@ -202,14 +211,29 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			for(DetalleOferta detalle : oferta.getDetalleOfertas()){
 				for(DetalleOferta detalleAprobado : listaDetOferta){
 					if(detalle.getDetalleCotizacion().getDetalleRequerimiento().getIdDetalleRequerimiento()
-							.equals(detalleAprobado.getDetalleCotizacion().getDetalleRequerimiento().getIdDetalleRequerimiento()))
+							.equals(detalleAprobado.getDetalleCotizacion().getDetalleRequerimiento().getIdDetalleRequerimiento())
+							&& !detalle.getIdDetalleOferta().equals(detalleAprobado.getIdDetalleOferta()))
 						detallesOfertasEliminar.add(detalle);
 				}
 			}
 		}
 		oferta.removeAll(detallesOfertasEliminar);
+		mostrarVisibiladOfertas(page);
 	}
 	
+	@NotifyChange({"visbOfertaAnterior", "visbOfertaSiguiente"})
+	private void mostrarVisibiladOfertas(int page) {
+		int size = ofertas.size();
+		this.visbOfertaAnterior = this.visbOfertaSiguiente = false;
+		
+		if(page==0 && size>1)
+			this.visbOfertaSiguiente = true;
+		else if(page > 0 && page+1!=size)
+			this.visbOfertaAnterior = this.visbOfertaSiguiente = true;
+		else if(page > 0 && page+1==size)
+			this.visbOfertaAnterior = true;
+	}
+
 	/**
 	 * Descripcion: Permite llenar la lista con las ofertas aprobadas eliminando archivos repetidos
 	 * Parametros: Ninguno.
@@ -225,13 +249,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	/**
 	 * Descripcion: metodo que permitira cargar los parametros a enviar para la siguiente interfaz
 	 * Parametros: Ninguno
-	 * Retorno: Ninguno
+	 * Retorno: @param parametros: lista de map que contendra los objetos a enviar a la otra interfaz
 	 * Nota: Ninguna
 	 * */
-	private void cargarParametros(){
-		parametros.clear();
+	private Map<String, Object> cargarParametros(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
 		parametros.put("detallesOfertas", listaDetOferta);
+		return parametros;
 	}
 	
 	/**
@@ -357,5 +382,28 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void setCantArticulos(int cantArticulos) {
 		this.cantArticulos = cantArticulos;
 	}
-	
+
+	public boolean isVisbOfertaAnterior() {
+		return visbOfertaAnterior;
+	}
+
+	public void setVisbOfertaAnterior(boolean visbOfertaAnterior) {
+		this.visbOfertaAnterior = visbOfertaAnterior;
+	}
+
+	public boolean isVisbOfertaSiguiente() {
+		return visbOfertaSiguiente;
+	}
+
+	public void setVisbOfertaSiguiente(boolean visbOfertaSiguiente) {
+		this.visbOfertaSiguiente = visbOfertaSiguiente;
+	}
+
+	public float getTotalArticulos() {
+		return totalArticulos;
+	}
+
+	public void setTotalArticulos(float totalArticulos) {
+		this.totalArticulos = totalArticulos;
+	}
 }
