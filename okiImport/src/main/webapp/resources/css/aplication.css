@@ -196,7 +196,14 @@ div.modal-footer {
     padding-left: 32px;
 }
 
+div.tab-nav {
+	margin-top: 20px;
+    margin-bottom: 20px;
+}
 
+.modal-footer div {
+	float: left;
+}
 
 
 /**COUNTER*/

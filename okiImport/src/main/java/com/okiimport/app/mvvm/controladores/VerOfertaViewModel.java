@@ -23,7 +23,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.DetalleOferta;
-import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
@@ -69,12 +68,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	
     //Atributos
 	private Requerimiento requerimiento;
-	private List<DetalleOferta> listaDetOferta;
-    private Oferta oferta;
+	private List<Oferta> ofertas; //Ofertas Disponibles
+	private List<DetalleOferta> listaDetOferta; //Carrito de Compra
+    private Oferta oferta; //Oferta a Mostrar
     
-    private Map<String, Object> parametros;
     private boolean cerrar = false;
-    private int cantArticulos;
+    private boolean visbOfertaAnterior = false, visbOfertaSiguiente = false;
+    private int page, cantArticulos;
+    private float totalArticulos;
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -84,44 +85,61 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento, 
-			@ExecutionArgParam("detallesOfertas") List<DetalleOferta> listaDetOferta )
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
 	{	
 		super.doAfterCompose(view);	
-		this.parametros = new HashMap<String, Object>();
+		//this.parametros = new HashMap<String, Object>();
 		this.requerimiento = requerimiento;
-		this.listaDetOferta = (listaDetOferta == null) ? new ArrayList<DetalleOferta>() : listaDetOferta;
+		this.listaDetOferta = new ArrayList<DetalleOferta>(); //Veremos Luego si Se carga
 		this.cantArticulos = this.listaDetOferta.size();
-		cargarOferta();
-		
+		this.ofertas = this.sTransaccion.consultarOfertasEnviadaPorRequerimiento(requerimiento.getIdRequerimiento());
+		cargarOferta(0);
 	}
 	
-	/**COMMAND
-	/* Descripcion: Permitira limpiar el campo aceptar de cada uno de los repuestos de la oferta
+	/**COMMAND*/
+	/**
+	 * Descripcion: Permite Aprobar el detalle de la oferta
+	 * Parametros: @param a: componente de la vista A que fue presionado
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange({"oferta", "cantArticulos", "totalArticulos"})
+	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) A a,
+			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
+	{
+		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO.getCss())) ? true : false;
+		totalArticulos += (aprobado) ? detalleOferta.calcularPrecioVentaConverter() : -detalleOferta.calcularPrecioVentaConverter();
+		detalleOferta.setAprobado(aprobado);
+		if(aprobado)
+			listaDetOferta.add(detalleOferta);
+		else
+			listaDetOferta.remove(listaDetOferta.indexOf(detalleOferta));
+		
+		cantArticulos = listaDetOferta.size();
+	}
+	
+	/**
+	 * Descripcion: Permitira limpiar el campo aceptar de cada uno de los repuestos de la oferta
 	 * Parametros: Ninguno
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange("oferta")
+	@NotifyChange({"oferta", "cantArticulos"})
 	public void limpiar(){
-		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
+		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas() ){
 			detalleOferta.setAprobado(null);
 		}
+		listaDetOferta.clear();
+		cantArticulos = listaDetOferta.size();
 	}
 	
-	/**
-	 * Descripcion: Permite Cargar La Oferta
-	 * Parametros: @param view: formularioOferta.zul 
-	 * Retorno: Oferta Cargada
-	 * Nota: Ninguna
-	 * */
 	@Command
-	@NotifyChange("oferta")
-	public void cargarOferta(){
-		List<DetalleRequerimiento> detallesRequerimiento = obtenerDetallesRequerimientos();
-		oferta = sTransaccion.consultarOfertaEnviadaPorRequerimiento(requerimiento.getIdRequerimiento(), detallesRequerimiento);
-	
+	@NotifyChange({"oferta", "visbOfertaAnterior", "visbOfertaSiguiente"})
+	public void mostrarOferta(@BindingParam("tipo") int tipo){
+		page += (tipo == 2) ? 1 : -1; 
+		this.cargarOferta(page);
 	}
 	
 	/**
@@ -138,91 +156,14 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 			llenarListAprobados();
 			oferta = sTransaccion.actualizarOferta(oferta);
 			//sTransaccion.actualizarRequerimiento(requerimiento);  Falta definir estatus
-			
-			verificarMasOfertas();
-			cargarParametros();
-
-			if (oferta != null)
-				verMasOfertas();
-			else {
-				if(listaDetOferta.size()>0)
-					redireccionarASolicitudDePedido(parametros);
-				else
-					reactivarRequerimiento();
-			}
-		}
-	}
-	
-	/**
-	 * Descripcion: Permitira mostrar mas ofertas en caso de que existan.
-	 * Parametros: Ninguno
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	public void verMasOfertas(){
-		super.mostrarMensaje("Informaci\u00F3n", "¿Realmente desea continuar viendo mas ofertas?", null, 
-				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL}, new EventListener<Event>(){
-					@Override
-					public void onEvent(Event event) throws Exception {
-						cargarParametros();
-						Messagebox.Button button = (Messagebox.Button) event.getData();
-						if (button == Messagebox.Button.YES) {
-							llenarListAprobados();
-							oferta = sTransaccion.actualizarOferta(oferta);
-							if(verificarMasOfertas()){
-								cerrar = true;
-								ejecutarGlobalCommand("verOferta", parametros);
-								winOferta.onClose();
-								return;
-							}
-							
-							button = Messagebox.Button.NO;
-						}
 						
-						if(button == Messagebox.Button.NO)
-							if(listaDetOferta.size()>0)
-								redireccionarASolicitudDePedido(parametros);
-							else 
-								reactivarRequerimiento();
-					}
-		}, null);
-	}
-	
-	/**
-	 * Descripcion: permitira quitar los articulos seleccionados del carrito de compra.
-	 * Parametros: Ninguno
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange({"oferta", "cantArticulos"})
-	public void vaciarCarrito(){
-		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
-			if (detalleOferta.getAprobado() != null && detalleOferta.getAprobado()){
-				detalleOferta.setAprobado(false);
-				cantArticulos--;
+			if(listaDetOferta.size()>0){
+				Map<String, Object> parametros  = cargarParametros();
+				redireccionarASolicitudDePedido(parametros);
 			}
+			else
+				reactivarRequerimiento();
 		}
-	}
-	
-	/**
-	 * Descripcion: Permite Aprobar el detalle de la oferta
-	 * Parametros: @param a: componente de la vista A que fue presionado
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange({"oferta", "cantArticulos"})
-	public void aprobarDetalleOferta(@ContextParam(ContextType.COMPONENT) A a,
-			@BindingParam("detalleOferta") DetalleOferta detalleOferta)
-	{
-		boolean aprobado = (a.getSclass().equalsIgnoreCase(AGREGAR_CARRITO.getCss())) ? true : false;
-		detalleOferta.setAprobado(aprobado);
-		if(aprobado)
-			cantArticulos++;
-		else
-			cantArticulos--;
 	}
 	
 	/**
@@ -252,22 +193,70 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		}
 	}
 	
-	/**METODOS PRIVADOS DE LA CLASE*/
+	/**METODOS PRIVADOS DE LA CLASE*/	
 	/**
-	 * Descripcion: Permite llenar la lista con las ofertas aprobadas
+	 * Descripcion: Permite Cargar La Oferta
+	 * Parametros: @param view: formularioOferta.zul 
+	 * Retorno: Oferta Cargada
+	 * Nota: Ninguna
+	 * */
+	@NotifyChange("oferta")
+	private void cargarOferta(int page){
+		this.page = page;
+		List<DetalleOferta> detallesOfertasEliminar = new ArrayList<DetalleOferta>();
+		oferta = ofertas.get(page);
+		oferta.recoveryCopyDetallesOfertas();
+		if(!listaDetOferta.isEmpty()){
+			oferta.copyDetallesOfertas();
+			for(DetalleOferta detalle : oferta.getDetalleOfertas()){
+				for(DetalleOferta detalleAprobado : listaDetOferta){
+					if(detalle.getDetalleCotizacion().getDetalleRequerimiento().getIdDetalleRequerimiento()
+							.equals(detalleAprobado.getDetalleCotizacion().getDetalleRequerimiento().getIdDetalleRequerimiento())
+							&& !detalle.getIdDetalleOferta().equals(detalleAprobado.getIdDetalleOferta()))
+						detallesOfertasEliminar.add(detalle);
+				}
+			}
+		}
+		oferta.removeAll(detallesOfertasEliminar);
+		mostrarVisibiladOfertas(page);
+	}
+	
+	@NotifyChange({"visbOfertaAnterior", "visbOfertaSiguiente"})
+	private void mostrarVisibiladOfertas(int page) {
+		int size = ofertas.size();
+		this.visbOfertaAnterior = this.visbOfertaSiguiente = false;
+		
+		if(page==0 && size>1)
+			this.visbOfertaSiguiente = true;
+		else if(page > 0 && page+1!=size)
+			this.visbOfertaAnterior = this.visbOfertaSiguiente = true;
+		else if(page > 0 && page+1==size)
+			this.visbOfertaAnterior = true;
+	}
+
+	/**
+	 * Descripcion: Permite llenar la lista con las ofertas aprobadas eliminando archivos repetidos
 	 * Parametros: Ninguno.
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	private void llenarListAprobados() {
 		Set<DetalleOferta> listaDetOferta = new LinkedHashSet<DetalleOferta>(this.listaDetOferta);
-		for ( DetalleOferta detalleOferta : this.oferta.getDetalleOfertas()){
-			if (detalleOferta.getAprobado() != null && detalleOferta.getAprobado()){
-				listaDetOferta.add(detalleOferta);
-			}
-		}
 		this.listaDetOferta.clear();
 		this.listaDetOferta.addAll(listaDetOferta);
+	}
+	
+	/**
+	 * Descripcion: metodo que permitira cargar los parametros a enviar para la siguiente interfaz
+	 * Parametros: Ninguno
+	 * Retorno: @param parametros: lista de map que contendra los objetos a enviar a la otra interfaz
+	 * Nota: Ninguna
+	 * */
+	private Map<String, Object> cargarParametros(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("detallesOfertas", listaDetOferta);
+		return parametros;
 	}
 	
 	/**
@@ -290,7 +279,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 				else
 					mostrarMensaje("Informaci\u00F3n", "El proceso realizado se perdera, ¿Desea continuar?", null, 
 							new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
-
 								@Override
 								public void onEvent(Event event) throws Exception {
 									Messagebox.Button button = (Messagebox.Button) event.getData();
@@ -300,25 +288,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 					}, null);
 			}
 		}, null);
-	}
-	
-	/**
-	 * Descripcion: Obtendra todos los objetos detalles requerimiento de los objetos detalle oferta seleccionados
-	 * Parametros: Ninguno
-	 * Retorno: @return detallesRequerimiento: lista de los detalles requerimientos asociados 
-	 * a los objetos detalle oferta seleccionados
-	 * Nota: Ninguna
-	 * */
-	private List<DetalleRequerimiento> obtenerDetallesRequerimientos(){
-		List<DetalleRequerimiento> detallesRequerimiento = null;
-		if(listaDetOferta!=null && !listaDetOferta.isEmpty()){
-			detallesRequerimiento = new ArrayList<DetalleRequerimiento>();
-			for(DetalleOferta detalleO : listaDetOferta){
-				detallesRequerimiento.add(detalleO.getDetalleCotizacion().getDetalleRequerimiento());
-			}
-			 
-		}
-		return detallesRequerimiento;
 	}
 	
 	/**
@@ -351,6 +320,8 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	private void cerrarRequerimiento(){
+		requerimiento.cerrarSolicitud();
+		sTransaccion.actualizarRequerimiento(requerimiento);
 		sTransaccion.cerrarRequerimiento(requerimiento, sMaestros, sControlUsuario, false);
 		mostrarMensaje("Informaci\u00F3n", "Requerimiento Cerrado!", null, null, new EventListener<Event>(){
 			@Override
@@ -371,45 +342,6 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		winOferta.onClose();
 	}
 	
-	/**
-	 * Descripcion: metodo que permitira cargar los parametros a enviar para la siguiente interfaz
-	 * Parametros: Ninguno
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	private void cargarParametros(){
-		parametros.clear();
-		parametros.put("requerimiento", requerimiento);
-		parametros.put("detallesOfertas", listaDetOferta);
-	}
-	
-	/**
-	 * Descripcion: metodo que permitira verificar si se encuentran mas ofertas o no para mostrar.
-	 * Parametros: Ninguno
-	 * Retorno: @return seguir: valor booleano que indicara si es true si hay mas ofertas y false en caso contrario
-	 * Nota: Ninguno
-	 * */
-	private boolean verificarMasOfertas(){
-		boolean seguir = (oferta!=null);
-		while(seguir){
-			cargarOferta();
-			
-			if(oferta==null) {
-				seguir = false;
-			}
-			else if(oferta.getDetalleOfertas().size()==0){
-				oferta.setEstatus(EEstatusOferta.INVALIDA);
-				sTransaccion.actualizarOferta(oferta);
-				seguir = true;
-				oferta = null;
-			}
-			else {
-				seguir = false;
-			}
-		}
-		return seguir;
-	}
-	
 	/**GETTERS Y SETTERS*/
 	public Carrito getAgregarCarrito() {
 		return AGREGAR_CARRITO;
@@ -426,7 +358,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-	
+
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}
@@ -450,5 +382,28 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	public void setCantArticulos(int cantArticulos) {
 		this.cantArticulos = cantArticulos;
 	}
-	
+
+	public boolean isVisbOfertaAnterior() {
+		return visbOfertaAnterior;
+	}
+
+	public void setVisbOfertaAnterior(boolean visbOfertaAnterior) {
+		this.visbOfertaAnterior = visbOfertaAnterior;
+	}
+
+	public boolean isVisbOfertaSiguiente() {
+		return visbOfertaSiguiente;
+	}
+
+	public void setVisbOfertaSiguiente(boolean visbOfertaSiguiente) {
+		this.visbOfertaSiguiente = visbOfertaSiguiente;
+	}
+
+	public float getTotalArticulos() {
+		return totalArticulos;
+	}
+
+	public void setTotalArticulos(float totalArticulos) {
+		this.totalArticulos = totalArticulos;
+	}
 }
