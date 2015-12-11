@@ -56,8 +56,12 @@
 								<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
 								<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.clasificacionRepuesto.descripcion)" />
 								<listcell label="@bind(each.detalleCotizacion.cantidad)" />
-								<listcell label="@bind(each.detalleCotizacion.precioVenta)" />
-								<listcell label="@bind(each.detalleCotizacion.precioFlete)" />
+								<listcell label="@bind(each.detalleCotizacion.precioVenta) 
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+								<listcell label="@bind(each.detalleCotizacion.precioFlete) 
+								          @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
 							</listitem>
 						</template>
 

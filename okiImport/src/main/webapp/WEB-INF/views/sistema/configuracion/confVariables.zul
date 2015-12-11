@@ -40,20 +40,13 @@
 								constraint="@bind(vm.notEmptyValidator)"></textbox>
 								</vbox>
 
-								<label value="Porcentaje Ganancia: " />
-							    <vbox>
-								<textbox></textbox>
-								</vbox>
-
-							</row>
-							
-							<row>
+								
 								<label value="Moneda: " />
 								<vbox>
-								
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
 										constraint="@bind(vm.getNotEmptyValidator())" readonly="true"
 										value="@bind(vm.monedaSeleccionada.nombre)">
+										
 										<bandpopup>
 											<listbox height="250px" width="200px" model="@load(vm.listaMonedas)" 
 												selectedItem="@bind(vm.monedaSeleccionada)" onSelect="@command('seleccionMoneda')">
@@ -62,19 +55,15 @@
 												</listhead>
 												<template name="model">
 													<listitem >
-														<listcell iconSclass="@bind(each.simbolo)" label="@bind(each.nombre)"/>
+														<listcell label="@bind(each.withSimbolo(each.nombre))"/>
 													</listitem>
 												</template>
 											</listbox>
 											<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
 										</bandpopup>
 									</bandbox>
-								
-								
 								</vbox>
-
 							</row>
-
 						</rows>
 					</grid>
 				</div>
