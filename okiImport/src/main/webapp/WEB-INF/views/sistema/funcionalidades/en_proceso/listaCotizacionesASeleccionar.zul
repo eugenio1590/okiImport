@@ -54,6 +54,15 @@
 						value="@bind(vm.detalleCotizacionFiltro.precioVenta)"
 						onChange="@command('aplicarFiltro')"/>
 				</auxheader>
+				<auxheader>
+				</auxheader>
+				<auxheader>
+					<div sclass="z-icon-filter bigger-200" />
+					<decimalbox width="70px" instant="true" 
+						format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)"
+						value="@bind(vm.detalleCotizacionFiltro.total)"
+						onChange="@command('aplicarFiltro')"/>
+				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
 				<listheader label="Proveedor" sort="none"
