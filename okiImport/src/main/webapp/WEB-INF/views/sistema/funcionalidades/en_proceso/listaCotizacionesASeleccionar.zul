@@ -114,7 +114,7 @@
 		<div width="100%" align="right">
 			<div sclass="btn btn-xs btn-info">
 				<button label="Seleccionar" type="submit"
-					onClick="@command('agregarSeleccion', cotizacion=null)" />
+					onClick="@command('agregarSeleccion')" />
 			</div>
 		</div>
 

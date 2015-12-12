@@ -454,14 +454,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	}
 	**/
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Descripcion: Permite limpiar las variables que se encargan de las variables de ciudad y estado
 	 * Parametros: Ninguno

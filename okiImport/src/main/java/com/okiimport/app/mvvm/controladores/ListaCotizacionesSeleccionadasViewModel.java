@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -33,31 +34,28 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class ListaCotizacionesASeleccionarViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
+public class ListaCotizacionesSeleccionadasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
 	// Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
-
-	private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<DetalleCotizacion> listaDetalleSeleccion;
 	private List<DetalleCotizacion> listaDetalleSeleccionado;
 	private List<DetalleCotizacion> eliminarDetalle;
 
 	// GUI
-	@Wire("#gridDetalleCotizacion")
-	private Listbox gridDetalleCotizacion;
-	@Wire("#pagDetalleCotizacion")
-	private Paging pagDetalleCotizacion;
+	@Wire("#gridDetalleSeleccion")
+	private Listbox gridDetalleSeleccion;
 
 	//Atributos
 	private static final Comparator<DetalleCotizacion> COMPR_DETALLE_COTIZACION = DetalleCotizacion.getComparator();
 	
-	private String titulo = "Repuestos Cotizados del Requerimiento N° ";
+	private String titulo = "Repuestos Seleccionados del Requerimiento N° ";
 	private Requerimiento requerimiento;
 	private DetalleCotizacion detalleCotizacionFiltro;
 	private DetalleCotizacion detalleCotizacion;
 	private String ubicacion;
+	private int cantOfertas;
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -67,16 +65,18 @@ public class ListaCotizacionesASeleccionarViewModel extends AbstractRequerimient
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("listaDetalleSeleccion")  List<DetalleCotizacion> listaDetalleSeleccionado) {
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
+		this.listaDetalleSeleccionado = listaDetalleSeleccionado;
 		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(
 				new Proveedor()), new DetalleRequerimiento());
 		detalleCotizacionFiltro.eliminarPrecios();
-		pagDetalleCotizacion.setPageSize(pageSize=10);
-		consultarDetalleCotizacion(0, null, null);
-		agregarGridSort(gridDetalleCotizacion);
+		listaDetalleSeleccionado = new ArrayList<DetalleCotizacion>();
+		cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
+		
 	}
 
 	/** Interface: EventListener<SortEvent> */
@@ -93,103 +93,59 @@ public class ListaCotizacionesASeleccionarViewModel extends AbstractRequerimient
 
 	}
 
+
 	/**
-	 * Descripcion: Mueve la seleccion realizada desde listaDetalleCotizacion a
-	 * ListaDetalleSeleccionado 
-	 * Parametros: @param view: aprobarCotizaciones.zul
+	 * Descripcion: Elimina la seleccion de listaDetalleSeleccion 
+	 * Parametros: @param view: aprobarCotizaciones.zul 
 	 * Retorno: Ninguno
-	 * Nota: Ninguna
+	 * Nota:Ninguna
 	 * */
 	@Command
-	public void agregarSeleccion(){
+	@NotifyChange({ "*" })
+	public void eliminarSeleccion() {
 		if(listaDetalleSeleccion!=null && !listaDetalleSeleccion.isEmpty()){
-			
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("listaDetalleSeleccion", listaDetalleSeleccion);
-			parametros.put("requerimiento", requerimiento);
-			
-			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesSeleccionadas.zul", parametros);
+			listaDetalleSeleccionado.removeAll(listaDetalleSeleccion);
 		}
 		else 
 			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
-
 	}
-	
 
 	/**
-	 * Descripcion: Consulta el detalle Cotizacion 
+	 * Descripcion: Guarda la Seleccion realizada en listaDetalleSeleccionado
 	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Retorno: Ninguno 
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange({ "*" })
+	public void guardar() {
+		if (cantOfertas == 3){
+			
+			mostrarMensaje("Informaci\u00F3n", "Ya se alcanz\u00F3 el n\u00FAmero m\u00E1ximo de ofertas", null, null, null, null);
+		}
+		else {
+			if(listaDetalleSeleccionado!=null && !listaDetalleSeleccionado.isEmpty()){
+				sTransaccion.guardarSeleccionRequerimiento(listaDetalleSeleccionado);
+				cantOfertas++;
+				limpiarDetalleSeleccionado();
+				mostrarMensaje("Informaci\u00F3n", "Selecci\u00F3n "+cantOfertas+" Guardada Exitosamente", null,
+						null, null, null);
+			}
+			else 
+				mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un item", null, null, null, null);
+		}
+	}
+
+	/**
+	 * Descripcion: Permitira limpiar la informacion de la seleccion
+	 * Parametros: Ninguno @param view: aprobarCotizaciones.zul  
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@GlobalCommand
-	@NotifyChange("*")
-	@SuppressWarnings("unchecked")
-	public void consultarDetalleCotizacion(
-			@Default("0") @BindingParam("page") int page,
-			@BindingParam("fieldSort") String fieldSort,
-			@BindingParam("sortDirection") Boolean sortDirection) {
-
-		/** FALTA FILTRAR POR ESTATUS DE DETALLE COTIZACION */
-		Map<String, Object> parametros = sTransaccion
-				.consultarDetallesCotizacion(detalleCotizacionFiltro,
-						requerimiento.getIdRequerimiento(), fieldSort,
-						sortDirection, page, pageSize);
-
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros
-				.get("detallesCotizacion");
-		Integer total = (Integer) parametros.get("total");
-		gridDetalleCotizacion.setMultiple(true);
-		gridDetalleCotizacion.setCheckmark(true);
-		pagDetalleCotizacion.setActivePage(page);
-		pagDetalleCotizacion.setTotalSize(total);
+	@NotifyChange({ "listaDetalleSeleccionado" })
+	private void limpiarDetalleSeleccionado(){
+		listaDetalleSeleccionado.clear();
 	}
-
-	/** COMMAND */
-
-	/**
-	 * Descripcion: permite cambiar la paginacion de acuerdo a la pagina activa
-	 * de Paging 
-	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: Ninguno 
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("*")
-	public void paginarLista() {
-		int page = pagDetalleCotizacion.getActivePage();
-		consultarDetalleCotizacion(page, null, null);
-	}
-
-	/**
-	 * Descripcion: permite filtrar los datos de la grid de acuerdo al campo
-	 * establecido en el evento 
-	 * Parametros: @param view: aprobarCotizaciones.zul
-	 * Retorno: Ninguno 
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("listaDetalleCotizacion")
-	public void aplicarFiltro() {
-		agregarUbicacion();
-		consultarDetalleCotizacion(0, null, null);
-	}
-
-	/** METODOS PROPIOS DE LA CLASE */
-
-	/**
-	 * Descripcion: Asigna la ubicacion del proveedor 
-	 * Parametros: @param view: aprobarCotizaciones.zul 
-	 * Retorno: Ninguno 
-	 * Nota: Ninguna
-	 * */
-	private void agregarUbicacion() {
-		Proveedor proveedor = this.detalleCotizacionFiltro.getCotizacion()
-				.getProveedor();
-		proveedor.setCiudad(new Ciudad(ubicacion, new Estado(ubicacion)));
-	}
-	
-
 
 	/**METODOS PROPIOS DE LA CLASE*/
 	/** SETTERS Y GETTERS */
@@ -208,15 +164,6 @@ public class ListaCotizacionesASeleccionarViewModel extends AbstractRequerimient
 	public void setDetalleCotizacionFiltro(
 			DetalleCotizacion detalleCotizacionFiltro) {
 		this.detalleCotizacionFiltro = detalleCotizacionFiltro;
-	}
-
-	public List<DetalleCotizacion> getListaDetalleCotizacion() {
-		return listaDetalleCotizacion;
-	}
-
-	public void setListaDetalleCotizacion(
-			List<DetalleCotizacion> listaDetalleCotizacion) {
-		this.listaDetalleCotizacion = listaDetalleCotizacion;
 	}
 
 	public String getTitulo() {

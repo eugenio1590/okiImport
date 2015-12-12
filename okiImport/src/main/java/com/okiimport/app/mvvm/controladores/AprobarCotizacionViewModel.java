@@ -72,9 +72,11 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
+			@ExecutionArgParam("listaDetalleSeleccion")  List<DetalleCotizacion> listaDetalleSeleccion) {
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
+		this.listaDetalleSeleccion = listaDetalleSeleccion;
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		detalleCotizacionFiltro = new DetalleCotizacion(new Cotizacion(
 				new Proveedor()), new DetalleRequerimiento());
@@ -83,7 +85,7 @@ public class AprobarCotizacionViewModel extends AbstractRequerimientoViewModel i
 
 		consultarDetalleCotizacion(0, null, null);
 		agregarGridSort(gridDetalleCotizacion);
-		pagDetalleCotizacion.setPageSize(pageSize=5);
+		pagDetalleCotizacion.setPageSize(pageSize=2);
 		cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
 	}
 

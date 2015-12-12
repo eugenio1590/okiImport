@@ -2,10 +2,9 @@
 <window title="@bind(vm.titulo)" border="none" width="95%"
 		height="95%" closable="true" sclass="btn-info"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.AprobarCotizacionViewModel')">
-		<listbox id="gridDetalleSeleccion" mold="paging"
-			selectedItems="@bind(vm.listaDetalleSeleccion)" checkmark="true"
-			pageSize="5" pagingPosition="top" multiple="true" sclass="mylist"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCotizacionesSeleccionadasViewModel')">
+		<listbox sclass="mylist" checkmark="true" pagingPosition="top" multiple="true"
+			selectedItems="@bind(vm.listaDetalleSeleccion)"
 			model="@load(vm.listaDetalleSeleccionado)">
 
 			<listhead>
@@ -50,11 +49,14 @@
 						label="@bind(each.detalleRequerimiento.cantidad)" />
 					<listcell label="@bind(each.cantidad)" />
 					<listcell label="@bind(each.precioVenta) 
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
-					<listcell label="@bind(each.calcularFlete())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+					<listcell label="@bind(each.precioFlete)
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
 					<listcell label="@bind(each.calcularTotal())
-										@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
 				</listitem>
 			</template>
 
