@@ -9,6 +9,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -21,6 +22,7 @@ import org.zkoss.zul.Window;
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -42,6 +44,9 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	private List<ModeloCombo<Boolean>> listaTipoPersona;
 	private ModeloCombo<Boolean> tipoPersona;
 	private List<Estado> listaEstados;
+	private String recordMode;
+	private Boolean cerrar;
+	private boolean makeAsReadOnly;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -50,8 +55,15 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view ) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("analista") Analista analista,
+			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
+		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
+		this.analista = (analista==null) ? new Analista() :  analista;
+		this.cerrar = (cerrar==null) ? true : cerrar;
+		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		limpiar();
 		
 		listaEstados = llenarListaEstados();
@@ -70,7 +82,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	@Command
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar) {
+			@BindingParam("btnLimpiar") Button btnLimpiar,
+			@BindingParam("recordMode") String recordMode) {
 		if (checkIsFormValid()) {
 				
 				btnEnviar.setDisabled(true);
@@ -180,5 +193,31 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	public void setListaCiudades(List<Ciudad> listaCiudades) {
 		this.listaCiudades = listaCiudades;
 	}
+
+	public String getRecordMode() {
+		return recordMode;
+	}
+
+	public void setRecordMode(String recordMode) {
+		this.recordMode = recordMode;
+	}
+
+	public Boolean getCerrar() {
+		return cerrar;
+	}
+
+	public void setCerrar(Boolean cerrar) {
+		this.cerrar = cerrar;
+	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+	
+	
 
 }

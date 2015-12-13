@@ -22,6 +22,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 
 import com.okiimport.app.model.Analista;
+import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -123,6 +124,14 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		cambiarAnalistas(page, null, null);
 	}
 
+	/*@Command
+	public void verAnalista(@BindingParam("analista") Analista analista){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("analista", analista);
+		llamarFormulario("verAnalistas.zul", parametros);
+	}*/
+	
+	
 	/**
 	 * Descripcion: Llama a un modal para ver los datos del analista
 	 * Parametros: Analista @param view: listaAnalistas.zul 
@@ -131,10 +140,20 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	 * */
 	@Command
 	public void verAnalista(@BindingParam("analista") Analista analista){
+		
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("analista", analista);
-		llamarFormulario("verAnalistas.zul", parametros);
+		//parametros.put("editar", false);
+		llamarFormulario("formularioAnalistas.zul", parametros);
 	}
+	
+	/*@Command
+	public void editarAnalista(@BindingParam("analista") Analista analista){
+		
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("analista", analista);
+			llamarFormulario("editarAnalistas.zul", parametros);
+	}*/
 	
 	/**
 	 * Descripcion: Llama a un modal para editar los datos del analista
@@ -147,8 +166,11 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("analista", analista);
-			llamarFormulario("editarAnalistas.zul", parametros);
+			//parametros.put("editar", true);
+			llamarFormulario("formularioAnalistas.zul", parametros);
 	}
+	
+	
 	
 	/**
 	 * Descripcion: Llama a un modal para crear o registrar un analista
