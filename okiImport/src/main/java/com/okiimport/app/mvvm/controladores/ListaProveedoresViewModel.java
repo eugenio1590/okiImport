@@ -215,6 +215,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 							
 							if (sTransaccion.validarProveedorEnCotizaciones(proveedor)){
 								proveedor.setiEstatus(EstatusProveedorFactory.getEstatusEliminado());
+								//EL METODO DICE ACTUTALIZARPERSONA
 								sMaestros.acutalizarPersona(proveedor);
 								cambiarProveedores(0, null, null);
 								notifyChange("proveedores");

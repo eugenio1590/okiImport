@@ -51,11 +51,11 @@
 					<listcell label="@bind(each.nombre)" />
 					<listcell>
 						<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
+								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Marca"
 									onClick="@command('editarMarca', marca = each)"/>
-								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Requerimiento"  
+								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Marca"  
 								    onClick="@command('verMarca', marca = each)"/>
-								<button iconSclass="z-icon-truck red bigger-160" tooltiptext="Enviar a Proveedores"
+								<button iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Marca"
 									onClick="@command('eliminarMarca', marca=each)"/>
 							</div>
 						
