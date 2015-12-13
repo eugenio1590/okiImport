@@ -135,6 +135,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		String cedula = this.proveedor.getCedula();
 		if(cedula!=null)
 			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
+		if(this.proveedor.getCiudad() != null)
+			this.estado = this.proveedor.getCiudad().getEstado();
 	}
 
 	/**COMMAND*/

@@ -118,7 +118,7 @@
 							<panel sclass="borderGrid">
 								<panelchildren>
                                    <!-- LISTA DETALLE OFERTA-->
-                                   <listbox id="listaOferta" mold="paging" pagingPosition="top" pageSize="5"
+                                   <listbox id="listaOferta" mold="paging" pagingPosition="top" pageSize="3"
                                    		model="@load(vm.oferta.detalleOfertas)"
                                    		emptyMessage="No Existen Repuestos Validos para Seleccionar">
                                    	

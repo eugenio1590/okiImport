@@ -50,15 +50,15 @@
 					<listcell label="@bind(each.idMarcaVehiculo)" />
 					<listcell label="@bind(each.nombre)" />
 					<listcell>
-
-						<div sclass=" action">
-							<a iconSclass="z-icon-eye blue bigger-200"
-								tooltiptext="Ver"
-								onClick="@command('verMarca', marca = each)" />
-							<a
-								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
-								onClick="@command('editarMarca', marca = each)" />
-						</div>
+						<div class="btn-group btn-group-sm">
+								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar"
+									onClick="@command('editarMarca', marca = each)"/>
+								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Requerimiento"  
+								    onClick="@command('verMarca', marca = each)"/>
+								<button iconSclass="z-icon-truck red bigger-160" tooltiptext="Enviar a Proveedores"
+									onClick="@command('eliminarMarca', marca=each)"/>
+							</div>
+						
 					</listcell>
 				</listitem>
 			</template>

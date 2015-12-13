@@ -60,16 +60,13 @@
 					<listcell></listcell>
 					<listcell>
 
-						<div sclass=" action">
-							<a
-								iconSclass="z-icon-eye blue bigger-200" tooltiptext="Ver"
-								onClick="@command('verProveedor', proveedor = each)" />
-							<a
-								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
-								onClick="@command('editarProveedor', proveedor = each)" />
-							<a
-								iconSclass="z-icon-trash-o red bigger-200" tooltiptext="Eliminar"
-								onClick="@command('eliminarProveedor', proveedor = each)" />
+						<div class="btn-group btn-group-sm">
+									<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Proveedor"
+									onClick="@command('editarProveedor', proveedor = each)" />
+									<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Proveedor"  
+								    onClick="@command('verProveedor', proveedor = each)" />
+								    <button  iconSclass="z-icon-trash-o red bigger-200" tooltiptext="Eliminar Proveedor"  
+								    onClick="@command('eliminarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
 						</div>
 					</listcell>
 				</listitem>

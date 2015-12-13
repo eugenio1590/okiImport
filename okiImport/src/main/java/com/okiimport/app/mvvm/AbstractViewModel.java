@@ -68,6 +68,7 @@ import org.zkoss.zul.impl.InputElement;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.controladores.AbstractCargaMasivaViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 
@@ -518,6 +519,10 @@ public abstract class AbstractViewModel {
 				if (header.getSortAscending() != null || header.getSortDescending() != null)
 					header.addEventListener(Events.ON_SORT, (EventListener<? extends Event>) this);
 			}
+	}
+	
+	public void notifyChange(String field){
+		BindUtils.postNotifyChange(null,null, this, field);
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE**/
