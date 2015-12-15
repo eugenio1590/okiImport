@@ -1,7 +1,9 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -18,16 +20,20 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.configuracion.SControlConfiguracion;
+
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.DetalleCotizacion;
 import com.okiimport.app.model.DetalleRequerimiento;
@@ -71,13 +77,17 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	
 	
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("configuracion") Configuracion configuracion)
 	{
 		super.doAfterCompose(view);
-		this.configuracion = sControlConfiguracion.consultarConfiguracionActual();
-		this.monedaSeleccionada = sControlConfiguracion.consultarMonedaBase();
+		limpiar();
+		//this.configuracion = configuracion;
 		
-		cambiarMonedas(0);
+		this.configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		
+		this.monedaSeleccionada = sControlConfiguracion.consultarMonedaBase();
+	
+		//cambiarMonedas(0);
 		
 	}
 	
@@ -88,7 +98,9 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 			@BindingParam("btnLimpiar") Button btnLimpiar){
 		if(checkIsFormValid()){
 		
-			sControlConfiguracion.guardarConfiguracion(configuracion, monedaSeleccionada);
+			btnEnviar.setDisabled(true);
+		    btnLimpiar.setDisabled(true);
+			sControlConfiguracion.guardarConfiguracion(configuracion, monedaSeleccionada); 
 			mostrarMensaje("Informaci\u00F3n", "La configuracion ha sido modificada existosamente ", null, null, new EventListener()
 			{
 						public void onEvent(Event event) throws Exception {
