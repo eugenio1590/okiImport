@@ -135,6 +135,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		String cedula = this.proveedor.getCedula();
 		if(cedula!=null)
 			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
+		if(this.proveedor.getCiudad() != null)
+			this.estado = this.proveedor.getCiudad().getEstado();
 	}
 
 	/**COMMAND*/
@@ -453,14 +455,6 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		}
 	}
 	**/
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Descripcion: Permite limpiar las variables que se encargan de las variables de ciudad y estado

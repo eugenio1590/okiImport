@@ -61,6 +61,8 @@ public class EditarAnalistaViewModel extends AbstractRequerimientoViewModel{
 		this.ciudad = analista.getCiudad();
 		if(this.estado!=null)
 		this.estado = this.ciudad.getEstado();
+		if(this.analista.getCiudad() != null)
+			this.estado = this.analista.getCiudad().getEstado();
 		
 	}
 	

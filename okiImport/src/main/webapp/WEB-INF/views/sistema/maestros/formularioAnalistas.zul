@@ -93,7 +93,7 @@
 							<combobox placeholder="Seleccione..."
 								width="110%" readonly="true" selectedItem="@bind(vm.estado)"
 								model="@load(vm.listaEstados)"
-								onSelect="@command('buscarCiudades')" constraint="@bind(vm.notEmptyValidator))">
+								onSelect="@command('buscarCiudades')" constraint="@bind(vm.notEmptyValidator)">
 								<template name="model">
 									<comboitem
 										label="@bind(each.nombre)">

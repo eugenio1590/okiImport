@@ -38,7 +38,7 @@
 				use="org.zkoss.zul.impl.MessageboxDlg$Button"
 				if="${!empty arg.ABORT}" />
 			<button identity="${arg.IGNORE}" autodisable="self"
-				sclass="btn-sm btn-info btn-md z-messagebox-btn"
+				sclass="btn-sm btn-inverse btn-md z-messagebox-btn"
 				use="org.zkoss.zul.impl.MessageboxDlg$Button"
 				if="${!empty arg.IGNORE}" />
 		</hbox>

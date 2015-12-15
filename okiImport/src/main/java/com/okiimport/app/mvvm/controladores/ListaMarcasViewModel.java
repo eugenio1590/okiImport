@@ -13,14 +13,18 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -159,6 +163,40 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	 * */
 	private void llamarFormulario(String ruta, Map<String, Object> parametros) {
 		crearModal(BasePackageSistemaMaest + ruta, parametros);
+	}
+	
+	/**
+	 * Descripcion: Llama a un modal para eliminar la marca
+	 * Parametros: Proveedor @param view: listaMarcas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void eliminarMarca(@BindingParam("marca") final MarcaVehiculo marcaVehiculo){
+		super.mostrarMensaje("Confirmacion", "¿Desea Eliminar Marca?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+							//if (sTransaccion.validarProveedorEnCotizaciones(proveedor)){
+								//proveedor.setiEstatus(EstatusProveedorFactory.getEstatusEliminado());
+								//HAY QUE CREAR EN SMAESTROS EL SERVICIO PARA ACTUALIZAR LA MARCA
+							//sMaestros.acutalizarPersona(marca);
+								cambiarMarcas(0, null, null);
+								notifyChange("proveedores");
+							}
+							else
+								//SI ES QUE ES NECESARIO, ¿CUANDO NO PUEDO ELIMINAR UNA MARCA?
+								mostrarMensaje("Informacion", "No se Puede eliminar la Marca", Messagebox.EXCLAMATION, null, null, null);
+						}
+						
+					//}
+					
+		}, null);
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */

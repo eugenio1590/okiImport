@@ -1,0 +1,75 @@
+<zk xmlns:w="client" xmlns:n="native">
+<window title="@bind(vm.titulo)" border="none" width="95%"
+		height="95%" closable="true" sclass="btn-info"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCotizacionesSeleccionadasViewModel')">
+		<listbox sclass="mylist" checkmark="true" pagingPosition="top" multiple="true"
+			selectedItems="@bind(vm.listaDetalleSeleccion)"
+			model="@load(vm.listaDetalleSeleccionado)">
+
+			<listhead>
+				<listheader label="Proveedor" sort="none"
+					width="170px">
+				</listheader>
+				<listheader label="Ubicacion" sort="none" width="170px"
+					tooltiptext="Estado-Ciudad">
+				</listheader>
+				<listheader label="Repuesto" sort="none"
+					width="250px">
+				</listheader>
+				<listheader value="marcaRepuesto" label="Marca"
+					sort="auto(marcaRepuesto)" width="150px">
+				</listheader>
+				<listheader label="C. Solicitada" sort="none"
+					width="110px">
+				</listheader>
+				<listheader value="cantidad" label="C. Ofrecida"
+					sort="auto(cantidad)" width="110px">
+				</listheader>
+				<listheader value="precioVenta" label="Prec. Venta"
+					sort="auto(precioVenta)" width="110px">
+				</listheader>
+				<listheader value="precioFlete" label="Prec. Flete"
+					sort="auto(precioFlete)" width="110px">
+				</listheader>
+				<listheader value="total" label="Total" sort="none"
+					width="80px">
+				</listheader>
+
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell
+						label="@bind(each.cotizacion.proveedor.nombre)" />
+					
+					<listcell
+						label="@bind(each.detalleRequerimiento.descripcion)" />
+					<listcell label="@bind(each.marcaRepuesto)" />
+					<listcell
+						label="@bind(each.detalleRequerimiento.cantidad)" />
+					<listcell label="@bind(each.cantidad)" />
+					<listcell label="@bind(each.precioVenta) 
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+					<listcell label="@bind(each.precioFlete)
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+					<listcell label="@bind(each.calcularTotal())
+										@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+											converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+				</listitem>
+			</template>
+
+		</listbox>
+		<paging id="pagDetalleCotizacion2"
+			onPaging="@command('paginarLista')" autohide="true" />
+		<div width="100%" align="right">
+			<div sclass="btn btn-xs btn-info">
+				<button label="Eliminar" type="submit"
+					onClick="@command('eliminarSeleccion', cotizacion=null)" />
+				<button label="Guardar" type="submit"
+					onClick="@command('guardar', cotizacion=null)" />
+			</div>
+		</div>
+		</window>
+</zk>

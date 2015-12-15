@@ -12,13 +12,10 @@ import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
 
 public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 
-	@BeanInjector("sControlConfiguracion")
-	private SControlConfiguracion sControlConfiguracion;
+	//Servicios
 	
 	//GUI
     @Wire("#winOferta")
@@ -59,14 +56,6 @@ public class VerDetalleOfertaViewModel extends AbstractRequerimientoViewModel {
 	}
 
 	/** GETTERS Y SETTERS */
-	public SControlConfiguracion getsControlConfiguracion() {
-		return sControlConfiguracion;
-	}
-
-	public void setsControlConfiguracion(SControlConfiguracion sControlConfiguracion) {
-		this.sControlConfiguracion = sControlConfiguracion;
-	}
-	
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
 	}

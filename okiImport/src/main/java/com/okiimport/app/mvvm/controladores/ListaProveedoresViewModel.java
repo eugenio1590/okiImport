@@ -15,26 +15,34 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.ClasificacionRepuesto;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
+import com.okiimport.app.service.transaccion.impl.STransaccionImpl;
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sMaestros")
 	protected SMaestros sMaestros;
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
+	
 	
 	//GUI
 	@Wire("#gridProveedores")
@@ -194,11 +202,33 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@NotifyChange("proveedores")
 	@Command
-	public void eliminarProveedor(@BindingParam("proveedor") Proveedor proveedor){
-		proveedor.setEstatus("eliminado");
-		sMaestros.acutalizarPersona(proveedor);
+	public void eliminarProveedor(@BindingParam("proveedor") final Proveedor proveedor){
+		super.mostrarMensaje("Confirmacion", "¿Desea Eliminar Proveedor?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+							if (sTransaccion.validarProveedorEnCotizaciones(proveedor)){
+								proveedor.setiEstatus(EstatusProveedorFactory.getEstatusEliminado());
+								//EL METODO DICE ACTUTALIZARPERSONA
+								sMaestros.acutalizarPersona(proveedor);
+								cambiarProveedores(0, null, null);
+								notifyChange("proveedores");
+							}
+							else
+								mostrarMensaje("Informacion", "No se Puede eliminar el proveedor", Messagebox.EXCLAMATION, null, null, null);
+						}
+						
+					}
+					
+					
+			
+		}, null);
 	}
 	
 	@Command
@@ -259,6 +289,14 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 
 	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
 		this.makeAsReadOnly = makeAsReadOnly;
+	}
+
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
+
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
 	}
 	
 	
