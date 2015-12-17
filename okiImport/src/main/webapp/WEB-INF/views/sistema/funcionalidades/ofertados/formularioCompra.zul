@@ -180,7 +180,11 @@
 									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
 									<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
 									<listcell label="@bind(each.detalleCotizacion.cantidad)" />
-									<listcell label="@bind(each.calcularPrecioVenta())" />
+									<listcell label="@bind(each.calcularPrecioVenta()) 
+									 @converter(vm.formatedMoneda, format=vm.formatNumber, 
+									 locale=vm.localeNumber, converterMoneda=each.compra.historicoMoneda,
+									  monedaBase=vm.monedaBase) " />
+									
 								</listitem>
 							</template>
 
