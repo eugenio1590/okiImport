@@ -26,7 +26,6 @@ import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoViewModel {
 	
-	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
@@ -41,7 +40,6 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
     private List<ModeloCombo<Boolean>> listaTipoFlete;
     private ModeloCombo<Boolean> tipoFlete;
     private boolean cerrar = false;
-    
     
     /**
 	 * Descripcion: Llama a inicializar la clase 
@@ -88,10 +86,38 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		if(this.checkIsFormValid()){
 			compra.setTipoFlete(tipoFlete.getValor());
 			compra = sTransaccion.registrarCompra(compra, requerimiento, true);
-			winCompras.onClose();
+			cerrarVentana();
 		}
 	}
-
+	
+	/**
+	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@Override
+	public void closeModal(){
+		if(!cerrar){
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+				@Override
+				public void onEvent(Event event) throws Exception {
+					Messagebox.Button button = (Messagebox.Button) event.getData();
+					if (button == Messagebox.Button.YES) {
+						//REAJUSTAR ESTATUS DE LAS OFERTAS
+						ejecutarGlobalCommand("cambiarRequerimientos", null);
+						cerrarVentana();
+					}
+				}
+			}, null);
+		}
+		else
+			super.closeModal();
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
 	/**
 	 * Descripcion: Permite llenar la lista con los tipo de flete
 	 * Parametros: @param view: formularioSolicituddePedido.zul  
@@ -103,33 +129,16 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaTipoFlete.add(new ModeloCombo<Boolean>("No", false));
 		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
 	}
-	
 	/**
-	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
 	 * Parametros: Ninguno
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
-	public void onCloseWindow(@ContextParam(ContextType.TRIGGER_EVENT) Event onClose){
-		if(!cerrar){
-			onClose.stopPropagation();
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
-					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
-				@Override
-				public void onEvent(Event event) throws Exception {
-					Messagebox.Button button = (Messagebox.Button) event.getData();
-					if (button == Messagebox.Button.YES) {
-						cerrar = true;
-						ejecutarGlobalCommand("cambiarRequerimientos", null);
-						winCompras.onClose();
-					}
-				}
-			}, null);
-		}
+	private void cerrarVentana(){
+		cerrar = true;
+		closeModal();
 	}
-	
-	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {

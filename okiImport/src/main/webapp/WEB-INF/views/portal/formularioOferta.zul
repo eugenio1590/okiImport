@@ -191,7 +191,7 @@
 						<button label="Vaciar Carrito" sclass="btn-sm btn-info"
 							onClick="@command('limpiar')"/>
 						<button label="Cancelar" sclass="btn-sm btn-danger"
-							onClick="@command('onCloseWindow')"/>
+							onClick="@command('closeModal')"/>
 					</n:div>
 				</div>
 			</div>

@@ -166,6 +166,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		}
 	}
 	
+	/**METODOS OVERRIDE*/
 	/**
 	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
 	 * Parametros: Ninguno
@@ -173,24 +174,25 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void onCloseWindow(@ContextParam(ContextType.TRIGGER_EVENT) Event onClose){
+	@Override
+	public void closeModal(){
 		if(!cerrar){
-			onClose.stopPropagation();
 			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
 					Messagebox.Button button = (Messagebox.Button) event.getData();
 					if (button == Messagebox.Button.YES) {
-						cerrar = true;
 						requerimiento.cerrarSolicitud();
 						sTransaccion.actualizarRequerimiento(requerimiento);
 						ejecutarGlobalCommand("cambiarRequerimientos", null);
-						winOferta.onClose();
+						cerrarVentana();
 					}
 				}
 			}, null);
 		}
+		else
+			super.closeModal();
 	}
 	
 	/**METODOS PRIVADOS DE LA CLASE*/	
@@ -266,14 +268,13 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 */
 	private void redireccionarASolicitudDePedido(final Map<String, Object> parametros){
-		super.mostrarMensaje("Informaci\u00F3n", "No existen mas ofertas para mostrar, ¿Desea continuar con la solicitud de pedido?", null, 
+		super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar con la solicitud de pedido?", null, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 			@Override
 			public void onEvent(Event event) throws Exception {
 				Messagebox.Button button = (Messagebox.Button) event.getData();
 				if (button == Messagebox.Button.YES) {
-					cerrar = true;
-					winOferta.onClose();
+					cerrarVentana();
 					crearModal(BasePackagePortal+"formularioSolicituddePedido.zul", parametros);
 				}
 				else
@@ -339,7 +340,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * */
 	private void cerrarVentana(){
 		cerrar = true;
-		winOferta.onClose();
+		closeModal();
 	}
 	
 	/**GETTERS Y SETTERS*/

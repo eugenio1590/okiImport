@@ -1,8 +1,7 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winCompras" border="none" height="0px"
 		apply="org.zkoss.bind.BindComposer" closable="true"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')"
-		onClose="@command('onCloseWindow')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarSolicitudPedidoViewModel')">
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
@@ -133,7 +132,8 @@
                                    		<listheader label="Marca" sort="none" />
                                    		<listheader label="Cant. Solicitada" sort="none"  width="15%" />
                                    		<listheader label="Cant. a Comprar" sort="none" width="15%"/>
-                                   		<listheader label="Precio de Venta S/F" sort="none" width="20%"/>
+                                   		<listheader label="Pcio. Unit." sort="none" width="10%"/>
+                                   		<listheader label="Pcio. Venta s/flete" sort="none" width="20%"/>
                                    	</listhead>
 
                                    	<template name="model">
@@ -143,7 +143,12 @@
                                    			<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
                                    			<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)" />
                                    			<listcell label="@bind(each.detalleCotizacion.cantidad)" />
-                                   			<listcell label="@bind(each.calcularPrecioVenta())" />
+                                   			<listcell label="@bind(each.calcularPrecioVentaUnit())
+                                   								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																	converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+                                   			<listcell label="@bind(each.calcularPrecioVenta())
+                                   								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																	converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
                                    		</listitem>
                                    	</template>
 
@@ -153,10 +158,12 @@
                                    		<listfooter />
                                    		<listfooter />
                                    		<listfooter />
+                                   		<listfooter />
                                    		<listfooter label="Total:">
                                    			<label
                                    				value="@bind(vm.compra.calcularTotal())
-                                   						@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+                                   						@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+															converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
                                    		</listfooter>
                                    	</listfoot>
                                    </listbox>
@@ -165,10 +172,12 @@
 						</groupbox>
 					</n:div>
 					<n:div class="modal-footer">
-						<button id="btnLimpiar" label="Limpiar" sclass="btn btn-info"
+						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
 							onClick="@command('limpiar')"/>
-						<button label="Enviar" sclass="btn btn-primary"
+						<button label="Enviar" sclass="btn-sm btn-primary"
 							onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+						<button label="Cancelar" sclass="btn-sm btn-danger"
+							onClick="@command('closeModal')"/>
 					</n:div>
 				</div>
 			</div>
