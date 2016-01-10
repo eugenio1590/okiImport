@@ -29,10 +29,8 @@
 		    <space></space> 
 		    <space></space> 
 		    <label value="Fecha: " />
-			<datebox id="fecha"  width="150px" format="dd/MM/yyyy" readonly="true" disabled="true"
-             value="@bind(vm.oferta.fechaCreacion)" instant="true"/>
-		 
-		    
+		    <label value="@bind(vm.oferta.fechaCreacion)
+		    				@converter('formatedDate', format=vm.formatDate)" />		    
 		</div>
 		
 		<groupbox closable="false">
@@ -54,10 +52,8 @@
 								
 
 								<label value="Fecha Creacion: " />
-								<datebox  width="80%"
-									readonly="true" mold="rounded"  format="dd/MM/yyyy" disabled="true"
-									value="@bind(vm.requerimiento.fechaCreacion)"/>
-									
+								<label value="@bind(vm.requerimiento.fechaCreacion)
+		    									@converter('formatedDate', format=vm.formatDate)" />									
 							</row>
 
 						</rows>
@@ -144,9 +140,8 @@
 									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)"/>
 									<listcell label="@bind(each.detalleCotizacion.cantidad)"/>
 									<listcell label="@bind(each.calcularPrecioVenta()) 
-									 @converter(vm.formatedMoneda, format=vm.formatNumber, 
-									 locale=vm.localeNumber, converterMoneda=each.compra.historicoMoneda,
-									  monedaBase=vm.monedaBase) " />
+									 						@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 							converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase) " />
 								</listitem>
 							</template>
 							
@@ -158,7 +153,8 @@
 						
 						<listfooter label="Total:">
 							<label value="@bind(vm.oferta.calcularTotal())
-											@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
+											@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 			converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase) "/>
 						</listfooter>
 						</listfoot>
 							

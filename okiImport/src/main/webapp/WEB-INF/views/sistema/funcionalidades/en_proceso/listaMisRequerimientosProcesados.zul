@@ -90,7 +90,7 @@
 									onClick="@command('editarCotizaciones', requerimiento = each)"/>								
 								<button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Seleccionar Cotizaciones"  
 								    onClick="@command('seleccionarCotizaciones', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() }"/>
-								<button iconSclass="fa fa-envelope-o red bigger-160" tooltiptext="Enviar Oferta"
+								<button iconSclass="fa fa-envelope-o red bigger-160" tooltiptext="Enviar Oferta" if="${ each.ofertar() }"
 									onClick="@command('enviarOferta', requerimiento = each)"/>
 								<button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Cotizaciones a Seleccionar"  
 								    onClick="@command('cotizacionesASeleccionar', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() }"/>
