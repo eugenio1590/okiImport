@@ -191,8 +191,10 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 				}
 			}, null);
 		}
-		else
+		else {
+			ejecutarGlobalCommand("cambiarRequerimientos", null);
 			super.closeModal();
+		}
 	}
 	
 	/**METODOS PRIVADOS DE LA CLASE*/	

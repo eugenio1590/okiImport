@@ -113,8 +113,10 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 				}
 			}, null);
 		}
-		else
+		else {
+			ejecutarGlobalCommand("cambiarRequerimientos", null);
 			super.closeModal();
+		}
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
