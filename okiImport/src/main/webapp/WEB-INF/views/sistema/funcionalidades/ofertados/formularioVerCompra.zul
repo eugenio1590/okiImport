@@ -10,7 +10,7 @@
 				<space></space>
 				<space></space>
 				<space></space>
-				<label value="N° Compra:" />
+				<label value="N° Solicitud:" />
 				<label value="@bind(vm.compra.idCompra)"  />
 				<space></space>
 				<space></space>
@@ -20,9 +20,8 @@
 				<space></space>
 				<space></space>
 				<label value="Fecha: " />
-				<datebox id="fecha" width="150px" format="dd/MM/yyyy" 
-					value="@bind(vm.compra.fechaCreacion)" instant="true"
-					readonly="true" />
+				<label value="@bind(vm.compra.fechaCreacion)
+		    					@converter('formatedDate', format=vm.formatDate)" />
 				<space></space>
 				<space></space>
 				<space></space>
@@ -34,8 +33,6 @@
 					width="250px" rows="2"/>
 				<space></space>
 				<space></space>
-
-
 			</div>
 
 			<groupbox closable="false">
@@ -61,10 +58,8 @@
 
 
 								<label value="Fecha Creacion: " />
-								<datebox width="48%" readonly="true" mold="rounded" 
-								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
-								/>
-
+								<label value="@bind(vm.requerimiento.fechaCreacion)
+		    									@converter('formatedDate', format=vm.formatDate)" />
 							</row>
 
 						</rows>
@@ -181,9 +176,8 @@
 									<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
 									<listcell label="@bind(each.detalleCotizacion.cantidad)" />
 									<listcell label="@bind(each.calcularPrecioVenta()) 
-									 @converter(vm.formatedMoneda, format=vm.formatNumber, 
-									 locale=vm.localeNumber, converterMoneda=each.historicoMoneda,
-									  monedaBase=vm.monedaBase) " />
+									 					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase) " />
 								</listitem>
 							</template>
 
@@ -195,24 +189,20 @@
 									<vbox>
 									<hbox>
 										<label value="Total Compra" />
-										<label
-											value="@bind(vm.totalCompra)
-												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										<label value="@bind(vm.totalCompra)
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
 									</hbox>
 									<hbox>
-										<label value="Flete: "></label>
-										<vbox>
-											<decimalbox format="@bind(vm.formatNumber)" locale="@bind(vm.localeNumber)" 
-												value="@bind(vm.compra.precioFlete)" 
-												constraint="@bind(vm.validatorPrecio)"
-												onChange="@command('calcularTotal')"/>
-										</vbox>
+										<label value="Flete: "/>
+										<label value="@bind(vm.compra.precioFlete)
+														@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)"/>
 									</hbox>
 									<hbox>
 										<label value="Total Neto:" />
-										<label
-											value="@bind(vm.totalCompraNeto)
-												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										<label value="@bind(vm.totalCompraNeto)
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
 									</hbox>
 									</vbox>
 								</listfooter>

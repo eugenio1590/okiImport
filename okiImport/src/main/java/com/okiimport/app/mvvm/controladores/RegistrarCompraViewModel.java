@@ -119,6 +119,20 @@ public class RegistrarCompraViewModel extends AbstractRequerimientoViewModel {
 		this.totalCompraNeto = this.totalCompra + this.compra.getPrecioFlete();
 	}
 	
+	/**
+	 * Descripcion: Permite limpiar los campos de la pantalla
+	 * Parametros: Ninguno
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange({"compra", "totalCompraNeto"})
+	public void limpiar(){
+		this.compra.setFechaCreacion(this.calendar.getTime());
+		this.compra.setPrecioFlete(new Float(0));
+		calcularTotal();
+	}
+	
 	 /**
 		 * Descripcion: Permite Registrar la compra 
 		 * Parametros: @param view: formularioCompra.zul 

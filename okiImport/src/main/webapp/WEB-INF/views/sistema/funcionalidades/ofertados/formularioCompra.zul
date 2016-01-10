@@ -10,8 +10,8 @@
 				<space></space>
 				<space></space>
 				<space></space>
-				<label value="N° Compra:" />
-				<label value="@bind(vm.compra.idCompra)" />
+				<label value="N° Solicitud:" />
+				<label value="@bind(vm.compra.idCompra)"  />
 				<space></space>
 				<space></space>
 				<space></space>
@@ -34,8 +34,6 @@
 					width="250px" rows="2"/>
 				<space></space>
 				<space></space>
-
-
 			</div>
 
 			<groupbox closable="false">
@@ -61,10 +59,8 @@
 
 
 								<label value="Fecha Creacion: " />
-								<datebox width="48%" readonly="true" mold="rounded" 
-								value="@bind(vm.requerimiento.fechaCreacion)" format="dd/MM/yyyy"
-								/>
-
+								<label value="@bind(vm.requerimiento.fechaCreacion)
+		    									@converter('formatedDate', format=vm.formatDate)" />
 							</row>
 
 						</rows>
@@ -181,10 +177,8 @@
 									<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
 									<listcell label="@bind(each.detalleCotizacion.cantidad)" />
 									<listcell label="@bind(each.calcularPrecioVenta()) 
-									 @converter(vm.formatedMoneda, format=vm.formatNumber, 
-									 locale=vm.localeNumber, converterMoneda=each.compra.historicoMoneda,
-									  monedaBase=vm.monedaBase) " />
-									
+									 					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase) " />
 								</listitem>
 							</template>
 
@@ -196,9 +190,9 @@
 									<vbox>
 									<hbox>
 										<label value="Total Compra" />
-										<label
-											value="@bind(vm.totalCompra)
-												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										<label value="@bind(vm.totalCompra)
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
 									</hbox>
 									<hbox>
 										<label value="Flete: "></label>
@@ -211,16 +205,13 @@
 									</hbox>
 									<hbox>
 										<label value="Total Neto:" />
-										<label
-											value="@bind(vm.totalCompraNeto)
-												@converter(vm.formatedNumber, format=vm.formatNumber, locale=vm.localeNumber)" />
+										<label value="@bind(vm.totalCompraNeto)
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 						converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
 									</hbox>
 									</vbox>
 								</listfooter>
 							</listfoot>
-							
-							
-							
 						</listbox>
 					</panelchildren>
 				</panel>
