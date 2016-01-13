@@ -226,3 +226,17 @@ div.tab-nav {
     margin: 30px;
     font-size: 15px;
 }
+
+.breadcrumbs.z-div, .breadcrumb.z-div {
+    margin-bottom: initial;
+    margin-top: initial;
+}
+
+/**MODAL*/
+.z-window-modal .modal-title, .z-window-modal div.tab-nav {
+	margin-bottom: 15px;
+}
+
+.z-window-modal .z-groupbox-content legend {
+	margin-bottom: 10px;
+}

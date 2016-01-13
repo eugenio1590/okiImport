@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winVerDetalleRequerimiento" border="none" height="0px"
-		apply="org.zkoss.bind.BindComposer" closable="true"
+		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerDetalleRequerimientoViewModel')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
@@ -14,6 +14,11 @@
 		    					<space/> 
 		    					<label value="N° Solicitud:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
+		    					<space/>
+		    					<space/> 
+		    					<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+		    					<label value="@bind(vm.requerimiento.fechaCreacion)
+		    									@converter('formatedDate', format=vm.formatDate)"/>
 		    					<space/>
 		    					<space/> 
 		   						<label value="Estado:" sclass="label-not-mandatory"/>
@@ -103,7 +108,7 @@
 							<panel sclass="borderGrid">
 								<panelchildren>
                                    <!-- LISTA DETALLE REQUERIMIENTO-->
-									<listbox mold="paging" pageSize="5" pagingPosition="top" emptyMessage="No hay solicitudes"
+									<listbox mold="paging" pageSize="5" pagingPosition="top"
 										model="@load(vm.requerimiento.detalleRequerimientos)" >
 										<listhead>
 											<listheader width="3%"/>
