@@ -99,6 +99,11 @@
 	background-color:  white;
 }
 
+/**Contenedor de la grid*/
+.winMyList .z-window-content {
+	padding: 0px;
+}
+
 /**Borde de la grid*/
 .borderGrid {
 	border: 1px solid #C3C3C3;
