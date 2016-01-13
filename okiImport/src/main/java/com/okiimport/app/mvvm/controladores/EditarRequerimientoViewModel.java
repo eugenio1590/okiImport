@@ -24,9 +24,8 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Paging;
 import org.zkoss.zul.Messagebox.ClickEvent;
-import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Ciudad;
@@ -66,9 +65,6 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	
 	@Wire("#cmbTraccion")
 	private Combobox cmbTraccion;
-	
-	@Wire("#txtTipoRepuesto")
-	private Textbox txtTipoRepuesto;
 	
 	@Wire("#gridMotores")
 	private Listbox gridMotores;
@@ -130,10 +126,6 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		String traccion = this.requerimiento.determinarTraccion();
 		if (traccion!=null)
 			cmbTraccion.setValue(traccion);
-		
-		String tipoRepuesto = this.requerimiento.determinarTipoRepuesto();
-		if (tipoRepuesto!=null)
-			txtTipoRepuesto.setValue(tipoRepuesto);
 		
 		cambiarMotores(0, null, null);
 	}
