@@ -202,7 +202,7 @@
 															
 																<!-- TIPO REPUESTO -->
 																<label value="Tipo Repuesto: " sclass="label-not-mandatory"/>
-																<label value="@bind(vm.requerimiento.determinarTipoRepuesto())" /><!-- FALTA -->
+																<label value="@bind(vm.requerimiento.determinarTipoRepuesto())" />
 															</row>
 														</rows>
 													</grid>
@@ -219,7 +219,7 @@
 													model="@load(vm.requerimiento.detalleRequerimientos)">
 													<listhead>
 							    						<listheader width="3%"/>
-														<listheader width="15%">
+														<listheader sort="none" width="15%">
 															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Codigo OEM" />
 														</listheader>
 														<listheader sort="none" width="300px">
@@ -231,7 +231,7 @@
 														<listheader sort="none" width="15%">
 															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Clasificación" />
 														</listheader>
-														<listheader label="Foto" sort="auto" width="15%"/>
+														<listheader sort="auto" width="15%" label="Foto"/>
 													</listhead>
 													<template name="model">
 														<listitem>
