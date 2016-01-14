@@ -235,7 +235,7 @@
 													</listhead>
 													<template name="model">
 														<listitem>
-								  							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
+								  							<listcell label="${forEachStatus.index+1}" />
 															<listcell>
 																<vbox hflex="1">
 																	<textbox hflex="1" readonly="@bind(!vm.editar)"
