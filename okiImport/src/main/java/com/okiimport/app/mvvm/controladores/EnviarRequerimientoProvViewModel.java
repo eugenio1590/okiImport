@@ -14,59 +14,24 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.A;
-import org.zkoss.zul.Groupbox;
-import org.zkoss.zul.Textbox;
-import org.zkoss.zul.Messagebox.ClickEvent;
-import org.zkoss.zul.Window;
 
-import com.okiimport.app.model.Ciudad;
-import com.okiimport.app.model.ClasificacionRepuesto;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
 
-public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewModel implements EventListener<ClickEvent>  {
+public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewModel {
 	
 	//Servicios
-	@BeanInjector("sMaestros")
-	private SMaestros sMaestros;
-	
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
 	
 	//GUI
-	@Wire("#winEnviarReqProv")
-	private Window winEnviarReqProv;
-	
-	@Wire("#grpDatosVehiculo")
-	private Groupbox grpDatosVehiculo;
-	
-	@Wire("#aDatosVehiculo")
-	private A aDatosVehiculo; 
-	
-	@Wire("#txtTipoRepuesto")
-	private Textbox txtTipoRepuesto;
-	
-	
 	
 	//Atributos
-	private List<ClasificacionRepuesto> listaClasificacionRepuesto;
 	private List <DetalleRequerimiento> listaDetalleRequerimientoSeleccionados;
 	private Requerimiento requerimiento;
-	private List <ModeloCombo<Boolean>> listaTraccion;
-	private List <ModeloCombo<Boolean>> listaTransmision;
-	private List <ModeloCombo<Boolean>> listaTipoRepuesto;
-	private ModeloCombo<Boolean> traccion;
-	private ModeloCombo<Boolean> transmision;
-	private Ciudad ciudad;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -75,32 +40,13 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
-			@ExecutionArgParam("requerimiento") Requerimiento requerimiento)
-	{
+			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
-		this.ciudad = requerimiento.getCliente().getCiudad();
-		Map<String, Object> parametros = sMaestros.consultarClasificacionRepuesto(0, -1);
-		listaClasificacionRepuesto = (List<ClasificacionRepuesto>) parametros.get("clasificacionRepuesto");
-		listaTraccion = llenarListaTraccion();
-		listaTransmision = llenarListaTransmision();
-		listaTipoRepuesto = llenarListaTipoRepuesto();
-		
-		String tipoRepuesto = this.requerimiento.determinarTipoRepuesto();
-		if (tipoRepuesto!=null)
-			txtTipoRepuesto.setValue(tipoRepuesto);
-		
 	}
 	
 	/**INTERFACE*/
-	
-	@Override
-	public void onEvent(ClickEvent event) throws Exception {
-		winEnviarReqProv.detach();
-		ejecutarGlobalCommand("cambiarRequerimientos", null);
-	}
 	
 	/**GLOBAL COMMAND*/
 	/**
@@ -118,102 +64,62 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	
 	/**COMMAND*/
 	/**
-	 * Descripcion: Permitira abrir o cerrar la seccion del vehiculo del formulario de acuerdo parametro que se le indique 
-	 * Parametros: @param view: enviarRequerimientoProv.zul 
-	 * @param justIcon: indicara si debe cambiarse solo el icono o tambien incluira abrir o no la seccion de vehiculo
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	public void abrirDatosVehiculo(@Default("false") @BindingParam("justIcon") boolean justIcon){
-		boolean open = grpDatosVehiculo.isOpen();
-		if(!justIcon){
-			grpDatosVehiculo.setOpen(!grpDatosVehiculo.isOpen());
-			aDatosVehiculo.setIconSclass((open) ? "z-icon-plus" : "z-icon-minus");
-		}
-		else
-			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
-	}
-	
-	/**
-	 * Descripcion: Permitira actualizar la informacion del requerimiento 
-	 * Parametros: @param view: enviarRequerimientoProv.zul
-	 * Retorno: Ninguno 
-	 * Nota: Ninguna
-	 * */
-	@Command
-	public void actualizar(){
-		if(checkIsFormValid()){
-			if(traccion!=null)
-				requerimiento.setTraccionV(traccion.getValor());
-			if(transmision!=null)
-				requerimiento.setTransmisionV(transmision.getValor());
-			requerimiento.setEstatus(EEstatusRequerimiento.RECIBIDO_EDITADO);
-			sTransaccion.actualizarRequerimiento(requerimiento);
-			
-		}
-	}
-
-	/**
 	 * Descripcion: Permitira enviar la solicitud de cotizacion al proveedor 
 	 * Parametros: requerimiento @param view: enviarRequerimientoProv.zul
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void enviarSolicitudProv(
-			@Default("false") @BindingParam("enviar") Boolean enviar,
-			@BindingParam("requerimiento") Requerimiento requerimiento){
+	public void enviarSolicitudProv(@Default("false") @BindingParam("enviar") Boolean enviar){
 		if(listaDetalleRequerimientoSeleccionados!= null && this.listaDetalleRequerimientoSeleccionados.size()>0){
 			if (validarListaClasificacion()==true){
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("enviar", enviar);
-				parametros.put("requerimiento", requerimiento);
+				parametros.put("requerimiento", this.requerimiento);
 				parametros.put("repuestosseleccionados", listaDetalleRequerimientoSeleccionados);
 				crearModal(BasePackageSistemaFunc+"emitidos/seleccionarProveedores.zul", parametros);
 			}
 			else
-				mostrarMensaje("Informaci\u00F3n", "Seleccione una clasificaci\u00F3n para los repuestos seleccionados", 
+				mostrarMensaje("Informaci\u00F3n", "Algunos repuestos seleccionados no tienen una clasificaci\u00F3n asignada", //cambiar mensaje
 						null, null, null, null);
 		} 
 		else
 			mostrarMensaje("Informaci\u00F3n", "Seleccione al menos un Repuesto", null, null, null, null);
 	}
 	
-	/**
-	 * Descripcion: Llama a actualizar los requerimientos
-	 * Parametros: @param view: enviarRequerimientoProv.zul
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	public void actualizarRequerimientos(){
-		ejecutarGlobalCommand("cambiarRequerimientos", null);
-	}
-	
+	/**METODOS PROPIOS DE LA CLASE*/
 	/**
 	 * Descripcion: Permite validar al proveedor segun la clasificacion del repuesto
-	 * Parametros: @param view: enviarRequerimientoProv.zul
+	 * Parametros: Ninguno
+	 * Retorno: @return valor boolean que permitira verificar si todos los repuestos seleccionados ya tiene
+	 * una clasificaion de repuesto asignada
+	 * Nota: Ninguna
+	 * */
+	private boolean validarListaClasificacion(){
+		if (listaDetalleRequerimientoSeleccionados!= null){
+			for( DetalleRequerimiento detalleReq: listaDetalleRequerimientoSeleccionados){
+				if ( detalleReq.getClasificacionRepuesto()==null )
+					return false;
+			}
+		}
+
+		return true;
+	}
+	
+	/**METODOS OVERRIDE*/
+	/**
+	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
+	 * Parametros: Ninguno
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public boolean validarListaClasificacion(){
-		
-		if (listaDetalleRequerimientoSeleccionados!= null)
-		{
-			for( DetalleRequerimiento detalleReq: listaDetalleRequerimientoSeleccionados)
-			{
-				if ( detalleReq.getClasificacionRepuesto()==null)
-				     return false;
-			}
-		}
-		
-			return true;
+	@Override
+	public void closeModal(){
+		super.closeModal();
+		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
-	
-	/**METODOS PROPIOS DE LA CLASE*/
-	
+		
 	/**SETTERS Y GETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
@@ -222,22 +128,14 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
 	}
-	
-	public SMaestros getsMaestros() {
-		return sMaestros;
+
+	public List<DetalleRequerimiento> getListaDetalleRequerimientoSeleccionados() {
+		return listaDetalleRequerimientoSeleccionados;
 	}
 
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
-	}
-	
-	public List<ClasificacionRepuesto> getListaClasificacionRepuesto() {
-		return listaClasificacionRepuesto;
-	}
-
-	public void setListaClasificacionRepuesto(
-			List<ClasificacionRepuesto> listaClasificacionRepuesto) {
-		this.listaClasificacionRepuesto = listaClasificacionRepuesto;
+	public void setListaDetalleRequerimientoSeleccionados(
+			List<DetalleRequerimiento> listaDetalleRequerimientoSeleccionados) {
+		this.listaDetalleRequerimientoSeleccionados = listaDetalleRequerimientoSeleccionados;
 	}
 
 	public Requerimiento getRequerimiento() {
@@ -247,63 +145,4 @@ public class EnviarRequerimientoProvViewModel extends AbstractRequerimientoViewM
 	public void setRequerimiento(Requerimiento requerimiento) {
 		this.requerimiento = requerimiento;
 	}
-	
-	public List<ModeloCombo<Boolean>> getListaTraccion() {
-		return listaTraccion;
-	}
-
-	public void setListaTraccion(List<ModeloCombo<Boolean>> listaTraccion) {
-		this.listaTraccion = listaTraccion;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTransmision() {
-		return listaTransmision;
-	}
-
-	public void setListaTransmision(List<ModeloCombo<Boolean>> listaTransmision) {
-		this.listaTransmision = listaTransmision;
-	}
-
-	public ModeloCombo<Boolean> getTraccion() {
-		return traccion;
-	}
-
-	public void setTraccion(ModeloCombo<Boolean> traccion) {
-		this.traccion = traccion;
-	}
-
-	public ModeloCombo<Boolean> getTransmision() {
-		return transmision;
-	}
-
-	public void setTransmision(ModeloCombo<Boolean> transmision) {
-		this.transmision = transmision;
-	}
-
-	public void setListaDetalleRequerimientoSeleccionados(
-			List<DetalleRequerimiento> listaDetalleRequerimientoSeleccionados) {
-		this.listaDetalleRequerimientoSeleccionados = listaDetalleRequerimientoSeleccionados;
-	}
-
-	public List<DetalleRequerimiento> getListaDetalleRequerimientoSeleccionados() {
-		return listaDetalleRequerimientoSeleccionados;
-	}
-
-	public Ciudad getCiudad() {
-		return ciudad;
-	}
-
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
-		return listaTipoRepuesto;
-	}
-
-	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
-		this.listaTipoRepuesto = listaTipoRepuesto;
-	}
-
-	
 }

@@ -1,242 +1,212 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winEnviarReqProv" title="Solicitar Repuesto" border="none" width="80%" closable="true"
-		sclass="btn-primary" apply="org.zkoss.bind.BindComposer"  
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')"
-		onClose="@command('actualizarRequerimientos')">
-		<groupbox closable="false">
-			<groupbox closable="false">
-				<caption label="Datos Personales" sclass="custom_caption" />
-				<div>
-					<grid>
-						<columns>
-							<column width="35%" align="right" />
-							<column width="65%" />
-							<column width="35%" align="right" />
-							<column width="65%" />
-						</columns>
+	<window id="winEnviarReqProv" border="none" width="0%"
+		apply="org.zkoss.bind.BindComposer"  
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EnviarRequerimientoProvViewModel')">
 		
-						<rows>
-							<row>
-								<label value="Cedula/RIF: " />
-								<vbox>
-								<textbox id="cedulaRif" width="125%" readonly="true"
-									mold="rounded" tabbable="false" 
-									value="@bind(vm.requerimiento.cliente.cedula)"
-									constraint="@bind(vm.validatorClienteCedulaRif2)"/>
-								</vbox>
+		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full"  height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Solicitar Repuestos a Proveedores" />
+					<n:div class="modal-inner">
+						<groupbox closable="false">
+							<div> 
+		    					<space/>
+		    					<space/> 
+		    					<label value="N° Solicitud:" sclass="label-not-mandatory"/>
+		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
+		    					<space/>
+		    					<space/> 
+		    					<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+		    					<label value="@bind(vm.requerimiento.fechaCreacion)
+		    									@converter('formatedDate', format=vm.formatDate)"/>
+		    					<space/>
+		    					<space/>
+		   						<label value="Estado:" sclass="label-not-mandatory"/>
+		    					<label value="@bind(vm.requerimiento.determinarEstatus())" sclass="z-letra-grande" /> 
+		    
+							</div>
+							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
+								<tabs>
+									<tab sclass="waves-color-blue waves-effect">
+										<label value="Datos Generales" />
+									</tab>
+									<tab sclass="waves-color-blue waves-effect">
+										<label value="Repuestos" />
+									</tab>
+								</tabs>
+								<tabpanels>
+									<!-- DATOS GENERALES -->
+									<tabpanel>
+										<!-- DATOS DEL CLIENTE -->
+										<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Datos del Cliente"/>
+										<div sclass="card card-main card-inner">
+											<grid>
+												<columns>
+													<column width="10%" />
+													<column  width="20%"/>
+													<column  width="20%"/>
+													<column  />
+												</columns>
+												<rows>
+													<row>
+														<!-- CEDULA -->
+														<label value="Cedula/RIF: " sclass="label-not-mandatory"/>
+														<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
-								<label value="Nombre/Razón Social: " />
-								<vbox>
-								<textbox id="nombreRazonSocial" width="130%" readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.nombre)"
-									constraint="@bind(vm.notEmptyValidator)" />
-								</vbox>
-							</row>
-							<row>
-								<label value="Teléfono: " />
-								<vbox>
-								<textbox id="telefono" width="125%" readonly="true" mold="rounded"
-									value="@bind(vm.requerimiento.cliente.telefono)"
-									constraint="@bind(vm.telefonoValidator)"/>
-								</vbox>
-								<label value="E-mail:" />
-								<vbox>								
-								<textbox id="email" width="130%" readonly="true" mold="rounded" 
-									value="@bind(vm.requerimiento.cliente.correo)"
-									constraint="@bind(vm.emailValidator)"/>
-								</vbox>
-							</row>
-							<row>
-								<label value="Estado: " />
-								<vbox>
-								<textbox id="estado" width="125%" readonly="true"
-									mold="rounded" tabbable="false" 
-									value="@bind(vm.ciudad.estado.nombre)"
-									constraint="@bind(vm.notEmptyValidator)"/>
-                                </vbox>
-								<label value="Ciudad: " />
-                                <vbox>
-								<textbox id="ciudad" width="130%" readonly="true" mold="rounded"
-									value="@bind(vm.ciudad.nombre)"  constraint="@bind(vm.notEmptyValidator)"/>
-								</vbox>
-							</row>
-						</rows>	
-					</grid>
-				</div>
-			</groupbox>
-			<groupbox id="grpDatosVehiculo" open="false" onOpen="@command('abrirDatosVehiculo', justIcon = true)">
-				<caption>
-					<a id="aDatosVehiculo" iconSclass="z-icon-plus" onClick="@command('abrirDatosVehiculo', justIcon = false)" />
-					<label value="Datos Vehiculo" sclass="custom_caption" />
-				</caption>
-				<hbox>
-				<groupbox id="tabDatosVehiculo" closable="false">
-					<caption label="Datos Basicos" sclass="custom_caption" />
-<div>
-
-						<grid>
-							<columns>
-								<column width="45%" align="right" />
-								<column width="55%" />
-								<column width="35%" align="right" />
-								<column width="65%" />
-							</columns>
-
-							<rows>
-								<row>
-									<label value="Marca: " />
-									<vbox>
-									<textbox width="100%" readonly="true"
-										value="@bind(vm.requerimiento.marcaVehiculo.nombre)"
-										constraint="@bind(vm.notEmptyValidator)"/>
-									</vbox>										
-									<label value="Modelo: " />
-									<vbox>
-									<textbox width="80%" readonly="true" mold="rounded"
-										value="@bind(vm.requerimiento.modeloV)"
-										constraint="@bind(vm.notEmptyValidator)"/>
-									</vbox>
-								</row>	
+														<!-- NOMBRE O RAZON SOCIAL -->
+														<label value="Nombre / Razón Social: " sclass="label-not-mandatory"/>
+														<label value="@bind(vm.requerimiento.cliente.nombre)" />
+													</row>
 												
-								<row>
-									<label value="Serial Carroceria: " />
-									<vbox>
-									<textbox id="serialCarroceria2"
-										width="100%" readonly="true" mold="rounded"
-										value="@bind(vm.requerimiento.serialCarroceriaV)"
-										constraint="@bind(vm.notEmptyValidator)"/>
-									</vbox>	
-									<label value="Año: " />	
-									<vbox>								
-									<intbox width="100%" readonly="true" 
-										value="@bind(vm.requerimiento.annoV)"
-										constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))" />
-									</vbox>									
-								</row>								
-							</rows>
-						</grid>
-					</div>
-				</groupbox>
-
-				<groupbox id="tabMasDatosVehiculo" closable="false">
-					<caption label="Datos Adicionales" sclass="custom_caption" />
-
-					<div>
-
-						<grid>
-							<columns>
-								<column width="35%" align="right" />
-								<column width="65%" />
-								<column width="35%" align="right" />
-								<column width="65%" />
-							</columns>
-
-							<rows>
-								<row>
-									<label value="Motor: " />
-									<vbox>
-									<textbox value="@bind(vm.requerimiento.motor.nombre)"
-										readonly="true" width="80%" constraint="@bind(vm.notEmptyValidator)">										
-									</textbox>
-									</vbox>
-										
-									<label value="Transmision: " />
-									<vbox>
-									<textbox
-										width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTransmision())" constraint="@bind(vm.notEmptyValidator)" >
-									</textbox>	
-									</vbox>
-								</row>
-
-								<row>
-									<label value="Traccion: " />
-									<vbox>
-									<textbox
-										width="80%" readonly="true"
-										value="@bind(vm.requerimiento.determinarTraccion())" constraint="@bind(vm.notEmptyValidator)">
-									</textbox>
-									</vbox>
-									
-									<label value="Tipo Repuesto:" />
-									<vbox>
-									<textbox id="txtTipoRepuesto" width="80%"
-										readonly="true" constraint="@bind(vm.notEmptyValidator)">
-									</textbox>
-									</vbox>
-								</row>
-							</rows>
-						</grid>
-					</div>
-				</groupbox>
-				</hbox>
-			</groupbox>
-			<groupbox closable="false">
-				<caption label="Datos Repuestos" sclass="custom_caption" />
-				
-						<!-- LISTA DE DETALLE REQUERIMIENTOS A ENVIAR A PROVEEDOR -->
-						
-						<panel sclass="borderGrid">
-						<panelchildren>
-						<listbox id="listRepuestos" mold="paging" emptyMessage="No hay solicitudes"
-							model="@load(vm.requerimiento.detalleRequerimientos)"
-							selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)"
-							style="margin-top:10px" pageSize="5" checkmark="true" 
-							pagingPosition="top" multiple="true"  sclass="mylist">
-							 
-							<listhead>
-							<listheader width="5%"/>
-								<listheader label="CodigoOEM"
-									sort="auto"  width="130px" />
-								
-								<listheader label="Descripcion"
-									sort="auto" />
-								<listheader label="Cantidad"
-									sort="auto" />
-								<listheader label="Clasificacion"
-									sort="none"  />
-								<listheader label="Foto" 
-								    sort="auto" />
-							</listhead>
-							<template name="model">
-								<listitem>
-								    <listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-									<listcell label="@bind(each.codigoOem)" >
-										
-									</listcell>
-									
-									<listcell label="@bind(each.descripcion)">
-									</listcell>
-									
-									<listcell label="@bind(each.cantidad)">
-									</listcell>
-									
-									<listcell label="@bind(each.clasificacionRepuesto.descripcion)" >
-									</listcell>
-									
-									<listcell>
-										<div>
-											<image width="50px"
-												height="50px" src="@bind(each.getFoto64())" />
-										</div>
-									</listcell>
-								</listitem>
-								</template>
+													<row>
+														<!-- TELEFONO -->
+														<label value="Telefono: " sclass="label-not-mandatory"/>
+														<label value="@bind(vm.requerimiento.cliente.telefono)"/>
+													
+														<!-- E-Mail -->
+														<label value="Correo: " sclass="label-not-mandatory"/>
+														<label value="@bind(vm.requerimiento.cliente.correo)"/>
+													</row>
 							
-						</listbox>
-						<paging id="pagMisRequerimientos" onPaging="@command('paginarLista')" 
-						autohide="true" />
-					</panelchildren>
-				</panel>
-			</groupbox>
-			<div width="100%" align="right">
-				<div>
-					<button label="Registrar Cotizacion por Analista" type="submit" sclass="btn-primary"
-						onClick="@command('enviarSolicitudProv', enviar = false, requerimiento = each)" />
-					<button label="Enviar a Proveedores" type="submit" sclass="btn-primary"
-						onClick="@command('enviarSolicitudProv', enviar = true, requerimiento = each)" />
+													<row>
+														<!-- ESTADO -->
+							    						<label value="Estado: " sclass="label-not-mandatory"/>
+							    						<label value="@bind(vm.requerimiento.cliente.ciudad.estado.nombre)"/>
+									
+														<!-- CIUDAD -->
+														<label value="Ciudad: " sclass="label-not-mandatory"/>
+														<label value="@bind(vm.requerimiento.cliente.ciudad.nombre)" />
+													</row>
+												</rows>
+											</grid>
+										</div>
+										
+										<!-- DATOS DEL VEHICULO -->
+										<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Datos del Vehiculo"/>
+										<tabbox sclass="tab-nav tab-nav-blue">
+											<tabs>
+												<tab sclass="waves-color-blue waves-effect">
+													<label value="Datos Basicos" />
+												</tab>
+												<tab sclass="waves-color-blue waves-effect">
+													<label value="Datos Adicionales" />
+												</tab>
+											</tabs>
+											<tabpanels>
+												<!-- DATOS BASICOS -->
+												<tabpanel>
+													<grid>
+														<columns>
+															<column width="10%" />
+															<column  width="20%"/>
+															<column  width="20%"/>
+															<column  />
+														</columns>
+														<rows>
+															<row>
+																<!-- MARCA -->
+																<label value="Marca: " sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.marcaVehiculo.nombre)"/>
+																
+																<!-- MODELO -->
+																<label value="Modelo: " sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.modeloV)"/>
+															</row>
+															
+															<row>
+																<!-- AÑO -->								
+																<label value="Año:" sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.annoV)"/>
+													
+																<!-- SERIAL DE CARROCERIA -->
+																<label value="Serial Carroceria:" sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.serialCarroceriaV)"/>
+															</row>
+														</rows>
+													</grid>
+												</tabpanel>
+												
+												<!-- DATOS ADICIONALES -->
+												<tabpanel>
+													<grid>
+														<columns>
+															<column width="10%" />
+															<column  width="20%"/>
+															<column  width="20%"/>
+															<column  />
+														</columns>
+														<rows>
+															<row>
+																<!-- MOTOR -->
+																<label value="Motor:" sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.motor.nombre)"/>
+																															
+																<!-- TRANSMISION -->
+																<label value="Transmision:" sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.determinarTransmision())"/>
+															</row>
+															<row>
+																<!-- TRACCION -->
+																<label value="Traccion:" sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.determinarTraccion())"/>
+																															
+																<!-- TIPO REPUESTO -->
+																<label value="Tipo Repuesto: " sclass="label-not-mandatory"/>
+																<label value="@bind(vm.requerimiento.determinarTipoRepuesto())" />
+															</row>
+														</rows>
+													</grid>
+												</tabpanel>
+											</tabpanels>
+										</tabbox>
+									</tabpanel>
+									
+									<!-- REPUESTOS -->
+									<tabpanel>
+										<panel sclass="borderGrid">
+											<panelchildren>											
+												<listbox id="listRepuestos" mold="paging" pageSize="5" pagingPosition="top"
+													checkmark="true" multiple="true"  sclass="mylist"
+													model="@load(vm.requerimiento.detalleRequerimientos)"
+													selectedItems="@bind(vm.listaDetalleRequerimientoSeleccionados)">
+													<listhead>
+														<listheader sort="none" width="15%" label="Codigo OEM"/>
+														<listheader sort="none" width="300px" label="Descripcion"/>
+														<listheader sort="none" width="15%" label="Cantidad"/>
+														<listheader sort="none" width="15%" label="Clasificación"/>
+														<listheader sort="auto" width="15%" label="Foto"/>
+													</listhead>
+													<template name="model">
+														<listitem>
+															<listcell label="@bind(each.codigoOem)"/>
+															<listcell label="@bind(each.descripcion)"/>
+															<listcell label="@bind(each.cantidad)"/>
+															<listcell label="@bind(each.clasificacionRepuesto.descripcion)"/>
+															<listcell>
+																<image width="50px" height="50px" src="@bind(each.getFoto64())" />
+															</listcell>
+														</listitem>
+													</template>
+												</listbox>
+											</panelchildren>
+										</panel>
+									</tabpanel>
+								</tabpanels>
+							</tabbox>
+						</groupbox>
+					</n:div>
+					<n:div class="modal-footer">
+						<div align="right" hflex="1">
+							<button id="btnLimpiar" label="Limpiar" type="submit"
+								onClick="@global-command('removerSeleccionados')" sclass="btn-sm btn-info" />
+							<button label="Cotizacion por Analista" type="submit" sclass="btn-sm btn-primary"
+								onClick="@command('enviarSolicitudProv', btnEnviar=self, btnLimpiar=btnLimpiar, enviar = false)" />
+							<button label="Enviar a Proveedores" type="submit" sclass="btn-sm btn-primary"
+								onClick="@command('enviarSolicitudProv', btnEnviar=self, btnLimpiar=btnLimpiar, enviar = true)" />						
+						</div>
+					</n:div>
 				</div>
 			</div>
-		</groupbox>
+		</n:div>
 	</window>
 </zk>
