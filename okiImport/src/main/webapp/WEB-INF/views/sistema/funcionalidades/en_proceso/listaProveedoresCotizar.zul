@@ -8,7 +8,7 @@
 		<panel sclass="borderGrid">
 			<panelchildren>
 				<hbox width="100%" align="center">
-					<paging id="pagProveedores" hflex="1"
+					<paging id="pagProveedores" hflex="1" sclass="custom-paging"
 						onPaging="@command('paginarLista')" autohide="true" />
 					<div sclass="z-paging z-paging-info"
 						height="28px">
