@@ -32,7 +32,7 @@
 			<panel sclass="borderGrid">
 				<panelchildren>
 					<hbox width="100%" align="center">
-						<paging id="pagCotizaciones" hflex="1"
+						<paging id="pagCotizaciones" hflex="1" sclass="custom-paging"
 							onPaging="@command('paginarLista')" autohide="true" />
 						<div sclass="z-paging z-paging-info" height="28px">
 							<label id="lblCotizaciones" sclass="rRmWwb-info"/>
@@ -42,9 +42,11 @@
 				pagingPosition="top" emptyMessage="No hay solicitudes"
 				onAfterRender="@command('updatePaging', paging = pagCotizaciones, label=lblCotizaciones)">
 					<auxhead>
+					<auxheader />
 						<auxheader colspan="3" label="Solicitudes de Cotizacion"/>
 					</auxhead>
 					<listhead>
+					<listheader width="2%" />
 
 						<listheader value="idCotizacion"
 							label="N° Solicitud" sort="auto(idCotizacion)" width="90px">
@@ -68,6 +70,8 @@
 					</listhead>
 					<template name="model">
 						<listitem>
+						<listcell label="${forEachStatus.index+1}"
+								       sclass="boxed-grey" />
 							<listcell label="@bind(each.idCotizacion)" />
 							<listcell>
 							  <vbox>
