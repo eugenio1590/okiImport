@@ -28,7 +28,7 @@ public class MisRequerimientosEmitidosViewModel extends AbstractMisRequerimiento
 	}
 	
 	/**COMMAND*/
-	/*
+	/**
 	 * Descripcion: permitira crear el emergente (modal) necesario para editar el requerimiento seleccionado
 	 * Parametros: requerimiento @param view: listaMisRequerimientosEmitidos.zul  
 	 * Retorno: Ninguno

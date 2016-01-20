@@ -41,7 +41,8 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static String titulo = "Cotizacion del Requerimiento Nro ";
+	private static String TITIULO_FORM = "Cotizaciones Incompletas del Requerimiento Nro. ";
+	private String titulo;
 	private String constraint_precio_flete;
 	private List<Cotizacion> listaCotizacion;
 	private Requerimiento requerimiento;
@@ -60,8 +61,8 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion(false);
-		titulo = titulo + requerimiento.getIdRequerimiento();
+		cotizacionFiltro = new Cotizacion();
+		titulo = TITIULO_FORM + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
 		gridCotizaciones.setEmptyMessage(CotizacionesProveedorInternacionalViewModel.TITULO_EMPTY_COTIZACIONES);
@@ -148,6 +149,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 	}
 	
+	/**METODOS OVERRIDE*/
 	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * Parametros: @param view: listaCotizacionesAnalista.zul 
@@ -155,7 +157,9 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void onCloseWindow(){
+	@Override
+	public void closeModal(){
+		super.closeModal();
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
@@ -205,8 +209,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	public String getTitulo() {
 		return titulo;
 	}
-
-	@SuppressWarnings("static-access")
+	
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
