@@ -149,7 +149,6 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		parametros.put("size", "90%");
 		crearModal(BasePackageSistemaFunc+"en_proceso/listaProveedoresCotizar.zul", parametros );
 	}
 	

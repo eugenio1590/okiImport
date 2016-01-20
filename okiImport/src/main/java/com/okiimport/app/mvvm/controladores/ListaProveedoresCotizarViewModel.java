@@ -15,13 +15,14 @@ import org.zkoss.bind.annotation.NotifyChange;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 
-public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
+public class ListaProveedoresCotizarViewModel extends ListaProveedoresViewModel {
 	
 	//Servicios
 	
+	//GUI
+	
 	//Atributos
 	private Requerimiento requerimiento;
-	private String size;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -30,9 +31,7 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose(superclass=true)
-	public void doAfterCompose(@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
-			@ExecutionArgParam("size") String size){
-		this.size = size;
+	public void doAfterCompose(@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		this.requerimiento = requerimiento;
 		cambiarProveedores(0, null, null);
 	}
@@ -72,12 +71,13 @@ public class ListaProveedorCotizarViewModel extends ListaProveedoresViewModel {
 			crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesProveedorInternacional.zul", parametros);
 	}
 	
-	/**GETTERS Y SETTERS*/
-	public String getSize() {
-		return size;
+	/**METODOS OVERRIDE*/
+	@Command
+	@Override
+	public void closeModal(){
+		super.closeModal();
+		this.ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 
-	public void setSize(String size) {
-		this.size = size;
-	}	
+	/**GETTERS Y SETTERS*/
 }
