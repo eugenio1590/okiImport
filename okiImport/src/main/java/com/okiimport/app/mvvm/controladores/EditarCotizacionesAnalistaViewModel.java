@@ -41,13 +41,9 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	private Paging pagCotizaciones;
 	
 	//Atributos
-	private static String TITIULO_FORM = "Cotizaciones Incompletas del Requerimiento Nro. ";
-	private String titulo;
-	private String constraint_precio_flete;
 	private List<Cotizacion> listaCotizacion;
 	private Requerimiento requerimiento;
-	private Cotizacion cotizacionFiltro;
-	private Cotizacion cotizacionSelecionada=null;
+	private Cotizacion cotizacion;
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -60,9 +56,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
-		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion();
-		titulo = TITIULO_FORM + requerimiento.getIdRequerimiento();
+		this.cotizacion = new Cotizacion();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
 		gridCotizaciones.setEmptyMessage(CotizacionesProveedorInternacionalViewModel.TITULO_EMPTY_COTIZACIONES);
@@ -97,7 +91,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 	public void cambiarCotizaciones(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sTransaccion.consultarCotizacionesParaEditar(cotizacionFiltro, fieldSort, 
+		Map<String, Object> parametros = sTransaccion.consultarCotizacionesParaEditar(cotizacion, fieldSort, 
 				sortDirection, requerimiento.getIdRequerimiento(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaCotizacion = (List<Cotizacion>) parametros.get("cotizaciones");
@@ -190,35 +184,11 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 		this.requerimiento = requerimiento;
 	}
 
-	public Cotizacion getCotizacionSelecionada() {
-		return cotizacionSelecionada;
+	public Cotizacion getCotizacion() {
+		return cotizacion;
 	}
 
-	public void setCotizacionSelecionada(Cotizacion cotizacionSelecionada) {
-		this.cotizacionSelecionada = cotizacionSelecionada;
-	}
-
-	public Cotizacion getCotizacionFiltro() {
-		return cotizacionFiltro;
-	}
-
-	public void setCotizacionFiltro(Cotizacion cotizacionFiltro) {
-		this.cotizacionFiltro = cotizacionFiltro;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-	
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getConstraint_precio_flete() {
-		return constraint_precio_flete;
-	}
-
-	public void setConstraint_precio_flete(String constraint_precio_flete) {
-		this.constraint_precio_flete = constraint_precio_flete;
+	public void setCotizacion(Cotizacion cotizacion) {
+		this.cotizacion = cotizacion;
 	}
 }
