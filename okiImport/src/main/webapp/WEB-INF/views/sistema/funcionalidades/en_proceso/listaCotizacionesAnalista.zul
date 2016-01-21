@@ -1,12 +1,12 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" height="0px" title="@bind(vm.titulo)"
+	<window border="none" height="0px"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.EditarCotizacionesAnalistaViewModel')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full"  height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
-					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="@bind(vm.titulo)" mode="defer" />
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Cotizaciones Incompletas" />
 					<n:div class="modal-inner">
 						
 		    			<!-- LISTA DE COTIZACIONES-->
@@ -27,27 +27,43 @@
 										<auxheader>
 											<div sclass="z-icon-filter bigger-200" />
 											<spinner instant="true" hflex="1"
-												value="@bind(vm.cotizacionFiltro.idCotizacion)" 
+												value="@bind(vm.cotizacion.idCotizacion)" 
 												onChange="@command('aplicarFiltro')"/>
 										</auxheader>
 										<auxheader>
 											<div sclass="z-icon-filter bigger-200" />
-											<datebox format="dd/MM/yyyy"
-												value="@bind(vm.cotizacionFiltro.fechaCreacion)" instant="true"
-												onChange="@command('aplicarFiltro')" width="100px" />
+											<datebox instant="true" hflex="1" format="@bind(vm.formatDate)"
+												value="@bind(vm.cotizacion.fechaCreacion)" 
+												onChange="@command('aplicarFiltro')" />
+										</auxheader>
+										<auxheader>
+											<div sclass="z-icon-filter bigger-200" />
+											<datebox instant="true" hflex="1" format="@bind(vm.formatDate)"
+												value="@bind(vm.cotizacion.fechaVencimiento)" 
+												onChange="@command('aplicarFiltro')" />
 										</auxheader>
 									</auxhead>
 									<listhead>
-										<listheader width="2%" />
-										<listheader value="idCotizacion" label="N° Solicitud" sort="auto(idCotizacion)" width="90px"/>
-										<listheader value="nombre" label="F. Creacion" sort="auto(fechaCreacion)" width="90px"/>
-										<listheader width="8%" label="Operaciones" />
+										<listheader width="2%" sort="none"/>
+										<listheader value="idCotizacion"  width="13%"
+											label="Nro. Cotizacion" sort="auto(idCotizacion)" />
+										<listheader value="fechaCreacion" width="18%"
+											label="Fecha de Creacion" sort="auto(fechaCreacion)" />
+										<listheader value="fechaVencimiento" width="18%"
+											label="Fecha de Vencimiento" sort="auto(fechaVencimiento)" />
+										<listheader value="none" width="29%"
+											label="Proveedor" sort="auto(idCotizacion)" />
+										<listheader sort="none" label="Operaciones"/>
 									</listhead>
 									<template name="model">
 										<listitem>
 											<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 											<listcell label="@bind(each.idCotizacion)" />
-											<listcell label="@bind(each.fechaCreacion)" />
+											<listcell label="@bind(each.fechaCreacion)
+																@converter('formatedDate', format=vm.formatDate)" />
+											<listcell label="@bind(each.fechaVencimiento)
+																@converter('formatedDate', format=vm.formatDate)" />
+											<listcell label="@bind(each.proveedor.nombre)" />
 											<listcell>
 												<div class="btn-group btn-group-sm">
 													<button 

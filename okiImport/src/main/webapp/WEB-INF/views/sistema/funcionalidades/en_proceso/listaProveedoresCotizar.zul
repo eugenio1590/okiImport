@@ -28,7 +28,6 @@
 										<auxheader>
 											<div sclass="z-icon-filter bigger-200" />
 											<spinner instant="true" hflex="1"
-												width="150px" constraint="no negative, no zero"
 												value="@bind(vm.proveedorFiltro.cedula)"
 												placeholder="Buscar por RIF"
 												onChange="@command('aplicarFiltro')" />
@@ -50,9 +49,8 @@
 											sort="auto(cedula)" width="18%" />
 										<listheader id="nombre" label="Nombre"
 											sort="auto(nombre)" width="18%" />
+										<listheader label="Ubicacion" sort="none" width="18%" />
 										<listheader label="Estado" sort="none" width="31%" />
-										<listheader label="Foto" sort="none"
-											align="center" width="18%" />
 										<listheader label="Operaciones" width="15%" sort="none" />
 									</listhead>
 
@@ -62,8 +60,8 @@
 												sclass="boxed-grey" />
 											<listcell label="@bind(each.cedula)" />
 											<listcell label="@bind(each.nombre)" />
+											<listcell label="@bind(each.ubicacion(' - '))" />
 											<listcell label="@bind(each.estatus)" />
-											<listcell></listcell>
 											<listcell>
 												<div class="btn-group btn-group-sm">
 													<button
