@@ -26,7 +26,8 @@ public class EstrategiaSDCUbicacion<DC extends DetalleCotizacion> extends Estrat
 		if(prov1.equals(prov2)){
 			if(estrategiaResolve!=null)
 				return estrategiaResolve.comparatorResolve(object1, object2, estrategiaResolve);
-			//Se resolvera dependiendo de la fecha de creacion
+			
+			return object1.compareWithDate(object2);
 		}
 		return compararDistancias(object1, object2, estrategiaResolve);
 	}
@@ -44,7 +45,8 @@ public class EstrategiaSDCUbicacion<DC extends DetalleCotizacion> extends Estrat
 			if(distProv1 == distProv2){
 				if(estrategiaResolve!=null)
 					return estrategiaResolve.comparatorResolve(object1, object2, estrategiaResolve);
-				//Se resolvera dependiendo de la fecha de creacion
+				
+				return object1.compareWithDate(object2);
 			}
 			
 			return distProv1.compareTo(distProv2);
@@ -62,7 +64,8 @@ public class EstrategiaSDCUbicacion<DC extends DetalleCotizacion> extends Estrat
 			if(distProv1 == distProv2){
 				if(estrategiaResolve!=null)
 					return estrategiaResolve.comparatorResolve(object1, object2, estrategiaResolve);
-				//Se resolvera dependiendo de la fecha de creacion
+				
+				return object1.compareWithDate(object2);
 			}
 			
 			return distProv1.compareTo(distProv2);

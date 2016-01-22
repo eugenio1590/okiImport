@@ -12,7 +12,8 @@ public class EstrategiaSDCPrecio<DC extends DetalleCotizacion> extends Estrategi
 		if(totalObj1 == totalObj2){
 			if(estrategiaResolve!=null)
 				return estrategiaResolve.comparatorResolve(object1, object2, estrategiaResolve);
-			//Se resolvera dependiendo de la fecha de creacion
+			
+			return object1.compareWithDate(object2);
 		}
 
 		return totalObj1.compareTo(totalObj2);
