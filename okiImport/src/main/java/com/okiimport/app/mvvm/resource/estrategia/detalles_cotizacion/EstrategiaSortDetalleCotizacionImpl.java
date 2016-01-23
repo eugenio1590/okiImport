@@ -6,12 +6,13 @@ import java.util.List;
 
 import com.okiimport.app.model.DetalleCotizacion;
 
-public abstract class EstrategiaSortDetalleCotizacionImpl<DC extends DetalleCotizacion> implements
-		EstrategiaSortDetalleCotizacion<DC> {
+public abstract class EstrategiaSortDetalleCotizacionImpl<DC extends DetalleCotizacion> 
+	implements EstrategiaSortDetalleCotizacion<DC> {
 
+	protected EstrategiaSortDetalleCotizacion<DC> estrategiaResolve;
+	
 	@Override
-	public void sortDetalleCotizacion(List<DC> detallesCotizacion,
-			final EstrategiaSortDetalleCotizacion<DC> estrategiaResolve) {
+	public void sortDetalleCotizacion(List<DC> detallesCotizacion) {
 		if(!detallesCotizacion.isEmpty() && detallesCotizacion.size()>1){
 			Collections.sort(detallesCotizacion, new Comparator<DC>(){
 
@@ -23,4 +24,21 @@ public abstract class EstrategiaSortDetalleCotizacionImpl<DC extends DetalleCoti
 			});
 		}
 	}
+	
+	@Override
+	public EstrategiaSortDetalleCotizacion<DC> updateEstrategiaResolve(EstrategiaSortDetalleCotizacion<DC> estrategiaResolve){
+		setEstrategiaResolve(estrategiaResolve);
+		return this;
+	}
+
+	/**SETTERS Y GETTERS*/
+	public EstrategiaSortDetalleCotizacion<DC> getEstrategiaResolve() {
+		return estrategiaResolve;
+	}
+
+	public void setEstrategiaResolve(EstrategiaSortDetalleCotizacion<DC> estrategiaResolve) {
+		this.estrategiaResolve = estrategiaResolve;
+	}
+	
+	/**METODOS PROPIOS DE LA CLASE*/
 }
