@@ -39,7 +39,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractMisRequerimien
 		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal(BasePackageSistemaFunc+"en_proceso/aprobarCotizaciones.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/listaCreacionOfertas.zul", parametros);
 	}
 	
 	/**COMMAND*/
@@ -54,7 +54,7 @@ public class MisRequerimientosProcesadosViewModel extends AbstractMisRequerimien
 		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		parametros.put("requerimiento", requerimiento);
-		crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesASeleccionar.zul", parametros);
+		crearModal(BasePackageSistemaFunc+"en_proceso/listaCreacionOfertas.zul", parametros);
 	}
 	
 	/**

@@ -1,0 +1,59 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window border="none" width="0px"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCreacionOfertasViewModel')">
+		
+		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full"  height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
+					<n:div class="modal-inner">
+						<listbox id="gridDetalleCotizacion" model="@load(vm.ofertas)">
+							<template name="model">
+								<listgroup label="Oferta ${forEachStatus.index+1}">
+									<label value="Proveedor" width="170px"/>
+									<label value="Ubicacion" width="170px"/>
+									<label value="Repuesto" width="250px"/>
+									<label value="Marca" width="150px"/>
+									<label value="C. Solicitada" width="110px"/>
+									<label value="C. Ofrecida" width="110px"/>
+									<label value="Prec. Venta" width="110px"/>
+									<label value="Prec. Flete" width="110px"/>
+									<label value="Total" width="80px"/>
+								</listgroup>
+								<template name="@bind(each.detalleOfertas)">
+									<listitem>
+										<listcell label="@bind(each.cotizacion.proveedor.nombre)" />
+										<listcell label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
+										<listcell label="@bind(each.detalleRequerimiento.descripcion)" />
+										<listcell label="@bind(each.marcaRepuesto)" />
+										<listcell label="@bind(each.detalleRequerimiento.cantidad)" />
+										<listcell label="@bind(each.cantidad)" />
+										<listcell label="@bind(each.precioVenta) 
+															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+										<listcell label="@bind(each.precioFlete)
+															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+										<listcell label="@bind(each.calcularTotal())
+															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+									</listitem>
+								</template>
+							</template>
+						</listbox>
+					</n:div>
+					<n:div class="modal-footer">
+						<div align="right" hflex="1">
+							<button label="Enviar al Cliente" type="submit" sclass="btn-sm btn-primary"
+								onClick="@command('enviarCliente')" />
+							<button label="Cancelar" sclass="btn-sm btn-danger"
+							onClick="@command('cancelar')"/>
+						</div>
+					</n:div>
+				</div>
+			</div>
+		</n:div>
+		
+	</window>
+</zk>
