@@ -8,38 +8,38 @@
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
 					<n:div class="modal-inner">
-						<listbox id="gridDetalleCotizacion" model="@load(vm.ofertas)">
+						<listbox id="gridDetalleCotizacion" model="@load(vm.detallesOfertas)">
+<!-- 							<template name="model:group"> -->
+<!-- 								<listgroup label="Oferta ${forEachStatus.index+1}" open="true"> -->
+<!-- 									<label value="Proveedor" width="170px"/> -->
+<!-- 									<label value="Ubicacion" width="170px"/> -->
+<!-- 									<label value="Repuesto" width="250px"/> -->
+<!-- 									<label value="Marca" width="150px"/> -->
+<!-- 									<label value="C. Solicitada" width="110px"/> -->
+<!-- 									<label value="C. Ofrecida" width="110px"/> -->
+<!-- 									<label value="Prec. Venta" width="110px"/> -->
+<!-- 									<label value="Prec. Flete" width="110px"/> -->
+<!-- 									<label value="Total" width="80px"/> -->
+<!-- 								</listgroup> -->
+<!-- 							</template> -->
 							<template name="model">
-								<listgroup label="Oferta ${forEachStatus.index+1}">
-									<label value="Proveedor" width="170px"/>
-									<label value="Ubicacion" width="170px"/>
-									<label value="Repuesto" width="250px"/>
-									<label value="Marca" width="150px"/>
-									<label value="C. Solicitada" width="110px"/>
-									<label value="C. Ofrecida" width="110px"/>
-									<label value="Prec. Venta" width="110px"/>
-									<label value="Prec. Flete" width="110px"/>
-									<label value="Total" width="80px"/>
-								</listgroup>
-								<template name="@bind(each.detalleOfertas)">
-									<listitem>
-										<listcell label="@bind(each.cotizacion.proveedor.nombre)" />
-										<listcell label="@bind(each.cotizacion.proveedor.ubicacion(' - '))" />
-										<listcell label="@bind(each.detalleRequerimiento.descripcion)" />
-										<listcell label="@bind(each.marcaRepuesto)" />
-										<listcell label="@bind(each.detalleRequerimiento.cantidad)" />
-										<listcell label="@bind(each.cantidad)" />
-										<listcell label="@bind(each.precioVenta) 
-															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
-										<listcell label="@bind(each.precioFlete)
-															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
-										<listcell label="@bind(each.calcularTotal())
-															@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
-																converterMoneda=each.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
-									</listitem>
-								</template>
+								<listitem>
+									<listcell label="@bind(each.detalleCotizacion.cotizacion.proveedor.nombre)" />
+									<listcell label="@bind(each.detalleCotizacion.cotizacion.proveedor.ubicacion(' - '))" />
+									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
+									<listcell label="@bind(each.detalleCotizacion.marcaRepuesto)" />
+									<listcell label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)" />
+									<listcell label="@bind(each.detalleCotizacion.cantidad)" />
+									<listcell label="@bind(each.detalleCotizacion.precioVenta) 
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+															converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+									<listcell label="@bind(each.detalleCotizacion.precioFlete)
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+															converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+									<listcell label="@bind(each.detalleCotizacion.calcularTotal())
+														@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+															converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+								</listitem>
 							</template>
 						</listbox>
 					</n:div>

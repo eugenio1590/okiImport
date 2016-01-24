@@ -1,5 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,8 +11,12 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zul.GroupsModel;
+import org.zkoss.zul.GroupsModelArray;
 
 import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -24,7 +30,8 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	private STransaccion sTransaccion;
 
 	//Atributos
-	private Map<String, List<DetalleCotizacion>> listasDetalleCotizacion; //Servicio
+	private Map<DetalleRequerimiento, List<DetalleCotizacion>> listasDetalleCotizacion; //Servicio
+	private List<DetalleOferta> detallesOfertas;
 	private List<Oferta> ofertas;
 	private Requerimiento requerimiento;
 	
@@ -60,12 +67,23 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@Override
 	@Command
 	public void closeModal(){
-		
+		super.closeModal();
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	private void crearOfertas() {
-				
+		ofertas = new ArrayList<Oferta>();
+		detallesOfertas = new ArrayList<DetalleOferta>();
+		listasDetalleCotizacion = sTransaccion.consultarDetallesCotizacion(requerimiento.getIdRequerimiento());
+		for(DetalleRequerimiento key: listasDetalleCotizacion.keySet()){
+			Oferta oferta = new Oferta();
+			for(DetalleCotizacion detallleC : listasDetalleCotizacion.get(key)){
+				DetalleOferta detalleOferta = new DetalleOferta(detallleC);
+				oferta.addDetalleOferta(detalleOferta );
+				detallesOfertas.add(detalleOferta);
+			}
+			ofertas.add(oferta);
+		}
 	}
 
 	/**GETTERS Y SETTERS*/
@@ -84,4 +102,16 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	public void setOfertas(List<Oferta> ofertas) {
 		this.ofertas = ofertas;
 	}
+
+	public List<DetalleOferta> getDetallesOfertas() {
+		return detallesOfertas;
+	}
+
+	public void setDetallesOfertas(List<DetalleOferta> detallesOfertas) {
+		this.detallesOfertas = detallesOfertas;
+	}
+
+	
+	
+	
 }
