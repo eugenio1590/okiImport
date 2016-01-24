@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window id="winCotizaciones" border="none" title="@bind(vm.titulo)"
-		width="95%" height="95%" closable="true" sclass="winMyList"
+		width="0px" height="0px" closable="true" sclass="winMyList"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizacionesProveedorNacionalViewModel')"
 		onClose="@command('onCloseWindow')">
@@ -14,7 +14,7 @@
 						titulo="Cotizar Proveedor Nacional" />
 					<n:div class="modal-inner">
 
-						<borderlayout>
+						<borderlayout height="1000px">
 							<west width="40%"
 								title="Informacion del Vehiculo" collapsible="true"
 								onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">
@@ -25,11 +25,11 @@
 
 										<grid>
 											<columns>
-												<column label="Marca:" />
-												<column label="Modelo:" />
-												<column label="Motor:" />
+												<column label="Marca:" sclass="label-not-mandatory"/>
+												<column label="Modelo:" sclass="label-not-mandatory" />
+												<column label="Motor:" sclass="label-not-mandatory"/>
 												<column
-													label="Tipo de Repuesto:" />
+													label="Tipo de Repuesto:" sclass="label-not-mandatory" />
 											</columns>
 											<rows>
 												<row>
@@ -70,6 +70,26 @@
 													<auxheader />
 													<auxheader
 														colspan="3" label="Solicitudes de Cotizacion" />
+													
+													<auxheader>
+														<div
+															sclass="z-icon-filter bigger-200" />
+														<spinner
+															value="@bind(vm.cotizacionFiltro.idCotizacion)"
+															instant="true" placeholder=""
+															onChange="@command('aplicarFiltro')" width="100px" />
+													</auxheader>
+													
+													<auxheader>
+														<div
+															sclass="z-icon-filter bigger-200" />
+														<datebox
+															format="dd/MM/yyyy"
+															value="@bind(vm.cotizacionFiltro.fechaCreacion)"
+															instant="true" onChange="@command('aplicarFiltro')"
+															width="100px" />
+													</auxheader>
+
 
 												</auxhead>
 
@@ -80,27 +100,11 @@
 													<listheader
 														value="idCotizacion" label="N° Solicitud"
 														sort="auto(idCotizacion)" width="90px">
-														<spinner
-															value="@bind(vm.cotizacionFiltro.idCotizacion)"
-															instant="true" placeholder=""
-															onChange="@command('aplicarFiltro')" width="100px" />
-														<div
-															sclass="z-icon-filter bigger-200" />
 													</listheader>
-
 													<listheader
 														value="nombre" label="F. Creacion"
 														sort="auto(fechaCreacion)" width="90px">
-														<datebox
-															format="dd/MM/yyyy"
-															value="@bind(vm.cotizacionFiltro.fechaCreacion)"
-															instant="true" onChange="@command('aplicarFiltro')"
-															width="100px" />
-
-														<div
-															sclass="z-icon-filter bigger-200" />
 													</listheader>
-
 													<listheader
 														width="8%" label="Operaciones" />
 
