@@ -5,7 +5,7 @@
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
-					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Solicitud de Pedido" />
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Factura de Productos" />
 					<n:div class="modal-inner">
 						<groupbox closable="false">
 							<!-- DATOS DE LA SOLICITUD -->
@@ -18,44 +18,31 @@
 									<column />
 								</columns>
 								<rows>
-									<row>
-										<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
-										<label value="@bind(vm.compra.fechaCreacion)
-												@converter('formatedDate', format=vm.formatDate)" />
-										<include src="/WEB-INF/views/template/fieldMandatory.zul" field="¿Incluir el Precio del Flete?:" />
-										<hbox>
-											<combobox readonly="true" constraint="@bind(vm.notEmptyValidator)" width="30%"
-												selectedItem="@bind(vm.tipoFlete)"
-												value="@bind(vm.tipoFlete.nombre)" 
-												model="@load(vm.listaTipoFlete)"><!-- width="150px" selectedItem="@bind(vm.tipoFlete)" -->
-												<template name="model">
-													<comboitem label="@bind(each.nombre)" />
-												</template>
-											</combobox>
-										</hbox>
-									</row>
-									<row>
-										<n:tr class="z-row z-grid-odd"><!-- colspan="4" -->
-											<n:td class="z-row-inner">
-												<div class="z-row-content">
-													<label value="Observacion:" sclass="label-not-mandatory"/>
-												</div>
-											</n:td>
-											<n:td class="z-row-inner" colspan="3" align="center">
-												<n:div class="z-row-content" hflex="1">
-													<vbox align="left" hflex="1">
-														<textbox mold="rounded" hflex="1" sclass="form-control no_rezise"
-															value="@bind(vm.compra.observacion)"/>
-													</vbox>
-												</n:div>
-											</n:td>
-										</n:tr>
-									</row>
+<!-- 									<row> -->
+<!-- 										<n:tr class="z-row z-grid-odd">colspan="4" -->
+<!-- 											<n:td class="z-row-inner"> -->
+<!-- 												<div class="z-row-content"> -->
+<!-- 													<label value="Observacion:" sclass="label-not-mandatory"/> -->
+<!-- 												</div> -->
+<!-- 											</n:td> -->
+<!-- 											<n:td class="z-row-inner" colspan="3" align="center"> -->
+<!-- 												<n:div class="z-row-content" hflex="1"> -->
+<!-- 													<vbox align="left" hflex="1"> -->
+<!-- 														<textbox mold="rounded" hflex="1" sclass="form-control no_rezise" -->
+<!-- 															value="@bind(vm.compra.observacion)"/> -->
+<!-- 													</vbox> -->
+<!-- 												</n:div> -->
+<!-- 											</n:td> -->
+<!-- 										</n:tr> -->
+<!-- 									</row> -->
 								</rows>
 							</grid>
 							
 							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
 								<tabs>
+									<tab sclass="waves-color-blue waves-effect">
+										<label value="Información general" />
+									</tab>
 									<tab sclass="waves-color-blue waves-effect">
 										<label value="Datos del Requerimiento" />
 									</tab>
@@ -64,6 +51,51 @@
 									</tab>
 								</tabs>
 								<tabpanels>
+									<!-- INFORMACION GENERAL DE LA FACTURA -->
+									<tabpanel>
+										<grid>
+											<columns>
+												<column width="10%" />
+												<column  width="20%"/>
+												<column  width="20%"/>
+												<column  />
+											</columns>
+										<rows>
+										<row>
+											<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
+											<label value="@bind(vm.compra.fechaCreacion)
+ 												@converter('formatedDate', format=vm.formatDate)" /> 
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="¿Incluir el Precio del Flete?:" />
+											<hbox>
+												<combobox readonly="true" constraint="@bind(vm.notEmptyValidator)" width="30%"
+													selectedItem="@bind(vm.tipoFlete)"
+													value="@bind(vm.tipoFlete.nombre)" 
+													model="@load(vm.listaTipoFlete)">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+										</row>
+										
+										<row>
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Forma de pago:" />
+											<hbox>
+												<combobox readonly="true" constraint="@bind(vm.notEmptyValidator)" width="75%"
+													selectedItem="@bind(vm.formaPago)"
+													value="@bind(vm.formaPago.nombre)" 
+													model="@load(vm.listaFormaPago)" placeholder = "Seleccione">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+										</row>
+										</rows>
+										</grid>
+									</tabpanel>
+									
+									
 									<!-- DATOS DEL REQUERIMIENTO -->
 									<tabpanel>
 										<grid>

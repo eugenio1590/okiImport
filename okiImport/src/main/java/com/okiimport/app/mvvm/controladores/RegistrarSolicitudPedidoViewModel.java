@@ -39,6 +39,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
     private Compra compra;
     private List<ModeloCombo<Boolean>> listaTipoFlete;
     private ModeloCombo<Boolean> tipoFlete;
+    private List<ModeloCombo<Boolean>> listaFormaPago;
+    private ModeloCombo<Boolean> formaPago;
     private boolean cerrar = false;
     
     /**
@@ -57,6 +59,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.compra.setDetalleOfertas(detallesOfertas);
 		this.requerimiento = requerimiento;
 		llenarTiposFlete();
+		llenarFormaPago();
 		limpiar();
 	}
 	
@@ -68,10 +71,11 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"compra","tipoFlete"})
+	@NotifyChange({"compra","tipoFlete", "formaPago"})
 	public void limpiar(){
 		this.compra.setObservacion(null);
 		this.tipoFlete = listaTipoFlete.get(0);
+		this.formaPago = listaFormaPago.get(0);
 		super.cleanConstraintForm();
 	}
 	
@@ -100,7 +104,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Override
 	public void closeModal(){
 		if(!cerrar){
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ï¿½Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
@@ -130,6 +134,18 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaTipoFlete = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoFlete.add(new ModeloCombo<Boolean>("No", false));
 		listaTipoFlete.add(new ModeloCombo<Boolean>("Si", true));
+	}
+	/**METODOS PROPIOS DE LA CLASE*/
+	/**
+	 * Descripcion: Permite llenar la lista con los tipo de forma de pago
+	 * Parametros: @param view: formularioSolicituddePedido.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	private void llenarFormaPago(){
+		listaFormaPago = new ArrayList<ModeloCombo<Boolean>>();
+		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
+		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
 	}
 	/**
 	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
@@ -181,5 +197,22 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 
 	public void setTipoFlete(ModeloCombo<Boolean> tipoFlete) {
 		this.tipoFlete = tipoFlete;
+	}
+
+	public List<ModeloCombo<Boolean>> getListaFormaPago() {
+		return listaFormaPago;
+	}
+
+	public void setListaFormaPago(List<ModeloCombo<Boolean>> listaFormaPago) {
+		this.listaFormaPago = listaFormaPago;
+	}
+
+	public ModeloCombo<Boolean> getFormaPago() {
+		return formaPago;
+	}
+
+	public void setFormaPago(ModeloCombo<Boolean> formaPago) {
+		this.formaPago = formaPago;
 	}   
+	
 }
