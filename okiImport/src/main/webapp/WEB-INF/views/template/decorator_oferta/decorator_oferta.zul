@@ -1,0 +1,44 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<listbox model="@load(detallesOferta)">
+		<!-- ARREGLAR TAMMAÑO DE LAS COLUMNAS -->
+		<listhead>
+			<listheader label="Proveedor"/>
+			<listheader label="Ubicacion" tooltiptext="Estado-Ciudad"/>
+			<listheader label="Repuesto"/>
+			<listheader label="Marca"/>
+			<listheader label="C. Solicitada" />
+			<listheader label="C. Ofrecida" />
+			<listheader label="Prec. Venta" />
+			<listheader label="Prec. Flete" />
+			<listheader label="Total" />
+		</listhead>
+		<template name="model">
+			<listitem>
+				<listcell
+					label="@bind(each.detalleCotizacion.cotizacion.proveedor.nombre)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.cotizacion.proveedor.ubicacion(' - '))" />
+				<listcell
+					label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.marcaRepuesto)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.detalleRequerimiento.cantidad)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.cantidad)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.precioVenta) 
+ 							@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+ 								converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.precioFlete)
+ 							@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+ 								converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+				<listcell
+					label="@bind(each.detalleCotizacion.calcularTotal())
+ 							@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
+ 								converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+			</listitem>
+		</template>
+	</listbox>
+</zk>
