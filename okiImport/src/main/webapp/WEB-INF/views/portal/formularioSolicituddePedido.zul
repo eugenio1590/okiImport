@@ -17,25 +17,6 @@
 									<column width="20%"/>
 									<column />
 								</columns>
-								<rows>
-<!-- 									<row> -->
-<!-- 										<n:tr class="z-row z-grid-odd">colspan="4" -->
-<!-- 											<n:td class="z-row-inner"> -->
-<!-- 												<div class="z-row-content"> -->
-<!-- 													<label value="Observacion:" sclass="label-not-mandatory"/> -->
-<!-- 												</div> -->
-<!-- 											</n:td> -->
-<!-- 											<n:td class="z-row-inner" colspan="3" align="center"> -->
-<!-- 												<n:div class="z-row-content" hflex="1"> -->
-<!-- 													<vbox align="left" hflex="1"> -->
-<!-- 														<textbox mold="rounded" hflex="1" sclass="form-control no_rezise" -->
-<!-- 															value="@bind(vm.compra.observacion)"/> -->
-<!-- 													</vbox> -->
-<!-- 												</n:div> -->
-<!-- 											</n:td> -->
-<!-- 										</n:tr> -->
-<!-- 									</row> -->
-								</rows>
 							</grid>
 							
 							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
@@ -55,33 +36,22 @@
 									<tabpanel>
 										<grid>
 											<columns>
-												<column width="10%" />
+												<column width="20%" />
 												<column  width="20%"/>
+												<column  width="25%"/>
 												<column  width="20%"/>
-												<column  />
 											</columns>
 										<rows>
 										<row>
 											<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
 											<label value="@bind(vm.compra.fechaCreacion)
  												@converter('formatedDate', format=vm.formatDate)" /> 
-											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="¿Incluir el Precio del Flete?:" />
-											<hbox>
-												<combobox readonly="true" constraint="@bind(vm.notEmptyValidator)" width="30%"
-													selectedItem="@bind(vm.tipoFlete)"
-													value="@bind(vm.tipoFlete.nombre)" 
-													model="@load(vm.listaTipoFlete)">
-													<template name="model">
-														<comboitem label="@bind(each.nombre)" />
-													</template>
-												</combobox>
-											</hbox>
 										</row>
 										
 										<row>
-											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Forma de pago:" />
+											<label value="Forma de pago:" sclass="label-not-mandatory" />
 											<hbox>
-												<combobox readonly="true" constraint="@bind(vm.notEmptyValidator)" width="75%"
+												<combobox id="cmbFormaPago" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="75%"
 													selectedItem="@bind(vm.formaPago)"
 													value="@bind(vm.formaPago.nombre)" 
 													model="@load(vm.listaFormaPago)" placeholder = "Seleccione">
@@ -90,6 +60,24 @@
 													</template>
 												</combobox>
 											</hbox>
+											<label value="¿Incluir el Precio del Flete?:" sclass="label-mandatory" />
+											<hbox>
+												<combobox id="cmbFlete" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="30%"
+													selectedItem="@bind(vm.tipoFlete)"
+													value="@bind(vm.tipoFlete.nombre)" 
+													model="@load(vm.listaTipoFlete)"
+													onSelect="@command('seleccionar')">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+										</row>
+										<row spans="1,4">
+											<label value="Monto del flete:" />
+											<label value = "@bind(vm.flete) "/>   
+										<!-- 	@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />     -->                          								
 										</row>
 										</rows>
 										</grid>
@@ -189,15 +177,26 @@
                                    		<listfooter />
                                    		<listfooter />
                                    		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
+<!--                                    		<listfooter /> -->
+<!--                                    		<listfooter /> -->
+                                   		<listfooter label="Sub Total:" width="60%">
+                                   			<label 	value="@bind(vm.compra.calcularSubTotal())
+                                    					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,  
+ 														converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" width="30%"/> 
+                                   		</listfooter>
+<!--                                    		<listfooter label="Flete:" width="60%"> -->
+<!--                                    			<label id="lblFlete" value="0.0"/> -->
+<!--                                    					value="@bind(vm.calcularPrecioFlete()) -->
+<!--                                     					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,   -->
+<!-- 														converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />  -->
+<!--                                    		</listfooter> -->
                                    		<listfooter label="Total:">
-                                   			<label
-                                   				value="@bind(vm.compra.calcularTotal())
-                                   						@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-															converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
+                                   			<label 	value="@bind(vm.compra.calcularTotal())
+                                   					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
                                    		</listfooter>
                                    	</listfoot>
+                                   
                                    </listbox>
 								</panelchildren>
                           	</panel>

@@ -2,6 +2,7 @@ package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
@@ -12,7 +13,10 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -33,6 +37,11 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	//GUI
 	@Wire("#winCompras")
 	private Window winCompras;
+	@Wire("#cmbFlete")
+	Combobox cmbFlete;
+	
+	@Wire Label lblFlete;
+	private Float flete;
 	
 	//Atributos
 	private Requerimiento requerimiento;
@@ -93,7 +102,21 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 			cerrarVentana();
 		}
 	}
-	
+	/**
+	 * Descripcion: Permitira 
+	 * Parametros: @param parametros: parametros a pasar al .zul
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 */
+	@Command
+	@NotifyChange({"flete"})
+	public void seleccionar(){
+		System.out.println("Entro el evento :D");
+		if(cmbFlete.getValue().equals("Si"))
+			flete = compra.calcularFlete();
+		else
+			flete = (float) 0.00;
+	}
 	/**
 	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
 	 * Parametros: Ninguno
@@ -146,6 +169,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaFormaPago = new ArrayList<ModeloCombo<Boolean>>();
 		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
+		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de crédito", true));		
+		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de débito", true));		
 	}
 	/**
 	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
@@ -213,6 +238,16 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 
 	public void setFormaPago(ModeloCombo<Boolean> formaPago) {
 		this.formaPago = formaPago;
+	}
+
+	public Float getFlete() {
+		return flete;
+	}
+
+	public void setFlete(Float flete) {
+		this.flete = flete;
 	}   
+	
+	
 	
 }
