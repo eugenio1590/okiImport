@@ -1,6 +1,5 @@
 package com.okiimport.app.mvvm.resource.decorator.ofertas;
 
-import org.zkoss.zk.ui.util.Template;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Tab;
 import org.zkoss.zul.Tabpanel;
@@ -32,6 +31,7 @@ public class DecoratorTabOferta {
 		//Se agrego el nuevo panel de navegacion para la oferta
 		Tab newTab = new Tab();
 		newTab.setLabel("Oferta Nro. "+oferta.getNroOferta());
+		newTab.setSclass("waves-color-blue waves-effect");
 		tabs.appendChild(newTab);
 		
 		//Se agrega el contenido del panel

@@ -8,7 +8,7 @@
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
 					<n:div class="modal-inner">
-						<tabbox>
+						<tabbox sclass="tab-nav tab-nav-blue">
 							<tabs id="tabsOfertas"/>
 							<tabpanels id="tabpOfertas"/>
 						</tabbox>
