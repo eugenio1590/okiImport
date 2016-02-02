@@ -67,6 +67,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.compra = new Compra(requerimiento, this.calendar.getTime());
 		this.compra.setDetalleOfertas(detallesOfertas);
 		this.requerimiento = requerimiento;
+		flete = (float) 0.0;
 		llenarTiposFlete();
 		llenarFormaPago();
 		limpiar();
@@ -111,7 +112,6 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Command
 	@NotifyChange({"flete"})
 	public void seleccionar(){
-		System.out.println("Entro el evento :D");
 		if(cmbFlete.getValue().equals("Si"))
 			flete = compra.calcularFlete();
 		else
