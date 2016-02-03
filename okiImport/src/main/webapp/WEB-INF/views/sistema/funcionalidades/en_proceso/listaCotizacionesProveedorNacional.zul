@@ -14,7 +14,7 @@
 						titulo="Cotizar Proveedor Nacional" />
 					<n:div class="modal-inner">
 
-						<borderlayout height="1000px">
+						<borderlayout height="550px">
 							<west width="40%"
 								title="Informacion del Vehiculo" collapsible="true"
 								onOpen="@command('openRegionWest',west=self, east = eastCotizacion, baseW='60%')">
