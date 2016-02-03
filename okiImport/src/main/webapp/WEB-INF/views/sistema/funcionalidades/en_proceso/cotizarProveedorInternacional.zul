@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winCotizar" border="none" title="@bind(vm.titulo)"
-		width="0px" height="0px" closable="true" sclass="btn-primary"
+	<window id="winCotizar" border="none" title="@bind(vm.titulo)" 
+		width="0px" height="0px" closable="true" sclass="winMyList"
 		apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.CotizarProveedorInternacionalViewModel')"
 		onClose="@command('onCloseWindow')">
@@ -14,7 +14,7 @@
 						titulo="Cotizar Proveedor Internacional" />
 					<n:div class="modal-inner">
 
-						<borderlayout height="1000px">
+						<borderlayout height="600px"  width="1300px">
 							<east id="eastCotizacion" width="100%"
 								title="Cotizacion">
 								<div>
