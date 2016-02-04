@@ -1,4 +1,18 @@
 <zk xmlns:w="client" xmlns:n="native">
+	<style>
+		.listitem-red, .listitem-red.z-listitem.z-listbox-odd {
+			background-color: rgba(255, 0, 0, 0.1);
+		}
+		
+		.listitem-red.z-listitem.z-listbox-odd:hover, .listitem-green.z-listitem.z-listbox-odd:hover {
+		    background-color: transparent;
+    		background-image: none;
+    	}
+		
+		.listitem-green, .listitem-green.z-listitem.z-listbox-odd {
+			background-color: rgba(76,175,80,0.1);
+		}
+	</style>
 	<panel sclass="borderGrid">
 		<panelchildren>
 			<listbox mold="paging" pagingPosition="top" pageSize="5"
@@ -15,6 +29,7 @@
 					<listheader label="Prec. Venta" />
 					<listheader label="Prec. Flete" />
 					<listheader label="Total" />
+					<listheader width="12%"/>
 				</listhead>
 				<template name="model">
 					<listitem>
@@ -42,6 +57,19 @@
 							label="@bind(each.detalleCotizacion.calcularTotal())
  									@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,
  										converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
+						<listcell>
+							<div class="btn-group btn-group-sm">
+								<button iconSclass="z-icon-check green bigger-160"
+										tooltiptext="Aprobar" 
+										visible="@bind(!each.aprobado)"
+										onClick="@command('aprobar', detalleOferta = each, decorator = decorator,
+											row = self.parent.parent.parent, buttons = self.parent, button = self)"/>
+								<button iconSclass="z-icon-times red bigger-160"
+										tooltiptext="Invalidar" 
+										onClick="@command('invalidar', detalleOferta = each, decorator = decorator,
+											row = self.parent.parent.parent, buttons = self.parent, button = self)"/>
+							</div>
+						</listcell>
 					</listitem>
 				</template>
 			</listbox>

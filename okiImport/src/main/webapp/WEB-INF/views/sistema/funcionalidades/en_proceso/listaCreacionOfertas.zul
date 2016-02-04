@@ -4,7 +4,7 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCreacionOfertasViewModel')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
-			<div class="modal-dialog modal-full"  height="auto"><!-- modal-xs -->
+			<div class="modal-dialog modal-full"  height="auto" width="90%"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
 					<n:div class="modal-inner">

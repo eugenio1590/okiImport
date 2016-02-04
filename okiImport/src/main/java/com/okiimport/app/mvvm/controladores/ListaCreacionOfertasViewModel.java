@@ -5,12 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
+import org.zkoss.zul.Div;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 
@@ -79,6 +84,28 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		
 	}
 	
+	@Command
+	@NotifyChange({"ofertas"})
+	public void aprobar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
+			@BindingParam("decorator") DecoratorTabOferta decorator,
+			@BindingParam("row") Listitem row,
+			@BindingParam("buttons") Div buttons,
+			@BindingParam("button") Button button){
+		detalleOferta.setAprobado(true);
+		decorator.updateButton(row, buttons, button, true);
+	}
+	
+	@Command
+	@NotifyChange({"ofertas"})
+	public void invalidar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
+			@BindingParam("decorator") DecoratorTabOferta decorator,
+			@BindingParam("row") Listitem row,
+			@BindingParam("buttons") Div buttons,
+			@BindingParam("button") Button button){
+		detalleOferta.setAprobado(false);
+		decorator.updateButton(row, buttons, button, false);
+	}
+	
 	/**METODOS OVERRIDE*/
 	@Override
 	@Command
@@ -89,7 +116,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	/**METODOS PROPIOS DE LA CLASE*/
 	@SuppressWarnings("unchecked")
 	private void crearOfertas() {
-		int pos = 1; //luego se calculara
+		int pos = cantOfertas + 1; //rectificar calculo con los estatus
 		Oferta oferta;
 		List<DetalleCotizacion> detallesCotizacion;
 		List<DetalleRequerimiento> keys = new ArrayList<DetalleRequerimiento>();
