@@ -31,9 +31,9 @@
 		<div sclass="counter-div" hflex="1" tooltiptext="Acciones sobre la Oferta">
 			<hbox width="100%" sclass="header-button">
 			<button iconSclass="fa fa-check" label="Oferta" type="submit"
-				sclass="btn-primary" /><!-- onClick="@command('agregarRepuesto')" -->
+				sclass="btn-primary" onClick="decorator.updateOferta(true)"/>
 			<button iconSclass="fa fa-times" label="Oferta" type="submit"
-				sclass="btn-danger" />
+				sclass="btn-danger" onClick="decorator.updateOferta(false)"/>
 			</hbox>
 		</div>		
 	</hbox>
@@ -42,7 +42,6 @@
 			<listbox mold="paging" pagingPosition="top" pageSize="5"
 				emptyMessage="No Existen Repuestos Validos para esta Oferta"
 				model="@load(oferta.detalleOfertas)">
-				<!-- ARREGLAR TAMMAÑO DE LAS COLUMNAS -->
 				<listhead>
 					<listheader label="Proveedor" />
 					<listheader label="Ubicacion" tooltiptext="Pais/Estado-Ciudad" />
