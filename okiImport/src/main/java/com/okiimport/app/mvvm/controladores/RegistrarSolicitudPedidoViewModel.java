@@ -113,7 +113,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@NotifyChange({"flete"})
 	public void seleccionar(){
 		if(cmbFlete.getValue().equals("Si"))
-			flete = compra.calcularFlete();
+			//flete = compra.calcularFlete();
+			;
 		else
 			flete = (float) 0.00;
 	}
