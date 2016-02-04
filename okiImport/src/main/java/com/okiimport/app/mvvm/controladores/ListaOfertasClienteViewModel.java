@@ -148,7 +148,7 @@ public class ListaOfertasClienteViewModel extends
 	public void enviarCliente(){
 		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
 		for(Oferta oferta : listaOfertas ){
-			if(oferta.getEstatus().equals(EEstatusOferta.SELECCION)){
+			if(oferta.getEstatus().equals(EEstatusOferta.SELECCIONADA)){
 				oferta.setPorctIva(configuracion.getPorctIva());
 				oferta.setPorctGanancia(configuracion.getPorctGanancia());
 				oferta.setEstatus(EEstatusOferta.ENVIADA);

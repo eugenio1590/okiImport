@@ -13,26 +13,50 @@
 			background-color: rgba(76,175,80,0.1);
 		}
 	</style>
+	<hbox hflex="1">
+		<grid>
+			<columns>
+				<column width="15%" />
+			</columns>
+			<rows>
+				<row>
+					<div>
+						<label value="Estado de la Oferta:" sclass="label-not-mandatory" />
+						<label id="estatusOferta${ oferta.nroOferta }" sclass="z-letra-grande" 
+							value="${oferta.estatus.nombre}"/>
+					</div>
+				</row>
+			</rows>
+		</grid>	
+		<div sclass="counter-div" hflex="1" tooltiptext="Acciones sobre la Oferta">
+			<hbox width="100%" sclass="header-button">
+			<button iconSclass="fa fa-check" label="Oferta" type="submit"
+				sclass="btn-primary" /><!-- onClick="@command('agregarRepuesto')" -->
+			<button iconSclass="fa fa-times" label="Oferta" type="submit"
+				sclass="btn-danger" />
+			</hbox>
+		</div>		
+	</hbox>
 	<panel sclass="borderGrid">
 		<panelchildren>
 			<listbox mold="paging" pagingPosition="top" pageSize="5"
 				emptyMessage="No Existen Repuestos Validos para esta Oferta"
-				model="@load(detallesOferta)">
+				model="@load(oferta.detalleOfertas)">
 				<!-- ARREGLAR TAMMAÑO DE LAS COLUMNAS -->
 				<listhead>
 					<listheader label="Proveedor" />
 					<listheader label="Ubicacion" tooltiptext="Pais/Estado-Ciudad" />
 					<listheader label="Repuesto" />
 					<listheader label="Marca" />
-					<listheader label="C. Solicitada" />
-					<listheader label="C. Ofrecida" />
+					<listheader label="Cant. Solict." width="7%" />
+					<listheader label="Cant. Ofert." width="7%"/>
 					<listheader label="Prec. Venta" />
 					<listheader label="Prec. Flete" />
-					<listheader label="Total" />
-					<listheader width="12%"/>
+					<listheader label="Costo" />
+					<listheader width="13%" align="center"/>
 				</listhead>
 				<template name="model">
-					<listitem>
+					<listitem id="row${ oferta.nroOferta }-${forEachStatus.index}">
 						<listcell
 							label="@bind(each.detalleCotizacion.cotizacion.proveedor.nombre)" />
 						<listcell
@@ -59,19 +83,38 @@
  										converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
 						<listcell>
 							<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-check green bigger-160"
-										tooltiptext="Aprobar" 
-										visible="@bind(!each.aprobado)"
-										onClick="@command('aprobar', detalleOferta = each, decorator = decorator,
-											row = self.parent.parent.parent, buttons = self.parent, button = self)"/>
-								<button iconSclass="z-icon-times red bigger-160"
+								<button id="acp${ oferta.nroOferta }-${forEachStatus.index}"
+										iconSclass="z-icon-check green bigger-160"
+										tooltiptext="Aprobar"
+										onClick="@command('aprobar', detalleOferta = each, decorator = decorator, button = self, id=forEachStatus.index)"/>
+								<button id="dec${ oferta.nroOferta }-${forEachStatus.index}"
+										iconSclass="z-icon-times red bigger-160"
 										tooltiptext="Invalidar" 
-										onClick="@command('invalidar', detalleOferta = each, decorator = decorator,
-											row = self.parent.parent.parent, buttons = self.parent, button = self)"/>
+										onClick="@command('invalidar', detalleOferta = each, decorator = decorator, button = self, id=forEachStatus.index)"/>
 							</div>
 						</listcell>
 					</listitem>
 				</template>
+				<listfoot>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter/>
+						<listfooter label="Total:">
+							<label value="@bind(oferta.calcularCosto())
+											@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+												converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
+						</listfooter>
+						<listfooter label="Util. Aprox.:" style="text-align: left;">
+							<label value="@bind(oferta.calcularTotal())
+                                   			@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+												converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
+						</listfooter>
+					</listfoot>
 			</listbox>
 		</panelchildren>
 	</panel>

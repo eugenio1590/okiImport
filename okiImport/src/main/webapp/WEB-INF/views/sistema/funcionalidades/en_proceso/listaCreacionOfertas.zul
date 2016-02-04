@@ -4,11 +4,11 @@
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaCreacionOfertasViewModel')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
-			<div class="modal-dialog modal-full"  height="auto" width="90%"><!-- modal-xs -->
+			<div class="modal-dialog modal-full"  height="auto" width="100%"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
 					<n:div class="modal-inner">
-						<tabbox sclass="tab-nav tab-nav-blue">
+						<tabbox sclass="tab-nav tab-nav-blue" maximalHeight="true">
 							<tabs id="tabsOfertas"/>
 							<tabpanels id="tabpOfertas"/>
 						</tabbox>
@@ -18,7 +18,7 @@
 							<button label="Enviar al Cliente" type="submit" sclass="btn-sm btn-primary"
 								onClick="@command('enviarCliente')" />
 							<button label="Cancelar" sclass="btn-sm btn-danger"
-							onClick="@command('cancelar')"/>
+								onClick="@command('cancelar')"/>
 						</div>
 					</n:div>
 				</div>

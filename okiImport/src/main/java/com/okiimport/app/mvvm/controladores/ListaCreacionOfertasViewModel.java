@@ -14,11 +14,10 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Div;
-import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 
+import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.DetalleCotizacion;
 import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.DetalleRequerimiento;
@@ -88,22 +87,20 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@NotifyChange({"ofertas"})
 	public void aprobar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
 			@BindingParam("decorator") DecoratorTabOferta decorator,
-			@BindingParam("row") Listitem row,
-			@BindingParam("buttons") Div buttons,
-			@BindingParam("button") Button button){
+			@BindingParam("button") Button button,
+			@BindingParam("id") Integer id){
 		detalleOferta.setAprobado(true);
-		decorator.updateButton(row, buttons, button, true);
+		decorator.updateDetalleOferta(id, button, true);
 	}
 	
 	@Command
 	@NotifyChange({"ofertas"})
 	public void invalidar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
 			@BindingParam("decorator") DecoratorTabOferta decorator,
-			@BindingParam("row") Listitem row,
-			@BindingParam("buttons") Div buttons,
-			@BindingParam("button") Button button){
+			@BindingParam("button") Button button,
+			@BindingParam("id") Integer id){
 		detalleOferta.setAprobado(false);
-		decorator.updateButton(row, buttons, button, false);
+		decorator.updateDetalleOferta(id, button, false);
 	}
 	
 	/**METODOS OVERRIDE*/
@@ -120,12 +117,13 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		Oferta oferta;
 		List<DetalleCotizacion> detallesCotizacion;
 		List<DetalleRequerimiento> keys = new ArrayList<DetalleRequerimiento>();
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
 		ofertas = new ArrayList<Oferta>();
 		listasDetalleCotizacion = sTransaccion.consultarDetallesCotizacion(requerimiento.getIdRequerimiento());
 		
 		while(ofertas.size()<3 && pos<=6){
 			//1. Creamos una oferta nueva
-			oferta = new Oferta(ofertas.size()+1);
+			oferta = new Oferta(ofertas.size()+1, configuracion.getPorctIva(), configuracion.getPorctGanancia());
 			
 			//2. Actualizamos el ordenamiento de cada una de las listas
 			for(DetalleRequerimiento key: listasDetalleCotizacion.keySet()){
