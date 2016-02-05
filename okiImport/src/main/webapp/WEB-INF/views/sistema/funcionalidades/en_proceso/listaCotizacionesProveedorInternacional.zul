@@ -11,7 +11,7 @@
 				<div sclass="modal-content">
 					<include
 						src="/WEB-INF/views/template/modal/titleModal.zul"
-						titulo="Proveedores con Cotizaciones Pendientes A Registrar" />
+						titulo="Proveedores Internacionales con Cotizaciones Pendientes A Registrar" />
 					<n:div class="modal-inner">
 					
 						<!-- LISTA COTIZACIONES PROVEEDOR INTERNACIONAL-->

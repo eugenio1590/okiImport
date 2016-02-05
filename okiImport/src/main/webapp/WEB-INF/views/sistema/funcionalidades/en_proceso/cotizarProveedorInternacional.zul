@@ -14,7 +14,7 @@
 						titulo="Cotizar Proveedor Internacional" />
 					<n:div class="modal-inner">
 
-						<borderlayout height="600px"  width="1300px">
+						<borderlayout height="550px"  width="1300px">
 							<east id="eastCotizacion" width="100%"
 								title="Cotizacion">
 								<div>
@@ -25,11 +25,11 @@
 											<columns>
 												<column
 													label="Fecha de Vencimiento: *" width="20%"
-													sclass="label-not-mandatory" />
+													/>
 												<column
-													label="Moneda: *" width="15%" sclass="label-not-mandatory" />
+													label="Moneda: *" width="15%" />
 												<column
-													label="Condiciones:" sclass="label-not-mandatory" />
+													 />
 											</columns>
 											<rows>
 												<row>
@@ -165,11 +165,11 @@
 													<listheader
 														label="Cant. Solicitada" width="13%" />
 													<listheader
-														label="Marca *" width="15%" />
+														label="Marca *" sclass="label-not-mandatory"  width="15%" />
 													<listheader
-														label="Cant. Cotizada *" width="13%" />
+														label="Cant. Cotizada *" sclass="label-not-mandatory"  width="13%" />
 													<listheader
-														label="Precio de Venta *" width="15%" />
+														label="Precio de Venta *" sclass="label-not-mandatory"  width="15%" />
 													<listheader
 														visible="@bind(!vm.tipoFlete.valor)" width="10%">
 														<label
@@ -328,7 +328,7 @@
 												value="* Campos Obligatorios" hflex="1" sclass="requerido" />
 										</div>
 									</hbox>
-									<n:div class="modal-footer">
+									
 										<div align="right">
 											<button id="btnLimpiar"
 												label="Limpiar" type="submit" onClick="@command('limpiar')"
@@ -338,7 +338,7 @@
 												onClick="@command('enviar', btnEnviar=self, btnLimpiar=btnLimpiar)"
 												sclass="btn-primary" />
 										</div>
-									</n:div>
+									
 								</div>
 							</east>
 						</borderlayout>
