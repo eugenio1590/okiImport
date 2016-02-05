@@ -274,6 +274,9 @@
 			<div hflex="1" vflex="1">
 				<include src="/WEB-INF/views/template/subTitle.zul" subtitulo="Datos de los Repuestos" />
 				<hbox width="100%" sclass="header-button">
+				
+				<fileupload iconSclass="fa fa-download" tooltiptext="Descargar archivo Carga Masiva" sclass="btn-info" />
+					
 					<fileupload iconSclass="fa fa-upload" tooltiptext="Agregar desde Archivo" sclass="btn-info" onUpload="@command('cargarArchivoRepuesto')"/>
 					<div align="right" hflex="1">
 						<button iconSclass="fa fa-plus" label="Repuesto" type="submit"
