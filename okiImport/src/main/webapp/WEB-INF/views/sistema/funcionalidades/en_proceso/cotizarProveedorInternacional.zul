@@ -71,10 +71,12 @@
 															</bandpopup>
 														</bandbox>
 													</vbox>
+													<vbox hflex="1">
 													<textbox
 														id="txtCondicion"
 														value="@bind(vm.cotizacionSelecionada.condiciones)"
-														rows="3" width="100%" sclass="no_rezise" />
+														rows="3" width="100%" sclass="form-control" />
+														</vbox>
 												</row>
 											</rows>
 										</grid>
