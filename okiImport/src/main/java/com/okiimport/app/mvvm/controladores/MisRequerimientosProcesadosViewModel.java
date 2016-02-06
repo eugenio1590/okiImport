@@ -86,20 +86,6 @@ public class MisRequerimientosProcesadosViewModel extends AbstractMisRequerimien
 		crearModal(BasePackageSistemaFunc+"en_proceso/listaCotizacionesAnalista.zul", parametros);
 	}
 	
-	/**COMMAND*/
-	/*
-	 * Descripcion: 
-	 * @param requerimiento: requerimiento seleccionado
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	public void configurarListaCotizaciones(@BindingParam("requerimiento") final Requerimiento requerimiento){
-		requerimiento.setDetalleRequerimientos(consultarDetallesRequerimiento(requerimiento));
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("requerimiento", requerimiento);
-		crearModal(BasePackageSistemaFunc+"en_proceso/configuracionListaCotizaciones.zul", parametros);
-	}
 
 	/**METODOS OVERRIDE*/
 	@Override
