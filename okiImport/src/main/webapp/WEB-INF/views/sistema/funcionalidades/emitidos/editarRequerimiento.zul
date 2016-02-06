@@ -295,9 +295,7 @@
 					</n:div>
 					<n:div class="modal-footer">
 						<hbox width="100%" visible="@bind(vm.editar)">
-							<div hflex="1">
-								<label value="* Campos Obligatorios" hflex="1" sclass="requerido" />
-							</div>
+							<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 							<div align="right">
 								<button id="btnLimpiar" label="Limpiar" type="submit"
 									onClick="@command('limpiar')" sclass="btn-sm btn-info" />
