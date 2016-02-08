@@ -23,10 +23,12 @@ import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.mvvm.resource.decorator.ofertas.DecoratorTabOferta;
 import com.okiimport.app.mvvm.resource.estrategia.detalles_cotizacion.ResolveEstrategiaSortDetalleCotizacion;
+import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
 import com.okiimport.app.service.web.SLocalizacion;
 
@@ -40,6 +42,9 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@BeanInjector("sLocalizacion")
 	private SLocalizacion sLocalizacion;
 	
+	@BeanInjector("mailCliente")
+	private MailCliente mailCliente;
+	
 	//GUI
 	@Wire("#tabsOfertas")
 	private Tabs tabsOfertas;
@@ -49,16 +54,18 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	
 	//Atributos
 	private ResolveEstrategiaSortDetalleCotizacion resolve;
-	private Map<DetalleRequerimiento, List<DetalleCotizacion>> listasDetalleCotizacion; //Servicio
+	private Map<DetalleRequerimiento, List<DetalleCotizacion>> listasDetalleCotizacion;
 	private List<DetalleOferta> detallesOfertas;
 	private List<Oferta> ofertas;
 	private Requerimiento requerimiento;
 	
 	private int cantOfertas;
+	private boolean guardar;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
-	 * Parametros: @param view: aprobarCotizaciones.zul 
+	 * Parametros: @param view: listaCreacionOfertas.zul
+	 * @param requerimiento: requerimiento seleccionado para la creacion de oferta
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
@@ -66,6 +73,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
+		this.guardar = false;
 		this.requerimiento = requerimiento;
 		this.cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
 		this.resolve = new ResolveEstrategiaSortDetalleCotizacion(sLocalizacion);
@@ -75,14 +83,29 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	/**COMMAND*/
 	@Command
 	public void cancelar(){
-		
+		//Verificar luego
+		closeModal();
 	}
 	
 	@Command
 	public void enviarCliente(){
-		
+		if(validarOfertas()){
+			if(guardarOfertas(true)){
+				//Cambiar el estatus del requerimiento
+				this.mailCliente.enviarOfertas(requerimiento, mailService);
+			}
+			closeModal();
+		}
 	}
 	
+	@Command
+	public void guardarEnviarLuego(){
+		if(validarOfertas()){
+			guardarOfertas(false);
+			closeModal();
+		}
+	}
+
 	@Command
 	@NotifyChange({"ofertas"})
 	public void aprobar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
@@ -108,6 +131,9 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@Command
 	public void closeModal(){
 		super.closeModal();
+		if(guardar){
+			this.mostrarMensaje("Informacion", "Las ofertas fueron guardadas con exito", null, null, null, null);
+		}
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -162,18 +188,27 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2);
 				decorator.agregarOferta(this);
 			}
-		
-//		detallesOfertas = new ArrayList<DetalleOferta>();
-//		listasDetalleCotizacion = sTransaccion.consultarDetallesCotizacion(requerimiento.getIdRequerimiento());
-//		for(DetalleRequerimiento key: listasDetalleCotizacion.keySet()){
-//			Oferta oferta = new Oferta();
-//			for(DetalleCotizacion detallleC : listasDetalleCotizacion.get(key)){
-//				DetalleOferta detalleOferta = new DetalleOferta(detallleC);
-//				oferta.addDetalleOferta(detalleOferta );
-//				detallesOfertas.add(detalleOferta);
-//			}
-//			ofertas.add(oferta);
-//		}
+	}
+	
+	private boolean validarOfertas() {
+		if(ofertas.isEmpty())
+			for(Oferta oferta : ofertas)
+				if(oferta.isCreada()){
+					mostrarMensaje("Error", "Algunas ofertas no se han completado.", null, null, null, null);
+					return false;
+				}
+		return true;
+	}
+	
+	private boolean guardarOfertas(boolean enviar){
+		boolean enviada = false;
+		for(Oferta oferta: ofertas){
+			enviada |= oferta.isInvalida() || oferta.enviar();
+			if(!oferta.isInvalida() && enviar)
+				oferta.setEstatus(EEstatusOferta.ENVIADA);
+			sTransaccion.actualizarOferta(oferta);
+		}
+		return enviada;
 	}
 
 	/**GETTERS Y SETTERS*/
@@ -191,6 +226,14 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 
 	public void setsLocalizacion(SLocalizacion sLocalizacion) {
 		this.sLocalizacion = sLocalizacion;
+	}
+
+	public MailCliente getMailCliente() {
+		return mailCliente;
+	}
+
+	public void setMailCliente(MailCliente mailCliente) {
+		this.mailCliente = mailCliente;
 	}
 
 	public List<Oferta> getOfertas() {
