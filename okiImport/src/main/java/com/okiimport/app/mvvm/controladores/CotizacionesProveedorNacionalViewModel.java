@@ -198,14 +198,11 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@SuppressWarnings("unchecked")
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
 		cotizacionSelecionada = cotizacion;
-		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(new DetalleCotizacion(), (int) cotizacion.getIdCotizacion(), 
-				null, null, 0, -1);
-		listaDetalleCotizacion = (List<DetalleCotizacion>) parametros.get("detallesCotizacion");
+		listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((int) cotizacion.getIdCotizacion());
 		limpiarCotizacionSeleccionada();
 		mostrarBotones();
 		configurarAtributosCotizacion(false);

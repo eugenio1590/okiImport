@@ -87,7 +87,6 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("cotizacion") Cotizacion cotizacion,
@@ -102,9 +101,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		cambiarMonedas(0);
 		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacionSelecionada.getIdCotizacion());	
 		
-		Map<String, Object> parametros = sTransaccion.consultarDetallesCotizacion(null, (int) cotizacion.getIdCotizacion(), 
-				null, null, 0, -1);
-		listaDetalleCotizacion = (List<DetalleCotizacionInternacional>) parametros.get("detallesCotizacion");
+		listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((Integer) cotizacion.getIdCotizacion());
 		prepararListaDetalleCotizacion();
 		limpiarCotizacionSeleccionada();
 		
