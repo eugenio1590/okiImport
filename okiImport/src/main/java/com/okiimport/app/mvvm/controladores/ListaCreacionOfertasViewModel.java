@@ -59,7 +59,6 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	private List<Oferta> ofertas;
 	private Requerimiento requerimiento;
 	
-	private int cantOfertas;
 	private boolean guardar;
 	
 	/**
@@ -75,8 +74,8 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		super.doAfterCompose(view);
 		this.guardar = false;
 		this.requerimiento = requerimiento;
-		this.cantOfertas = sTransaccion.consultarCantOfertasCreadasPorRequermiento(requerimiento.getIdRequerimiento());
 		this.resolve = new ResolveEstrategiaSortDetalleCotizacion(sLocalizacion);
+		this.ofertas = sTransaccion.consultarOfertasNoEnviada(requerimiento);
 		crearOfertas();
 	}
 	
@@ -90,7 +89,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@Command
 	public void enviarCliente(){
 		if(validarOfertas()){
-			if(guardarOfertas(true)){
+			if(guardar=guardarOfertas(true)){
 				//Cambiar el estatus del requerimiento
 				this.mailCliente.enviarOfertas(requerimiento, mailService);
 			}
@@ -101,7 +100,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@Command
 	public void guardarEnviarLuego(){
 		if(validarOfertas()){
-			guardarOfertas(false);
+			guardar=guardarOfertas(false);
 			closeModal();
 		}
 	}
@@ -132,24 +131,29 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	public void closeModal(){
 		super.closeModal();
 		if(guardar){
-			this.mostrarMensaje("Informacion", "Las ofertas fueron guardadas con exito", null, null, null, null);
+			mostrarMensaje("Informacion", "Las ofertas fueron guardadas con exito", null, null, null, null);
+			ejecutarGlobalCommand("cambiarRequerimientos", null);
 		}
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	@SuppressWarnings("unchecked")
 	private void crearOfertas() {
+		Integer cantOfertas = ofertas.size();
 		int pos = cantOfertas + 1; //rectificar calculo con los estatus
 		Oferta oferta;
 		List<DetalleCotizacion> detallesCotizacion;
 		List<DetalleRequerimiento> keys = new ArrayList<DetalleRequerimiento>();
 		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
-		ofertas = new ArrayList<Oferta>();
-		listasDetalleCotizacion = sTransaccion.consultarDetallesCotizacion(requerimiento.getIdRequerimiento());
 		
-		while(ofertas.size()<3 && pos<=6){
+		if(ofertas==null || ofertas.isEmpty())
+			ofertas = new ArrayList<Oferta>();
+		
+		listasDetalleCotizacion = sTransaccion.consultarDetallesCotizacionEmitidos(requerimiento.getIdRequerimiento());
+		
+		while(cantOfertas<3 && pos<=6 && !listasDetalleCotizacion.isEmpty()){
 			//1. Creamos una oferta nueva
-			oferta = new Oferta(ofertas.size()+1, configuracion.getPorctIva(), configuracion.getPorctGanancia());
+			oferta = new Oferta(ofertas.size()+1, configuracion.getPorctIva(), configuracion.getPorctGanancia(), false);
 			
 			//2. Actualizamos el ordenamiento de cada una de las listas
 			for(DetalleRequerimiento key: listasDetalleCotizacion.keySet()){
@@ -191,21 +195,27 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	}
 	
 	private boolean validarOfertas() {
-		if(ofertas.isEmpty())
+		if(!ofertas.isEmpty()){
 			for(Oferta oferta : ofertas)
 				if(oferta.isCreada()){
 					mostrarMensaje("Error", "Algunas ofertas no se han completado.", null, null, null, null);
 					return false;
 				}
-		return true;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private boolean guardarOfertas(boolean enviar){
 		boolean enviada = false;
 		for(Oferta oferta: ofertas){
 			enviada |= oferta.isInvalida() || oferta.enviar();
-			if(!oferta.isInvalida() && enviar)
-				oferta.setEstatus(EEstatusOferta.ENVIADA);
+			if(enviar)
+				if(!oferta.isInvalida())
+					oferta.setEstatus(EEstatusOferta.ENVIADA);
+				else
+					oferta.setEstatus(EEstatusOferta.RECHAZADA);
 			sTransaccion.actualizarOferta(oferta);
 		}
 		return enviada;

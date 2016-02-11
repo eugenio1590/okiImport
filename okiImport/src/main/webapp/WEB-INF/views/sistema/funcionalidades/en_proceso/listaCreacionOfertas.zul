@@ -15,10 +15,12 @@
 					</n:div>
 					<n:div class="modal-footer">
 						<div align="right" hflex="1">
-							<button label="Enviar al Cliente" type="submit" sclass="btn-sm btn-primary"
-								onClick="@command('enviarCliente')" />
 							<button label="Cancelar" sclass="btn-sm btn-danger"
 								onClick="@command('cancelar')"/>
+							<button label="Guardar y Enviar Luego" type="submit" sclass="btn-sm btn-primary"
+								onClick="@command('guardarEnviarLuego')" />
+							<button label="Enviar al Cliente" type="submit" sclass="btn-sm btn-primary"
+								onClick="@command('enviarCliente')" />
 						</div>
 					</n:div>
 				</div>

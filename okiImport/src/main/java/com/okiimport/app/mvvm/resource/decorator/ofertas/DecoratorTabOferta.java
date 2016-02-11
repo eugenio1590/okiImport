@@ -56,7 +56,19 @@ public class DecoratorTabOferta {
 		include.setAttribute("oferta", oferta);
 		include.setAttribute("decorator", this);
 		newPanel.appendChild(include);
-		tabpanels.appendChild(newPanel);
+		tabpanels.appendChild(newPanel);		
+	}
+	
+	public void updateGrid(){
+		if(oferta.getUpdateForDecorator()){
+			boolean acept;
+			List<DetalleOferta> detalles = oferta.getDetalleOfertas();
+			for(int i=0; i<detalles.size();i++){
+				acept = detalles.get(i).getAprobado();
+				updateRow(i, acept);
+				updateButtons(i, acept);
+			}
+		}
 	}
 	
 	public void updateDetalleOferta(Integer id, Button buttonAction, boolean acept){	
@@ -84,8 +96,7 @@ public class DecoratorTabOferta {
 		for(int i=0; i<detalles.size(); i++){
 			detalles.get(i).setAprobado(acept);
 			updateRow(i, acept);
-			updateButton("acp", i, (acept) ? false : true);
-			updateButton("dec", i, (acept) ? true : false);
+			updateButtons(i, acept);
 		}
 		updateEstado(oferta.getEstatus().getNombre());
 	}
@@ -99,6 +110,11 @@ public class DecoratorTabOferta {
 		StringBuilder builder = new StringBuilder("row").append(oferta.getNroOferta()).append("-").append(id);
 		Listitem row = findComponent(builder.toString());
 		row.setSclass((acept) ? LISTITEM_GREEN : LISTITEM_RED);
+	}
+	
+	private void updateButtons(Integer id, boolean visible){
+		updateButton("acp", id, (visible) ? false : true);
+		updateButton("dec", id, (visible) ? true : false);
 	}
 	
 	private void updateButton(String type, Integer id, boolean visible){

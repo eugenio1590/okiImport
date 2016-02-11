@@ -41,7 +41,8 @@
 		<panelchildren>
 			<listbox mold="paging" pagingPosition="top" pageSize="5"
 				emptyMessage="No Existen Repuestos Validos para esta Oferta"
-				model="@load(oferta.detalleOfertas)">
+				model="@load(oferta.detalleOfertas)"
+				onAfterRender="decorator.updateGrid()">
 				<listhead>
 					<listheader label="Proveedor" />
 					<listheader label="Ubicacion" tooltiptext="Pais/Estado-Ciudad" />
