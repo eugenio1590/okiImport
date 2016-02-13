@@ -86,6 +86,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.compra.setObservacion(null);
 		this.tipoFlete = listaTipoFlete.get(0);
 		this.formaPago = listaFormaPago.get(0);
+		this.flete = (float) 0.00;
 		super.cleanConstraintForm();
 	}
 	
@@ -170,7 +171,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de crédito", true));		
-		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de débito", true));		
+//		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de débito", true));		
 	}
 	/**
 	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
@@ -248,6 +249,9 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.flete = flete;
 	}   
 	
-	
+	@Command
+	public void abrirInterfazPago(final Map<String, Object> parametros){
+		crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
+	}
 	
 }

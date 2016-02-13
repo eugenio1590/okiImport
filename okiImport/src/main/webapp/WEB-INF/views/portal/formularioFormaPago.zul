@@ -1,0 +1,116 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPagoFactura" border="none" height="0px" 
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarPagoFacturaViewModel')">
+		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Pago de Factura" />
+					<n:div class="modal-inner">
+						<groupbox closable="false">
+							<!-- DATOS DEL PAGO -->
+							<grid>
+								<columns>
+									<column width="15%"/>
+									<column width="20%"/>
+									<column width="25%"/>
+									<column width="20%"/>
+									<column />
+								</columns>
+							</grid>
+							
+							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
+								<tabs>
+									<tab sclass="waves-color-blue waves-effect">
+										<label value="Información general" />
+									</tab>
+								</tabs>
+								<tabpanels>
+									<tabpanel>
+										<grid>
+											<columns>
+												<column width="20%" />
+												<column  width="25%"/>
+												<column  width="25%"/>
+												<column  width="20%"/>
+											</columns>
+										<rows>
+										<row>
+											<label value="Nombre y apellido:" sclass="label-not-mandatory" />
+											<textbox width="80%"/>
+											<label value="Tipo de documento:" sclass="label-not-mandatory" />
+											<hbox>
+												<combobox id="cmbTipoDocumento" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="80%"
+													selectedItem="@bind(vm.tipoDocumento)"
+													value="@bind(vm.tipoDocumento.nombre)" 
+													model="@load(vm.listaTipoDocumentos)">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+										</row>
+										<row>
+											<label value="Nro. de documento" sclass="label-not-mandatory" />
+											<textbox placeholder="Ej.: V20234124" width="80%"/>
+<!-- 											<hbox> -->
+<!-- 												<combobox id="cmbNacionalidad" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="20%" -->
+<!-- 													selectedItem="@bind(vm.nacionalidad)" -->
+<!-- 													value="@bind(vm.nacionalidad.nombre)"  -->
+<!-- 													model="@load(vm.listaNacionalidad)"> -->
+<!-- 													<template name="model"> -->
+<!-- 														<comboitem label="@bind(each.nombre)" /> -->
+<!-- 													</template> -->
+<!-- 												</combobox> -->
+<!-- 											</hbox> -->
+											
+										</row>
+										
+										<row>
+											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
+											<textbox width="80%" placeholder="Ej.: 0015 2225 2225 3336"/>
+											<label value="Tipo de tarjeta:" sclass="label-not-mandatory" />
+											<hbox>
+												<combobox id="cmbTipoTarjeta" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="80%"
+													selectedItem="@bind(vm.tipoTarjeta)"
+													value="@bind(vm.tipoTarjeta.nombre)" 
+													model="@load(vm.listaTipoTarjeta)">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+											
+										</row>
+										<row>
+											<label value="Fecha de vencimiento:" sclass="label-not-mandatory" />
+											<datebox width="40%"  format="@bind(vm.formatDate)" placeholder="dd/mm/yyyy" />
+											<label value="Últimos 3 digitos:" sclass="label-not-mandatory" />
+											<textbox width="90%" placeholder="Ej.: 541" />
+											
+										</row>
+										
+										</rows>
+										</grid>
+									</tabpanel>
+									
+								</tabpanels>
+							</tabbox>
+							
+							
+						
+						</groupbox>
+					</n:div>
+					<n:div class="modal-footer">
+						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
+							onClick="@command('limpiar')"/>
+						<button label="Enviar" sclass="btn-sm btn-primary"
+							onClick="@command('Enviar', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+						<button label="Cancelar" sclass="btn-sm btn-danger"
+							onClick="@command('closeModal')"/>
+					</n:div>
+				</div>
+			</div>
+		</n:div>
+	</window>
+</zk>
