@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -250,8 +251,22 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	}   
 	
 	@Command
-	public void abrirInterfazPago(final Map<String, Object> parametros){
-		crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
+	public void abrirInterfazPago(Map<String, Object> paramets){
+		final Float c = this.compra.calcularTotal();
+		super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+			
+			@Override
+			public void onEvent(Event event) throws Exception {
+				Messagebox.Button button = (Messagebox.Button) event.getData();
+				if (button == Messagebox.Button.YES) {
+					Map<String, Object> parametros = new HashMap<String, Object>();
+					parametros.put("totalFactura", c);
+					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
+				}else
+					closeModal();
+			}
+		}, null);
 	}
 	
 }

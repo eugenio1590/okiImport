@@ -36,76 +36,59 @@
 											</columns>
 										<rows>
 										<row>
-											<label value="Nombre y apellido:" sclass="label-not-mandatory" />
-											<textbox width="80%"/>
+											<label value="Correo electrónico:" sclass="label-not-mandatory" />
+											<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"/>
+											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
+											<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"/>
+										</row>
+										
+										<row>
+											<label value="Código de seguridad:" sclass="label-not-mandatory" />
+											<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" />
+											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtMesVence" width="95%" placeholder="Ej.: Febrero"/>
+										</row>	
+											
+										<row>
+											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"/>
+											<label value="Nombre del titular de la tarjeta:" sclass="label-not-mandatory" />
+											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez" />
+										</row>	
+										<row>
 											<label value="Tipo de documento:" sclass="label-not-mandatory" />
 											<hbox>
-												<combobox id="cmbTipoDocumento" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="80%"
+												<combobox id="cmbTipoDocumento" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="100%"
 													selectedItem="@bind(vm.tipoDocumento)"
 													value="@bind(vm.tipoDocumento.nombre)" 
-													model="@load(vm.listaTipoDocumentos)">
+													model="@load(vm.listaTipoDocumentos)"
+													placeholder="Seleccione">
 													<template name="model">
 														<comboitem label="@bind(each.nombre)" />
 													</template>
 												</combobox>
 											</hbox>
-										</row>
-										<row>
 											<label value="Nro. de documento" sclass="label-not-mandatory" />
-											<textbox placeholder="Ej.: V20234124" width="80%"/>
-<!-- 											<hbox> -->
-<!-- 												<combobox id="cmbNacionalidad" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="20%" -->
-<!-- 													selectedItem="@bind(vm.nacionalidad)" -->
-<!-- 													value="@bind(vm.nacionalidad.nombre)"  -->
-<!-- 													model="@load(vm.listaNacionalidad)"> -->
-<!-- 													<template name="model"> -->
-<!-- 														<comboitem label="@bind(each.nombre)" /> -->
-<!-- 													</template> -->
-<!-- 												</combobox> -->
-<!-- 											</hbox> -->
-											
-										</row>
-										
-										<row>
-											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
-											<textbox width="80%" placeholder="Ej.: 0015 2225 2225 3336"/>
-											<label value="Tipo de tarjeta:" sclass="label-not-mandatory" />
-											<hbox>
-												<combobox id="cmbTipoTarjeta" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="80%"
-													selectedItem="@bind(vm.tipoTarjeta)"
-													value="@bind(vm.tipoTarjeta.nombre)" 
-													model="@load(vm.listaTipoTarjeta)">
-													<template name="model">
-														<comboitem label="@bind(each.nombre)" />
-													</template>
-												</combobox>
-											</hbox>
-											
+											<textbox id="txtNroDoc" placeholder="Ej.: V20234124" width="95%"/>
 										</row>
 										<row>
-											<label value="Fecha de vencimiento:" sclass="label-not-mandatory" />
-											<datebox width="40%"  format="@bind(vm.formatDate)" placeholder="dd/mm/yyyy" />
-											<label value="Últimos 3 digitos:" sclass="label-not-mandatory" />
-											<textbox width="90%" placeholder="Ej.: 541" />
-											
+											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
+<!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
+											<label value="@bind(vm.totalFactura)" sclass="label-not-mandatory" />
 										</row>
-										
+											
 										</rows>
 										</grid>
 									</tabpanel>
-									
 								</tabpanels>
 							</tabbox>
-							
-							
-						
 						</groupbox>
 					</n:div>
 					<n:div class="modal-footer">
 						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
 							onClick="@command('limpiar')"/>
-						<button label="Enviar" sclass="btn-sm btn-primary"
-							onClick="@command('Enviar', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+						<button label="Pagar" sclass="btn-sm btn-primary"
+							onClick="@command('registrarPago', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 						<button label="Cancelar" sclass="btn-sm btn-danger"
 							onClick="@command('closeModal')"/>
 					</n:div>
