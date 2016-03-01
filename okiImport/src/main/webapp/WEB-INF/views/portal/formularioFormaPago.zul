@@ -1,0 +1,99 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window id="winPagoFactura" border="none" height="0px" 
+		apply="org.zkoss.bind.BindComposer" closable="true"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarPagoFacturaViewModel')">
+		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Pago de Factura" />
+					<n:div class="modal-inner">
+						<groupbox closable="false">
+							<!-- DATOS DEL PAGO -->
+							<grid>
+								<columns>
+									<column width="15%"/>
+									<column width="20%"/>
+									<column width="25%"/>
+									<column width="20%"/>
+									<column />
+								</columns>
+							</grid>
+							
+							<tabbox maximalHeight="true" sclass="tab-nav tab-nav-blue">
+								<tabs>
+									<tab sclass="waves-color-blue waves-effect">
+										<label value="Información general" />
+									</tab>
+								</tabs>
+								<tabpanels>
+									<tabpanel>
+										<grid>
+											<columns>
+												<column width="20%" />
+												<column  width="25%"/>
+												<column  width="25%"/>
+												<column  width="20%"/>
+											</columns>
+										<rows>
+										<row>
+											<label value="Correo electrónico:" sclass="label-not-mandatory" />
+											<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"/>
+											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
+											<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"/>
+										</row>
+										
+										<row>
+											<label value="Código de seguridad:" sclass="label-not-mandatory" />
+											<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" />
+											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtMesVence" width="95%" placeholder="Ej.: Febrero"/>
+										</row>	
+											
+										<row>
+											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"/>
+											<label value="Nombre del titular de la tarjeta:" sclass="label-not-mandatory" />
+											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez" />
+										</row>	
+										<row>
+											<label value="Tipo de documento:" sclass="label-not-mandatory" />
+											<hbox>
+												<combobox id="cmbTipoDocumento" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="100%"
+													selectedItem="@bind(vm.tipoDocumento)"
+													value="@bind(vm.tipoDocumento.nombre)" 
+													model="@load(vm.listaTipoDocumentos)"
+													placeholder="Seleccione">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+											</hbox>
+											<label value="Nro. de documento" sclass="label-not-mandatory" />
+											<textbox id="txtNroDoc" placeholder="Ej.: V20234124" width="95%"/>
+										</row>
+										<row>
+											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
+<!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
+											<label value="@bind(vm.totalFactura)" sclass="label-not-mandatory" />
+										</row>
+											
+										</rows>
+										</grid>
+									</tabpanel>
+								</tabpanels>
+							</tabbox>
+						</groupbox>
+					</n:div>
+					<n:div class="modal-footer">
+						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
+							onClick="@command('limpiar')"/>
+						<button label="Pagar" sclass="btn-sm btn-primary"
+							onClick="@command('registrarPago', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+						<button label="Cancelar" sclass="btn-sm btn-danger"
+							onClick="@command('closeModal')"/>
+					</n:div>
+				</div>
+			</div>
+		</n:div>
+	</window>
+</zk>

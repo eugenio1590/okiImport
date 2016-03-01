@@ -177,8 +177,6 @@
                                    		<listfooter />
                                    		<listfooter />
                                    		<listfooter />
-<!--                                    		<listfooter /> -->
-<!--                                    		<listfooter /> -->
                                    		<listfooter label="Sub Total:" width="60%">
                                    			<label 	value="@bind(vm.compra.calcularSubTotal())
                                     					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,  
@@ -200,7 +198,7 @@
 						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
 							onClick="@command('limpiar')"/>
 						<button label="Enviar" sclass="btn-sm btn-primary"
-							onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+							onClick="@command('abrirInterfazPago', btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 						<button label="Cancelar" sclass="btn-sm btn-danger"
 							onClick="@command('closeModal')"/>
 					</n:div>
