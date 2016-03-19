@@ -50,6 +50,10 @@ p.card-heading {
 	padding-bottom: 1%;
 }
 
+.modal-dialog {
+	padding: 30px 16px!important;
+}
+
 .panel-footer.z-hbox table tbody tr td {
 	padding-top: 1%;
 	padding-bottom: 1%;
@@ -160,11 +164,15 @@ div .card-header .card-inner .card-heading {
 }
 
 /**FUENTES PARA TITULOS*/
-.z-groupbox-content legend {
+.z-groupbox-content legend, .z-include legend {
     font-size: 18px;
     line-height: 20px;
     margin: 0 20px 14px;
     color: #2196f3;
+}
+
+.modal-inner .z-include legend {
+    margin-top: 10px;
 }
 
 /*LOGIN*/

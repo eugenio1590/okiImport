@@ -2,6 +2,11 @@
 	background-color: white;
 }
 
+.scroll-grid .z-listbox-body {
+	overflow: none!important;
+	overflow-y: scroll!important;
+}
+
 .bigger-130 {
 	font-size: 130%
 }

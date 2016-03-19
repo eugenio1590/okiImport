@@ -13,7 +13,7 @@
 						titulo="Cotizar Proveedor Internacional" />
 					<n:div class="modal-inner">
 
-						<borderlayout height="460px">
+						<borderlayout height="480px">
 							<east id="eastCotizacion" width="100%"
 								title="Cotizacion">
 								<div>
@@ -133,15 +133,13 @@
 											</hbox>
 										</groupbox>
 									</div>
+									
+									<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos a Cotizar"/>
 									<panel sclass="borderGrid">
 										<panelchildren>
-											<listbox id="gridDetalleCotizacion" height="80%"
-												mold="paging" pageSize="4"
+											<listbox id="gridDetalleCotizacion" sclass="scroll-grid" vflex="min"
+												mold="paging" pageSize="4" pagingPosition="top"
 												model="@load(vm.listaDetalleCotizacion)">
-												<auxhead>
-													<auxheader colspan="12" align="center"
-														label="Repuestos a Cotizar" />
-												</auxhead>
 												<listhead>
 													<listheader
 														label="Codigo OEM" width="7%" />
