@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.zkoss.bind.BindUtils;
@@ -8,6 +9,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Messagebox;
 
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -20,7 +22,16 @@ public abstract class AbstractCargaMasivaViewModel extends AbstractRequerimiento
 	//Atributos
 	protected String ultimoArchivo="";
 	
-	/**METODOS PRIVADOS DE LA CLASE*/
+	/**METODOS PROPIOS DE LA CLASE*/
+	protected void download(String path){
+		try {
+			Filedownload.save(path, null);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	protected void onUpload(final ProcesarDatosEstrategy<?> estrategia, final UploadEvent event, final String... notifyChange){
 		Component compt = event.getTarget();
 		try {

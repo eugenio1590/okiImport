@@ -268,6 +268,11 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		super.onUpload(new PDDetalleRequerimientoEstrategy(), event, "requerimiento");
 	}
 	
+	@Command
+	public void descargarArchivoRepuesto(){
+		super.download(BaseResources+"documentos/Formato Cargar Requerimientos.rar");
+	}
+	
 	/**METODOS OVERRIDE*/
 	/**CARGA MASIVA*/
 	@Override

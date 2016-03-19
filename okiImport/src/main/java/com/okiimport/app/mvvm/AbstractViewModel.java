@@ -77,6 +77,7 @@ public abstract class AbstractViewModel {
 	private static final SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	
 	protected static final String BaseApp = "/WEB-INF/views/";
+	protected static final String BaseResources = "/resources/";
 	
 	private Component form;
 	
