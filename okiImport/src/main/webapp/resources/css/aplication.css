@@ -110,6 +110,10 @@ div .card-header .card-inner .card-heading {
 	font-size: inherit;
 }
 
+.modal-content .no_rezise.notas {
+	font-size: 12px!important;
+}
+
 /* FUENTE PARA LAS LETRAS DE LA VENTANA*/
 .z-window-header {
 	color: white;

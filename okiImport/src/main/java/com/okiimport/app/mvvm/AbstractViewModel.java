@@ -250,8 +250,9 @@ public abstract class AbstractViewModel {
 	 * */
 	@Command
 	public void openRegionWest(@BindingParam("west") LayoutRegion west, @BindingParam("east") LayoutRegion east,
-			@Default("62.5%") @BindingParam("baseW") String baseW){
-		String width = (west.isOpen()) ? baseW : "95%";
+			@Default("62.5%") @BindingParam("baseW") String baseW,
+			@Default("97%") @BindingParam("baseWC") String baseWC){
+		String width = (west.isOpen()) ? baseW : baseWC;
 		east.setWidth(width);
 	}
 	
