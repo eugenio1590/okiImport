@@ -191,22 +191,26 @@
 														label="Repuestos a Cotizar" />
 												</auxhead>
 												<listhead>
-													<listheader label="Codigo OEM" width="15%" sclass="label-not-mandatory"  />
+													<listheader label="Codigo OEM" width="10%" sclass="label-not-mandatory"  />
 													<listheader label="Repuesto" sclass="label-not-mandatory"  />
-													<listheader label="Cant. Solicitada" width="13%" />
+													<listheader label="Cant. Solict." width="10%" />
 													<listheader width="15%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Marca"/>
+													</listheader>
+													<listheader width="14%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+															field="Tipo Reps."/>
 													</listheader>
 													<listheader width="15%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Cant. Cotizada"/>
 													</listheader>
-													<listheader width="15%">
+													<listheader width="11%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Pcio. Venta"/>
 													</listheader>
-													<listheader visible="@bind(vm.tipoFlete.valor)">
+													<listheader width="15%" visible="@bind(vm.tipoFlete.valor)">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Pcio. Flete (**)"/>
 													</listheader>
@@ -226,6 +230,15 @@
 																	constraint="@bind(vm.notEmptyValidator)"
 																	tooltiptext="Marca del Repuesto" />
 															</vbox>
+														</listcell>
+														<listcell>
+															<combobox readonly="true" width="100%"
+																model="@load(vm.listaTipoRepuesto)"
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)">
+																<template name="model">
+																	<comboitem label="@bind(each.nombre)" />
+																</template>
+															</combobox>
 														</listcell>
 														<listcell>
 															<spinner

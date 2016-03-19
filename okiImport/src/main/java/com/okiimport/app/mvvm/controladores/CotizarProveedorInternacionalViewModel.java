@@ -75,6 +75,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	private Moneda monedaSeleccionada;
 	private List<ModeloCombo<Boolean>> tiposFlete;
 	private List<ModeloCombo<Boolean>> formasEnvio;
+	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
 	private ModeloCombo<Boolean> tipoFlete;
 	private ModeloCombo<Boolean> formaEnvio;
 	private String titulo;
@@ -108,6 +109,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 		formasEnvio = llenarFormasDeEnvio();
 		formaEnvio = formasEnvio.get(0);
 		
+		listaTipoRepuesto = llenarListaTipoRepuestoProveedor();
 		tiposFlete = llenarTiposFleteInternacional();
 		tipoFlete = tiposFlete.get(0);
 		
@@ -293,6 +295,19 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	}
 	
 	/**
+	 * Descripcion: Permitira asignar el varlo del combo seleccionado del tipo de repuesto al detalle de cotizacion
+	 * Parametros: @param detalle: objeto detalle de cotizacion escogido
+	 * @param item: item del combo seleccionado
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void selectTipoRepuesto(@BindingParam("detalle") DetalleCotizacion detalle, 
+			@BindingParam("item") ModeloCombo<Boolean> item){
+		detalle.setTipoRepuesto(item.getValor());
+	}
+	
+	/**
 	 * Descripcion: Carga nuevamente las listas al cerrar la pantalla
 	 * Parametros: @param view: cotizarProveedorInternacional.zul 
 	 * Retorno: Ninguno
@@ -411,6 +426,14 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 
 	public void setMonedaSeleccionada(Moneda monedaSeleccionada) {
 		this.monedaSeleccionada = monedaSeleccionada;
+	}
+	
+	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
+		return listaTipoRepuesto;
+	}
+
+	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
+		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
 
 	public List<ModeloCombo<Boolean>> getTiposFlete() {

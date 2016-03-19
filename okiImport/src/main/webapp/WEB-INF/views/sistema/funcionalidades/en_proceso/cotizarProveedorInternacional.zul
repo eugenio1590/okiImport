@@ -139,53 +139,57 @@
 												mold="paging" pageSize="4"
 												model="@load(vm.listaDetalleCotizacion)">
 												<auxhead>
-													<auxheader colspan="11" align="center"
+													<auxheader colspan="12" align="center"
 														label="Repuestos a Cotizar" />
 												</auxhead>
 												<listhead>
 													<listheader
-														label="Codigo OEM" width="15%" />
+														label="Codigo OEM" width="7%" />
 													<listheader
-														label="Repuesto" width="20%" />
+														label="Repuesto" width="8%" />
 													<listheader
-														label="Cant. Solicitada" width="15%" />
-													<listheader width="15%">
+														label="Cant. Solict." width="6%" />
+													<listheader width="8%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Marca"/>
 													</listheader>
-													<listheader width="15%">
+													<listheader width="8%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+															field="Tipo Reps."/>
+													</listheader>
+													<listheader width="9%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Cant. Cotizada"/>
 													</listheader>
-													<listheader width="15%">
+													<listheader width="8%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Pcio. Venta"/>
 													</listheader>
-													<listheader width="10%"
+													<listheader width="5%"
 														visible="@bind(!vm.tipoFlete.valor)">
 														<label value="Peso" />
 														<label value="*"
 															visible="@bind(vm.constraintCampoObligatorio ne null)" />
 													</listheader>
-													<listheader width="10%"
+													<listheader width="5%"
 														visible="@bind(!vm.tipoFlete.valor)">
 														<label value="Largo" />
 														<label value="*"
 															visible="@bind(vm.constraintCampoObligatorio ne null)" />
 													</listheader>
-													<listheader width="10%"
+													<listheader width="5%"
 														visible="@bind(!vm.tipoFlete.valor)">
 														<label value="Ancho" />
 														<label value="*"
 															visible="@bind(vm.constraintCampoObligatorio ne null)" />
 													</listheader>
-													<listheader width="10%"
+													<listheader width="5%"
 														visible="@bind(!vm.tipoFlete.valor)">
 														<label value="Alto" />
 														<label value="*"
 															visible="@bind(vm.constraintCampoObligatorio ne null)" />
 													</listheader>
-													<listheader width="10%"
+													<listheader width="8%"
 														label="Flete" visible="@bind(!vm.tipoFlete.valor)"/>
 												</listhead>
 												<template name="model">
@@ -201,6 +205,15 @@
 																value="@bind(each.marcaRepuesto)" width="100%"
 																constraint="@bind(vm.getNotEmptyValidator())"
 																tooltiptext="Marca del Repuesto" />
+														</listcell>
+														<listcell>
+															<combobox readonly="true" width="100%"
+																model="@load(vm.listaTipoRepuesto)"
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)">
+																<template name="model">
+																	<comboitem label="@bind(each.nombre)" />
+																</template>
+															</combobox>
 														</listcell>
 														<listcell>
 															<spinner

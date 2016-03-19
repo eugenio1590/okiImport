@@ -216,12 +216,18 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaTipoPersona.add(new ModeloCombo<Boolean>("V", false));
 		return listaTipoPersona;
 	}
+	
+	protected static List<ModeloCombo<Boolean>> llenarListaTipoRepuestoProveedor(){
+		List<ModeloCombo<Boolean>> listaTipoRepuesto = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Reemplazo", true));
+		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Original", false));
+		return listaTipoRepuesto;
+	}
 
 	protected static List<ModeloCombo<Boolean>> llenarListaTipoRepuesto() {
 		List<ModeloCombo<Boolean>> listaTipoRepuesto = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Indistinto", null));
-		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Reemplazo", true));
-		listaTipoRepuesto.add(new ModeloCombo<Boolean>("Original", false));
+		listaTipoRepuesto.addAll(llenarListaTipoRepuestoProveedor());
 		return listaTipoRepuesto;
 	}
 
