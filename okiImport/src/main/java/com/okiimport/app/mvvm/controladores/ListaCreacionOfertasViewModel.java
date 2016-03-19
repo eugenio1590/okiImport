@@ -24,6 +24,7 @@ import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.mvvm.resource.decorator.ofertas.DecoratorTabOferta;
@@ -90,7 +91,8 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	public void enviarCliente(){
 		if(validarOfertas()){
 			if(guardar=guardarOfertas(true)){
-				//Cambiar el estatus del requerimiento
+				this.requerimiento.setEstatus(EEstatusRequerimiento.OFERTADO);
+				this.sTransaccion.actualizarRequerimiento(requerimiento);
 				this.mailCliente.enviarOfertas(requerimiento, mailService);
 			}
 			closeModal();
