@@ -1,7 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +19,12 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.model.Oferta;
-import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.Compra;
+import com.okiimport.app.model.Deposito;
+import com.okiimport.app.model.FormaPago;
+import com.okiimport.app.model.PagoCliente;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
@@ -29,8 +32,8 @@ import com.okiimport.app.service.transaccion.STransaccion;
 public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewModel{
 	
 	//Servicios
-		@BeanInjector("sTransaccion")
-		private STransaccion sTransaccion;
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
 		
 	//GUI
 	@Wire("#winPagoFactura")
@@ -58,6 +61,10 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
     private Textbox txtNroDoc;
     
     Float totalFactura;
+    Compra compra = new Compra();
+    FormaPago forma = new FormaPago();
+    
+    private CustomConstraint constraintMensaje;
     
 		/**
 		 * Descripcion: Llama a inicializar la clase 
@@ -68,12 +75,33 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
     	@NotifyChange({"totalFactura"})
 		@AfterCompose
 		public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-				@ExecutionArgParam("totalFactura")  Float totalF)
+				@ExecutionArgParam("totalFactura")  Float totalF,
+				@ExecutionArgParam("compra")  Compra compra,
+				@ExecutionArgParam("formaPago")  FormaPago forma)
 		{
 			super.doAfterCompose(view);
 			llenarTiposDocumento();
 			this.totalFactura = totalF;
+			this.compra = compra;
+			this.forma = forma;
 		}
+    	
+    	
+    	public PagoCliente llenarPago(){
+    		PagoCliente p = new PagoCliente();
+    		p.setCompra(this.compra);
+    		p.setFechaPago(new Date());
+    		p.setMonto(totalFactura);
+    		p.setEstatus("Pagado");
+    		p.setDescripcion("Descripcion Hardcore");
+    		p.setFormaPago(forma);
+    		//CORREGIR
+    		p.setBanco(null);
+    		//CORREGIR
+    		List<Deposito> depositos = new ArrayList<>();
+    		p.setDepositos(depositos);
+    		return p;
+    	}
 		
 		
 		/** METODOS PROPIOS DE LA CLASE */
@@ -96,6 +124,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 						//SIMULACION DE PAGO
 						mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
 						winPagoFactura.detach();
+						// ACA GUARDAR EL PAGO
+						sTransaccion.registrarPagoFactura(llenarPago());
+						sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
 					}else
 						closeModal();
 				}
@@ -202,6 +233,11 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			this.totalFactura = totalFactura;
 		}
 		
-		
-		
+		public CustomConstraint getConstraintMensaje() {
+			return constraintMensaje;
+		}
+
+		public void setConstraintMensaje(CustomConstraint constraintMensaje) {
+			this.constraintMensaje = constraintMensaje;
+		}
 }

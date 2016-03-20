@@ -36,24 +36,30 @@
 											</columns>
 										<rows>
 										<row>
-											<label value="Correo electrónico:" sclass="label-not-mandatory" />
-											<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"/>
-											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
-											<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"/>
+												<label value="Correo electrónico:" sclass="label-not-mandatory" />
+												<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"
+												constraint="@bind(vm.constraintMensaje)"/>
+												<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
+												<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
+												constraint="@bind(vm.constraintMensaje)"/>
 										</row>
 										
 										<row>
 											<label value="Código de seguridad:" sclass="label-not-mandatory" />
-											<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" />
+											<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" 
+											constraint="@bind(vm.constraintMensaje)"/>
 											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtMesVence" width="95%" placeholder="Ej.: Febrero"/>
+											<textbox id="txtMesVence" width="95%" placeholder="Ej.: Febrero"
+											constraint="@bind(vm.constraintMensaje)"/>
 										</row>	
 											
 										<row>
 											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"/>
+											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"
+											constraint="@bind(vm.constraintMensaje)"/>
 											<label value="Nombre del titular de la tarjeta:" sclass="label-not-mandatory" />
-											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez" />
+											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez"
+											constraint="@bind(vm.constraintMensaje)" />
 										</row>	
 										<row>
 											<label value="Tipo de documento:" sclass="label-not-mandatory" />
@@ -69,7 +75,8 @@
 												</combobox>
 											</hbox>
 											<label value="Nro. de documento" sclass="label-not-mandatory" />
-											<textbox id="txtNroDoc" placeholder="Ej.: V20234124" width="95%"/>
+											<textbox id="txtNroDoc" placeholder="Ej.: V20234124" width="95%"
+											constraint="@bind(vm.constraintMensaje)"/>
 										</row>
 										<row>
 											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
