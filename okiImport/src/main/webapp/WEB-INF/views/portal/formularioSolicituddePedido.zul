@@ -183,7 +183,7 @@
  														converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" width="30%"/> 
                                    		</listfooter>
                                    		<listfooter label="Total:">
-                                   			<label 	value="@bind(vm.compra.calcularTotal())
+                                   			<label 	value="@bind(vm.calcularTotal())
                                    					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
 													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
                                    		</listfooter>

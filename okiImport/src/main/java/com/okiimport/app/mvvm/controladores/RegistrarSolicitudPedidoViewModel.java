@@ -17,12 +17,14 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.FormaPago;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -39,10 +41,13 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Wire("#winCompras")
 	private Window winCompras;
 	@Wire("#cmbFlete")
-	Combobox cmbFlete;
+	private Combobox cmbFlete;
+	
+	@Wire
+	private Combobox cmbFormaPago;
 	
 	@Wire Label lblFlete;
-	private Float flete;
+	private Float flete=(float) 0.0;;
 	
 	//Atributos
 	private Requerimiento requerimiento;
@@ -51,6 +56,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
     private ModeloCombo<Boolean> tipoFlete;
     private List<ModeloCombo<Boolean>> listaFormaPago;
     private ModeloCombo<Boolean> formaPago;
+    private FormaPago formaPagoSelected;
     private boolean cerrar = false;
     
     /**
@@ -68,7 +74,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		this.compra = new Compra(requerimiento, this.calendar.getTime());
 		this.compra.setDetalleOfertas(detallesOfertas);
 		this.requerimiento = requerimiento;
-		flete = (float) 0.0;
+//		flete = (float) 0.0;
 		llenarTiposFlete();
 		llenarFormaPago();
 		limpiar();
@@ -106,8 +112,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		}
 	}
 	/**
-	 * Descripcion: Permitira 
-	 * Parametros: @param parametros: parametros a pasar al .zul
+	 * Descripcion: Permitira actualizar el monto del flete
+	 * Parametros: @param parametros: 
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 */
@@ -115,11 +121,19 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@NotifyChange({"flete"})
 	public void seleccionar(){
 		if(cmbFlete.getValue().equals("Si"))
-			//flete = compra.calcularFlete();
-			;
-		else
-			flete = (float) 0.00;
+			this.flete = compra.calcularFlete();
 	}
+	/**
+	 * Descripcion: Permitira calcular el monto total
+	 * Parametros: @param parametros: 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 */
+	@Command
+	public Float calcularTotal(){
+		return compra.calcularSubTotal() + this.flete;
+	}
+	
 	/**
 	 * Descripcion: Evento que se ejecuta al cerrar la ventana y que valida si el proceso actual de la compra se perdera o no
 	 * Parametros: Ninguno
@@ -149,6 +163,12 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		}
 	}
 	
+	@Listen("onSelect = #cmbFormaPago")
+	public void seleccionarFormaPago(){
+		Comboitem item = cmbFormaPago.getSelectedItem();
+		this.formaPagoSelected = item.getValue();
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	/**
 	 * Descripcion: Permite llenar la lista con los tipo de flete
@@ -173,7 +193,6 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de crédito", true));		
-//		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de débito", true));		
 	}
 	/**
 	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
@@ -253,7 +272,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	
 	@Command
 	public void abrirInterfazPago(Map<String, Object> paramets){
-		final Float c = this.compra.calcularTotal();
+		final Float c = calcularTotal();
 		super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 			
@@ -263,6 +282,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 				if (button == Messagebox.Button.YES) {
 					Map<String, Object> parametros = new HashMap<String, Object>();
 					parametros.put("totalFactura", c);
+					parametros.put("formaPago", formaPagoSelected);
+					parametros.put("compra", compra);
 					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
 				}else
 					closeModal();
