@@ -40,7 +40,8 @@ public class DecoratorTabOferta {
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
-	public void agregarOferta(AbstractRequerimientoViewModel viewModel) {
+	//Metodos Publicos
+	public void agregarOferta(AbstractRequerimientoViewModel viewModel) {		
 		//Se agrego el nuevo panel de navegacion para la oferta
 		Tab newTab = new Tab();
 		newTab.setLabel("Oferta Nro. "+oferta.getNroOferta());
@@ -56,7 +57,7 @@ public class DecoratorTabOferta {
 		include.setAttribute("oferta", oferta);
 		include.setAttribute("decorator", this);
 		newPanel.appendChild(include);
-		tabpanels.appendChild(newPanel);		
+		tabpanels.appendChild(newPanel);
 	}
 	
 	public void updateGrid(){
@@ -101,6 +102,11 @@ public class DecoratorTabOferta {
 		updateEstado(oferta.getEstatus().getNombre());
 	}
 	
+	public void recotizar(){
+		
+	}
+	
+	//Metodos Privados
 	private void updateEstado(String estatus){
 		Label label = findComponent("estatusOferta"+this.oferta.getNroOferta());
 		label.setValue(estatus);

@@ -181,8 +181,10 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 					listasDetalleCotizacion.remove(key);
 			
 			//4. Agregamos la nueva oferta a la lista de ofertas
-			if(oferta.isNotEmpty())
+			if(oferta.isNotEmpty()){
 				this.ofertas.add(oferta);
+				cantOfertas++;
+			}
 			
 			//5. Actualizamos la pos de la estrategia a usar en la siguiente iteracion
 			pos++;

@@ -30,10 +30,12 @@
 		</grid>	
 		<div sclass="counter-div" hflex="1" tooltiptext="Acciones sobre la Oferta">
 			<hbox width="100%" sclass="header-button">
-			<button iconSclass="fa fa-check" label="Oferta" type="submit"
-				sclass="btn-primary" onClick="decorator.updateOferta(true)"/>
-			<button iconSclass="fa fa-times" label="Oferta" type="submit"
-				sclass="btn-danger" onClick="decorator.updateOferta(false)"/>
+				<button iconSclass="fa fa-history" label="Re-Cotizar" type="submit" visible="${ oferta.isReCotizacion() }"
+					sclass="btn-success" onClick="decorator.recotizar()" disabled="true"/>
+				<button iconSclass="fa fa-check" label="Oferta" type="submit"
+					sclass="btn-primary" onClick="decorator.updateOferta(true)"/>
+				<button iconSclass="fa fa-times" label="Oferta" type="submit"
+					sclass="btn-danger" onClick="decorator.updateOferta(false)"/>
 			</hbox>
 		</div>		
 	</hbox>
