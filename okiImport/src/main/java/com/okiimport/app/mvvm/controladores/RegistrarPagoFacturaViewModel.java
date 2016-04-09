@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+
+
+
+//import org.omg.CORBA.Environment;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
@@ -19,6 +23,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.ClientTokenRequest;
+import com.braintreegateway.Environment;
+import com.braintreegateway.Request;
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.Deposito;
 import com.okiimport.app.model.FormaPago;
@@ -63,6 +71,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
     Float totalFactura;
     Compra compra = new Compra();
     FormaPago forma = new FormaPago();
+    String clientToken;
     
     private CustomConstraint constraintMensaje;
     
@@ -84,6 +93,24 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			this.totalFactura = totalF;
 			this.compra = compra;
 			this.forma = forma;
+			
+			//Pago con braintree
+			 BraintreeGateway gateway = new BraintreeGateway(		
+					  Environment.SANDBOX,
+					  "382dm4xp72sqgpjk",
+					  "wcwgq6pytzjs4q8c",
+					  "aec72812f66e5c89d2f404f51d6dac7a"
+					);
+			
+			ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
+			clientToken = gateway.clientToken().generate(clientTokenRequest);
+				//return clientToken;
+			/*post(new Route("/client_token") {
+				  @Override
+				  public Object handle(Request request, Response response) {
+				    return gateway.clientToken().generate();
+				  }
+				});*/
 		}
     	
     	
@@ -98,7 +125,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
     		//CORREGIR
     		p.setBanco(null);
     		//CORREGIR
-    		List<Deposito> depositos = new ArrayList<>();
+    		List<Deposito> depositos = new ArrayList<Deposito>();
     		p.setDepositos(depositos);
     		return p;
     	}
@@ -240,4 +267,15 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		public void setConstraintMensaje(CustomConstraint constraintMensaje) {
 			this.constraintMensaje = constraintMensaje;
 		}
+
+
+		public String getClientToken() {
+			return clientToken;
+		}
+
+
+		public void setClientToken(String clientToken) {
+			this.clientToken = clientToken;
+		}
+		
 }
