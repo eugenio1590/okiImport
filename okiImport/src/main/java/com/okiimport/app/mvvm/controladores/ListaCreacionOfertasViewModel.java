@@ -1,6 +1,7 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,29 +13,36 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Tabpanels;
 import org.zkoss.zul.Tabs;
 
 import com.okiimport.app.model.Configuracion;
+import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.DetalleCotizacion;
 import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.mvvm.resource.MessageboxEventListener;
 import com.okiimport.app.mvvm.resource.decorator.ofertas.DecoratorTabOferta;
 import com.okiimport.app.mvvm.resource.estrategia.detalles_cotizacion.ResolveEstrategiaSortDetalleCotizacion;
 import com.okiimport.app.service.mail.MailCliente;
+import com.okiimport.app.service.mail.MailProveedor;
 import com.okiimport.app.service.transaccion.STransaccion;
 import com.okiimport.app.service.web.SLocalizacion;
 
 @SuppressWarnings("rawtypes")
-public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewModel {
+public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewModel
+	implements DecoratorTabOferta.OnComunicatorOfertaListener, MessageboxEventListener.OnComunicatorListener {
 	
 	// Servicios
 	@BeanInjector("sTransaccion")
@@ -45,6 +53,9 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
+	
+	@BeanInjector("mailProveedor")
+	private MailProveedor mailProveedor;
 	
 	//GUI
 	@Wire("#tabsOfertas")
@@ -79,6 +90,35 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		this.ofertas = sTransaccion.consultarOfertasNoEnviada(requerimiento);
 		crearOfertas();
 	}
+	
+	/** Interface: DecoratorTabOferta.OnComunicatorOfertaListener */
+	@Override
+	public void registrarRecotizacion(Oferta oferta) {
+		List<DetalleCotizacion> detalles = oferta.getDetallesCotizacionParaRecotizacion();
+		Proveedor proveedor = detalles.get(0).getCotizacion().getProveedor();
+		Cotizacion cotizacion = sTransaccion.registrarRecotizacion(requerimiento, proveedor, detalles);
+		this.mailProveedor.enviarRecotizacionProveedor(proveedor, requerimiento, cotizacion, mailService);
+	}
+	
+	@Override
+	public void mostrarMensajeInvalidaRecotizacion(final Oferta oferta) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("oferta", oferta);
+		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, ¿desea continuar con la recotizacion?", 
+				Messagebox.EXCLAMATION, new Messagebox.Button[]{ Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL }, 
+				new MessageboxEventListener(this, params), null);
+	}
+	
+	/** Interface: MessageboxEventListener.OnComunicatorListener */
+	@Override
+	public void onEvent(Event event, Map<String, Object> params) {
+		Messagebox.Button button = (Messagebox.Button) event.getData();
+		if (button == Messagebox.Button.YES) {
+			Oferta oferta = (Oferta) params.get("oferta");
+			registrarRecotizacion(oferta);
+		}
+	}
+
 	
 	/**COMMAND*/
 	@Command
@@ -193,7 +233,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		DecoratorTabOferta decorator;
 		if(!ofertas.isEmpty())
 			for(Oferta oferta2 : ofertas){
-				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2);
+				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2, this);
 				decorator.agregarOferta(this);
 			}
 	}
@@ -248,6 +288,14 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 
 	public void setMailCliente(MailCliente mailCliente) {
 		this.mailCliente = mailCliente;
+	}
+
+	public MailProveedor getMailProveedor() {
+		return mailProveedor;
+	}
+
+	public void setMailProveedor(MailProveedor mailProveedor) {
+		this.mailProveedor = mailProveedor;
 	}
 
 	public List<Oferta> getOfertas() {

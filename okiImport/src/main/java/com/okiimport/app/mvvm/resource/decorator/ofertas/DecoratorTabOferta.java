@@ -29,10 +29,13 @@ public class DecoratorTabOferta {
 	
 	private Include include; //Para la busqueda de los componentes
 	
+	//Listener
+	private OnComunicatorOfertaListener listener;
+	
 	//Atributos
 	private Oferta oferta;
 
-	public DecoratorTabOferta(Tabs tabs, Tabpanels tabpanels, Oferta oferta) {
+	public DecoratorTabOferta(Tabs tabs, Tabpanels tabpanels, Oferta oferta, OnComunicatorOfertaListener listener) {
 		super();
 		this.tabs = tabs;
 		this.tabpanels = tabpanels;
@@ -103,7 +106,9 @@ public class DecoratorTabOferta {
 	}
 	
 	public void recotizar(){
-		
+		if(oferta.validoParaRecotizar()){
+			listener.registrarRecotizacion(oferta);
+		}
 	}
 	
 	//Metodos Privados
@@ -135,5 +140,13 @@ public class DecoratorTabOferta {
 		if(include!=null)
 			return (T) include.getFellow(id);
 		return null;
+	}
+	
+	/**
+	 * Descripcion: listener para la comunicacion en el viewmodel respectivo
+	 * */
+	public interface OnComunicatorOfertaListener {
+		void registrarRecotizacion(Oferta oferta);
+		void mostrarMensajeInvalidaRecotizacion(final Oferta oferta);
 	}
 }
