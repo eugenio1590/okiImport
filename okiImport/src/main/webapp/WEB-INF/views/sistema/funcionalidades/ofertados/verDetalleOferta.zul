@@ -1,7 +1,17 @@
 <zk xmlns:w="client" xmlns:n="native">
-<window id="winOferta" border="none" width="60%" title="Oferta"
-		apply="org.zkoss.bind.BindComposer" closable="true" sclass="btn-primary"
+<window id="winOferta" border="none" width="0px" height="0px"
+		apply="org.zkoss.bind.BindComposer" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.VerDetalleOfertaViewModel')">
+		
+		<n:div aria-hidden="false" class="modal fade in" role="dialog"
+			tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include
+						src="/WEB-INF/views/template/modal/titleModal.zul"
+						titulo="Detalle Oferta" />
+					<n:div class="modal-inner">
+					
 		<groupbox closable="false">
 		<div> 
 		    <space></space>
@@ -164,8 +174,18 @@
 				</panel>
 			</groupbox>
 		</groupbox>
-	
-			<div sclass="panel-footer" align="right">
+			
+			</n:div>
+					<n:div class="modal-footer">
+						<hbox width="100%" >
+							<include  hflex="1" />
+							<div align="right">
+						
+							</div>
+						</hbox>
+					</n:div>
+				</div>
 			</div>
+		</n:div>
 	</window>
 </zk>
