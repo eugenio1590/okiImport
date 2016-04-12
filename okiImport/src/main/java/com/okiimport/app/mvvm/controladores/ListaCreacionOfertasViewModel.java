@@ -6,19 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Tabpanels;
-import org.zkoss.zul.Tabs;
 
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Cotizacion;
@@ -57,13 +51,6 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@BeanInjector("mailProveedor")
 	private MailProveedor mailProveedor;
 	
-	//GUI
-	@Wire("#tabsOfertas")
-	private Tabs tabsOfertas;
-	
-	@Wire("#tabpOfertas")
-	private Tabpanels tabpOfertas;
-	
 	//Atributos
 	private ResolveEstrategiaSortDetalleCotizacion resolve;
 	private Map<DetalleRequerimiento, List<DetalleCotizacion>> listasDetalleCotizacion;
@@ -93,18 +80,20 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	
 	/** Interface: DecoratorTabOferta.OnComunicatorOfertaListener */
 	@Override
-	public void registrarRecotizacion(Oferta oferta) {
-		List<DetalleCotizacion> detalles = oferta.getDetallesCotizacionParaRecotizacion();
+	public void registrarRecotizacion(DecoratorTabOferta decorator, Oferta oferta) {
+		List<DetalleCotizacion> detalles = oferta.getDetallesCotizacionParaRecotizacion(false);
 		Proveedor proveedor = detalles.get(0).getCotizacion().getProveedor();
 		Cotizacion cotizacion = sTransaccion.registrarRecotizacion(requerimiento, proveedor, detalles);
 		this.mailProveedor.enviarRecotizacionProveedor(proveedor, requerimiento, cotizacion, mailService);
+		//decorator.updateOfertaRecotizada();
 	}
 	
 	@Override
-	public void mostrarMensajeInvalidaRecotizacion(final Oferta oferta) {
+	public void mostrarMensajeInvalidaRecotizacion(DecoratorTabOferta decorator, Oferta oferta) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("decorator", decorator);
 		params.put("oferta", oferta);
-		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, ¿desea continuar con la recotizacion?", 
+		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, se tomaran como articulos rechazados ¿desea continuar con la recotizacion?", 
 				Messagebox.EXCLAMATION, new Messagebox.Button[]{ Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL }, 
 				new MessageboxEventListener(this, params), null);
 	}
@@ -115,7 +104,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		Messagebox.Button button = (Messagebox.Button) event.getData();
 		if (button == Messagebox.Button.YES) {
 			Oferta oferta = (Oferta) params.get("oferta");
-			registrarRecotizacion(oferta);
+			registrarRecotizacion((DecoratorTabOferta) params.get("decorator"), oferta);
 		}
 	}
 
@@ -145,26 +134,6 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 			guardar=guardarOfertas(false);
 			closeModal();
 		}
-	}
-
-	@Command
-	@NotifyChange({"ofertas"})
-	public void aprobar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
-			@BindingParam("decorator") DecoratorTabOferta decorator,
-			@BindingParam("button") Button button,
-			@BindingParam("id") Integer id){
-		detalleOferta.setAprobado(true);
-		decorator.updateDetalleOferta(id, button, true);
-	}
-	
-	@Command
-	@NotifyChange({"ofertas"})
-	public void invalidar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
-			@BindingParam("decorator") DecoratorTabOferta decorator,
-			@BindingParam("button") Button button,
-			@BindingParam("id") Integer id){
-		detalleOferta.setAprobado(false);
-		decorator.updateDetalleOferta(id, button, false);
 	}
 	
 	/**METODOS OVERRIDE*/
@@ -230,12 +199,12 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 			pos++;
 		}
 		
-		DecoratorTabOferta decorator;
+		/*DecoratorTabOferta decorator;
 		if(!ofertas.isEmpty())
 			for(Oferta oferta2 : ofertas){
 				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2, this);
 				decorator.agregarOferta(this);
-			}
+			}*/
 	}
 	
 	private boolean validarOfertas() {

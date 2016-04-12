@@ -8,9 +8,15 @@
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Mejores Ofertas a enviar al Cliente" />
 					<n:div class="modal-inner">
-						<tabbox sclass="tab-nav tab-nav-blue" maximalHeight="true">
-							<tabs id="tabsOfertas"/>
-							<tabpanels id="tabpOfertas"/>
+						<tabbox sclass="tab-nav tab-nav-blue" maximalHeight="true" model="@bind(vm.ofertas)">
+							<template name="model:tab">
+								<tab label="@bind(each.titleNroOferta)" sclass="waves-color-blue waves-effect"/>
+							</template>
+							<template name="model:tabpanel">
+								<tabpanel>
+            						<include src="/WEB-INF/views/template/decorator_oferta/decorator_oferta.zul" oferta="${ each }" listener="${ vm }" />
+        						</tabpanel>
+							</template>
 						</tabbox>
 					</n:div>
 					<n:div class="modal-footer">
