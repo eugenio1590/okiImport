@@ -55,6 +55,8 @@
 							sort="auto(nombre)" width="18%" />
 						<listheader label="Estado" sort="none"
 							width="31%" />
+							<listheader label="Foto" sort="none"
+							width="15%" />
 						<listheader label="Operaciones" width="15%"
 							sort="none" />
 					</listhead>
@@ -64,7 +66,7 @@
 							<listcell label="@bind(each.id)" />
 							<listcell label="@bind(each.nombre)" />
 							<listcell
-								label="@bind(each.ciudad.estado.nombre)" />
+								label="@bind(each.estatus)" />
 							<listcell></listcell>
 							<listcell>
 
