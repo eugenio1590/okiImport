@@ -1,362 +1,445 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" closable="true"
-		title="Registrese Como Proveedor" border="normal" width="95%"
-		apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
+	<window id="winFormularioRequerimiento" closable="true" width="0px"
+		height="0px" border="none" apply="org.zkoss.bind.BindComposer"
+		sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
-					
-		<tabbox id="tabDatosProveedor" maximalHeight="true">
-			<tabs id="tabs">
 
-				<tab id="tabDatosFiscales" sclass="waves-color-blue waves-effect"
-					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Tax Data / Datos Fiscales" />
+		<n:div aria-hidden="false" class="modal fade in" role="dialog"
+			tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" width="auto"
+				height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include
+						src="/WEB-INF/views/template/modal/titleModal.zul"
+						titulo="Registrese Como Proveedor" />
+					<n:div class="modal-inner">
 
-				</tab>
+						<tabbox id="tabDatosProveedor"
+							maximalHeight="true">
+							<tabs id="tabs">
 
-				<tab id="tabMarcaVehiculo" sclass="waves-color-blue waves-effect"
-					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label value="Brands / Marcas" />
+								<tab id="tabDatosFiscales"
+									sclass="waves-color-blue waves-effect"
+									onClick="@command('habilitarBtnLimpiar', id=self.id)">
+									<label
+										value="Tax Data / Datos Fiscales" />
 
-				</tab>
+								</tab>
 
-				<tab id="tabClasificacionRepuesto" sclass="waves-color-blue waves-effect"
-					onClick="@command('habilitarBtnLimpiar', id=self.id)">
-					<label
-						value="Parts Clasification / Clasificación Repuestos" />
+								<tab id="tabMarcaVehiculo"
+									sclass="waves-color-blue waves-effect"
+									onClick="@command('habilitarBtnLimpiar', id=self.id)">
+									<label value="Brands / Marcas" />
 
-				</tab>
-			</tabs>
+								</tab>
 
-			<tabpanels>
-				<!-- DATOS GENERALES -->
-				<tabpanel>
-					<groupbox>
-						<div>
-							<grid>
-								<columns>
-									<column width="45%" align="right" />
-									<column width="45%" />
-									<column width="45%" align="right" />
-									<column width="65%" />
-									<column width="35%" align="right" />
-									<column width="65%" />
-								</columns>
-								<rows>
-<!-- 									<row> -->
-									
-<!-- 										<label value="Supplier Type/Tipo Proveedor: *" /> -->
-<!-- 										<combobox -->
-<!-- 											placeholder="Seleccione..." width="85%" readonly="true" -->
-<!-- 											value="@bind(vm.tipoProveedor.nombre)" -->
-<!-- 											selectedItem="@bind(vm.tipoProveedor)" -->
-<!-- 											model="@load(vm.listaTipoProveedor)" -->
-<!-- 											onChange="@command('actualizarLocalidad')"> -->
-<!-- 											<template name="model"> -->
-<!-- 												<comboitem -->
-<!-- 													label="@bind(each.nombre)"> -->
-<!-- 												</comboitem> -->
-<!-- 											</template> -->
-<!-- 										</combobox> -->
-										
-<!-- 									</row> -->
-									<row>
-										
-										<label value="ID/RIF: *" />
-										<hbox>
-											<vbox>
-												<combobox id="comboTipoPersona" buttonVisible="@bind(!vm.makeAsReadOnly)"
-													width="30%" readonly="@bind(vm.makeAsReadOnly)"
-													selectedItem="@bind(vm.tipoPersona)"
-													model="@load(vm.listaTipoPersona)">
-													<template name="model">
-														<comboitem
-															label="@bind(each.nombre)" />
+								<tab id="tabClasificacionRepuesto"
+									sclass="waves-color-blue waves-effect"
+									onClick="@command('habilitarBtnLimpiar', id=self.id)">
+									<label
+										value="Parts Clasification / Clasificación Repuestos" />
+
+								</tab>
+							</tabs>
+
+							<tabpanels>
+								<!-- DATOS GENERALES -->
+								<tabpanel>
+									<groupbox>
+										<div>
+											<grid>
+												<columns>
+													<column width="45%"
+														align="right" />
+													<column width="45%" />
+													<column width="45%"
+														align="right" />
+													<column width="65%" />
+													<column width="35%"
+														align="right" />
+													<column width="65%" />
+												</columns>
+												<rows>
+													<!-- 									<row> -->
+
+													<!-- 										<label value="Supplier Type/Tipo Proveedor: *" /> -->
+													<!-- 										<combobox -->
+													<!-- 											placeholder="Seleccione..." width="85%" readonly="true" -->
+													<!-- 											value="@bind(vm.tipoProveedor.nombre)" -->
+													<!-- 											selectedItem="@bind(vm.tipoProveedor)" -->
+													<!-- 											model="@load(vm.listaTipoProveedor)" -->
+													<!-- 											onChange="@command('actualizarLocalidad')"> -->
+													<!-- 											<template name="model"> -->
+													<!-- 												<comboitem -->
+													<!-- 													label="@bind(each.nombre)"> -->
+													<!-- 												</comboitem> -->
+													<!-- 											</template> -->
+													<!-- 										</combobox> -->
+
+													<!-- 									</row> -->
+													<row>
+
+														<label
+															value="ID/RIF: *" />
+														<hbox>
+															<vbox>
+																<combobox
+																	id="comboTipoPersona"
+																	buttonVisible="@bind(!vm.makeAsReadOnly)" width="30%"
+																	readonly="@bind(vm.makeAsReadOnly)"
+																	selectedItem="@bind(vm.tipoPersona)"
+																	model="@load(vm.listaTipoPersona)">
+																	<template
+																		name="model">
+																		<comboitem
+																			label="@bind(each.nombre)" />
+																	</template>
+																</combobox>
+															</vbox>
+															<vbox>
+																<textbox
+																	id="idRif" width="80%" mold="rounded" maxlength="12"
+																	placeholder="Ej: 402405375"
+																	readonly="@bind(vm.makeAsReadOnly)"
+																	value="@bind(vm.proveedor.cedula)"
+																	constraint="@bind(vm.validatorClienteCedulaRif)" />
+																<!-- onBlur="@command('buscarProveedor')"-->
+																<!-- onOK="@command('buscarProveedor')" -->
+
+
+															</vbox>
+														</hbox>
+
+														<label
+															value="Name/Nombre/Razón Social:*" />
+														<vbox>
+															<textbox
+																mold="rounded" width="130%"
+																placeholder="Ej: Empresa C.A"
+																value="@bind(vm.proveedor.nombre)"
+																readonly="@bind(vm.makeAsReadOnly)"
+																constraint="@bind(vm.notEmptyValidator)" />
+														</vbox>
+
+													</row>
+
+													<row>
+														<label
+															value="Phone Number/Teléfono: *" />
+														<vbox
+															width="85%">
+															<textbox
+																width="102%" mold="rounded" maxlength="11"
+																placeholder="Ej: 02512552233"
+																readonly="@bind(vm.makeAsReadOnly)"
+																value="@bind(vm.proveedor.telefono)"
+																constraint="@bind(vm.telefonoValidator)" />
+														</vbox>
+
+														<label
+															value="E-mail/Correo: *" />
+														<vbox>
+															<textbox
+																id="email" width="130%" mold="rounded"
+																value="@bind(vm.proveedor.correo)"
+																placeholder="Ej. fusa@gmail.com"
+																readonly="@bind(vm.makeAsReadOnly)"
+																constraint="@bind(vm.emailValidator)">
+															</textbox>
+														</vbox>
+
+													</row>
+
+													<row>
+														<label
+															value="Country/Pais: *" />
+														<vbox
+															width="85%">
+															<combobox
+																width="95%" readonly="true"
+																buttonVisible="@bind(!vm.makeAsReadOnly)"
+																placeholder="Seleccione..."
+																value="@bind(vm.proveedor.pais.nombre)"
+																selectedItem="@bind(vm.proveedor.pais)"
+																model="@load(vm.listaPaises)"
+																constraint="@bind(vm.notEmptyValidator)"
+																onChange="@command('actualizarLocalidad')">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@bind(each.nombre)">
+
+																	</comboitem>
+																</template>
+															</combobox>
+														</vbox>
+													</row>
+
+													<row>
+														<label
+															value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
+														<vbox>
+															<combobox
+																id="cmbEstado" width="95%" placeholder="Seleccione..."
+																readonly="true"
+																buttonVisible="@bind(!vm.makeAsReadOnly)"
+																value="@bind(vm.estado.nombre)"
+																selectedItem="@bind(vm.estado)"
+																visible="@bind(vm.proveedor.nacional)"
+																model="@load(vm.listaEstados)"
+																onSelect="@command('buscarCiudades')"
+																constraint="@bind(vm.constrEstado)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@bind(each.nombre)" />
+																</template>
+															</combobox>
+														</vbox>
+
+														<label
+															value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
+														<vbox>
+															<combobox
+																id="cmbCiudad" placeholder="Seleccione..." width="115%"
+																readonly="true"
+																buttonVisible="@bind(!vm.makeAsReadOnly)"
+																selectedItem="@bind(vm.proveedor.ciudad)"
+																value="@bind(vm.proveedor.ciudad.nombre)"
+																visible="@bind(vm.proveedor.nacional)"
+																model="@load(vm.listaCiudades)"
+																constraint="@bind(vm.constrCiudad)">
+																<template
+																	name="model">
+																	<comboitem
+																		label="@bind(each.nombre)" />
+																</template>
+															</combobox>
+														</vbox>
+													</row>
+
+													<row>
+														<n:tr
+															colspan="4" class="z-row">
+															<n:td
+																class="z-row-inner">
+																<div
+																	align="right" width="100%" class="z-row-content">
+																	<label
+																		value="Address/Dirección: *" />
+																</div>
+															</n:td>
+															<n:td
+																colspan="3" align="center" class="z-row-inner">
+																<div
+																	width="100%" class="z-row-content">
+																	<vbox
+																		width="100%" align="left">
+																		<textbox
+																			width="100%" hflex="1"
+																			readonly="@bind(vm.makeAsReadOnly)" rows="3"
+																			mold="rounded" value="@bind(vm.proveedor.direccion)"
+																			placeholder="Ej: zona industrial 2 "
+																			constraint="@bind(vm.getNotEmptyValidator())" />
+																	</vbox>
+																</div>
+															</n:td>
+														</n:tr>
+													</row>
+
+												</rows>
+											</grid>
+										</div>
+									</groupbox>
+								</tabpanel>
+
+								<!-- MARCAS DE VEHICULOS -->
+								<tabpanel>
+
+									<borderlayout>
+										<west width="30%" title="Marcas"
+											collapsible="true" border="normal"
+											onOpen="@command('openRegionWest', west=self, east=borderMarcasEast, baseW='70%')">
+											<vlayout height="100%"
+												vflex="1">
+												<toolbar
+													visible="@bind(!vm.makeAsReadOnly)">
+													<toolbarbutton
+														iconSclass="bigger-185 blue z-icon-arrow-right"
+														tooltiptext="Agregar Marcas a Vender"
+														onClick="@command('agregarMarcas')" />
+												</toolbar>
+												<hbox width="100%"
+													align="center">
+													<paging
+														id="pagMarcas" autohide="true" sclass="custom-paging"
+														hflex="1" onPaging="@command('paginarLista',tipo = 1)" />
+													<div
+														sclass="z-paging z-paging-info" height="25px">
+														<label
+															id="lblMarcas" sclass="rRmWwb-info" />
+													</div>
+												</hbox>
+												<listbox id="gridMarcas"
+													mold="paging" checkmark="true" multiple="true"
+													selectedItems="@bind(vm.marcaSeleccionadas)"
+													model="@load(vm.listaMarcaVehiculos)"
+													onAfterRender="@command('updatePaging', paging = pagMarcas, label=lblMarcas)">
+													<listhead>
+														<listheader
+															label="Nombre" sort="none" />
+													</listhead>
+													<template
+														name="model">
+														<listitem>
+															<listcell
+																label="@bind(each.nombre)" />
+														</listitem>
 													</template>
-												</combobox>
-											</vbox>
-											<vbox>
-												<textbox  id="idRif" width="80%" mold="rounded" maxlength="12"
-													placeholder="Ej: 402405375" 
-													readonly="@bind(vm.makeAsReadOnly)"
-													value="@bind(vm.proveedor.cedula)"
-													constraint="@bind(vm.validatorClienteCedulaRif)" />
-													<!-- onBlur="@command('buscarProveedor')"-->
-													<!-- onOK="@command('buscarProveedor')" -->
-													
-													
-											</vbox>
-										</hbox>
-										
-										<label value="Name/Nombre/Razón Social:*" />
-										<vbox>
-											<textbox mold="rounded" width="130%"
-												placeholder="Ej: Empresa C.A"
-												value="@bind(vm.proveedor.nombre)"
-												readonly="@bind(vm.makeAsReadOnly)"
-												constraint="@bind(vm.notEmptyValidator)" />
-										</vbox>
-											
-									</row>
+												</listbox>
+											</vlayout>
+										</west>
+										<east id="borderMarcasEast"
+											title="Marcas a Vender" width="70%">
+											<div>
+												<toolbar>
+													<toolbarbutton
+														visible="@bind(!vm.makeAsReadOnly)"
+														iconSclass="bigger-185 blue z-icon-arrow-left"
+														tooltiptext="Remover Marcas a Vender"
+														onClick="@command('eliminarMarcas')" />
+												</toolbar>
+												<listbox
+													id="gridMarcasVender" mold="paging" checkmark="true"
+													multiple="true" model="@load(vm.proveedor.marcaVehiculos)"
+													pagingPosition="top"
+													selectedItems="@bind(vm.marcaSeleccionadas)">
+													<!-- 
+														<frozen columns="1"/>
+													-->
+													<listhead>
+														<listheader
+															label="Nombre" sort="none" />
+													</listhead>
+													<template
+														name="model">
+														<listitem>
+															<listcell
+																label="@bind(each.nombre)" />
+														</listitem>
+													</template>
+												</listbox>
+											</div>
+										</east>
+									</borderlayout>
+								</tabpanel>
+								<!-- TIPOS DE REPUESTO -->
+								<tabpanel>
 
-									<row>
-										<label value="Phone Number/Teléfono: *" />
-										<vbox width="85%">
-											<textbox width="102%" mold="rounded" maxlength="11"
-												placeholder="Ej: 02512552233"
-												readonly="@bind(vm.makeAsReadOnly)"
-												value="@bind(vm.proveedor.telefono)" 
-												constraint="@bind(vm.telefonoValidator)" />
-										</vbox>
+									<borderlayout width="100%"
+										height="470px">
+										<west width="30%"
+											title="Tipo de Repuestos" collapsible="true"
+											onOpen="@command('openRegionWest', west=self, east=borderRepuestosEast, baseW='70%')">
+											<vlayout>
+												<toolbar>
+													<toolbarbutton
+														visible="@bind(!vm.makeAsReadOnly)"
+														iconSclass="bigger-185 blue z-icon-arrow-right"
+														tooltiptext="Agregar Tipo Repuesto a Vender"
+														onClick="@command('agregarTipoRepuesto')" />
+												</toolbar>
+												<hbox width="100%"
+													align="center">
+													<paging
+														id="pagTipoRepuestos" hflex="1" autohide="true"
+														sclass="custom-paging"
+														onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
+													<div
+														sclass="z-paging z-paging-info" height="25px">
+														<label
+															id="lblTipoRepuestos" sclass="rRmWwb-info" />
+													</div>
+												</hbox>
+												<listbox
+													id="gridClasificacionRepuesto"
+													model="@load(vm.listaClasificacionRepuesto)" mold="paging"
+													checkmark="true"
+													selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
+													multiple="true"
+													onAfterRender="@command('updatePaging', paging = pagTipoRepuestos, label=lblTipoRepuestos)">
+													<listhead>
+														<listheader
+															label="Nombre" sort="none" />
+													</listhead>
+													<template
+														name="model">
+														<listitem>
+															<listcell
+																label="@bind(each.descripcion)" />
+														</listitem>
+													</template>
 
-										<label value="E-mail/Correo: *" />
-										<vbox>
-											<textbox id="email"
-												width="130%" mold="rounded"
-												value="@bind(vm.proveedor.correo)"
-												placeholder="Ej. fusa@gmail.com"
-												readonly="@bind(vm.makeAsReadOnly)"
-												constraint="@bind(vm.emailValidator)">
-											</textbox>
-										</vbox>
-										
-									</row>
-									
-									<row>
-										<label value="Country/Pais: *" />
-										<vbox width="85%">
-											<combobox width="95%" readonly="true"
-												buttonVisible="@bind(!vm.makeAsReadOnly)"
-												placeholder="Seleccione..."
-												value="@bind(vm.proveedor.pais.nombre)"
-												selectedItem="@bind(vm.proveedor.pais)"
-												model="@load(vm.listaPaises)"
-												constraint="@bind(vm.notEmptyValidator)"
-												onChange="@command('actualizarLocalidad')">
-												<template name="model">
-													<comboitem
-														label="@bind(each.nombre)">
+												</listbox>
+											</vlayout>
+										</west>
+										<east id="borderRepuestosEast"
+											title="Tipo de Repuestos a Vender" width="70%">
+											<div>
+												<toolbar>
+													<toolbarbutton
+														visible="@bind(!vm.makeAsReadOnly)"
+														iconSclass="bigger-185 blue z-icon-arrow-left"
+														tooltiptext="Remover Tipo de Repuesto a Vender"
+														onClick="@command('eliminarTipoRepuesto')" />
+												</toolbar>
+												<listbox
+													id="gridTipoRepuestosVender"
+													model="@load(vm.proveedor.clasificacionRepuestos)"
+													mold="paging" checkmark="true" multiple="true"
+													pagingPosition="top"
+													selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
+													<listhead>
+														<listheader
+															label="Nombre" sort="none" />
+													</listhead>
+													<template
+														name="model">
+														<listitem>
+															<listcell
+																label="@bind(each.descripcion)" />
 
-													</comboitem>
-												</template>
-											</combobox>
-										</vbox>
-									</row>
-									
-									<row>
-										<label value="Estado: *" visible="@bind(vm.proveedor.nacional)" />
-										<vbox>
-											<combobox id="cmbEstado"
-												width="95%" placeholder="Seleccione..."
-												readonly="true"
-												buttonVisible="@bind(!vm.makeAsReadOnly)"
-												value="@bind(vm.estado.nombre)"
-												selectedItem="@bind(vm.estado)"
-												visible="@bind(vm.proveedor.nacional)"
-												model="@load(vm.listaEstados)"
-												onSelect="@command('buscarCiudades')"
-												constraint="@bind(vm.constrEstado)">
-												<template name="model">
-													<comboitem
-														label="@bind(each.nombre)"/>
-												</template>
-											</combobox>
-										</vbox>
-										
-										<label value="Ciudad: *" visible="@bind(vm.proveedor.nacional)" />
-										<vbox>
-											<combobox id="cmbCiudad"
-												placeholder="Seleccione..." width="115%" readonly="true"
-												buttonVisible="@bind(!vm.makeAsReadOnly)"
-												selectedItem="@bind(vm.proveedor.ciudad)"
-												value="@bind(vm.proveedor.ciudad.nombre)"
-												visible="@bind(vm.proveedor.nacional)"
-												model="@load(vm.listaCiudades)"
-												constraint="@bind(vm.constrCiudad)">
-												<template name="model">
-													<comboitem
-														label="@bind(each.nombre)"/>
-												</template>
-											</combobox>
-										</vbox>
-									</row>
-									
-									<row>
-										<n:tr colspan="4" class="z-row">
-											<n:td class="z-row-inner">
-												<div align="right" width="100%" class="z-row-content">
-													<label value="Address/Dirección: *" />
-												</div>
-											</n:td>
-											<n:td colspan="3" align="center" class="z-row-inner">
-												<div  width="100%" class="z-row-content" >
-													<vbox width="100%" align="left" >
-														<textbox width="100%" hflex="1"
-															readonly="@bind(vm.makeAsReadOnly)"
-															rows="3"  mold="rounded"
-															value="@bind(vm.proveedor.direccion)"
-															placeholder="Ej: zona industrial 2 "
-															constraint="@bind(vm.getNotEmptyValidator())" />
-													</vbox>
-												</div>
-											</n:td>
-										</n:tr>
-									</row>
+														</listitem>
+													</template>
+												</listbox>
+											</div>
+										</east>
+									</borderlayout>
+								</tabpanel>
+							</tabpanels>
+						</tabbox>
+				
+		
+		</n:div>
+					<n:div class="modal-footer" align="right" hflex="1" >
+						<hbox width="100%"  align="right" 
+							visible="@bind(!vm.makeAsReadOnly)" hflex="1" >
+							<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
+							<div sclass="panel-footer" align="right" hflex="1" >
 
-								</rows>
-							</grid>
-						</div>
-					</groupbox>
-				</tabpanel>
+								<button id="btnLimpiar" label="Limpiar"
+									type="submit" onClick="@command('limpiar')"
+									sclass="btn-primary" />
 
-				<!-- MARCAS DE VEHICULOS -->
-				<tabpanel>
-
-					<borderlayout>
-						<west width="30%" title="Marcas" collapsible="true" border="normal"
-							onOpen="@command('openRegionWest', west=self, east=borderMarcasEast, baseW='70%')">
-							<vlayout height="100%" vflex="1">
-								<toolbar visible="@bind(!vm.makeAsReadOnly)">
-									<toolbarbutton iconSclass="bigger-185 blue z-icon-arrow-right"
-										tooltiptext="Agregar Marcas a Vender"
-										onClick="@command('agregarMarcas')" />
-								</toolbar>
-								<hbox width="100%" align="center">
-									<paging id="pagMarcas" autohide="true" sclass="custom-paging" hflex="1"
-									onPaging="@command('paginarLista',tipo = 1)" />
-									<div sclass="z-paging z-paging-info" height="25px">
-									<label id="lblMarcas" sclass="rRmWwb-info"/>
-									</div>
-										</hbox>
-								<listbox id="gridMarcas" mold="paging" checkmark="true" multiple="true"
-									selectedItems="@bind(vm.marcaSeleccionadas)"
-									model="@load(vm.listaMarcaVehiculos)"
-									onAfterRender="@command('updatePaging', paging = pagMarcas, label=lblMarcas)">
-									<listhead>
-										<listheader label="Nombre" sort="none" />
-									</listhead>
-									<template name="model">
-										<listitem>
-											<listcell label="@bind(each.nombre)" />
-										</listitem>
-									</template>
-								</listbox>
-							</vlayout>
-						</west>
-						<east id="borderMarcasEast" title="Marcas a Vender"
-							width="70%">
-							<div>
-								<toolbar>
-									<toolbarbutton visible="@bind(!vm.makeAsReadOnly)"
-										iconSclass="bigger-185 blue z-icon-arrow-left"
-										tooltiptext="Remover Marcas a Vender"
-										onClick="@command('eliminarMarcas')" />
-								</toolbar>
-								<listbox id="gridMarcasVender" mold="paging" checkmark="true" multiple="true"
-									model="@load(vm.proveedor.marcaVehiculos)" pagingPosition="top"
-									selectedItems="@bind(vm.marcaSeleccionadas)">
-									<!-- 
-										<frozen columns="1"/>
-									-->
-									<listhead>
-										<listheader label="Nombre" sort="none" />
-									</listhead>
-									<template name="model">
-										<listitem>
-											<listcell label="@bind(each.nombre)" />
-										</listitem>
-									</template>
-								</listbox>
+								<button label="Registrar" type="submit"
+									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+									sclass="btn-primary" />
 							</div>
-						</east>
-					</borderlayout>
-				</tabpanel>
-				<!-- TIPOS DE REPUESTO -->
-				<tabpanel>
-
-					<borderlayout width="100%" height="470px">
-						<west width="30%" title="Tipo de Repuestos"
-							collapsible="true"
-							onOpen="@command('openRegionWest', west=self, east=borderRepuestosEast, baseW='70%')">
-							<vlayout>
-								<toolbar>
-									<toolbarbutton visible="@bind(!vm.makeAsReadOnly)"
-										iconSclass="bigger-185 blue z-icon-arrow-right"
-										tooltiptext="Agregar Tipo Repuesto a Vender"
-										onClick="@command('agregarTipoRepuesto')" />
-								</toolbar>
-								<hbox width="100%" align="center">
-									<paging id="pagTipoRepuestos" hflex="1"
-									autohide="true" sclass="custom-paging"
-									onPaging="@command('paginarListaTipoRepuesto',tipo = 1)" />
-									<div sclass="z-paging z-paging-info" height="25px">
-									<label id="lblTipoRepuestos" sclass="rRmWwb-info"/>
-									</div>
-										</hbox>
-								<listbox id="gridClasificacionRepuesto"
-									model="@load(vm.listaClasificacionRepuesto)" mold="paging"
-									checkmark="true"
-									selectedItems="@bind(vm.tipoRepuestoSeleccionados)"
-									multiple="true"
-									onAfterRender="@command('updatePaging', paging = pagTipoRepuestos, label=lblTipoRepuestos)">
-									<listhead>
-										<listheader label="Nombre"
-											sort="none" />
-									</listhead>
-									<template name="model">
-										<listitem>
-											<listcell
-												label="@bind(each.descripcion)" />
-										</listitem>
-									</template>
-
-								</listbox>
-							</vlayout>
-						</west>
-						<east id="borderRepuestosEast"
-							title="Tipo de Repuestos a Vender" width="70%">
-							<div>
-								<toolbar>
-									<toolbarbutton visible="@bind(!vm.makeAsReadOnly)"
-										iconSclass="bigger-185 blue z-icon-arrow-left"
-										tooltiptext="Remover Tipo de Repuesto a Vender"
-										onClick="@command('eliminarTipoRepuesto')" />
-								</toolbar>
-								<listbox id="gridTipoRepuestosVender"
-									model="@load(vm.proveedor.clasificacionRepuestos)"
-									mold="paging" checkmark="true" multiple="true" pagingPosition="top"
-									selectedItems="@bind(vm.tipoRepuestoSeleccionados)">
-									<listhead>
-										<listheader label="Nombre"
-											sort="none" />
-									</listhead>
-									<template name="model">
-										<listitem>
-											<listcell
-												label="@bind(each.descripcion)" />
-
-										</listitem>
-									</template>
-								</listbox>
-							</div>
-						</east>
-					</borderlayout>
-				</tabpanel>
-			</tabpanels>
-		</tabbox>
-		<!-- BOTONES -->
-		<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)">
-			<div hflex="1" align="center">
-				<label value="* Campos Obligatorios" sclass="requerido" />
+						</hbox>
+					</n:div>
+				</div>
 			</div>
-			<div sclass="panel-footer" align="right">
-
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
-
-				<button label="Registrar" type="submit"
-					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
-			</div>
-		</hbox>
+		</n:div>
+		
 	</window>
 </zk>
