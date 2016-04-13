@@ -11,7 +11,7 @@
 				<div sclass="modal-content">
 					<include
 						src="/WEB-INF/views/template/modal/titleModal.zul"
-						titulo="Registrese Como Proveedor" />
+						titulo="Registrar Proveedor" />
 					<n:div class="modal-inner">
 
 						<tabbox id="tabDatosProveedor"
@@ -98,7 +98,7 @@
 															</vbox>
 															<vbox>
 																<textbox
-																	id="idRif" width="80%" mold="rounded" maxlength="12"
+																	id="idRif" width="102%" mold="rounded" maxlength="12"
 																	placeholder="Ej: 402405375"
 																	readonly="@bind(vm.makeAsReadOnly)"
 																	value="@bind(vm.proveedor.cedula)"
@@ -129,7 +129,7 @@
 														<vbox
 															width="85%">
 															<textbox
-																width="102%" mold="rounded" maxlength="11"
+																width="120%" mold="rounded" maxlength="11"
 																placeholder="Ej: 02512552233"
 																readonly="@bind(vm.makeAsReadOnly)"
 																value="@bind(vm.proveedor.telefono)"
@@ -236,8 +236,8 @@
 																	<vbox
 																		width="100%" align="left">
 																		<textbox
-																			width="100%" hflex="1"
-																			readonly="@bind(vm.makeAsReadOnly)" rows="3"
+																			width="130%" hflex="1"
+																			readonly="@bind(vm.makeAsReadOnly)" rows="4"
 																			mold="rounded" value="@bind(vm.proveedor.direccion)"
 																			placeholder="Ej: zona industrial 2 "
 																			constraint="@bind(vm.getNotEmptyValidator())" />
@@ -421,19 +421,18 @@
 				
 		
 		</n:div>
-					<n:div class="modal-footer" align="right" hflex="1" >
-						<hbox width="100%"  align="right" 
-							visible="@bind(!vm.makeAsReadOnly)" hflex="1" >
+					<n:div class="modal-footer" >
+						<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)" hflex="1" >
 							<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
-							<div sclass="panel-footer" align="right" hflex="1" >
+							<div align="right" >
 
 								<button id="btnLimpiar" label="Limpiar"
 									type="submit" onClick="@command('limpiar')"
-									sclass="btn-primary" />
+									sclass="btn-sm btn-info" />
 
 								<button label="Registrar" type="submit"
 									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-									sclass="btn-primary" />
+									sclass="btn-sm btn-primary" />
 							</div>
 						</hbox>
 					</n:div>

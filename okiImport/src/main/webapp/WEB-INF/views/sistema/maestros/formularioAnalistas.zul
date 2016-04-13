@@ -7,7 +7,7 @@
 
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">
-			<div class="modal-dialog modal-full" width="auto"
+			<div class="modal-dialog modal-full" width="700"
 				height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include
@@ -158,17 +158,17 @@
 					</n:div>
 
 					<n:div class="modal-footer">
-						<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)">
+						<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)" hflex="1">
 							<include
 								src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
-							<div align="right">
+							<div align="right" >
 								<button id="btnLimpiar" label="Limpiar"
 									type="submit" onClick="@command('limpiar')"
-									sclass="btn-primary" />
+									sclass="btn-sm btn-info" />
 								<button id="btnEnviar" label="Registrar"
 									type="submit"
 									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-									sclass="btn-primary" />
+									sclass="btn-sm btn-primary" />
 							</div>
 						</hbox>
 					</n:div>
