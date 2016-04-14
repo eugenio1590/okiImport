@@ -94,17 +94,19 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			this.compra = compra;
 			this.forma = forma;
 			
-			//Pago con braintree
+			//Braintree
 			 BraintreeGateway gateway = new BraintreeGateway(		
 					  Environment.SANDBOX,
 					  "382dm4xp72sqgpjk",
 					  "wcwgq6pytzjs4q8c",
 					  "aec72812f66e5c89d2f404f51d6dac7a"
-					);
+			);
 			
 			ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
 			clientToken = gateway.clientToken().generate(clientTokenRequest);
-				//return clientToken;
+			System.out.println("clientToken en el VM: "+clientToken);
+			
+			//Send a client token to your client
 			/*post(new Route("/client_token") {
 				  @Override
 				  public Object handle(Request request, Response response) {
