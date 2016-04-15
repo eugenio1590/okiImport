@@ -32,7 +32,7 @@
 							<label value="Nombre Marca: *" />
 
                             <vbox>
-							<textbox id="nombre" width="110%"
+							<textbox id="nombre" width="110%" sclass="form-control"
 								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
 								placeholder="Ej: Toyota"
 								constraint="@bind(vm.notEmptyValidator)" />

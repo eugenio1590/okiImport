@@ -32,8 +32,10 @@
 
 									<rows>
 										<row>
-											<label
-												value="Cedula/RIF: *" />
+											<!-- CEDULA/RIF -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="ID / RIF:" />
 
 											<hbox>
 												<vbox>
@@ -55,16 +57,19 @@
 												<vbox>
 													<textbox
 														id="cedula/Rif" width="83%" readonly="" mold="rounded"
-														value="@bind(vm.analista.cedula)"
+														value="@bind(vm.analista.cedula)" sclass="form-control"
 														placeholder="Ej: 402405375" maxlength="12"
 														constraint="@bind(vm.validatorClienteCedulaRif)" />
 												</vbox>
 											</hbox>
 
-											<label value="Nombre: *" />
+											<!-- NOMBRE O RAZON SOCIAL -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Nombre: " />
 
 											<vbox>
-												<textbox id="nombre"
+												<textbox id="nombre" sclass="form-control"
 													width="125%" readonly="" mold="rounded"
 													value="@bind(vm.analista.nombre)"
 													placeholder="Ej: Alejandro Urbina"
@@ -74,10 +79,13 @@
 
 										<row>
 
-											<label value="Teléfono: *" />
+											<!-- TELEFONO -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Phone Number/Teléfono: " />
 
 											<vbox>
-												<textbox id="telefono"
+												<textbox id="telefono" sclass="form-control"
 													width="120%" readonly="" mold="rounded"
 													value="@bind(vm.analista.telefono)" maxlength="11"
 													placeholder="Ej: 02512552233"
@@ -85,9 +93,12 @@
 											</vbox>
 
 
-											<label value="E-mail: *" />
+											<!-- CORREO -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Correo: " />
 											<vbox>
-												<textbox id="email"
+												<textbox id="email" sclass="form-control"
 													width="125%" readonly="" mold="rounded"
 													value="@bind(vm.analista.correo)"
 													placeholder="Ej. fusa@gmail.com"
@@ -99,10 +110,13 @@
 										</row>
 										<row>
 
-											<label value="Dirección: *" />
+											<!-- DIRECCION -->
+																	<include
+																		src="/WEB-INF/views/template/fieldMandatory.zul"
+																		field="Dirección: " />
 
 											<vbox>
-												<textbox id="direccion"
+												<textbox id="direccion" sclass="form-control"
 													width="80%" rows="3" cols="35" readonly="" mold="rounded"
 													value="@bind(vm.analista.direccion)"
 													placeholder="Ej: zona industrial 2 "
@@ -110,7 +124,10 @@
 											</vbox>
 
 
-											<label value="Estado: *" />
+											<!-- ESTADO -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Estado: " />
 											<vbox>
 												<combobox
 													placeholder="Seleccione..." width="110%" readonly="true"
@@ -130,7 +147,10 @@
 										</row>
 
 										<row>
-											<label value="Ciudad: *" />
+											<!-- CIUDAD -->
+														<include
+															src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Ciudad: "  />
 											<vbox>
 												<combobox
 													placeholder="Seleccione..." width="108%" readonly="true"

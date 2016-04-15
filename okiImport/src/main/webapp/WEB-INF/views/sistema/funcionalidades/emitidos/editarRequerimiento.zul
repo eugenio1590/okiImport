@@ -12,11 +12,11 @@
 							<div> 
 		    					<space/>
 		    					<space/> 
-		    					<label value="N° Solicitud:" sclass="label-not-mandatory"/>
+		    					<label value="Nro. Solicitud:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 		    					<space/>
 		    					<space/> 
-		    					<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+		    					<label value="Fecha de Creación:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.fechaCreacion)
 		    									@converter('formatedDate', format=vm.formatDate)"/>
 		    					<space/>
@@ -50,7 +50,7 @@
 												<rows>
 													<row>
 														<!-- CEDULA -->
-														<label value="Cedula/RIF: " sclass="label-not-mandatory"/>
+														<label value="Cédula/RIF: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 														<!-- NOMBRE O RAZON SOCIAL -->
@@ -60,7 +60,7 @@
 												
 													<row>
 														<!-- TELEFONO -->
-														<label value="Telefono: " sclass="label-not-mandatory"/>
+														<label value="Teléfono: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.telefono)"/>
 													
 														<!-- E-Mail -->

@@ -119,7 +119,7 @@
 							<include  hflex="1" />
 							<div align="right">
 								<button
-												label="Enviar a Cliente" type="submit" sclass="btn-primary"
+												label="Enviar a Cliente" type="submit" sclass="btn-sm btn-primary"
 												onClick="@command('enviarCliente')"
 												disabled="@bind(!vm.enviarACliente())" />
 							</div>
