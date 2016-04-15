@@ -188,6 +188,7 @@
                                    			<label 	value="@bind(vm.calcularTotal())
                                    					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
 													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
+                                   		</listfooter>
                                    		<listfooter>
                                    			<vbox>
                                    				<label value="@bind(vm.compra.calcularSubTotal())
@@ -198,6 +199,7 @@
 																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
 											</vbox>
                                    		</listfooter>
+                                   		
                                    	</listfoot>
                                    
                                    </listbox>

@@ -11,7 +11,7 @@
 				<div sclass="modal-content">
 					<include
 						src="/WEB-INF/views/template/modal/titleModal.zul"
-						titulo="Crear Nuevo Usuario" />
+						titulo="Nuevo Usuario" />
 					<n:div class="modal-inner">
 					
 		<label value="Tipo de Usuario" sclass="label-not-mandatory" />
