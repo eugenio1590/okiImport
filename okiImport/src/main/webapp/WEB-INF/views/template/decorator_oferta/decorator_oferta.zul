@@ -30,13 +30,13 @@
 					</row>
 				</rows>
 			</grid>	
-			<div sclass="counter-div" hflex="1" tooltiptext="Acciones sobre la Oferta">
+			<div hflex="1" tooltiptext="Acciones sobre la Oferta">
 				<hbox width="100%" sclass="header-button">
 					<button iconSclass="fa fa-history" label="Re-Cotizar" type="submit"
-						sclass="btn-success" onClick="@command('recotizar')" visible="@bind(vm.oferta.isReCotizacion())"/>
-					<button iconSclass="fa fa-check" label="Oferta" type="submit"
+						sclass="btn-success" onClick="@command('recotizar', actions = self.parent)" visible="@bind(vm.oferta.isParaReCotizacion())"/>
+					<button iconSclass="fa fa-check" label="Oferta" type="submit" visible="@bind((vm.visibleBtnOfertas eq null) or (!vm.visibleBtnOfertas))"
 						sclass="btn-primary" onClick="@command('updateOferta', acept=true)"/>
-					<button iconSclass="fa fa-times" label="Oferta" type="submit"
+					<button iconSclass="fa fa-times" label="Oferta" type="submit" visible="@bind((vm.visibleBtnOfertas eq null) or (vm.visibleBtnOfertas))"
 						sclass="btn-danger" onClick="@command('updateOferta', acept=false)"/>
 				</hbox>
 			</div>		

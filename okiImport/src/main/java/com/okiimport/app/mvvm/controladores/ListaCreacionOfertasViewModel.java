@@ -80,12 +80,14 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	
 	/** Interface: DecoratorTabOferta.OnComunicatorOfertaListener */
 	@Override
-	public void registrarRecotizacion(DecoratorTabOferta decorator, Oferta oferta) {
+	public void registrarRecotizacion(Oferta oferta) {
 		List<DetalleCotizacion> detalles = oferta.getDetallesCotizacionParaRecotizacion(false);
 		Proveedor proveedor = detalles.get(0).getCotizacion().getProveedor();
 		Cotizacion cotizacion = sTransaccion.registrarRecotizacion(requerimiento, proveedor, detalles);
+		oferta.setCotizacion(cotizacion);
+		oferta.setEstatus(EEstatusOferta.RECHAZADA);
+		sTransaccion.actualizarOferta(oferta);
 		this.mailProveedor.enviarRecotizacionProveedor(proveedor, requerimiento, cotizacion, mailService);
-		//decorator.updateOfertaRecotizada();
 	}
 	
 	@Override
@@ -104,7 +106,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		Messagebox.Button button = (Messagebox.Button) event.getData();
 		if (button == Messagebox.Button.YES) {
 			Oferta oferta = (Oferta) params.get("oferta");
-			registrarRecotizacion((DecoratorTabOferta) params.get("decorator"), oferta);
+			registrarRecotizacion(oferta);
 		}
 	}
 
