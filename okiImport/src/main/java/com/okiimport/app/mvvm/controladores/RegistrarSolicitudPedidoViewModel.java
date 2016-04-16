@@ -122,6 +122,8 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	public void seleccionar(){
 		if(cmbFlete.getValue().equals("Si"))
 			this.flete = compra.calcularFlete();
+		if(cmbFlete.getValue().equals("No"))
+			this.flete = (float) 0.00;
 	}
 	/**
 	 * Descripcion: Permitira calcular el monto total
@@ -191,7 +193,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	private void llenarFormaPago(){
 		listaFormaPago = new ArrayList<ModeloCombo<Boolean>>();
 		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
-		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
+		//listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de crédito", true));		
 	}
 	/**

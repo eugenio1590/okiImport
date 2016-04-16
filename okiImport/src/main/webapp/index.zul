@@ -11,6 +11,7 @@
 
 <zk xmlns:w="client" xmlns:n="native">
 	<script src="/resources/css/material-design/js/base.min.js" type="text/javascript"/>
+<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js" type="text/javascript"></script>	
 	
 	<borderlayout id="principal" hflex="1" vflex="1" apply="org.zkoss.bind.BindComposer" 
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.InicioViewModel')"

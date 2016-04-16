@@ -19,6 +19,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -103,8 +104,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			);
 			
 			ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
-			clientToken = gateway.clientToken().generate(clientTokenRequest);
+			clientToken = gateway.clientToken().generate(clientTokenRequest);		
 			System.out.println("clientToken en el VM: "+clientToken);
+			Clients.evalJavaScript("loadForm('"+clientToken+"');");
 			
 			//Send a client token to your client
 			/*post(new Route("/client_token") {

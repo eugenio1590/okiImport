@@ -2,11 +2,20 @@
 	<window id="winPagoFactura" border="none" height="0px" 
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarPagoFacturaViewModel')">
+		
+<script type="text/javascript">
+	console.log('braintree: '+braintree);
+	function loadForm(clientToken){ 
+		console.log('clientToken: '+clientToken);	
+		braintree.setup(clientToken, "custom", {id: "pagoForm"});
+	};
+</script>	
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Pago de Factura" />
-					<n:div class="modal-inner" id="payment-form">
+					<n:div class="modal-inner" >
+					<n:form id="pagoForm" action="/payments/buy" method="POST">
 						<groupbox closable="false">
 							<!-- DATOS DEL PAGO -->
 							<grid>
@@ -36,32 +45,35 @@
 											</columns>
 										<rows>
 										<row>
-												<label value="Correo electrónico:" sclass="label-not-mandatory" />
+											<!-- 	<label value="Correo electrónico:" sclass="label-not-mandatory" />
 												<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"
-												constraint="@bind(vm.constraintMensaje)"/>
+												constraint="@bind(vm.constraintMensaje)"/>  -->
 												<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
-												<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
+												<n:input data-braintree-name = "number" id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
+												constraint="@bind(vm.constraintMensaje)"/>
+												<label value="Código de seguridad:" sclass="label-not-mandatory" />
+												<n:input data-braintree-name = "cvv" id="txtCodigo"  width="90%" placeholder="Ej.: 541" 
 												constraint="@bind(vm.constraintMensaje)"/>
 										</row>
 										
 										<row>
-											<label value="Código de seguridad:" sclass="label-not-mandatory" />
-											<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" 
+											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
+											<n:input data-braintree-name = "expiration_year" id="txtAnoVence" width="90%" placeholder="Ej.: 2018"
 											constraint="@bind(vm.constraintMensaje)"/>
 											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtMesVence" width="95%" placeholder="Ej.: 02"
+											<n:input data-braintree-name = "expiration_month" id="txtMesVence" width="95%" placeholder="Ej.: 02"
 											constraint="@bind(vm.constraintMensaje)"/>
 										</row>	
 											
 										<row>
-											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"
-											constraint="@bind(vm.constraintMensaje)"/>
 											<label value="Nombre del titular de la tarjeta:" sclass="label-not-mandatory" />
-											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez"
+											<n:input data-braintree-name = "cardholder_name" id="txtTitular" width="95%" placeholder="Ej.: José Perez"
 											constraint="@bind(vm.constraintMensaje)" />
+											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
+<!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
+											<label value="@bind(vm.totalFactura)" sclass="label-not-mandatory" />
 										</row>	
-										<row>
+									<!-- 	<row>
 											<label value="Tipo de documento:" sclass="label-not-mandatory" />
 											<hbox>
 												<combobox id="cmbTipoDocumento" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="100%"
@@ -77,19 +89,14 @@
 											<label value="Nro. de documento" sclass="label-not-mandatory" />
 											<textbox id="txtNroDoc" placeholder="Ej.: V20234124" width="95%"
 											constraint="@bind(vm.constraintMensaje)"/>
-										</row>
-										<row>
-											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
-<!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
-											<label value="@bind(vm.totalFactura)" sclass="label-not-mandatory" />
-										</row>
-											
+										</row>  -->	
 										</rows>
 										</grid>
 									</tabpanel>
 								</tabpanels>
 							</tabbox>
 						</groupbox>
+						</n:form>
 					</n:div>
 					<n:div class="modal-footer">
 						<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
@@ -104,13 +111,5 @@
 		</n:div>
 	</window>
 </zk>
-<script src="https://js.braintreegateway.com/js/braintree-2.22.2.min.js"></script>  
-<script>
-<%=
-	var clientToken = "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiJiYTQ1Mzc0Yzk4MTQxNWNhZTQ1MjQ1ZTUwMmEyYmNiOWQ3ZjVhNGFmMDIyODhiNDNiMTZjMjc1NWIxZmNhZWRjfGNyZWF0ZWRfYXQ9MjAxNi0wNC0wOVQwMjo0NDowMC42MjI0OTEzOTQrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzM0OHBrOWNnZjNiZ3l3MmIvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJjb2luYmFzZUVuYWJsZWQiOmZhbHNlLCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0=";
 
-	braintree.setup(clientToken, "dropin", {
- 	 container: "payment-form" 
-	});
-=>
-</script>
+
