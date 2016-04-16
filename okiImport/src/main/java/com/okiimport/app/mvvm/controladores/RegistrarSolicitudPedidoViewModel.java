@@ -144,7 +144,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Override
 	public void closeModal(){
 		if(!cerrar){
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ï¿½Desea continuar?", null, 
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
@@ -192,7 +192,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		listaFormaPago = new ArrayList<ModeloCombo<Boolean>>();
 		listaFormaPago.add(new ModeloCombo<Boolean>("Seleccione", false));		
 		listaFormaPago.add(new ModeloCombo<Boolean>("Mercado Pago", true));		
-		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de crÃ©dito", true));		
+		listaFormaPago.add(new ModeloCombo<Boolean>("Tarjeta de credito", true));		
 	}
 	/**
 	 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
