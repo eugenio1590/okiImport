@@ -108,13 +108,6 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			System.out.println("clientToken en el VM: "+clientToken);
 			Clients.evalJavaScript("loadForm('"+clientToken+"');");
 			
-			//Send a client token to your client
-			/*post(new Route("/client_token") {
-				  @Override
-				  public Object handle(Request request, Response response) {
-				    return gateway.clientToken().generate();
-				  }
-				});*/
 		}
     	
     	
