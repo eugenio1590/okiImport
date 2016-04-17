@@ -5,11 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 //import org.omg.CORBA.Environment;
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
@@ -20,14 +18,12 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.braintreegateway.BraintreeGateway;
-import com.braintreegateway.ClientTokenRequest;
-import com.braintreegateway.Environment;
-import com.braintreegateway.Request;
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.Deposito;
 import com.okiimport.app.model.FormaPago;
@@ -43,6 +39,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("gateway")
+	private BraintreeGateway gateway;
 		
 	//GUI
 	@Wire("#winPagoFactura")
@@ -96,15 +95,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			this.forma = forma;
 			
 			//Braintree
-			 BraintreeGateway gateway = new BraintreeGateway(		
-					  Environment.SANDBOX,
-					  "382dm4xp72sqgpjk",
-					  "wcwgq6pytzjs4q8c",
-					  "aec72812f66e5c89d2f404f51d6dac7a"
-			);
-			
-			ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
-			clientToken = gateway.clientToken().generate(clientTokenRequest);		
+			clientToken = gateway.clientToken().generate();		
 			System.out.println("clientToken en el VM: "+clientToken);
 			Clients.evalJavaScript("loadForm('"+clientToken+"');");
 			
@@ -127,35 +118,36 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
     		return p;
     	}
 		
-		
-		/** METODOS PROPIOS DE LA CLASE */
-		private void llenarTiposDocumento(){
-			listaTipoDocumentos = new ArrayList<ModeloCombo<Boolean>>();
-			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Seleccione", false));
-			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Cédula", false));
-			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Pasaporte", true));
-		}
 		/**COMMAND*/
 		@Command
-		public void registrarPago(Map<String, Object> paramets){
-			super.mostrarMensaje("Informaci\u00F3n", "Desea efectuar el pago de la factura de productos?", null, 
-					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
-				
-				@Override
-				public void onEvent(Event event) throws Exception {
-					Messagebox.Button button = (Messagebox.Button) event.getData();
-					if (button == Messagebox.Button.YES) {
-						//SIMULACION DE PAGO
-						mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
-						winPagoFactura.detach();
-						// ACA GUARDAR EL PAGO
-						sTransaccion.registrarPagoFactura(llenarPago());
-						sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
-					}else
-						closeModal();
-				}
-			}, null);
+		public void registrarPago(@BindingParam("btnEnviar") Button button){
+			if(checkIsFormValid()){ //Aca se Haran las validaciones
+				Clients.showBusy("Wait...."); //Se puede cambiar el mensaje
+				Clients.evalJavaScript("tokenizeCard("+buildCreditCardParameterJS()+");");
+			}
 		}
+		
+		@Command
+		@SuppressWarnings("unchecked")
+		public void onPaymentSuccess(@ContextParam(ContextType.TRIGGER_EVENT) Event event){
+			Clients.clearBusy();
+			Map<String, Object> data = (Map<String, Object>) event.getData();
+			String payment_method_nonce = (String) data.get("payment_method_nonce");
+			System.out.println("En el Server payment_method_nonce: "+payment_method_nonce);
+			//SIMULACION DE PAGO
+			mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+			winPagoFactura.detach();
+			// ACA GUARDAR EL PAGO
+			sTransaccion.registrarPagoFactura(llenarPago());
+			sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
+		}
+		
+		@Command
+		public void onPaymentError(@ContextParam(ContextType.TRIGGER_EVENT) Event event){
+			Clients.clearBusy();
+			mostrarMensaje("Error", "Error en Transaccion", null, null, null, null);
+		}
+		
 		/**
 		 * Descripcion: Permite limpiar los campos del formulario 
 		 * Parametros: @param view: formularioSolicituddePedido.zul 
@@ -201,6 +193,13 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			}
 		}
 		
+		/** METODOS PROPIOS DE LA CLASE */
+		private void llenarTiposDocumento(){
+			listaTipoDocumentos = new ArrayList<ModeloCombo<Boolean>>();
+			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Seleccione", false));
+			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Cédula", false));
+			listaTipoDocumentos.add(new ModeloCombo<Boolean>("Pasaporte", true));
+		}
 		
 		/**
 		 * Descripcion: metodo que actualiza la variable cerrar y llama al comman respectivo al cerrar la ventana.
@@ -213,6 +212,16 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			closeModal();
 		}
 		
+		private String buildCreditCardParameterJS(){
+			StringBuilder builder = new StringBuilder("");
+			builder.append("'").append(txtTitular.getValue()).append("', ")
+					.append("'").append(txtTarjeta.getValue()).append("', ")
+					.append("'").append(txtMesVence.getValue()).append("', ")
+					.append("'").append(txtAnoVence.getValue()).append("', ")
+					.append("'").append(txtCodigo.getValue()).append("'");
+			return builder.toString();
+		}
+		
 		/**GETTERS Y SETTERS*/
 		public STransaccion getsTransaccion() {
 			return sTransaccion;
@@ -220,6 +229,15 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 
 		public void setsTransaccion(STransaccion sTransaccion) {
 			this.sTransaccion = sTransaccion;
+		}
+
+		public BraintreeGateway getGateway() {
+			return gateway;
+		}
+
+
+		public void setGateway(BraintreeGateway gateway) {
+			this.gateway = gateway;
 		}
 
 

@@ -18,10 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.braintreegateway.Request;
 import com.okiimport.app.service.seguridad.SAcceso;
 
 /**
@@ -70,13 +67,6 @@ public class HomeController {
 	@RequestMapping(value= "/admin/home", method = RequestMethod.GET)
 	public String iniciarAdministrador(){
 		return "sistema/index.zul";
-	}
-	
-	@RequestMapping(value= "/payments/buy", method = RequestMethod.GET, params="payment_method_nonce")
-	public @ResponseBody String byParameter(@RequestParam("payment_method_nonce") String payment_method_nonce) {
-		System.out.println("payment_method_nonce en el HOME CONTROLLER: "+payment_method_nonce);
-		return "Mapped by path + method + presence of query parameter! (MappingController) - foo = "
-		           + payment_method_nonce;
 	}
 	
 	@RequestMapping(value= "/sessionExpirada", method = RequestMethod.GET)
