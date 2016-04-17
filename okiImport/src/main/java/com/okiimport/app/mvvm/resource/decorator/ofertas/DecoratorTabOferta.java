@@ -28,6 +28,7 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 		
 	//Atributos
 	private Oferta oferta;
+	private Boolean visibleBtnOfertas;
 	
 	@Init
     public void init(@ExecutionArgParam("listener") OnComunicatorOfertaListener listener, 
@@ -46,7 +47,7 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 	
 	/**COMMANDS*/
 	@Command
-	@NotifyChange("oferta")
+	@NotifyChange({"oferta", "visibleBtnOfertas"})
 	public void updateOferta(@BindingParam("acept") boolean acept){
 		List<DetalleOferta> detalles = this.oferta.getDetalleOfertas();
 		for(DetalleOferta detalle : detalles)
@@ -55,7 +56,7 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 	}
 	
 	@Command
-	@NotifyChange("oferta")
+	@NotifyChange({"oferta", "visibleBtnOfertas"})
 	public void aprobar(@BindingParam("detalleOferta") DetalleOferta detalleOferta,
 			@BindingParam("acept") boolean acept){
 		detalleOferta.setAprobado(acept);
@@ -64,9 +65,12 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 	}
 	
 	@Command
-	public void recotizar(){
-		if(oferta.validoParaRecotizar())
-			listener.registrarRecotizacion(this, oferta);
+	@NotifyChange("oferta")
+	public void recotizar(@BindingParam("actions") Component actions){
+		if(oferta.validoParaRecotizar()){
+			listener.registrarRecotizacion(oferta);
+			applyRecotizacion(actions);
+		}
 		else
 			listener.mostrarMensajeInvalidaRecotizacion(this, oferta);
 	}
@@ -82,11 +86,20 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 	}
 	
 	public boolean isAprobado(DetalleOferta detalle, boolean btnAprobado){
-		Boolean acept = detalle.getAprobado();
-		if(acept == null)
+		Boolean ofertaRecotizada = oferta.isReCotizacion();
+		Boolean acept = null;
+		if(ofertaRecotizada)
+			return false;
+		else if((acept=detalle.getAprobado()) == null)
 			return true;
 		else
 			return (btnAprobado) ? !acept : acept;
+	}
+	
+	public void applyRecotizacion(Component actions){
+		for(Component child : actions.getChildren()){
+			child.setVisible(false);
+		}
 	}
 	
 	//Metodos Privados
@@ -95,6 +108,12 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 			oferta.setEstatus(EEstatusOferta.INVALIDA);
 		else if(oferta.isAprobar())
 			oferta.setEstatus(EEstatusOferta.SELECCIONADA);
+		
+		updateVisibleBtnOfertas();
+	}
+	
+	private void updateVisibleBtnOfertas(){
+		this.visibleBtnOfertas = (oferta.isCreada()) ? true : oferta.isAprobar();
 	}
 	
 	/**GETTERS Y SETTERS*/
@@ -106,11 +125,21 @@ public class DecoratorTabOferta extends AbstractRequerimientoViewModel {
 		this.oferta = oferta;
 	}
 
+	public Boolean getVisibleBtnOfertas() {
+		return visibleBtnOfertas;
+	}
+
+	public void setVisibleBtnOfertas(Boolean visibleBtnOfertas) {
+		this.visibleBtnOfertas = visibleBtnOfertas;
+	}
+
+
+
 	/**
-	 * Descripcion: listener para la comunicacion en el viewmodel respectivo
+	 * Descripcion: listener para la comunicacion con el viewmodel respectivo
 	 * */
 	public interface OnComunicatorOfertaListener {
-		void registrarRecotizacion(DecoratorTabOferta decorator, Oferta oferta);
+		void registrarRecotizacion(Oferta oferta);
 		void mostrarMensajeInvalidaRecotizacion(DecoratorTabOferta decorator, Oferta oferta);
 	}
 }
