@@ -1,15 +1,18 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -22,20 +25,26 @@ import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import com.braintreegateway.BraintreeGateway;
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.FormaPago;
+import com.okiimport.app.model.PagoCliente;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
+import com.okiimport.app.service.web.SPago;
 
 public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoViewModel {
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("sPago")
+	private SPago sPago;
 	 
 	//GUI
 	@Wire("#winCompras")
@@ -78,6 +87,21 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		llenarTiposFlete();
 		llenarFormaPago();
 		limpiar();
+	}
+	
+	/**GLOBAL-COMMAND**/
+	@GlobalCommand
+	public void registrarPago(@BindingParam("pago") PagoCliente pago, @BindingParam("gateway") BraintreeGateway gateway){
+		//Aca se Registrara el Pago
+		boolean exito = this.sPago.guardarPagoCliente(sControlConfiguracion, gateway, pago);
+		if(exito){
+			//mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+			sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
+			this.winCompras.onClose();
+		}
+		else {
+			//Se muestra un mensaje.
+		}
 	}
 	
 	/**COMMAND*/
@@ -165,6 +189,24 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		}
 	}
 	
+	@Command
+	public void abrirInterfazPago(Map<String, Object> paramets){
+		super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
+				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
+			
+			@Override
+			public void onEvent(Event event) throws Exception {
+				Messagebox.Button button = (Messagebox.Button) event.getData();
+				if (button == Messagebox.Button.YES) {
+					Map<String, Object> parametros = new HashMap<String, Object>();
+					parametros.put("pago", crearPago());
+					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
+				}else
+					closeModal();
+			}
+		}, null);
+	}
+	
 	@Listen("onSelect = #cmbFormaPago")
 	public void seleccionarFormaPago(){
 		Comboitem item = cmbFormaPago.getSelectedItem();
@@ -207,6 +249,16 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		closeModal();
 	}
 	
+	private PagoCliente crearPago(){
+		PagoCliente p = new PagoCliente();
+		p.setCompra(this.compra);
+		p.setFechaPago(new Date());
+		p.setMonto(calcularTotal());
+		//p.setFormaPago(forma); falta
+		return p;
+	}
+	
+	
 	/**GETTERS Y SETTERS*/
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
@@ -214,6 +266,14 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
+	}
+
+	public SPago getsPago() {
+		return sPago;
+	}
+
+	public void setsPago(SPago sPago) {
+		this.sPago = sPago;
 	}
 
 	public List<ModeloCombo<Boolean>> getListaTipoFlete() {
@@ -270,27 +330,5 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 
 	public void setFlete(Float flete) {
 		this.flete = flete;
-	}   
-	
-	@Command
-	public void abrirInterfazPago(Map<String, Object> paramets){
-		final Float c = calcularTotal();
-		super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
-				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
-			
-			@Override
-			public void onEvent(Event event) throws Exception {
-				Messagebox.Button button = (Messagebox.Button) event.getData();
-				if (button == Messagebox.Button.YES) {
-					Map<String, Object> parametros = new HashMap<String, Object>();
-					parametros.put("totalFactura", c);
-					parametros.put("formaPago", formaPagoSelected);
-					parametros.put("compra", compra);
-					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
-				}else
-					closeModal();
-			}
-		}, null);
 	}
-	
 }

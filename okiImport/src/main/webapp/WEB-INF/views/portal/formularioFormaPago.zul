@@ -73,7 +73,7 @@
 											constraint="@bind(vm.constraintMensaje)" />
 											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
 <!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
-											<textbox name="monto" value="@bind(vm.totalFactura)" sclass="label-not-mandatory" disabled="true"/>
+											<textbox name="monto" value="@bind(vm.pago.monto)" sclass="label-not-mandatory" disabled="true"/>
 										</row>	
 									<!-- 	<row>
 											<label value="Tipo de documento:" sclass="label-not-mandatory" />
