@@ -237,6 +237,13 @@
 			<artifactId>persistencia</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		
+		<!-- Braintree -->
+		<dependency>
+		  <groupId>com.braintreepayments.gateway</groupId>
+		  <artifactId>braintree-java</artifactId>
+		  <version>2.59.0</version>
+		</dependency>
 
 	</dependencies>
     <build>

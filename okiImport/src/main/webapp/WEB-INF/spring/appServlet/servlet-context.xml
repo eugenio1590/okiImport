@@ -41,5 +41,6 @@
     <beans:bean id="mailCliente" class="com.okiimport.app.service.mail.impl.MailClienteImpl"/>
     <beans:bean id="mailProveedor" class="com.okiimport.app.service.mail.impl.MailProveedorImpl"/>
     <beans:bean id="sLocalizacion" class="com.okiimport.app.service.web.impl.SLocalizacionImpl"/>
+    <beans:bean id="sPago" class="com.okiimport.app.service.web.impl.SPagoImpl"/>
     
 </beans:beans>
