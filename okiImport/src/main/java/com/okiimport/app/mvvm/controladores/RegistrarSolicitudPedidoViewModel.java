@@ -16,6 +16,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Label;
@@ -30,24 +31,26 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
+import com.okiimport.app.service.web.SLocalizacion;
 
 public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoViewModel {
 	
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("sLocalizacion")
+	private SLocalizacion sLocalizacion;
 	 
 	//GUI
 	@Wire("#winCompras")
 	private Window winCompras;
-	@Wire("#cmbFlete")
-	private Combobox cmbFlete;
 	
 	@Wire
 	private Combobox cmbFormaPago;
 	
 	@Wire Label lblFlete;
-	private Float flete=(float) 0.0;;
+	private Float flete=(float) 0.0;
 	
 	//Atributos
 	private Requerimiento requerimiento;
@@ -113,15 +116,20 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	}
 	/**
 	 * Descripcion: Permitira actualizar el monto del flete
-	 * Parametros: @param parametros: 
+	 * Parametros: Ninguno. 
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 */
 	@Command
 	@NotifyChange({"flete"})
 	public void seleccionar(){
-		if(cmbFlete.getValue().equals("Si"))
-			this.flete = compra.calcularFlete();
+		if(this.tipoFlete.getValor()){
+			Clients.showBusy("Espere....");
+			this.flete = this.sLocalizacion.calcularFleteZoomConPesoYDistancia(compra, requerimiento.getCliente().getCiudad());
+			Clients.clearBusy();
+			if(flete == 0)
+				this.mostrarMensaje("Informacion", "El flete con Zomm no esta disponible para tu ubicacion", null, null, null, null);
+		}
 	}
 	/**
 	 * Descripcion: Permitira calcular el monto total
@@ -212,6 +220,14 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
+	}
+	
+	public SLocalizacion getsLocalizacion() {
+		return sLocalizacion;
+	}
+
+	public void setsLocalizacion(SLocalizacion sLocalizacion) {
+		this.sLocalizacion = sLocalizacion;
 	}
 
 	public List<ModeloCombo<Boolean>> getListaTipoFlete() {
