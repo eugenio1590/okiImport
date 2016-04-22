@@ -107,7 +107,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	@Command
 	@SuppressWarnings("unchecked")
 	public List<Estado> llenarListaEstados() {
-		return (List<Estado>) sMaestros.ConsultarEstado(0, -1).get("estados");
+		return (List<Estado>) sMaestros.consultarEstados(0, -1).get("estados");
 	}
 
 	@Command
