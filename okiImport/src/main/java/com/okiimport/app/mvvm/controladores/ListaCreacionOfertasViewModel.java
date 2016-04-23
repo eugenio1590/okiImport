@@ -87,7 +87,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		oferta.setCotizacion(cotizacion);
 		oferta.setEstatus(EEstatusOferta.RECHAZADA);
 		sTransaccion.actualizarOferta(oferta);
-		this.mailProveedor.enviarRecotizacionProveedor(proveedor, requerimiento, cotizacion, mailService);
+		this.mailProveedor.enviarRecotizacionProveedor(proveedor, requerimiento, cotizacion, cotizacion.getDetalleCotizacions(), mailService);
 	}
 	
 	@Override

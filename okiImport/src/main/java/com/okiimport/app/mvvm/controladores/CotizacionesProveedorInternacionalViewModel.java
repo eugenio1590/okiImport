@@ -1,5 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class CotizacionesProveedorInternacionalViewModel extends AbstractRequeri
 		this.persona = persona;
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion();
+		cotizacionFiltro = new Cotizacion((Date) null);
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);

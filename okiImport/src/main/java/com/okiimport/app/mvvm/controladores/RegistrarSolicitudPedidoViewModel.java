@@ -97,13 +97,14 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	public void registrarPago(@BindingParam("pago") PagoCliente pago, @BindingParam("gateway") BraintreeGateway gateway){
 		//Aca se Registrara el Pago
 		boolean exito = this.sPago.guardarPagoCliente(sControlConfiguracion, gateway, pago);
+		System.out.println("exito"+exito);
 		if(exito){
-			//mostrarMensaje("Informaci\u00F3n", "Â¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
 			sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
 			this.winCompras.onClose();
 		}
 		else {
-			//Se muestra un mensaje.
+			mostrarMensaje("Error", "¡El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
 		}
 	}
 	

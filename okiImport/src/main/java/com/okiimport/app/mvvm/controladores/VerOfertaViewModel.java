@@ -113,8 +113,11 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		detalleOferta.setAprobado(aprobado);
 		if(aprobado)
 			listaDetOferta.add(detalleOferta);
-		else
-			listaDetOferta.remove(listaDetOferta.indexOf(detalleOferta));
+		else {
+			int index = listaDetOferta.indexOf(detalleOferta);
+			if(index!=-1)
+				listaDetOferta.remove(index);
+		}
 		
 		cantArticulos = listaDetOferta.size();
 	}

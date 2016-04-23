@@ -147,10 +147,6 @@
                                    								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
 																	converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)" />
                                    			<listcell>
-<!--                                    				<checkbox name="remember${forEachStatus.index+1}" -->
-<!--                                    					checked="@bind(each.aprobado)" -->
-<!--                                    					tooltiptext="Aceptar Repuesto" -->
-<!--                                    					onCheck="@command('aprobarDetalleOferta', detalleOferta = each)" />	 -->
 												<a onClick="@command('aprobarDetalleOferta', detalleOferta = each)"
 													sclass="@bind((each.aprobado) ? vm.quitarCarrito.css : vm.agregarCarrito.css)"
 													tooltiptext="@bind((each.aprobado) ? vm.quitarCarrito.tool : vm.agregarCarrito.tool)"/>

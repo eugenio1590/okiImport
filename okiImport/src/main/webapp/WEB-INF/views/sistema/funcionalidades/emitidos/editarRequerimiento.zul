@@ -229,6 +229,9 @@
 															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
 														</listheader>
 														<listheader sort="none" width="15%">
+															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Peso (Kg.)" />
+														</listheader>
+														<listheader sort="none" width="15%">
 															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Clasificación" />
 														</listheader>
 														<listheader sort="auto" width="15%" label="Foto"/>
@@ -257,6 +260,16 @@
 																		readonly="@bind(!vm.editar)" buttonVisible="@bind(vm.editar)" 
 																		value="@bind(each.cantidad)"
 																		constraint="@bind(vm.cantValidator)"/>
+																</vbox>
+															</listcell>
+															<listcell>
+																<vbox hflex="1">
+																	<decimalbox hflex="1"
+																		format="@bind(vm.formatNumber)"
+																		locale="@bind(vm.localeNumber)"
+																		readonly="@bind(!vm.editar)"
+																		value="@bind(each.peso)"
+																		constraint="@bind(vm.validatorPrecio)" />
 																</vbox>
 															</listcell>
 															<listcell>
