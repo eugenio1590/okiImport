@@ -40,7 +40,7 @@
 							<row>
 								<!-- CEDULA -->
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="ID / RIF:" />
-								<hbox>
+								<vbox>
 									<vbox>
 										<combobox id="comboTipoPersona" width="30%" readonly="true"
 											selectedItem="@bind(vm.tipoPersona)" 
@@ -58,7 +58,7 @@
 											value="@bind(vm.proveedor.cedula)"
 											constraint="@bind(vm.validatorClienteCedulaRif)"/> 	
 									</vbox>
-								</hbox>
+								</vbox>
 								
 								<!-- NOMBRE O RAZON SOCIAL -->
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Nombre / Razón Social:" />

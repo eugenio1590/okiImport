@@ -46,33 +46,69 @@
 												<column  width="20%"/>
 											</columns>
 										<rows>
-										<row>
-											<label value="Titular de la tarjeta:" sclass="label-not-mandatory" />
-											<textbox id="txtTitular" maxlength="255" width="95%" placeholder="Ej.: José Perez"
-											constraint="@bind(vm.constraintMensaje)" />
-											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
-<!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
-											<textbox name="monto" value="@bind(vm.pago.monto)" sclass="label-not-mandatory" disabled="true"/>
+										<row>	
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Titular de la tarjeta:" />
+											<vbox>
+<!-- 											<label value="Titular de la tarjeta:" sclass="label-not-mandatory" /> -->
+												
+												<textbox id="txtTitular" maxlength="255" width="110%" placeholder="Ej.: José Perez"
+												constraint="@bind(vm.notEmptyValidator)"/>
+											</vbox>
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Nro. de tarjeta:" />
+											<vbox>
+<!-- 											<label value="Nro. de tarjeta:" sclass="label-not-mandatory" /> -->
+												<textbox id="txtTarjeta" maxlength="16" width="96%" placeholder="Ej.: 0015 2225 2225 3336"
+												constraint="@bind(vm.notEmptyValidator)"/>
+											</vbox>	
 										</row>	
+										<row>
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Tipo de tarjeta:" />
+											<vbox>
+	<!-- 											<label value="Tipo de tarjeta:" sclass="label-not-mandatory" /> -->
+<!-- 												<hbox> -->
+													<combobox id="cmbTipoTarjeta" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="96%"
+														selectedItem="@bind(vm.tipoTarjeta)"
+														value="@bind(vm.tipoTarjeta.nombre)" 
+														model="@load(vm.listaTipoTarjeta)" placeholder = "Seleccione"
+														onSelect="@command('seleccionarTipoTarjeta')">
+														<template name="model">
+															<comboitem label="@bind(each.nombre)" />
+														</template>
+													</combobox>
+<!-- 												</hbox> -->
+											</vbox>	
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Código de seguridad:" />
+											<vbox>
+	<!-- 											<label value="Código de seguridad:" sclass="label-not-mandatory" /> -->
+												<textbox id="txtCodigo"  width="96%" 
+													constraint="@bind(vm.notEmptyValidator)"/>
+											</vbox>	
+										</row>
 										<row>
 											<!-- 	<label value="Correo electrónico:" sclass="label-not-mandatory" />
 												<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"
-												constraint="@bind(vm.constraintMensaje)"/>  -->
-												<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
-												<textbox id="txtTarjeta" maxlength="16" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
-												constraint="@bind(vm.constraintMensaje)"/>
-												<label value="Código de seguridad:" sclass="label-not-mandatory" />
-												<textbox id="txtCodigo"  maxlength="4" width="90%" placeholder="Ej.: 5412" 
-												constraint="@bind(vm.constraintMensaje)"/>
+												constraint="@bind(vm.constraintMensaje)"/>  -->	
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Monto total a pagar:" />	
+											<vbox>
+<!-- 												<label value="Monto total a pagar:" sclass="label-not-mandatory" /> -->
+												<textbox name="monto" width="115%" value="@bind(vm.pago.monto) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+														converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" sclass="label-not-mandatory" disabled="true"/>	
+											</vbox>	
 										</row>
 										
 										<row>
-											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtAnoVence" maxlength="4" width="90%" placeholder="Ej.: 2016"
-											constraint="@bind(vm.constraintMensaje)"/>
-											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtMesVence" maxlength="2" width="95%" placeholder="Ej.: 02"
-											constraint="@bind(vm.constraintMensaje)"/>
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Año de vencimiento:" />
+											<vbox>
+	<!-- 											<label value="Año de vencimiento:" sclass="label-not-mandatory" /> -->
+												<textbox id="txtAnoVence" maxlength="4" width="110%" placeholder="Ej.: 2016"
+												constraint="@bind(vm.notEmptyValidator)"/>
+											</vbox>	
+											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Mes de vencimiento:" />
+											<vbox>
+<!-- 												<label value="Mes de vencimiento:" sclass="label-not-mandatory" /> -->
+												<textbox id="txtMesVence" maxlength="2" width="95%" placeholder="Ej.: 02"
+												constraint="@bind(vm.notEmptyValidator)"/>
+											</vbox>	
 										</row>	
 											
 									<!-- 	<row>

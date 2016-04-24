@@ -200,20 +200,9 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	
 	@Command
 	public void abrirInterfazPago(Map<String, Object> paramets){
-		/*super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
-				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
-			
-			@Override
-			public void onEvent(Event event) throws Exception {
-				Messagebox.Button button = (Messagebox.Button) event.getData();
-				if (button == Messagebox.Button.YES) {*/
-					Map<String, Object> parametros = new HashMap<String, Object>();
-					parametros.put("pago", crearPago());
-					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
-				/*}else
-					closeModal();
-			}
-		}, null);*/
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("pago", crearPago());
+		crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);	
 	}
 	
 	@Listen("onSelect = #cmbFormaPago")

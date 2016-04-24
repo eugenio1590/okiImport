@@ -1,6 +1,8 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +17,12 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -54,13 +59,18 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	private Textbox txtAnoVence;
 	@Wire
 	private Textbox txtTitular;
+	@Wire
+	private Combobox cmbTipoTarjeta;
 //	@Wire
 //	private Textbox txtNroDoc;
 
 	//Atributos
 	private List<ModeloCombo<Boolean>> listaTipoDocumentos;
+	private List<ModeloCombo<Boolean>> listaTipoTarjeta;
 	private ModeloCombo<Boolean> tipoDocumento;
 	private ModeloCombo<Boolean> tipoTarjeta;
+	
+	private CustomConstraint constraintCampoObligatorio;
 	
 	private Pago pago;
 	
@@ -77,11 +87,11 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	@NotifyChange({"totalFactura"})
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("pago")  Pago pago)
-	{
+			@ExecutionArgParam("pago")  Pago pago){
 		super.doAfterCompose(view);
 		this.pago = pago;
-		llenarTiposDocumento();	
+		//llenarTiposDocumento();	
+		llenarTiposTarjetas();
 
 		//Braintree
 		String clientToken = gateway.clientToken().generate();		
@@ -93,10 +103,60 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	/**COMMAND*/
 	@Command
 	public void registrarPago(@BindingParam("btnEnviar") Button button){
-		if(checkIsFormValid()){ //Aca se Haran las validaciones
-			Clients.showBusy("Wait...."); //Se puede cambiar el mensaje
-			Clients.evalJavaScript("tokenizeCard("+buildCreditCardParameterJS()+");");
+		if(checkIsFormValid()){
+			//Aca se Haran las validaciones
+			if(validacionesParaGuardar() == true){
+				Clients.showBusy("Espere un momento...."); //Se puede cambiar el mensaje
+				Clients.evalJavaScript("tokenizeCard("+buildCreditCardParameterJS()+");");
+			}
 		}
+	}
+	
+	@Command
+	public void seleccionarTipoTarjeta(){	
+		txtCodigo.setPlaceholder("");
+		if(!tipoTarjeta.getValor()){
+			System.out.println("es American Express....");
+			txtCodigo.setMaxlength(4);
+			txtCodigo.setPlaceholder("1234");
+		}else{
+			System.out.println("Es otra ....");
+			txtCodigo.setMaxlength(3);
+			txtCodigo.setPlaceholder("123");
+		}			
+	}
+	
+	public boolean validacionesParaGuardar(){
+		boolean guardar = false;
+		if(txtTarjeta.getValue() != "" && txtTitular.getValue() != "" && 
+				txtMesVence.getValue() != "" && txtCodigo.getValue() != "" &&
+				txtAnoVence.getValue() != ""){
+			if(txtTarjeta.getValue().length() == 16){
+				if(txtCodigo.getValue().length() == 3 || txtCodigo.getValue().length() == 4){
+					if(txtAnoVence.getValue().length() == 4){
+						if(txtMesVence.getValue().length() == 2){
+				
+							Calendar fecha = new GregorianCalendar();
+							if(Integer.parseInt(txtAnoVence.getValue()) >= fecha.get(Calendar.YEAR))
+								guardar = true;
+							else
+								mostrarMensaje("Error", "El año de vencimiento debe ser igual o mayor al año actual: "+"("+fecha.get(Calendar.YEAR)+")", null, null, null, null);
+						}else
+							mostrarMensaje("Error", "¡El mes de vencimiento debe contener 2 digitos!", null, null, null, null);   
+					
+					}else
+						mostrarMensaje("Error", "¡El año de vencimiento debe contener 4 digitos!", null, null, null, null);   
+						
+				}else
+					mostrarMensaje("Error", "¡Debe ingresar el CVV completo!", null, null, null, null);
+			}else
+				mostrarMensaje("Error", "¡Debe ingresar los 16 digitos de la Tarjeta!", null, null, null, null);
+				
+		}else{
+			mostrarMensaje("Error", "¡Debe ingresar todos los campos!", null, null, null, null);
+			
+		}
+		return guardar;
 	}
 
 	@Command
@@ -132,9 +192,10 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"tipoDocumento"})
+	@NotifyChange({"tipoDocumento", "tipoTarjeta"})
 	public void limpiar(){
 		this.tipoDocumento = listaTipoDocumentos.get(0);
+		this.tipoTarjeta = listaTipoTarjeta.get(0);
 		this.txtAnoVence.setValue("");
 		this.txtCodigo.setValue("");
 		//this.txtemail.setValue("");
@@ -171,11 +232,20 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	}
 
 	/** METODOS PROPIOS DE LA CLASE */
-	private void llenarTiposDocumento(){
+	/*private void llenarTiposDocumento(){
 		listaTipoDocumentos = new ArrayList<ModeloCombo<Boolean>>();
 		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Seleccione", false));
 		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Cédula", false));
 		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Pasaporte", true));
+	}*/
+	
+	private void llenarTiposTarjetas(){
+		listaTipoTarjeta = new ArrayList<ModeloCombo<Boolean>>();
+		listaTipoTarjeta.add(new ModeloCombo<Boolean>("American Express", false));// cvv de 4 digitos
+		listaTipoTarjeta.add(new ModeloCombo<Boolean>("MasterCard", true));
+		listaTipoTarjeta.add(new ModeloCombo<Boolean>("Visa", true));
+		listaTipoTarjeta.add(new ModeloCombo<Boolean>("Maestro", true));
+		listaTipoTarjeta.add(new ModeloCombo<Boolean>("Otra", true));
 	}
 
 	/**
@@ -233,7 +303,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	public void setTipoDocumento(ModeloCombo<Boolean> tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
-
+	
 	public ModeloCombo<Boolean> getTipoTarjeta() {
 		return tipoTarjeta;
 	}
@@ -258,7 +328,21 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		this.constraintMensaje = constraintMensaje;
 	}
 	
-	public int getMaxlength() {
-	    return 16;
+	public CustomConstraint getConstraintCampoObligatorio() {
+		return constraintCampoObligatorio;
 	}
+
+	public void setConstraintCampoObligatorio(CustomConstraint constraintCampoObligatorio) {
+		this.constraintCampoObligatorio = constraintCampoObligatorio;
+	}
+
+	public List<ModeloCombo<Boolean>> getListaTipoTarjeta() {
+		return listaTipoTarjeta;
+	}
+
+	public void setListaTipoTarjeta(List<ModeloCombo<Boolean>> listaTipoTarjeta) {
+		this.listaTipoTarjeta = listaTipoTarjeta;
+	}
+	
+	
 }

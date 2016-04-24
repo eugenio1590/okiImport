@@ -61,7 +61,7 @@
 												</combobox>
 											</hbox>
 											<label value="¿Incluir el Precio del Flete?:" sclass="label-mandatory" />
-											<combobox id="cmbFlete" readonly="true" width="30%"
+											<combobox id="cmbFlete" readonly="true" width="35%"
 												selectedItem="@bind(vm.tipoFlete)"
 												value="@bind(vm.tipoFlete.nombre)" 
 												model="@load(vm.listaTipoFlete)"
