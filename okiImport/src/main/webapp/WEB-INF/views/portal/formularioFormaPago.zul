@@ -47,34 +47,34 @@
 											</columns>
 										<rows>
 										<row>
-											<!-- 	<label value="Correo electrónico:" sclass="label-not-mandatory" />
-												<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"
-												constraint="@bind(vm.constraintMensaje)"/>  -->
-												<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
-												<textbox id="txtTarjeta" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
-												constraint="@bind(vm.constraintMensaje)"/>
-												<label value="Código de seguridad:" sclass="label-not-mandatory" />
-												<textbox id="txtCodigo"  width="90%" placeholder="Ej.: 541" 
-												constraint="@bind(vm.constraintMensaje)"/>
-										</row>
-										
-										<row>
-											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtAnoVence" width="90%" placeholder="Ej.: 2018"
-											constraint="@bind(vm.constraintMensaje)"/>
-											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
-											<textbox id="txtMesVence" width="95%" placeholder="Ej.: 02"
-											constraint="@bind(vm.constraintMensaje)"/>
-										</row>	
-											
-										<row>
-											<label value="Nombre del titular de la tarjeta:" sclass="label-not-mandatory" />
-											<textbox id="txtTitular" width="95%" placeholder="Ej.: José Perez"
+											<label value="Titular de la tarjeta:" sclass="label-not-mandatory" />
+											<textbox id="txtTitular" maxlength="255" width="95%" placeholder="Ej.: José Perez"
 											constraint="@bind(vm.constraintMensaje)" />
 											<label value="Monto total a pagar:" sclass="label-not-mandatory" />
 <!-- 											<include src="/WEB-INF/views/template/modal/subTitleModal.zul" titulo="Monto total a pagar:" />	 -->
 											<textbox name="monto" value="@bind(vm.pago.monto)" sclass="label-not-mandatory" disabled="true"/>
 										</row>	
+										<row>
+											<!-- 	<label value="Correo electrónico:" sclass="label-not-mandatory" />
+												<textbox id="txtemail" width="90%" placeholder="Ej.: micorreo@gmail.com"
+												constraint="@bind(vm.constraintMensaje)"/>  -->
+												<label value="Nro. de tarjeta:" sclass="label-not-mandatory" />
+												<textbox id="txtTarjeta" maxlength="16" width="95%" placeholder="Ej.: 0015 2225 2225 3336"
+												constraint="@bind(vm.constraintMensaje)"/>
+												<label value="Código de seguridad:" sclass="label-not-mandatory" />
+												<textbox id="txtCodigo"  maxlength="4" width="90%" placeholder="Ej.: 5412" 
+												constraint="@bind(vm.constraintMensaje)"/>
+										</row>
+										
+										<row>
+											<label value="Año de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtAnoVence" maxlength="4" width="90%" placeholder="Ej.: 2016"
+											constraint="@bind(vm.constraintMensaje)"/>
+											<label value="Mes de vencimiento:" sclass="label-not-mandatory" />
+											<textbox id="txtMesVence" maxlength="2" width="95%" placeholder="Ej.: 02"
+											constraint="@bind(vm.constraintMensaje)"/>
+										</row>	
+											
 									<!-- 	<row>
 											<label value="Tipo de documento:" sclass="label-not-mandatory" />
 											<hbox>

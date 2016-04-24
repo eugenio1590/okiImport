@@ -99,12 +99,12 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		boolean exito = this.sPago.guardarPagoCliente(sControlConfiguracion, gateway, pago);
 		System.out.println("exito"+exito);
 		if(exito){
-			mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "ï¿½Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
 			sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
 			this.winCompras.onClose();
 		}
 		else {
-			mostrarMensaje("Error", "¡El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
+			mostrarMensaje("Error", "ï¿½El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Override
 	public void closeModal(){
 		if(!cerrar){
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ï¿½Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
@@ -200,20 +200,20 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	
 	@Command
 	public void abrirInterfazPago(Map<String, Object> paramets){
-		super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
+		/*super.mostrarMensaje("Informaci\u00F3n", "Desea registrar el pago de la factura de productos?", null, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 			
 			@Override
 			public void onEvent(Event event) throws Exception {
 				Messagebox.Button button = (Messagebox.Button) event.getData();
-				if (button == Messagebox.Button.YES) {
+				if (button == Messagebox.Button.YES) {*/
 					Map<String, Object> parametros = new HashMap<String, Object>();
 					parametros.put("pago", crearPago());
 					crearModal(BasePackagePortal+"formularioFormaPago.zul", parametros);
-				}else
+				/*}else
 					closeModal();
 			}
-		}, null);
+		}, null);*/
 	}
 	
 	@Listen("onSelect = #cmbFormaPago")

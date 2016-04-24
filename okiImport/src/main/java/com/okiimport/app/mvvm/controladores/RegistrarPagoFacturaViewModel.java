@@ -42,8 +42,8 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	//GUI
 	@Wire("#winPagoFactura")
 	private Window winPagoFactura;	
-	@Wire
-	private Textbox txtemail;
+//	@Wire
+//	private Textbox txtemail;
 	@Wire
 	private Textbox txtTarjeta;
 	@Wire
@@ -54,8 +54,8 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	private Textbox txtAnoVence;
 	@Wire
 	private Textbox txtTitular;
-	@Wire
-	private Textbox txtNroDoc;
+//	@Wire
+//	private Textbox txtNroDoc;
 
 	//Atributos
 	private List<ModeloCombo<Boolean>> listaTipoDocumentos;
@@ -81,7 +81,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	{
 		super.doAfterCompose(view);
 		this.pago = pago;
-		llenarTiposDocumento();
+		llenarTiposDocumento();	
 
 		//Braintree
 		String clientToken = gateway.clientToken().generate();		
@@ -137,9 +137,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		this.tipoDocumento = listaTipoDocumentos.get(0);
 		this.txtAnoVence.setValue("");
 		this.txtCodigo.setValue("");
-		this.txtemail.setValue("");
+		//this.txtemail.setValue("");
 		this.txtMesVence.setValue("");
-		this.txtNroDoc.setValue("");
+		//this.txtNroDoc.setValue("");
 		this.txtTarjeta.setValue("");
 		this.txtTitular.setValue("");
 		super.cleanConstraintForm();
@@ -257,5 +257,8 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	public void setConstraintMensaje(CustomConstraint constraintMensaje) {
 		this.constraintMensaje = constraintMensaje;
 	}
-
+	
+	public int getMaxlength() {
+	    return 16;
+	}
 }
