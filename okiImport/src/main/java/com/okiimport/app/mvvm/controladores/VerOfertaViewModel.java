@@ -273,7 +273,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 */
 	private void redireccionarASolicitudDePedido(final Map<String, Object> parametros){
-		super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar con la solicitud de pedido?", null, 
+		super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar con la compra?", null, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 			@Override
 			public void onEvent(Event event) throws Exception {
