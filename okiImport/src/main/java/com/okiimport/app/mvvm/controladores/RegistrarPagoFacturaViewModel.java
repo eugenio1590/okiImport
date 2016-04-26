@@ -17,12 +17,10 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Comboitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -31,6 +29,7 @@ import com.braintreegateway.BraintreeGateway;
 import com.okiimport.app.model.Pago;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
+import com.okiimport.app.mvvm.constraint.braintree.CVVConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.transaccion.STransaccion;
@@ -344,5 +343,8 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		this.listaTipoTarjeta = listaTipoTarjeta;
 	}
 	
+	public CustomConstraint getCvvConstraint(){
+		return new CVVConstraint();
+	}
 	
 }

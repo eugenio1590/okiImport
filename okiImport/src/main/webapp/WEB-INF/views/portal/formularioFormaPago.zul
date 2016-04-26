@@ -79,9 +79,8 @@
 											</vbox>	
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Código de seguridad:" />
 											<vbox>
-	<!-- 											<label value="Código de seguridad:" sclass="label-not-mandatory" /> -->
 												<textbox id="txtCodigo"  width="96%" 
-													constraint="@bind(vm.notEmptyValidator)"/>
+													constraint="@bind(vm.cvvConstraint)"/>
 											</vbox>	
 										</row>
 										<row>
