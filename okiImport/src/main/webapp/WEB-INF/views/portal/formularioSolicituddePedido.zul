@@ -171,30 +171,20 @@
                                    	</template>
 
                                    	<listfoot>
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter>
-                                   			<hbox>
-                                   				<label value="Sub-Total:" />
-                                   				<label value="Total:" />
-                                   			</hbox>
+                                   		<listfooter span="6" hflex="1">
+                                   			<vbox align="rigth">
+                                   				<label value="Sub-Total:"/>
+                                   				<label value="Total:"/>
+                                   			</vbox>
                                    		</listfooter>
-                                   		<listfooter label="Total:">
-                                   			<label 	value="@bind(vm.calcularTotal())
-                                   					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
-										</listfooter>
-                                   		<listfooter>
-                                   			<vbox>
+                                   		<listfooter hflex="1">
+                                   			<vbox hflex="1">
                                    				<label value="@bind(vm.compra.calcularSubTotal())
                                     							@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,  
- 																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" width="30%"/> 
+ 																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" hflex="1"/> 
                                    				<label value="@bind(vm.compra.calcularTotal())
                                    								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
+																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" hflex="1"/>
 											</vbox>
                                    		</listfooter>
                                    		
