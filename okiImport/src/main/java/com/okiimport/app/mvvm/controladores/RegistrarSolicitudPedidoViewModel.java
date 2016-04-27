@@ -99,12 +99,12 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 		boolean exito = this.sPago.guardarPagoCliente(sControlConfiguracion, gateway, pago);
 		System.out.println("exito"+exito);
 		if(exito){
-			mostrarMensaje("Informaci\u00F3n", "ï¿½Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+			mostrarMensaje("Informaci\u00F3n", "¡Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
 			sTransaccion.guardarOrdenCompra(compra, sControlConfiguracion);
 			this.winCompras.onClose();
 		}
 		else {
-			mostrarMensaje("Error", "ï¿½El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
+			mostrarMensaje("Error", "¡El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class RegistrarSolicitudPedidoViewModel extends AbstractRequerimientoView
 	@Override
 	public void closeModal(){
 		if(!cerrar){
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ï¿½Desea continuar?", null, 
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, ¿Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
