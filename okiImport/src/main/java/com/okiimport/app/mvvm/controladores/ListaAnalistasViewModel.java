@@ -13,6 +13,7 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -20,6 +21,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.MarcaVehiculo;
@@ -44,6 +46,9 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	private List<Analista> analistas;
 	private Analista analistaFiltro;
 	private Textbox txtUsername;
+	
+	Window window = null;
+	int idcount = 0;
 
 	
 	/**
@@ -141,10 +146,27 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	@Command
 	public void verAnalista(@BindingParam("analista") Analista analista){
 		
-		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("analista", analista);
+		if(analista!=null){
+			System.out.println("nombre del analista: "+analista.getNombre()+" "+analista.getApellido());
+			Map<String, Object> parametros = new HashMap<String, Object>();
+			parametros.put("analista", analista);
+//			parametros.put("recordMode", "READ");
+//			parametros.put("cerrar", false);
+			Sessions.getCurrent().setAttribute("allmyvalues", parametros);
+			if (window != null) {
+				window.detach();
+				window.setId(null);
+			}
+			window = this.crearModal(BasePackageSistemaMaest+"formularioAnalistas.zul", parametros);
+		}else{
+			System.out.println("prueba:------ analista es nulo");
+		}
+		
+//		window.setMaximizable(true);
+//		window.doModal();
+//		window.setId("doModal" + "" + idcount + "");
 		//parametros.put("editar", false);
-		llamarFormulario("formularioAnalistas.zul", parametros);
+		//llamarFormulario("formularioAnalistas.zul", parametros);
 	}
 	
 	/*@Command

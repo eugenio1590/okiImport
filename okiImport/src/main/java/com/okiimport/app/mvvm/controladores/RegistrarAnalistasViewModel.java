@@ -23,6 +23,7 @@ import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
 import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -61,10 +62,11 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
+		System.out.println("imprimir analista  ----- "+analista.getNombre()+" "+analista.getApellido());
 		this.analista = (analista==null) ? new Analista() :  analista;
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
-		limpiar();
+		//limpiar();
 		
 		listaEstados = llenarListaEstados();
 		listaTipoPersona = llenarListaTipoPersona();
@@ -91,6 +93,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
 				analista.setCedula(tipo + analista.getCedula());
 				analista.setCiudad(ciudad);
+				analista.setiEstatus(EstatusPersonaFactory.getEstatusActivo());
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();
@@ -98,6 +101,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				model.put("cedula", analista.getCedula());
 				
 				mostrarMensaje("Informaci\u00F3n", "Analista Registrado con Exito", null, null, null, null);
+				
+				this.recargar();
 				
 			}	
 	}
@@ -109,8 +114,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	public void recargar() {
-		
 		winFormularioAnalista.onClose();
+		ejecutarGlobalCommand("cambiarAnalistas", null);
 	}
 	
 	/**
