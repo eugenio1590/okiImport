@@ -23,15 +23,20 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
+import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.service.PasswordGenerator;
+import com.okiimport.app.service.mail.MailUsuario;
 
 public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel implements  EventListener<SortEvent>{
 	
 	//Servicios
+	@BeanInjector("mailUsuario")
+	private MailUsuario mailUsuario;
 	
 	//GUI
 	@Wire("#gridPersonas")
@@ -147,7 +152,9 @@ public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel 
 			personaSeleccionada.setEstatus("activo");
 			usuario.setActivo(true);
 			usuario.setPersona(personaSeleccionada);
-			sControlUsuario.grabarUsuario(usuario, sMaestros);
+			usuario=sControlUsuario.grabarUsuario(usuario, sMaestros);
+			if(usuario.getPersona() instanceof Analista)
+				mailUsuario.enviarUsuarioyPassword(usuario, mailService);
 			mostrarMensaje("Informacion", "Usuario Creado Exitosamente", null, null, null, null);
 			personaSeleccionada = Persona.getNewInstance();
 			int page = pagPersonas.getActivePage();
@@ -214,4 +221,14 @@ public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel 
 	public void setTiposUsuario(List<ModeloCombo<Integer>> tiposUsuario) {
 		this.tiposUsuario = tiposUsuario;
 	}
+
+	public MailUsuario getMailUsuario() {
+		return mailUsuario;
+	}
+
+	public void setMailUsuario(MailUsuario mailUsuario) {
+		this.mailUsuario = mailUsuario;
+	}
+	
+	
 }
