@@ -101,9 +101,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private List<Ciudad> listaCiudad;
 	private Estado estadoSeleccionado;
 	private boolean makeAsReadOnly;
-	private Boolean cerrar;
+	protected Boolean cerrar;
 	private String recordMode;
-	private Proveedor proveedor;
+	protected Proveedor proveedor;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -376,7 +376,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	private Proveedor registrarProveedor(boolean enviarEmail){
+	protected Proveedor registrarProveedor(boolean enviarEmail){
 		
 		proveedor.setCedula(getCedulaComleta());
 		proveedor.setEstatus(EstatusProveedorFactory.getEstatusSolicitante().getValue());
@@ -484,7 +484,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		return this.tipoPersona.getNombre() + proveedor.getCedula();
 	}
 	
-	private boolean verificarExistencia(){
+	protected boolean verificarExistencia(){
 		return (sMaestros.consultarProveedor(new Proveedor(getCedulaComleta()))!=null);
 	}
 	

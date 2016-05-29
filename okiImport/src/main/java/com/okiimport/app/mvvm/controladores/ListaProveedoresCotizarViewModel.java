@@ -33,14 +33,14 @@ public class ListaProveedoresCotizarViewModel extends ListaProveedoresViewModel 
 	@AfterCompose(superclass=true)
 	public void doAfterCompose(@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		this.requerimiento = requerimiento;
-		cambiarProveedores(0, null, null);
+		consultarProveedores(0, null, null);
 	}
 	
 	/**GLOBAL COMMAND OVERRIDE*/
 	@GlobalCommand
 	@Override
 	@NotifyChange("proveedores")
-	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
+	public void consultarProveedores(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		if(requerimiento!=null){
