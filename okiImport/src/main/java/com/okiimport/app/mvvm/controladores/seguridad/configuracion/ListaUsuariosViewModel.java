@@ -46,7 +46,7 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 	private Usuario usuarioFiltro;
 	
 	//Atributos
-	private static final int PAGE_SIZE = 3;
+	private static final int PAGE_SIZE = 10;
 
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
@@ -82,6 +82,7 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 		usuarios = (List<Usuario>) parametros.get("usuarios");
 		pagUsuarios.setActivePage(page);
 		pagUsuarios.setTotalSize(total);
+		System.out.print("pasa por el cambiar script......");
 	}
 	
 	/**COMMAND*/

@@ -160,7 +160,9 @@ public class FormularioUsuariosViewModel extends AbstractRequerimientoViewModel 
 	}
 	
 	@Command
-	public void salir(){
+	@Override
+	public void closeModal(){
+		super.closeModal();
 		ejecutarGlobalCommand("cambiarUsuarios", null);
 	}
 
