@@ -131,9 +131,11 @@
 											<vbox>
 												<combobox
 													placeholder="Seleccione..." width="110%" readonly="true"
+													value="@bind(vm.analista.ciudad.estado.nombre)"
 													selectedItem="@bind(vm.estado)"
 													model="@load(vm.listaEstados)"
 													onSelect="@command('buscarCiudades')"
+													onChange="@command('buscarCiudades')"
 													constraint="@bind(vm.notEmptyValidator)">
 													<template
 														name="model">
@@ -154,6 +156,7 @@
 											<vbox>
 												<combobox
 													placeholder="Seleccione..." width="108%" readonly="true"
+													value="@bind(vm.analista.ciudad.nombre)"
 													selectedItem="@bind(vm.ciudad)"
 													model="@load(vm.listaCiudades)"
 													constraint="@bind(vm.notEmptyValidator)">
