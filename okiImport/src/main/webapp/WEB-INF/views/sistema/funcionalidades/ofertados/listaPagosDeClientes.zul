@@ -1,0 +1,92 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window border="none" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.listaPagosDeClientesViewModel')">
+		
+		<!-- LISTA DE PAGOS-->
+			<panel sclass="borderGrid">
+				<panelchildren>
+					<hbox width="100%" align="center">
+						<paging id="pagPagosDeClientes" hflex="1"
+							onPaging="@command('paginarLista')" autohide="true" />
+						<div sclass="z-paging z-paging-info" height="28px">
+							<label id="lblPagosDeClientes" sclass="rRmWwb-info"/>
+						</div>
+					</hbox>
+		<listbox id="gridPagosDeClientes" mold="paging" pageSize="10" pagingPosition="top" emptyMessage="No hay Pagos Hasta Los Momentos"
+			sclass="mylist" model="@load(vm.listaPagosDeClientes)"
+			onAfterRender="@command('updatePaging', paging = pagPagosDeClientes, label=lblPagosDeClientes)">
+
+			<listhead>
+
+				<listheader value="idPago" width="100px"
+					label="Nro.De Pago" sort="auto(idPago)">
+					<spinner constraint="no negative, no zero" value="@bind(vm.requerimientoFiltro.idRequerimiento)"
+						instant="true" placeholder="" onChange="@command('aplicarFiltro')"
+						width="70px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+				<listheader value="idOferta" label="Nro.De Oferta"
+					sort="auto(idOferta)" width="120px">
+					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
+						onChange="@command('aplicarFiltro')" hflex="1" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="cliente.nombre" label="Nombre Cliente"
+					sort="auto(nombre)" width="120px">
+					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.cliente.nombre)"
+						onChange="@command('aplicarFiltro')" hflex="1" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+				<listheader value="formaPago" label="Forma De Pago"
+					sort="auto(formaPago)" width="130px">
+					<textbox instant="true" placeholder="" value="@bind(vm.requerimientoFiltro.modeloV)"
+						onChange="@command('aplicarFiltro')" hflex="1" width="110px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="fechaPago" label="F. Creación"
+					sort="auto(fechaPago)" width="140px">
+					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaCreacion)"
+						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+				
+				<listheader value="monto" label="Monto Pagado"
+					sort="auto(monto)" width="140px">
+					<datebox format="dd/MM/yyyy" value="@bind(vm.requerimientoFiltro.fechaCreacion)"
+						instant="true" onChange="@command('aplicarFiltro')" width="100px" />
+					<div sclass="z-icon-filter bigger-200" />
+				</listheader>
+
+				<listheader width="10%" label="Operaciones" />
+
+			</listhead>
+			<template name="model">
+				<listitem>
+					<listcell label="@bind(each.idPago)" />
+					<listcell label=" @bind(each.idOferta)" />
+					<listcell label=" @bind(each.cliente.nombre)" />
+					<listcell label="@bind(each.formaPago)" />
+					<listcell>
+						<datebox value="@bind(each.fechaCreacion)" format="dd/MM/yyyy" 
+							buttonVisible="false" readonly="true"/>
+					</listcell>
+					<listcell label="@bind(each.monto)" />
+					<listcell>
+						<hbox spacing="20px">
+							<div class="btn-group btn-group-sm">
+								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Pago"  
+								    />
+							</div>
+						</hbox>
+					</listcell>
+				</listitem>
+			</template>
+		</listbox>
+		</panelchildren>
+				</panel>
+	</window>
+</zk>
