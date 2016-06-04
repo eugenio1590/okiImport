@@ -78,8 +78,6 @@
 								    onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
 								<button iconSclass="fa fa-files-o red bigger-160" tooltiptext="Ofertas"
 									onClick="@command('mostrarOfertas', requerimiento = each)"/>
-								<button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Seleccionar Cotizaciones"  
-								    onClick="@command('seleccionarCotizaciones', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() and each.seleccionarCotizacion() }"/>
 								<button  iconSclass="fa fa-shopping-cart green bigger-160" tooltiptext="Ver Compras"  
 								    onClick="@command('verCompras', requerimiento = each)"/>
 							</div>
