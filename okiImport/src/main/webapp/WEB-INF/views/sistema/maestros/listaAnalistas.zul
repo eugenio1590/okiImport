@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window border="none" apply="org.zkoss.bind.BindComposer"
-		id="winListaAnalistas"
+		id="winListaAnalistas" sclass="winMyList"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaAnalistasViewModel')">
 
 		<!-- LISTA DE ANALISTAS-->
@@ -19,6 +19,7 @@
 					model="@load(vm.analistas)"
 					onAfterRender="@command('updatePaging', paging = pagAnalistas, label=lblAnalistas)">
 					<auxhead sclass="nombre-center">
+					<auxheader/>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<spinner constraint="no negative, no zero"
@@ -47,21 +48,25 @@
 						</auxheader>
 					</auxhead>
 					<listhead menupopup="auto">
+					<listheader width="2%"/>
 						<listheader id="id" label="Codigo"
 							sort="auto(id)" width="18%" />
 						<listheader id="nombre" label="Nombre"
 							sort="auto(nombre)" width="18%" />
 						<listheader label="Estado" sort="none"
 							width="31%" />
+							<listheader label="Foto" sort="none"
+							width="15%" />
 						<listheader label="Operaciones" width="15%"
 							sort="none" />
 					</listhead>
 					<template name="model">
 						<listitem>
+						<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 							<listcell label="@bind(each.id)" />
 							<listcell label="@bind(each.nombre)" />
 							<listcell
-								label="@bind(each.ciudad.estado.nombre)" />
+								label="@bind(each.estatus)" />
 							<listcell></listcell>
 							<listcell>
 

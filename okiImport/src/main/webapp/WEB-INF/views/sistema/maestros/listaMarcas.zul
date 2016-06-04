@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer"
+	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaMarcasViewModel')">
 		
 		<!-- LISTA DE MARCAS-->
@@ -16,6 +16,7 @@
 			model="@load(vm.marcas)"
 			onAfterRender="@command('updatePaging', paging = pagMarcas, label=lblMarcas)">
 			<auxhead sclass="nombre-center">
+			<auxheader/>
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
@@ -37,6 +38,7 @@
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
+			<listheader width="2%"/>
 				<listheader id="id" label="Codigo" sort="auto(id)"
 					width="18%" />
 				<listheader id="nombre" label="Nombre"
@@ -47,6 +49,7 @@
 			</listhead>
 			<template name="model">
 				<listitem>
+				<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 					<listcell label="@bind(each.idMarcaVehiculo)" />
 					<listcell label="@bind(each.nombre)" />
 					<listcell>

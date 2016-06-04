@@ -1,9 +1,21 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioMarca" title="Registrar Marca"
-		border="normal" width="40%" apply="org.zkoss.bind.BindComposer"
-		sclass="btn-primary" closable="true"
+	<window id="winFormularioMarca" closable="true" width="0px"
+		height="0px" border="none" apply="org.zkoss.bind.BindComposer" sclass="btn-primary"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarMarcasViewModel')"
 		form="@id('fx') @load(vm.marca) @save(vm.marca, before='registrar')">
+		
+		
+		<n:div aria-hidden="false" class="modal fade in" role="dialog"
+			tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" width="500px"
+				height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include
+						src="/WEB-INF/views/template/modal/titleModal.zul"
+						titulo="Registrar Marca" />
+					<n:div class="modal-inner">
+		
+		
 		<groupbox>
 
 			<div>
@@ -20,7 +32,7 @@
 							<label value="Nombre Marca: *" />
 
                             <vbox>
-							<textbox id="nombre" width="110%"
+							<textbox id="nombre" width="110%" sclass="form-control"
 								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
 								placeholder="Ej: Toyota"
 								constraint="@bind(vm.notEmptyValidator)" />
@@ -30,19 +42,26 @@
 				</grid>
 			</div>
 		</groupbox>
-		<hbox width="100%">
-			<div hflex="1" align="center">
-				<label value="* Campos Obligatorios" sclass="requerido" />
-			</div>
-			<div sclass="panel-footer" align="right">
+		
+		</n:div>
 
-				<button id="btnLimpiar" label="Limpiar" type="submit"
-					onClick="@command('limpiar')" sclass="btn-primary" />
-
-				<button id="btnEnviar" label="Registrar" type="submit"
-					onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
-					sclass="btn-primary" />
+					<n:div class="modal-footer">
+						<hbox width="100%" hflex="1">
+							<include
+								src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
+							<div align="right" >
+								<button id="btnLimpiar" label="Limpiar"
+									type="submit" onClick="@command('limpiar')"
+									sclass="btn-sm btn-info" />
+								<button id="btnEnviar" label="Registrar"
+									type="submit"
+									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+									sclass="btn-sm btn-primary" />
+							</div>
+						</hbox>
+					</n:div>
+				</div>
 			</div>
-		</hbox>
+		</n:div>
 	</window>
 </zk>

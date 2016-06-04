@@ -61,17 +61,15 @@
 												</combobox>
 											</hbox>
 											<label value="¿Incluir el Precio del Flete?:" sclass="label-mandatory" />
-											<hbox>
-												<combobox id="cmbFlete" readonly="true" constraint="@bind(vm.notEmptyValidator)" width="30%"
-													selectedItem="@bind(vm.tipoFlete)"
-													value="@bind(vm.tipoFlete.nombre)" 
-													model="@load(vm.listaTipoFlete)"
-													onSelect="@command('seleccionar')">
-													<template name="model">
-														<comboitem label="@bind(each.nombre)" />
-													</template>
-												</combobox>
-											</hbox>
+											<combobox id="cmbFlete" readonly="true" width="35%"
+												selectedItem="@bind(vm.tipoFlete)"
+												value="@bind(vm.tipoFlete.nombre)" 
+												model="@load(vm.listaTipoFlete)"
+												onSelect="@command('seleccionar')">
+												<template name="model">
+													<comboitem label="@bind(each.nombre)" />
+												</template>
+											</combobox>
 										</row>
 										<row spans="1,4">
 											<label value="Monto del flete:" />
@@ -173,31 +171,23 @@
                                    	</template>
 
                                    	<listfoot>
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter />
-                                   		<listfooter>
-                                   			<hbox>
-                                   				<label value="Sub-Total:" />
-                                   				<label value="Total:" />
-                                   			</hbox>
+                                   		<listfooter span="6" hflex="1">
+                                   			<vbox align="rigth">
+                                   				<label value="Sub-Total:"/>
+                                   				<label value="Total:"/>
+                                   			</vbox>
                                    		</listfooter>
-                                   		<listfooter label="Total:">
-                                   			<label 	value="@bind(vm.calcularTotal())
-                                   					@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
-                                   		<listfooter>
-                                   			<vbox>
+                                   		<listfooter hflex="1">
+                                   			<vbox hflex="1">
                                    				<label value="@bind(vm.compra.calcularSubTotal())
                                     							@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber,  
- 																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" width="30%"/> 
+ 																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" hflex="1"/> 
                                    				<label value="@bind(vm.compra.calcularTotal())
                                    								@converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" />
+																	converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)" hflex="1"/>
 											</vbox>
                                    		</listfooter>
+                                   		
                                    	</listfoot>
                                    
                                    </listbox>

@@ -113,8 +113,11 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 		detalleOferta.setAprobado(aprobado);
 		if(aprobado)
 			listaDetOferta.add(detalleOferta);
-		else
-			listaDetOferta.remove(listaDetOferta.indexOf(detalleOferta));
+		else {
+			int index = listaDetOferta.indexOf(detalleOferta);
+			if(index!=-1)
+				listaDetOferta.remove(index);
+		}
 		
 		cantArticulos = listaDetOferta.size();
 	}
@@ -270,7 +273,7 @@ public class VerOfertaViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 */
 	private void redireccionarASolicitudDePedido(final Map<String, Object> parametros){
-		super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar con la solicitud de pedido?", null, 
+		super.mostrarMensaje("Informaci\u00F3n", "¿Desea continuar con la compra?", null, 
 				new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 			@Override
 			public void onEvent(Event event) throws Exception {

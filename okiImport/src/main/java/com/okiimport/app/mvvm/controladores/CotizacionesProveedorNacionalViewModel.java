@@ -114,7 +114,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		this.persona = persona;
 		this.requerimiento = requerimiento;
 		this.requerimiento.especificarInformacionVehiculo();
-		cotizacionFiltro = new Cotizacion();
+		cotizacionFiltro = new Cotizacion((Date) null);
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
 		cambiarMonedas(0);

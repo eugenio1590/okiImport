@@ -1,10 +1,21 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer"
-		closable="true" sclass="btn-primary" width="70%" height="70%"
-		title="@bind(vm.titulo)" id="winListaCompras"
+
+
+	<window border="none" apply="org.zkoss.bind.BindComposer" width="0px" height="0px" title="@bind(vm.titulo)"
+		closable="true"  id="winListaCompras"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaComprasClienteViewModel')"
 		onClose="@command('cambiarRequerimientos')">
-		<borderlayout>
+		
+		<n:div aria-hidden="false" class="modal fade in" role="dialog"
+			tabindex="-1" style="display: block;">
+			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
+				<div sclass="modal-content">
+					<include
+						src="/WEB-INF/views/template/modal/titleModal.zul"
+						titulo="Lista Compras Cliente" />
+					<n:div class="modal-inner">
+					
+		<borderlayout height="480px">
 			<north title="Requerimiento">
 				<columnlayout sclass="base_contenedor_campos">
 					<columnchildren sclass="base_division_campos">
@@ -84,6 +95,20 @@
 <!-- 					</div> -->
 <!-- 				</div> -->
 			</south>
-		</borderlayout>
+			
+			</borderlayout>
+			
+			</n:div>
+					<n:div class="modal-footer">
+						<hbox width="100%" >
+							
+							<div align="right">
+							</div>
+						</hbox>
+					</n:div>
+				</div>
+			</div>
+		</n:div>
+		
 	</window>
 </zk>
