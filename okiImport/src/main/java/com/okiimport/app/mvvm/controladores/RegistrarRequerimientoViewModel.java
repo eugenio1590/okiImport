@@ -38,7 +38,6 @@ import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
-import com.okiimport.app.service.web.SLocalizacion;
 
 public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
 
@@ -47,8 +46,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	private STransaccion sTransaccion;
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
-	@BeanInjector("sLocalizacion")
-	private SLocalizacion sLocalizacion;
 	
 	// GUI
 	@Wire("#cedulaRif")
@@ -246,10 +243,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				this.cliente = new Cliente(cedulaBuscar.substring(1,
 						cedulaBuscar.length()));
 			this.requerimiento.setCliente(this.cliente);
-			if(this.cliente!=null && this.cliente.getCiudad()!=null){
-				System.out.println("Paso");
-				sLocalizacion.calcularFleteZoomConPesoYDistancia(null, this.cliente.getCiudad());
-			}
 		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
@@ -458,14 +451,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 	public void setMotor(Motor motor) {
 		this.motor = motor;
-	}
-
-	public SLocalizacion getsLocalizacion() {
-		return sLocalizacion;
-	}
-
-	public void setsLocalizacion(SLocalizacion sLocalizacion) {
-		this.sLocalizacion = sLocalizacion;
 	}
 	
 }
