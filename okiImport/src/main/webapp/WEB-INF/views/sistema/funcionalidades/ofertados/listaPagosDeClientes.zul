@@ -17,7 +17,7 @@
 				<listbox id="gridPagosDeClientes" mold="paging"
 					pageSize="10" pagingPosition="top"
 					emptyMessage="No hay Pagos Hasta Los Momentos" sclass="mylist"
-					model="@load(vm.listaRequerimientos)"
+					model="@load(vm.listaDePagos)"
 					onAfterRender="@command('updatePaging', paging = pagPagosDeClientes, label=lblPagosDeClientes)">
 
 					<auxhead>
@@ -25,43 +25,41 @@
 							<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<spinner instant="true" hflex="1"
-								value="@bind(vm.requerimientoFiltro.idRequerimiento)"
+								value="@bind(vm.pagoClienteFiltro.id)"
 								onChange="@command('aplicarFiltro')"  />
 						</auxheader>
 
 								<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<spinner instant="true" hflex="1"
-								value="@bind(vm.requerimientoFiltro.idRequerimiento)"
+								value="@bind(vm.pagoClienteFiltro.compra.idCompra)"
 								onChange="@command('aplicarFiltro')"  />
 						</auxheader>
 
 									<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
-								value="@bind(vm.requerimientoFiltro.cliente.nombre)"
+								value="@bind(vm.pagoClienteFiltro.compra.requerimiento.cliente.nombre)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
 
 								<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
-								value="@bind(vm.requerimientoFiltro.formaPago)"
+								value="@bind(vm.pagoClienteFiltro.formaPago)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
 									<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<datebox instant="true" hflex="1"
 								format="@bind(vm.formatDate)"
-								value="@bind(vm.requerimientoFiltro.fechaCreacion)"
+								value="@bind(vm.pagoClienteFiltro.fechaCreacion)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
-
-							
 									<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
-								value="@bind(vm.requerimientoFiltro.montoPagado)"
+								value="@bind(vm.pagoClienteFiltro.monto)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
 					</auxhead>
@@ -69,13 +67,13 @@
 								<listhead>
 						<listheader width="2%"/>
 						<listheader value="idPago" width="10%" 
-							label="Nro. Pago" sort="auto(idPago)"/>
+							label="Nro. Pago" sort="auto(id)"/>
 							<listheader value="idOferta" width="10%" 
-							label="Nro. Oferta" sort="auto(idOferta)"/>
+							label="Nro. Oferta" sort="auto(idPago)"/>
 						<listheader value="cliente.nombre" width="20%"
 							label="Cliente" sort="auto(cliente.nombre)"/>
 							<listheader value="formaPago" width="15%" 
-							label="Forma Pago" sort="auto(modeloV)"/>
+							label="Forma Pago" sort="auto(formaPago))"/>
 						<listheader value="fechaCreacion" width="15%"
 							label="Fecha de Creación" sort="auto(fechaCreacion)"/>
 						<listheader value="montoPago" width="15%"
@@ -86,13 +84,13 @@
 							<template name="model">
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-							<listcell label="@bind(each.idPago" />
-							<listcell label="@bind(each.idOferta" />
-							<listcell label="@bind(each.cliente.nombre)" />
+							<listcell label="@bind(each.compra.idCompra)" />
+							<listcell label="@bind(each.compra.idCompra)" />
+							<listcell label="@bind(each.compra.requerimiento.cliente.nombre)" />
 							<listcell label="@bind(each.formaPago)" />
 							<listcell label="@bind(each.fechaCreacion)
 												@converter('formatedDate', format=vm.formatDate)"/>
-							<listcell label="@bind(each.montoPago)" />
+							<listcell label="@bind(each.monto)" />
 							<listcell>
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">
