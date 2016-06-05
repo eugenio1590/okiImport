@@ -37,21 +37,18 @@
 					<separator orient="vertical" width="10px"
 						bar="false" />
 				</auxheader>
-				<auxheader colspan="1" />
 				<auxheader width="20%">
 					<button label="Nuevo Proveedor"
 						onClick="@command('registrarProveedor')" sclass="btn-primary" />
 				</auxheader>
 			</auxhead>
 			<listhead menupopup="auto">
-			<listheader width="2%"/>
+				<listheader width="2%"/>
 				<listheader id="id" label="Codigo" sort="auto(id)"
 					width="18%" />
 				<listheader id="nombre" label="Nombre"
 					sort="auto(nombre)" width="18%" />
 				<listheader label="Estado" sort="none" width="31%" />
-				<listheader label="Foto" sort="none" align="center"
-					width="18%" />
 				<listheader label="Operaciones" width="15%" sort="none"/>
 			</listhead>
 			<template name="model">
@@ -60,7 +57,6 @@
 					<listcell label="@bind(each.id)" />
 					<listcell label="@bind(each.nombre)" />
 					<listcell label="@bind(each.estatus)" />
-					<listcell></listcell>
 					<listcell>
 
 						<div class="btn-group btn-group-sm">

@@ -247,6 +247,7 @@ div.tab-nav {
 /**MODAL*/
 .z-window-modal .modal-title, .z-window-modal div.tab-nav {
 	margin-bottom: 15px;
+	color: black;
 }
 
 .z-window-modal .z-groupbox-content legend {

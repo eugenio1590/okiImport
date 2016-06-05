@@ -2,8 +2,7 @@
 	<window id="winUsuario"
 		border="none" width="0px" height="0px" closable="true"
 		apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.configuracion.FormularioUsuariosViewModel')"
-		onClose="@command('salir')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.configuracion.FormularioUsuariosViewModel')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">

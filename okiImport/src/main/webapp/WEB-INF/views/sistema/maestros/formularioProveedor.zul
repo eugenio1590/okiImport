@@ -1,36 +1,30 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window id="winFormularioRequerimiento" closable="true" width="0px"
+	<window id="winProveedor" closable="true" width="0px"
 		height="0px" border="none" apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.maestros.RegistrarProveedorViewModel')">
 
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">
 			<div class="modal-dialog modal-full" width="auto"
 				height="auto"><!-- modal-xs -->
 				<div sclass="modal-content">
-					<include
-						src="/WEB-INF/views/template/modal/titleModal.zul"
-						titulo="Registrar Proveedor" />
+					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Registrar Proveedor" />
 					<n:div class="modal-inner">
-
 						<tabbox id="tabDatosProveedor"
 							maximalHeight="true">
 							<tabs id="tabs">
-
 								<tab id="tabDatosFiscales"
 									sclass="waves-color-blue waves-effect"
 									onClick="@command('habilitarBtnLimpiar', id=self.id)">
 									<label
 										value="Tax Data / Datos Fiscales" />
-
 								</tab>
 
 								<tab id="tabMarcaVehiculo"
 									sclass="waves-color-blue waves-effect"
 									onClick="@command('habilitarBtnLimpiar', id=self.id)">
 									<label value="Brands / Marcas" />
-
 								</tab>
 
 								<tab id="tabClasificacionRepuesto"
@@ -38,7 +32,6 @@
 									onClick="@command('habilitarBtnLimpiar', id=self.id)">
 									<label
 										value="Parts Clasification / Clasificación Repuestos" />
-
 								</tab>
 							</tabs>
 
@@ -107,8 +100,6 @@
 																	constraint="@bind(vm.validatorClienteCedulaRif)" />
 																<!-- onBlur="@command('buscarProveedor')"-->
 																<!-- onOK="@command('buscarProveedor')" -->
-
-
 															</vbox>
 														</hbox>
 
@@ -124,7 +115,6 @@
 																readonly="@bind(vm.makeAsReadOnly)"
 																constraint="@bind(vm.notEmptyValidator)" />
 														</vbox>
-
 													</row>
 
 													<row>
@@ -240,15 +230,11 @@
 																class="z-row-inner">
 																<div
 																	align="right" width="100%" class="z-row-content">
-
-
-
 																	<!-- DIRECCION -->
 																	<include
 																		src="/WEB-INF/views/template/fieldMandatory.zul"
 																		field="Address/Dirección: "
 																		visible="@bind(vm.proveedor.nacional)" />
-
 																</div>
 															</n:td>
 															<n:td
@@ -401,7 +387,6 @@
 																label="@bind(each.descripcion)" />
 														</listitem>
 													</template>
-
 												</listbox>
 											</vlayout>
 										</west>
@@ -440,8 +425,6 @@
 								</tabpanel>
 							</tabpanels>
 						</tabbox>
-
-
 					</n:div>
 					<n:div class="modal-footer">
 						<hbox width="100%"
@@ -463,6 +446,5 @@
 				</div>
 			</div>
 		</n:div>
-
 	</window>
 </zk>

@@ -71,8 +71,7 @@
 							width="50px" height="50px" />
 					</listcell>
 					<listcell>
-
-						<div sclass=" action">
+					 	<div sclass=" action">
 							<a
 								iconSclass="z-icon-pencil green bigger-200" tooltiptext="Editar"
 								onClick="@command('editarUsuario', usuario = each)" />

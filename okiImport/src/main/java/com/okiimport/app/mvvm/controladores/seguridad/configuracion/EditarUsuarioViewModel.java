@@ -18,13 +18,19 @@ import org.zkoss.zul.Image;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
+import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.mail.MailCliente;
+import com.okiimport.app.service.mail.MailUsuario;
 
 public class EditarUsuarioViewModel extends AbstractRequerimientoViewModel implements EventListener<UploadEvent> {
 	
 	//Servicios
+	@BeanInjector("mailUsuario")
+	private MailUsuario mailUsuario;
 	
 	//GUI
 	@Wire("#winEditarUsuario")
@@ -95,8 +101,9 @@ public class EditarUsuarioViewModel extends AbstractRequerimientoViewModel imple
 		
 		if(foto!=null)
 			usuario.setFoto(foto.getByteData());
-		
 		usuario=sControlUsuario.actualizarUsuario(usuario, false);
+		if(usuario.getPersona() instanceof Analista)
+			mailUsuario.enviarUsuarioyPassword(usuario, mailService);
 		mostrarMensaje("Informacion", "El usuario se ha actualizado exitosamente", null, null, null, null);
 		winEditarUsuario.detach();
 		ejecutarGlobalCommand("cambiarUsuarios", null);
@@ -126,4 +133,13 @@ public class EditarUsuarioViewModel extends AbstractRequerimientoViewModel imple
 	public void setValidadorUsername(AbstractValidator validadorUsername) {
 		this.validadorUsername = validadorUsername;
 	}
+
+	public MailUsuario getMailUsuario() {
+		return mailUsuario;
+	}
+
+	public void setMailUsuario(MailUsuario mailUsuario) {
+		this.mailUsuario = mailUsuario;
+	}
+	
 }

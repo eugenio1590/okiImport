@@ -71,7 +71,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
-		cambiarProveedores(0, null, null);
+		consultarProveedores(0, null, null);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -97,7 +97,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * */
 	@GlobalCommand
 	@NotifyChange("proveedores")
-	public void cambiarProveedores(@Default("0") @BindingParam("page") int page, 
+	public void consultarProveedores(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
 		Map<String, Object> parametros = sMaestros.consultarProveedores(proveedorFiltro, page, pageSize);
@@ -118,7 +118,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@NotifyChange("*")
 	public void paginarLista(){
 		int page=pagProveedores.getActivePage();
-		cambiarProveedores(page, null, null);
+		consultarProveedores(page, null, null);
 	}
 	
 	/**
@@ -130,7 +130,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	@Command
 	@NotifyChange("*")
 	public void aplicarFiltro(){
-		cambiarProveedores(0, null, null);
+		consultarProveedores(0, null, null);
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 								proveedor.setiEstatus(EstatusProveedorFactory.getEstatusEliminado());
 								//EL METODO DICE ACTUTALIZARPERSONA
 								sMaestros.acutalizarPersona(proveedor);
-								cambiarProveedores(0, null, null);
+								consultarProveedores(0, null, null);
 								notifyChange("proveedores");
 							}
 							else

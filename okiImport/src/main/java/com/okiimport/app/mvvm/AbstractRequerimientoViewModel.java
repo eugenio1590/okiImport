@@ -468,4 +468,6 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public void setMonedaBase(ICoverterMoneda monedaBase) {
 		this.monedaBase = monedaBase;
 	}
+	
+	
 }
