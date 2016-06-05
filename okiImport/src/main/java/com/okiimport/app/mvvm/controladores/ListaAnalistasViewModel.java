@@ -14,17 +14,22 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
+import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -76,7 +81,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("fieldSort",  event.getTarget().getId().toString());
 			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarUsuarios", parametros );
+			ejecutarGlobalCommand("cambiarAnalistas", parametros );
 		}
 		
 	}
@@ -150,23 +155,21 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 			System.out.println("nombre del analista: "+analista.getNombre()+" "+analista.getApellido());
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("analista", analista);
-//			parametros.put("recordMode", "READ");
-//			parametros.put("cerrar", false);
+			parametros.put("recordMode", "READ");
+			parametros.put("cerrar", false);
 			Sessions.getCurrent().setAttribute("allmyvalues", parametros);
 			if (window != null) {
 				window.detach();
 				window.setId(null);
 			}
 			window = this.crearModal(BasePackageSistemaMaest+"formularioAnalistas.zul", parametros);
+			window.setMaximizable(true);
+			window.doModal();
+			window.setId("doModal" + "" + idcount + "");
 		}else{
 			System.out.println("prueba:------ analista es nulo");
 		}
 		
-//		window.setMaximizable(true);
-//		window.doModal();
-//		window.setId("doModal" + "" + idcount + "");
-		//parametros.put("editar", false);
-		//llamarFormulario("formularioAnalistas.zul", parametros);
 	}
 	
 	/*@Command
@@ -215,6 +218,67 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
+	/**
+	 * Descripcion: Llama a un modal para eliminar los datos del analista
+	 * Parametros: Analista @param view: listaAnalistas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void eliminarAnalista(@BindingParam("analista") final Analista analista){
+		super.mostrarMensaje("Confirmacion", "¿Desea Eliminar el Analista?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+								analista.setiEstatus(EstatusPersonaFactory.getEstatusInactivo());
+								//EL METODO DICE ACTUTALIZARPERSONA
+								sMaestros.acutalizarPersona(analista);
+								cambiarAnalistas(0, null, null);
+								notifyChange("analistas");
+							}
+							
+				}
+					
+			
+		}, null);
+	}
+	
+	
+	/**
+	 * Descripcion: Llama a un modal para cambiar el estatus del analista a ACTIVO
+	 * Parametros: Analista @param view: listaAnalistas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void actualizarEstatus(@BindingParam("analista") final Analista analista){
+		super.mostrarMensaje("Confirmacion", "¿Está seguro que desea cambiar el estatus del analista?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+								analista.setiEstatus(EstatusPersonaFactory.getEstatusActivo());
+								//EL METODO DICE ACTUTALIZARPERSONA
+								sMaestros.acutalizarPersona(analista);
+								cambiarAnalistas(0, null, null);
+								notifyChange("analistas");
+							}
+							
+				}
+					
+			
+		}, null);
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**SETTERS Y GETTERS*/
