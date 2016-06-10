@@ -14,6 +14,7 @@ import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -25,6 +26,7 @@ import org.zkoss.zul.Radio;
 import org.zkoss.zul.Radiogroup;
 
 import com.okiimport.app.model.Usuario;
+import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 
 public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
@@ -126,19 +128,41 @@ public class ListaUsuariosViewModel extends AbstractRequerimientoViewModel imple
 			mostrarMensaje("Error", "No se puede Editar el Usuario de la Session", Messagebox.ERROR, null, null, null);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Command
 	@NotifyChange("usuarios")
-	public void actualizarEstado(@BindingParam("usuario") Usuario usuario, @BindingParam("estado") Boolean estado){
-		Usuario userSession = consultarUsuarioSession();
-		if(userSession.getId()!=usuario.getId()){
-			if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
-				String mensaje = (estado) ? "Activado" : "Desactivado";
-				mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
-				paginarLista();
-			}
-		}
-		else
-			mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
+	public void actualizarEstado(@BindingParam("usuario") final Usuario usuario, @BindingParam("estado") final Boolean estado){
+				
+		super.mostrarMensaje("Confirmacion", "¿Está seguro que desea cambiar el estatus del usuario?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+							Usuario userSession = consultarUsuarioSession();
+							if(userSession.getId()!=usuario.getId()){
+								if(sControlUsuario.cambiarEstadoUsuario(usuario, estado)){
+									String mensaje = (estado) ? "Activado" : "Desactivado";
+									mostrarMensaje("Informacion", "Usuario "+mensaje+" Exitosamente", null, null, null, null);
+									paginarLista();
+									notifyChange("usuarios");
+								}
+							}
+							else
+								mostrarMensaje("Error", "No se puede Desactivar el Usuario de la Session", Messagebox.ERROR, null, null, null);
+						
+							}
+							
+				}
+					
+			
+		}, null);
+		
+		
+	
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/

@@ -70,11 +70,11 @@
 							<listcell></listcell>
 							<listcell>
 
-								<div class="btn-group btn-group-sm">
+								<div class="btn-group btn-group-sm action">
 									<button
 										iconSclass="z-icon-pencil green bigger-160"
 										tooltiptext="Editar Analista"
-										onClick="@command('editarAnalista', analista = each)" />
+										onClick="@command('editarAnalista', analista = each)" if="${ !each.isEliminar() }" />
 									<button
 										iconSclass="z-icon-eye blue bigger-160"
 										tooltiptext="Ver Analista"
@@ -82,7 +82,14 @@
 									<button
 										iconSclass="z-icon-trash-o red bigger-160"
 										tooltiptext="Eliminar Analista"
-										onClick="@command('eliminarAnalista', analista = each)" />
+										onClick="@command('eliminarAnalista', analista = each)" if="${ !each.isEliminar() }"/>
+										
+									<button iconSclass="fa fa-unlock-alt fa-2x"
+										tooltiptext="Activar Analista"
+										onClick="@command('actualizarEstatus', analista=each)"
+										if="${ each.isEliminar() }" />
+
+
 								</div>
 							</listcell>
 						</listitem>

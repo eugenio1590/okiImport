@@ -94,6 +94,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				analista.setCedula(tipo + analista.getCedula());
 				analista.setCiudad(ciudad);
 				analista.setiEstatus(EstatusPersonaFactory.getEstatusActivo());
+				analista.setAdministrador(false);
 				analista = sMaestros.registrarAnalista(analista);
 
 				Map<String, Object> model = new HashMap<String, Object>();
