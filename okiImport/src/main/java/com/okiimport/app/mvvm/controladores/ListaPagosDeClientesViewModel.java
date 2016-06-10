@@ -24,6 +24,7 @@ import com.okiimport.app.model.Pago;
 import com.okiimport.app.model.PagoCliente;
 import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -48,7 +49,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	//Atributos	
 		protected List <PagoCliente> listaDePagos;
 		protected PagoCliente pagoClienteFiltro;
-		protected PagoCliente pagoCliente;
+		private PagoCliente pagoCliente;
 		
 		
 	/**
@@ -94,7 +95,8 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void cambiarPagos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarPagosClientes(pagoClienteFiltro,page, pageSize);
+		Map<String, Object> parametros = sMaestros.consultarPagosClientes(pagoClienteFiltro,  fieldSort, sortDirection, 
+				 page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaDePagos = (List<PagoCliente>) parametros.get("pagoClientes");
 		pagPagosDeClientes.setActivePage(page);
@@ -126,6 +128,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void aplicarFiltro(){
 		cambiarPagos(0, null, null);
 	}
+
 
 	public List<PagoCliente> getListaDePagos() {
 		return listaDePagos;
@@ -181,9 +184,8 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 
 	public void setPagoCliente(PagoCliente pagoCliente) {
 		this.pagoCliente = pagoCliente;
-	}	
-	
-	
+	}
+
 	
 	
 }

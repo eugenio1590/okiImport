@@ -66,11 +66,11 @@
 
 								<listhead>
 						<listheader width="2%"/>
-						<listheader value="idPago" width="10%" 
+						<listheader value="id" width="10%" 
 							label="Nro. Pago" sort="auto(id)"/>
-							<listheader value="idOferta" width="10%" 
-							label="Nro. Oferta" sort="auto(idPago)"/>
-						<listheader value="cliente.nombre" width="20%"
+							<listheader value="idCompra" width="10%" 
+							label="Nro. Compra" sort="auto(idCompra)"/>
+						<listheader value="clienteNombre" width="20%"
 							label="Cliente" sort="auto(cliente.nombre)"/>
 							<listheader value="formaPago" width="15%" 
 							label="Forma Pago" sort="auto(formaPago))"/>
@@ -84,7 +84,7 @@
 							<template name="model">
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-							<listcell label="@bind(each.compra.idCompra)" />
+							<listcell label="@bind(each.id)" />
 							<listcell label="@bind(each.compra.idCompra)" />
 							<listcell label="@bind(each.compra.requerimiento.cliente.nombre)" />
 							<listcell label="@bind(each.formaPago)" />
