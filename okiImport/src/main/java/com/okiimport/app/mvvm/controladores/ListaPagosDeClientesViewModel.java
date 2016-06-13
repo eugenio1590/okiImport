@@ -61,7 +61,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		pagoClienteFiltro = new PagoCliente();
+		pagoClienteFiltro = new PagoCliente(null);
 		pagPagosDeClientes.setPageSize(pageSize);
 		agregarGridSort(gridPagosDeClientes);
 		cambiarPagos(0, null, null);

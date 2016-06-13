@@ -67,15 +67,15 @@
 								<listhead>
 						<listheader width="2%"/>
 						<listheader value="id" width="10%" 
-							label="Nro. Pago" sort="auto(id)"/>
+							label="Nro. Pago" sort="none"/>
 							<listheader value="idCompra" width="10%" 
-							label="Nro. Compra" sort="auto(idCompra)"/>
+							label="Nro. Compra" sort="none"/>
 						<listheader value="clienteNombre" width="20%"
-							label="Cliente" sort="auto(cliente.nombre)"/>
+							label="Cliente" sort="none"/>
 							<listheader value="formaPago" width="15%" 
-							label="Forma Pago" sort="auto(formaPago))"/>
+							label="Forma Pago" sort="none"/>
 						<listheader value="fechaCreacion" width="15%"
-							label="Fecha de Creación" sort="auto(fechaCreacion)"/>
+							label="Fecha de Creación" sort="none"/>
 						<listheader value="montoPago" width="15%"
 							label="Monto Pagado" sort="none"/>
 						<listheader sort="none" label="Operaciones" />
