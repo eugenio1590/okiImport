@@ -95,7 +95,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void cambiarPagos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarPagosClientes(pagoClienteFiltro,  fieldSort, sortDirection, 
+		Map<String, Object> parametros = sTransaccion.consultarPagosClientes(pagoClienteFiltro,  fieldSort, sortDirection, 
 				 page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaDePagos = (List<PagoCliente>) parametros.get("pagoClientes");
