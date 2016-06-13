@@ -185,6 +185,7 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 			cotizacionSelecionada.setDetalleCotizacions(detallesCotizacion);
 			sTransaccion.registrarCotizacion(cotizacionSelecionada, requerimiento);
 			this.mostrarMensaje("Informaci\u00F3n", "Registro Exitoso de Cotizaci\u00F3n", null, null, this, null);
+			onCloseWindow();
 		}
 	}
 	
@@ -316,6 +317,8 @@ public class CotizarProveedorInternacionalViewModel extends AbstractRequerimient
 	@Command
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
+		ejecutarGlobalCommand("consultarProveedores", null);
+		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
 	
 	
