@@ -74,8 +74,8 @@
 							label="Forma Pago" sort="auto(formaPago)"/>
 						<listheader value="fechaCreacion" width="15%"
 							label="Fecha de Creación" sort="auto(fechaCreacion)"/>
-						<listheader value="montoPago" width="15%"
-							label="Monto Pagado" sort="auto(montoPago)"/>
+						<listheader value="monto" width="15%"
+							label="Monto Pagado" sort="auto(monto)"/>
 						<listheader sort="none" label="Operaciones" />
 					</listhead>
 

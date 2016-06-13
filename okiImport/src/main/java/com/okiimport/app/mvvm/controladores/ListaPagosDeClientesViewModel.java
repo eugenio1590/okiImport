@@ -76,7 +76,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 		// TODO Auto-generated method stub		
 		if(event.getTarget() instanceof Listheader){
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort",  event.getTarget().getId().toString());
+			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
 			parametros.put("sortDirection", event.isAscending());
 			ejecutarGlobalCommand("cambiarPagos", parametros );
 		}
