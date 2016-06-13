@@ -20,37 +20,32 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.model.Pago;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.PagoCliente;
-import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 
 public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 
 	//Servicios
-	@BeanInjector("sMaestros")
-	protected SMaestros sMaestros;
-		@BeanInjector("sTransaccion")
-		protected STransaccion sTransaccion;
+	@BeanInjector("sTransaccion")
+	protected STransaccion sTransaccion;
 			
-		//GUI
-		@Wire("#gridPagosDeClientes")
-		protected Listbox gridPagosDeClientes;
+	//GUI
+	@Wire("#gridPagosDeClientes")
+	protected Listbox gridPagosDeClientes;
 			
-		@Wire("#pagPagosDeClientes")
-		protected Paging pagPagosDeClientes;
+	@Wire("#pagPagosDeClientes")
+	protected Paging pagPagosDeClientes;
 		
 	//Atributos	
-		protected List <PagoCliente> listaDePagos;
-		protected PagoCliente pagoClienteFiltro;
-		private PagoCliente pagoCliente;
-		
+	protected List <PagoCliente> listaDePagos;
+	protected PagoCliente pagoClienteFiltro;
+	private PagoCliente pagoCliente;	
 		
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -61,7 +56,8 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 		super.doAfterCompose(view);
-		pagoClienteFiltro = new PagoCliente(null);
+		Compra compra = new Compra(new Requerimiento(new Cliente()), null);
+		pagoClienteFiltro = new PagoCliente(compra, null);
 		pagPagosDeClientes.setPageSize(pageSize);
 		agregarGridSort(gridPagosDeClientes);
 		cambiarPagos(0, null, null);
@@ -95,7 +91,7 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void cambiarPagos(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarPagosClientes(pagoClienteFiltro,  fieldSort, sortDirection, 
+		Map<String, Object> parametros = sTransaccion.consultarPagosClientes(pagoClienteFiltro,  fieldSort, sortDirection, 
 				 page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaDePagos = (List<PagoCliente>) parametros.get("pagoClientes");
@@ -129,21 +125,12 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 		cambiarPagos(0, null, null);
 	}
 
-
 	public List<PagoCliente> getListaDePagos() {
 		return listaDePagos;
 	}
 
 	public void setListaDePagos(List<PagoCliente> listaDePagos) {
 		this.listaDePagos = listaDePagos;
-	}
-
-	public SMaestros getsMaestros() {
-		return sMaestros;
-	}
-
-	public void setsMaestros(SMaestros sMaestros) {
-		this.sMaestros = sMaestros;
 	}
 
 	public STransaccion getsTransaccion() {
@@ -185,7 +172,4 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void setPagoCliente(PagoCliente pagoCliente) {
 		this.pagoCliente = pagoCliente;
 	}
-
-	
-	
 }
