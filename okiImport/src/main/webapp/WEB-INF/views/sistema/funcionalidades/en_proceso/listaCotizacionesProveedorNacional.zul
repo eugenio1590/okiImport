@@ -184,23 +184,23 @@
 									<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos a Cotizar"/>
 									<panel sclass="borderGrid">
 										<panelchildren>
-											<listbox id="gridDetalleCotizacion" sclass="scroll-grid" vflex="min"
+											<listbox id="gridDetalleCotizacion"  vflex="min"
 												mold="paging" pageSize="4" pagingPosition="top"
 												model="@load(vm.listaDetalleCotizacion)"
 												emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
 												<listhead>
-													<listheader label="Codigo OEM" width="10%" sclass="label-not-mandatory"  />
-													<listheader label="Repuesto" sclass="label-not-mandatory"  />
-													<listheader label="Cant. Solict." width="10%" />
-													<listheader width="15%">
-														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+													<listheader label="Codigo OEM" width="10%" sclass="label-not-mandatory" align="center" />
+													<listheader label="Repuesto" sclass="label-not-mandatory" width="10%" align="center" />
+													<listheader label="Cant. Solict." width="10%" sclass="label-not-mandatory" align="center"/>
+													<listheader>
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" width="9%" 
 															field="Marca"/>
 													</listheader>
-													<listheader width="14%">
-														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+													<listheader width="13%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul"
 															field="Tipo Reps."/>
 													</listheader>
-													<listheader width="15%">
+													<listheader width="13%">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Cant. Cotizada"/>
 													</listheader>
@@ -208,10 +208,11 @@
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Pcio. Venta"/>
 													</listheader>
-													<listheader width="15%" visible="@bind(vm.tipoFlete.valor)">
+													<listheader width="13%" visible="@bind(vm.tipoFlete.valor)">
 														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 															field="Pcio. Flete (**)"/>
 													</listheader>
+													<listheader label="Total"  sclass="label-not-mandatory" align="center" />
 												</listhead>
 												<template name="model">
 													<listitem>
@@ -224,25 +225,25 @@
 														<listcell>
 															<vbox>
 																<textbox
-																	value="@bind(each.marcaRepuesto)" width="100%"
+																	value="@bind(each.marcaRepuesto)" 
 																	constraint="@bind(vm.notEmptyValidator)"
-																	tooltiptext="Marca del Repuesto" />
+																	tooltiptext="Marca del Repuesto" width="100%" />
 															</vbox>
 														</listcell>
 														<listcell>
-															<combobox readonly="true" width="100%"
+															<combobox readonly="true"
 																model="@load(vm.listaTipoRepuesto)"
-																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)">
-																<template name="model">
-																	<comboitem label="@bind(each.nombre)" />
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="101%" >
+																<template name="model" >
+																	<comboitem label="@bind(each.nombre)"/>
 																</template>
 															</combobox>
 														</listcell>
 														<listcell>
 															<spinner
-																value="@bind(each.cantidad)" width="100%"
+																value="@bind(each.cantidad)"
 																tooltiptext="Cantidad Cotizada del Repuesto"
-																constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))" />
+																constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))"  width="100%" />
 														</listcell>
 														<listcell>
 															<vbox>
@@ -250,9 +251,9 @@
 																	format="@bind(vm.formatNumber)"
 																	locale="@bind(vm.localeNumber)"
 																	tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
-																	value="@bind(each.precioVenta)" width="100%"
+																	value="@bind(each.precioVenta)" 
 																	constraint="@bind(vm.validatorPrecio)"
-																	onChange="@command('calcularPrecio', column=1)" />
+																	onChange="@command('calcularPrecio', column=1)" width="100%" />
 															</vbox>
 														</listcell>
 														<listcell
@@ -262,9 +263,19 @@
 																	format="@bind(vm.formatNumber)"
 																	locale="@bind(vm.localeNumber)"
 																	tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
-																	value="@bind(each.precioFlete)" width="100%"
+																	value="@bind(each.precioFlete)" 
 																	constraint="@bind(vm.constraintPrecioFlete)"
-																	onChange="@command('calcularPrecio', column=2)" />
+																	onChange="@command('calcularPrecio', column=2)" width="100%" />
+															</vbox>
+														</listcell>
+														<listcell>
+															<vbox>
+																<decimalbox
+																	format="@bind(vm.formatNumber)"
+																	locale="@bind(vm.localeNumber)"
+																	tooltiptext="Total"
+																	value="@bind((each.cantidad*each.precioVenta)+each.precioFlete)"
+																	constraint="@bind(vm.validatorPrecio)" disabled="true"  width="100%"/>
 															</vbox>
 														</listcell>
 													</listitem>
