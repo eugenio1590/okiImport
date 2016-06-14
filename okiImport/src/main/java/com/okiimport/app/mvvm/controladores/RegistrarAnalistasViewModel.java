@@ -62,7 +62,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
-		System.out.println("imprimir analista  ----- "+analista.getNombre()+" "+analista.getApellido());
+		//System.out.println("imprimir analista  ----- "+analista.getNombre()+" "+analista.getApellido());
 		this.analista = (analista==null) ? new Analista() :  analista;
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
