@@ -68,6 +68,10 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		//limpiar();
 		
+		/*if(recordMode.equalsIgnoreCase("READ")){
+			this.ciudad=analista.getCiudad();
+		}*/
+		
 		listaEstados = llenarListaEstados();
 		listaTipoPersona = llenarListaTipoPersona();
 		this.tipoPersona = listaTipoPersona.get(1);

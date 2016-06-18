@@ -205,6 +205,9 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	 * */
 	@Command
 	public void nuevoAnalista(){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+
+		//parametros.put("recordMode", "NEW");
 		llamarFormulario("formularioAnalistas.zul", null);
 	}
 	
