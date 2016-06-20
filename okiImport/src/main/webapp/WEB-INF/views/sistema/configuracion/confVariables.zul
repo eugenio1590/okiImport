@@ -21,14 +21,14 @@
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Valor Libra: " />
 								<vbox>
 								<textbox id="txtValorLibra" placeholder="EJ: 28$" sclass="form-control"
-								constraint="@bind(vm.notEmptyValidator)"></textbox>
+								constraint="@bind(vm.notEmptyValidator)" value="@bind(vm.vLibra)"></textbox>
 								</vbox>
 
 
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Porcentaje Ganancia: " />
 								<vbox>
-								<textbox id="txtPorcentajeGanancia" placeholder="EJ: 30%" sclass="form-control"
-								constraint="@bind(vm.notEmptyValidator)"></textbox>
+								<textbox id="txtPorcentajeGanancia" placeholder="EJ: 30%" sclass="form-control" 
+								constraint="@bind(vm.notEmptyValidator)" value="@bind(vm.pGanancia)"></textbox>
 								</vbox>
 
 							</row>
@@ -36,11 +36,11 @@
 								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Porcentaje IVA: " />
 								<vbox>
 								<textbox id="txtPorcentajeIVA" placeholder="EJ: 12%" sclass="form-control"
-								constraint="@bind(vm.notEmptyValidator)"></textbox>
+								constraint="@bind(vm.notEmptyValidator)" value="@bind(vm.pIva)"></textbox>
 								</vbox>
 
 								
-								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Moneda: " />
+								<!--<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Moneda: "/> 
 								<vbox>
 								<bandbox id="bandbMoneda" mold="rounded" autodrop="true" width="100%"
 										constraint="@bind(vm.getNotEmptyValidator())" readonly="true"
@@ -61,7 +61,7 @@
 											<paging id="pagMonedas" onPaging="@command('paginarListaMonedas')" autohide="true"/>
 										</bandpopup>
 									</bandbox>
-								</vbox>
+								</vbox>-->
 							</row>
 						</rows>
 					</grid>
