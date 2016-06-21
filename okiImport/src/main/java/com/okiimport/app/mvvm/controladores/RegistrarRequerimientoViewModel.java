@@ -80,6 +80,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	private Requerimiento requerimiento;
 	private Cliente cliente;
 	private Motor motor;
+	protected static final String BaseURL = "/WEB-INF/views/portal/";
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -128,6 +129,22 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		pagMotores.setTotalSize(total);
 	}
 	
+	@GlobalCommand
+	@NotifyChange("limpiarCamposReq")
+	public void limpiarCamposRequerimiento(){
+		//System.out.println("entre al LIMPIAR");
+		recargar();
+//		motor = new Motor();
+//		requerimiento = new Requerimiento();
+//		cliente = new Cliente();
+//		requerimiento.setCliente(cliente);
+//		super.cleanConstraintForm();
+		
+		
+		//limpiar();
+	}
+	
+	
 	/**COMMAND*/
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar Requerimiento
@@ -136,13 +153,23 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
+	@NotifyChange({ "requerimiento", "cliente", "estado", "transmision", "traccion", "tipoRepuesto" })
 	public void limpiar() {
-		motor = new Motor();
-		requerimiento = new Requerimiento();
-		cliente = new Cliente();
-		requerimiento.setCliente(cliente);
-		super.cleanConstraintForm();
+		try{
+			motor = new Motor();
+			requerimiento = new Requerimiento();
+			cliente = new Cliente();
+			requerimiento.setCliente(cliente);
+			this.estado=new Estado();
+			this.transmision=new ModeloCombo<Boolean>();
+			this.traccion=new ModeloCombo<Boolean>();
+			tipoRepuesto=new ModeloCombo<Boolean>();
+			super.cleanConstraintForm();
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 
 	 /**
@@ -154,6 +181,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
+		try{
 		if (checkIsFormValid()) {
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
@@ -175,19 +203,28 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				// decir que no puede instanciarse sino solo una vez
 				
 				mailCliente.registrarRequerimiento(requerimiento, mailService);
-
-				mostrarMensaje("Informaci\u00F3n",
-						"El Requerimiento ha sido registrado exitosamente ",
-						null, null, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								recargar();
-							}
-						}, null);
+				
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+//				mostrarMensaje("Informaci\u00F3n",
+//						"El Requerimiento ha sido registrado exitosamente ",
+//						null, null, new EventListener() {
+//							public void onEvent(Event event) throws Exception {
+//								recargar();
+//							}
+//						}, null);
+				
 			} else
 				mostrarMensaje("Informaci\u00F3n",
 						"Agregue al Menos un Requerimiento", null, null, null,
 						null);
 		}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 	
 	 /**
