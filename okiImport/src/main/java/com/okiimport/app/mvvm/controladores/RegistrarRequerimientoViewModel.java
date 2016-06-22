@@ -38,7 +38,6 @@ import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
-import com.okiimport.app.service.web.SLocalizacion;
 
 public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
 
@@ -47,8 +46,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	private STransaccion sTransaccion;
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
-	@BeanInjector("sLocalizacion")
-	private SLocalizacion sLocalizacion;
 	
 	// GUI
 	@Wire("#cedulaRif")
@@ -83,6 +80,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	private Requerimiento requerimiento;
 	private Cliente cliente;
 	private Motor motor;
+	protected static final String BaseURL = "/WEB-INF/views/portal/";
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -131,6 +129,22 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		pagMotores.setTotalSize(total);
 	}
 	
+	@GlobalCommand
+	@NotifyChange("limpiarCamposReq")
+	public void limpiarCamposRequerimiento(){
+		//System.out.println("entre al LIMPIAR");
+		recargar();
+//		motor = new Motor();
+//		requerimiento = new Requerimiento();
+//		cliente = new Cliente();
+//		requerimiento.setCliente(cliente);
+//		super.cleanConstraintForm();
+		
+		
+		//limpiar();
+	}
+	
+	
 	/**COMMAND*/
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar Requerimiento
@@ -139,13 +153,23 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
+	@NotifyChange({ "requerimiento", "cliente", "estado", "transmision", "traccion", "tipoRepuesto" })
 	public void limpiar() {
-		motor = new Motor();
-		requerimiento = new Requerimiento();
-		cliente = new Cliente();
-		requerimiento.setCliente(cliente);
-		super.cleanConstraintForm();
+		try{
+			motor = new Motor();
+			requerimiento = new Requerimiento();
+			cliente = new Cliente();
+			requerimiento.setCliente(cliente);
+			this.estado=new Estado();
+			this.transmision=new ModeloCombo<Boolean>();
+			this.traccion=new ModeloCombo<Boolean>();
+			tipoRepuesto=new ModeloCombo<Boolean>();
+			super.cleanConstraintForm();
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 
 	 /**
@@ -157,6 +181,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
+		try{
 		if (checkIsFormValid()) {
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
@@ -178,19 +203,28 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				// decir que no puede instanciarse sino solo una vez
 				
 				mailCliente.registrarRequerimiento(requerimiento, mailService);
-
-				mostrarMensaje("Informaci\u00F3n",
-						"El Requerimiento ha sido registrado exitosamente ",
-						null, null, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								recargar();
-							}
-						}, null);
+				
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+//				mostrarMensaje("Informaci\u00F3n",
+//						"El Requerimiento ha sido registrado exitosamente ",
+//						null, null, new EventListener() {
+//							public void onEvent(Event event) throws Exception {
+//								recargar();
+//							}
+//						}, null);
+				
 			} else
 				mostrarMensaje("Informaci\u00F3n",
 						"Agregue al Menos un Requerimiento", null, null, null,
 						null);
 		}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 	
 	 /**
@@ -246,10 +280,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				this.cliente = new Cliente(cedulaBuscar.substring(1,
 						cedulaBuscar.length()));
 			this.requerimiento.setCliente(this.cliente);
-			if(this.cliente!=null && this.cliente.getCiudad()!=null){
-				System.out.println("Paso");
-				sLocalizacion.calcularFleteZoomConPesoYDistancia(null, this.cliente.getCiudad());
-			}
 		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
@@ -458,14 +488,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 	public void setMotor(Motor motor) {
 		this.motor = motor;
-	}
-
-	public SLocalizacion getsLocalizacion() {
-		return sLocalizacion;
-	}
-
-	public void setsLocalizacion(SLocalizacion sLocalizacion) {
-		this.sLocalizacion = sLocalizacion;
 	}
 	
 }

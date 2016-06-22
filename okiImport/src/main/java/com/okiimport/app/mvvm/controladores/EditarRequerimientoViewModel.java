@@ -17,10 +17,12 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
+import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.A;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Groupbox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
@@ -177,6 +179,27 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		}
 		else
 			aDatosVehiculo.setIconSclass((!open) ? "z-icon-plus" : "z-icon-minus");
+	}
+	
+	/**
+	 * Descripcion: funcion que permitira mostrar el emergente para cargar
+	 * la foto del detalle de requermiento
+	 * Parametros: @param detalle: objeto requermiento el cual se le actualizara la foto
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange("*")
+	public void uploadFoto(@BindingParam("detalle") final DetalleRequerimiento detalle){
+		Fileupload.setTemplate("/WEB-INF/views/sistema/configuracion/fileupload.zul");
+		Fileupload.get(new EventListener<UploadEvent>(){
+
+			@Override
+			public void onEvent(UploadEvent event) throws Exception {
+				cambiarFoto(event.getMedia(), detalle);
+				notifyChange("*");
+			}
+		});
 	}
 	
 	/**
