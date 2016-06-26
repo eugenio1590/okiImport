@@ -251,6 +251,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 				configurarAtributosCotizacion(true);
 				cambiarCotizaciones(0, null, null);
 				eastCotizacion.setTitle(TITULO_EAST);
+				onCloseWindow();
 			}
 		}
 		else if(cotizacionSelecionada==null)
