@@ -77,7 +77,7 @@
 													<listheader width="20%" 
 														label="Proveedor" sort="none"/>
 													<listheader value="nombre" width="13%"
-														label="Fecha de Creacion" sort="auto(fechaCreacion)" >
+														label="Fecha de Creación" sort="auto(fechaCreacion)" >
 													</listheader>
 													<listheader width="13%" 
 														label="Fecha de Vencimiento" sort="none"/>

@@ -19,7 +19,7 @@
 			<north title="Requerimiento">
 				<columnlayout sclass="base_contenedor_campos">
 					<columnchildren sclass="base_division_campos">
-						<label value="Fecha de Creacion:"/>
+						<label value="Fecha de Creación:"/>
 						<label value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaCreacion))"/>
 					</columnchildren>
 					<columnchildren sclass="base_division_campos">

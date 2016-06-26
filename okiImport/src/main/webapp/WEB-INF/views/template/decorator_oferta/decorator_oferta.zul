@@ -48,7 +48,7 @@
 					model="@load(vm.oferta.detalleOfertas)">
 					<listhead>
 						<listheader label="Proveedor" />
-						<listheader label="Ubicacion" tooltiptext="Pais/Estado-Ciudad" />
+						<listheader label="Ubicación" tooltiptext="Pais/Estado-Ciudad" />
 						<listheader label="Repuesto" />
 						<listheader label="Marca" />
 						<listheader label="Cant. Solict." width="7%" />

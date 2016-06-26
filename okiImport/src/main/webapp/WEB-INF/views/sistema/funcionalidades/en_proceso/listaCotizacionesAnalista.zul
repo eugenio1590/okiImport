@@ -46,9 +46,9 @@
 									<listhead>
 										<listheader width="2%" sort="none"/>
 										<listheader value="idCotizacion"  width="13%"
-											label="Nro. Cotizacion" sort="auto(idCotizacion)" />
+											label="Nro. Cotización" sort="auto(idCotizacion)" />
 										<listheader value="fechaCreacion" width="18%"
-											label="Fecha de Creacion" sort="auto(fechaCreacion)" />
+											label="Fecha de Creación" sort="auto(fechaCreacion)" />
 										<listheader value="fechaVencimiento" width="18%"
 											label="Fecha de Vencimiento" sort="auto(fechaVencimiento)" />
 										<listheader value="none" width="29%"

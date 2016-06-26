@@ -186,13 +186,17 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({"requerimiento", "traccion", "transmision"})
+	@NotifyChange({"requerimiento", "traccion", "transmision", "cmbTransmision", "cmbTraccion"})
 	public void limpiar(){
 		this.requerimiento.setSerialCarroceriaV(null);
+		this.requerimiento.setMotor(new Motor());
+		this.traccion=new ModeloCombo<Boolean>();
+		this.transmision= new ModeloCombo<Boolean>();
 		for(DetalleRequerimiento detalle:this.requerimiento.getDetalleRequerimientos()){
 			detalle.setCodigoOem("");
 			detalle.setCantidad(new Long(0));
 			detalle.setDescripcion("");
+			detalle.setPeso((float) 0);
 			detalle.setClasificacionRepuesto(null);
 			detalle.setFoto(null);
 		}

@@ -68,6 +68,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		//limpiar();
 		
+		this.ciudad=this.analista.getCiudad();
+		this.estado=this.analista.getCiudad().getEstado();
 		/*if(recordMode.equalsIgnoreCase("READ")){
 			this.ciudad=analista.getCiudad();
 		}*/
@@ -130,9 +132,11 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "analista" })
+	@NotifyChange({ "analista", "ciudad", "estado" })
 	public void limpiar() {
 		analista = new Analista();
+		this.ciudad=new Ciudad();
+		this.estado=new Estado();
 		super.cleanConstraintForm();
 	}
 	

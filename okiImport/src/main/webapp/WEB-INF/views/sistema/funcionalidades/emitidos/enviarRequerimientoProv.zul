@@ -16,7 +16,7 @@
 		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 		    					<space/>
 		    					<space/> 
-		    					<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+		    					<label value="Fecha de Creación:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.fechaCreacion)
 		    									@converter('formatedDate', format=vm.formatDate)"/>
 		    					<space/>
@@ -50,7 +50,7 @@
 												<rows>
 													<row>
 														<!-- CEDULA -->
-														<label value="Cedula/RIF: " sclass="label-not-mandatory"/>
+														<label value="Cédula/RIF: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 														<!-- NOMBRE O RAZON SOCIAL -->
@@ -60,7 +60,7 @@
 												
 													<row>
 														<!-- TELEFONO -->
-														<label value="Telefono: " sclass="label-not-mandatory"/>
+														<label value="Teléfono: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.telefono)"/>
 													
 														<!-- E-Mail -->
@@ -86,7 +86,7 @@
 										<tabbox sclass="tab-nav tab-nav-blue">
 											<tabs>
 												<tab sclass="waves-color-blue waves-effect">
-													<label value="Datos Basicos" />
+													<label value="Datos Básicos" />
 												</tab>
 												<tab sclass="waves-color-blue waves-effect">
 													<label value="Datos Adicionales" />
@@ -119,7 +119,7 @@
 																<label value="@bind(vm.requerimiento.annoV)"/>
 													
 																<!-- SERIAL DE CARROCERIA -->
-																<label value="Serial Carroceria:" sclass="label-not-mandatory"/>
+																<label value="Serial Carrocería:" sclass="label-not-mandatory"/>
 																<label value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 															</row>
 														</rows>
@@ -142,12 +142,12 @@
 																<label value="@bind(vm.requerimiento.motor.nombre)"/>
 																															
 																<!-- TRANSMISION -->
-																<label value="Transmision:" sclass="label-not-mandatory"/>
+																<label value="Transmisión:" sclass="label-not-mandatory"/>
 																<label value="@bind(vm.requerimiento.determinarTransmision())"/>
 															</row>
 															<row>
 																<!-- TRACCION -->
-																<label value="Traccion:" sclass="label-not-mandatory"/>
+																<label value="Tracción:" sclass="label-not-mandatory"/>
 																<label value="@bind(vm.requerimiento.determinarTraccion())"/>
 																															
 																<!-- TIPO REPUESTO -->
@@ -199,7 +199,7 @@
 						<div align="right" hflex="1">
 							<button id="btnLimpiar" label="Limpiar" type="submit"
 								onClick="@global-command('removerSeleccionados')" sclass="btn-sm btn-info" />
-							<button label="Cotizacion por Analista" type="submit" sclass="btn-sm btn-primary"
+							<button label="Cotización por Analista" type="submit" sclass="btn-sm btn-primary"
 								onClick="@command('enviarSolicitudProv', btnEnviar=self, btnLimpiar=btnLimpiar, enviar = false)" />
 							<button label="Enviar a Proveedores" type="submit" sclass="btn-sm btn-primary"
 								onClick="@command('enviarSolicitudProv', btnEnviar=self, btnLimpiar=btnLimpiar, enviar = true)" />						

@@ -72,7 +72,7 @@
 														sort="auto(idCotizacion)" width="90px">
 													</listheader>
 													<listheader
-														value="nombre" label="F. Creacion"
+														value="nombre" label="F. Creación"
 														sort="auto(fechaCreacion)" width="90px">
 													</listheader>
 													<listheader width="25%" label="Operaciones" />
@@ -189,7 +189,7 @@
 												model="@load(vm.listaDetalleCotizacion)"
 												emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
 												<listhead>
-													<listheader label="Codigo OEM" width="10%" sclass="label-not-mandatory"  />
+													<listheader label="Código OEM" width="10%" sclass="label-not-mandatory"  />
 													<listheader label="Repuesto" sclass="label-not-mandatory"  />
 													<listheader label="Cant. Solict." width="10%" />
 													<listheader width="15%">
