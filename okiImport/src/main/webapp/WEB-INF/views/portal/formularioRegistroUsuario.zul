@@ -39,8 +39,8 @@
 													placeholder="Ej: 4025375" maxlength="12"
 													value="@bind(vm.cliente.cedula)"
 													constraint="@bind(vm.validatorClienteCedulaRif)"
-													onBlur="@command('buscarCliente')"
-													onOK="@command('buscarCliente')" />
+													 /><!-- onBlur="@command('buscarCliente')"
+													onOK="@command('buscarCliente')" -->
 											</vbox>
 										</hbox>
 									</row>
@@ -159,7 +159,7 @@
 				<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
 					onClick="@command('limpiar')" />
 				<button label="Inscribirme" type="submit" sclass="btn-sm btn-primary"
-					onClick="@command('registrarUsuario',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>
 	</vlayout>
