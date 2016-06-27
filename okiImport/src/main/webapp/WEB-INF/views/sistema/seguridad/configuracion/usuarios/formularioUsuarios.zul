@@ -39,7 +39,7 @@
 							<auxheader colspan="1">
 								<div sclass="z-icon-filter bigger-200" />
 								<textbox value="@bind(vm.personaFiltro.cedula)"
-									instant="true" placeholder="Buscar por Cedula"
+									instant="true" placeholder="Buscar por Cédula"
 									onChange="@command('aplicarFiltro')" />
 							</auxheader>
 							<auxheader colspan="1">
@@ -51,7 +51,7 @@
 							<auxheader colspan="1"></auxheader>
 						</auxhead>
 						<listhead menupopup="auto">
-							<listheader id="cedula" label="Cedula" sort="auto(cedula)" />
+							<listheader id="cedula" label="Cédula" sort="auto(cedula)" />
 							<listheader id="nombre" label="Nombre" sort="auto(nombre)" />
 							<listheader width="10%" />
 						</listhead>

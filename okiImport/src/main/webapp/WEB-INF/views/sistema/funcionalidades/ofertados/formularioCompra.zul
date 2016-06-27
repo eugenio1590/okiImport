@@ -28,7 +28,7 @@
 				<space></space>
 				<space></space>
 				<space></space>
-				<label value="Observacion:" />
+				<label value="Observación:" />
 				<textbox sclass="no_rezise notas" readonly="true"
 					value="@bind(vm.compra.observacion)" 
 					width="250px" rows="2"/>
@@ -50,7 +50,7 @@
 
 						<rows>
 							<row>
-								<label value="Numero: " />
+								<label value="Número: " />
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.idRequerimiento)" width="100%"
@@ -58,7 +58,7 @@
 								</vbox>
 
 
-								<label value="Fecha Creacion: " />
+								<label value="Fecha Creación: " />
 								<label value="@bind(vm.requerimiento.fechaCreacion)
 		    									@converter('formatedDate', format=vm.formatDate)" />
 							</row>
@@ -83,7 +83,7 @@
 
 						<rows>
 							<row>
-								<label value="Cedula: " />
+								<label value="Cédula: " />
 								<vbox>
 								<textbox
 									value="@bind(vm.requerimiento.cliente.cedula)" width="100%"
@@ -165,7 +165,7 @@
 							onAfterRender="@command('updatePaging', paging = pagDetallesCompra, label=lblDetallesCompra)">
 							
 							<listhead>
-								<listheader label="Descripcion" sort="none" />
+								<listheader label="Descripción" sort="none" />
 								<listheader label="Marca" sort="none" />
 								<listheader label="Cant. Encontrada" sort="none" />
 								<listheader label="Precio Venta" sort="none" />
