@@ -21,7 +21,7 @@
 		    									@converter('formatedDate', format=vm.formatDate)"/>
 		    					<space/>
 		    					<space/> 
-		   						<label value="Estado:" sclass="label-not-mandatory"/>
+		   						<label value="Estado" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.determinarEstatus())" sclass="z-letra-grande" /> 
 		    
 							</div>
@@ -131,7 +131,7 @@
 														onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" 
 														if="${ not each.fotoVacia() }"/>
 												</listcell>
-												<listcell label="Por definir"/>
+												<listcell label="@bind(vm.requerimiento.determinarEstatus())"/>
 											</listitem>
 										</template>
 									</listbox>

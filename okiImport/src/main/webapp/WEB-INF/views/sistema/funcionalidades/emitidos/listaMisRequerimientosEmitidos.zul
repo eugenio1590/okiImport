@@ -86,17 +86,16 @@
 											iconSclass="z-icon-pencil green bigger-160"
 											tooltiptext="Editar"
 											onClick="@command('editarReguerimiento', requerimiento = each)"
-											if="${ each.editar() }" />
+											if="${ each.editarV2() }" />
 										<button
 											iconSclass="z-icon-eye blue bigger-160"
 											tooltiptext="Ver Requerimiento"
-											onClick="@command('verRequerimiento', requerimiento = each)"
-											if="${ !each.editar() }" />
+											onClick="@command('verRequerimiento', requerimiento = each)"/>
 										<button
 											iconSclass="z-icon-truck red bigger-160"
 											tooltiptext="Enviar a Proveedores"
 											onClick="@command('enviarProveedores', requerimiento=each)"
-											if="${ !each.isCerrarSolicitud() }" />
+											if="${!each.isCerrarSolicitud() and each.puedeEnviar()}" />
 										<button
 											iconSclass="fa fa-users purple bigger-160"
 											tooltiptext="Cotizar" if="${ each.cotizar() }"
