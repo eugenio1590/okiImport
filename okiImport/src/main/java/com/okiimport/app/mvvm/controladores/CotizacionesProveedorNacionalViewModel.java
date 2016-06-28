@@ -51,8 +51,8 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	private STransaccion sTransaccion;
 	
 	//GUI
-	@Wire("#winCotizaciones")
-	private Window winCotizaciones;
+	/*@Wire("#winCotizaciones")
+	private Window winCotizaciones;*/
 	
 	@Wire("#gridCotizaciones")
 	private Listbox gridCotizaciones;
@@ -60,44 +60,24 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Wire("#pagCotizaciones")
 	private Paging pagCotizaciones;
 	
-	@Wire("#eastCotizacion")
-	private East eastCotizacion;
 	
-	@Wire("#btnBotones")
-	private Hbox btnBotones;
-	
-	@Wire("#dtbFecha")
-	private Datebox dtbFecha;
-	
-	@Wire("#txtCondicion")
-	private Textbox txtCondicion;
-	
-	@Wire("#bandbMoneda")
-	private Bandbox bandbMoneda;
-	
-	@Wire("#pagMonedas")
-	private Paging pagMonedas;
-	
-	@Wire("#cmbFlete")
-	private Combobox cmbFlete;
 	
 	//le quite el atributo static al titulo
 	//Atributos
 	public static final String TITULO_EMPTY_COTIZACIONES = "No existen mas solicituces de cotizacion";
-	private static final String TITULO_EAST = "Cotizacion ";
 	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
 	private CustomConstraint constraintPrecioFlete = null;
 	private List<Cotizacion> listaCotizacion;
-	private List<DetalleCotizacion> listaDetalleCotizacion;
+	//private List<DetalleCotizacion> listaDetalleCotizacion;
 	private List<Moneda> monedas;
 	private Persona persona;
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
-	private Moneda monedaSeleccionada;
+	/*private Moneda monedaSeleccionada;
 	private List<ModeloCombo<Boolean>> tiposFlete;
 	private ModeloCombo<Boolean> tipoFlete;
-	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
+	private List<ModeloCombo<Boolean>> listaTipoRepuesto;*/
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -117,15 +97,15 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		cotizacionFiltro = new Cotizacion((Date) null);
 		titulo = titulo + requerimiento.getIdRequerimiento();
 		cambiarCotizaciones(0, null, null);
-		cambiarMonedas(0);
+		
 		agregarGridSort(gridCotizaciones);
 		gridCotizaciones.setEmptyMessage(TITULO_EMPTY_COTIZACIONES);
 		pagCotizaciones.setPageSize(pageSize);
-		eastCotizacion.setTitle(TITULO_EAST);	
+		//eastCotizacion.setTitle(TITULO_EAST);	
 		
-		listaTipoRepuesto = llenarListaTipoRepuestoProveedor();
+		/*listaTipoRepuesto = llenarListaTipoRepuestoProveedor();
 		tiposFlete = llenarTiposFleteNacional();
-		tipoFlete = tiposFlete.get(0);
+		tipoFlete = tiposFlete.get(0);*/
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
@@ -202,12 +182,19 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
-		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
+		/*eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
 		cotizacionSelecionada = cotizacion;
 		listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((int) cotizacion.getIdCotizacion());
+		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorInternacional.zul", parametros);
 		limpiarCotizacionSeleccionada();
 		mostrarBotones();
-		configurarAtributosCotizacion(false);
+		configurarAtributosCotizacion(false);*/
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("persona", this.persona);
+		parametros.put("requerimiento", this.requerimiento);
+		parametros.put("cotizacion", cotizacion);
+		parametros.put("obligatorioTodosCampos", false);
+		crearModal(BasePackageSistemaFunc+"en_proceso/cotizarProveedorNacional.zul", parametros);
 	}
 	
 	/**
@@ -216,7 +203,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
 	public void limpiar(){
 		limpiarCotizacionSeleccionada();
@@ -227,7 +214,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 				detalle.setPrecioVenta(null);
 				detalle.setPrecioFlete(null);
 			}
-	}
+	}*/
 	
 	/**
 	 * Descripcion: Permitira enviar los datos de la cotizacion seleccionada para su registro
@@ -235,7 +222,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
@@ -256,7 +243,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		}
 		else if(cotizacionSelecionada==null)
 			mostrarMensaje("Informaci\u00F3n", "Debe Seleccionar una Cotizaci\u00F3n", null, null, null, null);
-	}
+	}*/
 	
 	/**
 	 * Descripcion: Permitira asginar el historial mas actual de la moneda seleccionada
@@ -264,7 +251,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("cotizacionSelecionada")
 	public void seleccionMoneda(){
 		bandbMoneda.close();
@@ -272,7 +259,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 			HistoricoMoneda historico = this.sControlConfiguracion.consultarActualConversion(monedaSeleccionada);
 			this.cotizacionSelecionada.setHistoricoMoneda(historico);
 		}
-	}
+	}*/
 	
 	/**
 	 * Descripcion: Permitira cambiar la paginacion de la listaMonedas de acuerdo a la pagina activa del Paging
@@ -280,13 +267,13 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("*")
 	public void paginarListaMonedas(){
 		int page=pagMonedas.getActivePage();
 		cambiarMonedas(page);
 	}
-	
+	*/
 	/**
 	 * Descripcion: Permitira cargar nuevamente las listas al cerrar la pantalla
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
@@ -306,9 +293,9 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange({"listaDetalleCotizacion", "constraintPrecioFlete"})
-	public void seleccionarTipoFlete(){
+	public void seleccionar(){
 		if(!this.tipoFlete.getValor()){
 			this.constraintPrecioFlete = null;
 			for(DetalleCotizacion detalle : this.listaDetalleCotizacion)
@@ -317,7 +304,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		else
 			this.constraintPrecioFlete = super.getValidatorCantPositiva();
 	}
-	
+	*/
 	/**
 	 * Descripcion: Permitira calcular el precio de la columna especificado como parametro
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
@@ -325,7 +312,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("cotizacionSelecionada")
 	public void calcularPrecio(@BindingParam("column") int column){
 		float total = 0;
@@ -343,7 +330,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		default: break;
 		}
 	}
-	
+	*/
 	/**
 	 * Descripcion: Permitira asignar el varlo del combo seleccionado del tipo de repuesto al detalle de cotizacion
 	 * Parametros: @param detalle: objeto detalle de cotizacion escogido
@@ -351,12 +338,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	public void selectTipoRepuesto(@BindingParam("detalle") DetalleCotizacion detalle, 
 			@BindingParam("item") ModeloCombo<Boolean> item){
 		detalle.setTipoRepuesto(item.getValor());
 	}
-	
+	*/
 	/**
 	 * Descripcion: Permitira cargar la lista de monedas de acuerdo a la pagina dada como parametro
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
@@ -364,7 +351,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	@NotifyChange("monedas")
 	public void cambiarMonedas(@Default("0") @BindingParam("page") int page){
 		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
@@ -374,21 +361,21 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		pagMonedas.setTotalSize(total);
 		pagMonedas.setPageSize(pageSize);
 	}
-	
+	*/
 	/**
 	 * Descripcion: Permitira mostrar los botones limpiar y enviar si la lista de detalles contiene datos
 	 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	private void mostrarBotones(){
+	/*private void mostrarBotones(){
 		if(listaDetalleCotizacion!=null)
 			if(listaDetalleCotizacion.size()>0){
 				btnBotones.setVisible(true);
 				return;
 			}
 		btnBotones.setVisible(false);
-	}
+	}*/
 	
 	/**
 	 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
@@ -396,12 +383,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	private void limpiarCotizacionSeleccionada(){
+	/*private void limpiarCotizacionSeleccionada(){
 		if(cotizacionSelecionada!=null){
 			cotizacionSelecionada.setFechaVencimiento(AbstractServiceImpl.sumarORestarFDia(new Date(), 1));
 			cotizacionSelecionada.setCondiciones(null);
 		}
-	}
+	}*/
 	
 	/**
 	 * Descripcion: Permitira preparar los componentes graficos para cotizar 
@@ -411,12 +398,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
-	private void configurarAtributosCotizacion(boolean readOnly){
+	/*private void configurarAtributosCotizacion(boolean readOnly){
 		txtCondicion.setReadonly(readOnly);
 		dtbFecha.setButtonVisible(!readOnly);
 		bandbMoneda.setButtonVisible(!readOnly);
 		cmbFlete.setButtonVisible(!readOnly);
-	}
+	}*/
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/
 	
@@ -437,7 +424,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		this.listaCotizacion = listaCotizacion;
 	}
 
-	public List<DetalleCotizacion> getListaDetalleCotizacion() {
+	/*public List<DetalleCotizacion> getListaDetalleCotizacion() {
 		return listaDetalleCotizacion;
 	}
 
@@ -452,7 +439,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 
 	public void setMonedas(List<Moneda> monedas) {
 		this.monedas = monedas;
-	}
+	}*/
 
 	public Requerimiento getRequerimiento() {
 		return requerimiento;
@@ -478,14 +465,14 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		this.cotizacionFiltro = cotizacionFiltro;
 	}
 
-	public Moneda getMonedaSeleccionada() {
+	/*public Moneda getMonedaSeleccionada() {
 		return monedaSeleccionada;
 	}
 
 	public void setMonedaSeleccionada(Moneda monedaSeleccionada) {
 		this.monedaSeleccionada = monedaSeleccionada;
 	}
-
+*/
 	public String getTitulo() {
 		return titulo;
 	}
@@ -502,7 +489,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		this.constraintPrecioFlete = constraintPrecioFlete;
 	}
 
-	public List<ModeloCombo<Boolean>> getTiposFlete() {
+	/*public List<ModeloCombo<Boolean>> getTiposFlete() {
 		return tiposFlete;
 	}
 
@@ -525,6 +512,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void setListaTipoRepuesto(List<ModeloCombo<Boolean>> listaTipoRepuesto) {
 		this.listaTipoRepuesto = listaTipoRepuesto;
 	}
+	*/
 	
 	
 }
