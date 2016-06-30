@@ -18,6 +18,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Requerimiento;
@@ -54,7 +55,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 	public void doAfterCompose(Component view){
 		super.doAfterCompose(view);
 		UserDetails user = this.getUser();
-		requerimientoFiltro = new Requerimiento(new Cliente());
+		requerimientoFiltro = new Requerimiento(new Cliente(), new Analista());
 		usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 		cambiarRequerimientos(0, null, null);
 		agregarGridSort(gridMisRequerimientos);

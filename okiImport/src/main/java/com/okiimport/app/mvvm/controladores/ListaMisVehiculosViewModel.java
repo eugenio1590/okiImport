@@ -21,6 +21,8 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Analista;
+import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -85,7 +87,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculos(vehiculoFiltro, page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculos(new Cliente(), page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
