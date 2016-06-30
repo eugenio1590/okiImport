@@ -1,6 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
 	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaMisVehiculosViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.vehiculo.ListaMisVehiculosViewModel')">
 
 		<!-- LISTA DE MIS VEHICULOS-->
 		<panel sclass="borderGrid">
@@ -50,24 +50,24 @@
 					
 					<listhead>
 						<listheader width="2%"/>
-						<listheader value="vehiculo.marca" width="20%"
-							label="Marca" sort="auto(vehiculoMarca)"/>
-						<listheader value="vehiculo.modelo" width="15%"
-							label="Modelo" sort="auto(vehiculoModelo)"/>
-						<listheader value="vehiculo.anno width="15%"
+						<listheader value="marcaVehiculo" width="20%"
+							label="Marca" sort="auto(marcaVehiculo)"/>
+						<listheader value="modelo" width="15%"
+							label="Modelo" sort="auto(modelo)"/>
+						<listheader value="anno" width="15%"
 							label="Año" sort="auto(anno)"/>
-							<listheader value="vehiculo.motor" width="20%"
-							label="Motor" sort="auto(vehiculoMotor)"/>
+							<listheader value="motor" width="20%"
+							label="Motor" sort="auto(motor)"/>
 						<listheader sort="none" label="Operaciones" />
 					</listhead>
 					
 					<template name="model">
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-							<listcell label="@bind(each.vehiculoMarca)" />
-							<listcell label="@bind(each.vehiculoModelo)" />
+							<listcell label="@bind(each.marcaVehiculo)" />
+							<listcell label="@bind(each.modelo)" />
 							<listcell label="@bind(each.anno)"/>
-							<listcell label="@bind(each.vehiculoMotor)" />
+							<listcell label="@bind(each.motor)" />
 							<listcell>
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">
