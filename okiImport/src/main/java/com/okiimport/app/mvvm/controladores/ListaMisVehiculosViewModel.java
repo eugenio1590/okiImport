@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -22,6 +23,7 @@ import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -45,6 +47,8 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		private List<Vehiculo> vehiculos;
 		private Vehiculo vehiculoFiltro;
 		
+		private Cliente cliente;
+		
 		/**
 		 * Descripcion: Llama a inicializar la clase 
 		 * Parametros: @param view: listaMisVehiculos.zul 
@@ -54,6 +58,9 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		@AfterCompose
 		public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 			super.doAfterCompose(view);
+			UserDetails user = this.getUser();
+			Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
+			cliente = (Cliente) usuario.getPersona();
 			vehiculoFiltro = new Vehiculo();
 			pagMisVehiculos.setPageSize(pageSize);
 			agregarGridSort(gridMisVehiculos);
@@ -87,7 +94,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculos(new Cliente(), page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculos(cliente, page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
