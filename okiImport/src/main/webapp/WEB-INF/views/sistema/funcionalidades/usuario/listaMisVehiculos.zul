@@ -1,7 +1,6 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer"
-		sclass="winMyList"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.MisVehiculosViewModel')">
+	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaMisVehiculosViewModel')">
 
 		<!-- LISTA DE MIS VEHICULOS-->
 		<panel sclass="borderGrid">
@@ -18,12 +17,6 @@
 					model="@load(vm.listaVehiculos)">
 					<auxhead>
 						<auxheader/>
-						<auxheader>
-							<div sclass="z-icon-filter bigger-200" />
-							<spinner instant="true" hflex="1"
-								value="@bind(vm.vehiculoFiltro.idVehiculo)"
-								onChange="@command('aplicarFiltro')"  />
-						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
@@ -45,62 +38,55 @@
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
-							<combobox instant="true" readonly="true" hflex="1"
-								selectedItem="@bind(vm.estatusFiltro)" 
-								model="@load(vm.listaEstatus)"
-								onChange="@command('aplicarFiltro')"
-								value="@bind(vm.estatusFiltro.nombre)">
-								<template name="model">
-									<comboitem label="@bind(each.nombre)" />
-								</template>
-							</combobox>
+							<spinner instant="true" hflex="1"
+								value="@bind(vm.vehiculoFiltro.motor)"
+								onChange="@command('aplicarFiltro')"  />
 						</auxheader>
+						<auxheader width="20%">
+					<button label="Agregar Vehiculo"
+						onClick="@command('nuevoVehiculo')" sclass="btn-primary" />
+				</auxheader>
 					</auxhead>
+					
 					<listhead>
 						<listheader width="2%"/>
-						<listheader value="idRequerimiento" width="10%" 
-							label="Nro. Solicitud" sort="auto(idRequerimiento)"/>
-						<listheader value="cliente.nombre" width="20%"
-							label="Cliente" sort="auto(idRequerimiento)"/>
-						<listheader value="fechaCreacion" width="15%"
-							label="Fecha de Creación" sort="auto(fechaCreacion)"/>
-						<listheader value="modeloV" width="15%"
-							label="Modelo" sort="auto(modeloV)"/>
-						<listheader value="estatus" width="20%"
-							label="Estado" sort="none"/>
+						<listheader value="vehiculo.marca" width="20%"
+							label="Marca" sort="auto(vehiculoMarca)"/>
+						<listheader value="vehiculo.modelo" width="15%"
+							label="Modelo" sort="auto(vehiculoModelo)"/>
+						<listheader value="vehiculo.anno width="15%"
+							label="Año" sort="auto(anno)"/>
+							<listheader value="vehiculo.motor" width="20%"
+							label="Motor" sort="auto(vehiculoMotor)"/>
 						<listheader sort="none" label="Operaciones" />
 					</listhead>
+					
 					<template name="model">
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-							<listcell label="@bind(each.idRequerimiento)" />
-							<listcell label="@bind(each.cliente.nombre)" />
-							<listcell label="@bind(each.fechaCreacion)
-												@converter('formatedDate', format=vm.formatDate)"/>
-							<listcell label="@bind(each.modeloV)" />
-							<listcell label="@bind(each.determinarEstatus())" />
+							<listcell label="@bind(each.vehiculoMarca)" />
+							<listcell label="@bind(each.vehiculoModelo)" />
+							<listcell label="@bind(each.anno)"/>
+							<listcell label="@bind(each.vehiculoMotor)" />
 							<listcell>
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">
 										<button
 											iconSclass="z-icon-pencil green bigger-160"
 											tooltiptext="Editar"
-											onClick="@command('editarReguerimiento', requerimiento = each)"
-											if="${ each.editar() }" />
+											onClick="@command('editarVehiculo', vehiculo = each)"
+										     />
 										<button
 											iconSclass="z-icon-eye blue bigger-160"
-											tooltiptext="Ver Requerimiento"
-											onClick="@command('verRequerimiento', requerimiento = each)"
-											if="${ !each.editar() }" />
+											tooltiptext="Ver Vehiculo"
+											onClick="@command('verVehiculo', vehiculo = each)"
+											 />
 										<button
-											iconSclass="z-icon-truck red bigger-160"
-											tooltiptext="Enviar a Proveedores"
-											onClick="@command('enviarProveedores', requerimiento=each)"
-											if="${ !each.isCerrarSolicitud() }" />
-										<button
-											iconSclass="fa fa-users purple bigger-160"
-											tooltiptext="Cotizar" if="${ each.cotizar() }"
-											onClick="@command('cotizar', requerimiento = each)" />
+											iconSclass="z-icon-trash-o red bigger-160"
+											tooltiptext="Eliminar Vehiculo"
+											onClick="@command('eliminarVehiculo', vehiculo = each)"
+											 />
+										
 									</div>
 								</hbox>
 							</listcell>
