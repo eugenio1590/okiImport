@@ -72,7 +72,9 @@
 												sclass="form-control" mold="rounded"
 												placeholder="Ej. xxx@gmail.com"
 												value="@bind(vm.cliente.correo)"
-												constraint="@bind(vm.emailValidator)" />
+												constraint="@bind(vm.emailValidator)"
+												onChange="@command('verificarCorreo')" />
+											<label id="msgCorreo" visible="false" sclass="requerido"/>
 										</vbox>
 									</row>
 									<row>
