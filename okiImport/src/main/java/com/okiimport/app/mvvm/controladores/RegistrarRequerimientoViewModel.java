@@ -23,6 +23,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
@@ -38,6 +39,11 @@ import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 
 public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
 
@@ -62,6 +68,9 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	
 	@Wire("#pagMotores")
 	private Paging pagMotores;
+	
+	@Wire("#msgCorreo")
+	private Label lblMsgCorreo;
 
 	//Atributos
 	private List<DetalleRequerimiento> eliminarDetalle;
@@ -339,6 +348,24 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
+	
+	@Command
+	public void verificarCorreo(){
+		Boolean respuesta=false;
+		this.lblMsgCorreo.setValue("El correo ya existe");
+		respuesta=this.sMaestros.consultarCorreoCliente(requerimiento.getCliente().getCorreo());
+		//llamada al metodo del validar 
+		if(respuesta){
+			System.out.println("el correo "+requerimiento.getCliente().getCorreo()+" ya existe.");
+			this.lblMsgCorreo.setVisible(true);
+			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
+		}else{
+			System.out.println("el correo es valido. No existe en la BD.");
+			this.lblMsgCorreo.setVisible(false);
+			//return new GeneralConstraint(EConstraint.NO_EMPTY);
+		}
+	}
+	
 	
 	/**GETTERS Y SETTERS*/
 	public Requerimiento getRequerimiento() {

@@ -17,6 +17,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
@@ -81,6 +82,9 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@Wire("#idRif")
 	public Textbox idRif;
+	
+	@Wire("#msgCorreoP")
+	private Label lblMsgCorreo;
 	
 	//Atributos
 	private static final Comparator<MarcaVehiculo> COMPR_MARCA_VEHICULO = MarcaVehiculo.getComparator();
@@ -472,6 +476,25 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		estado = null;
 		proveedor.setCiudad(null);
 	}
+	
+	
+	@Command
+	public void verificarCorreo(){
+		Boolean respuesta=false;
+		this.lblMsgCorreo.setValue("El correo ya existe");
+		respuesta=this.sMaestros.consultarCorreoProveedor(proveedor.getCorreo());
+		//llamada al metodo del validar 
+		if(respuesta){
+			System.out.println("el correo "+proveedor.getCorreo()+" ya existe.");
+			this.lblMsgCorreo.setVisible(true);
+			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
+		}else{
+			System.out.println("el correo es valido. No existe en la BD.");
+			this.lblMsgCorreo.setVisible(false);
+			//return new GeneralConstraint(EConstraint.NO_EMPTY);
+		}
+	}
+	
 	
 	/**
 	 * Descripcion: Permitira obtener la cedula completa del proveedor

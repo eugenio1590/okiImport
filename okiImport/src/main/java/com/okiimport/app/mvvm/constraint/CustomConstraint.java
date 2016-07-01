@@ -19,7 +19,7 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 		SERVER(SimpleConstraint.SERVER, null),
 		NO_FUTURE(SimpleConstraint.NO_FUTURE, "Valores futuros no permitido"),
 		NO_PAST(SimpleConstraint.NO_PAST, "Valores pasados no permitido"),
-		NO_TODAY(SimpleConstraint.NO_TODAY, "El dida de hoy no permitido"),
+		NO_TODAY(SimpleConstraint.NO_TODAY, "El dia de hoy no permitido"),
 		BEFORE_START(SimpleConstraint.BEFORE_START, null),
 		BEFORE_END(SimpleConstraint.BEFORE_END, null),
 		END_BEFORE(SimpleConstraint.END_BEFORE, null),
@@ -34,7 +34,8 @@ public abstract class CustomConstraint implements Constraint, org.zkoss.zul.Cust
 		OVERLAP_AFTER(SimpleConstraint.OVERLAP_AFTER, null),
 		AT_POINTER(SimpleConstraint.AT_POINTER, null),
 		AFTER_POINTER(SimpleConstraint.AFTER_POINTER, null),
-		CUSTOM(-1, null);
+		CUSTOM(-1, null),
+		EMAIL_INVALID(-1,"Correo no valido");
 		
 		//ATRIBUTOS
 		private int value;
