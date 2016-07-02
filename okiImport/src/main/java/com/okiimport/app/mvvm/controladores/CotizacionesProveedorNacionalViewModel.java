@@ -418,6 +418,14 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		cmbFlete.setButtonVisible(!readOnly);
 	}
 	
+	@Command
+	@NotifyChange("listaDetalleCotizacion")
+	public void QuitarCotizacion(@BindingParam("detalle") DetalleCotizacion detalle){
+		detalle.setVisible(false);
+		detalle.setCantidad((long) 0);
+		
+	}
+	
 	/**METODOS PROPIOS Y DE LA CLASE*/
 	
 	/**SETTERS Y GETTERS*/	

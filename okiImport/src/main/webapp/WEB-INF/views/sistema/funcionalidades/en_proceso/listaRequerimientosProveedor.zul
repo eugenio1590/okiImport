@@ -16,8 +16,8 @@
 					</div>
 				</hbox>
 				<listbox id="gridMisRequerimientos" mold="paging"
-					emptyMessage="No hay solicitudes" checkmark="true"
-					pagingPosition="top" multiple="true" sclass="mylist"
+					emptyMessage="No hay solicitudes"
+					pagingPosition="top" sclass="mylist"
 					model="@load(vm.listaRequerimientos)"
 					onAfterRender="@command('updatePaging', paging = pagMisRequerimientos, label=lblMisRequerimientos)">
 
