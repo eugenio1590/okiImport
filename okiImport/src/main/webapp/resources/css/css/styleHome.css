@@ -1,0 +1,25 @@
+header {
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  background-color:#fbc92b;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  text-align: center;
+  color: white;
+}
+.navbar-default {
+  background-color: #fbc92b;
+  border-color: rgba(34, 34, 34, 0.05);
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-transition: all 0.35s;
+  -moz-transition: all 0.35s;
+  transition: all 0.35s;
+}
+.hole{
+/* 	background-image: url('./img/header.jpg'); */
+  background: url(http://keystonerealestate.ca/wp-content/uploads/2013/03/background-greywhite-2.jpg); 
+  text-align: center;
+}

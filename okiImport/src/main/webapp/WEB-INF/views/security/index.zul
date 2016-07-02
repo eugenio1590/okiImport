@@ -1,43 +1,44 @@
 <?page title="Inicio de Sesion" contentType="text/html;charset=UTF-8" session="false" ?>
-<?link href="/resources/css/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"?>
-<?link href="/resources/css/fonts.css" rel="stylesheet" type="text/css"?>
-<?link href="/resources/css/less/index.css.dsp" rel="stylesheet" type="text/css"?>
-<?link href="/resources/css/font-awesome.min.css" rel="stylesheet" type="text/css"?>
-<?link href="/resources/css/aplication.css" rel="stylesheet" type="text/css"?>
-<?link href="/resources/css/grid.css" rel="stylesheet" type="text/css"?>
+<?link rel="stylesheet" href="/resources/css/bootstrap/css/bootstrap.css" type="text/css"?>
+<?link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'?>
+<?link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'?>
+<?link rel="stylesheet" href="/resources/css/css/font-awesome/css/font-awesome.min.css" type="text/css"?>
+<?link rel="stylesheet" href="/resources/css/css/styleHome.css" type="text/css"?>
+ <!-- IE 9. ICO 32x32 pixels -->
+        <?link rel="shortcut icon" href="resources/css/css/img/favicon.ico"?>
 
-<!-- MATERIAL DESIGN -->
-<!-- <?link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"?> -->
-<?link href="/resources/css/material-design/css/base.min.css" rel="stylesheet"?>
-<?link href="/resources/css/checkbox_material.css" rel="stylesheet"?>
+        <!-- iOS and Android 2.1+ 180x180 pixels. --> 
+        <?link rel="apple-touch-icon-precomposed" href="resources/css/css/img/favicon.png"?>
 
-<zk xmlns:w="client" xmlns:n="native">
-	<borderlayout id="principal" hflex="1" vflex="1"
-		sclass="avoid-fout page-blue">
+        <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels. -->
+       <?link rel="icon" href="resources/css/css/img/favicon.ico"?>
+       
+       <zk xmlns:w="client" xmlns:n="native">
+	<borderlayout id="principal" >
 
-		<north  height="68px">
-			<div>
-				<include src="/WEB-INF/views/portal/head.zul" />
-			</div>
+		<north height="40px">
+		<n:header class="navbar navbar-default navbar-fixed-top" style="height:15px">
+	
+		 <a class="navbar-brand">
+			<image src="/resources/img/logo.png" width="45%" style="margin-top:-10px !important;" />
+			</a>
+		
+			
+		</n:header>
 		</north>
 
-		<center autoscroll="true" style="border-style: solid;">
-			<vlayout width="100%" sclass="z-fondo-principal">
-				<space/>
+		<center autoscroll="true" sclass="hole">
+			
 				<div align="center" height="100%">
-					<div width="30%"><!-- class="card-wrap" -->
-						<div class="card">
-							<div class="card-main">
-								<include src="/WEB-INF/views/template/title.zul" titulo="Inicio de Sesión" />
-								<div class="card-inner"
-									align="center">
+					<div width="30%">
+					<n:h1>Inicio de Sesión </n:h1>
+<!-- 								<include src="/WEB-INF/views/template/title.zul" titulo="Inicio de Sesión" /> -->
+								<div align="center">
 									<include src="login.zul" />
 								</div>
-							</div>
-						</div>
 					</div>
 				</div>
-			</vlayout>
+			
 		</center>
 	</borderlayout>
 </zk>

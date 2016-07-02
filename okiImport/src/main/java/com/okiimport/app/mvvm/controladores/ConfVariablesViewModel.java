@@ -100,7 +100,7 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 		
 			btnEnviar.setDisabled(true);
 		    btnLimpiar.setDisabled(true);
-			sControlConfiguracion.guardarConfiguracion(configuracion, monedaSeleccionada); 
+			sControlConfiguracion.guardarConfiguracion(configuracion/* monedaSeleccionada*/); 
 			mostrarMensaje("Informaci\u00F3n", "La configuracion ha sido modificada existosamente ", null, null, new EventListener()
 			{
 						public void onEvent(Event event) throws Exception {
