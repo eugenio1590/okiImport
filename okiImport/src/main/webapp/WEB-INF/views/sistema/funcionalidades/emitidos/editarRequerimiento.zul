@@ -289,14 +289,15 @@
 															<listcell>
 																<div>
 																	<image width="50px" sclass="imagen-default"
-																		height="50px" src="@bind(each.getFoto64())"
-																		hover="/resources/img/icons/ampliar.png"
-																		tooltiptext="Ampliar"
-																		onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
-																	<space/>
-																	<button label="..."
-																		sclass="btn-info" style="margin-bottom:0px"
-																		onClick="@command('uploadFoto', detalle = each)" />
+																	height="50px" src="@bind(each.getFoto64())"
+																	tooltiptext="Ampliar"
+																	onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
+
+																	<button label="+"
+																	visible="@bind(vm.editar)"
+																	sclass="btn-info" style="margin-bottom:0px"
+																	tooltiptext="Subir Foto"
+																	onClick="@command('uploadFoto', detalle = each)" />
 																</div>
 															</listcell>
 														</listitem>
