@@ -131,7 +131,7 @@
 														onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" 
 														if="${ not each.fotoVacia() }"/>
 												</listcell>
-												<listcell label="@bind(vm.requerimiento.determinarEstatus())"/>
+												<listcell label="@bind(each.determinarEstatus())"/>
 											</listitem>
 										</template>
 									</listbox>
