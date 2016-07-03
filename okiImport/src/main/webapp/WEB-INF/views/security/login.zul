@@ -3,15 +3,19 @@
 	<div align="center">
 		<n:form id="formLogin" class="form" action="login" method="POST">
 			<div hflex="1" align="center">
+			<n:div class="inicio">
+	</n:div>
 				<grid>
 					<columns>
 						<column label="" />
 					</columns>
-					<rows>
-						<row align="center">
-							<vlayout spacing="15px">
-								<image src="/resources/img/user1.png"
-									sclass="img-rounded" width="50px"/>
+					<rows >
+						<row align="center" sclass="formulario" style="background:#fff">
+						
+							<vlayout spacing="15px" >
+							<n:h3>Accede a tú cuenta</n:h3>
+<!-- 								<image src="/resources/img/user1.png" -->
+<!-- 									sclass="img-rounded" width="50px"/> -->
 
 								<div id="errorLogin" sclass="alert alert-danger" if="${not empty param.auth}">
 									Credenciales Invalidas!
@@ -28,6 +32,7 @@
 									<textbox id="password" name="j_password" sclass="form-control"  hflex="1"
 										type="password" class="form-control" placeholder="Contraseña"/>
 								</div>
+							
 
 								<div class="form-group">
 									<div class="row">
@@ -49,15 +54,18 @@
 								</n:div>
 								
 <!-- 								<hlayout spacing="15px">	 -->
-<!-- 									<checkbox id="remember_me" name="remember-me" />sclass="access-hide" -->
-<!-- 									<label value="Recordarme"/> -->
-<!-- 								</hlayout> -->
+<!-- 									<checkbox id="remember_me" name="remember-me" /> -->
+<!--  									<label value="Recordarme"/>  -->
+<!--  								</hlayout> -->
+
 							</vlayout>
 						</row>
 					</rows>
 				</grid>
 			</div>
 		</n:form>
+	</div>
+	<div>
 	</div>
 
 </zk>
