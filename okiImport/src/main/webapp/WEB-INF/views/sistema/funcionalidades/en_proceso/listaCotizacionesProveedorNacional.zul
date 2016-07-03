@@ -184,7 +184,7 @@
 									<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos a Cotizar"/>
 									<panel sclass="borderGrid">
 										<panelchildren>
-											<listbox id="gridDetalleCotizacion"  vflex="min"
+											<listbox id="gridDetalleCotizacion"
 												mold="paging" pageSize="4" pagingPosition="top"
 												model="@load(vm.listaDetalleCotizacion)"
 												emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
@@ -213,9 +213,10 @@
 															field="Pcio. Flete (**)"/>
 													</listheader>
 													<listheader label="Total"  sclass="label-not-mandatory" align="center" />
+													<listheader label="Operaciones"  sclass="label-not-mandatory" align="center" />
 												</listhead>
 												<template name="model">
-													<listitem>
+													<listitem visible="@bind(each.visible)">
 														<listcell
 															label="@bind(each.detalleRequerimiento.codigoOem)" />
 														<listcell
@@ -277,6 +278,15 @@
 																	value="@bind((each.cantidad*each.precioVenta)+each.precioFlete)"
 																	constraint="@bind(vm.validatorPrecio)" disabled="true"  width="100%"/>
 															</vbox>
+														</listcell>
+														<listcell>
+															<hbox>
+																<div class="btn-group btn-group-sm">
+																	<button iconSclass="z-icon-close red bigger-160"
+																		tooltiptext="Quitar"
+																		onClick="@command('QuitarCotizacion', detalle = each)" />
+																</div>
+															</hbox>
 														</listcell>
 													</listitem>
 												</template>
