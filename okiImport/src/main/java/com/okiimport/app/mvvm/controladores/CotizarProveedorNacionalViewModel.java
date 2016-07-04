@@ -362,7 +362,7 @@ public class CotizarProveedorNacionalViewModel extends AbstractRequerimientoView
 		public void onCloseWindow(){
 			ejecutarGlobalCommand("cambiarRequerimientos", null);
 			ejecutarGlobalCommand("cambiarCotizaciones", null);
-			ejecutarGlobalCommand("cambiarProveedores", null);
+			ejecutarGlobalCommand("consultarProveedores", null);
 		}
 
 		public STransaccion getsTransaccion() {

@@ -22,17 +22,17 @@
 }
 
 .bigger-160 {
-	font-size: 160%
+	font-size: 140%
 }
 
 .bigger-160.black {
 	color: black;
-	font-size: 160%;
+	font-size: 140%;
 }
 
 .bigger-160.cyan {
 	color: rgb(36, 168, 183);
-	font-size: 160%;
+	font-size: 140%;
 }
 
 .bigger-180 {

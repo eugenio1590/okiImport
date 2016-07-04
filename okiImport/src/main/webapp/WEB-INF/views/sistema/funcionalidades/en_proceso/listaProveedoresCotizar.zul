@@ -65,7 +65,7 @@
 											<listcell>
 												<div class="btn-group btn-group-sm">
 													<button
-														iconSclass="fa fa-file purple bigger-160"
+														iconSclass="z-icon-fa fa-file purple bigger-110"
 														tooltiptext="Cotizar"
 														onClick="@command('cotizar', proveedor = each)" />
 												</div>
