@@ -85,7 +85,7 @@
 									<div class="btn-group btn-group-sm">
 										<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Requerimiento"  
 								   			onClick="@command('verRequerimiento', requerimiento = each)" if="${ !each.editar() }"/>
-										<button iconSclass="fa fa-files-o red bigger-160" tooltiptext="Ofertas"
+										<button iconSclass="z-icon-fa fa-files-o red bigger-130" tooltiptext="Ofertas"
 											onClick="@command('mostrarOfertas', requerimiento = each)"/>
 								<!--    <button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Seleccionar Cotizaciones"  
 								    	onClick="@command('seleccionarCotizaciones', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() and each.seleccionarCotizacion() }"/> -->

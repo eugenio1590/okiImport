@@ -120,8 +120,7 @@
 							<div align="right">
 								<button
 												label="Enviar a Cliente" type="submit" sclass="btn-sm btn-primary"
-												onClick="@command('enviarCliente')"
-												disabled="@bind(!vm.enviarACliente())" />
+												onClick="@command('enviarCliente')" />
 							</div>
 						</hbox>
 					</n:div>
