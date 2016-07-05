@@ -21,6 +21,15 @@
 	font-size: 130%;
 }
 
+.bigger-150 {
+	font-size: 145%
+}
+
+.bigger-150.cyan {
+	color: rgb(36, 168, 183);
+	font-size: 145%;
+}
+
 .bigger-160 {
 	font-size: 140%
 }
