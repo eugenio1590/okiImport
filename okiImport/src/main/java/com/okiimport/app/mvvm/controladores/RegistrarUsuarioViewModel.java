@@ -12,6 +12,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
 
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Cliente;
@@ -39,6 +40,10 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	// GUI
 	@Wire("#cedulaRif")
 	public Intbox cedulaRif;
+	
+	@Wire("#lblMsgCorreo")
+	public Label lblMsgCorreo;
+	
 	
 	@Wire("#cmbEstado")
 	private Combobox cmbEstado;
@@ -107,6 +112,23 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
+		}
+	}
+	
+	@Command
+	public void verificarCorreo(){
+		Boolean respuesta=false;
+		this.lblMsgCorreo.setValue("El correo ya existe");
+		respuesta=this.sMaestros.consultarCorreoCliente(cliente.getCorreo());
+		//llamada al metodo del validar 
+		if(respuesta){
+			System.out.println("el correo "+cliente.getCorreo()+" ya existe.");
+			this.lblMsgCorreo.setVisible(true);
+			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
+		}else{
+			System.out.println("el correo es valido. No existe en la BD.");
+			this.lblMsgCorreo.setVisible(false);
+			//return new GeneralConstraint(EConstraint.NO_EMPTY);
 		}
 	}
 
