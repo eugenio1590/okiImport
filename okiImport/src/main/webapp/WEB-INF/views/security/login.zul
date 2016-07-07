@@ -18,7 +18,7 @@
 <!-- 									sclass="img-rounded" width="50px"/> -->
 
 								<div id="errorLogin" sclass="alert alert-danger" if="${not empty param.auth}">
-									Credenciales Invalidas!
+									¡Credenciales Invalidas!
 								</div>
 
 								<div class="input-group">

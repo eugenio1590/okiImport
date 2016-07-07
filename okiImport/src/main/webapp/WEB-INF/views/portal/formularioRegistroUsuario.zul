@@ -71,11 +71,11 @@
 											<vbox>
 												<intbox id="cedulaRif"
 													sclass="form-control" mold="rounded"
-													placeholder="Ej: 4025375" maxlength="12"
+													placeholder="Ej: 401402375" maxlength="9"
 													value="@bind(vm.cliente.cedula)"
 													constraint="@bind(vm.validatorClienteCedulaRif)"
-													 /><!-- onBlur="@command('buscarCliente')"
-													onOK="@command('buscarCliente')" -->
+													  onBlur="@command('buscarCliente')"
+													onOK="@command('buscarCliente')"/>
 											</vbox>
 										</hbox>
 									</row>
@@ -128,7 +128,7 @@
 										<vbox hflex="1">
 											<textbox
 												id="crearClave" sclass="form-control" mold="rounded"
-												value="@bind(vm.usuario.pasword)"
+												value="@bind(vm.usuario.pasword)" type="password"
 												placeholder="entre 6 a 20 caracteres" hflex="1"
 												constraint="@bind(vm.notEmptyValidator)" />
 										</vbox>	
@@ -138,7 +138,7 @@
 										<vbox hflex="1">
 											<textbox
 												id="repetirClave" sclass="form-control" mold="rounded"
-												value="@bind(vm.usuario.pasword)"
+												value="@bind(vm.usuario.paswordRepeat)" type="password"
 												placeholder="entre 6 a 20 caracteres" hflex="1"
 												constraint="@bind(vm.notEmptyValidator)" />
 										</vbox>		

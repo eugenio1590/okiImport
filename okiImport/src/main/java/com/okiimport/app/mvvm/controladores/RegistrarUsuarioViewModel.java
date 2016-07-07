@@ -11,6 +11,7 @@ import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Intbox;
 
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Cliente;
@@ -34,12 +35,19 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	@BeanInjector("mailUsuario")
 	private MailUsuario mailUsuario;
 
-	//GUI
+	
+	// GUI
+	@Wire("#cedulaRif")
+	public Intbox cedulaRif;
+	
 	@Wire("#cmbEstado")
 	private Combobox cmbEstado;
 
 	@Wire("#cmbCiudad")
 	private Combobox cmbCiudad;
+	
+	@Wire("#comboTipoPersona")
+	private Combobox comboTipoPersona;
 
 	//Atributos
 	private CustomConstraint constrEstado = null;
@@ -70,6 +78,36 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 		listaTipoPersona = llenarListaTipoPersona();
 		tipoPersona = listaTipoPersona.get(1);
 		//tipoPersona=consultarTipoPersona(this.cliente.getCedula(),listaTipoPersona);
+	}
+	
+	/**
+	 * Descripcion: Permite consultar si el cliente ya existe en la Base de datos
+	 * Parametros: @param view: formularioRequerimiento.zul  
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange({ "*" })
+	public void buscarCliente() {
+		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
+		String cedula = cliente.getCedula();
+		String cedulaBuscar = tipo + cedula;
+		if (cedula != null && !cedula.equalsIgnoreCase("")) {
+			Cliente cliente = sMaestros.consultarCliente(new Cliente(
+					cedulaBuscar));
+			if (cliente != null) {
+				this.cliente = cliente;
+				this.cliente.setCedula(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
+				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
+			} else
+				this.cliente = new Cliente(cedulaBuscar.substring(1,
+						cedulaBuscar.length()));
+			//this.persona.setCliente(this.cliente);
+		} else {
+			this.cliente.setCedula(null);
+			cedulaRif.getValue();
+		}
 	}
 
 	/**
@@ -126,10 +164,12 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void registrar(){
+	public void registrar(Usuario usuario){
+		if (checkIsFormValid()) {
 		cliente.setCedula(getCedulaComleta());
 		cliente.setEstatus(EstatusCliente.getEstatusActivo().getValue());
 		this.sControlUsuario.grabarUsuario(usuario, sMaestros);
+	}
 	}
 
 
@@ -269,5 +309,23 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
 		this.tipoPersona = tipoPersona;
 	}
+
+	public Combobox getComboTipoPersona() {
+		return comboTipoPersona;
+	}
+
+	public void setComboTipoPersona(Combobox comboTipoPersona) {
+		this.comboTipoPersona = comboTipoPersona;
+	}
+
+	public Intbox getCedulaRif() {
+		return cedulaRif;
+	}
+
+	public void setCedulaRif(Intbox cedulaRif) {
+		this.cedulaRif = cedulaRif;
+	}
+	
+	
 
 }
