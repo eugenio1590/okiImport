@@ -35,7 +35,7 @@
 													id="gridOfertasCliente" mold="paging"
 													emptyMessage="No hay solicitudes" pageSize="10"
 													pagingPosition="top" sclass="mylist"
-													model="@load(vm.listaOfertas)"
+													model="@load(vm.listaDetalleCotizaciones)"
 													onAfterRender="@command('updatePaging', paging = pagOfertasCliente, label=lblOfertasCliente)">
 
 													<listhead>
@@ -61,11 +61,11 @@
 														name="model">
 														<listitem>
 															<listcell
-																label="@bind(each.idOferta)" />
+																label="@bind(each.detalleRequerimiento.descripcion)" />
 															<listcell
-																label="@bind(vm.getFormatoFecha(each.fechaCreacion))" />
+																label="@bind(each.cantidad)" />
 															<listcell>
-																<spinner instant="true" width="75px" constraint="no empty, min 0"/>
+																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" constraint="no empty, min 0"/>
 															</listcell>
 															<listcell>
 																<hbox
@@ -75,7 +75,12 @@
 																		<button
 																			iconSclass="z-icon fa fa-shopping-cart black bigger-160"
 																			tooltiptext="Añadir al Carrito"
-																			onClick="@command('verOferta', oferta = each)" />
+																			onClick="@command('agregarFavorito', cotizacion = each)" if="${ !each.mostrarEsatusFavorito()}" />
+																			<button
+																			iconSclass="z-icon fa fa-remove black bigger-160"
+																			tooltiptext="Quitar del Carrito"
+																			onClick="@command('quitarFavorito', cotizacion = each)" if="${ each.mostrarEsatusFavorito()}" />
+																		
 																	</div>
 																</hbox>
 															</listcell>
@@ -96,7 +101,7 @@
 							<div align="right">
 								<button
 												label="Aceptar" type="submit" sclass="btn-sm btn-primary"
-												onClick="@command('enviarCliente')" />
+												onClick="@command('cerrar')" />
 							</div>
 						</hbox>
 					</n:div>
