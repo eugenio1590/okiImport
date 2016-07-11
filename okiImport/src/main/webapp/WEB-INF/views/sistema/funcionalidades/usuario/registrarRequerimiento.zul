@@ -1,0 +1,7 @@
+<zk xmlns:w="client" xmlns:n="native">
+	<window width="80%" title="Registrar Requerimiento" border="normal">
+	<vbox>
+	  En construccion
+	</vbox>
+</window>
+</zk>
