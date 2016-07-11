@@ -71,6 +71,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
+		System.out.println("antes de consultar");
 		consultarProveedores(0, null, null);
 	}
 	

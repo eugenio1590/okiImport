@@ -107,4 +107,16 @@ public class HomeController {
 	public static String obtenerDirectorioRecursos(String path){
 		return obtenerDirectorioRecursos()+path;
 	}
+	
+	@RequestMapping(value= "/proveedorF", method = RequestMethod.GET)
+	public String obtenerFproveedor(){
+		return "portal/formularioProveedor.zul";
+	}
+	
+	@RequestMapping(value= "/registrate", method = RequestMethod.GET)
+	public String obtenerFregistro(){
+		return "portal/formularioRegistroUsuario.zul";
+	}
+	
+	
 }

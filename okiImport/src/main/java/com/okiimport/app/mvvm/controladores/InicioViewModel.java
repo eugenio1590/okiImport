@@ -40,6 +40,17 @@ public class InicioViewModel extends AbstractRequerimientoViewModel {
 	}
 	
 	/**
+	 * Descripcion: Llama a formulario para registrar solicitud de usuario 
+	 * Parametros: @param view: index.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void registrarUsuario(){
+		insertComponent(principal.getPage(), "#mainInclude", BasePackagePortal+"formularioRegistroUsuario.zul");
+	}
+	
+	/**
 	 * Descripcion: Llama a formulario para verificar solicitud de requerimiento
 	 * Parametros: @param view: index.zul 
 	 * Retorno: Ninguno

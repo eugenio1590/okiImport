@@ -137,12 +137,17 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	/** METODOS SOBREESCRITOS */
 	@Override
 	public void doAfterCompose(Component view){
-		super.doAfterCompose(view);
+		
+		try
+		{super.doAfterCompose(view);
 		Usuario usuario = getUsuario();
 		if(usuario!=null)
 			monedaBase = sControlConfiguracion.consultarActualConversion(usuario.getPersona());
 		else
 			monedaBase = sControlConfiguracion.consultarActualConversionMonedaBase();
+		} catch (Exception e) {
+		    System.out.println(e.getMessage());
+		}
 	}
 	
 	@Override

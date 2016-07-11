@@ -60,11 +60,11 @@
 					<listcell>
 
 						<div class="btn-group btn-group-sm">
-									<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Proveedor"
-									onClick="@command('editarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
 									<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Proveedor"  
 								    onClick="@command('verProveedor', proveedor = each)" />
-								    <button  iconSclass="z-icon-trash-o red bigger-200" tooltiptext="Eliminar Proveedor"  
+								    <button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Proveedor"
+									onClick="@command('editarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
+								    <button  iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Proveedor"  
 								    onClick="@command('eliminarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
 						</div>
 					</listcell>

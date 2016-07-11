@@ -124,42 +124,31 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
-		
-		if(checkIsFormValid()){
-		
-			
-		  
-		   configuracion.setPorctIva(Float.parseFloat(pIva)/100);
-		   configuracion.setPorctGanancia(Float.parseFloat(pGanancia)/100);
-		   configuracion.setValorLibra(Float.parseFloat(vLibra)/100);
-		   if((configuracion.getPorctGanancia().equals(conf.getPorctGanancia()))&&(configuracion.getPorctIva().equals(conf.getPorctIva()))&&(configuracion.getValorLibra().equals(conf.getValorLibra())))
-				   mostrarMensaje("Informaci\u00F3n", "No existen cambios en la configuracion", null, null, new EventListener()
-					{
-								public void onEvent(Event event) throws Exception {
-									
-									
-								}
-							},null);
-		   else
-				
-		{sControlConfiguracion.guardarConfiguracion(configuracion); 
-		   mostrarMensaje("Confirmacion", "¿Esta seguro que desea realizar el cambio de configuracion?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
-					new EventListener(){
 
-						@Override
-						public void onEvent(Event event) throws Exception {
-							// TODO Auto-generated method stub
-							Messagebox.Button button = (Messagebox.Button) event.getData();
-							if (button == Messagebox.Button.YES) {
-								sControlConfiguracion.guardarConfiguracion(configuracion); 
-								winConfVariables.onClose();
-								}
-								
+		if(checkIsFormValid()){
+			configuracion.setPorctIva(Float.parseFloat(pIva)/100);
+			configuracion.setPorctGanancia(Float.parseFloat(pGanancia)/100);
+			configuracion.setValorLibra(Float.parseFloat(vLibra)/100);
+			if((configuracion.getPorctGanancia().equals(conf.getPorctGanancia()))&&(configuracion.getPorctIva().equals(conf.getPorctIva()))&&(configuracion.getValorLibra().equals(conf.getValorLibra())))
+				mostrarMensaje("Informaci\u00F3n", "No existen cambios en la configuracion", null, null, null,null);
+			else {
+
+				btnEnviar.setDisabled(true);
+				btnLimpiar.setDisabled(true);
+				mostrarMensaje("Confirmacion", "¿Esta seguro que desea realizar el cambio de configuracion?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+						new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							sControlConfiguracion.guardarConfiguracion(configuracion); 
+							winConfVariables.onClose();
+						}
 					}
-						
-				
-			}, null);}}
-		
+				}, null);
+			}
+		}
 	}
 
 	
