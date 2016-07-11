@@ -16,8 +16,8 @@
 					</div>
 				</hbox>
 				<listbox id="gridMisRequerimientos" mold="paging"
-					emptyMessage="No hay solicitudes" checkmark="true"
-					pagingPosition="top" multiple="true" sclass="mylist"
+					emptyMessage="No hay solicitudes"
+					pagingPosition="top" sclass="mylist"
 					model="@load(vm.listaRequerimientos)"
 					onAfterRender="@command('updatePaging', paging = pagMisRequerimientos, label=lblMisRequerimientos)">
 
@@ -27,53 +27,52 @@
 							<div sclass="z-icon-filter bigger-200" />
 							<spinner constraint="no negative, no zero"
 								value="@bind(vm.requerimientoFiltro.idRequerimiento)"
-								instant="true" placeholder=""
-								onChange="@command('aplicarFiltro')" width="70px" />
+								instant="true"
+								onChange="@command('aplicarFiltro')" width="85px" />
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<datebox format="dd/MM/yyyy"
 								value="@bind(vm.requerimientoFiltro.fechaCreacion)"
 								instant="true" onChange="@command('aplicarFiltro')"
-								width="100px" />
+								width="120px" />
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<datebox format="dd/MM/yyyy"
 								value="@bind(vm.requerimientoFiltro.fechaVencimiento)"
 								instant="true" onChange="@command('aplicarFiltro')"
-								width="100px" />
+								width="120px" />
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" placeholder=""
 								value="@bind(vm.requerimientoFiltro.marcaVehiculo.nombre)"
-								onChange="@command('aplicarFiltro')" width="110px" />
+								onChange="@command('aplicarFiltro')" width="170px" />
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" placeholder=""
 								value="@bind(vm.requerimientoFiltro.modeloV)"
-								onChange="@command('aplicarFiltro')" width="110px" />
+								onChange="@command('aplicarFiltro')" width="155px" />
 						</auxheader>
-
 					</auxhead>
 
 
 					<listhead>
-						<listheader width="2%" />
+						<listheader width="4%" />
 						<listheader value="idRequerimiento"
-							width="100px" label="Nro." sort="auto(idRequerimiento)" />
+							width="13%" label="Nro." sort="auto(idRequerimiento)" />
 						<listheader value="fechaCreacion"
-							label="F. Creación" sort="auto(fechaCreacion)" width="140px" />
+							label="F. Creación" sort="auto(fechaCreacion)" width="15%" />
 						<listheader value="fechaVencimiento"
 							label="F. Vencimiento" sort="auto(fechaVencimiento)"
-							width="160px" />
+							width="15%" />
 						<listheader value="marcaVehiculo.marcaV"
-							label="Marca" sort="auto(marcaV)" width="130px" />
+							label="Marca" sort="auto(marcaV)" width="20%" />
 						<listheader value="modeloV" label="Modelo"
-							sort="auto(modeloV)" width="130px" />
-						<listheader width="10%" label="Operaciones" />
+							sort="auto(modeloV)" width="19%x" />
+						<listheader width="14%" label="Operaciones" />
 
 					</listhead>
 					<template name="model">
@@ -82,16 +81,10 @@
 								sclass="boxed-grey" />
 							<listcell
 								label="@bind(each.idRequerimiento)" />
-							<listcell>
-								<datebox
-									value="@bind(each.fechaCreacion)" format="dd/MM/yyyy"
-									buttonVisible="false" readonly="true" />
-							</listcell>
-							<listcell>
-								<datebox
-									value="@bind(each.fechaVencimiento)" format="dd/MM/yyyy"
-									buttonVisible="false" readonly="true" />
-							</listcell>
+							<listcell
+								label="@bind(each.fechaCreacion) @converter('formatedDate', format=vm.formatDate)"/>
+							<listcell
+								label="@bind(each.fechaVencimiento) @converter('formatedDate', format=vm.formatDate)"/>
 							<listcell
 								label="@bind(each.marcaVehiculo.nombre)" />
 							<listcell label="@bind(each.modeloV)" />
