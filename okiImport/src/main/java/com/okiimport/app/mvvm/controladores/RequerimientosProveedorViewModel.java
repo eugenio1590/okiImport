@@ -163,7 +163,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("*")
 	public void verCompra(@BindingParam("compra") Compra compra, @BindingParam("requerimiento") Requerimiento requerimiento){
 		
@@ -176,7 +176,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 			
 			crearModal(BasePackageSistemaFunc+"ofertados/verCompraProveedor.zul", parametros);
 			
-	}
+	}*/
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/
 	
