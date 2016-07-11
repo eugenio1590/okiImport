@@ -21,6 +21,11 @@
 						Verificar Requerimiento
 					</a>
 				</n:li>
+				<n:li>
+					<a class="tile"	onClick="@command('registrarUsuario')">
+						Inscribete
+					</a>
+				</n:li>
 			</n:ul>
 		</div>
 	</div>

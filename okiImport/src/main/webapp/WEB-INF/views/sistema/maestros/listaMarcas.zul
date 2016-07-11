@@ -21,13 +21,13 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
 						width="150px" value="@bind(vm.marcaFiltro.idMarcaVehiculo)"
-						instant="true" placeholder="Buscar por Codigo"
+						instant="true" 
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox value="@bind(vm.marcaFiltro.nombre)"
-						instant="true" placeholder="Buscar por Nombre"
+						instant="true" 
 						onChange="@command('aplicarFiltro')" hflex="1" />
 				</auxheader>
 				
