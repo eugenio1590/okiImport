@@ -41,16 +41,24 @@
 													<listhead>
 
 														<listheader
-															value="" width="400px" 
+															value="" width="180px" 
 															label="Descripción del Artículo" sort="none" />
+															
+														<listheader
+															value="" width="90px" 
+															label="Marca" sort="none" />
+														
+														<listheader
+															value="" width="130px" 
+															label="Precio Unitario BsF." sort="none" />
 
 														<listheader
-															value="" label="Unidades Disponibles"
-															width="135px" sort="none" />
+															value="" label="Unid. Disponibles"
+															width="125px" sort="none" />
 
 														<listheader
 															value="" label="Cantidad a Adquirir" 
-															width="120px" sort="none">
+															width="125px" sort="none">
 
 														</listheader>
 														<listheader
@@ -63,9 +71,14 @@
 															<listcell
 																label="@bind(each.detalleRequerimiento.descripcion)" />
 															<listcell
+																label="@bind(each.marcaRepuesto)"/>
+															<listcell
+																label="@bind(each.precioVenta)"/>
+															<listcell
 																label="@bind(each.cantidad)" />
 															<listcell>
-																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" constraint="no empty, min 0"/>
+																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" constraint="no empty, min 0"
+																/>
 															</listcell>
 															<listcell>
 																<hbox
@@ -77,7 +90,7 @@
 																			tooltiptext="Añadir al Carrito"
 																			onClick="@command('agregarFavorito', cotizacion = each)" if="${ !each.mostrarEsatusFavorito()}" />
 																			<button
-																			iconSclass="z-icon fa fa-remove black bigger-160"
+																			iconSclass="z-icon fa fa-shopping-cart red bigger-160"
 																			tooltiptext="Quitar del Carrito"
 																			onClick="@command('quitarFavorito', cotizacion = each)" if="${ each.mostrarEsatusFavorito()}" />
 																		

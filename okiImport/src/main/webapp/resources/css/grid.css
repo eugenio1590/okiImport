@@ -39,6 +39,11 @@
 	font-size: 140%;
 }
 
+.bigger-160.red {
+	color: red;
+	font-size: 140%;
+}
+
 .bigger-160.cyan {
 	color: rgb(36, 168, 183);
 	font-size: 140%;

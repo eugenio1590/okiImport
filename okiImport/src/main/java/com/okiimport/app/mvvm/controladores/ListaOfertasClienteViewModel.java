@@ -192,7 +192,6 @@ public class ListaOfertasClienteViewModel extends
 	public void cambiarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 	}
-
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
