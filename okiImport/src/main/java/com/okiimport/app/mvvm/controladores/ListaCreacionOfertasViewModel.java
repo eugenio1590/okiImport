@@ -200,13 +200,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 			//5. Actualizamos la pos de la estrategia a usar en la siguiente iteracion
 			pos++;
 		}
-		
-		/*DecoratorTabOferta decorator;
-		if(!ofertas.isEmpty())
-			for(Oferta oferta2 : ofertas){
-				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2, this);
-				decorator.agregarOferta(this);
-			}*/
+	
 	}
 	
 	private boolean validarOfertas() {

@@ -15,6 +15,8 @@ import com.okiimport.app.mvvm.controladores.AbstractMisRequerimientosViewModel;
 
 public class MisRequerimientoViewModel extends AbstractMisRequerimientosViewModel  {
 	
+	
+	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
 	 * Parametros: @param view: listaMisRequerimientosEmitidos.zul 
@@ -33,6 +35,7 @@ public class MisRequerimientoViewModel extends AbstractMisRequerimientosViewMode
 	public void registarNuevoRequerimiento(){
 		crearModal(BasePackageSistemaFunc+"usuario/registrarRequerimiento.zul", null);
 	}
+	
 	@Command
 	public void mostrarOfertas(@BindingParam("requerimiento") Requerimiento requerimiento){
 		

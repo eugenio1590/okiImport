@@ -76,7 +76,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 	}
 	
 	/**GLOBAL COMMAND*/
-	/*
+	/**
 	 * Descripcion: permitira cambiar los requerimientos de la grid de acuerdo a la pagina dada como parametro
 	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
 	 * @param fieldSort: campo de ordenamiento, puede ser nulo
@@ -99,7 +99,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 	}
 	
 	/**COMMAND*/
-	/*
+	/**
 	 * Descripcion: permitira cambiar la paginacion de acuerdo a la pagina activa del Paging
 	 * @param Ninguno
 	 * Retorno: Ninguno
@@ -111,7 +111,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 		cambiarRequerimientos(page, null, null);
 	}
 	
-	/*
+	/**
 	 * Descripcion: permitira filtrar los datos de la grid de acuerdo al campo establecido en el evento
 	 * @param Ninguno
 	 * Retorno: Ninguno
@@ -126,7 +126,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 		cambiarRequerimientos(0, null, null);
 	}
 	
-	/*
+	/**
 	 * Descripcion: permitira crear el emergente (modal) necesario para consultar la informacion del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
@@ -140,7 +140,7 @@ public abstract class AbstractMisRequerimientosViewModel extends AbstractRequeri
 		crearModal(BasePackageSistemaFunc+"emitidos/editarRequerimiento.zul", parametros);
 	}
 	
-	/*
+	/**
 	 * Descripcion: permitira visualizar los proveedores para luego registrar la cotizacion respectiva
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno

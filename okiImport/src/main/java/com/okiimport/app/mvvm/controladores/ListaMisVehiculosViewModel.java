@@ -21,7 +21,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-import com.okiimport.app.model.Analista;
+
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;

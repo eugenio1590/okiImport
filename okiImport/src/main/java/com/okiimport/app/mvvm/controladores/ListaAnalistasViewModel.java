@@ -22,14 +22,14 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-import org.zkoss.zul.Textbox;
+
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
-import com.okiimport.app.model.MarcaVehiculo;
-import com.okiimport.app.model.Proveedor;
+
+
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
-import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
+
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -50,7 +50,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	//Modelos
 	private List<Analista> analistas;
 	private Analista analistaFiltro;
-	private Textbox txtUsername;
+	
 	
 	Window window = null;
 	int idcount = 0;

@@ -1,59 +1,30 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Decimalbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Paging;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-
-//
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
-
-import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.GlobalCommand;
-import org.zkoss.zk.ui.event.SortEvent;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listheader;
-
-import com.okiimport.app.model.Analista;
-import com.okiimport.app.model.Cotizacion;
-import com.okiimport.app.model.DetalleCotizacion;
-import com.okiimport.app.model.DetalleRequerimiento;
-import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
-import com.okiimport.app.service.transaccion.STransaccion;
-//
 
 
 public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 
 	
 	//Servicios
-	
-	//GUI
 	    
 	    @Wire("#winConfVariables")
 		private Window winConfVariables;
@@ -69,7 +40,6 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	    private Textbox txtPorcentajeIVA;
 		
 	//Atributos
-		private List<Moneda> listaMonedas;
 		private Moneda monedaSeleccionada;
 		
 		private Configuracion configuracion;
