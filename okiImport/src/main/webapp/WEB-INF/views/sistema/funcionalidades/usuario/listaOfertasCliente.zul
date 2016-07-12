@@ -2,7 +2,7 @@
 
 	<window id="winListaOfertas" border="none" width="0px" height="0px" title="@bind(vm.titulo)"
 		apply="org.zkoss.bind.BindComposer" closable="true"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.ListaOfertasClienteViewModel')"
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.oferta.ListaDetalleOfertaClienteViewModel')"
 		onClose="@command('cambiarRequerimientos')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
@@ -35,7 +35,7 @@
 													id="gridOfertasCliente" mold="paging"
 													emptyMessage="No hay solicitudes" pageSize="10"
 													pagingPosition="top" sclass="mylist"
-													model="@load(vm.listaDetalleCotizaciones)"
+													model="@load(vm.listaDetalleOfertas)"
 													onAfterRender="@command('updatePaging', paging = pagOfertasCliente, label=lblOfertasCliente)">
 
 													<listhead>
@@ -74,18 +74,20 @@
 														name="model">
 														<listitem>
 															<listcell
-																label="@bind(each.detalleRequerimiento.descripcion)" />
+																label="@bind(each.detalleCotizacion.detalleRequerimiento.descripcion)" />
 															<listcell
-																label="@bind(each.marcaRepuesto)"/>
+																label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 															<listcell
-																label="@bind(each.precioVenta)"/>
+																label="@bind(each.detalleCotizacion.precioVenta)"/>
 															<listcell
-																label="@bind(each.cantidad)" />
+																label="@bind(each.detalleCotizacion.cantidad)" />
 															<listcell>
 																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" 
-																constraint="no negative, no zero"
+																constraint="no negative" onChange="@command('refrescar')"
 																/>
 															</listcell>
+															<listcell
+																label="@bind(each.calcularPrecioVentaSinFlete())"/>
 															<listcell>
 																<hbox
 																	spacing="20px">
@@ -94,11 +96,11 @@
 																		<button
 																			iconSclass="z-icon fa fa-shopping-cart black bigger-160"
 																			tooltiptext="Añadir al Carrito"
-																			onClick="@command('agregarFavorito', cotizacion = each)" if="${ !each.mostrarEsatusFavorito()}" />
+																			onClick="@command('agregarFavorito', detalle = each)" if="${ !each.mostrarEsatusFavorito()}" />
 																			<button
 																			iconSclass="z-icon fa fa-shopping-cart red bigger-160"
 																			tooltiptext="Quitar del Carrito"
-																			onClick="@command('quitarFavorito', cotizacion = each)" if="${ each.mostrarEsatusFavorito()}" />
+																			onClick="@command('quitarFavorito', detalle = each)" if="${ each.mostrarEsatusFavorito()}" />
 																		
 																	</div>
 																</hbox>
