@@ -46,7 +46,6 @@ public abstract class AbstractCargaMasivaViewModel extends AbstractRequerimiento
 						". \n¿Desea cargar el archivo "+media.getName()+"? \nSe perderan los datos cargados con anterioridad.", 
 						estrategia, event, notifyChange);
 			else if((type = TypeDocument.switchName(media.getFormat())) != null){
-				byte[] binario = media.getByteData();
 	 			//if (binario.length <= (servicioConfiguracionGeneral.buscarTamanoMaximo() * 1048576)) {
 	 				prepararCarga();
 	 				if(estrategia!=null && !estrategia.cargarDatos(type, media.getStreamData(), 0)){

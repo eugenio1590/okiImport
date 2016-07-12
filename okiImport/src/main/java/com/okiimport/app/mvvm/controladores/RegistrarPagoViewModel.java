@@ -51,7 +51,7 @@ public class RegistrarPagoViewModel extends AbstractRequerimientoViewModel  {
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view)
 			
 	{

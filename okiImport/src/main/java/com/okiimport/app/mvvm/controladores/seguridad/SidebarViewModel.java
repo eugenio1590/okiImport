@@ -76,7 +76,7 @@ public class SidebarViewModel extends AbstractViewModel implements SerializableE
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
-	/*
+	/**
 	 * Descripcion: Permitira crear el Encabezado del Menu de acuerdo al item Seleccionado
 	 * @param item. item del menu seleccionado
 	 * Retorno: Ninguno

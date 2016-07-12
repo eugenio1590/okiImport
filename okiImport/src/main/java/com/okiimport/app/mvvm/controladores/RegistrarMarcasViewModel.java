@@ -10,11 +10,10 @@ import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
+
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Messagebox;
+
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.MarcaVehiculo;
@@ -36,7 +35,7 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	
 	//Atributos
 	private MarcaVehiculo marca;
-	private Integer page_size = 10;
+	//private Integer page_size = 10;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 

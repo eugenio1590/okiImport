@@ -84,6 +84,7 @@
 															<listcell>
 																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" 
 																constraint="no negative, no zero"
+																
 																/>
 															</listcell>
 															<listcell>

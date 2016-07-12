@@ -1,16 +1,25 @@
 package com.okiimport.app.mvvm.controladores.cliente.requerimientos;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 
+import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.Oferta;
+import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.controladores.AbstractMisRequerimientosViewModel;
 
 public class MisRequerimientoViewModel extends AbstractMisRequerimientosViewModel  {
+	
+	
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 

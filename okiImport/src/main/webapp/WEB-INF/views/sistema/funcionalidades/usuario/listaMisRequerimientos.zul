@@ -91,6 +91,10 @@
 											tooltiptext="Ver Requerimiento"
 											onClick="@command('verRequerimiento', requerimiento = each)"
 											if="${ !each.editar() }" />
+										<button
+											iconSclass="z-icon-file blue bigger-160" tooltiptext="Ver Oferta" 
+											if="${ each.verOfertas() }"
+											onClick="@command('verOferta',requerimiento = each)" />
 									</div>
 								</hbox>
 							</listcell>

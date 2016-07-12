@@ -23,7 +23,6 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Configuracion;
-import com.okiimport.app.model.DetalleCotizacion;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
@@ -54,7 +53,7 @@ public class ListaOfertasClienteViewModel extends
 	private Window winListaOfertas;
 
 	// Atributos
-	private List<DetalleCotizacion> listaDetalleCotizaciones;
+	private List<Oferta> listaOfertas;
 	private Requerimiento requerimiento;
 	private String titulo = "Ofertas del Requerimiento N° ";
 
@@ -69,8 +68,6 @@ public class ListaOfertasClienteViewModel extends
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento) {
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
-		this.listaDetalleCotizaciones=sTransaccion.consultarDetalleContizacionEmitidosPorRequerimiento(requerimiento.getIdRequerimiento());
-		
 		
 		this.titulo = this.titulo + requerimiento.getIdRequerimiento();
 		agregarGridSort(gridOfertasCliente);
@@ -105,6 +102,7 @@ public class ListaOfertasClienteViewModel extends
 			@BindingParam("sortDirection") Boolean sortDirection) {
 		Map<String, Object> parametros = sTransaccion.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
+		listaOfertas = (List<Oferta>) parametros.get("ofertas");
 		pagOfertasCliente.setActivePage(page);
 		pagOfertasCliente.setTotalSize(total);
 	}
@@ -124,63 +122,52 @@ public class ListaOfertasClienteViewModel extends
 	}
 	
 	/**
-	 * Descripcion: Actualiza el registro de detalle de la cotizacion, cambiando su estatusFavorito a true
-	 * Parametros: DetalleCotizacion detalleCotizacion
+	 * Descripcion: Llama a un modal para ver los datos de la oferta
+	 * Parametros: Oferta @param view: listaOfertasCliente.zul 
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
 	@Command
 	@NotifyChange("*")
-	public void agregarFavorito(@BindingParam("cotizacion") DetalleCotizacion detalle){
-		try{
-			detalle.setEstatusFavorito(true);
-			sTransaccion.actualizarDetalleCotizacion(detalle);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	public void verOferta(@BindingParam("oferta") Oferta oferta){
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		oferta.setDetalleOfertas(this.sTransaccion.consultarDetallesOferta(oferta));
+		parametros.put("oferta", oferta);
+		parametros.put("requerimiento", this.requerimiento);
 		
-		
-	}
-	
-	/**
-	 * Descripcion: Actualiza el registro de detalle de la cotizacion, cambiando su estatusFavorito a false
-	 * Parametros: DetalleCotizacion detalleCotizacion
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("*")
-	public void quitarFavorito(@BindingParam("cotizacion") DetalleCotizacion detalle){
-		try{
-			detalle.setEstatusFavorito(false);
-			detalle.setCantidadSeleccionada((long) 0);
-			sTransaccion.actualizarDetalleCotizacion(detalle);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	/**
-	 * Descripcion: Actualiza el registro de detalle de la cotizacion, cambiando su estatusFavorito a false
-	 * Parametros: DetalleCotizacion detalleCotizacion
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("*")
-	public void cerrar(){
-		try{
-			winListaOfertas.onClose();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-		
+		crearModal(BasePackageSistemaFunc+"ofertados/verDetalleOferta.zul", parametros);
 	}
 
-	
+	/**
+	 * Descripcion: Llama a enviar las ofertas al cliente
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void enviarCliente(){
+		Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		for(Oferta oferta : listaOfertas ){
+			if(oferta.getEstatus().equals(EEstatusOferta.SELECCIONADA)){
+				oferta.setPorctIva(configuracion.getPorctIva());
+				oferta.setPorctGanancia(configuracion.getPorctGanancia());
+				oferta.setEstatus(EEstatusOferta.ENVIADA);
+				sTransaccion.actualizarOferta(oferta);
+			}
+		}
+		requerimiento.setEstatus(EEstatusRequerimiento.OFERTADO);
+		sTransaccion.actualizarRequerimiento(requerimiento);
+
+		//No es el servicio que se usara
+		//Aqui se colocara el servicio para enviar el correo enviarOfertas.html 
+		//Miguel
+		mailCliente.enviarOfertas(requerimiento, mailService);
+		
+		winListaOfertas.detach();
+		
+		mostrarMensaje("Informaci\u00F3n", "Ofertas Enviadas al Cliente", null, null, null, null);
+
+	}
 	
 	/**
 	 * Descripcion: Llama a ejecutar globalCommand
@@ -191,6 +178,23 @@ public class ListaOfertasClienteViewModel extends
 	@Command
 	public void cambiarRequerimientos(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
+	}
+
+	
+	/**
+	 * Descripcion: Llama a enviar a Cliente
+	 * Parametros: @param view: listaOfertasCliente.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	public boolean enviarACliente(){
+		boolean enviar = false;
+		for(Oferta oferta : listaOfertas)
+			if(oferta.enviar()){
+				enviar = true;
+				break;
+			}
+		return enviar;
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -213,15 +217,12 @@ public class ListaOfertasClienteViewModel extends
 		this.mailCliente = mailCliente;
 	}
 
-	
-
-	public List<DetalleCotizacion> getListaDetalleCotizaciones() {
-		return listaDetalleCotizaciones;
+	public List<Oferta> getListaOfertas() {
+		return listaOfertas;
 	}
 
-	public void setListaDetalleCotizaciones(
-			List<DetalleCotizacion> listaDetalleCotizaciones) {
-		this.listaDetalleCotizaciones = listaDetalleCotizaciones;
+	public void setListaOfertas(List<Oferta> listaOfertas) {
+		this.listaOfertas = listaOfertas;
 	}
 
 	public Requerimiento getRequerimiento() {
