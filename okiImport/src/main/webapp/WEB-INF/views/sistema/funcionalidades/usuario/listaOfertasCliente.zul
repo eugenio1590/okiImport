@@ -41,15 +41,15 @@
 													<listhead>
 
 														<listheader
-															value="" width="180px" 
+															value="" width="160px" 
 															label="Repuesto" sort="none" />
 															
 														<listheader
-															value="" width="120px" 
+															value="" width="110px" 
 															label="Marca" sort="none" />
 														
 														<listheader
-															value="" width="130px" 
+															value="" width="120px" 
 															label="Pcio. Unit. BsF." sort="none" />
 
 														<listheader
@@ -58,7 +58,7 @@
 
 														<listheader
 															value="" label="Cant. Adquirir" 
-															width="125px" sort="none">
+															width="115px" sort="none">
 
 														</listheader>
 														<listheader
@@ -84,7 +84,7 @@
 															<listcell>
 															   <vbox>
 																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" 
-																constraint="@bind(vm.getValidatorCantidad(5))" onChange="@command('refrescar')"
+																constraint="@bind(vm.getValidatorCantidad(each.detalleCotizacion.cantidad))" onChange="@command('refrescar')"
 																/>
 																</vbox>
 															</listcell>
