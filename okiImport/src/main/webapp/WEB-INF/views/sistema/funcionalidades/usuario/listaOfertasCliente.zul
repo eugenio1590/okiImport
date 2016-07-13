@@ -78,7 +78,7 @@
 															<listcell
 																label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 															<listcell
-																label="@bind(each.detalleCotizacion.precioVenta)"/>
+																label="@bind(each.calcularPrecioVentaUnit())"/>
 															<listcell
 																label="@bind(each.detalleCotizacion.cantidad)" />
 															<listcell>

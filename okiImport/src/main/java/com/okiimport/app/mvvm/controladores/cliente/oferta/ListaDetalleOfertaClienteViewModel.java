@@ -78,9 +78,7 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 			agregarGridSort(gridOfertasCliente);
 			pagOfertasCliente.setPageSize(pageSize);
 			//cambiarOfertas(0, null, null);
-		}
-		
-		
+		}		
 
 		/**Interface: EventListener<SortEvent>*/
 		@Override
@@ -122,7 +120,7 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 		 * */
 		@GlobalCommand
 		@SuppressWarnings("unchecked")
-		@NotifyChange("listaOfertas")
+		@NotifyChange("listaOferta")
 		public void cambiarOfertas(@Default("0") @BindingParam("page") int page,
 				@BindingParam("fieldSort") String fieldSort,
 				@BindingParam("sortDirection") Boolean sortDirection) {
@@ -291,7 +289,6 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 		public void setListaDetalleOfertas(List<DetalleOferta> listaDetalleOfertas) {
 			this.listaDetalleOfertas = listaDetalleOfertas;
 		}
-		
 		
 
 }
