@@ -82,9 +82,11 @@
 															<listcell
 																label="@bind(each.detalleCotizacion.cantidad)" />
 															<listcell>
+															   <vbox>
 																<spinner instant="true" value="@bind(each.cantidadSeleccionada)" width="75px" 
-																constraint="no negative" onChange="@command('refrescar')"
+																constraint="@bind(vm.getValidatorCantidad(5))" onChange="@command('refrescar')"
 																/>
+																</vbox>
 															</listcell>
 															<listcell
 																label="@bind(each.calcularPrecioVentaSinFlete())"/>
