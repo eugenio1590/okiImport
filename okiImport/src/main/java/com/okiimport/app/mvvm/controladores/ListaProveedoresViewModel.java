@@ -33,7 +33,7 @@ import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
-import com.okiimport.app.service.transaccion.impl.STransaccionImpl;
+
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	

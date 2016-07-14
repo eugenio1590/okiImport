@@ -3,6 +3,7 @@
 	<name>okiImport</name>
 	<comment></comment>
 	<projects>
+		<project>OkiImportPersistencia</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -68,7 +68,7 @@ import org.zkoss.zul.impl.InputElement;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.controladores.AbstractCargaMasivaViewModel;
+
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.resource.model.ModelNavbar;
 

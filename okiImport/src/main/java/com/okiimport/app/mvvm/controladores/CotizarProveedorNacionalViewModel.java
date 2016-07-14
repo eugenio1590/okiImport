@@ -28,10 +28,10 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
-import com.okiimport.app.model.Configuracion;
+
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.DetalleCotizacion;
-import com.okiimport.app.model.DetalleCotizacionInternacional;
+
 import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Requerimiento;
@@ -107,12 +107,8 @@ public class CotizarProveedorNacionalViewModel extends AbstractRequerimientoView
 			eastCotizacionNacional.setTitle(TITULO_EAST+"N° "+cotizacionSelecionada.getIdCotizacion());	
 			
 			listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((int) cotizacion.getIdCotizacion());
-				
-			//prepararListaDetalleCotizacion();
-			limpiarCotizacionSeleccionada();
 			
-			/*formasEnvio = llenarFormasDeEnvio();
-			formaEnvio = formasEnvio.get(0);*/
+			limpiarCotizacionSeleccionada();
 			
 			listaTipoRepuesto = llenarListaTipoRepuestoProveedor();
 			tiposFlete = llenarTiposFleteNacional();
@@ -231,20 +227,6 @@ public class CotizarProveedorNacionalViewModel extends AbstractRequerimientoView
 				}
 		}
 		
-		
-		/**
-		 * Descripcion: Asigna la configuracion actual de la libra a los detalles de cotizacion
-		 * Parametros: @param view: cotizarProveedorInternacional.zul 
-		 * Retorno: Ninguno
-		 * Nota: Ninguna
-		 * */
-		/*private void prepararListaDetalleCotizacion(){
-			Configuracion configuracion = sControlConfiguracion.consultarConfiguracionActual();
-			Float valorLibra = configuracion.getValorLibra();
-			for(DetalleCotizacion detalle : listaDetalleCotizacion)
-				detalle.setValorLibra(valorLibra);
-		}*/
-		
 		/**
 		 * Descripcion: Permitira limpiar la informacion de la cotizacion seleccionada
 		 * Parametros: Ninguno @param view: listaCotizacionesProveedorNacional.zul 
@@ -343,13 +325,6 @@ public class CotizarProveedorNacionalViewModel extends AbstractRequerimientoView
 			default: break;
 			}
 		}
-		
-		/**
-		 * Descripcion: Asigna la configuracion actual de la libra a los detalles de cotizacion
-		 * Parametros: @param view: cotizarProveedorInternacional.zul 
-		 * Retorno: Ninguno
-		 * Nota: Ninguna
-		 * */
 		
 		
 		/**

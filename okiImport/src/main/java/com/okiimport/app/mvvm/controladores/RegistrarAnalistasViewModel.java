@@ -12,17 +12,16 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
+
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Messagebox;
+
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
-import com.okiimport.app.model.Proveedor;
+
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;

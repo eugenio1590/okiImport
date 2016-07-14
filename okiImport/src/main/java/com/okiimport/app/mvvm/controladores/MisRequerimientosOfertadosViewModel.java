@@ -28,7 +28,7 @@ public class MisRequerimientosOfertadosViewModel extends AbstractMisRequerimient
 	}
 
 	/**COMMAND*/
-	/*
+	/**
 	 * Descripcion: permitira crear el emergente (modal) necesario para aprobar las cotizaciones del requerimiento seleccionado
 	 * @param requerimiento: requerimiento seleccionado
 	 * Retorno: Ninguno
