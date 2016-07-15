@@ -23,8 +23,6 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.MarcaVehiculo;
-
-
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -85,13 +83,14 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@GlobalCommand
 	@NotifyChange("marcas")
 	public void cambiarMarcas(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
-		Map<String, Object> parametros = sMaestros.consultarMarcas(page,
-				PAGE_SIZE);//marcaFiltro,
+		Map<String, Object> parametros = sMaestros.consultarMarcasF(marcaFiltro,  fieldSort, sortDirection, 
+				 page, pageSize);//marcaFiltro,
 		Integer total = (Integer) parametros.get("total");
 		marcas = (List<MarcaVehiculo>) parametros.get("marcas");
 		pagMarcas.setActivePage(page);
@@ -199,6 +198,17 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 		}, null);
 	}
 
+	/**
+	 * Descripcion: Permitira filtrar por los campos del analista
+	 * Parametros: @param view: listaMarca.zul    
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange("*")
+	public void aplicarFiltro(){
+		cambiarMarcas(0, null, null);
+	}
 	/** METODOS PROPIOS DE LA CLASE */
 	/** SETTERS Y GETTERS */
 

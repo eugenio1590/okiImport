@@ -22,14 +22,11 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
-
-
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
-
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -94,12 +91,14 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@GlobalCommand
 	@NotifyChange("analistas")
 	public void cambiarAnalistas(@Default("0") @BindingParam("page") int page, 
 			@BindingParam("fieldSort") String fieldSort, 
 			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarAnalistas(analistaFiltro, page, pageSize);
+		Map<String, Object> parametros = sMaestros.consultarAnalistasF(analistaFiltro, fieldSort, sortDirection, 
+				 page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		analistas = (List<Analista>) parametros.get("analistas");
 		pagAnalistas.setActivePage(page);
@@ -282,8 +281,21 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 		}, null);
 	}
 	
+	
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
+	/**
+	 * Descripcion: Permitira filtrar por los campos del analista
+	 * Parametros: @param view: listaAnalista.zul    
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	@NotifyChange("*")
+	public void aplicarFiltro(){
+		cambiarAnalistas(0, null, null);
+	}
 	/**SETTERS Y GETTERS*/
 
 	public List<Analista> getAnalistas() {

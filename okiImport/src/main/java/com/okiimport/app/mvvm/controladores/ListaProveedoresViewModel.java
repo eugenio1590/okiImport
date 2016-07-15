@@ -96,6 +96,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 	 * Retorno: Ninguno
 	 * Nota: Ninguna
 	 * */
+	@SuppressWarnings("unchecked")
 	@GlobalCommand
 	@NotifyChange("proveedores")
 	public void consultarProveedores(@Default("0") @BindingParam("page") int page, 

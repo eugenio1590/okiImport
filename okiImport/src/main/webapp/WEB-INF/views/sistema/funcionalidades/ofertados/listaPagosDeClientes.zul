@@ -56,7 +56,7 @@
 						</auxheader>
 									<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
-							<textbox instant="true" hflex="1"
+							<decimalbox instant="true" hflex="1" format="#,###.##"
 								value="@bind(vm.pagoClienteFiltro.monto)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
