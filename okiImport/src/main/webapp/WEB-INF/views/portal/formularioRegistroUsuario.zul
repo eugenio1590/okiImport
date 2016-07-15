@@ -112,7 +112,6 @@
 												constraint="@bind(vm.emailValidator)"
 												onChange="@command('verificarCorreo')" />
 										</vbox>
-										<label id="msgCorreoP" visible="false" sclass="requerido"/>
 											<!-- TELEFONO -->
 										<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Teléfono:" />
 										<vbox hflex="1">

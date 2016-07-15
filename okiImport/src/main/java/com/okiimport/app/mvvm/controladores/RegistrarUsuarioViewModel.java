@@ -117,7 +117,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	
 	@Command
 	public void verificarCorreo(){
-		Boolean respuesta=false;
+		/*Boolean respuesta=false;
 		this.lblMsgCorreo.setValue("El correo ya existe");
 		respuesta=this.sMaestros.consultarCorreoCliente(cliente.getCorreo());
 		//llamada al metodo del validar 
@@ -129,7 +129,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 			System.out.println("el correo es valido. No existe en la BD.");
 			this.lblMsgCorreo.setVisible(false);
 			//return new GeneralConstraint(EConstraint.NO_EMPTY);
-		}
+		}*/
 	}
 
 	/**
@@ -186,12 +186,13 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void registrar(Usuario usuario){
+	public void registrar(){
 		if (checkIsFormValid()) {
-		cliente.setCedula(getCedulaComleta());
-		cliente.setEstatus(EstatusCliente.getEstatusActivo().getValue());
-		this.sControlUsuario.grabarUsuario(usuario, sMaestros);
-	}
+			cliente.setCedula(getCedulaComleta());
+			cliente.setEstatus(EstatusCliente.getEstatusActivo().getValue());
+			this.sControlUsuario.grabarUsuario(usuario, sMaestros);
+			this.redireccionar("/inicioSession");
+		}
 	}
 
 
