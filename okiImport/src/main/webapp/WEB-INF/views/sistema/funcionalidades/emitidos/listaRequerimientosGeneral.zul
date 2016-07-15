@@ -74,13 +74,13 @@
 			<template name="model">
 				<listitem>
 					<listcell label="@bind(each.idRequerimiento)" />
-					<listcell label=" @bind(each.cliente.nombre)" />
+					<listcell label=" @bind((each.cliente.nombre).concat(' ').concat(each.cliente.apellido))" />
 					<listcell>
 						<datebox value="@bind(each.fechaCreacion)" format="dd/MM/yyyy" 
 							buttonVisible="false" readonly="true"/>
 					</listcell>
 					<listcell label="@bind(each.modeloV)" />
-					<listcell label="@bind(each.analista.nombre)"/>
+					<listcell label="@bind((each.analista.nombre).concat(' ').concat(each.analista.apellido))"/>
 					<listcell label="@bind(each.determinarEstatus())"/>
 					
 				</listitem>

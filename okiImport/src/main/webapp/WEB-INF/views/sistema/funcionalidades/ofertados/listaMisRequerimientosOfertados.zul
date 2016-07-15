@@ -75,7 +75,7 @@
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 							<listcell label="@bind(each.idRequerimiento)" />
-							<listcell label=" @bind(each.cliente.nombre)" />
+							<listcell label=" @bind((each.cliente.nombre).concat(' ').concat(each.cliente.apellido))" />
 							<listcell label="@bind(each.fechaCreacion)
 												@converter('formatedDate', format=vm.formatDate)"/>
 							<listcell label="@bind(each.modeloV)" />

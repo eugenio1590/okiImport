@@ -64,7 +64,7 @@
 						<listitem>
 						<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 							<listcell label="@bind(each.id)" />
-							<listcell label="@bind(each.nombre)" />
+							<listcell label="@bind((each.nombre).concat(' ').concat(each.apellido))" />
 							<listcell
 								label="@bind(each.estatus)" />
 							<listcell></listcell>

@@ -43,19 +43,22 @@
 											<grid>
 												<columns>
 													<column width="10%" />
-													<column  width="20%"/>
-													<column  width="20%"/>
+													<column  width="25%"/>
+													<column  width="18%"/>
 													<column  />
 												</columns>
 												<rows>
 													<row>
+													
 														<!-- CEDULA -->
 														<label value="Cédula/RIF: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.cedula)"/>
-
+														
 														<!-- NOMBRE O RAZON SOCIAL -->
-														<label value="Nombre / Razón Social: " sclass="label-not-mandatory"/>
-														<label value="@bind(vm.requerimiento.cliente.nombre)" />
+														
+														<label value="Nombre/Razón Social: " sclass="label-not-mandatory"/>
+														<label value="@bind((vm.requerimiento.cliente.nombre).concat(' ').concat(vm.requerimiento.cliente.apellido))"/>
+															
 													</row>
 												
 													<row>
