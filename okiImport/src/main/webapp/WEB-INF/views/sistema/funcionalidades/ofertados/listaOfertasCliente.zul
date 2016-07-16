@@ -21,9 +21,10 @@
 										<columnchildren
 											sclass="base_division_campos">
 											<label
-												value="Fecha de Creacion:" />
+												value="Fecha de Creación:" />
 											<label
 												value="@bind(vm.getFormatoFecha(vm.requerimiento.fechaCreacion))" />
+												
 										</columnchildren>
 										<columnchildren
 											sclass="base_division_campos">
@@ -120,8 +121,7 @@
 							<div align="right">
 								<button
 												label="Enviar a Cliente" type="submit" sclass="btn-sm btn-primary"
-												onClick="@command('enviarCliente')"
-												disabled="@bind(!vm.enviarACliente())" />
+												onClick="@command('enviarCliente')" />
 							</div>
 						</hbox>
 					</n:div>

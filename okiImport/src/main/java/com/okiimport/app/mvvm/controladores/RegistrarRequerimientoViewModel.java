@@ -14,7 +14,7 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
+
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -23,6 +23,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
@@ -38,6 +39,11 @@ import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
+import com.okiimport.app.mvvm.constraint.GeneralConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
+import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
+import com.okiimport.app.mvvm.constraint.CustomConstraint;
 
 public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
 
@@ -62,6 +68,9 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	
 	@Wire("#pagMotores")
 	private Paging pagMotores;
+	
+	@Wire("#msgCorreo")
+	private Label lblMsgCorreo;
 
 	//Atributos
 	private List<DetalleRequerimiento> eliminarDetalle;
@@ -80,6 +89,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	private Requerimiento requerimiento;
 	private Cliente cliente;
 	private Motor motor;
+	protected static final String BaseURL = "/WEB-INF/views/portal/";
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -128,6 +138,22 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		pagMotores.setTotalSize(total);
 	}
 	
+	@GlobalCommand
+	@NotifyChange("limpiarCamposReq")
+	public void limpiarCamposRequerimiento(){
+		//System.out.println("entre al LIMPIAR");
+		recargar();
+//		motor = new Motor();
+//		requerimiento = new Requerimiento();
+//		cliente = new Cliente();
+//		requerimiento.setCliente(cliente);
+//		super.cleanConstraintForm();
+		
+		
+		//limpiar();
+	}
+	
+	
 	/**COMMAND*/
 	/**
 	 * Descripcion: Permite limpiar los campos del formulario registrar Requerimiento
@@ -136,13 +162,23 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
+	@NotifyChange({ "requerimiento", "cliente", "estado", "transmision", "traccion", "tipoRepuesto" })
 	public void limpiar() {
-		motor = new Motor();
-		requerimiento = new Requerimiento();
-		cliente = new Cliente();
-		requerimiento.setCliente(cliente);
-		super.cleanConstraintForm();
+		try{
+			motor = new Motor();
+			requerimiento = new Requerimiento();
+			cliente = new Cliente();
+			requerimiento.setCliente(cliente);
+			this.estado=new Estado();
+			this.transmision=new ModeloCombo<Boolean>();
+			this.traccion=new ModeloCombo<Boolean>();
+			tipoRepuesto=new ModeloCombo<Boolean>();
+			super.cleanConstraintForm();
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 
 	 /**
@@ -154,6 +190,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
+		try{
 		if (checkIsFormValid()) {
 			if (requerimiento.getDetalleRequerimientos().size() > 0) {
 				btnEnviar.setDisabled(true);
@@ -175,19 +212,28 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				// decir que no puede instanciarse sino solo una vez
 				
 				mailCliente.registrarRequerimiento(requerimiento, mailService);
-
-				mostrarMensaje("Informaci\u00F3n",
-						"El Requerimiento ha sido registrado exitosamente ",
-						null, null, new EventListener() {
-							public void onEvent(Event event) throws Exception {
-								recargar();
-							}
-						}, null);
+				
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+//				mostrarMensaje("Informaci\u00F3n",
+//						"El Requerimiento ha sido registrado exitosamente ",
+//						null, null, new EventListener() {
+//							public void onEvent(Event event) throws Exception {
+//								recargar();
+//							}
+//						}, null);
+				
 			} else
 				mostrarMensaje("Informaci\u00F3n",
 						"Agregue al Menos un Requerimiento", null, null, null,
 						null);
 		}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
 	}
 	
 	 /**
@@ -302,6 +348,24 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	}
 	
 	/**METODOS PROPIOS DE LA CLASE*/
+	
+	@Command
+	public void verificarCorreo(){
+		Boolean respuesta=false;
+		this.lblMsgCorreo.setValue("El correo ya existe");
+		respuesta=this.sMaestros.consultarCorreoCliente(requerimiento.getCliente().getCorreo());
+		//llamada al metodo del validar 
+		if(respuesta){
+			System.out.println("el correo "+requerimiento.getCliente().getCorreo()+" ya existe.");
+			this.lblMsgCorreo.setVisible(true);
+			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
+		}else{
+			System.out.println("el correo es valido. No existe en la BD.");
+			this.lblMsgCorreo.setVisible(false);
+			//return new GeneralConstraint(EConstraint.NO_EMPTY);
+		}
+	}
+	
 	
 	/**GETTERS Y SETTERS*/
 	public Requerimiento getRequerimiento() {

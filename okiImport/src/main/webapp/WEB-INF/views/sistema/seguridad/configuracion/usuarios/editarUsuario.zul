@@ -14,7 +14,7 @@
 					</columns>
 					<rows>
 						<row>
-							<label value="Cedula" />
+							<label value="Cédula" />
 							<vbox>
 							<textbox readonly="true" value="@bind(vm.persona.cedula)"
 							constraint="@bind(vm.validatorClienteCedulaRif)" />

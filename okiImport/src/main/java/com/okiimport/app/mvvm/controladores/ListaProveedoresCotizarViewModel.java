@@ -17,9 +17,6 @@ import com.okiimport.app.model.Requerimiento;
 
 public class ListaProveedoresCotizarViewModel extends ListaProveedoresViewModel {
 	
-	//Servicios
-	
-	//GUI
 	
 	//Atributos
 	private Requerimiento requerimiento;

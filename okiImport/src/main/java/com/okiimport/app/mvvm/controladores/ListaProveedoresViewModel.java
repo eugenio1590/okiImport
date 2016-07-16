@@ -25,15 +25,17 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.ClasificacionRepuesto;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Proveedor;
+import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.model.factory.persona.EstatusProveedorFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
-import com.okiimport.app.service.transaccion.impl.STransaccionImpl;
+
 
 public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
@@ -71,6 +73,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		proveedorFiltro = new Proveedor();
 		pagProveedores.setPageSize(pageSize);
 		agregarGridSort(gridProveedores);
+		System.out.println("antes de consultar");
 		consultarProveedores(0, null, null);
 	}
 	
@@ -255,6 +258,37 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		crearModal(BasePackageSistemaMaest+ruta, parametros);
 	}
 
+	/**
+	 * Descripcion: Llama a un modal para cambiar el estatus del proveedor a ACTIVO
+	 * Parametros: Analista @param view: listaProveedores.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void actualizarEstatus(@BindingParam("proveedor") final Proveedor proveedor){
+		super.mostrarMensaje("Confirmacion", "¿Está seguro que desea cambiar el estatus del proveedor?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+								proveedor.setiEstatus(EstatusProveedorFactory.getEstatusActivo());
+								sMaestros.acutalizarPersona(proveedor);
+								consultarProveedores(0, null, null);
+								notifyChange("proveedores");;
+							}
+							
+				}
+					
+			
+		}, null);
+	}
+	
+	
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 
 	/**SETTERS Y GETTERS*/

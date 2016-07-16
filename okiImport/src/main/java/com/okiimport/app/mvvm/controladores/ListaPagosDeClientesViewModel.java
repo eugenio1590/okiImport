@@ -124,6 +124,17 @@ public class ListaPagosDeClientesViewModel extends AbstractRequerimientoViewMode
 	public void aplicarFiltro(){
 		cambiarPagos(0, null, null);
 	}
+	
+	@Command
+	public void verCompra(@BindingParam("pago") PagoCliente pago){
+		Requerimiento requerimiento = pago.getCompra().getRequerimiento();
+		
+		Compra compra = pago.getCompra();
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("requerimiento", requerimiento);
+		parametros.put("compra", compra);
+		super.crearModal(BasePackageSistemaFunc+"ofertados/formularioVerCompra.zul", parametros);
+	}
 
 	public List<PagoCliente> getListaDePagos() {
 		return listaDePagos;

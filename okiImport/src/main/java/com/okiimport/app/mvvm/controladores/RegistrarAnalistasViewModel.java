@@ -12,17 +12,16 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
+
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Messagebox;
+
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
-import com.okiimport.app.model.Proveedor;
+
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -67,6 +66,12 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		//limpiar();
+		
+		this.ciudad=this.analista.getCiudad();
+		this.estado=this.analista.getCiudad().getEstado();
+		/*if(recordMode.equalsIgnoreCase("READ")){
+			this.ciudad=analista.getCiudad();
+		}*/
 		
 		listaEstados = llenarListaEstados();
 		listaTipoPersona = llenarListaTipoPersona();
@@ -126,9 +131,11 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "analista" })
+	@NotifyChange({ "analista", "ciudad", "estado" })
 	public void limpiar() {
 		analista = new Analista();
+		this.ciudad=new Ciudad();
+		this.estado=new Estado();
 		super.cleanConstraintForm();
 	}
 	

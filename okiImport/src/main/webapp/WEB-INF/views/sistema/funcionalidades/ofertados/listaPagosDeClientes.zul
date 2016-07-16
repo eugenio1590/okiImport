@@ -92,7 +92,8 @@
 							<listcell>
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">
-										
+										<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Compra"  
+								    			onClick="@command('verCompra', pago = each)"/>
 									</div>
 								</hbox>
 							</listcell>

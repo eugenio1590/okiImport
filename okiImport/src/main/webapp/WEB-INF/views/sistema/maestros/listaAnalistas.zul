@@ -24,7 +24,7 @@
 							<div sclass="z-icon-filter bigger-200" />
 							<spinner constraint="no negative, no zero"
 								width="150px" value="@bind(vm.analistaFiltro.id)" instant="true"
-								placeholder="Buscar por Codigo"
+								placeholder="Buscar por Código"
 								onChange="@command('aplicarFiltro')" />
 						</auxheader>
 						<auxheader colspan="1">
@@ -49,12 +49,12 @@
 					</auxhead>
 					<listhead menupopup="auto">
 					<listheader width="2%"/>
-						<listheader id="id" label="Codigo"
+						<listheader id="id" label="Código"
 							sort="auto(id)" width="18%" />
 						<listheader id="nombre" label="Nombre"
 							sort="auto(nombre)" width="18%" />
 						<listheader label="Estado" sort="none"
-							width="31%" />
+							width="20%" />
 							<listheader label="Foto" sort="none"
 							width="15%" />
 						<listheader label="Operaciones" width="15%"
@@ -64,7 +64,7 @@
 						<listitem>
 						<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 							<listcell label="@bind(each.id)" />
-							<listcell label="@bind(each.nombre)" />
+							<listcell label="@bind((each.nombre).concat(' ').concat(each.apellido))" />
 							<listcell
 								label="@bind(each.estatus)" />
 							<listcell></listcell>
@@ -72,19 +72,20 @@
 
 								<div class="btn-group btn-group-sm action">
 									<button
-										iconSclass="z-icon-pencil green bigger-160"
-										tooltiptext="Editar Analista"
-										onClick="@command('editarAnalista', analista = each)" if="${ !each.isEliminar() }" />
-									<button
 										iconSclass="z-icon-eye blue bigger-160"
 										tooltiptext="Ver Analista"
 										onClick="@command('verAnalista', analista = each)" />
+									<button
+										iconSclass="z-icon-pencil green bigger-160"
+										tooltiptext="Editar Analista"
+										onClick="@command('editarAnalista', analista = each)" if="${ !each.isEliminar() }" />
 									<button
 										iconSclass="z-icon-trash-o red bigger-160"
 										tooltiptext="Eliminar Analista"
 										onClick="@command('eliminarAnalista', analista = each)" if="${ !each.isEliminar() }"/>
 										
-									<button iconSclass="fa fa-unlock-alt fa-2x"
+									<button
+									    iconSclass="z-icon-fa fa-unlock-alt cyan fa-2x bigger-150"
 										tooltiptext="Activar Analista"
 										onClick="@command('actualizarEstatus', analista=each)"
 										if="${ each.isEliminar() }" />

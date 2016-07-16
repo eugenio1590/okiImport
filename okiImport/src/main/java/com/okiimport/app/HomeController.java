@@ -1,13 +1,12 @@
 package com.okiimport.app;
 
-import java.io.File;
-import java.io.InputStream;
+
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.HashMap;
+
 import java.util.Locale;
-import java.util.Map;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,4 +106,16 @@ public class HomeController {
 	public static String obtenerDirectorioRecursos(String path){
 		return obtenerDirectorioRecursos()+path;
 	}
+	
+	@RequestMapping(value= "/proveedorF", method = RequestMethod.GET)
+	public String obtenerFproveedor(){
+		return "portal/formularioProveedor.zul";
+	}
+	
+	@RequestMapping(value= "/registrate", method = RequestMethod.GET)
+	public String obtenerFregistro(){
+		return "portal/formularioRegistroUsuario.zul";
+	}
+	
+	
 }

@@ -72,7 +72,9 @@
 												sclass="form-control" mold="rounded"
 												placeholder="Ej. xxx@gmail.com"
 												value="@bind(vm.cliente.correo)"
-												constraint="@bind(vm.emailValidator)" />
+												constraint="@bind(vm.emailValidator)"
+												onChange="@command('verificarCorreo')" />
+											<label id="msgCorreo" visible="false" sclass="requerido"/>
 										</vbox>
 									</row>
 									<row>
@@ -81,10 +83,13 @@
 										<vbox hflex="1">
 											<combobox readonly="true"
 												placeholder="Seleccione..." hflex="1"
+												value="@bind(vm.estado.nombre)"
 												selectedItem="@bind(vm.estado)"
 												model="@load(vm.listaEstados)"
 												constraint="@bind(vm.notEmptyValidator)"
-												onSelect="@command('buscarCiudades')">
+												onSelect="@command('buscarCiudades')"
+												onChange="@command('buscarCiudades')">
+												
 												<template
 													name="model">
 													<comboitem
@@ -168,7 +173,7 @@
 											
 											<!-- SERIAL DE CARROCERIA -->
 											<hbox>
-												<label value="Serial de Carroceria: " sclass="form-label"/>
+												<label value="Serial de Carrocería: " sclass="form-label"/>
                                         	</hbox>
                                             <vbox>
 												<textbox id="serialCarroceria" sclass="form-control" mold="rounded"
@@ -231,7 +236,7 @@
     											<label value="Transmision: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
-												selectedItem="@bind(vm.transmision)"
+												selectedItem="@bind(vm.transmision)" value="@bind(vm.transmision.nombre)"
 												model="@load(vm.listaTransmision)">
 												<template name="model">
 													<comboitem label="@bind(each.nombre)"/>
@@ -242,10 +247,10 @@
 										<row>
 											<!-- TRACCION -->
 											<hbox>
-												<label value="Traccion: " sclass="form-label"/>
+												<label value="Tracción: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
-												selectedItem="@bind(vm.traccion)"
+												selectedItem="@bind(vm.traccion)" value="@bind(vm.traccion.nombre)"
 												model="@load(vm.listaTraccion)">
 												<template name="model">
 													<comboitem label="@bind(each.nombre)"/>
@@ -257,7 +262,7 @@
 												<label value="Tipo Repuesto: " sclass="form-label"/>
 											</hbox>
 											<combobox placeholder="Seleccione..." readonly="true" hflex="1"
-												selectedItem="@bind(vm.tipoRepuesto)"
+												selectedItem="@bind(vm.tipoRepuesto)" value="@bind(vm.tipoRepuesto.nombre)"
 												model="@load(vm.listaTipoRepuesto)">
 												<template name="model">
 													<comboitem label="@bind(each.nombre)"/>
@@ -295,7 +300,7 @@
 								<listheader label="CodigoOEM"
 									sort="auto"  width="20%"/>
 								<listheader width="40%" sort="auto">
-									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripcion" />
+									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripción" />
 								</listheader>
 								<listheader width="15%" sort="auto">
 									<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
@@ -358,9 +363,9 @@
 		<hbox hflex="1" sclass="panel-footer">
 			<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 			<div align="right" hflex="1">
-				<button id="btnLimpiar" label="Limpiar" sclass="btn-sm btn-info"
+				<button id="btnLimpiar" label="Limpiar" width="100px" sclass="btn-sm btn-info"
 					onClick="@command('limpiar')" />
-				<button label="Enviar" type="submit" sclass="btn-sm btn-primary"
+				<button label="Enviar" type="submit" width="100px" sclass="btn-sm btn-primary"
 					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
 			</div>
 		</hbox>

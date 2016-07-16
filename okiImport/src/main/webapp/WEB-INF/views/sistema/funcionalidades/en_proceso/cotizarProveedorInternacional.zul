@@ -98,7 +98,7 @@
 
 												<space />
 												<include src="/WEB-INF/views/template/fieldMandatory.zul" 
-														field="Forma de Envio:"/>
+														field="Forma de Envío:"/>
 												<vbox>
 													<combobox
 														id="cmbFormaFlete" width="70%" readonly="true"
@@ -128,7 +128,7 @@
 												<n:td width="35%">
 													<textbox rows="3" width="100%" readonly="true"
 														sclass="no_rezise notas" style="font-size: 13px;"
-														value="(**) El precio del flete por repuesto tendra las mismas unidades de moneda que el precio de venta." />
+														value="(**) El precio del flete por repuesto tendrá las mismas unidades de moneda que el precio de venta." />
 												</n:td>
 											</hbox>
 										</groupbox>

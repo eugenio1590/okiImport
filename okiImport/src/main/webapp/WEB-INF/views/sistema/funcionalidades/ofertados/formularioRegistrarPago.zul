@@ -17,7 +17,7 @@
 						<rows>
 							<row>
 								<label
-									value="N Deposito / Transferencia: " />
+									value="N. Depósito / Transferencia: " />
 									
                                 <vbox>
 								<textbox id="idDepositoTransferencia" placeholder="0102125485622"
@@ -87,12 +87,12 @@
 						<rows>
 							<row>
 								<label
-									value="Nombre Cliente / Razon Social: " />
+									value="Nombre Cliente / Razón Social: " />
 								<vbox>
 								<textbox width="80%" readonly="false" placeholder=" Urbicars C.A" constraint="@bind(vm.notEmptyValidator)"/>
 								</vbox>
 
-								<label value="Cedula/RIF: *" />
+								<label value="Cédula/RIF: *" />
 								        
 										<hbox>
 										<vbox>
@@ -120,14 +120,14 @@
 
 							<row>
 
-								<label value="Direccion Fiscal: *" />
+								<label value="Dirección Fiscal: *" />
                                 <vbox>
 								<textbox id="direccionFiscal" maxlength="100" rows="2"
 									width="80%" mold="rounded" placeholder="Zona Industrial 2"
 									constraint="@bind(vm.notEmptyValidator)" />
 								</vbox>
 
-								<label value="Telefono: " />
+								<label value="Teléfono: " />
 								<vbox>
 								<intbox width="80%" readonly="false" placeholder="02514150878"
 								constraint="@bind(vm.telefonoValidator)" />
@@ -141,7 +141,7 @@
 			</groupbox>
 
 			<groupbox id="tabDatosEnvio" closable="false">
-				<caption label="Datos Envio" sclass="custom_caption" />
+				<caption label="Datos Envío" sclass="custom_caption" />
 				<div>
 
 					<grid>
@@ -170,7 +170,7 @@
 								</combobox>
 								</vbox>
 
-								<label value="Direccion de Envio: *" />
+								<label value="Dirección de Envío: *" />
 								<vbox>
 								<textbox id="direccionEnvio" width="80%" maxlength="100" rows="2"
 									mold="rounded" placeholder="av 19 con calle 46 y 45"
@@ -181,7 +181,7 @@
 							<row>
 
 								<label
-									value="Oficina/Direccion Particular *" />
+									value="Oficina/Dirección Particular *" />
 								<vbox>
 								<combobox id="cmbOficinaDireccion"
 									placeholder="Seleccione..." width="80%" readonly="false"
@@ -242,7 +242,7 @@
 								</textbox>
 								</vbox>
 								
-								<label value="Cedula:" />
+								<label value="Cédula:" />
 								<vbox>
 								<textbox id="cedula" width="80%"
 									readonly="false" 
@@ -255,7 +255,7 @@
 							</row>
 							<row>
 
-								<label value="Telefono: *" />
+								<label value="Teléfono: *" />
 								<vbox>
 								<textbox id="telefonoQuienRecibe"
 									width="80%" readonly="false" placeholder="02514157258"
@@ -264,7 +264,7 @@
 								</textbox>
 								</vbox>
 
-								<label value="Articulos que Compro:" />
+								<label value="Artículos que Compro:" />
 								<vbox>
 								<textbox id="artCompra" width="80%" maxlength="100" rows="4"
 									readonly="false" placeholder="2 Muñones Hyundai Atos" constraint="@bind(vm.notEmptyValidator)">

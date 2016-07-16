@@ -61,7 +61,7 @@
 						<listheader value="idRequerimiento" width="10%"
 							label="Nro. Solicitud" sort="auto(idRequerimiento)" />
 						<listheader value="fechaCreacion" width="20%"
-							label="fecha de Creacion" sort="auto(idRequerimiento)" />
+							label="fecha de Creación" sort="auto(idRequerimiento)" />
 						<listheader value="fechaVencimiento" width="15%"
 							label="Fecha de Vencimiento" sort="auto(fechaCreacion)" />
 						<listheader value="marcaV" width="15%"

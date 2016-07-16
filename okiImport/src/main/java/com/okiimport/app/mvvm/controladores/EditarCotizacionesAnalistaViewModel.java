@@ -3,6 +3,7 @@ package com.okiimport.app.mvvm.controladores;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -22,6 +23,7 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.Proveedor;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
@@ -56,7 +58,7 @@ public class EditarCotizacionesAnalistaViewModel extends AbstractRequerimientoVi
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento){
 		super.doAfterCompose(view);
 		this.requerimiento = requerimiento;
-		this.cotizacion = new Cotizacion();
+		this.cotizacion = new Cotizacion(null, new Proveedor());
 		cambiarCotizaciones(0, null, null);
 		agregarGridSort(gridCotizaciones);
 		gridCotizaciones.setEmptyMessage(CotizacionesProveedorInternacionalViewModel.TITULO_EMPTY_COTIZACIONES);

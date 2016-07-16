@@ -25,7 +25,7 @@
 												<label value="@bind(vm.oferta.idOferta)" />
 											</div>
 											<div>
-												<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
+												<label value="Fecha de Creación:" sclass="label-not-mandatory" />
 												<label value="@bind(vm.oferta.fechaCreacion)
 																@converter('formatedDate', format=vm.formatDate)" />
 											</div>
@@ -51,7 +51,7 @@
 										<label value="Datos del Requerimiento" />
 									</tab>
 									<tab sclass="waves-color-blue waves-effect">
-										<label value="Datos del Vehiculo" />
+										<label value="Datos del Vehículo" />
 									</tab>
 								</tabs>
 								<tabpanels>
@@ -70,7 +70,7 @@
 													<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 												</row>
 												<row>
-													<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+													<label value="Fecha de Creación:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.fechaCreacion)
 																	@converter('formatedDate', format=vm.formatDate)" />
 													<label value="Fecha de Vencimiento: " sclass="label-not-mandatory"/>
@@ -104,7 +104,7 @@
 												<row>
 													<label value="Año:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.annoV)"/>
-													<label value="Serial de Carroceria:" sclass="label-not-mandatory"/>
+													<label value="Serial de Carrocería:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.serialCarroceriaV)" />
 												</row>
 											</rows>
@@ -124,7 +124,7 @@
                                    	
                                    	<listhead>
                                    		<listheader width="3%"/>
-                                   		<listheader label="Descripcion" sort="none" width="30%"/>
+                                   		<listheader label="Descripción" sort="none" width="30%"/>
                                    		<listheader label="Marca" sort="none" />
                                    		<listheader label="Cant. Solict." sort="none"  width="10%" />
                                    		<listheader label="Cant. Ofert." sort="none" width="10%"/>

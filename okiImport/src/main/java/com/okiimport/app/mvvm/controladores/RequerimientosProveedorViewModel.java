@@ -106,8 +106,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		gridMisRequerimientos.setMultiple(true);
-		gridMisRequerimientos.setCheckmark(true);
 		pagMisRequerimientos.setActivePage(page);
 		pagMisRequerimientos.setTotalSize(total);
 	}
@@ -163,7 +161,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 	 * Retorno: Ninguno 
 	 * Nota: Ninguna
 	 * */
-	@Command
+	/*@Command
 	@NotifyChange("*")
 	public void verCompra(@BindingParam("compra") Compra compra, @BindingParam("requerimiento") Requerimiento requerimiento){
 		
@@ -176,7 +174,7 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 			
 			crearModal(BasePackageSistemaFunc+"ofertados/verCompraProveedor.zul", parametros);
 			
-	}
+	}*/
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/
 	

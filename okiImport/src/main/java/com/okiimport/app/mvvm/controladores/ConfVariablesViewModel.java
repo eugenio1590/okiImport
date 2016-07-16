@@ -1,94 +1,92 @@
 package com.okiimport.app.mvvm.controladores;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Paging;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-
 import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.Moneda;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
-
-//
-import com.okiimport.app.mvvm.resource.BeanInjector;
-import com.okiimport.app.service.configuracion.SControlConfiguracion;
-
-import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.GlobalCommand;
-import org.zkoss.zk.ui.event.SortEvent;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listheader;
-
-import com.okiimport.app.model.Analista;
-import com.okiimport.app.model.Cotizacion;
-import com.okiimport.app.model.DetalleCotizacion;
-import com.okiimport.app.model.DetalleRequerimiento;
-import com.okiimport.app.model.Requerimiento;
-import com.okiimport.app.service.transaccion.STransaccion;
-//
 
 
 public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 
 	
 	//Servicios
-	
-	//GUI
 	    
 	    @Wire("#winConfVariables")
 		private Window winConfVariables;
 	    
-		@Wire("#txtValorlibra")
-		public Textbox txtValorLibra;
-		
-		@Wire("#txtPorcentajeGanancia")
-		public Textbox txtPorcentajeGanancia;
-		
-		@Wire("#txtPorcentajeIVA")
-		public Textbox txtPorcentajeIVA;
-		
-		@Wire("#bandbMoneda")
-		private Bandbox bandbMoneda;
-		
-		@Wire("#pagMonedas")
-		private Paging pagMonedas;
+	   
+	    @Wire("#txtValorLibra")
+	    private Textbox txtValorLibra;
+	    
+	    @Wire("#txtPorcentajeGanancia")
+	    private Textbox txtPorcentajeGanancia;
+	    
+	    @Wire("#txtPorcentajeIVA")
+	    private Textbox txtPorcentajeIVA;
 		
 	//Atributos
-		private List<Moneda> listaMonedas;
 		private Moneda monedaSeleccionada;
 		
 		private Configuracion configuracion;
+		private Configuracion conf;
+		private String pIva=null;
+		private String pGanancia=null;
+		private String vLibra=null;
 	
 	
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,  @ExecutionArgParam("configuracion") Configuracion configuracion)
-	{
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view/*,  @ExecutionArgParam("configuracion") Configuracion configuracion*/)
+	{System.out.println("conf");
+		try{
+			
+		
 		super.doAfterCompose(view);
 		limpiar();
-		//this.configuracion = configuracion;
 		
 		this.configuracion = sControlConfiguracion.consultarConfiguracionActual();
+		this.conf = sControlConfiguracion.consultarConfiguracionActual();
+		DecimalFormat formateador = new DecimalFormat("##.#"); 
+		float aux1, aux2, aux3=0;
+		aux1=configuracion.getPorctIva()*100;
+		aux1=formateador.parse(formateador.format(aux1)).floatValue();
+		System.out.println("aux1"+aux1);
+		this.pIva=Float.toString(aux1);
+		aux2=configuracion.getPorctGanancia()*100;
 		
-		this.monedaSeleccionada = sControlConfiguracion.consultarMonedaBase();
-	
-		//cambiarMonedas(0);
+		aux2=formateador.parse(formateador.format(aux2)).floatValue();
+
+		System.out.println("aux2"+aux2);
+		this.pGanancia=Float.toString(aux2);
+		aux3=configuracion.getValorLibra()*100;
 		
+		aux3=formateador.parse(formateador.format(aux3)).floatValue();
+
+		System.out.println("aux"+aux3);
+		this.vLibra=Float.toString(aux3);
+		//this.configuracion = configuracion;
+		
+		
+		System.out.println("conf"+this.configuracion.getPorctIva());
+		
+		
+	}	catch (Exception e) {
+	     System.out.println(e);
+	}
 	}
 	
 	
@@ -96,20 +94,34 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	@NotifyChange("*")
 	public void enviar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar){
+
 		if(checkIsFormValid()){
-		
-			btnEnviar.setDisabled(true);
-		    btnLimpiar.setDisabled(true);
-			sControlConfiguracion.guardarConfiguracion(configuracion, monedaSeleccionada); 
-			mostrarMensaje("Informaci\u00F3n", "La configuracion ha sido modificada existosamente ", null, null, new EventListener()
-			{
-						public void onEvent(Event event) throws Exception {
-							
+			configuracion.setPorctIva(Float.parseFloat(pIva)/100);
+			configuracion.setPorctGanancia(Float.parseFloat(pGanancia)/100);
+			configuracion.setValorLibra(Float.parseFloat(vLibra)/100);
+			if((configuracion.getPorctGanancia().equals(conf.getPorctGanancia()))&&(configuracion.getPorctIva().equals(conf.getPorctIva()))&&(configuracion.getValorLibra().equals(conf.getValorLibra())))
+				mostrarMensaje("Informaci\u00F3n", "No existen cambios en la configuracion", null, null, null,null);
+			else {
+
+				btnEnviar.setDisabled(true);
+				btnLimpiar.setDisabled(true);
+				mostrarMensaje("Confirmacion", "¿Esta seguro que desea realizar el cambio de configuracion?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+						new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							sControlConfiguracion.guardarConfiguracion(configuracion); 
 							winConfVariables.onClose();
 						}
-					},null);
+					}
+				}, null);
+			}
 		}
 	}
+
+	
 	
 	
 	
@@ -121,81 +133,20 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "*" })
+	@NotifyChange( "*" )
 	public void limpiar() {
-		txtValorLibra.setValue("");
-		txtPorcentajeGanancia.setValue("");
-		txtPorcentajeIVA.setValue("");
+		
+		try{
+		this.pIva=null;
+		this.pGanancia=null;
+		this.vLibra=null;
 		super.cleanConstraintForm();
-	}
+	}catch (Exception e) {
+	     System.out.println(e);
+	}}
+		
 
 	
-	/**
-	 * Descripcion: Cambia la paginacion de acuerdo a la pagina activa
-	 * de Paging 
-	 * Parametros: @param view: confVariable.zul 
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange("*")
-	public void paginarListaMonedas(){
-		int page=pagMonedas.getActivePage();
-		cambiarMonedas(page);
-	}
-	
-	
-	/**
-	 * Descripcion: Carga la lista de monedas de acuerdo a la pagina dada como parametro
-	 * Parametros: @param view: confVariables.zul 
-	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@SuppressWarnings("unchecked")
-	@NotifyChange("listaMonedas")
-	private void cambiarMonedas(@Default("0") @BindingParam("page") int page){
-		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
-		Integer total = (Integer) parametros.get("total");
-		listaMonedas = (List<Moneda>) parametros.get("monedas");
-		pagMonedas.setActivePage(page);
-		pagMonedas.setTotalSize(total);
-		pagMonedas.setPageSize(pageSize);
-	}
-	
-	
-	
-	//
-
-	public Bandbox getBandbMoneda() {
-		return bandbMoneda;
-	}
-
-	public void setBandbMoneda(Bandbox bandbMoneda) {
-		this.bandbMoneda = bandbMoneda;
-	}
-
-	public Paging getPagMonedas() {
-		return pagMonedas;
-	}
-
-
-	public void setPagMonedas(Paging pagMonedas) {
-		this.pagMonedas = pagMonedas;
-	}
-
-
-
-	public List<Moneda> getListaMonedas() {
-		return listaMonedas;
-	}
-
-
-	public void setListaMonedas(List<Moneda> listaMonedas) {
-		this.listaMonedas = listaMonedas;
-	}
-
-
 
 	public Moneda getMonedaSeleccionada() {
 		return monedaSeleccionada;
@@ -204,6 +155,48 @@ public class ConfVariablesViewModel extends AbstractRequerimientoViewModel  {
 
 	public void setMonedaSeleccionada(Moneda monedaSeleccionada) {
 		this.monedaSeleccionada = monedaSeleccionada;
+	}
+
+
+	public Configuracion getConfiguracion() {
+		return configuracion;
+	}
+
+
+	public void setConfiguracion(Configuracion configuracion) {
+		this.configuracion = configuracion;
+	}
+
+
+	public String getpIva() {
+		return pIva;
+	}
+
+
+	public void setpIva(String pIva) {
+		this.pIva = pIva;
+	}
+
+
+	
+
+	public String getpGanancia() {
+		return pGanancia;
+	}
+
+
+	public void setpGanancia(String pGanancia) {
+		this.pGanancia = pGanancia;
+	}
+
+
+	public String getvLibra() {
+		return vLibra;
+	}
+
+
+	public void setvLibra(String vLibra) {
+		this.vLibra = vLibra;
 	}
 
 	

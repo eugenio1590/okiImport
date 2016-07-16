@@ -28,7 +28,7 @@
 										<label value="Datos del Requerimiento" />
 									</tab>
 									<tab sclass="waves-color-blue waves-effect">
-										<label value="Datos del Vehiculo" />
+										<label value="Datos del Vehículo" />
 									</tab>
 								</tabs>
 								<tabpanels>
@@ -43,7 +43,7 @@
 											</columns>
 										<rows>
 										<row>
-											<label value="Fecha de Creacion:" sclass="label-not-mandatory" />
+											<label value="Fecha de Creación:" sclass="label-not-mandatory" />
 											<label value="@bind(vm.compra.fechaCreacion)
  												@converter('formatedDate', format=vm.formatDate)" /> 
 										</row>
@@ -93,11 +93,11 @@
 											</columns>
 											<rows>
 												<row>
-													<label value="Numero:" sclass="label-not-mandatory"/>
+													<label value="Número:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 												</row>
 												<row>
-													<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+													<label value="Fecha de Creación:" sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.fechaCreacion)
 																	@converter('formatedDate', format=vm.formatDate)" />
 													<label value="Fecha de Vencimiento: " sclass="label-not-mandatory"/>

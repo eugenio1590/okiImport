@@ -18,7 +18,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
 						width="150px" value="@bind(vm.usuarioFiltro.id)" instant="true"
-						placeholder="Buscar por Codigo"
+						placeholder="Buscar por Código"
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">
@@ -50,7 +50,7 @@
 			</auxhead>
 			<listhead menupopup="auto">
 				<listheader width="2%" />
-				<listheader id="id" label="Codigo" sort="auto(id)"
+				<listheader id="id" label="Código" sort="auto(id)"
 					width="18%" />
 				<listheader id="username" label="Username"
 					sort="auto(username)" width="18%" />

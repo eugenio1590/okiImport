@@ -119,7 +119,7 @@
 											<vbox>
 												<combobox
 													placeholder="Seleccione..." width="100%" cols="30" readonly="@bind(vm.makeAsReadOnly)"
-													value="@bind(vm.analista.ciudad.estado.nombre)"
+													value="@bind(vm.estado.nombre)"
 													height="15px" 
 													disabled="@bind(vm.makeAsReadOnly)"
 													selectedItem="@bind(vm.estado)"
@@ -147,7 +147,7 @@
 													placeholder="Seleccione..." width="100%" cols="30" readonly="@bind(vm.makeAsReadOnly)"
 													height="45"
 													disabled="@bind(vm.makeAsReadOnly)"
-													value="@bind(vm.analista.ciudad.nombre)"
+													value="@bind(vm.ciudad.nombre)"
 													selectedItem="@bind(vm.ciudad)"
 													model="@load(vm.listaCiudades)"
 													constraint="@bind(vm.notEmptyValidator)">

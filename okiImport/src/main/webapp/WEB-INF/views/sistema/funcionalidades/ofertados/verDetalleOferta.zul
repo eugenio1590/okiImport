@@ -73,7 +73,7 @@
 													<row>
 														<!-- NRO REQUERIMIENTO -->
 														<label
-															value="Nro Requerimiento: " sclass="label-not-mandatory" />
+															value="Nro. Requerimiento: " sclass="label-not-mandatory" />
 														<label
 															value="@bind(vm.requerimiento.idRequerimiento)" />
 
@@ -87,14 +87,14 @@
 										<!-- DATOS DEL VEHICULO -->
 										<include
 											src="/WEB-INF/views/template/modal/subTitleModal.zul"
-											subtitulo="Datos del Vehiculo" />
+											subtitulo="Datos del Vehículo" />
 										<tabbox
 											sclass="tab-nav tab-nav-blue">
 											<tabs>
 												<tab
 													sclass="waves-color-blue waves-effect">
 													<label
-														value="Datos Basicos" />
+														value="Datos Básicos" />
 												</tab>
 												<tab
 													sclass="waves-color-blue waves-effect">

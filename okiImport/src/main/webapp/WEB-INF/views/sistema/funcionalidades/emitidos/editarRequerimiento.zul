@@ -43,19 +43,22 @@
 											<grid>
 												<columns>
 													<column width="10%" />
-													<column  width="20%"/>
-													<column  width="20%"/>
+													<column  width="25%"/>
+													<column  width="18%"/>
 													<column  />
 												</columns>
 												<rows>
 													<row>
+													
 														<!-- CEDULA -->
 														<label value="Cédula/RIF: " sclass="label-not-mandatory"/>
 														<label value="@bind(vm.requerimiento.cliente.cedula)"/>
-
+														
 														<!-- NOMBRE O RAZON SOCIAL -->
-														<label value="Nombre / Razón Social: " sclass="label-not-mandatory"/>
-														<label value="@bind(vm.requerimiento.cliente.nombre)" />
+														
+														<label value="Nombre/Razón Social: " sclass="label-not-mandatory"/>
+														<label value="@bind((vm.requerimiento.cliente.nombre).concat(' ').concat(vm.requerimiento.cliente.apellido))"/>
+															
 													</row>
 												
 													<row>
@@ -86,7 +89,7 @@
 										<tabbox sclass="tab-nav tab-nav-blue">
 											<tabs>
 												<tab sclass="waves-color-blue waves-effect">
-													<label value="Datos Basicos" />
+													<label value="Datos Básicos" />
 												</tab>
 												<tab sclass="waves-color-blue waves-effect">
 													<label value="Datos Adicionales" />
@@ -119,7 +122,7 @@
 																<label value="@bind(vm.requerimiento.annoV)"/>
 													
 																<!-- SERIAL DE CARROCERIA -->
-																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Serial Carroceria:" />
+																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Serial Carrocería:" />
 																<vbox>
 																	<textbox id="serialCarroceria" sclass="form-control" mold="rounded"
 																		maxlength="25" placeholder="Ej: xA245D25623" readonly="@bind(!vm.editar)"
@@ -174,12 +177,14 @@
 																</vbox>
 															
 																<!-- TRANSMISION -->
-																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Transmision:" />
+																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Transmisión:" />
 																<vbox>
 																	<combobox id="cmbTransmision" placeholder="Seleccione..." width="80%" 
 																		readonly="true" buttonVisible="@bind(vm.editar)"
 																		selectedItem="@bind(vm.transmision)"
-																		model="@load(vm.listaTransmision)" constraint="@bind(vm.notEmptyValidator)">
+																		model="@load(vm.listaTransmision)"
+																		value="@bind(vm.transmision.nombre)"
+																		 constraint="@bind(vm.notEmptyValidator)">
 																		<template name="model">
 																			<comboitem label="@bind(each.nombre)"/>
 																		</template>
@@ -188,12 +193,14 @@
 															</row>
 															<row>
 																<!-- TRACCION -->
-																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Traccion:" />
+																<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Tracción:" />
 																<vbox>
 																	<combobox id="cmbTraccion" placeholder="Seleccione..." width="80%"
 																		readonly="true" buttonVisible="@bind(vm.editar)"
 																		selectedItem="@bind(vm.traccion)"
-																		model="@load(vm.listaTraccion)" constraint="@bind(vm.notEmptyValidator)">
+																		model="@load(vm.listaTraccion)"
+																		value="@bind(vm.traccion.nombre)"
+																		 constraint="@bind(vm.notEmptyValidator)">
 																		<template name="model">
 																			<comboitem label="@bind(each.nombre)"/>
 																		</template>
@@ -220,10 +227,10 @@
 													<listhead>
 							    						<listheader width="3%"/>
 														<listheader sort="none" width="15%">
-															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Codigo OEM" />
+															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Código OEM" />
 														</listheader>
 														<listheader sort="none" width="300px">
-															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripcion" />
+															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Descripción" />
 														</listheader>
 														<listheader sort="none" width="15%">
 															<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Cantidad" />
@@ -285,14 +292,15 @@
 															<listcell>
 																<div>
 																	<image width="50px" sclass="imagen-default"
-																		height="50px" src="@bind(each.getFoto64())"
-																		hover="/resources/img/icons/ampliar.png"
-																		tooltiptext="Ampliar"
-																		onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
-																	<space/>
-																	<button label="..."
-																		sclass="btn-info" style="margin-bottom:0px"
-																		onClick="@command('uploadFoto', detalle = each)" />
+																	height="50px" src="@bind(each.getFoto64())"
+																	tooltiptext="Ampliar"
+																	onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" />
+
+																	<button label="+"
+																	visible="@bind(vm.editar)"
+																	sclass="btn-info" style="margin-bottom:0px"
+																	tooltiptext="Subir Foto"
+																	onClick="@command('uploadFoto', detalle = each)" />
 																</div>
 															</listcell>
 														</listitem>
@@ -308,7 +316,7 @@
 					<n:div class="modal-footer">
 						<hbox width="100%" visible="@bind(vm.editar)">
 							<include src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
-							<div align="right">
+							<div align="right" hflex="1">
 								<button id="btnLimpiar" label="Limpiar" type="submit"
 									onClick="@command('limpiar')" sclass="btn-sm btn-info" />
 								<button label="Editar" type="submit" sclass="btn-sm btn-primary"

@@ -95,7 +95,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("decorator", decorator);
 		params.put("oferta", oferta);
-		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, se tomaran como articulos rechazados ¿desea continuar con la recotizacion?", 
+		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, se tomaran como articulos rechazados ï¿½desea continuar con la recotizacion?", 
 				Messagebox.EXCLAMATION, new Messagebox.Button[]{ Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL }, 
 				new MessageboxEventListener(this, params), null);
 	}
@@ -124,6 +124,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 			if(guardar=guardarOfertas(true)){
 				this.requerimiento.setEstatus(EEstatusRequerimiento.OFERTADO);
 				this.sTransaccion.actualizarRequerimiento(requerimiento);
+				this.sTransaccion.actualizarDetallesRequerimiento(requerimiento);
 				this.mailCliente.enviarOfertas(requerimiento, mailService);
 			}
 			closeModal();
@@ -200,13 +201,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 			//5. Actualizamos la pos de la estrategia a usar en la siguiente iteracion
 			pos++;
 		}
-		
-		/*DecoratorTabOferta decorator;
-		if(!ofertas.isEmpty())
-			for(Oferta oferta2 : ofertas){
-				decorator = new DecoratorTabOferta(tabsOfertas, tabpOfertas, oferta2, this);
-				decorator.agregarOferta(this);
-			}*/
+	
 	}
 	
 	private boolean validarOfertas() {

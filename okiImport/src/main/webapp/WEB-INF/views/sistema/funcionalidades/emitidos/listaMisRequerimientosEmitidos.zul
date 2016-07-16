@@ -74,7 +74,7 @@
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 							<listcell label="@bind(each.idRequerimiento)" />
-							<listcell label="@bind(each.cliente.nombre)" />
+							<listcell label="@bind((each.cliente.nombre).concat(' ').concat(each.cliente.apellido))" />
 							<listcell label="@bind(each.fechaCreacion)
 												@converter('formatedDate', format=vm.formatDate)"/>
 							<listcell label="@bind(each.modeloV)" />
@@ -83,22 +83,21 @@
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">
 										<button
+											iconSclass="z-icon-eye blue bigger-160"
+											tooltiptext="Ver Requerimiento"
+											onClick="@command('verRequerimiento', requerimiento = each)"
+										     />
+										<button
 											iconSclass="z-icon-pencil green bigger-160"
 											tooltiptext="Editar"
 											onClick="@command('editarReguerimiento', requerimiento = each)"
 											if="${ each.editar() }" />
 										<button
-											iconSclass="z-icon-eye blue bigger-160"
-											tooltiptext="Ver Requerimiento"
-											onClick="@command('verRequerimiento', requerimiento = each)"
-											if="${ !each.editar() }" />
-										<button
 											iconSclass="z-icon-truck red bigger-160"
 											tooltiptext="Enviar a Proveedores"
-											onClick="@command('enviarProveedores', requerimiento=each)"
-											if="${ !each.isCerrarSolicitud() }" />
+											onClick="@command('enviarProveedores', requerimiento=each)" />
 										<button
-											iconSclass="fa fa-users purple bigger-160"
+											iconSclass="z-icon-fa fa-users purple bigger-100"
 											tooltiptext="Cotizar" if="${ each.cotizar() }"
 											onClick="@command('cotizar', requerimiento = each)" />
 									</div>
