@@ -33,7 +33,7 @@
 
                             <vbox>
 							<textbox id="nombre" width="110%" sclass="form-control"
-								readonly="" mold="rounded" value="@bind(vm.marca.nombre)"
+								readonly="@bind(vm.makeAsReadOnly)" mold="rounded" value="@bind(vm.marca.nombre)"
 								placeholder="Ej: Toyota"
 								constraint="@bind(vm.notEmptyValidator)" />
 							</vbox>
@@ -46,7 +46,7 @@
 		</n:div>
 
 					<n:div class="modal-footer">
-						<hbox width="100%" hflex="1">
+						<hbox width="100%" visible="@bind(!vm.makeAsReadOnly)"  hflex="1">
 							<include
 								src="/WEB-INF/views/template/textFieldsMandatory.zul" hflex="1" />
 							<div align="right" >
@@ -55,7 +55,7 @@
 									sclass="btn-sm btn-info" />
 								<button id="btnEnviar" label="Registrar"
 									type="submit"
-									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar, edicion=vm.valor)"
 									sclass="btn-sm btn-primary" />
 							</div>
 						</hbox>

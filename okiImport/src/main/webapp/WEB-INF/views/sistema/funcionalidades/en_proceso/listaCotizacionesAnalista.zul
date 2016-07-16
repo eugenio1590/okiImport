@@ -42,13 +42,19 @@
 												value="@bind(vm.cotizacion.fechaVencimiento)" 
 												onChange="@command('aplicarFiltro')" />
 										</auxheader>
+										<auxheader>
+											<div sclass="z-icon-filter bigger-200" />
+											<textbox instant="true" hflex="1"
+												value="@bind(vm.cotizacion.proveedor.nombre)" 
+												onChange="@command('aplicarFiltro')" />
+										</auxheader>
 									</auxhead>
 									<listhead>
 										<listheader width="2%" sort="none"/>
 										<listheader value="idCotizacion"  width="13%"
-											label="Nro. Cotizacion" sort="auto(idCotizacion)" />
+											label="Nro. Cotización" sort="auto(idCotizacion)" />
 										<listheader value="fechaCreacion" width="18%"
-											label="Fecha de Creacion" sort="auto(fechaCreacion)" />
+											label="Fecha de Creación" sort="auto(fechaCreacion)" />
 										<listheader value="fechaVencimiento" width="18%"
 											label="Fecha de Vencimiento" sort="auto(fechaVencimiento)" />
 										<listheader value="none" width="29%"

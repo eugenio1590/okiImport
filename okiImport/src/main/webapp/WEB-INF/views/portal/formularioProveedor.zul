@@ -118,13 +118,15 @@
 									<textbox id="email" mold="rounded" sclass="form-control" hflex="1"
 										value="@bind(vm.proveedor.correo)"
 										placeholder="Ej. xxx@gmail.com"
-										constraint="@bind(vm.emailValidator)">
+										constraint="@bind(vm.emailValidator)"
+										onChange="@command('verificarCorreo')">
 									</textbox>
+									<label id="msgCorreoP" visible="false" sclass="requerido"/>
 								</vbox>
 							</row>
 							<row>
 								<!-- PAIS -->
-								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Country / Pais:" />
+								<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Country / País:" />
 								<vbox hflex="1">
 									<combobox width="100%" readonly="true" 
 										placeholder="Seleccione..."

@@ -39,11 +39,11 @@
 			</auxhead>
 			<listhead menupopup="auto">
 			<listheader width="2%"/>
-				<listheader id="id" label="Codigo" sort="auto(id)"
+				<listheader id="id" label="Código" sort="auto(id)"
 					width="18%" />
 				<listheader id="nombre" label="Nombre"
 					sort="auto(nombre)" width="18%" />
-					
+				<listheader label="Estado" sort="none" width="20%" />
 				
 				<listheader label="Operaciones" width="15%" sort="none" />
 			</listhead>
@@ -52,14 +52,21 @@
 				<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
 					<listcell label="@bind(each.idMarcaVehiculo)" />
 					<listcell label="@bind(each.nombre)" />
+					<listcell label="@bind(each.estatus)" />
 					<listcell>
 						<div class="btn-group btn-group-sm">
+								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Marca"
+									onClick="@command('editarMarca', marca = each)" if="${ !each.isEliminar() }"/>
 								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Marca"  
 								    onClick="@command('verMarca', marca = each)"/>
 								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Marca"
 									onClick="@command('editarMarca', marca = each)"/>
 								<button iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Marca"
-									onClick="@command('eliminarMarca', marca=each)"/>
+									onClick="@command('eliminarMarca', marca=each)" if="${ !each.isEliminar() }"/>
+								<button iconSclass="fa fa-unlock-alt fa-2x"
+										tooltiptext="Activar Marca"
+										onClick="@command('actualizarEstatus', marca=each)"
+										if="${ each.isEliminar() }" />
 							</div>
 						
 					</listcell>

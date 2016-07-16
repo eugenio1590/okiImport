@@ -16,12 +16,12 @@
 		    					<label value="@bind(vm.requerimiento.idRequerimiento)"/>
 		    					<space/>
 		    					<space/> 
-		    					<label value="Fecha de Creacion:" sclass="label-not-mandatory"/>
+		    					<label value="Fecha de Creación:" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.fechaCreacion)
 		    									@converter('formatedDate', format=vm.formatDate)"/>
 		    					<space/>
 		    					<space/> 
-		   						<label value="Estado:" sclass="label-not-mandatory"/>
+		   						<label value="Estado" sclass="label-not-mandatory"/>
 		    					<label value="@bind(vm.requerimiento.determinarEstatus())" sclass="z-letra-grande" /> 
 		    
 							</div>
@@ -47,7 +47,7 @@
 											<rows>
 												<row>
 													<!-- CEDULA -->
-													<label value="Cedula/RIF: " sclass="label-not-mandatory"/>
+													<label value="Cédula/RIF: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.cliente.cedula)"/>
 
 													<!-- NOMBRE O RAZON SOCIAL -->
@@ -94,7 +94,7 @@
 													<label value="@bind(vm.requerimiento.annoV)"/>
 													
 													<!-- SERIAL DE CARROCERIA -->
-													<label value="Serial Carroceria: " sclass="label-not-mandatory"/>
+													<label value="Serial Carrocería: " sclass="label-not-mandatory"/>
 													<label value="@bind(vm.requerimiento.serialCarroceriaV)"/>
 												</row>
 											</rows>
@@ -112,8 +112,8 @@
 										model="@load(vm.requerimiento.detalleRequerimientos)" >
 										<listhead>
 											<listheader width="3%"/>
-											<listheader label="CodigoOEM" sort="none" width="20%" />
-											<listheader label="Descripcion" sort="none" width="40%" />
+											<listheader label="CódigoOEM" sort="none" width="20%" />
+											<listheader label="Descripción" sort="none" width="40%" />
 											<listheader label="Cantidad" sort="none" width="10%" />
 											<listheader label="Foto" sort="none" width="10%"/>
 											<listheader label="Estado" sort="none" />	
@@ -131,7 +131,7 @@
 														onClick="@command('ampliarImagen', titulo='Repuesto', imagen=each.getFoto64())" 
 														if="${ not each.fotoVacia() }"/>
 												</listcell>
-												<listcell label="Por definir"/>
+												<listcell label="@bind(each.determinarEstatus())"/>
 											</listitem>
 										</template>
 									</listbox>

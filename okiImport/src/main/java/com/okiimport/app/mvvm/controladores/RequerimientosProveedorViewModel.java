@@ -106,7 +106,6 @@ public class RequerimientosProveedorViewModel extends AbstractRequerimientoViewM
 				fieldSort, sortDirection,usuario.getPersona().getId(), page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaRequerimientos = (List<Requerimiento>) parametros.get("requerimientos");
-		
 		pagMisRequerimientos.setActivePage(page);
 		pagMisRequerimientos.setTotalSize(total);
 	}

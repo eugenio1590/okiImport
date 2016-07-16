@@ -8,6 +8,7 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 
@@ -16,6 +17,7 @@ import org.zkoss.zul.Button;
 
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.enumerados.EEstatusGeneral;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -35,7 +37,11 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	
 	//Atributos
 	private MarcaVehiculo marca;
-	//private Integer page_size = 10;
+	private String recordMode;
+	private Boolean cerrar;
+	private boolean makeAsReadOnly;
+	private String valor=null;
+	private Integer page_size = 10;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -44,9 +50,23 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
-		super.doAfterCompose(view);
-		limpiar();
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("marca") MarcaVehiculo marca,
+			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("valor") String valor,
+			@ExecutionArgParam("cerrar") Boolean cerrar) {
+		try{
+			super.doAfterCompose(view);
+			this.setRecordMode((recordMode == null) ? "EDIT" : recordMode);
+			this.marca = (marca==null) ? new MarcaVehiculo() :  marca;
+			this.cerrar = (cerrar==null) ? true : cerrar;
+			this.valor=valor;
+			makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//limpiar();
 		
 	}
 	
@@ -59,8 +79,12 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	@Command
 	@NotifyChange({ "marca" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
-			@BindingParam("btnLimpiar") Button btnLimpiar) {
-		if (checkIsFormValid()) {
+			@BindingParam("btnLimpiar") Button btnLimpiar,
+			@BindingParam("edicion") String valor) {
+		
+		try{
+			
+				if (checkIsFormValid()) {
 				
 				btnEnviar.setDisabled(true);
 				btnLimpiar.setDisabled(true);
@@ -71,11 +95,18 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("nombre", marca.getNombre());
-				
-				
-				mostrarMensaje("Informaci\u00F3n", "Marca Registrada con Exito", null, null, null, null);
-				
+				System.out.println("valor: "+valor);
+				this.valor=valor;
+				if(this.valor!=null)
+					mostrarMensaje("Informaci\u00F3n", "Marca Actualizada con Exito", null, null, null, null);
+				else mostrarMensaje("Informaci\u00F3n", "Marca Registrada con Exito", null, null, null, null);
+				this.setValor(null);
+				this.recargar();
 			}	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -89,6 +120,17 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 	public void limpiar() {
 		marca = new MarcaVehiculo();
 		super.cleanConstraintForm();
+	}
+	
+	/**
+	 * Descripcion: Permite recargar la pantalla al cerrar
+	 * Parametros: @param view: formularioMarcas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	public void recargar() {
+		winFormularioMarca.onClose();
+		ejecutarGlobalCommand("cambiarMarcas", null);
 	}
 
 	/**METODOS PROPIOS DE LA CLASE*/
@@ -108,6 +150,38 @@ public class RegistrarMarcasViewModel extends AbstractRequerimientoViewModel {
 
 	public void setMarca(MarcaVehiculo marca) {
 		this.marca = marca;
+	}
+
+	public String getRecordMode() {
+		return recordMode;
+	}
+
+	public void setRecordMode(String recordMode) {
+		this.recordMode = recordMode;
+	}
+
+	public Boolean getCerrar() {
+		return cerrar;
+	}
+
+	public void setCerrar(Boolean cerrar) {
+		this.cerrar = cerrar;
+	}
+
+	public boolean isMakeAsReadOnly() {
+		return makeAsReadOnly;
+	}
+
+	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
+		this.makeAsReadOnly = makeAsReadOnly;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 	

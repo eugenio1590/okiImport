@@ -101,7 +101,205 @@
 								</div>
 								
 							</west>
+<<<<<<< HEAD
 							
+=======
+							<east id="eastCotizacion" width="65%" title="Cotizacion">
+								<div>
+									<groupbox closable="false">
+										<grid>
+											<columns>
+												<column width="20%">
+													<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+														field="Fecha de Vencimiento:" />
+												</column>
+												<column width="20%">
+													<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+														field="Moneda:" />
+												</column>
+												<column label="Condiciones:" />
+											</columns>
+											<rows>
+												<row>
+													<vbox hflex="1">
+														<datebox id="dtbFecha" format="@bind(vm.formatDate)"
+															readonly="true" buttonVisible="false" hflex="1"
+															value="@bind(vm.cotizacionSelecionada.fechaVencimiento)"
+															constraint="@bind(vm.validatorFechaVencimiento)" />
+													</vbox>
+
+													<vbox>
+														<bandbox
+															id="bandbMoneda" mold="rounded" autodrop="true"
+															width="80%" readonly="true" buttonVisible="false"
+															constraint="@bind(vm.notEmptyValidator)"
+															value="@bind(vm.cotizacionSelecionada.historicoMoneda.moneda.nombre)">
+															<bandpopup>
+																<listbox
+																	height="250px" width="200px" model="@load(vm.monedas)"
+																	selectedItem="@bind(vm.monedaSeleccionada)"
+																	onSelect="@command('seleccionMoneda')">
+																	<listhead>
+																		<listheader label="Nombre" />
+																	</listhead>
+																	<template
+																		name="model">
+																		<listitem>
+																			<listcell label="@bind(each.withSimbolo(each.nombre))" />
+																		</listitem>
+																	</template>
+																</listbox>
+																<paging id="pagMonedas" autohide="true"
+																	onPaging="@command('paginarListaMonedas')" />
+															</bandpopup>
+														</bandbox>
+													</vbox>
+													<vbox hflex="1">
+														<textbox id="txtCondicion" rows="2" hflex="1"
+															 readonly="true" sclass="form-control"
+															value="@bind(vm.cotizacionSelecionada.condiciones)"/>
+													</vbox>
+												</row>
+											</rows>
+										</grid>
+									</groupbox>
+									<div width="100%" align="center">
+										<groupbox closable="false" width="99%">
+											<caption label="Flete" sclass="custom_caption_title" />
+											<div align="left">
+												<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+														field="Tipo de Flete:" style="display: inline-block;"/>
+												<combobox id="cmbFlete" width="225px"
+													buttonVisible="false" readonly="true" 
+													model="@load(vm.tiposFlete)"
+													selectedItem="@bind(vm.tipoFlete)"
+													onSelect="@command('seleccionarTipoFlete')">
+													<template name="model">
+														<comboitem label="@bind(each.nombre)" />
+													</template>
+												</combobox>
+												<textbox rows="2" width="56%" readonly="true"
+													sclass="no_rezise notas" style="font-size: 13px;"
+													value="(**) El precio del flete por repuesto tendra las mismas unidades de moneda que el precio de venta." />
+											</div>
+										</groupbox>
+									</div>
+									
+									<include src="/WEB-INF/views/template/modal/subTitleModal.zul" subtitulo="Repuestos a Cotizar"/>
+									<panel sclass="borderGrid">
+										<panelchildren>
+											<listbox id="gridDetalleCotizacion"
+												mold="paging" pageSize="4" pagingPosition="top"
+												model="@load(vm.listaDetalleCotizacion)"
+												emptyMessage="No se ha Seleccionado Ninguna Cotizacion">
+												<listhead>
+													<listheader label="Código OEM" width="10%" sclass="label-not-mandatory" align="center" />
+													<listheader label="Repuesto" sclass="label-not-mandatory" width="10%" align="center" />
+													<listheader label="Cant. Solict." width="10%" sclass="label-not-mandatory" align="center"/>
+													<listheader>
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" width="9%" 
+															field="Marca"/>
+													</listheader>
+													<listheader width="13%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul"
+															field="Tipo Reps."/>
+													</listheader>
+													<listheader width="13%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+															field="Cant. Cotizada"/>
+													</listheader>
+													<listheader width="11%">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+															field="Pcio. Venta"/>
+													</listheader>
+													<listheader width="13%" visible="@bind(vm.tipoFlete.valor)">
+														<include src="/WEB-INF/views/template/fieldMandatory.zul" 
+															field="Pcio. Flete (**)"/>
+													</listheader>
+													<listheader label="Total"  sclass="label-not-mandatory" align="center" />
+													<listheader label="Operaciones"  sclass="label-not-mandatory" align="center" />
+												</listhead>
+												<template name="model">
+													<listitem visible="@bind(each.visible)">
+														<listcell
+															label="@bind(each.detalleRequerimiento.codigoOem)" />
+														<listcell
+															label="@bind(each.detalleRequerimiento.descripcion)" />
+														<listcell
+															label="@bind(each.detalleRequerimiento.cantidad)" />
+														<listcell>
+															<vbox>
+																<textbox
+																	value="@bind(each.marcaRepuesto)" 
+																	constraint="@bind(vm.notEmptyValidator)"
+																	tooltiptext="Marca del Repuesto" width="100%" />
+															</vbox>
+														</listcell>
+														<listcell>
+															<combobox readonly="true"
+																model="@load(vm.listaTipoRepuesto)"
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="101%" >
+																<template name="model" >
+																	<comboitem label="@bind(each.nombre)"/>
+																</template>
+															</combobox>
+														</listcell>
+														<listcell>
+															<spinner
+																value="@bind(each.cantidad)"
+																tooltiptext="Cantidad Cotizada del Repuesto"
+																constraint="@bind(vm.getValidatorCantidad(each.detalleRequerimiento.cantidad))"  width="100%" />
+														</listcell>
+														<listcell>
+															<vbox>
+																<decimalbox
+																	format="@bind(vm.formatNumber)"
+																	locale="@bind(vm.localeNumber)"
+																	tooltiptext="Precio de venta por las cantidades cotizadas del Repuesto con el Iva Incluido"
+																	value="@bind(each.precioVenta)" 
+																	constraint="@bind(vm.validatorPrecio)"
+																	onChange="@command('calcularPrecio', column=1)" width="100%" />
+															</vbox>
+														</listcell>
+														<listcell
+															visible="@bind(vm.tipoFlete.valor)">
+															<vbox>
+																<decimalbox
+																	format="@bind(vm.formatNumber)"
+																	locale="@bind(vm.localeNumber)"
+																	tooltiptext="Precio del flete por las cantidades cotizadas del Repuesto"
+																	value="@bind(each.precioFlete)" 
+																	constraint="@bind(vm.constraintPrecioFlete)"
+																	onChange="@command('calcularPrecio', column=2)" width="100%" />
+															</vbox>
+														</listcell>
+														<listcell>
+															<vbox>
+																<decimalbox
+																	format="@bind(vm.formatNumber)"
+																	locale="@bind(vm.localeNumber)"
+																	tooltiptext="Total"
+																	value="@bind((each.cantidad*each.precioVenta)+each.precioFlete)"
+																	constraint="@bind(vm.validatorPrecio)" disabled="true"  width="100%"/>
+															</vbox>
+														</listcell>
+														<listcell>
+															<hbox>
+																<div class="btn-group btn-group-sm">
+																	<button iconSclass="z-icon-close red bigger-160"
+																		tooltiptext="Quitar"
+																		onClick="@command('QuitarCotizacion', detalle = each)" />
+																</div>
+															</hbox>
+														</listcell>
+													</listitem>
+												</template>
+											</listbox>
+										</panelchildren>
+									</panel>
+								</div>
+							</east>
+>>>>>>> refs/heads/requerimiento
 						</borderlayout>
 					</n:div>
 					<n:div class="modal-footer">

@@ -23,8 +23,7 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.MarcaVehiculo;
-
-
+import com.okiimport.app.model.enumerados.EEstatusGeneral;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
@@ -132,10 +131,11 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void verMarca(@BindingParam("marcas") MarcaVehiculo marcas){
+	public void verMarca(@BindingParam("marca") MarcaVehiculo marca){
 		
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		parametros.put("marcas", marcas);
+		parametros.put("marca", marca);
+		parametros.put("recordMode", "READ");
 		//parametros.put("editar", false);
 		llamarFormulario("formularioMarcas.zul", parametros);
 	}
@@ -147,10 +147,11 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 	 * Nota: Ninguna
 	 * */
 	@Command
-	public void editarMarca(@BindingParam("marcas") MarcaVehiculo marcas){
+	public void editarMarca(@BindingParam("marca") MarcaVehiculo marca){
 		
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("marcas", marcas);
+			parametros.put("marca", marca);
+			parametros.put("valor", "editar");
 			//parametros.put("editar", true);
 			llamarFormulario("formularioMarcas.zul", parametros);
 	}
@@ -185,9 +186,10 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 							//if (sTransaccion.validarProveedorEnCotizaciones(proveedor)){
 								//proveedor.setiEstatus(EstatusProveedorFactory.getEstatusEliminado());
 								//HAY QUE CREAR EN SMAESTROS EL SERVICIO PARA ACTUALIZAR LA MARCA
-							//sMaestros.acutalizarPersona(marca);
+								marcaVehiculo.setEstatus(EEstatusGeneral.INACTIVO);
+								sMaestros.registrarMarca(marcaVehiculo);
 								cambiarMarcas(0, null, null);
-								notifyChange("proveedores");
+								notifyChange("marcas");
 							}
 							else
 								//SI ES QUE ES NECESARIO, ¿CUANDO NO PUEDO ELIMINAR UNA MARCA?
@@ -196,6 +198,35 @@ public class ListaMarcasViewModel extends AbstractRequerimientoViewModel impleme
 						
 					//}
 					
+		}, null);
+	}
+	
+	/**
+	 * Descripcion: Llama a un modal para cambiar el estatus de la marca a ACTIVO
+	 * Parametros: Analista @param view: listaMarcas.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	@Command
+	public void actualizarEstatus(@BindingParam("marca") final MarcaVehiculo marca){
+		super.mostrarMensaje("Confirmacion", "¿Está seguro que desea cambiar el estatus de la marca?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+				new EventListener(){
+
+					@Override
+					public void onEvent(Event event) throws Exception {
+						// TODO Auto-generated method stub
+						Messagebox.Button button = (Messagebox.Button) event.getData();
+						if (button == Messagebox.Button.YES) {
+							
+								marca.setEstatus(EEstatusGeneral.ACTIVO);
+								sMaestros.registrarMarca(marca);
+								cambiarMarcas(0, null, null);
+								notifyChange("marcas");
+							}
+							
+				}
+					
+			
 		}, null);
 	}
 

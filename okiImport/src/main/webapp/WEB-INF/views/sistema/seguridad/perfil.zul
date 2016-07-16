@@ -6,7 +6,7 @@
 			image="/resources/img/user.png" sclass="menubarCustom"/>
 		<menu label="">
 			<menupopup>
-				<menuitem label="Configuracion" iconSclass="z-icon-cog" />
+				<menuitem label="Configuración" iconSclass="z-icon-cog" />
 				<menuitem label="Profile" iconSclass="z-icon-user" onClick="@command('editarPerfil')" />
 				<menuseparator />
 				<menuitem label="Logout" iconSclass="z-icon-off" onClick="@command('logout')" />

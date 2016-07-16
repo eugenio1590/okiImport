@@ -24,7 +24,9 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 //
 
+
 import com.okiimport.app.model.Cotizacion;
+import com.okiimport.app.model.DetalleCotizacion;
 //
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
@@ -177,6 +179,14 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
 		ejecutarGlobalCommand("cambiarProveedores", null);
+	}
+	
+	@Command
+	@NotifyChange("listaDetalleCotizacion")
+	public void QuitarCotizacion(@BindingParam("detalle") DetalleCotizacion detalle){
+		detalle.setVisible(false);
+		detalle.setCantidad((long) 0);
+		
 	}
 	
 	/**METODOS PROPIOS Y DE LA CLASE*/

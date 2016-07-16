@@ -49,7 +49,7 @@
 											sort="auto(cedula)" width="18%" />
 										<listheader id="nombre" label="Nombre"
 											sort="auto(nombre)" width="18%" />
-										<listheader label="Ubicacion" sort="none" width="18%" />
+										<listheader label="Ubicación" sort="none" width="18%" />
 										<listheader label="Estado" sort="none" width="31%" />
 										<listheader label="Operaciones" width="15%" sort="none" />
 									</listhead>

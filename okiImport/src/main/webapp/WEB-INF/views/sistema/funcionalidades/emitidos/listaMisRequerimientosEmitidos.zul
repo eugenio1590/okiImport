@@ -95,8 +95,7 @@
 										<button
 											iconSclass="z-icon-truck red bigger-160"
 											tooltiptext="Enviar a Proveedores"
-											onClick="@command('enviarProveedores', requerimiento=each)"
-											if="${ !each.isCerrarSolicitud() }" />
+											onClick="@command('enviarProveedores', requerimiento=each)" />
 										<button
 											iconSclass="z-icon-fa fa-users purple bigger-100"
 											tooltiptext="Cotizar" if="${ each.cotizar() }"

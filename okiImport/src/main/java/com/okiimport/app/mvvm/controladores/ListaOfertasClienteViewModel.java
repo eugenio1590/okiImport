@@ -23,8 +23,10 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Configuracion;
+import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusDetalleRequerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
@@ -55,7 +57,7 @@ public class ListaOfertasClienteViewModel extends
 	// Atributos
 	private List<Oferta> listaOfertas;
 	private Requerimiento requerimiento;
-	private String titulo = "Ofertas del Requerimiento N° ";
+	private String titulo = "Ofertas del Requerimiento Nï¿½ ";
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 

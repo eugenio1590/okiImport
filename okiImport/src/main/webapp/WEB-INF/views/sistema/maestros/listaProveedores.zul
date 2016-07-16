@@ -21,7 +21,7 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
 						width="150px" value="@bind(vm.proveedorFiltro.id)" instant="true"
-						placeholder="Buscar por Codigo"
+						placeholder="Buscar por Código"
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">
@@ -44,7 +44,7 @@
 			</auxhead>
 			<listhead menupopup="auto">
 				<listheader width="2%"/>
-				<listheader id="id" label="Codigo" sort="auto(id)"
+				<listheader id="id" label="Código" sort="auto(id)"
 					width="18%" />
 				<listheader id="nombre" label="Nombre"
 					sort="auto(nombre)" width="18%" />
@@ -66,6 +66,10 @@
 									onClick="@command('editarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
 								    <button  iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Proveedor"  
 								    onClick="@command('eliminarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
+								    <button iconSclass="fa fa-unlock-alt fa-2x"
+										tooltiptext="Activar Proveedor"
+										onClick="@command('actualizarEstatus', proveedor=each)"
+										if="${ each.isEliminar() }" />
 						</div>
 					</listcell>
 				</listitem>
