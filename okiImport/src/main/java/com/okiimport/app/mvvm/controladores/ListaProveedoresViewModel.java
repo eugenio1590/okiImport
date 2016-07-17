@@ -159,6 +159,7 @@ public class ListaProveedoresViewModel extends AbstractRequerimientoViewModel im
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("proveedor", proveedor);
 		map.put("recordMode", "EDIT");
+		map.put("valor", "editar");
 		map.put("cerrar", false);
 		Sessions.getCurrent().setAttribute("allmyvalues", map);
 		if (window != null) {

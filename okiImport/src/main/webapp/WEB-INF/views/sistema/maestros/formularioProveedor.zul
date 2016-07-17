@@ -189,6 +189,7 @@
 																visible="@bind(vm.proveedor.nacional)"
 																model="@load(vm.listaEstados)"
 																onSelect="@command('buscarCiudades')"
+																onChange="@command('buscarCiudades')"
 																constraint="@bind(vm.constrEstado)">
 																<template
 																	name="model">

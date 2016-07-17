@@ -108,6 +108,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	protected Boolean cerrar;
 	private String recordMode;
 	protected Proveedor proveedor;
+	private String valor=null;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -119,6 +120,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("proveedor") Proveedor proveedor,
 			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("valor") String valor,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
@@ -137,6 +139,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		tipoPersona = listaTipoPersona.get(1);
 		tipoPersona=consultarTipoPersona(this.proveedor.getCedula(),listaTipoPersona);
 		String cedula = this.proveedor.getCedula();
+		this.valor=valor;
+		
 		if(cedula!=null)
 			this.proveedor.setCedula(this.proveedor.getCedula().substring(1));
 		if(this.proveedor.getCiudad() != null)
@@ -182,26 +186,28 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar,
 			@BindingParam("recordMode") String recordMode) {
+		
+		
 		if (checkIsFormValid()) {
-			if(!verificarExistencia()){
-				if (proveedor.getMarcaVehiculos().size() > 0
-						&& proveedor.getClasificacionRepuestos().size() > 0) {
-
-					btnEnviar.setDisabled(true);
-					btnLimpiar.setDisabled(true);
-
-					registrarProveedor(cerrar);
-				}
-
-				else
-					mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto. "
-							+ "(Add at Least a Brand and a Classification of Parts)",
-							null, null, null, null);
-			}
-			else
-				mostrarMensaje("Informaci\u00F3n", "Ya se encuentra registrado en el sistema"
-						+ " (Already registered in the system)",
-						null, null, null, null);
+					
+					if(!verificarExistencia()){
+						if (proveedor.getMarcaVehiculos().size() > 0
+								&& proveedor.getClasificacionRepuestos().size() > 0) {
+		
+							btnEnviar.setDisabled(true);
+							btnLimpiar.setDisabled(true);
+							registrarProveedor(true);
+						}
+		
+						else
+							mostrarMensaje("Informaci\u00F3n", "Agregue al Menos una Marca y Una Clasificaci\u00F3n de Repuesto. "
+									+ "(Add at Least a Brand and a Classification of Parts)",
+									null, null, null, null);
+					}
+					else
+						mostrarMensaje("Informaci\u00F3n", "Ya se encuentra registrado en el sistema"
+								+ " (Already registered in the system)",
+								null, null, null, null);
 		}
 	}
 
@@ -393,6 +399,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		proveedor = sMaestros.registrarProveedor(proveedor);
 		
 		String str = null;
+		System.out.println("el recordmode es"+recordMode);
+		System.out.println("el valor enviarMail es"+enviarEmail);
 		if(recordMode.equalsIgnoreCase("EDIT") && enviarEmail)
 			str = "Su Solicitud Ha sido Registrada Exitosamente, Se Respondera en 48 Horas (Your request has been registered Successfully it , will respond in 48 hours)";
 		else
@@ -400,25 +408,16 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 		if(enviarEmail){
 			this.mailProveedor.registrarSolicitudProveedor(proveedor, mailService);
-
-
-			mostrarMensaje("Informacion", str, null, null,
-					new EventListener<Event>() {
-
-						public void onEvent(Event event) throws Exception {
-							redireccionar("/");
-						}
-					}, null);
 		}
-		else {
-			mostrarMensaje("Informacion", str, null, null,
-					new EventListener<Event>() {
-						public void onEvent(Event event) throws Exception {
-							winProveedor.onClose();
-							ejecutarGlobalCommand("consultarProveedores", null);
-						}
-					}, null);
-		}
+		
+		mostrarMensaje("Informacion", str, null, null,
+				new EventListener<Event>() {
+					public void onEvent(Event event) throws Exception {
+						winProveedor.onClose();
+						ejecutarGlobalCommand("consultarProveedores", null);
+					}
+				}, null);
+		
 		return proveedor;
 	}
 	
@@ -668,6 +667,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 	
 }
