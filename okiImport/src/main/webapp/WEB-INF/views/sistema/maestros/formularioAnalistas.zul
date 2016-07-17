@@ -118,7 +118,7 @@
 															field="Estado: " />
 											<vbox>
 												<combobox
-													placeholder="Seleccione..." width="100%" cols="30" readonly="@bind(vm.makeAsReadOnly)"
+													placeholder="Seleccione..." width="100%" cols="30" readonly="true"
 													value="@bind(vm.estado.nombre)"
 													height="15px" 
 													disabled="@bind(vm.makeAsReadOnly)"
@@ -144,7 +144,7 @@
 															field="Ciudad: "  />
 											<vbox>
 												<combobox
-													placeholder="Seleccione..." width="100%" cols="30" readonly="@bind(vm.makeAsReadOnly)"
+													placeholder="Seleccione..." width="100%" cols="30" readonly="true"
 													height="45"
 													disabled="@bind(vm.makeAsReadOnly)"
 													value="@bind(vm.ciudad.nombre)"
