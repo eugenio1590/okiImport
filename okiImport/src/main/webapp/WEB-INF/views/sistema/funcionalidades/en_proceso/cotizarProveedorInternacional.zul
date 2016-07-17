@@ -207,7 +207,8 @@
 														<listcell>
 															<combobox readonly="true" width="100%"
 																model="@load(vm.listaTipoRepuesto)"
-																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)">
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"
+																constraint="@bind(vm.notEmptyValidator)">
 																<template name="model">
 																	<comboitem label="@bind(each.nombre)" />
 																</template>

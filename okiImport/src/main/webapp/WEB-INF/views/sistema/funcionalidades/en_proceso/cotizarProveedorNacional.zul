@@ -84,7 +84,8 @@
 												<combobox id="cmbFleteNacional" width="120%" readonly="true"
 													model="@load(vm.tiposFlete)"
 													selectedItem="@bind(vm.tipoFlete)"
-													onSelect="@command('seleccionarTipoFlete')">
+													onSelect="@command('seleccionarTipoFlete')"
+													constraint="@bind(vm.notEmptyValidator)">
 													<template name="model">
 														<comboitem label="@bind(each.nombre)" />
 													</template>
@@ -151,7 +152,8 @@
 														<listcell>
 															<combobox readonly="true"
 																model="@load(vm.listaTipoRepuesto)"
-																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="100%" >
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="100%" 
+																constraint="@bind(vm.notEmptyValidator)">
 																<template name="model" >
 																	<comboitem label="@bind(each.nombre)"/>
 																</template>

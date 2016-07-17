@@ -101,9 +101,7 @@
 								</div>
 								
 							</west>
-<<<<<<< HEAD
-							
-=======
+
 							<east id="eastCotizacion" width="65%" title="Cotizacion">
 								<div>
 									<groupbox closable="false">
@@ -173,7 +171,8 @@
 													buttonVisible="false" readonly="true" 
 													model="@load(vm.tiposFlete)"
 													selectedItem="@bind(vm.tipoFlete)"
-													onSelect="@command('seleccionarTipoFlete')">
+													onSelect="@command('seleccionarTipoFlete')"
+													constraint="@bind(vm.notEmptyValidator)">
 													<template name="model">
 														<comboitem label="@bind(each.nombre)" />
 													</template>
@@ -238,7 +237,8 @@
 														<listcell>
 															<combobox readonly="true"
 																model="@load(vm.listaTipoRepuesto)"
-																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="101%" >
+																onSelect="@command('selectTipoRepuesto', detalle = each, item = self.selectedItem.value)"   width="101%"
+																constraint="@bind(vm.notEmptyValidator)">
 																<template name="model" >
 																	<comboitem label="@bind(each.nombre)"/>
 																</template>
@@ -299,7 +299,7 @@
 									</panel>
 								</div>
 							</east>
->>>>>>> refs/heads/requerimiento
+
 						</borderlayout>
 					</n:div>
 					<n:div class="modal-footer">
