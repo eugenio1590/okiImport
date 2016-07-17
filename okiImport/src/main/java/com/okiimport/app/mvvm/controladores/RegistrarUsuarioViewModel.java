@@ -75,8 +75,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("persona") Persona persona) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
 		listaEstados = llenarListaEstados();
@@ -139,7 +138,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "proveedor",  "estado", "constrEstado", "constrCiudad" })
+	@NotifyChange({ "usuario", "cliente", "estado", "constrEstado", "constrCiudad" })
 	public void limpiar() {
 		this.cliente = new Cliente();
 		this.usuario = new Usuario(this.cliente, true);

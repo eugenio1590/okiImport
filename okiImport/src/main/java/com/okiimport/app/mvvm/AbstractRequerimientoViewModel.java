@@ -28,6 +28,7 @@ import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.constraint.AnnoConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
+import com.okiimport.app.mvvm.constraint.EqualsAndIntervalValueConstraint;
 import com.okiimport.app.mvvm.constraint.GeneralConstraint;
 import com.okiimport.app.mvvm.constraint.MayorCantidadConstraint;
 import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
@@ -373,10 +374,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	
     public CustomConstraint getValidatorFechaVencimiento() {
-		
     	return new GeneralConstraint(EConstraint.NO_EMPTY,
 				EConstraint.NO_PAST );
 	}
+    
+    public CustomConstraint getValidatorEqualsAndIntervalValue(@BindingParam("valorEqual") String valorEqual,
+    		@BindingParam("minValue") Integer minValue, @BindingParam("maxValue") Integer maxValue){
+    	return new EqualsAndIntervalValueConstraint(valorEqual, minValue, maxValue);
+    }
     
     public void setButtonDisiabled(final org.zkoss.zul.Button button){
     	String sclass = button.getSclass();
