@@ -104,10 +104,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 				this.cliente.setCedula(cedulaBuscar.substring(1,
 						cedulaBuscar.length()));
 				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
-			} else
-				this.cliente = new Cliente(cedulaBuscar.substring(1,
-						cedulaBuscar.length()));
-			//this.persona.setCliente(this.cliente);
+			}
 		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
