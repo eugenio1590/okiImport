@@ -21,7 +21,16 @@ public class RegistrarProveedorViewModel extends com.okiimport.app.mvvm.controla
 			@BindingParam("btnLimpiar") Button btnLimpiar,
 			@BindingParam("recordMode") String recordMode) {
 		
+		
 		if (checkIsFormValid()) {
+			//esto para que permita actualizar el registro del proveedor
+			System.out.println("valor es: "+this.getValor());
+					if(this.getValor()!=null && this.getValor().equals("editar")){
+						 registrarProveedor(false);
+						 return;
+					}
+					
+					//esta condicion es para validad que no se registre varias veces el mismo proveedor
 			if(!verificarExistencia()){
 				if (proveedor.getMarcaVehiculos().size() > 0
 						&& proveedor.getClasificacionRepuestos().size() > 0) {
@@ -29,7 +38,7 @@ public class RegistrarProveedorViewModel extends com.okiimport.app.mvvm.controla
 					btnEnviar.setDisabled(true);
 					btnLimpiar.setDisabled(true);
 
-					registrarProveedor(false);
+					registrarProveedor(true);
 				}
 
 				else

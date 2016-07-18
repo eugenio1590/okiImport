@@ -31,7 +31,7 @@
 						onChange="@command('aplicarFiltro')" hflex="1" />
 				</auxheader>
 				
-				
+				<auxheader colspan="1" />
 				<auxheader width="20%">
 					<button label="Nueva Marca"
 						onClick="@command('nuevaMarca')" sclass="btn-primary" />
@@ -55,15 +55,14 @@
 					<listcell label="@bind(each.estatus)" />
 					<listcell>
 						<div class="btn-group btn-group-sm">
-								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Marca"
-									onClick="@command('editarMarca', marca = each)" if="${ !each.isEliminar() }"/>
+		
 								<button  iconSclass="z-icon-eye blue bigger-160" tooltiptext="Ver Marca"  
 								    onClick="@command('verMarca', marca = each)"/>
 								<button iconSclass="z-icon-pencil green bigger-160" tooltiptext="Editar Marca"
-									onClick="@command('editarMarca', marca = each)"/>
+									onClick="@command('editarMarca', marca = each)" if="${ !each.isEliminar() }" />
 								<button iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Marca"
 									onClick="@command('eliminarMarca', marca=each)" if="${ !each.isEliminar() }"/>
-								<button iconSclass="fa fa-unlock-alt fa-2x"
+								<button iconSclass="z-icon-fa fa-unlock-alt cyan fa-2x bigger-150"
 										tooltiptext="Activar Marca"
 										onClick="@command('actualizarEstatus', marca=each)"
 										if="${ each.isEliminar() }" />

@@ -22,23 +22,22 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
-
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
-
-
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
-
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 	
 	//Servicios
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
 	
 	//GUI
 	@Wire("#gridAnalistas")
@@ -192,6 +191,7 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			parametros.put("analista", analista);
 			parametros.put("recordMode", "EDIT");
+			parametros.put("valor", "editar");
 			//parametros.put("editar", true);
 			llamarFormulario("formularioAnalistas.zul", parametros);
 	}
@@ -239,14 +239,28 @@ public class ListaAnalistasViewModel extends AbstractRequerimientoViewModel impl
 						Messagebox.Button button = (Messagebox.Button) event.getData();
 						if (button == Messagebox.Button.YES) {
 							
-								analista.setiEstatus(EstatusPersonaFactory.getEstatusInactivo());
-								//EL METODO DICE ACTUTALIZARPERSONA
-								sMaestros.acutalizarPersona(analista);
-								cambiarAnalistas(0, null, null);
-								notifyChange("analistas");
+							analista.setiEstatus(EstatusPersonaFactory.getEstatusInactivo());
+		//				EL METODO DICE ACTUTALIZARPERSONA
+						sMaestros.acutalizarPersona(analista);
+						cambiarAnalistas(0, null, null);
+						notifyChange("analistas");
+						
+//										if (sTransaccion.validarAnalistaEnRequerimientos(analista)){
+//											analista.setiEstatus(EstatusPersonaFactory.getEstatusInactivo());
+//											//EL METODO DICE ACTUTALIZARPERSONA
+//											sMaestros.acutalizarPersona(analista);
+//											cambiarAnalistas(0, null, null);
+//											notifyChange("analistas");
+//										}
+//										else
+//											mostrarMensaje("Informacion", "No se Puede eliminar el analista, esta asignado a un requerimiento que esta activo", Messagebox.EXCLAMATION, null, null, null);
+//										}
+								
+								
 							}
+					}
 							
-				}
+				
 					
 			
 		}, null);

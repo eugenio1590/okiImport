@@ -75,8 +75,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("persona") Persona persona) {
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
 		listaEstados = llenarListaEstados();
@@ -105,10 +104,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 				this.cliente.setCedula(cedulaBuscar.substring(1,
 						cedulaBuscar.length()));
 				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
-			} else
-				this.cliente = new Cliente(cedulaBuscar.substring(1,
-						cedulaBuscar.length()));
-			//this.persona.setCliente(this.cliente);
+			}
 		} else {
 			this.cliente.setCedula(null);
 			cedulaRif.getValue();
@@ -139,7 +135,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "proveedor",  "estado", "constrEstado", "constrCiudad" })
+	@NotifyChange({ "usuario", "cliente", "estado", "constrEstado", "constrCiudad" })
 	public void limpiar() {
 		this.cliente = new Cliente();
 		this.usuario = new Usuario(this.cliente, true);

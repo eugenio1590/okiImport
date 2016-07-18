@@ -94,7 +94,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculos(cliente, page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculos(vehiculoFiltro, page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
@@ -178,7 +178,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			Map<String, Object> parametros = new HashMap<String, Object>();
 
 			//parametros.put("recordMode", "NEW");
-			llamarFormulario("registrarVehiculo.zul", null);
+			llamarFormulario("usuario/formularioVehiculo.zul", null);
 		}
 		
 		/**

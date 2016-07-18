@@ -4,19 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
-import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
-
-import org.zkoss.zk.ui.event.EventListener;
-import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
@@ -24,28 +21,21 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
-import org.zkoss.zul.Listbox;
-import org.zkoss.zul.Listheader;
-import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Estado;
-import com.okiimport.app.model.MarcaVehiculo;
 import com.okiimport.app.model.Motor;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.Usuario;
+import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.mvvm.carga_masiva.PDDetalleRequerimientoEstrategy;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
 import com.okiimport.app.service.transaccion.STransaccion;
-import com.okiimport.app.mvvm.constraint.GeneralConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint;
-import com.okiimport.app.mvvm.constraint.CustomConstraint.EConstraint;
-import com.okiimport.app.mvvm.constraint.RegExpressionConstraint.RegExpression;
-import com.okiimport.app.mvvm.constraint.CustomConstraint;
 
-public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel implements EventListener<SortEvent> {
+public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewModel {
 
 	//Servicios
 	@BeanInjector("sTransaccion")
@@ -63,32 +53,19 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@Wire("#comboTipoPersona")
 	private Combobox comboTipoPersona;
 	
-	@Wire("#gridMotores")
-	private Listbox gridMotores;
-	
-	@Wire("#pagMotores")
-	private Paging pagMotores;
-	
 	@Wire("#msgCorreo")
 	private Label lblMsgCorreo;
 
 	//Atributos
 	private List<DetalleRequerimiento> eliminarDetalle;
-	private List<MarcaVehiculo> listaMarcasVehiculo;
-	private List<Motor> listaMotor;
-	private List<Estado> listaEstados;
 	
-	private List<ModeloCombo<Boolean>> listaTraccion;
-	private List<ModeloCombo<Boolean>> listaTransmision;
-	private List<ModeloCombo<Boolean>> listaTipoPersona;
+	private List<Vehiculo> vehiculos;
 	private List<ModeloCombo<Boolean>> listaTipoRepuesto;
-	private ModeloCombo<Boolean> traccion;
-	private ModeloCombo<Boolean> transmision;
-	private ModeloCombo<Boolean> tipoPersona;
 	private ModeloCombo<Boolean> tipoRepuesto;
 	private Requerimiento requerimiento;
 	private Cliente cliente;
 	private Motor motor;
+	private Vehiculo vehiculo;
 	protected static final String BaseURL = "/WEB-INF/views/portal/";
 
 	/**
@@ -100,44 +77,17 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
+		UserDetails user = this.getUser();
+		Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
+		cliente = (Cliente) usuario.getPersona();
+		
 		limpiar();
-		agregarGridSort(gridMotores);
-		pagMotores.setPageSize(pageSize=3);
-		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.consultarMarcas(0, -1).get("marcas");
-		listaEstados = llenarListaEstados();
-		listaTraccion = llenarListaTraccion();
-		listaTransmision = llenarListaTransmision();
-		listaTipoPersona = llenarListaTipoPersona();
-		tipoPersona = listaTipoPersona.get(1);
+		//tipoPersona = listaTipoPersona.get(1);
 		listaTipoRepuesto = llenarListaTipoRepuesto();
-		cambiarMotores(0, null, null);
-	}
-	
-	/**Interface: EventListener<SortEvent>*/
-	@Override
-	public void onEvent(SortEvent event) throws Exception {
-		if(event.getTarget() instanceof Listheader){
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("fieldSort", ((Listheader) event.getTarget()).getValue().toString());
-			parametros.put("sortDirection", event.isAscending());
-			ejecutarGlobalCommand("cambiarMotores", parametros );
-		}
+		vehiculos = (List<Vehiculo>) sMaestros.consultarVehiculos(new Vehiculo(cliente), 0, -1).get("vehiculos");
 	}
 	
 	/**GLOBAL COMMAND*/
-	@GlobalCommand
-	@SuppressWarnings("unchecked")
-	@NotifyChange("listaMotor")
-	public void cambiarMotores(@Default("0") @BindingParam("page") int page, 
-			@BindingParam("fieldSort") String fieldSort, 
-			@BindingParam("sortDirection") Boolean sortDirection){
-		Map<String, Object> parametros = sMaestros.consultarMotores(motor, fieldSort, sortDirection, page, pageSize);
-		Integer total = (Integer) parametros.get("total");
-		listaMotor = (List<Motor>) parametros.get("motores");
-		pagMotores.setActivePage(page);
-		pagMotores.setTotalSize(total);
-	}
-	
 	@GlobalCommand
 	@NotifyChange("limpiarCamposReq")
 	public void limpiarCamposRequerimiento(){
@@ -162,23 +112,16 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	 * Nota: Ninguna
 	 * */
 	@Command
-	@NotifyChange({ "requerimiento", "cliente", "estado", "transmision", "traccion", "tipoRepuesto" })
+	@NotifyChange({ "requerimiento", "cliente", "tipoRepuesto" })
 	public void limpiar() {
 		try{
-			motor = new Motor();
 			requerimiento = new Requerimiento();
-			cliente = new Cliente();
 			requerimiento.setCliente(cliente);
-			this.estado=new Estado();
-			this.transmision=new ModeloCombo<Boolean>();
-			this.traccion=new ModeloCombo<Boolean>();
 			tipoRepuesto=new ModeloCombo<Boolean>();
 			super.cleanConstraintForm();
 		}catch(Exception e){
 			e.printStackTrace();
-			
 		}
-		
 	}
 
 	 /**
@@ -191,47 +134,41 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar) {
 		try{
-		if (checkIsFormValid()) {
-			if (requerimiento.getDetalleRequerimientos().size() > 0) {
-				btnEnviar.setDisabled(true);
-				btnLimpiar.setDisabled(true);
-				String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-				cliente.setCedula(tipo + cliente.getCedula());
-				cliente = sMaestros.registrarOActualizarCliente(cliente);
-				requerimiento.setCliente(cliente);
-				if (traccion != null)
-					requerimiento.setTraccionV(traccion.getValor());
-				if (transmision != null)
-					requerimiento.setTransmisionV(transmision.getValor());
-				if (tipoRepuesto != null)
-					requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
+			if (checkIsFormValid()) {
+				if (requerimiento.getDetalleRequerimientos().size() > 0) {
+					btnEnviar.setDisabled(true);
+					btnLimpiar.setDisabled(true);
 
-				sTransaccion.registrarRequerimiento(requerimiento, true, sMaestros);
+					requerimiento.setCliente(cliente);
+					requerimiento.setAnnoV(vehiculo.getAnno());
+					requerimiento.setModeloV(vehiculo.getModelo());
+					requerimiento.setMotor(vehiculo.getMotor());
+					requerimiento.setMarcaVehiculo(vehiculo.getMarcaVehiculo());
+					requerimiento.setTraccionV(vehiculo.getTraccion());
+					requerimiento.setTransmisionV(vehiculo.getTransmision());
+					
+					if (tipoRepuesto != null)
+						requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
 
-				// El Objecto que se envia debe declararse final, esto quiere
-				// decir que no puede instanciarse sino solo una vez
-				
-				mailCliente.registrarRequerimiento(requerimiento, mailService);
-				
-				Map<String, Object> parametros = new HashMap<String, Object>();
-				crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
-//				mostrarMensaje("Informaci\u00F3n",
-//						"El Requerimiento ha sido registrado exitosamente ",
-//						null, null, new EventListener() {
-//							public void onEvent(Event event) throws Exception {
-//								recargar();
-//							}
-//						}, null);
-				
-			} else
-				mostrarMensaje("Informaci\u00F3n",
-						"Agregue al Menos un Requerimiento", null, null, null,
-						null);
+					sTransaccion.registrarRequerimiento(requerimiento, true, sMaestros);
+
+					// El Objecto que se envia debe declararse final, esto quiere
+					// decir que no puede instanciarse sino solo una vez
+
+					mailCliente.registrarRequerimiento(requerimiento, mailService);
+
+					Map<String, Object> parametros = new HashMap<String, Object>();
+					crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+
+				} else
+					mostrarMensaje("Informaci\u00F3n",
+							"Agregue al Menos un Requerimiento", null, null, null,
+							null);
+			}
+
 		}
-		
-		}catch(Exception e){
+		catch(Exception e){
 			e.printStackTrace();
-			
 		}
 		
 	}
@@ -263,49 +200,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 				requerimiento.removeDetalleRequerimiento(detalle);
 		}
 
-	}
-
-	/**
-	 * Descripcion: Permite consultar si el cliente ya existe en la Base de datos
-	 * Parametros: @param view: formularioRequerimiento.zul  
-	 * Retorno: Ninguno
-	 * Nota: Ninguna
-	 * */
-	@Command
-	@NotifyChange({ "requerimiento", "cliente" })
-	public void buscarCliente() {
-		String tipo = (this.tipoPersona.getValor()) ? "J" : "V";
-		String cedula = cliente.getCedula();
-		String cedulaBuscar = tipo + cedula;
-		if (cedula != null && !cedula.equalsIgnoreCase("")) {
-			Cliente cliente = sMaestros.consultarCliente(new Cliente(
-					cedulaBuscar));
-			if (cliente != null) {
-				this.cliente = cliente;
-				this.cliente.setCedula(cedulaBuscar.substring(1,
-						cedulaBuscar.length()));
-				this.comboTipoPersona.setValue(cedulaBuscar.substring(0, 1));
-			} else
-				this.cliente = new Cliente(cedulaBuscar.substring(1,
-						cedulaBuscar.length()));
-			this.requerimiento.setCliente(this.cliente);
-		} else {
-			this.cliente.setCedula(null);
-			cedulaRif.getValue();
-		}
-	}
-	
-	@Command
-	@NotifyChange("listaMotor")
-	public void paginarListaMotores(){
-		int page=pagMotores.getActivePage();
-		cambiarMotores(page, null, null);
-	}
-	
-	@Command
-	@NotifyChange("listaMotor")
-	public void aplicarFiltroMotor(){
-		cambiarMotores(0, null, null);
 	}
 	
 	@Command
@@ -349,23 +243,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
-	@Command
-	public void verificarCorreo(){
-		Boolean respuesta=false;
-		this.lblMsgCorreo.setValue("El correo ya existe");
-		respuesta=this.sMaestros.consultarCorreoCliente(requerimiento.getCliente().getCorreo());
-		//llamada al metodo del validar 
-		if(respuesta){
-			System.out.println("el correo "+requerimiento.getCliente().getCorreo()+" ya existe.");
-			this.lblMsgCorreo.setVisible(true);
-			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
-		}else{
-			System.out.println("el correo es valido. No existe en la BD.");
-			this.lblMsgCorreo.setVisible(false);
-			//return new GeneralConstraint(EConstraint.NO_EMPTY);
-		}
-	}
-	
 	
 	/**GETTERS Y SETTERS*/
 	public Requerimiento getRequerimiento() {
@@ -384,60 +261,12 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		this.cliente = cliente;
 	}
 
-	public List<MarcaVehiculo> getListaMarcasVehiculo() {
-		return listaMarcasVehiculo;
-	}
-
-	public List<Motor> getListaMotor() {
-		return listaMotor;
-	}
-
-	public void setListaMarcasVehiculo(List<MarcaVehiculo> listaMarcasVehiculo) {
-		this.listaMarcasVehiculo = listaMarcasVehiculo;
-	}
-
-	public void setListaMotor(List<Motor> listaMotor) {
-		this.listaMotor = listaMotor;
-	}
-
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
 	}
 
 	public void setsTransaccion(STransaccion sTransaccion) {
 		this.sTransaccion = sTransaccion;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTraccion() {
-		return listaTraccion;
-	}
-
-	public void setListaTraccion(List<ModeloCombo<Boolean>> listaTraccion) {
-		this.listaTraccion = listaTraccion;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTransmision() {
-		return listaTransmision;
-	}
-
-	public void setListaTransmision(List<ModeloCombo<Boolean>> listaTransmision) {
-		this.listaTransmision = listaTransmision;
-	}
-
-	public ModeloCombo<Boolean> getTraccion() {
-		return traccion;
-	}
-
-	public void setTraccion(ModeloCombo<Boolean> traccion) {
-		this.traccion = traccion;
-	}
-
-	public ModeloCombo<Boolean> getTransmision() {
-		return transmision;
-	}
-
-	public void setTransmision(ModeloCombo<Boolean> transmision) {
-		this.transmision = transmision;
 	}
 
 	public void recargar() {
@@ -450,22 +279,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 	public void setEliminarDetalle(List<DetalleRequerimiento> eliminarDetalle) {
 		this.eliminarDetalle = eliminarDetalle;
-	}
-
-	public List<ModeloCombo<Boolean>> getListaTipoPersona() {
-		return listaTipoPersona;
-	}
-
-	public void setListaTipoPersona(List<ModeloCombo<Boolean>> listaTipoPersona) {
-		this.listaTipoPersona = listaTipoPersona;
-	}
-
-	public ModeloCombo<Boolean> getTipoPersona() {
-		return tipoPersona;
-	}
-
-	public void setTipoPersona(ModeloCombo<Boolean> tipoPersona) {
-		this.tipoPersona = tipoPersona;
 	}
 
 	public List<ModeloCombo<Boolean>> getListaTipoRepuesto() {
@@ -493,14 +306,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		this.estado = estado;
 	}
 
-	public List<Estado> getListaEstados() {
-		return listaEstados;
-	}
-
-	public void setListaEstados(List<Estado> listaEstados) {
-		this.listaEstados = listaEstados;
-	}
-
 	public MailCliente getMailCliente() {
 		return mailCliente;
 	}
@@ -515,6 +320,22 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 	public void setMotor(Motor motor) {
 		this.motor = motor;
+	}
+
+	public List<Vehiculo> getVehiculos() {
+		return vehiculos;
+	}
+
+	public void setVehiculos(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
+	}
+
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 	
 }

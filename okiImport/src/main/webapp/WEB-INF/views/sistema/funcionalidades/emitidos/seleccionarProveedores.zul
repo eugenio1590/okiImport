@@ -72,8 +72,6 @@
 					</n:div>
 					<n:div class="modal-footer">
 						<div sclass="panel-footer" align="right" hflex="1">
-							<button id="btnLimpiar" label="Limpiar"
-								onClick="@command('limpiar')" sclass="btn-sm btn-info" />
 							<button label="Enviar" type="submit"
 								onClick="@command('enviar', btnEnviar=self, btnLimpiar=btnLimpiar)" sclass="btn-sm btn-primary" />
 						</div>
