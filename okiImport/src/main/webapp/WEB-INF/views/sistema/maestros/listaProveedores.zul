@@ -66,7 +66,7 @@
 									onClick="@command('editarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
 								    <button  iconSclass="z-icon-trash-o red bigger-160" tooltiptext="Eliminar Proveedor"  
 								    onClick="@command('eliminarProveedor', proveedor = each)" if="${ !each.isEliminar() }" />
-								    <button iconSclass="fa fa-unlock-alt fa-2x"
+								    <button iconSclass="z-icon-fa fa-unlock-alt cyan fa-2x bigger-150"
 										tooltiptext="Activar Proveedor"
 										onClick="@command('actualizarEstatus', proveedor=each)"
 										if="${ each.isEliminar() }" />

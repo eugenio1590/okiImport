@@ -12,16 +12,13 @@ import org.zkoss.bind.annotation.ContextType;
 import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
-
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
-
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Analista;
 import com.okiimport.app.model.Ciudad;
 import com.okiimport.app.model.Estado;
-
 import com.okiimport.app.model.factory.persona.EstatusPersonaFactory;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.model.ModeloCombo;
@@ -46,6 +43,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	private List<Estado> listaEstados;
 	private String recordMode;
 	private Boolean cerrar;
+	private String valor=null;
 	private boolean makeAsReadOnly;
 	
 	/**
@@ -58,6 +56,7 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
 			@ExecutionArgParam("analista") Analista analista,
 			@ExecutionArgParam("recordMode") String recordMode,
+			@ExecutionArgParam("valor") String valor,
 			@ExecutionArgParam("cerrar") Boolean cerrar) {
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
@@ -66,9 +65,17 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 		this.cerrar = (cerrar==null) ? true : cerrar;
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ"))? true : false; 
 		//limpiar();
+		this.valor=valor;
 		
-		this.ciudad=this.analista.getCiudad();
-		this.estado=this.analista.getCiudad().getEstado();
+		System.out.println("ciudad esta en:"+this.analista.getCiudad());
+		if(this.analista.getCiudad()==null){
+			this.ciudad=new Ciudad();
+			this.estado=new Estado();
+		}else{
+			this.ciudad=this.analista.getCiudad();
+			this.estado=this.analista.getCiudad().getEstado();
+		}
+		
 		/*if(recordMode.equalsIgnoreCase("READ")){
 			this.ciudad=analista.getCiudad();
 		}*/
@@ -90,7 +97,8 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 	@NotifyChange({ "analista" })
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar,
-			@BindingParam("recordMode") String recordMode) {
+			@BindingParam("recordMode") String recordMode,
+			@BindingParam("edicion") String valor) {
 		if (checkIsFormValid()) {
 				
 				btnEnviar.setDisabled(true);
@@ -106,8 +114,11 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 				model.put("nombreSolicitante", analista.getNombre());
 				model.put("cedula", analista.getCedula());
 				
-				mostrarMensaje("Informaci\u00F3n", "Analista Registrado con Exito", null, null, null, null);
-				
+				this.valor=valor;
+				if(this.valor!=null)
+					mostrarMensaje("Informaci\u00F3n", "Analista Actualizado con Exito", null, null, null, null);
+				else mostrarMensaje("Informaci\u00F3n", "Analista Registrado con Exito", null, null, null, null);
+				this.setValor(null);
 				this.recargar();
 				
 			}	
@@ -229,6 +240,14 @@ public class RegistrarAnalistasViewModel extends AbstractRequerimientoViewModel 
 
 	public void setMakeAsReadOnly(boolean makeAsReadOnly) {
 		this.makeAsReadOnly = makeAsReadOnly;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 	
 	

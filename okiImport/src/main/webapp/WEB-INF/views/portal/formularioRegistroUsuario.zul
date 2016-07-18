@@ -155,7 +155,8 @@
 												selectedItem="@bind(vm.estado)"
 												model="@load(vm.listaEstados)"
 												constraint="@bind(vm.notEmptyValidator)"
-												onSelect="@command('buscarCiudades')">
+												onSelect="@command('buscarCiudades')"
+												onChange="@command('buscarCiudades')">
 												<template
 													name="model">
 													<comboitem
