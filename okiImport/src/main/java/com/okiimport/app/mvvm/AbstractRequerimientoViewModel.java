@@ -131,7 +131,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 					parametros);
 		}
 		else
-			mostrarMensaje("Error", "No es una imagen valida para mostrar", Messagebox.ERROR, null, null, null);
+			mostrarMensaje("Error", "No es una imagen válida para mostrar", Messagebox.ERROR, null, null, null);
 	}
 
 	/** METODOS SOBREESCRITOS */
@@ -197,7 +197,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
 				"Oficina Empresa Encomiendas", true));
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
-				"Direccion Particular", false));
+				"Dirección Particular", false));
 		return listaOficinaDireccion;
 	}
 
@@ -210,8 +210,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarListaTransmision() {
 		List<ModeloCombo<Boolean>> listaTransmision = new ArrayList<ModeloCombo<Boolean>>();
-		listaTransmision.add(new ModeloCombo<Boolean>("Automatico", true));
-		listaTransmision.add(new ModeloCombo<Boolean>("Sincronico", false));
+		listaTransmision.add(new ModeloCombo<Boolean>("Automático", true));
+		listaTransmision.add(new ModeloCombo<Boolean>("Sincrónico", false));
 		return listaTransmision;
 	}
 
@@ -287,7 +287,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio() {
 		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
 		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Marítimo", false));
 		return listaFormasEnvio;
 	}
 
@@ -312,7 +312,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.+@.+\\.[a-z]+/",
-				"Debe contener un correo valido.") };
+				"Debe contener una dirección de correo válida.") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 	}
@@ -335,7 +335,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getTelefonoValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.[0-9]+/",
-				"Debe Contener Un Numero Telefonico Valido Ej. 025141785289") };
+				"Debe Contener Un Número Telefónico Válido Ej. 025141785289") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 
@@ -348,7 +348,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public CustomConstraint getCantValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Un Numero Valido") };
+				"/.[0-9]+/", "Debe Contener Un Número Válido") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
@@ -359,14 +359,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
         
         RegExpression[] constrains = new RegExpression[] { new RegExpression(
 		"/.[0-9]+/",
-		"Introduzca RIF o Cedula solo Números sin guiones Ej.: 402405374") };
+		"Introduzca RIF o Cédula. Sólo Números, sin Guiones Ej.: 402405374") };
         return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
      }
 	
 	public CustomConstraint getValidatorPrecio() {
 		
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Valores Numericos Validos") };
+				"/.[0-9]+/", "Debe Contener Valores Numéricos Válidos") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO, EConstraint.CUSTOM);
 	}
