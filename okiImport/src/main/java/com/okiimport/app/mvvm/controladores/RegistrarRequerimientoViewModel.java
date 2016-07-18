@@ -84,7 +84,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		limpiar();
 		//tipoPersona = listaTipoPersona.get(1);
 		listaTipoRepuesto = llenarListaTipoRepuesto();
-		vehiculos = (List<Vehiculo>) sMaestros.consultarVehiculos(cliente, 0, -1).get("vehiculos");
+		vehiculos = (List<Vehiculo>) sMaestros.consultarVehiculos(new Vehiculo(cliente), 0, -1).get("vehiculos");
 	}
 	
 	/**GLOBAL COMMAND*/
