@@ -101,16 +101,16 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view) {
 		super.doAfterCompose(view);
 		limpiar();
-		agregarGridSort(gridMotores);
-		pagMotores.setPageSize(pageSize=3);
-		listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.consultarMarcas(0, -1).get("marcas");
-		listaEstados = llenarListaEstados();
-		listaTraccion = llenarListaTraccion();
-		listaTransmision = llenarListaTransmision();
-		listaTipoPersona = llenarListaTipoPersona();
-		tipoPersona = listaTipoPersona.get(1);
-		listaTipoRepuesto = llenarListaTipoRepuesto();
-		cambiarMotores(0, null, null);
+		//agregarGridSort(gridMotores);
+		//pagMotores.setPageSize(pageSize=3);
+		//listaMarcasVehiculo = (List<MarcaVehiculo>) sMaestros.consultarMarcas(0, -1).get("marcas");
+		//listaEstados = llenarListaEstados();
+		//listaTraccion = llenarListaTraccion();
+		//listaTransmision = llenarListaTransmision();
+		//listaTipoPersona = llenarListaTipoPersona();
+		//tipoPersona = listaTipoPersona.get(1);
+		//listaTipoRepuesto = llenarListaTipoRepuesto();
+		//cambiarMotores(0, null, null);
 	}
 	
 	/**Interface: EventListener<SortEvent>*/
