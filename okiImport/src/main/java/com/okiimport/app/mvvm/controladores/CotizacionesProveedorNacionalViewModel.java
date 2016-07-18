@@ -18,6 +18,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Bandbox;
 //
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
@@ -25,8 +26,16 @@ import org.zkoss.zul.Paging;
 //
 
 
+
+
+
+
+
 import com.okiimport.app.model.Cotizacion;
 import com.okiimport.app.model.DetalleCotizacion;
+import com.okiimport.app.model.DetalleCotizacionInternacional;
+import com.okiimport.app.model.HistoricoMoneda;
+import com.okiimport.app.model.Moneda;
 //
 import com.okiimport.app.model.Persona;
 import com.okiimport.app.model.Requerimiento;
@@ -50,6 +59,12 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Wire("#pagCotizaciones")
 	private Paging pagCotizaciones;
 	
+	@Wire("#bandbMoneda")
+	private Bandbox bandbMoneda;
+	
+	@Wire("#pagMonedas")
+	private Paging pagMonedas;
+	
 	
 
 	//Atributos
@@ -61,6 +76,9 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	private Requerimiento requerimiento;
 	private Cotizacion cotizacionFiltro;
 	private Cotizacion cotizacionSelecionada=null;
+	/*private List<Moneda> monedas;
+	private Moneda monedaSeleccionada;
+	private List<DetalleCotizacion> listaDetalleCotizacion;*/
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -123,6 +141,54 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 		pagCotizaciones.setActivePage(page);
 		pagCotizaciones.setTotalSize(total);
 	}
+	
+	/**
+	 * Descripcion: Carga la lista de monedas de acuerdo a la pagina dada como parametro
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * @param page: pagina a consultar, si no se indica sera 0 por defecto
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	/*@SuppressWarnings("unchecked")
+	@NotifyChange("monedas")
+	private void cambiarMonedas(@Default("0") @BindingParam("page") int page){
+		Map<String, Object> parametros = this.sControlConfiguracion.consultarMonedasConHistorico(page, pageSize);
+		Integer total = (Integer) parametros.get("total");
+		monedas = (List<Moneda>) parametros.get("monedas");
+		pagMonedas.setActivePage(page);
+		pagMonedas.setTotalSize(total);
+		pagMonedas.setPageSize(pageSize);
+	}*/
+	
+	/**
+	 * Descripcion: Asigna el historial mas actual de la moneda seleccionada
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	/*@Command
+	@NotifyChange({"cotizacionSelecionada", "listaDetalleCotizacion"})
+	public void seleccionMoneda(){
+		bandbMoneda.close();
+		if(this.cotizacionSelecionada!=null){
+			HistoricoMoneda historico = this.sControlConfiguracion.consultarActualConversion(monedaSeleccionada);
+			this.cotizacionSelecionada.setHistoricoMoneda(historico);
+			
+			actualizarListaDetalleCotizacion();
+		}
+	}*/
+	
+	/**
+	 * Descripcion: Actualiza la lista de detalles de cotizacion calculando su precio de flete
+	 * Parametros: @param view: cotizarProveedorInternacional.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	/*@NotifyChange({"listaDetalleCotizacion", "cotizacionSelecionada"})
+	private void actualizarListaDetalleCotizacion(){
+		for(DetalleCotizacionInternacional detalle : this.listaDetalleCotizacion)
+			calcularTotalFlete(detalle);
+	}*/
 	
 	/**COMMAND*/
 	/**
@@ -247,4 +313,23 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void setConstraintPrecioFlete(CustomConstraint constraintPrecioFlete) {
 		this.constraintPrecioFlete = constraintPrecioFlete;
 	}
+
+	/*public List<Moneda> getMonedas() {
+		return monedas;
+	}
+
+	public void setMonedas(List<Moneda> monedas) {
+		this.monedas = monedas;
+	}
+
+	public Moneda getMonedaSeleccionada() {
+		return monedaSeleccionada;
+	}
+
+	public void setMonedaSeleccionada(Moneda monedaSeleccionada) {
+		this.monedaSeleccionada = monedaSeleccionada;
+	}*/
+	
+	
+	
 }

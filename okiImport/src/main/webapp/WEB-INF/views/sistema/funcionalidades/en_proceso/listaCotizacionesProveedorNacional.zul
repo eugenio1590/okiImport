@@ -101,9 +101,6 @@
 								</div>
 								
 							</west>
-<<<<<<< HEAD
-							
-=======
 							<east id="eastCotizacion" width="65%" title="Cotizacion">
 								<div>
 									<groupbox closable="false">
@@ -129,7 +126,7 @@
 													</vbox>
 
 													<vbox>
-														<bandbox
+														<!--<bandbox
 															id="bandbMoneda" mold="rounded" autodrop="true"
 															width="80%" readonly="true" buttonVisible="false"
 															constraint="@bind(vm.notEmptyValidator)"
@@ -152,7 +149,7 @@
 																<paging id="pagMonedas" autohide="true"
 																	onPaging="@command('paginarListaMonedas')" />
 															</bandpopup>
-														</bandbox>
+														</bandbox>-->
 													</vbox>
 													<vbox hflex="1">
 														<textbox id="txtCondicion" rows="2" hflex="1"
@@ -169,7 +166,7 @@
 											<div align="left">
 												<include src="/WEB-INF/views/template/fieldMandatory.zul" 
 														field="Tipo de Flete:" style="display: inline-block;"/>
-												<combobox id="cmbFlete" width="225px"
+											<!--	<combobox id="cmbFlete" width="225px"
 													buttonVisible="false" readonly="true" 
 													model="@load(vm.tiposFlete)"
 													selectedItem="@bind(vm.tipoFlete)"
@@ -177,7 +174,7 @@
 													<template name="model">
 														<comboitem label="@bind(each.nombre)" />
 													</template>
-												</combobox>
+												</combobox> -->
 												<textbox rows="2" width="56%" readonly="true"
 													sclass="no_rezise notas" style="font-size: 13px;"
 													value="(**) El precio del flete por repuesto tendra las mismas unidades de moneda que el precio de venta." />
@@ -299,7 +296,6 @@
 									</panel>
 								</div>
 							</east>
->>>>>>> refs/heads/requerimiento
 						</borderlayout>
 					</n:div>
 					<n:div class="modal-footer">
