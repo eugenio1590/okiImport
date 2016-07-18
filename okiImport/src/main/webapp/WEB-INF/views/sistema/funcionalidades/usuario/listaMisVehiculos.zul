@@ -14,13 +14,13 @@
 				</hbox>
 				<listbox id="gridMisVehiculos" emptyMessage="No hay solicitudes" sclass="mylist"
 					onAfterRender="@command('updatePaging', paging = pagMisVehiculos, label=lblMisVehiculos)"
-					model="@load(vm.listaVehiculos)">
+					model="@load(vm.vehiculos)">
 					<auxhead>
 						<auxheader/>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
-								value="@bind(vm.vehiculoFiltro.marca)"
+								value="@bind(vm.vehiculoFiltro.marcaVehiculo.nombre)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
 						<auxheader>
