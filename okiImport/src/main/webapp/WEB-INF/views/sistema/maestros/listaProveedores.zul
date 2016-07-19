@@ -20,8 +20,8 @@
 				<auxheader>
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
-						width="150px" value="@bind(vm.proveedorFiltro.id)" instant="true"
-						placeholder="Buscar por Código"
+						width="150px" value="@bind(vm.proveedorFiltro.id)" hflex="1" instant="true"
+						placeholder="Buscar por Codigo"
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">
