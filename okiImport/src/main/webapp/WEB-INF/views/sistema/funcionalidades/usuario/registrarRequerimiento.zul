@@ -113,7 +113,7 @@
 												<fileupload
 													iconSclass="fa fa-upload"
 													tooltiptext="Agregar desde Archivo" sclass="btn-info"
-													onUpload="@command('cargarArchivoRepuesto')" />
+													onClick="@command('cargarArchivoRepuesto')" />
 												<div align="right"
 													hflex="1">
 													<button

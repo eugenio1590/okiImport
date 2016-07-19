@@ -14,11 +14,13 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 
@@ -204,8 +206,17 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	
 	@Command
 	@NotifyChange("requerimiento")
-	public void cargarArchivoRepuesto(@ContextParam(ContextType.TRIGGER_EVENT) UploadEvent event){
-		super.onUpload(new PDDetalleRequerimientoEstrategy(), event, "requerimiento");
+	public void cargarArchivoRepuesto(){
+		Fileupload.setTemplate("/WEB-INF/views/sistema/configuracion/fileupload.zul");
+		Fileupload.get(new EventListener<UploadEvent>(){
+
+			@Override
+			public void onEvent(UploadEvent event) throws Exception {
+				onUpload(new PDDetalleRequerimientoEstrategy(), event, "requerimiento");
+				notifyChange("*");
+			}
+		});
+		
 	}
 	
 	@Command
