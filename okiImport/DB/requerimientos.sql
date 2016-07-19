@@ -1852,7 +1852,6 @@ INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad,
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (17, NULL, NULL, NULL, 'z-icon-cog', 'Configuracion', NULL, 1, NULL);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (18, NULL, NULL, NULL, 'z-icon-lock', 'Seguridad', NULL, 1, 17);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (19, NULL, NULL, NULL, NULL, 'Usuarios', '/WEB-INF/views/sistema/seguridad/configuracion/usuarios/listaUsuarios.zul', 1, 18);
-INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (200, NULL, NULL, NULL, NULL, 'Mis Requerimientos', '/WEB-INF/views/sistema/funcionalidades/usuario/listaMisRequerimientos.zul', 4, NULL);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (201, NULL, NULL, NULL, 'z-icon-bold', 'Datos Basicos', NULL, 4, NULL);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (202, NULL, NULL, NULL, NULL, 'Vehiculo', '/WEB-INF/views/sistema/funcionalidades/usuario/listaMisVehiculos.zul', 4, 201);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (300, NULL, NULL, NULL, 'z-icon-book', 'Mis Requerimientos', NULL, 2, NULL);
@@ -1864,6 +1863,8 @@ INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad,
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (20, NULL, NULL, NULL, NULL, 'Proveedor', '/WEB-INF/views/sistema/maestros/listaProveedores.zul', 1, 15);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (21, NULL, NULL, NULL, NULL, 'Analista', '/WEB-INF/views/sistema/maestros/listaAnalistas.zul', 1, 15);
 INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (22, NULL, NULL, NULL, NULL, 'Marcas de Vehiculo', '/WEB-INF/views/sistema/maestros/listaMarcas.zul', 1, 15);
+INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (200, NULL, NULL, NULL, 'z-icon-book', 'Mis Requerimientos', '/WEB-INF/views/sistema/funcionalidades/usuario/listaMisRequerimientos.zul', 4, NULL);
+INSERT INTO menu (id_menu, fecha_creacion, fecha_ultima_modificacion, actividad, icono, nombre, ruta, tipo, id_padre) VALUES (203, NULL, NULL, NULL, 'z-icon-user', 'Perfil', '/WEB-INF/views/sistema/configuracion/editarPerfil.zul', 4, NULL);
 
 
 --
@@ -2073,8 +2074,8 @@ SELECT pg_catalog.setval('requerimiento_id_seq', 1, false);
 --
 
 INSERT INTO usuario (id, fecha_creacion, fecha_ultima_modificacion, activo, foto, pasword, username, persona_id) VALUES (1, NULL, NULL, true, NULL, '123', 'admin', 1);
-INSERT INTO usuario (id, fecha_creacion, fecha_ultima_modificacion, activo, foto, pasword, username, persona_id) VALUES (2, '2016-07-18 00:05:30.216', NULL, true, NULL, 'MnWuACLwKo', 'maria@gmail.com', 2);
-INSERT INTO usuario (id, fecha_creacion, fecha_ultima_modificacion, activo, foto, pasword, username, persona_id) VALUES (5, '2016-07-18 00:05:30.216', NULL, true, NULL, '123', 'eugeniohernandez17@g', 4);
+INSERT INTO usuario (id, fecha_creacion, fecha_ultima_modificacion, activo, foto, pasword, username, persona_id) VALUES (2, '2016-07-18 00:05:30.216', NULL, true, NULL, '123', 'maria@gmail.com', 2);
+INSERT INTO usuario (id, fecha_creacion, fecha_ultima_modificacion, activo, foto, pasword, username, persona_id) VALUES (5, '2016-07-18 00:05:30.216', NULL, true, NULL, '123', 'eugeniohernandez17@gmail.com', 4);
 
 
 --

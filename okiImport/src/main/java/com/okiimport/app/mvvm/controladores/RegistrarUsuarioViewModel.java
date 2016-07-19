@@ -186,6 +186,7 @@ public class RegistrarUsuarioViewModel extends AbstractRequerimientoViewModel {
 		if (checkIsFormValid()) {
 			cliente.setCedula(getCedulaComleta());
 			cliente.setEstatus(EstatusCliente.getEstatusActivo().getValue());
+			usuario.setUsername(cliente.getCorreo());
 			this.sControlUsuario.grabarUsuario(usuario, sMaestros);
 			this.redireccionar("/inicioSession");
 		}
