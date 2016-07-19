@@ -89,8 +89,7 @@
 										<button
 											iconSclass="z-icon-eye blue bigger-160"
 											tooltiptext="Ver Requerimiento"
-											onClick="@command('verRequerimiento', requerimiento = each)"
-											if="${ !each.editar() }" />
+											onClick="@command('verRequerimiento', requerimiento = each)" />
 										<button
 											iconSclass="z-icon-file blue bigger-160" tooltiptext="Ver Oferta" 
 											if="${ each.verOfertas() }"
