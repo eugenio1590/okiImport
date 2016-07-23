@@ -109,6 +109,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	private String recordMode;
 	protected Proveedor proveedor;
 	private String valor=null;
+	private Boolean validacionCorreo=false;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -174,6 +175,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	public void limpiar() {
 		proveedor = new Proveedor();
 		limpiarEstadoYCiudad();
+		this.lblMsgCorreo.setVisible(false);
+		this.validacionCorreo=false;
 	}
 	
 	 /**
@@ -479,17 +482,18 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	
 	@Command
 	public void verificarCorreo(){
-		Boolean respuesta=false;
+		
 		this.lblMsgCorreo.setValue("El correo ya existe");
-		respuesta=this.sMaestros.consultarCorreoProveedor(proveedor.getCorreo());
+		this.validacionCorreo=this.sMaestros.consultarCorreoProveedor(proveedor.getCorreo());
 		//llamada al metodo del validar 
-		if(respuesta){
+		if(this.validacionCorreo){
 			System.out.println("el correo "+proveedor.getCorreo()+" ya existe.");
 			this.lblMsgCorreo.setVisible(true);
 			//return new GeneralConstraint(EConstraint.EMAIL_INVALID);
 		}else{
 			System.out.println("el correo es valido. No existe en la BD.");
 			this.lblMsgCorreo.setVisible(false);
+			this.validacionCorreo=false;
 			//return new GeneralConstraint(EConstraint.NO_EMPTY);
 		}
 	}
@@ -675,6 +679,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+
+	public Boolean getValidacionCorreo() {
+		return validacionCorreo;
+	}
+
+	public void setValidacionCorreo(Boolean validacionCorreo) {
+		this.validacionCorreo = validacionCorreo;
 	}
 	
 }

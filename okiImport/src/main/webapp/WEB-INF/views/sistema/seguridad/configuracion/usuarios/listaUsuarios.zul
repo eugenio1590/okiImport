@@ -18,13 +18,12 @@
 					<div sclass="z-icon-filter bigger-200" />
 					<spinner constraint="no negative, no zero"
 						width="150px" value="@bind(vm.usuarioFiltro.id)" instant="true"
-						placeholder="Buscar por Código"
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">
 					<div sclass="z-icon-filter bigger-200" />
 					<textbox value="@bind(vm.usuarioFiltro.username)"
-						instant="true" placeholder="Buscar por Username"
+						instant="true"
 						onChange="@command('aplicarFiltro')" />
 				</auxheader>
 				<auxheader colspan="1">

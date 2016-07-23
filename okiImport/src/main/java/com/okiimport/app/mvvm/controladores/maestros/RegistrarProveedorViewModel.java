@@ -22,7 +22,7 @@ public class RegistrarProveedorViewModel extends com.okiimport.app.mvvm.controla
 			@BindingParam("recordMode") String recordMode) {
 		
 		
-		if (checkIsFormValid()) {
+		if (checkIsFormValid() && !this.getValidacionCorreo()) {
 			//esto para que permita actualizar el registro del proveedor
 			System.out.println("valor es: "+this.getValor());
 					if(this.getValor()!=null && this.getValor().equals("editar")){
