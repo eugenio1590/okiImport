@@ -23,15 +23,13 @@ import org.zkoss.zul.Bandbox;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox.ClickEvent;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.Messagebox.ClickEvent;
 
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.MarcaVehiculo;
-import com.okiimport.app.model.Moneda;
 import com.okiimport.app.model.Motor;
-import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.model.enumerados.EEstatusGeneral;
@@ -131,14 +129,6 @@ public class RegistrarVehiculoViewModel extends AbstractRequerimientoViewModel
 				if(transmision!=null)
 					vehiculo.setTransmision(transmision.getValor());
 				vehiculo.setEstatus(EEstatusGeneral.ACTIVO);
-				/*
-				 * requerimiento.setAnnoV(vehiculo.getAnno());
-				 * requerimiento.setModeloV(vehiculo.getModelo());
-				 * requerimiento.setMotor(vehiculo.getMotor());
-				 * requerimiento.setMarcaVehiculo(vehiculo.getMarcaVehiculo());
-				 * requerimiento.setTraccionV(vehiculo.getTraccion());
-				 * requerimiento.setTransmisionV(vehiculo.getTransmision());
-				 */
 
 				sTransaccion.actualizarVehiculo(vehiculo);
 

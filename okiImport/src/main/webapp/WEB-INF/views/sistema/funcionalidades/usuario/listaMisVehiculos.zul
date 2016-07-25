@@ -1,5 +1,5 @@
 <zk xmlns:w="client" xmlns:n="native">
-	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList"
+	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList" id="winListaMisVehiculos"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.vehiculo.ListaMisVehiculosViewModel')">
 
 		<!-- LISTA DE MIS VEHICULOS-->
@@ -50,9 +50,9 @@
 					
 					<listhead>
 						<listheader width="2%"/>
-						<listheader value="marcaVehiculo" width="20%"
+						<listheader value="marcaVehiculo" width="26%"
 							label="Marca" sort="auto(marcaVehiculo)"/>
-						<listheader value="modelo" width="15%"
+						<listheader value="modelo" width="18%"
 							label="Modelo" sort="auto(modelo)"/>
 						<listheader value="anno" width="15%"
 							label="Año" sort="auto(anno)"/>
@@ -64,10 +64,10 @@
 					<template name="model">
 						<listitem>
 							<listcell label="${forEachStatus.index+1}" sclass="boxed-grey" />
-							<listcell label="@bind(each.marcaVehiculo)" />
+							<listcell label="@bind(each.marcaVehiculo.nombre)" />
 							<listcell label="@bind(each.modelo)" />
 							<listcell label="@bind(each.anno)"/>
-							<listcell label="@bind(each.motor)" />
+							<listcell label="@bind(each.motor.nombre)" />
 							<listcell>
 								<hbox spacing="20px">
 									<div class="btn-group btn-group-sm">

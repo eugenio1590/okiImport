@@ -21,7 +21,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Paging;
 
-
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;
@@ -64,7 +63,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			vehiculoFiltro = new Vehiculo();
 			pagMisVehiculos.setPageSize(pageSize);
 			agregarGridSort(gridMisVehiculos);
-			cambiarVehiculos(0, null, null);
+			//cambiarVehiculos(0, null, null);
 		}
 		
 		
@@ -89,17 +88,17 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
-		@GlobalCommand
+	/*	@GlobalCommand
 		@NotifyChange("vehiculos")
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculos(vehiculoFiltro, page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculosCliente(cliente.getId(), page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
 			pagMisVehiculos.setTotalSize(total);
-		}     
+		}     */ 
 		
 		/**
 		 * Descripcion: Llama a cerrar a vista
@@ -111,7 +110,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		@NotifyChange("*")
 		public void cerrarvista(){
 			
-			cambiarVehiculos(0, null, null);
+			//cambiarVehiculos(0, null, null);
 		}
 		
 		/**COMMAND*/
@@ -125,7 +124,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		@NotifyChange("*")
 		public void paginarLista(){
 			int page=pagMisVehiculos.getActivePage();
-			cambiarVehiculos(page, null, null);
+			//cambiarVehiculos(page, null, null);
 		}
 		
 	
