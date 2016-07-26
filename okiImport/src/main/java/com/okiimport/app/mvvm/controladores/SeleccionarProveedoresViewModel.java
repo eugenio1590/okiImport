@@ -235,7 +235,6 @@ public class SeleccionarProveedoresViewModel extends AbstractRequerimientoViewMo
 		agregarProveedoresSeleccionados();
 		if(!this.proveedoresSeleccionadosARegistrar.isEmpty()){
 			btnEnviar.setDisabled(true);
-			btnLimpiar.setDisabled(true);
 			
 			Cotizacion cotizacion = null;
 			List<DetalleCotizacion> detalleCotizacions = null;
