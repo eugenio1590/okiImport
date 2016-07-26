@@ -29,14 +29,12 @@
 											<div sclass="z-icon-filter bigger-200" />
 											<spinner instant="true" hflex="1"
 												value="@bind(vm.proveedorFiltro.cedula)"
-												placeholder="Buscar por RIF"
 												onChange="@command('aplicarFiltro')" />
 										</auxheader>
 										<auxheader>
 											<div sclass="z-icon-filter bigger-200" />
 											<textbox instant="true" hflex="1"
 												value="@bind(vm.proveedorFiltro.nombre)"
-												placeholder="Buscar por Nombre"
 												onChange="@command('aplicarFiltro')" />
 										</auxheader>
 										<auxheader colspan="1" />
