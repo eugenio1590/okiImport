@@ -12,7 +12,7 @@
 						<label id="lblMisVehiculos" sclass="rRmWwb-info" />
 					</div>
 				</hbox>
-				<listbox id="gridMisVehiculos" emptyMessage="No hay solicitudes" sclass="mylist"
+				<listbox id="gridMisVehiculos" emptyMessage="No hay vehiculos registrados" sclass="mylist"
 					onAfterRender="@command('updatePaging', paging = pagMisVehiculos, label=lblMisVehiculos)"
 					model="@load(vm.vehiculos)">
 					<auxhead>
@@ -25,8 +25,7 @@
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
-							<datebox instant="true" hflex="1"
-								format="@bind(vm.formatDate)"
+							<textbox instant="true" hflex="1"
 								value="@bind(vm.vehiculoFiltro.modelo)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
@@ -38,7 +37,7 @@
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
-							<spinner instant="true" hflex="1"
+							<textbox instant="true" hflex="1"
 								value="@bind(vm.vehiculoFiltro.motor)"
 								onChange="@command('aplicarFiltro')"  />
 						</auxheader>
@@ -51,13 +50,13 @@
 					<listhead>
 						<listheader width="2%"/>
 						<listheader value="marcaVehiculo" width="26%"
-							label="Marca" sort="auto(marcaVehiculo)"/>
-						<listheader value="modelo" width="18%"
+							label="Marca" sort="auto(marcaVehiculo.nombre)"/>
+						<listheader value="modelo" width="24%"
 							label="Modelo" sort="auto(modelo)"/>
 						<listheader value="anno" width="15%"
 							label="Año" sort="auto(anno)"/>
-							<listheader value="motor" width="20%"
-							label="Motor" sort="auto(motor)"/>
+							<listheader value="motor" width="15%"
+							label="Motor" sort="auto(motor.nombre)"/>
 						<listheader sort="none" label="Operaciones" />
 					</listhead>
 					

@@ -126,7 +126,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		/**COMMAND*/
 		/**
 		 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
-		 * Parametros: @param view: listaAnalistas.zul  
+		 * Parametros: @param view: listaMisVehiculos.zul  
 		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
@@ -155,7 +155,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 					window.detach();
 					window.setId(null);
 				}
-				window = this.crearModal(BasePackageSistemaFunc+"usuario/registrarVehiculo.zul", parametros);
+				window = this.crearModal(BasePackageSistemaFunc+"usuario/formularioVehiculo.zul", parametros);
 				window.setMaximizable(true);
 				window.doModal();
 				window.setId("doModal" + "" + idcount + "");
@@ -173,7 +173,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("vehiculo", vehiculo);
 				//parametros.put("editar", true);
-				llamarFormulario("registrarVehiculo.zul", parametros);
+				llamarFormulario("usuario/formularioVehiculo.zul", parametros);
 		}
 		
 		/**
@@ -192,7 +192,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		
 		/**
 		 * Descripcion: Metodo de la clase que permite llamar formularios 
-		 * Parametros: @param view: listaProveedores.zul 
+		 * Parametros: @param view: listaMisVehiculos.zul 
 		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
@@ -229,6 +229,19 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 				
 			}, null);
 		}
+		
+		/**
+		 * Descripcion: Permitira filtrar por los campos del analista
+		 * Parametros: @param view: listaMisVehiculos.zul    
+		 * Retorno: Ninguno
+		 * Nota: Ninguna
+		 * */
+		@Command
+		@NotifyChange("*")
+		public void aplicarFiltro(){
+			cambiarVehiculos(0, null, null);
+		}
+		
 
 		/**METODOS PROPIOS DE LA CLASE*/
 		
