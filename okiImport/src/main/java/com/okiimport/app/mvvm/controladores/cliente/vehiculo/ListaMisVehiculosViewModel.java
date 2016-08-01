@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -23,12 +24,15 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
+
 import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.model.enumerados.EEstatusGeneral;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 
 public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel implements EventListener<SortEvent>{
 
@@ -36,6 +40,8 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 	//Servicios
 		@BeanInjector("sMaestros")
 		private SMaestros sMaestros;
+		@BeanInjector("sTransaccion")
+		private STransaccion sTransaccion;
 		
 		//GUI
 		@Wire("#gridMisVehiculos")
@@ -61,6 +67,9 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		@AfterCompose
 		public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
 			super.doAfterCompose(view);
+			UserDetails user = this.getUser();
+			Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
+			cliente = (Cliente) usuario.getPersona();
 			vehiculoFiltro = new Vehiculo();
 			pagMisVehiculos.setPageSize(pageSize);
 			agregarGridSort(gridMisVehiculos);
@@ -94,7 +103,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculos(vehiculoFiltro, page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculosCliente(cliente.getId(), page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
@@ -117,7 +126,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		/**COMMAND*/
 		/**
 		 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
-		 * Parametros: @param view: listaAnalistas.zul  
+		 * Parametros: @param view: listaMisVehiculos.zul  
 		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
@@ -146,7 +155,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 					window.detach();
 					window.setId(null);
 				}
-				window = this.crearModal(BasePackageSistemaFunc+"usuario/registrarVehiculo.zul", parametros);
+				window = this.crearModal(BasePackageSistemaFunc+"usuario/formularioVehiculo.zul", parametros);
 				window.setMaximizable(true);
 				window.doModal();
 				window.setId("doModal" + "" + idcount + "");
@@ -164,7 +173,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("vehiculo", vehiculo);
 				//parametros.put("editar", true);
-				llamarFormulario("registrarVehiculo.zul", parametros);
+				llamarFormulario("usuario/formularioVehiculo.zul", parametros);
 		}
 		
 		/**
@@ -183,7 +192,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		
 		/**
 		 * Descripcion: Metodo de la clase que permite llamar formularios 
-		 * Parametros: @param view: listaProveedores.zul 
+		 * Parametros: @param view: listaMisVehiculos.zul 
 		 * Retorno: Ninguno
 		 * Nota: Ninguna
 		 * */
@@ -220,6 +229,19 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 				
 			}, null);
 		}
+		
+		/**
+		 * Descripcion: Permitira filtrar por los campos del analista
+		 * Parametros: @param view: listaMisVehiculos.zul    
+		 * Retorno: Ninguno
+		 * Nota: Ninguna
+		 * */
+		@Command
+		@NotifyChange("*")
+		public void aplicarFiltro(){
+			cambiarVehiculos(0, null, null);
+		}
+		
 
 		/**METODOS PROPIOS DE LA CLASE*/
 		

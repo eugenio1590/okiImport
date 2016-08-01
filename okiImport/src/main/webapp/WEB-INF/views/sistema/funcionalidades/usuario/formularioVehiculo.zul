@@ -2,7 +2,7 @@
 	<window id="winFormularioVehiculo" closable="true" width="0px"
 		height="0px" border="none" apply="org.zkoss.bind.BindComposer"
 		sclass="btn-primary"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarRequerimientoViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.vehiculo.RegistrarVehiculoViewModel')">
 
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">
@@ -34,7 +34,7 @@
 										<vbox hflex="1">
 											<combobox
 												placeholder="Seleccione..." readonly="true" hflex="1"
-												selectedItem="@bind(vm.requerimiento.marcaVehiculo)"
+												selectedItem="@bind(vm.vehiculo.marcaVehiculo)"
 												constraint="@bind(vm.notEmptyValidator)"
 												model="@load(vm.listaMarcasVehiculo)">
 												<template
@@ -52,7 +52,7 @@
 										<vbox>
 											<textbox id="modelo"
 												sclass="form-control" mold="rounded" placeholder="Ej Hilux"
-												value="@bind(vm.requerimiento.modeloV)"
+												value="@bind(vm.vehiculo.modelo)"
 												constraint="@bind(vm.notEmptyValidator)" />
 										</vbox>
 									</row>
@@ -65,7 +65,7 @@
 											<intbox
 												placeholder="Ej: 2015" sclass="form-control"
 												constraint="@bind(vm.getValidatorAnno(null, vm.yearDay))"
-												value="@bind(vm.requerimiento.annoV)" />
+												value="@bind(vm.vehiculo.anno)" />
 										</vbox>
 
 										<!-- SERIAL DE CARROCERIA -->
@@ -77,119 +77,84 @@
 											<textbox
 												id="serialCarroceria" sclass="form-control" mold="rounded"
 												maxlength="25" placeholder="Ej: xA245D25623"
-												value="@bind(vm.requerimiento.serialCarroceriaV)" />
+												value="@bind(vm.vehiculo.serialCarroceria)" />
 										</vbox>
 									</row>
+									<row>
+										<!-- MOTOR -->
+										<hbox>
+											<label value="Motor: "
+												sclass="form-label" />
+										</hbox>
+										<bandbox id="bdMotor"
+											mold="rounded" autodrop="true" readonly="true"
+											placeholder="Seleccione..." hflex="1"
+											value="@bind(vm.vehiculo.motor.nombre)">
+											<bandpopup>
+												<listbox
+													id="gridMotores" width="200px" mold="paging"
+													model="@load(vm.listaMotores)"
+													selectedItem="@bind(vm.vehiculo.motor)"
+													onSelect="bdMotor.close();">
+													<listhead>
+														<listheader
+															value="nombre" label="Nombre" sort="auto(nombre)">
+															<textbox
+																instant="true" placeholder=""
+																value="@bind(vm.motor.nombre)"
+																onChange="@command('aplicarFiltroMotor')" width="100px" />
+															<div
+																sclass="z-icon-filter bigger-200" />
+														</listheader>
+													</listhead>
+													<template
+														name="model">
+														<listitem
+															label="@bind(each.nombre)" />
+													</template>
+												</listbox>
+												<paging id="pagMotores"
+													onPaging="@command('paginarListaMotores')" autohide="true" />
+											</bandpopup>
+										</bandbox>
+
+										<!-- TRANSMISION -->
+										<hbox>
+											<label value="Transmision: "
+												sclass="form-label" />
+										</hbox>
+										<combobox
+											placeholder="Seleccione..." readonly="true" hflex="1"
+											selectedItem="@bind(vm.transmision)"
+											value="@bind(vm.transmision.nombre)"
+											model="@load(vm.listaTransmision)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)" />
+											</template>
+										</combobox>
+									</row>
+
+									<row>
+										<!-- TRACCION -->
+										<hbox>
+											<label value="Tracción: "
+												sclass="form-label" />
+										</hbox>
+										<combobox
+											placeholder="Seleccione..." readonly="true" hflex="1"
+											selectedItem="@bind(vm.traccion)"
+											value="@bind(vm.traccion.nombre)"
+											model="@load(vm.listaTraccion)">
+											<template name="model">
+												<comboitem
+													label="@bind(each.nombre)" />
+											</template>
+										</combobox>
+									</row>
+
 								</rows>
 							</grid>
-						</div>
-
-
-						<div sclass="col-lg-12 col-sm-0">
-							<div sclass="card">
-								<n:aside class="card-side pull-left">
-									<n:span class="card-heading">
-										<n:i class="fa fa-indent" />
-									</n:span>
-								</n:aside>
-								<div sclass="card-main">
-									<div sclass="card-inner">
-										<n:p class="card-heading">
-											Datos Adicionales
-										</n:p>
-										<grid>
-											<columns>
-												<column width="5%"
-													align="right" />
-												<column width="15%" />
-												<column width="10%"
-													align="right" />
-												<column width="15%" />
-											</columns>
-
-											<rows>
-												<row>
-													<!-- MOTOR -->
-													<hbox>
-														<label
-															value="Motor: " sclass="form-label" />
-													</hbox>
-													<bandbox
-														id="bdMotor" mold="rounded" autodrop="true"
-														readonly="true" placeholder="Seleccione..." hflex="1"
-														value="@bind(vm.requerimiento.motor.nombre)">
-														<bandpopup>
-															<listbox
-																id="gridMotores" width="200px" mold="paging"
-																model="@load(vm.listaMotor)"
-																selectedItem="@bind(vm.requerimiento.motor)"
-																onSelect="bdMotor.close();">
-																<listhead>
-																	<listheader
-																		value="nombre" label="Nombre" sort="auto(nombre)">
-																		<textbox
-																			instant="true" placeholder=""
-																			value="@bind(vm.motor.nombre)"
-																			onChange="@command('aplicarFiltroMotor')"
-																			width="100px" />
-																		<div
-																			sclass="z-icon-filter bigger-200" />
-																	</listheader>
-																</listhead>
-																<template
-																	name="model">
-																	<listitem
-																		label="@bind(each.nombre)" />
-																</template>
-															</listbox>
-															<paging
-																id="pagMotores"
-																onPaging="@command('paginarListaMotores')"
-																autohide="true" />
-														</bandpopup>
-													</bandbox>
-
-													<!-- TRANSMISION -->
-													<hbox>
-														<label
-															value="Transmision: " sclass="form-label" />
-													</hbox>
-													<combobox
-														placeholder="Seleccione..." readonly="true" hflex="1"
-														selectedItem="@bind(vm.transmision)"
-														value="@bind(vm.transmision.nombre)"
-														model="@load(vm.listaTransmision)">
-														<template
-															name="model">
-															<comboitem
-																label="@bind(each.nombre)" />
-														</template>
-													</combobox>
-												</row>
-
-												<row>
-													<!-- TRACCION -->
-													<hbox>
-														<label
-															value="Tracción: " sclass="form-label" />
-													</hbox>
-													<combobox
-														placeholder="Seleccione..." readonly="true" hflex="1"
-														selectedItem="@bind(vm.traccion)"
-														value="@bind(vm.traccion.nombre)"
-														model="@load(vm.listaTraccion)">
-														<template
-															name="model">
-															<comboitem
-																label="@bind(each.nombre)" />
-														</template>
-													</combobox>
-												</row>
-											</rows>
-										</grid>
-									</div>
-								</div>
-							</div>
 						</div>
 					</n:div>
 					<n:div class="modal-footer">
