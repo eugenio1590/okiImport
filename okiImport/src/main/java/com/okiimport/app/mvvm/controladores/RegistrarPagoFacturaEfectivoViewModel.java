@@ -1,8 +1,6 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
@@ -15,6 +13,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Decimalbox;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
@@ -32,7 +31,7 @@ import com.okiimport.app.service.web.SPago;
 public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimientoViewModel{
 	
 	//Servicios
-	@BeanInjector("SPago")
+	@BeanInjector("sPago")
 	private SPago sPago;
 		
 	@BeanInjector("sMaestros")
@@ -42,7 +41,7 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	@Wire("#winPagoFacturaEfect")
 	private Window winPagoFactura;	
 	@Wire
-	private Textbox txtMonto;
+	private Textbox decMonto;
 	@Wire
 	private Textbox txtTitular;
 	@Wire
@@ -83,8 +82,8 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 			if(validacionesParaGuardar() == true){
 				Boolean exito = sPago.registrarPagoEfectivo(llenarPago());
 				if(exito){
-				    sPago.registrarPagoEfectivo(llenarPago());
 					mostrarMensaje("Informaci\u00F3n", "�Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+					//limpiar();
 					this.winPagoFactura.onClose();
 				}
 				else 
@@ -96,17 +95,17 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	private PagoCliente llenarPago() {
 		PagoCliente pago = new PagoCliente();
 		pago.setFechaPago(new Date());
-		pago.setMonto(Float.valueOf((txtMonto.getValue())));
+		pago.setMonto((Float.valueOf((decMonto.getValue()))));
 		pago.setEstatus(EEstatusGeneral.ACTIVO.name());
 		pago.setDescripcion(txtObservaciones.getValue());
-		//pago.setFormaPago(formaPago);
+		//pago.setFormaPago(formaPago); CORREGIR
 		return pago;
 	}
 
 	public boolean validacionesParaGuardar(){
 		boolean guardar = false;
-		if(txtMonto.getValue() != "" && txtTitular.getValue() != ""){
-			if(Integer.parseInt(txtMonto.getValue()) > 0)
+		if(Float.valueOf(decMonto.getValue()) != 0 && txtTitular.getValue() != ""){
+			if(Float.valueOf(decMonto.getValue()) > 0)
 				guardar = true;
 			else
 				mostrarMensaje("Error", "¡El monto total a pagar debe ser mayor a cero!", null, null, null, null);
@@ -120,7 +119,7 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	public void limpiar(){
 		this.txtTitular.setValue("");
 		this.txtObservaciones.setValue("");
-		this.txtMonto.setValue("");
+		this.decMonto.setValue("");
 		super.cleanConstraintForm();
 	}
 	
@@ -173,7 +172,6 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	public void setConstraintMensaje(CustomConstraint constraintMensaje) {
 		this.constraintMensaje = constraintMensaje;
 	}
-	
 	
 
 }

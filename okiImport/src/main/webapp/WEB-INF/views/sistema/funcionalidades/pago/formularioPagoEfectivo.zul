@@ -43,8 +43,8 @@
 											</vbox>
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Monto total a pagar:" />	
 											<vbox>
-<!-- 												<doublebox id="doubMonto" width="100%" format="###,##0.00#" sclass="label-not-mandatory" /> -->
-													<textbox id="txtMonto" width ="92.7%" ></textbox>	
+													<textbox  id="decMonto" width="92.7%" ></textbox>
+<!-- 													<decimalbox id="decMonto" width="150.5%" format="#,##0.##" sclass="label-not-mandatory" ></decimalbox>	 -->
 											</vbox>	
 										</row>	
 										<row>
