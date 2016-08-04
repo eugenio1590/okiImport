@@ -139,7 +139,8 @@
 																placeholder="Ej. fusa@gmail.com"
 																readonly="@bind(vm.makeAsReadOnly)"
 																constraint="@bind(vm.emailValidator)"
-																onChange="@command('verificarCorreo')">
+																onChange="@command('verificarCorreo')"
+																onOK="@command('verificarCorreo')">
 															</textbox>
 															<label id="msgCorreoP" visible="false" sclass="requerido"/>
 														</vbox>
