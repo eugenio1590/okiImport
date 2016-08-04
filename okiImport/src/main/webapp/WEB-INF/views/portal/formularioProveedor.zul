@@ -15,7 +15,7 @@
        
 
 <zk xmlns:w="client" xmlns:n="native">
-
+		
 		<n:header class="navbar navbar-default navbar-fixed-top" style="height:15px">
 	<div align="left">
 	 <a class="navbar-brand" href="/">
@@ -33,7 +33,7 @@
 	<center sclass="hole" autoscroll="true">
 	<div align="center" height="100%">
 	<div width="80%">
-
+<window id="winProveedor"> 
 	<vlayout sclass="formulario" apply="org.zkoss.bind.BindComposer"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.RegistrarProveedorViewModel')">
 		<n:h3>Registrese Como Proveedor</n:h3>
@@ -348,6 +348,7 @@
 			</div>
 		</hbox>
 	</vlayout>
+	</window>
 	
 	</div>
 	</div>

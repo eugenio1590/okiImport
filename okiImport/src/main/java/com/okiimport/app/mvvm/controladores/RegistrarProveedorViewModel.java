@@ -414,12 +414,26 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 				new EventListener<Event>() {
 					public void onEvent(Event event) throws Exception {
 						winProveedor.onClose();
+						//recargar();
 						ejecutarGlobalCommand("consultarProveedores", null);
 					}
+
 				}, null);
 		
 		return proveedor;
 	}
+	
+	/**
+	 * Descripcion: Permite recargar la pantalla al cerrar
+	 * Parametros: @param view: formularioProveedor.zul 
+	 * Retorno: Ninguno
+	 * Nota: Ninguna
+	 * */
+	/*public void recargar() {
+		winProveedor.onClose();
+		//redireccionar("/");
+		//ejecutarGlobalCommand("cambiarProveedores", null);
+	}*/
 	
 	
 	

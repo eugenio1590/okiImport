@@ -242,7 +242,6 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			cambiarVehiculos(0, null, null);
 		}
 		
-
 		/**METODOS PROPIOS DE LA CLASE*/
 		
 		/**SETTERS Y GETTERS*/
@@ -306,6 +305,4 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			this.cliente = cliente;
 		}
 	
-		
-
 }

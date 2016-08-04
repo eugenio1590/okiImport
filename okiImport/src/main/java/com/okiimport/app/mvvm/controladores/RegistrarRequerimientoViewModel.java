@@ -349,4 +349,6 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		this.vehiculo = vehiculo;
 	}
 	
+	
+	
 }
