@@ -183,7 +183,7 @@
 																		readonly="true" buttonVisible="@bind(vm.editar)"
 																		selectedItem="@bind(vm.transmision)"
 																		model="@load(vm.listaTransmision)"
-																		value="@bind(vm.transmision.nombre)"
+																		
 																		 constraint="@bind(vm.notEmptyValidator)">
 																		<template name="model">
 																			<comboitem label="@bind(each.nombre)"/>
@@ -199,7 +199,7 @@
 																		readonly="true" buttonVisible="@bind(vm.editar)"
 																		selectedItem="@bind(vm.traccion)"
 																		model="@load(vm.listaTraccion)"
-																		value="@bind(vm.traccion.nombre)"
+																		
 																		 constraint="@bind(vm.notEmptyValidator)">
 																		<template name="model">
 																			<comboitem label="@bind(each.nombre)"/>

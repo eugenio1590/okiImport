@@ -99,6 +99,7 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	 * */
 	@AfterCompose
 	@SuppressWarnings("unchecked")
+	@NotifyChange({"requerimiento", "traccion", "transmision", "cmbTransmision", "cmbTraccion"})
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view, 
 			@ExecutionArgParam("requerimiento") Requerimiento requerimiento,
 			@ExecutionArgParam("estado") Estado estado,
@@ -106,16 +107,9 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	{
 		super.doAfterCompose(view);
 		this.editar = editar;
-		//prueba
-		requerimiento.setCliente(sMaestros.consultarCliente(requerimiento.getCliente()));
-		//prueba fin
 		this.requerimiento = requerimiento;
 		this.motor = new Motor();
 		
-		System.out.println("nombre del cliente: "+requerimiento.getCliente().getNombre()+" "+requerimiento.getCliente().getApellido());
-		System.out.println("cedula: "+requerimiento.getCliente().getCedula());
-		System.out.println("direccion "+requerimiento.getCliente().getDireccion());
-		System.out.println("ciudad "+requerimiento.getCliente().getCiudad().getNombre());
 		this.ciudad = requerimiento.getCliente().getCiudad();
 		this.estado = requerimiento.getCliente().getCiudad().getEstado();
 		
@@ -132,8 +126,6 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		
 		String transmision = this.requerimiento.determinarTransmision();
 		if (transmision!=null)
-			//prueba
-			//this.transmision.setNombre(transmision);
 			cmbTransmision.setValue(transmision);
 		
 		String traccion = this.requerimiento.determinarTraccion();
