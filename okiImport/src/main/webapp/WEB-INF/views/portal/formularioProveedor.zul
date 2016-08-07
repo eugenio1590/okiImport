@@ -134,7 +134,9 @@
 										model="@load(vm.listaPaises)" 
 										value="@bind(vm.proveedor.pais.nombre)"										
 										constraint="@bind(vm.notEmptyValidator)"
-										onChange="@command('actualizarLocalidad')">
+										onChange="@command('actualizarLocalidad')"
+										onSelect="@command('actualizarLocalidad')"
+										onBlur="@command('actualizarLocalidad')">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
 										</template>
@@ -152,6 +154,8 @@
 										visible="@bind(vm.proveedor.nacional)"
 										model="@load(vm.listaEstados)"
 										onSelect="@command('buscarCiudades')"
+										onChange="@command('buscarCiudades')"
+										onBlur="@command('buscarCiudades')"
 										constraint="@bind(vm.constrEstado)">
 										<template name="model">
 											<comboitem label="@bind(each.nombre)"/>
@@ -344,7 +348,7 @@
 				<button id="btnLimpiar" label="Limpiar" type="submit"
 					onClick="@command('limpiar')" sclass="btn btn-limpiar btn-xl" />
 				<button label="Enviar" type="submit" sclass="btn btn-primary btn-xl"
-					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar)"/>
+					onClick="@command('registrar',  btnEnviar=self, btnLimpiar=btnLimpiar, tipoReg='portal')"/>
 			</div>
 		</hbox>
 	</vlayout>

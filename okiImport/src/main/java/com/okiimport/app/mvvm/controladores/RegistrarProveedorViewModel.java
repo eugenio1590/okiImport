@@ -110,6 +110,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	protected Proveedor proveedor;
 	private String valor=null;
 	private Boolean validacionCorreo=false;
+	private String tipoRegistro=null;
 	
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -188,7 +189,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	@Command
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar,
-			@BindingParam("recordMode") String recordMode) {
+			@BindingParam("recordMode") String recordMode,
+			@BindingParam("tipoReg") String tipoR) {
 		
 		
 		if (checkIsFormValid()) {
@@ -196,7 +198,7 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 					if(!verificarExistencia()){
 						if (proveedor.getMarcaVehiculos().size() > 0
 								&& proveedor.getClasificacionRepuestos().size() > 0) {
-		
+							this.tipoRegistro=tipoR;
 							btnEnviar.setDisabled(true);
 							btnLimpiar.setDisabled(true);
 							registrarProveedor(true);
@@ -416,9 +418,17 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 		mostrarMensaje("Informacion", str, null, null,
 				new EventListener<Event>() {
 					public void onEvent(Event event) throws Exception {
-						winProveedor.onClose();
-						//recargar();
-						ejecutarGlobalCommand("consultarProveedores", null);
+						if(getTipoRegistro().equals("portal")){
+							winProveedor.onClose();
+							redireccionar("/");
+							//recargar();
+							ejecutarGlobalCommand("consultarProveedores", null);
+						}else{
+							winProveedor.onClose();
+							//recargar();
+							ejecutarGlobalCommand("consultarProveedores", null);
+						}
+						
 					}
 
 				}, null);
@@ -434,8 +444,8 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 	 * */
 	/*public void recargar() {
 		winProveedor.onClose();
-		//redireccionar("/");
-		//ejecutarGlobalCommand("cambiarProveedores", null);
+		redireccionar("/");
+		ejecutarGlobalCommand("cambiarProveedores", null);
 	}*/
 	
 	
@@ -701,6 +711,14 @@ public class RegistrarProveedorViewModel extends AbstractRequerimientoViewModel 
 
 	public void setValidacionCorreo(Boolean validacionCorreo) {
 		this.validacionCorreo = validacionCorreo;
+	}
+
+	public String getTipoRegistro() {
+		return tipoRegistro;
+	}
+
+	public void setTipoRegistro(String tipoRegistro) {
+		this.tipoRegistro = tipoRegistro;
 	}
 	
 }

@@ -106,10 +106,19 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 	{
 		super.doAfterCompose(view);
 		this.editar = editar;
+		//prueba
+		requerimiento.setCliente(sMaestros.consultarCliente(requerimiento.getCliente()));
+		//prueba fin
 		this.requerimiento = requerimiento;
 		this.motor = new Motor();
-		this.estado = requerimiento.getCliente().getCiudad().getEstado();
+		
+		System.out.println("nombre del cliente: "+requerimiento.getCliente().getNombre()+" "+requerimiento.getCliente().getApellido());
+		System.out.println("cedula: "+requerimiento.getCliente().getCedula());
+		System.out.println("direccion "+requerimiento.getCliente().getDireccion());
+		System.out.println("ciudad "+requerimiento.getCliente().getCiudad().getNombre());
 		this.ciudad = requerimiento.getCliente().getCiudad();
+		this.estado = requerimiento.getCliente().getCiudad().getEstado();
+		
 		
 		agregarGridSort(gridMotores);
 		pagMotores.setPageSize(pageSize=3);
@@ -123,6 +132,8 @@ public class EditarRequerimientoViewModel extends AbstractRequerimientoViewModel
 		
 		String transmision = this.requerimiento.determinarTransmision();
 		if (transmision!=null)
+			//prueba
+			//this.transmision.setNombre(transmision);
 			cmbTransmision.setValue(transmision);
 		
 		String traccion = this.requerimiento.determinarTraccion();

@@ -19,8 +19,10 @@ public class RegistrarProveedorViewModel extends com.okiimport.app.mvvm.controla
 	@Override
 	public void registrar(@BindingParam("btnEnviar") Button btnEnviar,
 			@BindingParam("btnLimpiar") Button btnLimpiar,
-			@BindingParam("recordMode") String recordMode) {
+			@BindingParam("recordMode") String recordMode,
+			@BindingParam("tipoReg") String tipoR) {
 		
+		setTipoRegistro(tipoR);
 		
 		if (checkIsFormValid() && !this.getValidacionCorreo()) {
 			//esto para que permita actualizar el registro del proveedor

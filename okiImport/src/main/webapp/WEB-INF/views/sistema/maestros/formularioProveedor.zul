@@ -419,7 +419,7 @@
 									sclass="btn-sm btn-info" />
 
 								<button label="Registrar" type="submit"
-									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar)"
+									onClick="@command('registrar', btnEnviar=self, btnLimpiar=btnLimpiar, tipoReg='interno')"
 									sclass="btn-sm btn-primary" />
 							</div>
 						</hbox>
