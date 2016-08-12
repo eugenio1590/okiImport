@@ -43,14 +43,18 @@
 											</vbox>
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Monto total a pagar:" />	
 											<vbox>
-													<textbox  id="decMonto" width="92.7%" ></textbox>
-<!-- 													<decimalbox id="decMonto" width="150.5%" format="#,##0.##" sclass="label-not-mandatory" ></decimalbox>	 -->
+												<decimalbox
+													format="@bind(vm.formatNumber)"
+													locale="@bind(vm.localeNumber)"
+													tooltiptext="Monto total a pagar"
+													value="@bind(vm.montoPagar)" width="153.5%"
+													constraint="@bind(vm.getValidatorCantPositiva())"/>
 											</vbox>	
 										</row>	
 										<row>
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Fecha de pago:" />	
 											<vbox>
-												<datebox  id="dateFechaPago" sclass="label-not-mandatory" format="dd/MM/yyyy" disabled="true" width="145%"></datebox>
+												<datebox  id="dateFechaPago" sclass="label-not-mandatory" format="dd/MM/yyyy" disabled="true" width="149.5%"></datebox>
 											</vbox>	
 											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Observacion:" />	
 											<vbox>

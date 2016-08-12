@@ -3,7 +3,7 @@
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.FormasPagoViewModel')">
 		<n:div aria-hidden="false" class="modal fade in" role="dialog" tabindex="-1" style="display: block;">
-			<div class="modal-dialog modal-full" height="auto"><!-- modal-xs -->
+			<div class="modal-dialog modal-full" height="auto">modal-xs
 				<div sclass="modal-content">
 					<include src="/WEB-INF/views/template/modal/titleModal.zul" titulo="Formas de pago" />
 					<n:div class="modal-inner" >
