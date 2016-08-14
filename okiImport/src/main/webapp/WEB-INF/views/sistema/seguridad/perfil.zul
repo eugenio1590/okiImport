@@ -1,7 +1,8 @@
 <zk>
 	<style src="/resources/css/menubar.css"/>
 	<menubar sclass="user-menu light-blue" apply="org.zkoss.bind.BindComposer"
-		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.PerfilViewModel')">
+		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.seguridad.PerfilViewModel')"
+		binder="@init(queueName='perfil',queueScope='application')">
 		<menuitem id="menInfoUsuario" tooltiptext="John's Avatar" label="Welcome, Jason" 
 			image="/resources/img/user.png" sclass="menubarCustom"/>
 		<menu label="">
@@ -12,6 +13,8 @@
 				<menuitem label="Logout" iconSclass="z-icon-off" onClick="@command('logout')" />
 			</menupopup>
 		</menu>
+		
+		<menuitem id="menCarrito" tooltiptext="Carrito de Compra" iconSclass="z-icon-fa fa-shopping-cart" sclass="menubarCustom menuCarrito" onClick="@command('mostrarCarrito')" />
 	</menubar>
 	<!-- 
 		<div class="shortcuts" align="left">

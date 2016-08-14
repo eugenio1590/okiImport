@@ -48,6 +48,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 	@BeanInjector("mailCliente")
 	private MailCliente mailCliente;
 	
+	
 	@BeanInjector("mailProveedor")
 	private MailProveedor mailProveedor;
 	

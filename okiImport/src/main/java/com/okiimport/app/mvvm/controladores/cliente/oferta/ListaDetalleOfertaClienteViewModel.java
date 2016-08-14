@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -16,6 +17,7 @@ import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.EventQueues;
 import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
@@ -57,7 +59,7 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 		private List<Oferta> listaOferta;
 		private List<DetalleOferta> listaDetalleOfertas;
 		private Requerimiento requerimiento;
-		private String titulo = "Ofertas del Requerimiento N° ";
+		private String titulo = "Ofertas del Requerimiento Nï¿½ ";
 
 		/**
 		 * Descripcion: Llama a inicializar la clase 
@@ -158,6 +160,7 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 				if(detalle.getCantidadSeleccionada()!=0 && detalle.getCantidadSeleccionada()<=detalle.getDetalleCotizacion().getCantidad()){
 						detalle.setEstatusFavorito(true);
 						sTransaccion.actualizarDetallesOferta(detalle);
+						refrescarCarrito();
 				}
 				else{
 					if(detalle.getCantidadSeleccionada()==0)
@@ -184,11 +187,16 @@ AbstractRequerimientoViewModel implements EventListener<SortEvent> {
 				detalle.setEstatusFavorito(false);
 				detalle.setCantidadSeleccionada((long) 0);
 				sTransaccion.actualizarDetallesOferta(detalle);
+				refrescarCarrito();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 			
 			
+		}
+		
+		private void refrescarCarrito(){
+		    BindUtils.postGlobalCommand("perfil", EventQueues.APPLICATION, "getSizeShoppingCar", null);
 		}
 		
 		@Command
