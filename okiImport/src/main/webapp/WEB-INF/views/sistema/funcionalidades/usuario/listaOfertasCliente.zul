@@ -3,7 +3,8 @@
 	<window id="winListaOfertas" border="none" width="0px" height="0px" title="@bind(vm.titulo)"
 		apply="org.zkoss.bind.BindComposer" closable="true"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.oferta.ListaDetalleOfertaClienteViewModel')"
-		onClose="@command('cambiarRequerimientos')">
+		onClose="@command('cambiarRequerimientos')"
+		binder="@init(queueName='listOfertas',queueScope='application')">
 		
 		<n:div aria-hidden="false" class="modal fade in" role="dialog"
 			tabindex="-1" style="display: block;">
@@ -78,7 +79,8 @@
 															<listcell
 																label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 															<listcell
-																label="@bind(each.calcularPrecioVentaUnit())"/>
+																label="@bind(each.calcularPrecioVentaUnit()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
 															<listcell
 																label="@bind(each.detalleCotizacion.cantidad)" />
 															<listcell>
@@ -89,7 +91,8 @@
 																</vbox>
 															</listcell>
 															<listcell
-																label="@bind(each.calcularPrecioVentaSinFlete())"/>
+																label="@bind(each.calcularPrecioVentaSinFlete()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
 															<listcell>
 																<hbox
 																	spacing="20px">

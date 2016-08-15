@@ -23,3 +23,25 @@
 	/*color:red;*/
 	background-color: #96c0da;
 }
+
+.menuCarrito li{
+	height: 50px;
+	width: 70px;
+	padding: 10px;
+	color:white;
+}
+
+.menuCarrito a{
+	height: 50px;
+	width: 70px;
+	padding: 10px 10px 5px 5px !important;
+	color:white;
+}
+
+.menuCarrito a i{
+	font-size:26px !important;
+}
+
+.menuCarrito a span{
+	margin: 3px;
+}
