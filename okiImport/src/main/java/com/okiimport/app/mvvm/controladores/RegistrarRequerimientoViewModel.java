@@ -23,6 +23,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Cliente;
 import com.okiimport.app.model.DetalleRequerimiento;
@@ -57,6 +58,10 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 	
 	@Wire("#msgCorreo")
 	private Label lblMsgCorreo;
+	
+	@Wire("#winERequerimiento")
+	private Window winERequerimiento;
+	
 
 	//Atributos
 	private List<DetalleRequerimiento> eliminarDetalle;
@@ -161,6 +166,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 					Map<String, Object> parametros = new HashMap<String, Object>();
 					crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+					winERequerimiento.onClose();
 
 				} else
 					mostrarMensaje("Informaci\u00F3n",
