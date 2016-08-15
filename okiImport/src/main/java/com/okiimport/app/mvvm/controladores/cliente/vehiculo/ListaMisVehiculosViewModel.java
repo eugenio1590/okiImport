@@ -26,6 +26,8 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Cliente;
+import com.okiimport.app.model.MarcaVehiculo;
+import com.okiimport.app.model.Motor;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.Vehiculo;
 import com.okiimport.app.model.enumerados.EEstatusGeneral;
@@ -71,6 +73,9 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			Usuario usuario = sControlUsuario.consultarUsuario(user.getUsername(), user.getPassword(), null);
 			cliente = (Cliente) usuario.getPersona();
 			vehiculoFiltro = new Vehiculo();
+			vehiculoFiltro.setMotor(new Motor());
+			vehiculoFiltro.setMarcaVehiculo(new MarcaVehiculo());
+			vehiculoFiltro.setCliente(cliente);
 			pagMisVehiculos.setPageSize(pageSize);
 			agregarGridSort(gridMisVehiculos);
 			cambiarVehiculos(0, null, null);
@@ -103,7 +108,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		public void cambiarVehiculos(@Default("0") @BindingParam("page") int page, 
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
-			Map<String, Object> parametros = sMaestros.consultarVehiculosCliente(cliente.getId(), page, pageSize);
+			Map<String, Object> parametros = sMaestros.consultarVehiculosPorCliente(vehiculoFiltro, page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			vehiculos = (List<Vehiculo>) parametros.get("vehiculos");
 			pagMisVehiculos.setActivePage(page);
@@ -210,7 +215,7 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 		 * */
 		@Command
 		public void eliminarVehiculo(@BindingParam("vehiculo") final Vehiculo vehiculo){
-			super.mostrarMensaje("Confirmacion", "¿Desea Eliminar el Vehiculo?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
+			super.mostrarMensaje("Confirmacion", "ï¿½Desea Eliminar el Vehiculo?", Messagebox.EXCLAMATION, new Messagebox.Button[]{Messagebox.Button.YES,Messagebox.Button.NO}, 
 					new EventListener(){
 
 						@Override

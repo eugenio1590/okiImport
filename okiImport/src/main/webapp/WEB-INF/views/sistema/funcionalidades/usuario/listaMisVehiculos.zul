@@ -38,7 +38,7 @@
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
-								value="@bind(vm.vehiculoFiltro.motor)"
+								value="@bind(vm.vehiculoFiltro.motor.nombre)"
 								onChange="@command('aplicarFiltro')"  />
 						</auxheader>
 						<auxheader width="20%">
