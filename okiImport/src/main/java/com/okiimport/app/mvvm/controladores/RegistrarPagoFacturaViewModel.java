@@ -26,12 +26,14 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import com.braintreegateway.BraintreeGateway;
+import com.okiimport.app.model.FormaPago;
 import com.okiimport.app.model.Pago;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.constraint.braintree.CVVConstraint;
 import com.okiimport.app.mvvm.model.ModeloCombo;
 import com.okiimport.app.mvvm.resource.BeanInjector;
+import com.okiimport.app.service.maestros.SMaestros;
 import com.okiimport.app.service.transaccion.STransaccion;
 
 public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewModel{
@@ -39,6 +41,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	//Servicios
 	@BeanInjector("sTransaccion")
 	private STransaccion sTransaccion;
+	
+	@BeanInjector("sMaestros")
+	private SMaestros sMaestros;
 
 	@BeanInjector("gateway")
 	private BraintreeGateway gateway;
@@ -46,8 +51,6 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	//GUI
 	@Wire("#winPagoFactura")
 	private Window winPagoFactura;	
-//	@Wire
-//	private Textbox txtemail;
 	@Wire
 	private Textbox txtTarjeta;
 	@Wire
@@ -60,14 +63,19 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	private Textbox txtTitular;
 	@Wire
 	private Combobox cmbTipoTarjeta;
-//	@Wire
-//	private Textbox txtNroDoc;
+	@Wire
+	private Combobox cmbFormaPago;
+	
 
 	//Atributos
 	private List<ModeloCombo<Boolean>> listaTipoDocumentos;
 	private List<ModeloCombo<Boolean>> listaTipoTarjeta;
+	private List<ModeloCombo<Boolean>> listaFormaPagoAux;
+	private List<FormaPago> listaFormaPago;
 	private ModeloCombo<Boolean> tipoDocumento;
 	private ModeloCombo<Boolean> tipoTarjeta;
+	private ModeloCombo<Boolean> formaPago;
+	
 	
 	private CustomConstraint constraintCampoObligatorio;
 	
@@ -89,12 +97,11 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 			@ExecutionArgParam("pago")  Pago pago){
 		super.doAfterCompose(view);
 		this.pago = pago;
-		//llenarTiposDocumento();	
 		llenarTiposTarjetas();
+		llenarFormaPago();
 
 		//Braintree
 		String clientToken = gateway.clientToken().generate();		
-		System.out.println("clientToken en el VM: "+clientToken);
 		Clients.evalJavaScript("loadForm('"+clientToken+"');");
 
 	}
@@ -103,7 +110,6 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	@Command
 	public void registrarPago(@BindingParam("btnEnviar") Button button){
 		if(checkIsFormValid()){
-			//Aca se Haran las validaciones
 			if(validacionesParaGuardar() == true){
 				Clients.showBusy("Espere un momento...."); //Se puede cambiar el mensaje
 				Clients.evalJavaScript("tokenizeCard("+buildCreditCardParameterJS()+");");
@@ -115,11 +121,9 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	public void seleccionarTipoTarjeta(){	
 		txtCodigo.setPlaceholder("");
 		if(!tipoTarjeta.getValor()){
-			System.out.println("es American Express....");
 			txtCodigo.setMaxlength(4);
 			txtCodigo.setPlaceholder("1234");
 		}else{
-			System.out.println("Es otra ....");
 			txtCodigo.setMaxlength(3);
 			txtCodigo.setPlaceholder("123");
 		}			
@@ -197,9 +201,7 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		this.tipoTarjeta = listaTipoTarjeta.get(0);
 		this.txtAnoVence.setValue("");
 		this.txtCodigo.setValue("");
-		//this.txtemail.setValue("");
 		this.txtMesVence.setValue("");
-		//this.txtNroDoc.setValue("");
 		this.txtTarjeta.setValue("");
 		this.txtTitular.setValue("");
 		super.cleanConstraintForm();
@@ -230,13 +232,11 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 		}
 	}
 
-	/** METODOS PROPIOS DE LA CLASE */
-	/*private void llenarTiposDocumento(){
-		listaTipoDocumentos = new ArrayList<ModeloCombo<Boolean>>();
-		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Seleccione", false));
-		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Cédula", false));
-		listaTipoDocumentos.add(new ModeloCombo<Boolean>("Pasaporte", true));
-	}*/
+	@SuppressWarnings("unchecked")
+	@NotifyChange({"listaFormaPago"})
+	private void llenarFormaPago(){
+		listaFormaPago = new ArrayList((List<FormaPago>) sMaestros.consultarFormasPago(0, -1).get("formasPago"));
+	}
 	
 	private void llenarTiposTarjetas(){
 		listaTipoTarjeta = new ArrayList<ModeloCombo<Boolean>>();
@@ -269,8 +269,17 @@ public class RegistrarPagoFacturaViewModel extends AbstractRequerimientoViewMode
 	}
 
 	/**GETTERS Y SETTERS*/
+	
 	public STransaccion getsTransaccion() {
 		return sTransaccion;
+	}
+
+	public SMaestros getsMaestros() {
+		return sMaestros;
+	}
+
+	public void setsMaestros(SMaestros sMaestros) {
+		this.sMaestros = sMaestros;
 	}
 
 	public void setsTransaccion(STransaccion sTransaccion) {
