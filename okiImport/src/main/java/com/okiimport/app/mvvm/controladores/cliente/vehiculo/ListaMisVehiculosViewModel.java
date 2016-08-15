@@ -172,6 +172,8 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 			
 				Map<String, Object> parametros = new HashMap<String, Object>();
 				parametros.put("vehiculo", vehiculo);
+				parametros.put("recordMode", "EDIT");
+				parametros.put("valor", "editar");
 				//parametros.put("editar", true);
 				llamarFormulario("usuario/formularioVehiculo.zul", parametros);
 		}
@@ -218,7 +220,6 @@ public class ListaMisVehiculosViewModel extends AbstractRequerimientoViewModel i
 							if (button == Messagebox.Button.YES) {
 								
 									vehiculo.setEstatus(EEstatusGeneral.INACTIVO);
-									//EL METODO DICE ACTUTALIZARPERSONA
 									sMaestros.registrarVehiculo(vehiculo);
 									cambiarVehiculos(0, null, null);
 									notifyChange("vehiculos");

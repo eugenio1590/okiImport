@@ -77,7 +77,7 @@ public class RegistrarVehiculoViewModel extends AbstractRequerimientoViewModel
 
 	/**
 	 * Descripcion: Llama a inicializar la clase Parametros: @param view:
-	 * formularioAnalistas.zul Retorno: Ninguno Nota: Ninguna
+	 * formularioVehiculo.zul Retorno: Ninguno Nota: Ninguna
 	 * */
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
@@ -89,8 +89,7 @@ public class RegistrarVehiculoViewModel extends AbstractRequerimientoViewModel
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
 		this.vehiculo = (vehiculo == null) ? new Vehiculo() : vehiculo;
 		this.cerrar = (cerrar == null) ? true : cerrar;
-		makeAsReadOnly = (recordMode != null && recordMode
-				.equalsIgnoreCase("READ")) ? true : false;
+		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ")) ? true : false;
 		this.valor = valor;
 		this.motor = new Motor();
 		agregarGridSort(gridMotores);
