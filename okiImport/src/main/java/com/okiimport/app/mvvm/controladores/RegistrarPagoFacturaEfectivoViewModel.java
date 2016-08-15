@@ -17,13 +17,16 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.Pago;
 import com.okiimport.app.model.PagoCliente;
+import com.okiimport.app.model.enumerados.EEstatusCompra;
 import com.okiimport.app.model.enumerados.EEstatusGeneral;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.maestros.SMaestros;
+import com.okiimport.app.service.transaccion.STransaccion;
 import com.okiimport.app.service.web.SPago;
 
 public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimientoViewModel{
@@ -34,6 +37,9 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 		
 	@BeanInjector("sMaestros")
 	private SMaestros sMaestros;
+	
+	@BeanInjector("sTransaccion")
+	private STransaccion sTransaccion;
 		
 	//GUI
 	@Wire("#winPagoFacturaEfect")
@@ -47,6 +53,7 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 		
 	private CustomConstraint constraintCampoObligatorio;
 	private Pago pago;
+	private Compra compra;
 	private Float montoPagar;
 	private boolean cerrar = false;
 	private CustomConstraint constraintMensaje;
@@ -61,9 +68,11 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	@NotifyChange({"totalFactura"})
 	@AfterCompose
 	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
-			@ExecutionArgParam("pago")  Pago pago){
+			@ExecutionArgParam("pago")  Pago pago,
+			@ExecutionArgParam("compra") Compra compra){
 		super.doAfterCompose(view);
 		this.pago = pago;
+		this.compra = compra;
 		dateFechaPago.setValue(new Date());
 	}
 
@@ -74,6 +83,7 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 			if(validacionesParaGuardar() == true){
 				Boolean exito = sPago.registrarPagoEfectivo(llenarPago());
 				if(exito){
+					actualizarCompra();
 					mostrarMensaje("Informaci\u00F3n", "�Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
 					this.winPagoFactura.onClose();
 				}
@@ -83,12 +93,18 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 		}
 	}
 	
+	private void actualizarCompra(){
+		this.compra.setEstatus(EEstatusCompra.PAGADA);
+		sTransaccion.registrarOActualizarCompra(this.compra);
+	}
+	
 	private PagoCliente llenarPago() {
 		PagoCliente pago = new PagoCliente();
 		pago.setFechaPago(new Date());
 		pago.setMonto(this.montoPagar);
 		pago.setEstatus(EEstatusGeneral.ACTIVO.name());
 		pago.setDescripcion(txtObservaciones.getValue());
+		pago.setCompra(this.compra);
 		//pago.setFormaPago(formaPago); CORREGIR
 		return pago;
 	}
@@ -170,6 +186,22 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 
 	public void setMontoPagar(Float montoPagar) {
 		this.montoPagar = montoPagar;
+	}
+
+	public Compra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
+	}
+
+	public STransaccion getsTransaccion() {
+		return sTransaccion;
+	}
+
+	public void setsTransaccion(STransaccion sTransaccion) {
+		this.sTransaccion = sTransaccion;
 	}
 	
 }

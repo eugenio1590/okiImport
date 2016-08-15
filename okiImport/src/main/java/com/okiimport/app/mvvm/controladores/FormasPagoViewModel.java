@@ -1,12 +1,15 @@
 package com.okiimport.app.mvvm.controladores;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -16,6 +19,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Messagebox;
 
+import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.FormaPago;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.constraint.CustomConstraint;
@@ -41,6 +45,7 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	private List<ModeloCombo<Boolean>> listaFormaPagoAux;
 	private List<FormaPago> listaFormaPago;
 	private ModeloCombo<Boolean> formaPago;
+	private Compra compra;
 	
 	private CustomConstraint constraintCampoObligatorio;
 	private CustomConstraint constraintMensaje;
@@ -54,39 +59,43 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	 * */
 	@NotifyChange({"totalFactura"})
 	@AfterCompose
-	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view){
+	public void doAfterCompose(@ContextParam(ContextType.VIEW) Component view,
+			@ExecutionArgParam("compra") Compra compra){
 		super.doAfterCompose(view);
+		this.compra = compra;
 		llenarFormasNoParametrizadas();
 
 	}
 	
 	@Listen("onSelect = #cmbFormaPago")
 	public void actualizarView(){
-		if(formaPago.getNombre().equals("Efectivo")){
+		if(formaPago.getNombre().equals("Efectivo"))
 			abrirInterfazPagoEfectivo();
-		}else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito")){
+		else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito"))
 			abrirInterfazPagoTDC();
-		}	
 	}
 	
 	@Command
 	public void seleccionarFormaPago(){	
-		if(formaPago.getNombre().equals("Efectivo")){
+		if(formaPago.getNombre().equals("Efectivo"))
 			abrirInterfazPagoEfectivo();
-		}else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito")){
+		else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito"))
 			abrirInterfazPagoTDC();
-		}	
 	}
 	
 	@Command
 	public void abrirInterfazPagoEfectivo(){
-		crearModal(BasePackageSistemaFunc+"/pago/formularioPagoEfectivo.zul", null);	
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("compra", compra);
+		crearModal(BasePackageSistemaFunc+"/pago/formularioPagoEfectivo.zul", parametros);	
 	}
 	
 	//Para TDC o Debito
 	@Command
 	public void abrirInterfazPagoTDC(){
-		crearModal(BasePackageSistemaFunc+"/pago/formularioFormaPago2.zul", null);	
+		Map<String, Object> parametros = new HashMap<String, Object>();
+		parametros.put("compra", compra);
+		crearModal(BasePackageSistemaFunc+"/pago/formularioFormaPago2.zul", parametros);	
 	}
 	
 	/**
@@ -197,4 +206,13 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 		this.formaPago = formaPago;
 	}
 
+	public Compra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
+	}
+	
+	
 }
