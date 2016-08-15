@@ -131,8 +131,8 @@
 										<combobox
 											placeholder="Seleccione..." readonly="true" hflex="1"
 											disabled="@bind(vm.makeAsReadOnly)"
-											selectedItem="@bind(vm.vehiculo.transmision)"
-											value="@bind(vm.vehiculo.determinarTransmision())"
+											selectedItem="@bind(vm.transmision)"
+											value="@bind(vm.transmision.nombre)"
 											model="@load(vm.listaTransmision)">
 											<template name="model">
 												<comboitem
@@ -150,8 +150,8 @@
 										<combobox
 											placeholder="Seleccione..." readonly="true" hflex="1"
 											disabled="@bind(vm.makeAsReadOnly)"
-											selectedItem="@bind(vm.vehiculo.traccion)"
-											value="@bind(vm.vehiculo.determinarTraccion())"
+											selectedItem="@bind(vm.traccion)"
+											value="@bind(vm.traccion.nombre)"
 											model="@load(vm.listaTraccion)">
 											<template name="model">
 												<comboitem

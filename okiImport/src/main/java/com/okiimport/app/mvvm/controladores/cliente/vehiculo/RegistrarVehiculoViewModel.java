@@ -88,6 +88,8 @@ public class RegistrarVehiculoViewModel extends AbstractRequerimientoViewModel
 		super.doAfterCompose(view);
 		this.recordMode = (recordMode == null) ? "EDIT" : recordMode;
 		this.vehiculo = (vehiculo == null) ? new Vehiculo() : vehiculo;
+		this.traccion = new ModeloCombo<Boolean>(this.vehiculo.determinarTraccion(), this.vehiculo.getTraccion());
+		this.transmision = new ModeloCombo<Boolean>(this.vehiculo.determinarTransmision(), this.vehiculo.getTransmision());
 		this.cerrar = (cerrar == null) ? true : cerrar;
 		makeAsReadOnly = (recordMode != null && recordMode.equalsIgnoreCase("READ")) ? true : false;
 		this.valor = valor;
@@ -106,6 +108,7 @@ public class RegistrarVehiculoViewModel extends AbstractRequerimientoViewModel
 
 		cambiarMotores(0, null, null);
 	}
+	
 
 	/**
 	 * Descripcion: Permite Registrar el vehiculo Parametros: @param view:
