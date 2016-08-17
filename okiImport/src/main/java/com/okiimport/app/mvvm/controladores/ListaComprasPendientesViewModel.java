@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.event.SortEvent;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listheader;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Paging;
 
 import com.okiimport.app.model.Cliente;
@@ -80,20 +81,23 @@ public class ListaComprasPendientesViewModel extends AbstractRequerimientoViewMo
 		}
 
 		/**GLOBAL COMMAND*/
+		@SuppressWarnings("unchecked")
 		@GlobalCommand
 		@NotifyChange("listaCompras")
 		public void cambiarCompras(@Default("0") @BindingParam("page") int page,
 				@BindingParam("fieldSort") String fieldSort, 
 				@BindingParam("sortDirection") Boolean sortDirection){
 			String cedula = obtenerCedulaConTipoPersona();
-			System.out.println("*******************");
-			System.out.println("CEDULA -> "+cedula);
+			//System.out.println("*******************");
+			//System.out.println("CEDULA -> "+cedula);
 			Map<String, Object> parametros = sTransaccion.consultarComprasDelCliente( cedula, fieldSort, sortDirection, page, pageSize);
 			Integer total = (Integer) parametros.get("total");
 			listaCompras = (List<Compra>) parametros.get("compras");
 			gridComprasCliente.setMultiple(true);
 			pagComprasCliente.setActivePage(page);
 			pagComprasCliente.setTotalSize(total);
+			if(listaCompras.size()==0)
+				mostrarMensaje("Cliente", "Disculpe, no se encontraron compras pendientes asociadas al ID/RIF : "+cedula, Messagebox.EXCLAMATION, null, null, null);
 		}
 		
 		/**
