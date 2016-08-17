@@ -24,6 +24,7 @@ import com.okiimport.app.model.DetalleOferta;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.enumerados.EEstatusCompra;
+import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
 import com.okiimport.app.mvvm.AbstractRequerimientoViewModel;
 import com.okiimport.app.mvvm.resource.BeanInjector;
 import com.okiimport.app.service.mail.MailCliente;
@@ -156,6 +157,11 @@ AbstractRequerimientoViewModel {
 					Requerimiento req = detalle.getDetalleCotizacion().getDetalleRequerimiento().getRequerimiento();
 					if(!idsRequerimientos.contains(req.getIdRequerimiento())){
 						idsRequerimientos.add(req.getIdRequerimiento());
+						
+						
+						//gestionar requerimiento
+						req.setEstatus(EEstatusRequerimiento.COMPRADO);
+						req =  sTransaccion.actualizarRequerimiento(req);
 						
 						//gestionar compra
 						Compra compra = new Compra();
