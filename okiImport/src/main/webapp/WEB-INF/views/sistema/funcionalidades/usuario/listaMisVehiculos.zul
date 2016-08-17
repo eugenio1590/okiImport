@@ -1,4 +1,10 @@
 <zk xmlns:w="client" xmlns:n="native">
+
+	<style>
+	.filterVehiculoAnno span{
+		display:block !important;
+	}
+	</style>
 	<window border="none" apply="org.zkoss.bind.BindComposer" sclass="winMyList" id="winListaMisVehiculos"
 		viewModel="@id('vm') @init('com.okiimport.app.mvvm.controladores.cliente.vehiculo.ListaMisVehiculosViewModel')">
 
@@ -29,11 +35,12 @@
 								value="@bind(vm.vehiculoFiltro.modelo)"
 								onChange="@command('aplicarFiltro')"/>
 						</auxheader>
-						<auxheader>
+						<auxheader sclass="filterVehiculoAnno">
 							<div sclass="z-icon-filter bigger-200" />
 							<textbox instant="true" hflex="1"
 								value="@bind(vm.vehiculoFiltro.anno)"
-								onChange="@command('aplicarFiltro')"/>
+								onChange="@command('aplicarFiltro')"
+								constraint="@bind(vm.cantValidatorOrEmptyString)"/>
 						</auxheader>
 						<auxheader>
 							<div sclass="z-icon-filter bigger-200" />

@@ -132,7 +132,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 					parametros);
 		}
 		else
-			mostrarMensaje("Error", "No es una imagen válida para mostrar", Messagebox.ERROR, null, null, null);
+			mostrarMensaje("Error", "No es una imagen vï¿½lida para mostrar", Messagebox.ERROR, null, null, null);
 	}
 
 	/** METODOS SOBREESCRITOS */
@@ -198,7 +198,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
 				"Oficina Empresa Encomiendas", true));
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
-				"Dirección Particular", false));
+				"Direcciï¿½n Particular", false));
 		return listaOficinaDireccion;
 	}
 
@@ -211,8 +211,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarListaTransmision() {
 		List<ModeloCombo<Boolean>> listaTransmision = new ArrayList<ModeloCombo<Boolean>>();
-		listaTransmision.add(new ModeloCombo<Boolean>("Automático", true));
-		listaTransmision.add(new ModeloCombo<Boolean>("Sincrónico", false));
+		listaTransmision.add(new ModeloCombo<Boolean>("Automï¿½tico", true));
+		listaTransmision.add(new ModeloCombo<Boolean>("Sincrï¿½nico", false));
 		return listaTransmision;
 	}
 
@@ -287,8 +287,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio() {
 		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aéreo", true));
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Marítimo", false));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aï¿½reo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Marï¿½timo", false));
 		return listaFormasEnvio;
 	}
 
@@ -313,7 +313,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.+@.+\\.[a-z]+/",
-				"Debe contener una dirección de correo válida.") };
+				"Debe contener una direcciï¿½n de correo vï¿½lida.") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 	}
@@ -336,7 +336,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getTelefonoValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.[0-9]+/",
-				"Debe Contener Un Número Telefónico Válido Ej. 025141785289") };
+				"Debe Contener Un Nï¿½mero Telefï¿½nico Vï¿½lido Ej. 025141785289") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 
@@ -349,25 +349,34 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public CustomConstraint getCantValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Un Número Válido") };
+				"/.[0-9]+/", "Debe Contener Un NÃºmero VÃ¡lido") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
 
 	}
 	
+	public CustomConstraint getCantValidatorOrEmptyString() {
+		RegExpression[] constrains = new RegExpression[] { new RegExpression(
+				"/^(\\s*|\\d+)$/", "Debe contener un nÃºmero vÃ¡lido") };
+		return new RegExpressionConstraint(constrains,
+				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
+				EConstraint.CUSTOM);
+	}
+	
+	
 	public CustomConstraint getValidatorClienteCedulaRif2() {
         
         RegExpression[] constrains = new RegExpression[] { new RegExpression(
 		"/.[0-9]+/",
-		"Introduzca RIF o Cédula. Sólo Números, sin Guiones Ej.: 402405374") };
+		"Introduzca RIF o Cï¿½dula. Sï¿½lo Nï¿½meros, sin Guiones Ej.: 402405374") };
         return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
      }
 	
 	public CustomConstraint getValidatorPrecio() {
 		
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Valores Numéricos Válidos") };
+				"/.[0-9]+/", "Debe Contener Valores Numï¿½ricos Vï¿½lidos") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO, EConstraint.CUSTOM);
 	}
