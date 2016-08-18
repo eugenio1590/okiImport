@@ -108,7 +108,7 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	@Override
 	public void closeModal(){
 		if(!cerrar){
-			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, �Desea continuar?", null, 
+			super.mostrarMensaje("Informaci\u00F3n", "Si cierra la ventana el proceso realizado se perdera, �Desea continuar?", null, 
 					new Messagebox.Button[]{Messagebox.Button.YES, Messagebox.Button.NO}, new EventListener<Event>(){
 				@Override
 				public void onEvent(Event event) throws Exception {
@@ -133,8 +133,8 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	private void llenarFormasNoParametrizadas(){
 		listaFormaPagoAux = new ArrayList<ModeloCombo<Boolean>>();
 		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Efectivo", false));
-		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Crédito", true));
-		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Débito", false));
+		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Credito", true));
+		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Debito", false));
 	}
 	
 	/**
