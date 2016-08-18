@@ -182,7 +182,12 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 		
 	}
 	
-	 /**
+	 private void ejecutarGlobalCommand(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
 	 * Descripcion: Permite poder agregar un nuevo repuesto al requerimiento
 	 * Parametros: @param view: formularioRequerimiento.zul  
 	 * Retorno: Ninguno
