@@ -18,7 +18,8 @@
 						maxlength="9" hflex="1"
 						value="@bind(vm.cliente.cedula)"
 						constraint="@bind(vm.validatorClienteCedulaRif2)" 
-						onOK="@global-command('cambiarRequerimientos')" />
+						onOK="@global-command('cambiarCompras')"
+						onBlur="@global-command('cambiarCompras')" />
 				</vbox>
 				<button label="Buscar" onClick="@global-command('cambiarCompras')" sclass="btn-primary" />
 			</hbox>
@@ -40,54 +41,24 @@
 						onAfterRender="@command('updatePaging', paging=pagComprasCliente, label=lblComprasCliente)"
 						model="@load(vm.listaCompras)">
 						
-						<auxhead>
-							<auxheader>
-<!-- 								<hbox hflex="1"> -->
-<!-- 									<intbox -->
-<!-- 										instant="true" hflex="1" -->
-<!-- 										value="@bind(vm.compraFiltro.idCompra)" -->
-<!-- 										constraint="no negative, no zero" -->
-<!-- 										onChange="@command('aplicarFiltro')" /> -->
-<!-- 									<div sclass="z-icon-filter bigger-200" /> -->
-<!-- 								</hbox> -->
-							</auxheader>
-							<auxheader>
-<!-- 								<datebox instant="true" hflex="1" -->
-<!-- 									value="@bind(vm.fechaCreacion)" -->
-<!-- 									format="@bind(vm.formatDate)"  -->
-<!-- 									onChange="@command('aplicarFiltro')"  /> -->
-<!-- 								<div sclass="z-icon-filter bigger-200" /> -->
-							</auxheader>
-							<auxheader>
-<!-- 								<textbox instant="true" hflex="1" -->
-<!-- 									value="@bind(vm.requerimientoFiltro.modeloV)"  -->
-<!-- 									onChange="@command('aplicarFiltro')"/> -->
-<!-- 								<div sclass="z-icon-filter bigger-200" /> -->
-							</auxheader>
-							<auxheader>
-<!-- 								<textbox instant="true" hflex="1" -->
-<!-- 									value="@bind(vm.requerimientoFiltro.serialCarroceriaV)" -->
-<!-- 									onChange="@command('aplicarFiltro')" /> -->
-<!-- 								<div sclass="z-icon-filter bigger-200" /> -->
-							</auxheader>
-						</auxhead>
+						
 							
 						<listhead>
 
 							<listheader label="N° Compra" width="70px"
-								value="idCompra" sort="auto(idCompra)" />
+								value="idCompra"  />
 								
 							<listheader label="N° Solicitud" width="70px"
-								value="requerimiento.idRequerimiento" sort="auto(requerimiento.idRequerimiento)" />
+								value="requerimiento.idRequerimiento"  />
 							
 							<listheader label="Fecha Creación" width="100px"
-								value="fechaCreacion" sort="auto(fechaCreacion)"/>
+								value="fechaCreacion" />
 
 							<listheader value="precioVenta" label="Precio de venta"
-								sort="auto(precioVenta)" width="120px"/>
+								 width="120px"/>
 
 							<listheader label="Precio de flete" width="100px"
-								value="precioFlete" sort="auto(precioFlete)" />
+								value="precioFlete"  />
 								 
 							<listheader width="11%" label="Estatus" />
 							<listheader width="11%" label="Operaciones" />
