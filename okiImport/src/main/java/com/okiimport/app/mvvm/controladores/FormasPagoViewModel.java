@@ -71,7 +71,7 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	public void actualizarView(){
 		if(formaPago.getNombre().equals("Efectivo"))
 			abrirInterfazPagoEfectivo();
-		else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito"))
+		else if (formaPago.getNombre().equals("Debito") || formaPago.getNombre().equals("Credito"))
 			abrirInterfazPagoTDC();
 	}
 	
@@ -79,7 +79,7 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	public void seleccionarFormaPago(){	
 		if(formaPago.getNombre().equals("Efectivo"))
 			abrirInterfazPagoEfectivo();
-		else if (formaPago.getNombre().equals("Débito") || formaPago.getNombre().equals("Crédito"))
+		else if (formaPago.getNombre().equals("Debito") || formaPago.getNombre().equals("Credito"))
 			abrirInterfazPagoTDC();
 	}
 	
