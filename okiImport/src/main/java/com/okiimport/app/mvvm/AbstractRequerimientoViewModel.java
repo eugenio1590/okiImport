@@ -287,8 +287,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarFormasDeEnvio() {
 		List<ModeloCombo<Boolean>> listaFormasEnvio = new ArrayList<ModeloCombo<Boolean>>();
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("A�reo", true));
-		listaFormasEnvio.add(new ModeloCombo<Boolean>("Mar�timo", false));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Aereo", true));
+		listaFormasEnvio.add(new ModeloCombo<Boolean>("Maritimo", false));
 		return listaFormasEnvio;
 	}
 
@@ -313,7 +313,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getEmailValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.+@.+\\.[a-z]+/",
-				"Debe contener una direcci�n de correo v�lida.") };
+				"Debe contener una direccion de correo valida.") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 	}
@@ -336,7 +336,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	public CustomConstraint getTelefonoValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
 				"/.[0-9]+/",
-				"Debe Contener Un N�mero Telef�nico V�lido Ej. 025141785289") };
+				"Debe Contener Un Numero Telefonico Valido Ej. 025141785289") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.CUSTOM);
 
@@ -349,7 +349,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	public CustomConstraint getCantValidator() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Un Número Válido") };
+				"/.[0-9]+/", "Debe Contener Un Numero Valido") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
@@ -358,7 +358,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 	
 	public CustomConstraint getCantValidatorOrEmptyString() {
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/^(\\s*|\\d+)$/", "Debe contener un número válido") };
+				"/^(\\s*|\\d+)$/", "Debe contener un numero valido") };
 		return new RegExpressionConstraint(constrains,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO,
 				EConstraint.CUSTOM);
@@ -369,14 +369,14 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
         
         RegExpression[] constrains = new RegExpression[] { new RegExpression(
 		"/.[0-9]+/",
-		"Introduzca RIF o C�dula. S�lo N�meros, sin Guiones Ej.: 402405374") };
+		"Introduzca RIF o Cedula. Solo Numeros, sin Guiones Ej.: 402405374") };
         return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY, EConstraint.NO_NEGATIVE,EConstraint.NO_ZERO);
      }
 	
 	public CustomConstraint getValidatorPrecio() {
 		
 		RegExpression[] constrains = new RegExpression[] { new RegExpression(
-				"/.[0-9]+/", "Debe Contener Valores Num�ricos V�lidos") };
+				"/.[0-9]+/", "Debe Contener Valores Numericos Validos") };
 		return new RegExpressionConstraint(constrains, EConstraint.NO_EMPTY,
 				EConstraint.NO_NEGATIVE, EConstraint.NO_ZERO, EConstraint.CUSTOM);
 	}
