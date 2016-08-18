@@ -85,7 +85,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	//Atributos
 	public static final String TITULO_EMPTY_COTIZACIONES = "No existen mas solicituces de cotizacion";
 	private static final String TITULO_EAST = "Cotizacion ";
-	private String titulo = "Solicitudes de Cotizacion del Requerimiento N° ";
+	private String titulo = "Solicitudes de Cotizacion del Requerimiento Nï¿½ ";
 	private CustomConstraint constraintPrecioFlete = null;
 	private List<Cotizacion> listaCotizacion;
 	private List<DetalleCotizacion> listaDetalleCotizacion;
@@ -202,7 +202,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
-		eastCotizacion.setTitle(TITULO_EAST+"N° "+cotizacion.getIdCotizacion());
+		eastCotizacion.setTitle(TITULO_EAST+"Nï¿½ "+cotizacion.getIdCotizacion());
 		cotizacionSelecionada = cotizacion;
 		listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((int) cotizacion.getIdCotizacion());
 		limpiarCotizacionSeleccionada();
@@ -251,6 +251,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 				configurarAtributosCotizacion(true);
 				cambiarCotizaciones(0, null, null);
 				eastCotizacion.setTitle(TITULO_EAST);
+				onCloseWindow();
 			}
 		}
 		else if(cotizacionSelecionada==null)
@@ -296,7 +297,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	public void onCloseWindow(){
 		ejecutarGlobalCommand("cambiarRequerimientos", null);
 		ejecutarGlobalCommand("cambiarCotizaciones", null);
-		ejecutarGlobalCommand("cambiarProveedores", null);
+		ejecutarGlobalCommand("consultarProveedores", null);
 	}
 	
 	/**

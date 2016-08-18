@@ -167,6 +167,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 
 					Map<String, Object> parametros = new HashMap<String, Object>();
 					crearModal(BaseURL+"avisoRequerimientoRegistrado.zul", parametros);
+					ejecutarGlobalCommand("cambiarRequerimientos", null);
 					winERequerimiento.onClose();
 
 				} else
