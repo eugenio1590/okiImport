@@ -211,8 +211,8 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 
 	protected static List<ModeloCombo<Boolean>> llenarListaTransmision() {
 		List<ModeloCombo<Boolean>> listaTransmision = new ArrayList<ModeloCombo<Boolean>>();
-		listaTransmision.add(new ModeloCombo<Boolean>("Autom�tico", true));
-		listaTransmision.add(new ModeloCombo<Boolean>("Sincr�nico", false));
+		listaTransmision.add(new ModeloCombo<Boolean>("Automatico", true));
+		listaTransmision.add(new ModeloCombo<Boolean>("Sincronico", false));
 		return listaTransmision;
 	}
 

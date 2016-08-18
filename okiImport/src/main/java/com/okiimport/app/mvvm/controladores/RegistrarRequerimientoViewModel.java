@@ -153,6 +153,7 @@ public class RegistrarRequerimientoViewModel extends AbstractCargaMasivaViewMode
 					requerimiento.setMarcaVehiculo(vehiculo.getMarcaVehiculo());
 					requerimiento.setTraccionV(vehiculo.getTraccion());
 					requerimiento.setTransmisionV(vehiculo.getTransmision());
+					requerimiento.setSerialCarroceriaV(vehiculo.getSerialCarroceria());
 					
 					if (tipoRepuesto != null)
 						requerimiento.setTipoRepuesto(tipoRepuesto.getValor());
