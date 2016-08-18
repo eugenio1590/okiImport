@@ -96,7 +96,7 @@ public class ListaCreacionOfertasViewModel extends AbstractRequerimientoViewMode
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("decorator", decorator);
 		params.put("oferta", oferta);
-		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, se tomaran como articulos rechazados ï¿½desea continuar con la recotizacion?", 
+		this.mostrarMensaje("Informacion", "Algunos articulos no se les ha aprobado, se tomaran como articulos rechazados ¿desea continuar con la recotizacion?", 
 				Messagebox.EXCLAMATION, new Messagebox.Button[]{ Messagebox.Button.YES, Messagebox.Button.NO, Messagebox.Button.CANCEL }, 
 				new MessageboxEventListener(this, params), null);
 	}
