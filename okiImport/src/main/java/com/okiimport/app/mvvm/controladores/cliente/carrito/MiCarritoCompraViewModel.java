@@ -105,11 +105,16 @@ AbstractRequerimientoViewModel {
 		}
 		
 		public HistoricoMoneda getHistoricoMoneda(){
+			if (this.historicoMoneda==null){
+				this.historicoMoneda = new HistoricoMoneda();
+				this.historicoMoneda.setMontoConversion((float) 0);
+				this.historicoMoneda.convert(0);
+			}
 			return historicoMoneda;
 		}
 		
 		public void setHistoricoMoneda(HistoricoMoneda historicoMoneda){
-		this.historicoMoneda= historicoMoneda;
+			this.historicoMoneda= historicoMoneda;
 		}
 		
 		
@@ -153,7 +158,7 @@ AbstractRequerimientoViewModel {
 			try{
 				for(Entry<Integer, Compra> entry : hash_compras_requerimiento.entrySet()) {
 				    Compra compra = entry.getValue();
-				    mailCliente.enviarInformacionCompra(compra, mailService);
+				    //mailCliente.enviarInformacionCompra(compra, mailService);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
@@ -183,9 +188,11 @@ AbstractRequerimientoViewModel {
 						compra.setRequerimiento(req);
 						compra.setEstatus(EEstatusCompra.EN_ESPERA);
 						compra.setPrecioVenta(detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada());
+						
 						compra.addDetalleOferta(detalle);
 						compra = sTransaccion.registrarOActualizarCompra(compra);
 						
+						System.out.println("compra id:"+ compra.getIdCompra() +" lo que tiene precioVenta: "+compra.getPrecioVenta());
 						//gestionar detalle oferta
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);
@@ -197,11 +204,12 @@ AbstractRequerimientoViewModel {
 					} else {
 						compra = hash_compras_requerimiento.get(req.getIdRequerimiento());
 						total = compra.getPrecioVenta();
-						total+= (detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
+						total+= (detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada());
 						compra.setPrecioVenta(total);
 						compra.addDetalleOferta(detalle);
 						compra = sTransaccion.registrarOActualizarCompra(compra);
-						
+						System.out.println("compra id:"+ compra.getIdCompra() +" lo que tiene precioVenta: "+compra.getPrecioVenta());
+
 						//gestionar detalle oferta
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);
