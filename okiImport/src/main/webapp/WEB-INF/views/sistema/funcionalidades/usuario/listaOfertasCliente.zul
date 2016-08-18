@@ -79,8 +79,8 @@
 															<listcell
 																label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 															<listcell
-																label="@bind(each.calcularPrecioVentaUnit()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
+																label="@bind(each.calcularPrecioVenta()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+									 							converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)"/>
 															<listcell
 																label="@bind(each.detalleCotizacion.cantidad)" />
 															<listcell>
@@ -92,7 +92,7 @@
 															</listcell>
 															<listcell
 																label="@bind(each.calcularPrecioVentaSinFlete()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
-													converterMoneda=vm.monedaBase, monedaBase=vm.monedaBase)"/>
+									 							converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)"/>
 															<listcell>
 																<hbox
 																	spacing="20px">
