@@ -132,7 +132,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 					parametros);
 		}
 		else
-			mostrarMensaje("Error", "No es una imagen v�lida para mostrar", Messagebox.ERROR, null, null, null);
+			mostrarMensaje("Error", "No es una imagen valida para mostrar", Messagebox.ERROR, null, null, null);
 	}
 
 	/** METODOS SOBREESCRITOS */
@@ -198,7 +198,7 @@ public abstract class AbstractRequerimientoViewModel extends AbstractViewModel {
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
 				"Oficina Empresa Encomiendas", true));
 		listaOficinaDireccion.add(new ModeloCombo<Boolean>(
-				"Direcci�n Particular", false));
+				"Direccion Particular", false));
 		return listaOficinaDireccion;
 	}
 
