@@ -40,9 +40,6 @@
 					<listbox id="gridComprasCliente" emptyMessage="No hay compras pendientes"
 						onAfterRender="@command('updatePaging', paging=pagComprasCliente, label=lblComprasCliente)"
 						model="@load(vm.listaCompras)">
-						
-						
-							
 						<listhead>
 
 							<listheader label="N° Compra" width="70px"
