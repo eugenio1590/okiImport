@@ -68,7 +68,7 @@ public class CotizarProveedorNacionalViewModel extends AbstractRequerimientoView
 		
 		//Atributos
 		private static final String TITULO_EAST = "Cotizacion ";
-		private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N° ";
+		private static final String TITULO_BASE = "Solicitudes de Cotizacion del Requerimiento N ";
 		private String titulo ;
 		
 		private CustomConstraint constraintPrecioFlete = null;

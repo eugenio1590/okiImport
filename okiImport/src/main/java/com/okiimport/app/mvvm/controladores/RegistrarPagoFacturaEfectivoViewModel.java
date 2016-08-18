@@ -88,11 +88,11 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 				Boolean exito = sPago.registrarPagoEfectivo(llenarPago());
 				if(exito){
 					actualizarCompra();
-					mostrarMensaje("Informaci\u00F3n", "�Operacion registrada exitosamente!", Messagebox.INFORMATION, null, null, null);
+					mostrarMensaje("Informaci\u00F3n", "Operacion registrada exitosamente", Messagebox.INFORMATION, null, null, null);
 					this.winPagoFactura.onClose();
 				}
 				else 
-					mostrarMensaje("Error", "�El Pago no pudo realizarse, intente de nuevo!", Messagebox.ERROR, null, null, null);
+					mostrarMensaje("Error", "El Pago no pudo realizarse, intente de nuevo", Messagebox.ERROR, null, null, null);
 			}
 		}
 	}
@@ -122,9 +122,9 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 			if(this.montoPagar > 0)
 				guardar = true;
 			else
-				mostrarMensaje("Error", "¡El monto total a pagar debe ser mayor a cero!", null, null, null, null);
+				mostrarMensaje("Error", "El monto total a pagar debe ser mayor a cero", null, null, null, null);
 		}else{
-			mostrarMensaje("Error", "¡Debe ingresar todos los campos!", null, null, null, null);
+			mostrarMensaje("Error", "Debe ingresar todos los campos", null, null, null, null);
 		}
 		return guardar;
 	}
