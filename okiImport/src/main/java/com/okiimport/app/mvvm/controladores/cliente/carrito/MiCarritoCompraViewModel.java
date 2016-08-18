@@ -24,6 +24,7 @@ import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.DetalleOferta;
+import com.okiimport.app.model.HistoricoMoneda;
 import com.okiimport.app.model.Requerimiento;
 import com.okiimport.app.model.Usuario;
 import com.okiimport.app.model.enumerados.EEstatusCompra;
@@ -58,7 +59,7 @@ AbstractRequerimientoViewModel {
 		
 		private Double totalCarrito = 0.0;
 		
-		private List<Compra> listadoComprasEfectuadas;
+		private HistoricoMoneda historicoMoneda;
 		
 		private Map<Integer, Compra> hash_compras_requerimiento = new HashMap<Integer, Compra>();
 		
@@ -97,9 +98,18 @@ AbstractRequerimientoViewModel {
 		private Double refrescarMontoTotalCarrito(){
 			Double total =0.00;
 			for(DetalleOferta detalle: this.listaDetalleOfertas){
-				total+=detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada();
+				total+=detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada();
+				setHistoricoMoneda(detalle.getDetalleCotizacion().getCotizacion().getHistoricoMoneda());
 			}
 			return total;
+		}
+		
+		public HistoricoMoneda getHistoricoMoneda(){
+			return historicoMoneda;
+		}
+		
+		public void setHistoricoMoneda(HistoricoMoneda historicoMoneda){
+		this.historicoMoneda= historicoMoneda;
 		}
 		
 		
@@ -165,32 +175,27 @@ AbstractRequerimientoViewModel {
 					if(!hash_compras_requerimiento.containsKey(req.getIdRequerimiento())){
 						
 						//gestionar requerimiento
-						System.out.println("gestionar requerimiento");
 						req.setEstatus(EEstatusRequerimiento.COMPRADO);
 						req =  sTransaccion.actualizarRequerimiento(req);
 						
 						//gestionar compra
-						System.out.println("gestionar compra ");
 						compra = new Compra();
 						compra.setRequerimiento(req);
 						compra.setEstatus(EEstatusCompra.EN_ESPERA);
-						compra.setPrecioVenta(detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
+						compra.setPrecioVenta(detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada());
 						compra.addDetalleOferta(detalle);
 						compra = sTransaccion.registrarOActualizarCompra(compra);
 						
 						//gestionar detalle oferta
-						System.out.println("gestionar detalle oferta ");
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);
 						
 						//agrego a la lista de compras para luego enviar email
-						System.out.println("agrego a la lista de compras para luego enviar email");
 						hash_compras_requerimiento.put(req.getIdRequerimiento(), compra);
 						
 						
 					} else {
 						compra = hash_compras_requerimiento.get(req.getIdRequerimiento());
-						System.out.println("lo que trae compra del map en el precio "+compra.getPrecioVenta());
 						total = compra.getPrecioVenta();
 						total+= (detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
 						compra.setPrecioVenta(total);
