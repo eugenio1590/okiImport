@@ -89,7 +89,7 @@
 									onClick="@command('cotizar', requerimiento = each)"/>
 								<button iconSclass="z-icon-book blue red bigger-160" tooltiptext="Editar Cotizaciones" if="${ each.editarCotizacion() }"
 									onClick="@command('editarCotizaciones', requerimiento = each)"/>								
-								<button iconSclass="z-icon-fa fa-envelope-o bigger-100" tooltiptext="Enviar Oferta" if="${ each.ofertar() }"
+								<button iconSclass="z-icon-fa fa-envelope-o red bigger-100" tooltiptext="Enviar Oferta" if="${ each.ofertar() }"
 									onClick="@command('enviarOferta', requerimiento = each)"/>
 								<button  iconSclass="fa fa-check-square-o blue bigger-160" tooltiptext="Cotizaciones a Seleccionar"  
 								    onClick="@command('cotizacionesASeleccionar', requerimiento = each)" if="${ !each.editar() and !each.editarCotizacion() and each.verSeleccionarCotizacion() }"/>

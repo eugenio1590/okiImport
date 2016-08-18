@@ -58,7 +58,7 @@ public class ListaOfertasClienteViewModel extends
 	// Atributos
 	private List<Oferta> listaOfertas;
 	private Requerimiento requerimiento;
-	private String titulo = "Ofertas del Requerimiento N� ";
+	private String titulo = "Ofertas del Requerimiento Nro ";
 	
 	private boolean showButton = true;
 
@@ -164,7 +164,7 @@ public class ListaOfertasClienteViewModel extends
 		}
 		requerimiento.setEstatus(EEstatusRequerimiento.OFERTADO);
 		sTransaccion.actualizarRequerimiento(requerimiento);
-
+		cambiarRequerimientos();
 		//No es el servicio que se usara
 		//Aqui se colocara el servicio para enviar el correo enviarOfertas.html 
 		//Miguel

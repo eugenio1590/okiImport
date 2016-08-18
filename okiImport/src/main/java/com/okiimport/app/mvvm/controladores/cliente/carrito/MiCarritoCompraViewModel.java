@@ -98,7 +98,7 @@ AbstractRequerimientoViewModel {
 		private Double refrescarMontoTotalCarrito(){
 			Double total =0.00;
 			for(DetalleOferta detalle: this.listaDetalleOfertas){
-				total+=detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada();
+				total+=detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada();
 				setHistoricoMoneda(detalle.getDetalleCotizacion().getCotizacion().getHistoricoMoneda());
 			}
 			return total;
@@ -158,7 +158,7 @@ AbstractRequerimientoViewModel {
 			try{
 				for(Entry<Integer, Compra> entry : hash_compras_requerimiento.entrySet()) {
 				    Compra compra = entry.getValue();
-				    //mailCliente.enviarInformacionCompra(compra, mailService);
+				    mailCliente.enviarInformacionCompra(compra, mailService);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
@@ -187,12 +187,15 @@ AbstractRequerimientoViewModel {
 						compra = new Compra();
 						compra.setRequerimiento(req);
 						compra.setEstatus(EEstatusCompra.EN_ESPERA);
-						compra.setPrecioVenta(detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada());
+						compra.setPrecioVenta(detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
 						
 						compra.addDetalleOferta(detalle);
 						compra = sTransaccion.registrarOActualizarCompra(compra);
 						
+						System.out.println("lo que tiene detalle oferta en precio es "+ detalle.calcularPrecioVentaUnit());
+						System.out.println("la cantidad seleccionada es: " + detalle.getCantidadSeleccionada());
 						System.out.println("compra id:"+ compra.getIdCompra() +" lo que tiene precioVenta: "+compra.getPrecioVenta());
+						
 						//gestionar detalle oferta
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);
@@ -204,12 +207,16 @@ AbstractRequerimientoViewModel {
 					} else {
 						compra = hash_compras_requerimiento.get(req.getIdRequerimiento());
 						total = compra.getPrecioVenta();
-						total+= (detalle.calcularPrecioVenta() * detalle.getCantidadSeleccionada());
+						total+= (detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
 						compra.setPrecioVenta(total);
 						compra.addDetalleOferta(detalle);
 						compra = sTransaccion.registrarOActualizarCompra(compra);
+						
+						System.out.println("lo que tiene detalle oferta en precio es "+ detalle.calcularPrecioVentaUnit());
+						System.out.println("la cantidad seleccionada es: " + detalle.getCantidadSeleccionada());
 						System.out.println("compra id:"+ compra.getIdCompra() +" lo que tiene precioVenta: "+compra.getPrecioVenta());
-
+						
+						
 						//gestionar detalle oferta
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);

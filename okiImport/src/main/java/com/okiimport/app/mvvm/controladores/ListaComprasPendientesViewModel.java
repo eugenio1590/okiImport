@@ -100,6 +100,22 @@ public class ListaComprasPendientesViewModel extends AbstractRequerimientoViewMo
 				mostrarMensaje("Cliente", "Disculpe, no se encontraron compras pendientes asociadas al ID/RIF : "+cedula, Messagebox.EXCLAMATION, null, null, null);
 		}
 		
+		
+		@GlobalCommand
+		@NotifyChange("listaCompras")
+		public void refrescarListadoCompras(@Default("0") @BindingParam("page") int page,
+				@BindingParam("fieldSort") String fieldSort, 
+				@BindingParam("sortDirection") Boolean sortDirection){
+			String cedula = obtenerCedulaConTipoPersona();
+			//System.out.println("*******************");
+			//System.out.println("CEDULA -> "+cedula);
+			Map<String, Object> parametros = sTransaccion.consultarComprasDelCliente( cedula, fieldSort, sortDirection, page, pageSize);
+			Integer total = (Integer) parametros.get("total");
+			listaCompras = (List<Compra>) parametros.get("compras");
+			gridComprasCliente.setMultiple(true);
+			pagComprasCliente.setActivePage(page);
+			pagComprasCliente.setTotalSize(total);
+		}
 		/**
 		 * Descripcion: Permitira cambiar la paginacion de acuerdo a la pagina activa del Paging 
 		 * Parametros: @param view: formularioVerificarRequerimiento.zul  

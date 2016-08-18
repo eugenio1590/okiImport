@@ -202,7 +202,7 @@ public class CotizacionesProveedorNacionalViewModel extends AbstractRequerimient
 	@Command
 	@NotifyChange({"listaDetalleCotizacion","cotizacionSelecionada"})
 	public void cotizar(@BindingParam("cotizacion") Cotizacion cotizacion){
-		eastCotizacion.setTitle(TITULO_EAST+"N� "+cotizacion.getIdCotizacion());
+		eastCotizacion.setTitle(TITULO_EAST+"Nro. "+cotizacion.getIdCotizacion());
 		cotizacionSelecionada = cotizacion;
 		listaDetalleCotizacion = sTransaccion.consultarDetallesCotizacion((int) cotizacion.getIdCotizacion());
 		limpiarCotizacionSeleccionada();

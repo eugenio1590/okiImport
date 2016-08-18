@@ -101,7 +101,8 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 	private void actualizarCompra(){
 		this.compra.setEstatus(EEstatusCompra.PAGADA);
 		sTransaccion.registrarOActualizarCompra(this.compra);
-		ejecutarGlobalCommand("cambiarCompras", null);
+		ejecutarGlobalCommand("refrescarListadoCompras", null);
+		ejecutarGlobalCommand("cerrarModalFormasPago", null);
 
 	}
 	

@@ -68,7 +68,7 @@
 												<listhead>
 													<listheader width="2%" />
 													<listheader
-														value="idCotizacion" label="N° Solicitud"
+														value="idCotizacion" label="Nro. Solicitud"
 														sort="auto(idCotizacion)" width="90px">
 													</listheader>
 													<listheader

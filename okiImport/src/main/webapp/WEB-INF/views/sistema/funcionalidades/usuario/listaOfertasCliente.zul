@@ -79,7 +79,7 @@
 															<listcell
 																label="@bind(each.detalleCotizacion.marcaRepuesto)"/>
 															<listcell
-																label="@bind(each.calcularPrecioVenta()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
+																label="@bind(each.calcularPrecioVentaUnit()) @converter(vm.formatedMoneda, format=vm.formatNumber, locale=vm.localeNumber, 
 									 							converterMoneda=each.detalleCotizacion.cotizacion.historicoMoneda, monedaBase=vm.monedaBase)"/>
 															<listcell
 																label="@bind(each.detalleCotizacion.cantidad)" />

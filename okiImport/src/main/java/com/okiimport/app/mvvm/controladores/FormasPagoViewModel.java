@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.zkoss.bind.annotation.AfterCompose;
+import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ContextParam;
 import org.zkoss.bind.annotation.ContextType;
+import org.zkoss.bind.annotation.Default;
 import org.zkoss.bind.annotation.ExecutionArgParam;
+import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
@@ -18,6 +21,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Window;
 
 import com.okiimport.app.model.Compra;
 import com.okiimport.app.model.FormaPago;
@@ -40,6 +44,9 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 	//GUI
 	@Wire
 	private Combobox cmbFormaPago;
+	
+	@Wire("#winPagoFactura")
+	private Window winPagoFactura;
 	
 	//Atributos
 	private List<ModeloCombo<Boolean>> listaFormaPagoAux;
@@ -135,6 +142,11 @@ public class FormasPagoViewModel extends AbstractRequerimientoViewModel{
 		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Efectivo", false));
 		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Credito", true));
 		listaFormaPagoAux.add(new ModeloCombo<Boolean>("Debito", false));
+	}
+	
+	@GlobalCommand
+	public void cerrarModalFormasPago(){
+		winPagoFactura.onClose();
 	}
 	
 	/**
