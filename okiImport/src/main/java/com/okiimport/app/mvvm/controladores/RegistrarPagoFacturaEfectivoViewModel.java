@@ -73,6 +73,10 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 		super.doAfterCompose(view);
 		this.pago = pago;
 		this.compra = compra;
+		setMontoPagar(this.compra.getPrecioVenta());
+		String cliente = this.compra.getRequerimiento().getCliente().getNombre().concat(" ".concat(this.compra.getRequerimiento().getCliente().getApellido()));
+		txtTitular.setValue(cliente);
+		txtTitular.setDisabled(true);
 		dateFechaPago.setValue(new Date());
 	}
 
@@ -93,9 +97,12 @@ public class RegistrarPagoFacturaEfectivoViewModel extends AbstractRequerimiento
 		}
 	}
 	
+	@NotifyChange("*")
 	private void actualizarCompra(){
 		this.compra.setEstatus(EEstatusCompra.PAGADA);
 		sTransaccion.registrarOActualizarCompra(this.compra);
+		ejecutarGlobalCommand("cambiarCompras", null);
+
 	}
 	
 	private PagoCliente llenarPago() {

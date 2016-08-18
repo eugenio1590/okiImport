@@ -48,7 +48,8 @@
 													locale="@bind(vm.localeNumber)"
 													tooltiptext="Monto total a pagar"
 													value="@bind(vm.montoPagar)" width="153.5%"
-													constraint="@bind(vm.getValidatorCantPositiva())"/>
+													constraint="@bind(vm.getValidatorCantPositiva())"
+													disabled="true"/>
 											</vbox>	
 										</row>	
 										<row>

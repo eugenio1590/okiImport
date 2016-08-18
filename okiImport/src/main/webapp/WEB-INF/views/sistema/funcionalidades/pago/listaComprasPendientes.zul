@@ -41,7 +41,9 @@
 						onAfterRender="@command('updatePaging', paging=pagComprasCliente, label=lblComprasCliente)"
 						model="@load(vm.listaCompras)">
 						<listhead>
-
+							<listheader label="Cliente" width="70px"
+								value="idCliente"  />
+								
 							<listheader label="N° Compra" width="70px"
 								value="idCompra"  />
 								
@@ -63,6 +65,7 @@
 						</listhead>
 						<template name="model">
 							<listitem>
+								<listcell label="@bind((each.requerimiento.cliente.nombre).concat(' ').concat(each.requerimiento.cliente.apellido))" />
 								<listcell label="@bind(each.idCompra)" />
 								<listcell label="@bind(each.requerimiento.idRequerimiento)" />
 								<listcell label="@bind(each.fechaCreacion)
