@@ -26,6 +26,7 @@ import com.okiimport.app.model.Configuracion;
 import com.okiimport.app.model.DetalleRequerimiento;
 import com.okiimport.app.model.Oferta;
 import com.okiimport.app.model.Requerimiento;
+import com.okiimport.app.model.enumerados.EEstatusCompra;
 import com.okiimport.app.model.enumerados.EEstatusDetalleRequerimiento;
 import com.okiimport.app.model.enumerados.EEstatusOferta;
 import com.okiimport.app.model.enumerados.EEstatusRequerimiento;
@@ -58,6 +59,9 @@ public class ListaOfertasClienteViewModel extends
 	private List<Oferta> listaOfertas;
 	private Requerimiento requerimiento;
 	private String titulo = "Ofertas del Requerimiento N� ";
+	
+	private boolean showButton = true;
+
 
 	/**
 	 * Descripcion: Llama a inicializar la clase 
@@ -98,13 +102,14 @@ public class ListaOfertasClienteViewModel extends
 	 * */
 	@GlobalCommand
 	@SuppressWarnings("unchecked")
-	@NotifyChange("listaOfertas")
+	@NotifyChange("*")
 	public void cambiarOfertas(@Default("0") @BindingParam("page") int page,
 			@BindingParam("fieldSort") String fieldSort,
 			@BindingParam("sortDirection") Boolean sortDirection) {
 		Map<String, Object> parametros = sTransaccion.consultarOfertasPorRequerimiento(requerimiento.getIdRequerimiento(), fieldSort, sortDirection, page, pageSize);
 		Integer total = (Integer) parametros.get("total");
 		listaOfertas = (List<Oferta>) parametros.get("ofertas");
+		recorrerListadoOfertas();
 		pagOfertasCliente.setActivePage(page);
 		pagOfertasCliente.setTotalSize(total);
 	}
@@ -199,6 +204,15 @@ public class ListaOfertasClienteViewModel extends
 		return enviar;
 	}
 	
+	private void recorrerListadoOfertas(){
+		for(Oferta oferta: this.listaOfertas){
+			if(oferta.getEstatus().equals(EEstatusOferta.ENVIADA)){
+				setShowButton(false);
+				break;
+			}
+		}
+	}
+	
 	/**METODOS PROPIOS DE LA CLASE*/
 	
 	/**METODOS GETTERS AND SETTERS*/
@@ -241,5 +255,13 @@ public class ListaOfertasClienteViewModel extends
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+	
+	public boolean isShowButton() {
+		return showButton;
+	}
+
+	public void setShowButton(boolean showButton) {
+		this.showButton = showButton;
 	}
 }
