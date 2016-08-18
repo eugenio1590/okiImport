@@ -1,7 +1,10 @@
 package com.okiimport.app.mvvm.controladores.cliente.carrito;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.zkoss.bind.BindUtils;
@@ -56,6 +59,8 @@ AbstractRequerimientoViewModel {
 		private Double totalCarrito = 0.0;
 		
 		private List<Compra> listadoComprasEfectuadas;
+		
+		private Map<Integer, Compra> hash_compras_requerimiento = new HashMap<Integer, Compra>();
 		
 		/**
 		 * Descripcion: Llama a inicializar la clase 
@@ -136,8 +141,9 @@ AbstractRequerimientoViewModel {
 		@NotifyChange("*")
 		public void enviarMail(){
 			try{
-				for(Compra compra: listadoComprasEfectuadas){
-					mailCliente.enviarInformacionCompra(compra, mailService);
+				for(Entry<Integer, Compra> entry : hash_compras_requerimiento.entrySet()) {
+				    Compra compra = entry.getValue();
+				    mailCliente.enviarInformacionCompra(compra, mailService);
 				}
 			}catch(Exception e){
 				e.printStackTrace();
@@ -151,20 +157,21 @@ AbstractRequerimientoViewModel {
 		public Boolean registarCompra(){
 			Boolean respuesta = true;
 			try{
-				List<Integer> idsRequerimientos = new ArrayList<Integer>();
-				listadoComprasEfectuadas = new ArrayList<Compra>();
+				float total = 0;
+				
 				for(DetalleOferta detalle: this.listaDetalleOfertas){
 					Requerimiento req = detalle.getDetalleCotizacion().getDetalleRequerimiento().getRequerimiento();
-					if(!idsRequerimientos.contains(req.getIdRequerimiento())){
-						idsRequerimientos.add(req.getIdRequerimiento());
-						
+					Compra compra;
+					if(!hash_compras_requerimiento.containsKey(req.getIdRequerimiento())){
 						
 						//gestionar requerimiento
+						System.out.println("gestionar requerimiento");
 						req.setEstatus(EEstatusRequerimiento.COMPRADO);
 						req =  sTransaccion.actualizarRequerimiento(req);
 						
 						//gestionar compra
-						Compra compra = new Compra();
+						System.out.println("gestionar compra ");
+						compra = new Compra();
 						compra.setRequerimiento(req);
 						compra.setEstatus(EEstatusCompra.EN_ESPERA);
 						compra.setPrecioVenta(detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
@@ -172,14 +179,33 @@ AbstractRequerimientoViewModel {
 						compra = sTransaccion.registrarOActualizarCompra(compra);
 						
 						//gestionar detalle oferta
+						System.out.println("gestionar detalle oferta ");
 						detalle.setEstatusFavorito(false);
 						sTransaccion.actualizarDetallesOferta(detalle);
 						
 						//agrego a la lista de compras para luego enviar email
-						listadoComprasEfectuadas.add(compra);
+						System.out.println("agrego a la lista de compras para luego enviar email");
+						hash_compras_requerimiento.put(req.getIdRequerimiento(), compra);
 						
 						
+					} else {
+						compra = hash_compras_requerimiento.get(req.getIdRequerimiento());
+						System.out.println("lo que trae compra del map en el precio "+compra.getPrecioVenta());
+						total = compra.getPrecioVenta();
+						total+= (detalle.calcularPrecioVentaUnit() * detalle.getCantidadSeleccionada());
+						compra.setPrecioVenta(total);
+						compra.addDetalleOferta(detalle);
+						compra = sTransaccion.registrarOActualizarCompra(compra);
+						
+						//gestionar detalle oferta
+						detalle.setEstatusFavorito(false);
+						sTransaccion.actualizarDetallesOferta(detalle);
+						
+						//agrego a la lista de compras para luego enviar email					
+						hash_compras_requerimiento.put(req.getIdRequerimiento(), compra);
 					}
+					
+					
 				}
 				llenarCarrito();
 			}catch(Exception e){
