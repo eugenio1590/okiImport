@@ -119,9 +119,9 @@
 						<hbox width="100%" >
 							<include  hflex="1" />
 							<div align="right">
-								<button
-												label="Enviar a Cliente" type="submit" sclass="btn-sm btn-primary"
-												onClick="@command('enviarCliente')" />
+								<button visible="@load(vm.showButton)"
+										label="Enviar a Cliente" type="submit" sclass="btn-sm btn-primary"
+										onClick="@command('enviarCliente')" />
 							</div>
 						</hbox>
 					</n:div>
