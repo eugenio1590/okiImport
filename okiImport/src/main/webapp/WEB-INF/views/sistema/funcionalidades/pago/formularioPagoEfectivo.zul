@@ -56,7 +56,7 @@
 											<vbox>
 												<datebox  id="dateFechaPago" sclass="label-not-mandatory" format="dd/MM/yyyy" disabled="true" width="149.5%"></datebox>
 											</vbox>	
-											<include src="/WEB-INF/views/template/fieldMandatory.zul" field="Observacion:" />	
+											<include field="Observacion:" />	
 											<vbox>
 												<textbox id="txtObservaciones" width ="92.7%" tabindex="13" multiline="true" maxlength="255" style="resize:vertical;max-height:100px; min-height:50px;" />
 											</vbox>	
